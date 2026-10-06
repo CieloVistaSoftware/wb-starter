@@ -64,13 +64,12 @@ The fix:
 
 ## Events
 
-- `wb:expandable:toggle` — Fired on expand/collapse
+- `wb:cardexpandable:toggle` — Fired on expand and collapse. Bubbles.
 
 ## Methods
 
-- `expand()` — Expands the card
-- `collapse()` — Collapses the card
-- `toggle()` — Toggles expanded state
-- `isExpanded()` — Returns expanded state
+- `show()` — Expands the card. On `element.wbCardExpandable`; read the state from `element.wbCardExpandable.expanded`.
+- `hide()` — Collapses the card. On `element.wbCardExpandable`.
+- `toggle()` — Expands a collapsed card, collapses an expanded one. On `element.wbCardExpandable`.
 
 <sub>Schema: [`cardexpandable.schema.json`](../../src/wb-models/cardexpandable.schema.json)</sub>

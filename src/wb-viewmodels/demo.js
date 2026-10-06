@@ -1029,7 +1029,17 @@ export async function demo(element, options = {}) {
                 const measure = () => {
                     const demoCs = getComputedStyle(element);
                     const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
-                    const controlWidth = only.getBoundingClientRect().width + hPad;
+                    // #1579: the GRID's width, as the #486 note above says, not
+                    // the child's. Before the commit the demo is fit-content, so
+                    // the grid already holds the width the control asked for;
+                    // committing it changes nothing on screen. The child's own
+                    // box can be narrower than what it asked for: a horizontal
+                    // card's image column is `width: 40%` of the card, so its
+                    // laid-out width depends on its container. Committing that
+                    // narrower width narrowed the demo and its code panel by
+                    // 70-118px a second after first paint, and the card then
+                    // shrank again inside the new width.
+                    const controlWidth = grid.getBoundingClientRect().width + hPad;
                     // #563 follow-up, John: "show all the code on single
                     // elements per row" -- measuring only the control left
                     // the code panel (width:100% of x-demo, see demo.css)
