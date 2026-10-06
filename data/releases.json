@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.353",
+      "date": "2026-10-06",
+      "summary": "Two behaviors-project tests failed on CI under load and passed 8 of 8 locally. &quot;tooltip appears on hover&quot; hovered the example before tooltip.js had attached its mouseenter listener, so no .x-tooltip appeared; &quot;issues — no uncaught errors&quot; waited for networkidle while the issues page paged through the live GitHub API via /api/issues, and the whole 30s budget ran out before any error check. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1650\" target=\"_blank\" rel=\"noopener\">PR 1650</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The tooltip hover waits for its listener; page smoke bounds its network-idle wait</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/790f6b7b86aef6677d5bee58fd8df47c1c13f853\" target=\"_blank\" rel=\"noopener\"><code>790f6b7</code></a>",
+          "issues": [
+            918
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-input/select/textarea/checkbox/switch keep their div host, with the reason</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e525bc1975881327ce58cd915e96bf7d9b0b5790\" target=\"_blank\" rel=\"noopener\"><code>e525bc1</code></a>",
+          "issues": [
+            918
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Schemas name each behavior&#39;s real HTML host; IntelliSense stops teaching &lt;div&gt;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d9eaa504173d2fccc9f344a265cfff3a69ff5fb\" target=\"_blank\" rel=\"noopener\"><code>0d9eaa5</code></a>",
+          "issues": [
+            918
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/remaining-coverage.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/remaining-coverage.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/pages/every-page-loads-without-errors.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/pages/every-page-loads-without-errors.spec.ts</a>. Before: on CI, &quot;element(s) not found&quot; for .x-tooltip and &quot;Test timeout of 30000ms exceeded&quot; on issues. Now: the hover targets [x-tooltip].x-tooltip-trigger (set in the same step as the listener), and the page check loads, then waits at most 15s for the network to settle; 45 of 45 pass locally.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/99a84b5b7a3abe1072add36b1a3f487e7c19387f\" target=\"_blank\" rel=\"noopener\"><code>99a84b5</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.352",
       "date": "2026-10-06",
       "summary": "Autoinject-select-variant-colors.spec.ts read the theme-variant selects&#39; style= attribute to check for theme variables; this PR moved those colours into <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/autoinject.html\" target=\"_blank\" rel=\"noopener\">demos/autoinject.html</a>&#39;s &lt;style&gt; rules (#779), so the attribute is gone and the check failed with &quot;received value must not be null&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1646\" target=\"_blank\" rel=\"noopener\">PR 1646</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
