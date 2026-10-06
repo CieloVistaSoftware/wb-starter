@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T19:24:24.111Z",
+  "generatedAt": "2026-10-06T23:32:26.472Z",
   "count": 160,
   "schemas": [
     {
@@ -10,7 +10,7 @@
       "tag": "x-accordion",
       "baseClass": "x-accordion",
       "properties": {
-        "accordion-title": {
+        "accordionTitle": {
           "type": "string",
           "description": "Marks a child as an accordion panel and supplies its header text. This is the canonical spelling; `data-accordion-title` is read as a fallback.",
           "default": "",
@@ -1381,9 +1381,9 @@
       "tag": "x-center",
       "baseClass": "x-center",
       "properties": {
-        "max-width": {
+        "maxWidth": {
           "type": "string",
-          "description": "Read by center().",
+          "description": "Widest the centred box may grow, as any CSS length (60ch, 40rem). Unset, it takes the full width.",
           "default": "this is the max width",
           "examples": [
             "20ch",
@@ -1392,7 +1392,7 @@
         },
         "gutters": {
           "type": "string",
-          "description": "Read by center().",
+          "description": "Space kept on the left and right inside the box, so text never touches the edges. Any CSS length; 1rem by default.",
           "default": "1rem",
           "examples": [
             "0",
@@ -1401,7 +1401,7 @@
         },
         "intrinsic": {
           "type": "boolean",
-          "description": "Read by center(). Bare attribute.",
+          "description": "Centre the children by their own width with flexbox, instead of centring a max-width box. Bare attribute.",
           "default": false
         }
       },
@@ -1624,7 +1624,7 @@
           ],
           "default": "24"
         },
-        "show-seconds": {
+        "showSeconds": {
           "type": "string",
           "description": "Show the seconds field. On unless set to `\"false\"`.",
           "enum": [
@@ -1696,7 +1696,7 @@
       "file": "code.schema.json",
       "name": "code",
       "title": "Code",
-      "description": "A <code> block gets syntax highlighting for its language, a surface to sit on, and an optional copy button (show-copy).",
+      "description": "A <code> block gets syntax highlighting for its language, a surface to sit on, and an optional copy button (showCopy).",
       "tag": "x-code",
       "baseClass": "x-code",
       "properties": {
@@ -1720,16 +1720,16 @@
           "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
           "default": "this is the size"
         },
-        "show-copy": {
+        "showCopy": {
           "type": "boolean",
           "description": "Show a copy-to-clipboard button.",
           "default": false
         },
         "copy": {
           "type": "boolean",
-          "description": "Alias of `show-copy`.",
+          "description": "Alias of `showCopy`.",
           "default": false,
-          "aliasOf": "show-copy"
+          "aliasOf": "showCopy"
         }
       },
       "matrix": [],
@@ -1853,36 +1853,36 @@
       "file": "confirm.schema.json",
       "name": "confirm",
       "title": "Confirm",
-      "description": "x-confirm puts a confirmation dialog in front of a click: the dialog shows confirm-title and confirm-message with OK and Cancel buttons, and fires wb:confirm:ok or wb:confirm:cancel.",
+      "description": "x-confirm puts a confirmation dialog in front of a click: the dialog shows confirmTitle and confirmMessage with OK and Cancel buttons, and fires wb:confirm:ok or wb:confirm:cancel.",
       "tag": "x-confirm",
       "baseClass": "x-confirm",
       "properties": {
         "heading": {
           "type": "string",
-          "description": "Dialog heading. Only used when `confirm-title` is absent.",
+          "description": "Dialog heading. Only used when `confirmTitle` is absent.",
           "default": "Confirm"
         },
         "message": {
           "type": "string",
-          "description": "Body text. Only used when `confirm-message` is absent.",
+          "description": "Body text. Only used when `confirmMessage` is absent.",
           "default": "Are you sure?"
         },
-        "confirm-text": {
+        "confirmText": {
           "type": "string",
           "description": "Label on the confirming button. Defaults to `OK`.",
           "default": "OK"
         },
-        "cancel-text": {
+        "cancelText": {
           "type": "string",
           "description": "Label on the dismissing button. Defaults to `Cancel`.",
           "default": "Cancel"
         },
-        "confirm-title": {
+        "confirmTitle": {
           "type": "string",
           "description": "Dialog heading. Read BEFORE `heading`; defaults to `Confirm`.",
           "default": "this is the confirm title"
         },
-        "confirm-message": {
+        "confirmMessage": {
           "type": "string",
           "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`.",
           "default": "this is the confirm message"
@@ -1905,7 +1905,7 @@
       "properties": {
         "direction": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Flow of the children at one column: column stacks them, row lines them up side by side. Ignored in grid mode.",
           "default": "column",
           "examples": [
             "column"
@@ -1913,12 +1913,12 @@
         },
         "columns": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "1 is a flex stack or row. 2 or more switches to a responsive grid whose columns auto-fit down to one on narrow screens.",
           "default": "1"
         },
         "gap": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Space between the children, as any CSS length.",
           "default": "1rem",
           "examples": [
             "3rem"
@@ -1926,12 +1926,12 @@
         },
         "align": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Cross-axis alignment of the children: start, center, end or stretch.",
           "default": "stretch"
         },
         "justify": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Main-axis placement of the children: start, center, end, space-between, space-around or space-evenly.",
           "default": "start",
           "examples": [
             "flex-start",
@@ -1940,20 +1940,20 @@
         },
         "padding": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Space inside the container around its children, as any CSS length.",
           "default": "1rem",
           "examples": [
             "2.5rem"
           ]
         },
-        "max-width": {
+        "maxWidth": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Widest the container may grow; it is then centred. Any CSS length.",
           "default": "this is the max width"
         },
         "wrap": {
           "type": "string",
-          "description": "Read by container().",
+          "description": "Let a row wrap onto more lines when it runs out of room. wrap=\"false\" keeps every child on one line.",
           "default": "this is the wrap"
         }
       },
@@ -2012,7 +2012,7 @@
       "file": "copybutton.schema.json",
       "name": "copybutton",
       "title": "Copybutton",
-      "description": "x-copybutton makes the element copy the text of another element when clicked: the one matched by copy-target (or the selector given as the attribute value), or its own text when there is none.",
+      "description": "x-copybutton makes the element copy the text of another element when clicked: the one matched by copyTarget (or the selector given as the attribute value), or its own text when there is none.",
       "tag": "x-copybutton",
       "baseClass": "x-copybutton",
       "properties": {
@@ -2031,17 +2031,17 @@
           "description": "Corner the button is placed in, e.g. `top-right` (default).",
           "default": "top-right"
         },
-        "copy-feedback": {
+        "copyFeedback": {
           "type": "string",
           "description": "Message shown after a successful copy. Defaults to `Copied!`.",
           "default": "Copied ✓"
         },
-        "copy-duration": {
+        "copyDuration": {
           "type": "string",
           "description": "How long the feedback stays visible, in milliseconds. Defaults to `2000`.",
           "default": "2000"
         },
-        "copy-target": {
+        "copyTarget": {
           "type": "string",
           "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first.",
           "default": "this is the copy target"
@@ -2120,9 +2120,9 @@
       "tag": "x-cover",
       "baseClass": "x-cover",
       "properties": {
-        "min-height": {
+        "minHeight": {
           "type": "string",
-          "description": "Read by cover().",
+          "description": "Smallest height of the cover, as any CSS length. 100vh fills the screen.",
           "default": "100vh",
           "examples": [
             "8rem",
@@ -2132,7 +2132,7 @@
         },
         "padding": {
           "type": "string",
-          "description": "Read by cover().",
+          "description": "Space inside the cover around its header, content and footer, as any CSS length.",
           "default": "1rem",
           "examples": [
             "0",
@@ -2760,11 +2760,11 @@
       "file": "figure.schema.json",
       "name": "figure",
       "title": "Figure",
-      "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text, and caption-position=\"overlay\" lays the caption across the bottom of the image.",
+      "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text, and captionPosition=\"overlay\" lays the caption across the bottom of the image.",
       "tag": "x-figure",
       "baseClass": "x-figure",
       "properties": {
-        "caption-position": {
+        "captionPosition": {
           "type": "string",
           "description": "Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar.",
           "default": "bottom",
@@ -2890,13 +2890,11 @@
         },
         {
           "filename": "architecture-diagram.png",
-          "size": "2.4 MB",
-          "href": "/files/architecture-diagram.png"
+          "size": "2.4 MB"
         },
         {
           "filename": "product-walkthrough.mp4",
-          "size": "58 MB",
-          "href": "/files/product-walkthrough.mp4"
+          "size": "58 MB"
         },
         {
           "filename": "interview-recording.m4a",
@@ -2904,8 +2902,7 @@
         },
         {
           "filename": "release-assets.zip",
-          "size": "104 MB",
-          "href": "/files/release-assets.zip"
+          "size": "104 MB"
         },
         {
           "filename": "sensor-capture.bin",
@@ -3221,7 +3218,7 @@
       "properties": {
         "ratio": {
           "type": "string",
-          "description": "Read by frame().",
+          "description": "Width-to-height shape the first child is held to, written as width/height: 16/9, 4/3, 1/1.",
           "default": "16/9"
         }
       },
@@ -3390,7 +3387,7 @@
       "properties": {
         "columns": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "How many columns to aim for. Each column has a minimum width, so the grid drops to fewer columns on narrow screens.",
           "default": "3",
           "examples": [
             "4",
@@ -3399,31 +3396,31 @@
         },
         "rows": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Number of auto-height rows to lay out, for a grid that should not grow past them.",
           "default": "this is the rows"
         },
         "gap": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Space between the cells, as any CSS length.",
           "default": "1rem",
           "examples": [
             "0",
             "3rem"
           ]
         },
-        "min-width": {
+        "minWidth": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Smallest a column may get before the grid wraps to fewer columns, as any CSS length. Overrides the width columns implies.",
           "default": "this is the min width"
         },
         "align": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Vertical alignment of each item in its cell: start, center, end or stretch.",
           "default": "this is the align"
         },
         "justify": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Horizontal alignment of each item in its cell: start, center, end or stretch.",
           "default": "this is the justify"
         },
         "background": {
@@ -3433,17 +3430,17 @@
         },
         "headers": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Comma-separated header labels; each becomes a header cell at the top of the grid.",
           "default": "this is the headers"
         },
         "center": {
           "type": "boolean",
-          "description": "Read by grid(). Bare attribute.",
+          "description": "Centre every item in its cell, and its text. Bare attribute.",
           "default": false
         },
-        "alt-rows": {
+        "altRows": {
           "type": "boolean",
-          "description": "Read by grid(). Bare attribute.",
+          "description": "Shade every other row so rows are easier to follow. Bare attribute.",
           "default": false
         }
       },
@@ -4130,12 +4127,12 @@
       "properties": {
         "size": {
           "type": "string",
-          "description": "Read by icon().",
+          "description": "Size of the SVG icon, as any CSS length. 1em matches the text beside it.",
           "default": "1em"
         },
         "space": {
           "type": "string",
-          "description": "Read by icon().",
+          "description": "Gap between the icon and its text, as any CSS length.",
           "default": "0.5em",
           "examples": [
             "0",
@@ -4293,7 +4290,7 @@
       "file": "img.schema.json",
       "name": "img",
       "title": "Img",
-      "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspect-ratio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
+      "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspectRatio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
       "tag": "x-img",
       "baseClass": "x-img",
       "properties": {
@@ -4307,7 +4304,7 @@
           "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
           "default": "this is the fallback"
         },
-        "aspect-ratio": {
+        "aspectRatio": {
           "type": "string",
           "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
           "default": "this is the aspect ratio",
@@ -4336,7 +4333,7 @@
         },
         "height": {
           "type": "number",
-          "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspect-ratio` wins over the pair.",
+          "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspectRatio` wins over the pair.",
           "default": 0
         }
       },
@@ -4586,7 +4583,7 @@
           "description": "The label text",
           "default": "this is the x label"
         },
-        "label-position": {
+        "labelPosition": {
           "type": "string",
           "enum": [
             "left",
@@ -4906,21 +4903,21 @@
       "file": "modal.schema.json",
       "name": "modal",
       "title": "Modal",
-      "description": "A trigger that opens a modal <dialog>. x-modal is the dialog() behavior (semantics/dialog.js exports it as `modal`): with modal-title or modal-content the host becomes a clickable trigger that builds and opens the dialog; without them the host is hidden and its children become the content of a dialog opened by calling element.open().",
+      "description": "A trigger that opens a modal <dialog>. x-modal is the dialog() behavior (semantics/dialog.js exports it as `modal`): with modalTitle or modalContent the host becomes a clickable trigger that builds and opens the dialog; without them the host is hidden and its children become the content of a dialog opened by calling element.open().",
       "tag": "x-modal",
       "baseClass": "x-modal",
       "properties": {
-        "modal-title": {
+        "modalTitle": {
           "type": "string",
-          "description": "Dialog heading. Its presence (or modal-content's) makes the host a visible trigger that opens the dialog on click. `title` is read first when both are set.",
+          "description": "Dialog heading. Its presence (or modalContent's) makes the host a visible trigger that opens the dialog on click. `title` is read first when both are set.",
           "default": "Dialog"
         },
-        "modal-content": {
+        "modalContent": {
           "type": "string",
-          "description": "Dialog body HTML. Its presence (or modal-title's) makes the host a trigger. `content` is read first when both are set.",
+          "description": "Dialog body HTML. Its presence (or modalTitle's) makes the host a trigger. `content` is read first when both are set.",
           "default": ""
         },
-        "modal-size": {
+        "modalSize": {
           "type": "string",
           "description": "Size of the opened dialog. `size` is read first when both are set.",
           "enum": [
@@ -5344,23 +5341,23 @@
       "file": "pagination.schema.json",
       "name": "pagination",
       "title": "Pagination",
-      "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and per-page (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
+      "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and perPage (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
       "tag": "x-pagination",
       "baseClass": "x-pagination",
       "properties": {
         "total": {
           "type": "string",
-          "description": "Total number of items. With `per-page` this derives the page count.",
+          "description": "Total number of items. With `perPage` this derives the page count.",
           "default": "0"
         },
-        "per-page": {
+        "perPage": {
           "type": "string",
           "description": "Items per page. Defaults to `10`.",
           "default": "10"
         },
         "pages": {
           "type": "string",
-          "description": "Explicit page count. Overrides the count derived from `total`/`per-page`.",
+          "description": "Explicit page count. Overrides the count derived from `total`/`perPage`.",
           "default": "0"
         },
         "current": {
@@ -5402,18 +5399,18 @@
       "file": "popover.schema.json",
       "name": "popover",
       "title": "Popover",
-      "description": "x-popover attaches a small panel with popover-title and popover-content to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
+      "description": "x-popover attaches a small panel with popoverTitle and popoverContent to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
       "tag": "x-popover",
       "baseClass": "x-popover",
       "properties": {
         "description": {
           "type": "string",
-          "description": "Popover body text. Only used when `popover-content` is absent.",
+          "description": "Popover body text. Only used when `popoverContent` is absent.",
           "default": "this is the description"
         },
         "heading": {
           "type": "string",
-          "description": "Popover heading. Only used when `popover-title` is absent.",
+          "description": "Popover heading. Only used when `popoverTitle` is absent.",
           "default": "this is the heading"
         },
         "trigger": {
@@ -5426,12 +5423,12 @@
           "description": "Side the popover opens on: `top` (default), `bottom`, `left` or `right`.",
           "default": "top"
         },
-        "popover-content": {
+        "popoverContent": {
           "type": "string",
           "description": "Popover body text. Read BEFORE `description`.",
           "default": "this is the popover content"
         },
-        "popover-title": {
+        "popoverTitle": {
           "type": "string",
           "description": "Popover heading. Read BEFORE `heading`.",
           "default": "this is the popover title"
@@ -5658,7 +5655,7 @@
       "file": "pre.schema.json",
       "name": "pre",
       "title": "Pre",
-      "description": "A plain <pre> gets a code block: syntax highlighting for language, line numbers, an optional copy button (show-copy), wrapping or horizontal scrolling, and a max-height after which it scrolls.",
+      "description": "A plain <pre> gets a code block: syntax highlighting for language, line numbers, an optional copy button (showCopy), wrapping or horizontal scrolling, and a maxHeight after which it scrolls.",
       "tag": "x-pre",
       "baseClass": "x-pre",
       "properties": {
@@ -5672,12 +5669,12 @@
           "description": "When `\"true\"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing.",
           "default": "this is the scrollable"
         },
-        "show-line-numbers": {
+        "showLineNumbers": {
           "type": "string",
           "description": "Line numbers in a gutter beside the code. On unless set to `\"false\"`.",
           "default": "this is the show line numbers"
         },
-        "max-height": {
+        "maxHeight": {
           "type": "string",
           "description": "A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page.",
           "default": "this is the max height"
@@ -5696,16 +5693,16 @@
             "lg"
           ]
         },
-        "show-copy": {
+        "showCopy": {
           "type": "boolean",
           "description": "Show a copy-to-clipboard button in the corner of the block.",
           "default": false
         },
         "copy": {
           "type": "boolean",
-          "description": "Alias of `show-copy`.",
+          "description": "Alias of `showCopy`.",
           "default": false,
-          "aliasOf": "show-copy"
+          "aliasOf": "showCopy"
         }
       },
       "matrix": [],
@@ -6087,18 +6084,18 @@
       "file": "prompt.schema.json",
       "name": "prompt",
       "title": "Prompt",
-      "description": "x-prompt makes a click open a dialog that asks for a line of text, with prompt-title, prompt-message, a placeholder and an optional default-value.",
+      "description": "x-prompt makes a click open a dialog that asks for a line of text, with promptTitle, promptMessage, a placeholder and an optional defaultValue.",
       "tag": "x-prompt",
       "baseClass": "x-prompt",
       "properties": {
         "heading": {
           "type": "string",
-          "description": "Dialog heading. Only used when `prompt-title` is absent.",
+          "description": "Dialog heading. Only used when `promptTitle` is absent.",
           "default": "Input"
         },
         "message": {
           "type": "string",
-          "description": "Body text. Only used when `prompt-message` is absent.",
+          "description": "Body text. Only used when `promptMessage` is absent.",
           "default": "this is the message"
         },
         "placeholder": {
@@ -6106,17 +6103,17 @@
           "description": "Placeholder shown in the empty input.",
           "default": "this is the placeholder"
         },
-        "default-value": {
+        "defaultValue": {
           "type": "string",
           "description": "Value the input starts with, already selected so typing replaces it.",
           "default": "this is the default value"
         },
-        "prompt-title": {
+        "promptTitle": {
           "type": "string",
           "description": "Dialog heading. Read BEFORE `heading`; defaults to `Input`.",
           "default": "this is the prompt title"
         },
-        "prompt-message": {
+        "promptMessage": {
           "type": "string",
           "description": "Body text above the field. Read BEFORE `message`.",
           "default": "this is the prompt message"
@@ -6405,9 +6402,9 @@
       "tag": "x-reel",
       "baseClass": "x-reel",
       "properties": {
-        "item-width": {
+        "itemWidth": {
           "type": "string",
-          "description": "Read by reel().",
+          "description": "Width of each item in the row, as any CSS length. auto lets each item take its own width.",
           "default": "auto",
           "examples": [
             "8rem",
@@ -6417,7 +6414,7 @@
         },
         "gap": {
           "type": "string",
-          "description": "Read by reel().",
+          "description": "Space between the items, as any CSS length.",
           "default": "1rem",
           "examples": [
             "0",
@@ -6896,13 +6893,13 @@
       "file": "share.schema.json",
       "name": "share",
       "title": "Share",
-      "description": "x-share makes the element open the device's share sheet with share-title, share-text and share-url; where the Web Share API is missing it copies the URL to the clipboard instead.",
+      "description": "x-share makes the element open the device's share sheet with shareTitle, shareText and shareUrl; where the Web Share API is missing it copies the URL to the clipboard instead.",
       "tag": "x-share",
       "baseClass": "x-share",
       "properties": {
         "text": {
           "type": "string",
-          "description": "Body text. Only used when `share-text` is absent.",
+          "description": "Body text. Only used when `shareText` is absent.",
           "default": "this is the text"
         },
         "label": {
@@ -6910,24 +6907,24 @@
           "description": "Button label. Defaults to `📤 Share`.",
           "default": "📤 Share"
         },
-        "share-title": {
+        "shareTitle": {
           "type": "string",
           "description": "Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`.",
           "default": "this is the share title"
         },
-        "share-text": {
+        "shareText": {
           "type": "string",
           "description": "Body text passed to the share sheet. Read BEFORE `text`.",
           "default": "this is the share text"
         },
-        "share-url": {
+        "shareUrl": {
           "type": "string",
           "description": "URL to share. Read BEFORE `url`; falls back to the current page address.",
           "default": "#"
         },
         "url": {
           "type": "string",
-          "description": "URL to share. Only used when `share-url` is absent.",
+          "description": "URL to share. Only used when `shareUrl` is absent.",
           "default": "#"
         }
       },
@@ -6948,29 +6945,29 @@
       "properties": {
         "side": {
           "type": "string",
-          "description": "Read by sidebarlayout().",
+          "description": "Which child is the sidebar: left makes the first child the sidebar, right the second.",
           "default": "left",
           "examples": [
             "right"
           ]
         },
-        "side-width": {
+        "sideWidth": {
           "type": "string",
-          "description": "Read by sidebarlayout().",
+          "description": "Width of the sidebar, as any CSS length.",
           "default": "300px",
           "examples": [
             "8rem",
             "22rem"
           ]
         },
-        "content-min": {
+        "contentMin": {
           "type": "string",
-          "description": "Read by sidebarlayout().",
+          "description": "Narrowest the main area may get before the sidebar wraps underneath it, as a CSS length or percentage.",
           "default": "50%"
         },
         "gap": {
           "type": "string",
-          "description": "Read by sidebarlayout().",
+          "description": "Space between the sidebar and the main area, as any CSS length.",
           "default": "1rem",
           "examples": [
             "0",
@@ -7366,7 +7363,7 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Read by stat().",
+          "description": "The small caption shown under the value, such as \"Active users\".",
           "default": "this is the label",
           "examples": [
             "Monthly revenue"
@@ -7374,7 +7371,7 @@
         },
         "variant": {
           "type": "string",
-          "description": "Read by stat().",
+          "description": "Colour of the value: blue, green, orange or purple.",
           "default": "this is the variant",
           "examples": [
             "blue",
@@ -7723,7 +7720,7 @@
       "properties": {
         "threshold": {
           "type": "string",
-          "description": "Read by switcher().",
+          "description": "Width below which the children stack instead of sitting in a row, as any CSS length.",
           "default": "30rem",
           "examples": [
             "10rem",
@@ -7732,7 +7729,7 @@
         },
         "gap": {
           "type": "string",
-          "description": "Read by switcher().",
+          "description": "Space between the children, as any CSS length.",
           "default": "1rem",
           "examples": [
             "0",
@@ -7741,7 +7738,7 @@
         },
         "limit": {
           "type": "string",
-          "description": "Read by switcher().",
+          "description": "Most children that may share a row; with more than this, they always stack.",
           "default": "4"
         }
       },
@@ -8729,11 +8726,11 @@
       "file": "vimeo.schema.json",
       "name": "vimeo",
       "title": "Vimeo",
-      "description": "x-vimeo embeds the Vimeo video with video-id as a responsive player that keeps its aspect ratio.",
+      "description": "x-vimeo embeds the Vimeo video with videoId as a responsive player that keeps its aspect ratio.",
       "tag": "x-vimeo",
       "baseClass": "x-vimeo",
       "properties": {
-        "video-id": {
+        "videoId": {
           "type": "string",
           "description": "The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed.",
           "default": "this is the video id"
@@ -8893,16 +8890,16 @@
       "file": "youtube.schema.json",
       "name": "youtube",
       "title": "Youtube",
-      "description": "x-youtube embeds a YouTube video from video-id or a full url as a responsive player that keeps its aspect ratio.",
+      "description": "x-youtube embeds a YouTube video from videoId or a full url as a responsive player that keeps its aspect ratio.",
       "tag": "x-youtube",
       "baseClass": "x-youtube",
       "properties": {
         "url": {
           "type": "string",
-          "description": "A full YouTube watch or share URL. The id is extracted from it, so use this OR `video-id`, not both.",
+          "description": "A full YouTube watch or share URL. The id is extracted from it, so use this OR `videoId`, not both.",
           "default": "#"
         },
-        "video-id": {
+        "videoId": {
           "type": "string",
           "description": "The 11-character YouTube id — the `v=` value in a watch URL. Use this OR `url`.",
           "default": "this is the video id"

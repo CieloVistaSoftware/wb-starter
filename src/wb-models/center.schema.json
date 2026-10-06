@@ -7,7 +7,7 @@
   "properties": {
     "maxWidth": {
       "type": "string",
-      "description": "Read by center().",
+      "description": "Widest the centred box may grow, as any CSS length (60ch, 40rem). Unset, it takes the full width.",
       "default": "this is the max width",
       "examples": [
         "20ch",
@@ -16,7 +16,7 @@
     },
     "gutters": {
       "type": "string",
-      "description": "Read by center().",
+      "description": "Space kept on the left and right inside the box, so text never touches the edges. Any CSS length; 1rem by default.",
       "default": "1rem",
       "examples": [
         "0",
@@ -25,7 +25,7 @@
     },
     "intrinsic": {
       "type": "boolean",
-      "description": "Read by center(). Bare attribute.",
+      "description": "Centre the children by their own width with flexbox, instead of centring a max-width box. Bare attribute.",
       "default": false
     }
   },

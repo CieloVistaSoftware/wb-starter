@@ -7,7 +7,7 @@
   "properties": {
     "threshold": {
       "type": "string",
-      "description": "Read by switcher().",
+      "description": "Width below which the children stack instead of sitting in a row, as any CSS length.",
       "default": "30rem",
       "examples": [
         "10rem",
@@ -16,7 +16,7 @@
     },
     "gap": {
       "type": "string",
-      "description": "Read by switcher().",
+      "description": "Space between the children, as any CSS length.",
       "default": "1rem",
       "examples": [
         "0",
@@ -25,7 +25,7 @@
     },
     "limit": {
       "type": "string",
-      "description": "Read by switcher().",
+      "description": "Most children that may share a row; with more than this, they always stack.",
       "default": "4"
     }
   },

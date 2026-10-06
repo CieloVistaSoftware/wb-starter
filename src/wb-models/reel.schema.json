@@ -7,7 +7,7 @@
   "properties": {
     "itemWidth": {
       "type": "string",
-      "description": "Read by reel().",
+      "description": "Width of each item in the row, as any CSS length. auto lets each item take its own width.",
       "default": "auto",
       "examples": [
         "8rem",
@@ -17,7 +17,7 @@
     },
     "gap": {
       "type": "string",
-      "description": "Read by reel().",
+      "description": "Space between the items, as any CSS length.",
       "default": "1rem",
       "examples": [
         "0",
