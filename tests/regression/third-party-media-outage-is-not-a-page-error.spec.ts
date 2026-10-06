@@ -261,7 +261,11 @@ test.describe('#1115 third-party media outage', () => {
       () => expected.filter((e) => names(o.pageErrors, e.url).length === 0).map((e) => e.name),
       { timeout: 45000, intervals: [500] },
     ).toEqual([]);
-    await page.waitForTimeout(1000);
+    // Each error's log post follows it (#1516: polled, not a 1000ms sleep).
+    await expect.poll(
+      () => expected.filter((e) => names(o.logPosts, e.url).length === 0).map((e) => e.name),
+      { timeout: 15000, intervals: [250] },
+    ).toEqual([]);
 
     const marked = await unreachableHosts(page);
     const summary = expected.map((e) => ({

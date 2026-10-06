@@ -8,7 +8,7 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * box and fails on a loaded one, which is #961's signature ("passes alone,
  * fails under load"). On 2026-10-06, 202 of 798 spec files held 426 sleeps;
  * the first pass (#1516) took that to 345 and the positive ones from 88 to 68;
- * the second took the positive ones to 43.
+ * the second took the positive ones to 43, the third to 26.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -30,9 +30,9 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   - `elementReady(locator)` / `buildInView(locator)` in tests/base.ts
  */
 const CEILING = {
-  positive: 43,
+  positive: 26,
   redundant: 0,
-  setup: 209,
+  setup: 208,
   negative: 61,
 };
 

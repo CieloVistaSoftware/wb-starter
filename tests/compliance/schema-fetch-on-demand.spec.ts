@@ -30,8 +30,10 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
 
     await page.goto('/?page=home');
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
-    // Let any deferred/lazy schema fetches (scroll-triggered, MutationObserver-driven) settle.
-    await page.waitForTimeout(1500);
+    // Deferred/lazy schema fetches (scroll-triggered, MutationObserver-driven)
+    // have answered once WB settles (#1516: not 1500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const uniqueSchemaRequests = new Set(schemaRequests);
 

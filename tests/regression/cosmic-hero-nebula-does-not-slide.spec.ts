@@ -71,6 +71,7 @@ test.describe('cosmic hero nebula does not slide (#1595)', () => {
     // Without x-hero--cosmic the layer is the oversized sheen, which is meant
     // to move; the band needs both classes (#1595).
     test.skip(!/\bx-hero--cosmic\b/.test(first.classes), `home hero has no x-hero--cosmic: ${first.classes}`);
+    // sleep-proves-negative: the nebula must NOT move over time; staying still fires no event
     await page.waitForTimeout(1500);
     const later = await readLayer(page, '[x-cardhero]');
     expect(first.animation, 'the home hero nebula runs no slide animation').toBe('none');
