@@ -15,15 +15,14 @@ test.describe('site nav reachability across widths (#276)', () => {
       await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
       await wbIdle(page);
       await page.setViewportSize({ width, height: 800 });
-      await page.waitForTimeout(400);
 
       const nav = page.locator('.site__nav');
       const toggle = page.locator('#navToggle');
 
-      const navVisible = await nav.isVisible().catch(() => false);
-      const toggleVisible = await toggle.isVisible().catch(() => false);
-
-      expect(navVisible || toggleVisible, `at ${width}px, neither the sidebar nor the hamburger toggle is visible — nav is unreachable`).toBe(true);
+      // Polled while the layout reflows to the new width (#1516: not 400ms).
+      await expect.poll(async () => (await nav.isVisible().catch(() => false)) || (await toggle.isVisible().catch(() => false)), {
+        message: `at ${width}px, neither the sidebar nor the hamburger toggle is visible — nav is unreachable`,
+      }).toBe(true);
     });
   }
 

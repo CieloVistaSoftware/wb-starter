@@ -111,7 +111,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     
     // Hover to trigger tooltip
     await element.hover();
-    await page.waitForTimeout(300);
     
     // Check for tooltip element (class may vary)
     const tooltip = page.locator('[class*="tooltip"], [data-tooltip-visible]');

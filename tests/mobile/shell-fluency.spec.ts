@@ -20,7 +20,9 @@ test.describe('Mobile shell fluency (real SPA, not fragments)', () => {
     test(`no horizontal overflow: ${pg.name}`, async ({ page }) => {
       await page.goto(pg.url);
       await page.locator('.site__main').waitFor({ state: 'attached', timeout: 15000 });
-      await page.waitForTimeout(900); // let lazy components hydrate
+      // Lazy components have hydrated once WB settles (#1516: not 900ms).
+      await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+      await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
       const m = await page.evaluate(() => {
         const de = document.documentElement;
         return { scrollWidth: de.scrollWidth, clientWidth: de.clientWidth };

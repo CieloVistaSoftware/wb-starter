@@ -233,7 +233,8 @@ test.describe('Site Generation — Phase 4', () => {
 
         await page.goto(`${SITE_DIR}/${pg.filename}`);
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
-        await page.waitForTimeout(500);
+        // Startup errors are thrown by the time WB settles (#1516: not 500ms).
+        await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 
         const critical = errors.filter(e =>
           !e.includes('favicon') &&

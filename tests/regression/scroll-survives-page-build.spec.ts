@@ -57,6 +57,7 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
   expect(scrolled, 'themes must be tall enough to scroll for this check').toBeGreaterThan(100);
 
   await page.waitForFunction(() => (window as any).__scanReleased === true, null, { timeout: 10000 });
+  // sleep-proves-negative: the scan finishing must NOT move the reader; a scroll that correctly never happens fires no event
   await page.waitForTimeout(300); // the code after the scan, and a frame
   expect(await page.evaluate(() => document.getElementById('siteBody')!.scrollTop),
     'the scan finishing moved the reader back toward the top').toBeGreaterThanOrEqual(scrolled - 2);

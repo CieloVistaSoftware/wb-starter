@@ -204,14 +204,13 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       const trigger = triggers.nth(i);
       await trigger.scrollIntoViewIfNeeded();
       await trigger.click();
-      await page.waitForTimeout(200);
-      const opened = await trigger.evaluate((dd) => {
+      // Polled until the menu opens (#1516: not 200ms).
+      await expect.poll(() => trigger.evaluate((dd) => {
         return Array.from(dd.querySelectorAll('*')).some((el) => {
           const cs = getComputedStyle(el);
           return cs.position !== 'static' && cs.display !== 'none' && el.getBoundingClientRect().height > 0;
         });
-      });
-      expect(opened, `dropdown trigger[${i}] should open something on click`).toBeTruthy();
+      }), { message: `dropdown trigger[${i}] should open something on click` }).toBe(true);
       await page.keyboard.press('Escape');
     }
   });

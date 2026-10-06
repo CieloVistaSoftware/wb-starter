@@ -114,6 +114,7 @@ test.describe('[x-demo]: per-card doc links (#388)', () => {
 
     // Give the no-doc element the same settling time as the real one, then
     // confirm it never added a (necessarily broken) link of its own.
+    // sleep-proves-negative: the plain <div> must NOT add a link of its own; a link that correctly never appears fires no event
     await page.waitForTimeout(500);
     expect(await badgeFiles(page, 'nodoc'), 'only the card doc; the plain <div> gets none').toEqual([
       'docs/behaviors/card.md',

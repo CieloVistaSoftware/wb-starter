@@ -55,6 +55,7 @@ test.describe('wheel over an inner scroller (#1037)', () => {
     const box = (await page.locator('#inner-1037').boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.wheel(0, 120);
+    // sleep-proves-negative: the page must NOT move while the inner box can scroll; a scroll that correctly never happens fires no event
     await page.waitForTimeout(300); // past the fallback's 16ms check
 
     const after = await page.evaluate(() => ({
