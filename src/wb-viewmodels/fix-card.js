@@ -1,4 +1,3 @@
-import { WBCard } from './x-card.js';
 import { composeCard } from './card.js';
 import { readAttr } from '../core/read-attr.js';
 import { mdhtml } from './mdhtml.js';
@@ -36,11 +35,10 @@ function getLanguage(fix) {
  * Render one fix record into `host`, using `card` (the composeCard() base the
  * host was composed with) to build the header/main structure.
  *
- * A module function rather than a WBFixCard method so the SAME renderer
- * serves both authoring forms: the <x-fix-card> tag (the class below) and
- * <div x-fix-card> (fixCard() at the bottom). While it lived only on the
- * class, the attribute form -- the one 4.0.0 made canonical -- had no way to
- * reach it at all.
+ * A module function so the SAME renderer serves both authoring forms: the
+ * <x-fix-card> tag and <div x-fix-card>. Both reach it through fixCard() at
+ * the bottom (#789). While it lived only on a class, the attribute form --
+ * the one 4.0.0 made canonical -- had no way to reach it at all.
  */
 function renderFixCard(host, card, fix) {
   if (!fix || !card) return;
@@ -208,44 +206,6 @@ function renderFixCard(host, card, fix) {
   }
 }
 
-export class WBFixCard extends WBCard {
-  constructor() {
-    super();
-    this.fixData = null;
-  }
-
-  set data(fix) {
-    this.fixData = fix;
-    this.render();
-  }
-
-  get data() {
-    return this.fixData;
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.classList.add('fix-card');
-    
-    // #1014: a 125-line <style> block carrying 49 `!important` declarations
-    // used to be injected here. It now lives in src/styles/behaviors/fix-card.css,
-    // loaded through the behavior CSS manifest like every other behavior's
-    // styles. The !important was compensating for a specificity tie with
-    // card.css (both 0-2-0); the stylesheet uses .x-card.fix-card (0-3-0) and
-    // wins on merit instead.
-    ensureBehaviorCss('fix-card');
-
-    // If data was set before connection, render now
-    if (this.fixData) {
-      this.render();
-    }
-  }
-
-  render() {
-    renderFixCard(this, this.card, this.fixData);
-  }
-}
-
 // #365 / #660: the behavior for the attribute form, <div x-fix-card>.
 //
 // This used to add one class and return, on the claim that "the real work
@@ -258,20 +218,22 @@ export class WBFixCard extends WBCard {
 // plain property that rendered nothing. The behavior was inert while its
 // comments said it was live.
 //
-// Composition instead of the class (Tier 1: capability is applied by a
+// Composition instead of a class (Tier 1: capability is applied by a
 // behavior function, never acquired by subclassing): compose the card base on
-// the element, then give the element the same `data` accessor the class has,
-// wired to the same renderer.
+// the element, then give the element a `data` accessor wired to the renderer.
+// The <x-fix-card> tag gets exactly this too, through the shim at the bottom.
+
+// Elements this behavior is attached to, so the tag shim and WB.scan() reaching
+// the same <x-fix-card> compose one card, not two.
+const attached = new WeakSet();
+
 export default function fixCard(element) {
   element.classList.add('x-fix-card');
-  // The <x-fix-card> tag is still upgraded by the shim below and owns its own
-  // card and accessor; composing a second card on it would build twice.
-  if (element instanceof WBFixCard) return () => {};
+  if (attached.has(element)) return () => {};
+  attached.add(element);
 
   element.classList.add('fix-card');
   ensureBehaviorCss('fix-card');
-  // Same options WBCard.connectedCallback composes the tag form with, so both
-  // forms render an identical card.
   const base = composeCard(element, {
     ...element.dataset,
     behavior: element.getAttribute('behavior') || 'card',
@@ -294,44 +256,39 @@ export default function fixCard(element) {
   if (fixData) renderFixCard(element, base, fixData);
 
   return () => {
+    attached.delete(element);
     delete element.data;
     if (base && typeof base.cleanup === 'function') base.cleanup();
     element.classList.remove('fix-card');
   };
 }
 
-// Registration shim (#911).
+// Registration shim for the <x-fix-card> TAG (#911, #789).
 //
-// f624fcc9 (4.0.0 — components removed) deleted
-//   customElements.define('wb-fix-card', WBFixCard);
-// and without this the Custom Elements API leaves every <x-fix-card> inert:
-// connectedCallback never fires, .fix-card is never applied, and the matching
-// stylesheet has nothing to style.
+// Without a definition the Custom Elements API leaves every <x-fix-card> inert:
+// nothing composes the card and `.data = fix` renders nothing. The fix-card
+// behavior itself is reachable as <div x-fix-card> through tag-map.js,
+// wb-viewmodels/index.js, behavior-css-manifest.js and wb-lazy.js's eager list.
 //
-// #1061 — WHAT CHANGED, AND WHAT DID NOT.
-//
-// This comment used to justify itself with "public/fix-viewer.html still does
-// createElement('x-fix-card') and assigns card.data". It does not any more:
-// that page now renders a table on both of its render paths, because John
-// asked to track a fix back to its issue and forward to its release, which a
-// card grid could not show. `grep -c "x-fix-card" public/fix-viewer.html` is 0.
-//
-// That makes the page a former CONSUMER, not the reason this exists. The
-// behavior itself is fully registered and reachable by anyone writing
-// <div x-fix-card>: tag-map.js:212, wb-viewmodels/index.js:95,
-// behavior-css-manifest.js:87, wb-lazy.js:378's eager selector list,
-// schema-builder.js:973, and its own src/wb-models/fix-card.schema.json with
-// documented examples. Removing it would delete a working behavior from the
-// framework, which is a different and much larger decision than dropping the
-// dead code it superficially resembles.
-//
-// So the shim stays and the claim about fix-viewer.html is corrected. Whether
-// the framework should keep a fix-card behavior at all is a product question,
-// left on #1061 rather than answered by whoever happened to change the page.
-//
-// TIER1-LAWS §2 permits this shape: a registration shim the Custom Elements API
-// requires, holding no shared behavior logic. Converting fix-card to a behavior
-// is the right end state and is tracked in #660 / #789.
+// #789: this used to be `class WBFixCard extends WBCard`, a variant subclassing
+// a base component -- the two-level hierarchy Tier 1 §2 forbids. It is now the
+// shape §2 permits: a class the Custom Elements API requires, extending only
+// HTMLElement and holding no behavior logic. It applies fixCard() to itself
+// on connect, exactly as WB.scan() applies it to a <div x-fix-card>, so the two
+// forms cannot drift. tests/compliance/no-component-inheritance-in-source.spec.ts
+// fails if a class extends anything but a platform base again.
+class XFixCardElement extends HTMLElement {
+  connectedCallback() {
+    // Composed once, on first connect, and kept: a move (disconnect, then
+    // connect elsewhere) keeps the card and its record. card.js's cleanup does
+    // not remove the DOM it built, so tearing down and composing again on
+    // every move stacked a second header on the card. A record set while
+    // detached (createElement, .data =, append) is an own property, which
+    // fixCard() picks up; fixCard() also ignores a second call on one element.
+    fixCard(this);
+  }
+}
+
 if (typeof customElements !== 'undefined' && !customElements.get('x-fix-card')) {
-  customElements.define('x-fix-card', WBFixCard);
+  customElements.define('x-fix-card', XFixCardElement);
 }
