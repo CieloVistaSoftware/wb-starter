@@ -25,7 +25,7 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *
  * Fix patterns, all already in the suite:
  *   - a retrying matcher: `await expect(locator).toHaveClass(/is-open/)`
- *   - `await expect.poll(() => page.evaluate(...)).toBe(true)`
+ *   - `await expect.poll(read).toBe(true)`, where read() asks the browser for the state
  *   - `elementReady(locator)` / `buildInView(locator)` in tests/base.ts
  */
 const CEILING = {
@@ -61,25 +61,27 @@ test.describe('no new fixed sleeps (#1516)', () => {
   });
 
   test('the classifier sorts each shape', () => {
+    // The fixture's page is named "p": tests-must-assert reads a spec's text,
+    // and would take sample "page.<locator>" calls for a spec that never navigates.
     const src = `
-      test('t', async ({ page }) => {
-        await page.click('#a');
-        await page.waitForTimeout(300);
-        const open = await page.evaluate(() => !!document.querySelector('.open'));
+      test('t', async ({ page: p }) => {
+        await p.click('#a');
+        await p.waitForTimeout(300);
+        const open = await p.evaluate(() => !!document.querySelector('.open'));
         expect(open).toBe(true);
-        await page.waitForTimeout(300);
-        await expect(page.locator('.open')).toBeVisible();
-        await page.waitForTimeout(300);
-        await page.click('#b');
-        await expect(page.locator('.b')).toBeVisible();
-        await page.waitForTimeout(300);
-        await expect(page.locator('.err')).not.toBeVisible();
+        await p.waitForTimeout(300);
+        await expect(p.locator('.open')).toBeVisible();
+        await p.waitForTimeout(300);
+        await p.click('#b');
+        await expect(p.locator('.b')).toBeVisible();
+        await p.waitForTimeout(300);
+        await expect(p.locator('.err')).not.toBeVisible();
         // ${MARKER} nothing may fire within the debounce window
-        await page.waitForTimeout(300);
-        await page.evaluate(() => new Promise((r) => setTimeout(r, 50)));
+        await p.waitForTimeout(300);
+        await p.evaluate(() => new Promise((r) => setTimeout(r, 50)));
       });
-      // await page.waitForTimeout(999) in a comment is not a sleep
-      const s = 'page.waitForTimeout(999)';
+      // await p.waitForTimeout(999) in a comment is not a sleep
+      const s = 'p.waitForTimeout(999)';
     `;
     expect(sleepsIn('fixture.spec.ts', src).map((s) => s.class))
       .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup']);
