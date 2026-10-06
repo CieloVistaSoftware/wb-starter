@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.337",
+      "date": "2026-10-06",
+      "summary": "Typed cards stamped their type as two extra classes (x-card--image x-card-image) on top of the x-cardimage attribute that already says it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1631\" target=\"_blank\" rel=\"noopener\">PR 1631</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Two more specs asserted the bare x-card class substring</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+          "issues": [
+            969
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A typed card&#39;s own header and footer stay the card&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+          "issues": [
+            969
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Typed cards carry their attribute, not injected variant classes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+          "issues": [
+            969
+          ]
+        }
+      ],
+      "seeIt": "Open demos/site/cards.html, inspect any rendered typed card (for example the Image Card), and read its class attribute. Before: class=&quot;x-card--image x-card-image&quot;. Now: no variant class; the card looks exactly the same."
+    },
+    {
       "version": "1.0.336",
       "date": "2026-10-06",
       "summary": "The v3 standards page described components that no longer exist and had been garbled by a find-and-replace. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1630\" target=\"_blank\" rel=\"noopener\">PR 1630</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a>",
