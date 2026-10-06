@@ -27,6 +27,16 @@
 
 ---
 
+**Updated 2026-10-06, morning.** Rule for `<select>` vs `x-dropdown` (#682).
+
+**Files touched:** `docs/standards/V3-STANDARDS.md`, `docs/behaviors/select.md`, `docs/behaviors/dropdown.md`, `demos/site/forms.html`.
+
+**Last action:** written rule with a one-line test (a value is `<select>`, an action is `x-dropdown`); `<div x-select options='…'>` recorded as deprecated, still working; the forms.html Select samples were placeholder text with no options and are now real `<select>`s, one per feature.
+
+**Next step:** #274 (widen overlap pages); later, migrate the remaining `<div x-select>` markup (pages/contact.html, demos/playground.html).
+
+---
+
 **Updated 2026-10-06, morning.** Last two behavior docs without a live demo (#323).
 
 **Files touched:** `docs/behaviors/label.md`, `docs/behaviors/autosize.md`, `tests/compliance/md-wb-demo-required.spec.ts`.
