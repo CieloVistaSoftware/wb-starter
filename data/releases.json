@@ -6,9 +6,9 @@
   ],
   "releases": [
     {
-      "version": "1.0.334",
+      "version": "1.0.336",
       "date": "2026-10-06",
-      "summary": "The v3 standards page described components that no longer exist and had been garbled by a find-and-replace. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a>",
+      "summary": "The v3 standards page described components that no longer exist and had been garbled by a find-and-replace. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1630\" target=\"_blank\" rel=\"noopener\">PR 1630</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a>",
       "items": [
         {
           "kind": "changed",
@@ -16,19 +16,47 @@
           "issues": [
             340
           ]
-        },
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fstandards%2FV3-STANDARDS.md\" target=\"_blank\" rel=\"noopener\">docs/standards/V3-STANDARDS.md</a> in the doc viewer. Before: headings like &quot;Behavior vs. Behavior&quot; and an example using the removed x-as-article. Now: it explains behaviors, auto-injection and schemas as the code works today, with examples that render.",
+      "links": [
         {
-          "kind": "fixed",
-          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2efb2fbe322200f99069ea6ea8f0803bdf029b7d\" target=\"_blank\" rel=\"noopener\"><code>2efb2fb</code></a>",
-          "issues": [
-            1633
-          ]
-        },
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e4d540312b756a3280cb94781d0d373b18ef7407\" target=\"_blank\" rel=\"noopener\"><code>e4d5403</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.335",
+      "date": "2026-10-06",
+      "summary": "To get a green glow you had to write color=&quot;var(--success-color)&quot;, knowing the theme&#39;s internal token name; color=&quot;success&quot; produced --glow-color: success, which is no colour, so the glow silently stayed primary. The same token spelling was taught for x-grid background and x-stack bg. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1632\" target=\"_blank\" rel=\"noopener\">PR 1632</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a>",
+      "items": [
         {
           "kind": "fixed",
           "html": "<strong>Colour attributes take the theme&#39;s colour name, not var(--token)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2f928e3954172aec9affc445aefd6dcc305d65ca\" target=\"_blank\" rel=\"noopener\"><code>2f928e3</code></a>",
           "issues": [
             907
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/playground.html and find &quot;Glowing (always on, no click)&quot;. Before: its markup read color=&quot;var(--success-color)&quot;. Now: it reads color=&quot;success&quot; and glows green. On the Grid doc, the Background example now reads background=&quot;bg-tertiary&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1722c6e83e081a00e9702b4274bb3716a5be5ae3\" target=\"_blank\" rel=\"noopener\"><code>1722c6e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.334",
+      "date": "2026-10-06",
+      "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1628\" target=\"_blank\" rel=\"noopener\">PR 1628</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2efb2fbe322200f99069ea6ea8f0803bdf029b7d\" target=\"_blank\" rel=\"noopener\"><code>2efb2fb</code></a>",
+          "issues": [
+            1633
           ]
         },
         {
@@ -39,51 +67,39 @@
           ]
         }
       ],
-      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fstandards%2FV3-STANDARDS.md\" target=\"_blank\" rel=\"noopener\">docs/standards/V3-STANDARDS.md</a> in the doc viewer. Before: headings like &quot;Behavior vs. Behavior&quot; and an example using the removed x-as-article. Now: it explains behaviors, auto-injection and schemas as the code works today, with examples that render.",
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/release-bump-touches-only-project-version.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/release-bump-touches-only-project-version.spec.ts</a> --project=regression. Before: on a slow runner, &quot;Test timeout of 30000ms exceeded&quot;. Now: the test waits as long as the script&#39;s own 120s budget (plus a minute), and passes (2 passed locally).",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/97e589a805337357f5cb3d92720355dbd816d66e\" target=\"_blank\" rel=\"noopener\"><code>97e589a</code></a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d3dc54f68f9db9699a5af445d55887e51731487b\" target=\"_blank\" rel=\"noopener\"><code>d3dc54f</code></a>"
         }
       ]
     },
     {
       "version": "1.0.333",
       "date": "2026-10-06",
-      "summary": "Main gained 1.0.331 and 1.0.332 while this PR waited, so CI&#39;s merge of the two disagreed with the generator (releases-list-every-version: &quot;1.0.330 items&quot;); releases.json is regenerated from the merged history. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a>",
+      "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1634\" target=\"_blank\" rel=\"noopener\">PR 1634</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
       "items": [
         {
-          "kind": "changed",
-          "html": "<strong>Regenerate releases.json after merging main (1.0.331, 1.0.332)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/164230f912cc5199ce57e51c682f37a2f90fe245\" target=\"_blank\" rel=\"noopener\"><code>164230f</code></a>",
+          "kind": "fixed",
+          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fbca122b4a121ae01af8e997090dcb1a08fa4092\" target=\"_blank\" rel=\"noopener\"><code>fbca122</code></a>",
           "issues": [
-            1623
+            1633
           ]
         }
       ],
-      "seeIt": "Run <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/releases-list-every-version.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/releases-list-every-version.spec.ts</a>. Before: &quot;1.0.330 items&quot; differed by the #1621 favicon item. Now: 2/2.",
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/release-bump-touches-only-project-version.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/release-bump-touches-only-project-version.spec.ts</a> --project=regression. Before: on a slow runner, &quot;Test timeout of 30000ms exceeded&quot;. Now: the test waits as long as the script&#39;s own 120s budget (plus a minute), and passes (2 passed locally).",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/164230f912cc5199ce57e51c682f37a2f90fe245\" target=\"_blank\" rel=\"noopener\"><code>164230f</code></a>"
-        },
-        {
-          "label": "PR (releases links)",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1624</a>"
-        },
-        {
-          "label": "Issue",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1623</a>"
-        },
-        {
-          "label": "See it (live site, after deploy)",
-          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=releases</a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/780db42a1a7d68f3577e6f28f8a97c1993c4f43b\" target=\"_blank\" rel=\"noopener\"><code>780db42</code></a>"
         }
       ]
     },
     {
       "version": "1.0.332",
       "date": "2026-10-06",
-      "summary": "The iPhone (WebKit) test run took no review screenshots, because a capture of any page with an audio player that never loads hung until it timed out. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
+      "summary": "The iPhone (WebKit) test run took no review screenshots, because a capture of any page with an audio player that never loads hung until it timed out. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1629\" target=\"_blank\" rel=\"noopener\">PR 1629</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
       "items": [
         {
           "kind": "fixed",
@@ -91,7 +107,21 @@
           "issues": [
             1439
           ]
-        },
+        }
+      ],
+      "seeIt": "Open the &quot;Playwright (mobile-validation-iphone)&quot; job on this PR and find the five &quot;screenshot:&quot; tests. Before: all five were skipped (&quot;WebKit screenshots stall on the CI runner&quot;). Now: all five run and pass, Home included.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c135f2ed099c734ee44e7c5b9e48fe5cecd37e87\" target=\"_blank\" rel=\"noopener\"><code>c135f2e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.331",
+      "date": "2026-10-06",
+      "summary": "Striped table rows had no contrast rule, and on the light and arctic themes the stripes were fainter than on any other theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1625\" target=\"_blank\" rel=\"noopener\">PR 1625</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
+      "items": [
         {
           "kind": "fixed",
           "html": "<strong>Striped rows differ by at least 1.2:1 on every theme</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/15d554728b589fe674f8067e648c7c0a00562f83\" target=\"_blank\" rel=\"noopener\"><code>15d5547</code></a>",
@@ -100,62 +130,19 @@
           ]
         }
       ],
-      "seeIt": "Open the &quot;Playwright (mobile-validation-iphone)&quot; job on this PR and find the five &quot;screenshot:&quot; tests. Before: all five were skipped (&quot;WebKit screenshots stall on the CI runner&quot;). Now: all five run and pass, Home included.",
+      "seeIt": "Open the Behaviors page, pick the table behavior with striped on, and switch to the Light theme. Before: alternate rows were barely distinguishable. Now: they are as distinct as on the other light themes, and the rule is written down in §33.",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e79fd2821a3b527109718bc1c928f809b084e5cb\" target=\"_blank\" rel=\"noopener\"><code>e79fd28</code></a>"
-        }
-      ]
-    },
-    {
-      "version": "1.0.331",
-      "date": "2026-10-06",
-      "summary": "Main gained 1.0.329 and 1.0.330 (the #1620 merge) in the old format while this PR was open; releases.json is regenerated so every entry has its commit links and 1.0.330 shows #1620&#39;s Links block (PR, issue, see-it pages). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a>",
-      "items": [
-        {
-          "kind": "changed",
-          "html": "<strong>Regenerate releases.json after merging main (1.0.329, 1.0.330)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/957ac676af978605bba3db2403b25f797cb488aa\" target=\"_blank\" rel=\"noopener\"><code>957ac67</code></a>",
-          "issues": [
-            1623
-          ]
-        }
-      ],
-      "links": [
-        {
-          "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/957ac676af978605bba3db2403b25f797cb488aa\" target=\"_blank\" rel=\"noopener\"><code>957ac67</code></a>"
-        },
-        {
-          "label": "PR (releases links)",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1624</a>"
-        },
-        {
-          "label": "Issue",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1623</a>"
-        },
-        {
-          "label": "See it (live site, after deploy)",
-          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=releases</a>"
-        },
-        {
-          "label": "See it (local)",
-          "html": "<a href=\"http://localhost:3000/?page=releases\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/?page=releases</a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f47a195dec75b18e74aeec7d912310590fadc8b7\" target=\"_blank\" rel=\"noopener\"><code>f47a195</code></a>"
         }
       ]
     },
     {
       "version": "1.0.330",
       "date": "2026-10-06",
-      "summary": "The browser tab showed a blue star instead of the wb logo used everywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1621\" target=\"_blank\" rel=\"noopener\">#1621</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+      "summary": "The alignment spec&#39;s expects all sat inside its loop over the cases, which no-test-passes-by-skipping-its-assertions (#1092) rejects because an empty loop would pass silently; it now also asserts, outside the loop, that all six cases were measured. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1620\" target=\"_blank\" rel=\"noopener\">PR 1620</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
       "items": [
-        {
-          "kind": "fixed",
-          "html": "<strong>Browser-tab favicon is the wb logo</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1621\" target=\"_blank\" rel=\"noopener\">#1621</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9528073d3b8a9c3a35cda202eedc4609cfa58bfe\" target=\"_blank\" rel=\"noopener\"><code>9528073</code></a>",
-          "issues": [
-            1621
-          ]
-        },
         {
           "kind": "changed",
           "html": "<strong>Assert every xalign case was measured, unconditionally</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e04354a7e95108ce718dce14fcdf16daecef9e04\" target=\"_blank\" rel=\"noopener\"><code>e04354a</code></a>",
@@ -171,11 +158,11 @@
           ]
         }
       ],
-      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a> and look at the browser tab (hard-refresh with Ctrl+Shift+R if it is cached). Before: a blue five-point star. Now: the wb logo tile (blue, with the orange brush and pencil).",
+      "seeIt": "Run <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-test-passes-by-skipping-its-assertions.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-test-passes-by-skipping-its-assertions.spec.ts</a>. Before: it listed cardhero-buttons-follow-xalign.spec.ts as a test whose expects can all be skipped. Now: it passes, 2/2.",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/34ab1bcb1c6585d25c18b04a137b625deb723d86\" target=\"_blank\" rel=\"noopener\"><code>34ab1bc</code></a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2664e80dc19a16a977ee1652ec3ebe5ecc56be62\" target=\"_blank\" rel=\"noopener\"><code>2664e80</code></a>"
         },
         {
           "label": "PR (centered buttons)",
@@ -198,33 +185,21 @@
     {
       "version": "1.0.329",
       "date": "2026-10-06",
-      "summary": "The Releases page named pages, files and URLs as plain text (1.0.328&#39;s See it read &quot;Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a>&quot;, not a link) and never linked the commits; now every URL, repo path and ?page= in a summary or See it is a link, each version has a Links row (its commit, then each commit&#39;s Links block), and every item links its commit. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a>",
+      "summary": "The browser tab showed a blue star instead of the wb logo used everywhere else. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1622\" target=\"_blank\" rel=\"noopener\">PR 1622</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1621\" target=\"_blank\" rel=\"noopener\">#1621</a>",
       "items": [
         {
           "kind": "fixed",
-          "html": "<strong>Releases page links every place it names, every commit, and each commit&#39;s Links</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b79f9643835f044f297af82d8de6057120efb0ca\" target=\"_blank\" rel=\"noopener\"><code>b79f964</code></a>",
+          "html": "<strong>Browser-tab favicon is the wb logo</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1621\" target=\"_blank\" rel=\"noopener\">#1621</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9528073d3b8a9c3a35cda202eedc4609cfa58bfe\" target=\"_blank\" rel=\"noopener\"><code>9528073</code></a>",
           "issues": [
-            1623
+            1621
           ]
         }
       ],
-      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">?page=releases</a> and look at 1.0.328. Before: &quot;<a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a>&quot; was plain text and nothing linked the commits. Now: it opens the live cards page, Links shows the commit, and each item ends with its commit&#39;s short sha as a link.",
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a> and look at the browser tab (hard-refresh with Ctrl+Shift+R if it is cached). Before: a blue five-point star. Now: the wb logo tile (blue, with the orange brush and pencil).",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b79f9643835f044f297af82d8de6057120efb0ca\" target=\"_blank\" rel=\"noopener\"><code>b79f964</code></a>"
-        },
-        {
-          "label": "Issue",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1623</a>"
-        },
-        {
-          "label": "See it (live site, after deploy)",
-          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=releases</a>"
-        },
-        {
-          "label": "See it (local)",
-          "html": "<a href=\"http://localhost:3000/?page=releases\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/?page=releases</a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b6fe77a54bbf5e4da693bc9d7b34ee1ce3b82822\" target=\"_blank\" rel=\"noopener\"><code>b6fe77a</code></a>"
         }
       ]
     },
