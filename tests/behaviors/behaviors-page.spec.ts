@@ -51,7 +51,7 @@ type Pick = {
   host?: string;
   /**
    * The attribute the option is written to, when it is not `prop` itself --
-   * x-toast's variant axis lands on `toast-variant`, because the trigger
+   * x-toast's variant axis lands on `toastVariant` (#1526: the schema's name), because the trigger
    * button owns its own `variant`.
    */
   attr?: string;
@@ -202,8 +202,8 @@ test.describe('Behaviors page — Feedback', () => {
     // button's own `variant`, leaving the catalogue's toast-variant="success"
     // in charge -- every toast row fired the same success toast, and this test
     // had been rewritten to expect exactly that. pages/behaviors.html's
-    // withOption() now writes the namespaced toast-variant the example uses.
-    const btn = await show(page, { token: 'x-toast', prop: 'variant', attr: 'toast-variant', value: 'info', ready: '[x-toast]' });
+    // withOption() now writes the namespaced toastVariant the example uses.
+    const btn = await show(page, { token: 'x-toast', prop: 'variant', attr: 'toastVariant', value: 'info', ready: '[x-toast]' });
     // By its message: picking the row raises the site-wide click confirmation
     // (#456), which is itself an info toast, and must not count as this one.
     const message = await btn.getAttribute('message');

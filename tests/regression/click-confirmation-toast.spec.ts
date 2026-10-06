@@ -110,7 +110,7 @@ test.describe('site-wide click confirmation (#456)', () => {
     const row = page.locator('.behaviors-search-results__row[data-browse-token="x-toast"][data-variant="success"]').first();
     await row.scrollIntoViewIfNeeded();
     await row.click();
-    const button = page.locator('#behaviors-live [x-toast][toast-variant="success"]').first();
+    const button = page.locator('#behaviors-live [x-toast][toastVariant="success"]').first();
     await button.scrollIntoViewIfNeeded();
     await expect(button).toHaveAttribute('x-ready', '', { timeout: 10000 });
     // The row click is a plain button, so it raised its own confirmation.

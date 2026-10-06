@@ -151,10 +151,11 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     await expect(statsGrid).toHaveAttribute('columns', '4');
   });
 
-  test('Container: [x-container] has max-width and padding', async ({ page }) => {
+  test('Container: [x-container] has maxWidth and padding', async ({ page }) => {
     const container = page.locator('[x-container]');
     await expect(container).toHaveCount(1);
-    await expect(container).toHaveAttribute('max-width', '900px');
+    // #1125: the schema's camelCase name, as pages/home.html now writes it.
+    await expect(container).toHaveAttribute('maxWidth', '900px');
     await expect(container).toHaveAttribute('padding', '2rem');
   });
 
@@ -275,10 +276,10 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     await expect(audio).toHaveClass(/x-audio/, { timeout: 15000 });
   });
 
-  test('Audio: has required attributes (src, show-eq, volume)', async ({ page }) => {
+  test('Audio: has required attributes (src, showEq, volume)', async ({ page }) => {
     const audio = page.locator('audio');
     await expect(audio).toHaveAttribute('src');
-    await expect(audio).toHaveAttribute('show-eq');
+    await expect(audio).toHaveAttribute('showEq');
     await expect(audio).toHaveAttribute('volume', '0.5');
   });
 
