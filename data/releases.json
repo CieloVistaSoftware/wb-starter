@@ -6,6 +6,36 @@
   ],
   "releases": [
     {
+      "version": "1.0.300",
+      "date": "2026-10-05",
+      "summary": "The cards demo page used to build all 293 demos on load and froze for over nine seconds; it now builds only what is on screen, and a test keeps it that way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1576\" target=\"_blank\" rel=\"noopener\">PR 1576</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/987\" target=\"_blank\" rel=\"noopener\">#987</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Cards.html builds the demos on screen, not all 293, on load</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/987\" target=\"_blank\" rel=\"noopener\">#987</a>",
+          "issues": [
+            987
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html and scroll as soon as it appears. Before: the page ignored input for over nine seconds while it built all 293 demos (13,680ms of main-thread blocking, one 9,110ms task). Now: it scrolls at once; 45 demos build on load and the rest build as they come into view."
+    },
+    {
+      "version": "1.0.299",
+      "date": "2026-10-05",
+      "summary": "A test of our own spinners hung for 30 seconds on CI because it counted the temporary page-loading spinner while the site was still booting, then waited for it after it was gone. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1578\" target=\"_blank\" rel=\"noopener\">PR 1578</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1577\" target=\"_blank\" rel=\"noopener\">#1577</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Collect spinners after the site has booted, and bound each wait</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1577\" target=\"_blank\" rel=\"noopener\">#1577</a>",
+          "issues": [
+            1577
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/site-spinners-do-not-teach.spec.ts --project=regression --repeat-each=5</code>. Before: on CI it could time out at 30s, its trace showing waitForSelector [x-spinner] &gt;&gt; nth=0 started after navigation had removed that spinner. Now: it collects spinners only after the site has booted, no wait can outlast the test, and it passes 20 of 20."
+    },
+    {
       "version": "1.0.298",
       "date": "2026-10-05",
       "summary": "An in-progress row on the Issues page said what was happening now and next, but never why, or how to see the fix. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1571\" target=\"_blank\" rel=\"noopener\">#1571</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1572\" target=\"_blank\" rel=\"noopener\">#1572</a>",
