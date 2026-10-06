@@ -40,7 +40,18 @@ const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
  * its footer took the page footer's behavior. A landmark inside a dialog is
  * the dialog's.
  */
-const COMPONENT_HOST = 'article, dialog, [x-card], [class*="x-card"]';
+// #969: typed cards no longer carry a variant class (`x-card--image`), so
+// `[class*="x-card"]` stopped seeing them and their own <header> took the page
+// header's behavior. A typed card is its attribute; the list is card.css's
+// own `:is([x-card], [x-cardbutton], ...)` set.
+const TYPED_CARDS = ['button', 'draggable', 'expandable', 'file', 'hero', 'horizontal',
+  'image', 'link', 'minimizable', 'notification', 'overlay', 'portfolio', 'pricing',
+  'product', 'profile', 'stats', 'testimonial', 'video'];
+
+/** Any card host: `[x-card]`, every typed card attribute, or a card class. */
+export const CARD_HOST = ['[x-card]', ...TYPED_CARDS.map((t) => `[x-card${t}]`), '[class*="x-card"]'].join(', ');
+
+const COMPONENT_HOST = `article, dialog, ${CARD_HOST}`;
 
 /**
  * Is this element a landmark that belongs to an enclosing component, and so
