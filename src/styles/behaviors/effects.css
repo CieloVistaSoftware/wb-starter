@@ -497,6 +497,17 @@ MARQUEE & RIPPLE
     0 0 30px var(--glow-color, var(--primary));
 }
 
+/* #907: color takes the theme's colour NAME, never the token behind it. These
+   are the names in src/core/theme-color.js, so color="success" needs no JS and
+   writes nothing on the element; a hex or rgb() arrives as a generated rule. */
+.x-glow[color="primary"]   { --glow-color: var(--primary); }
+.x-glow[color="secondary"] { --glow-color: var(--secondary); }
+.x-glow[color="accent"]    { --glow-color: var(--accent); }
+.x-glow[color="success"]   { --glow-color: var(--success-color); }
+.x-glow[color="warning"]   { --glow-color: var(--warning-color); }
+.x-glow[color="danger"]    { --glow-color: var(--danger-color); }
+.x-glow[color="info"]      { --glow-color: var(--info-color); }
+
 /* #816: the pulse. `animation: x-glow` named a keyframe that existed nowhere,
    so the box glow never pulsed -- the same silent failure as #847/#866. The
    halo breathes between a tight and a wide ring. */

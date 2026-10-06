@@ -14,6 +14,12 @@ A glowing heading: the letters glow, not the line box, and it holds steady.
 <h3 x-glow target="text" color="#06b6d4">Night mode</h3>
 </div>
 
+A theme colour by name: `color="success"`, never the token behind it (`var(--success-color)`).
+
+<div x-demo>
+<button x-glow color="success">Saved</button>
+</div>
+
 The box glow pulses; a reader who prefers reduced motion gets the glow without the pulse.
 
 ## Attributes
@@ -21,6 +27,6 @@ The box glow pulses; a reader who prefers reduced motion gets the glow without t
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `target` | `box` \| `text` | `box` | What glows. `box` haloes the element's rectangle and pulses; `text` haloes the letters with a steady text-shadow, for headings. |
-| `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. |
+| `color` | `primary` \| `secondary` \| `accent` \| `success` \| `warning` \| `danger` \| `info`, or any CSS colour | `primary` | Colour of the glow. A theme name follows the active theme; a hex, `rgb()` or `hsl()` pins it. Never a `var(--…)` token. |
 
 <sub>Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)</sub>

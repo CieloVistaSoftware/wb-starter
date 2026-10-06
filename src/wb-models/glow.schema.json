@@ -7,9 +7,10 @@
   "properties": {
     "color": {
       "type": "string",
-      "description": "Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it.",
-      "default": "var(--primary, #6366f1)",
+      "description": "Colour of the glow: a theme colour name (primary, secondary, accent, success, warning, danger, info), which follows the active theme, or any CSS colour (hex, rgb(), hsl()) to pin it. Never a var(--…) token (#907).",
+      "default": "primary",
       "examples": [
+        "success",
         "#22c55e",
         "#ef4444",
         "#f59e0b",
@@ -36,7 +37,7 @@
   "test": {
     "setup": [
       "<div x-glow>Test Content</div>",
-      "<div x-glow color=\"var(--primary, #6366f1)\">Test Content</div>",
+      "<div x-glow color=\"success\">Test Content</div>",
       "<h3 x-glow target=\"text\">Test Content</h3>"
     ]
   },

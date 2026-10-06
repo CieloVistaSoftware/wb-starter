@@ -8,8 +8,8 @@
     "Auto-lowered by 1 on 2026-10-06."
   ],
   "generated": "2026-10-06",
-  "totalProblems": 317,
-  "filesWithProblems": 142,
+  "totalProblems": 316,
+  "filesWithProblems": 141,
   "files": {
     "scripts/add-site-tests.mjs": 1,
     "scripts/analyze-failures.js": 7,
@@ -89,7 +89,6 @@
     "src/wb-viewmodels/colorpicker.js": 1,
     "src/wb-viewmodels/copy.js": 1,
     "src/wb-viewmodels/demo.js": 4,
-    "src/wb-viewmodels/effects.js": 1,
     "src/wb-viewmodels/error.js": 1,
     "src/wb-viewmodels/file.js": 1,
     "src/wb-viewmodels/form.js": 1,
