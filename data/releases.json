@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.351",
+      "date": "2026-10-06",
+      "summary": "Source comments, a schema title, a component-library page heading and two docs still called things a &quot;base card&quot;, &quot;base element&quot;, &quot;base behavior&quot; or &quot;base class&quot;, and card.css&#39;s header said &quot;ALL CARDS INHERIT FROM THIS&quot;, which reads as the OOP inheritance model the project has dropped (John: &quot;Don&#39;t use the name base anywhere in this project we are no longer OOP&quot;). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1654\" target=\"_blank\" rel=\"noopener\">PR 1654</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/462\" target=\"_blank\" rel=\"noopener\">#462</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No OOP &quot;base&quot; wording in shipped code, pages or docs; a guard keeps it out</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/462\" target=\"_blank\" rel=\"noopener\">#462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/962c66bbb3313d197aea7274149e6fe2d38b9a5b\" target=\"_blank\" rel=\"noopener\"><code>962c66b</code></a>",
+          "issues": [
+            462
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-legacy-component-inheritance-docs.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-legacy-component-inheritance-docs.spec.ts</a>. Before: the new #462 test lists the offending lines (card.css &quot;BASE CARD - ALL CARDS INHERIT FROM THIS&quot;, the component-library &quot;Base Card&quot; heading, demo.js &quot;base-card blocks&quot;). Now: all pass, and the x-component-library page heading reads &quot;Card&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b5216565d0749de943e197d09d012815dc39f825\" target=\"_blank\" rel=\"noopener\"><code>b521656</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.350",
       "date": "2026-10-06",
       "summary": "The Behaviors page&#39;s search box sat inside two nested .x-input__wrapper divs on most loads: the page runs in the site shell&#39;s wb.js and also imports wb-lazy.js, each runtime applies input() on its own, and the native-input path of input() had no guard against wrapping an input it had already wrapped. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1652\" target=\"_blank\" rel=\"noopener\">PR 1652</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1645\" target=\"_blank\" rel=\"noopener\">#1645</a>",
