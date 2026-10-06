@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.345",
+      "date": "2026-10-06",
+      "summary": "Wheel-over-inner-scroller-scrolls-only-it.spec.ts put its inner box in and scrolled it to the end before the site had finished its first navigation, so on the slow Windows runner late styles and fonts could leave the box short of its end and the wheel went to the box, not the page (red on this PR&#39;s regression job, green on the three runs before it). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1641\" target=\"_blank\" rel=\"noopener\">PR 1641</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The wheel spec waits for the page to land before scrolling its box</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fbc8cb816fff90476b1b5417d2a879b2b04457dc\" target=\"_blank\" rel=\"noopener\"><code>fbc8cb8</code></a>",
+          "issues": [
+            883,
+            1037
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The code both runtimes ran twice lives once, in runtime-shared.js</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ff2d31efbc16b653151d9a57d011370bf4d4691\" target=\"_blank\" rel=\"noopener\"><code>6ff2d31</code></a>",
+          "issues": [
+            883
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/wheel-over-inner-scroller-scrolls-only-it.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/wheel-over-inner-scroller-scrolls-only-it.spec.ts</a> --project=regression --repeat-each=10. Before: it waited only for #siteBody to exist. Now: it waits for wbIdle() and document.fonts.ready, asserts the box is at its end right before the wheel, and passes 20 of 20.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/749178bf660e913a7ada2df1245dd76b379ddcf9\" target=\"_blank\" rel=\"noopener\"><code>749178b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.344",
       "date": "2026-10-06",
       "summary": "Behaviors were written two ways, x-behavior=&quot;cardimage&quot; and x-cardimage, and 46 behaviors only worked the first way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1643\" target=\"_blank\" rel=\"noopener\">PR 1643</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1642\" target=\"_blank\" rel=\"noopener\">#1642</a>",
