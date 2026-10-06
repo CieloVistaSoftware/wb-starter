@@ -44,9 +44,11 @@ test.describe('Behaviors selector — structure (#664/#666)', () => {
 
     const report = await page.evaluate(async () => {
       const rows = [...document.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
-      const root = location.pathname.replace(/pages\/.*$/, '');
-      const tagMap: any = await import(root + 'src/core/tag-map.js');
-      const lazy: any = await import(root + 'src/core/wb-lazy.js');
+      // Resolved against the page, as the site resolves its own assets: the
+      // page is /behaviors now (#1001), so a path with the name still on it
+      // would ask for /behaviorssrc/....
+      const tagMap: any = await import(new URL('src/core/tag-map.js', document.baseURI).href);
+      const lazy: any = await import(new URL('src/core/wb-lazy.js', document.baseURI).href);
       const merged = { ...(lazy.WB_LAZY_ONLY_ATTRIBUTES || {}), ...tagMap.extensionMap };
 
       const labels = new Set(rows.map((r) => r.dataset.label));

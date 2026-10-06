@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { pagePath } from '../helpers/page-path';
 
 // The route below holds a page fragment; a live service worker would answer
 // it first and the hold would never apply (#1349).
@@ -27,9 +28,9 @@ test('a slow earlier navigation does not paint over a newer one (#1519)', async 
   await page.goto('/?page=home');
   await page.waitForFunction(() => !!document.querySelector('#mainPage-home'), null, { timeout: 20000 });
 
-  const tap = (p: string) => page.evaluate((id) => {
-    (document.querySelector(`.nav__item[href="?page=${id}"]`) as HTMLElement).click();
-  }, p);
+  const tap = (p: string) => page.evaluate((href) => {
+    (document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement).click();
+  }, pagePath(p));
 
   await tap('about');
   await tap('themes');
