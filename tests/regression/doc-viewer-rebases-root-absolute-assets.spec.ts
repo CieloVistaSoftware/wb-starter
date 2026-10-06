@@ -76,7 +76,8 @@ test('the doc viewer resolves root-absolute doc assets under the deploy base', a
       waitUntil: 'domcontentloaded',
     });
     await page.waitForSelector('#content img', { timeout: 20_000 });
-    await page.waitForTimeout(500);
+    // Every image has been requested and answered (#1516: not 500ms).
+    await page.waitForFunction(() => [...document.querySelectorAll('#content img')].every((i) => (i as HTMLImageElement).complete), null, { timeout: 20_000 });
 
     // Read the RESOLVED urls the browser will actually request.
     const resolved = await page.evaluate(() => {

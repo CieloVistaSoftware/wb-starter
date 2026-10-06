@@ -35,7 +35,8 @@ test.describe('home page load weight (#390)', () => {
 
     await page.goto('/');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-    await page.waitForTimeout(500);
+    // Every load the page starts has called back once WB settles (#1516: not 500ms).
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     expect(partialRequests).toEqual([]);
   });
@@ -54,7 +55,8 @@ test.describe('home page load weight (#390)', () => {
 
     await page.goto('/');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-    await page.waitForTimeout(500);
+    // Every load the page starts has called back once WB settles (#1516: not 500ms).
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     expect(offPageRequests).toEqual([]);
   });
@@ -65,7 +67,8 @@ test.describe('home page load weight (#390)', () => {
 
     await page.goto('/');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-    await page.waitForTimeout(500);
+    // Every load the page starts has called back once WB settles (#1516: not 500ms).
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     // Measured after the fix: ~82. 100 leaves headroom for incidental
     // variance (image/schema counts) without masking a real regression --
