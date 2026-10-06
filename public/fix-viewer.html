@@ -370,6 +370,7 @@
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     import '../src/wb-viewmodels/fix-card.js';
+    import { centralDate } from '../src/core/central-time.js';
 
     // Initialize WB to enable behaviors like mdhtml, code, pre
     WB.init({ autoInject: true });
@@ -552,7 +553,7 @@
           if (!fix.testRun && effectiveStatus.toUpperCase() !== 'PENDING') effectiveStatus = 'TEST MISSING';
           key = effectiveStatus.toUpperCase();
         }
-        else if (groupType === 'date') key = new Date(fix.date).toLocaleDateString();
+        else if (groupType === 'date') key = centralDate(fix.date);
 
         if (!groups[key]) groups[key] = [];
         groups[key].push(fix);

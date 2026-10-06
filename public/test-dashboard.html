@@ -431,6 +431,8 @@
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--border-focus); }
   </style>
+  <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
+  <script type="module" src="../src/core/central-time.js"></script>
 </head>
 <body>
 
@@ -662,7 +664,7 @@
     }
 
     if (s.updatedAt) {
-      document.getElementById('lastUpdate').textContent = new Date(s.updatedAt).toLocaleTimeString();
+      document.getElementById('lastUpdate').textContent = WBTime.time(s.updatedAt);
     }
 
     const cf = document.getElementById('currentFile');
@@ -824,7 +826,8 @@
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  startPolling();
+  // Once central-time.js (a module) has set WBTime (#1553).
+  document.addEventListener('DOMContentLoaded', startPolling);
 </script>
 </body>
 </html>

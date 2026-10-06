@@ -1,6 +1,7 @@
 import { VERSION } from '../core/version.js';
 import { versionNumber } from '../core/version-number.js';
 import { removeServiceWorkers } from '../core/service-worker.js';
+import { centralDateTime } from '../core/central-time.js';
 
 /**
  * Release — the ONE place any element displays the site's release/build
@@ -29,12 +30,7 @@ import { removeServiceWorkers } from '../core/service-worker.js';
 
 function formatBuiltAtCentral(isoString) {
   try {
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Chicago',
-      year: 'numeric', month: 'short', day: 'numeric',
-      hour: 'numeric', minute: '2-digit',
-      timeZoneName: 'short',
-    }).format(new Date(isoString));
+    return centralDateTime(isoString);
   } catch (e) {
     return isoString; // never break the element over a formatting failure
   }

@@ -1,5 +1,6 @@
 import { readAttr } from '../core/read-attr.js';
 import { setRule, onlyChanged } from '../core/dynamic-style.js';
+import { centralDateTime } from '../core/central-time.js';
 /**
  * Notes Behavior
  * -----------------------------------------------------------------------------
@@ -256,7 +257,7 @@ export function notes(element, options = {}) {
     const locationStr = pageName
       ? `Page: ${pageName.charAt(0).toUpperCase() + pageName.slice(1)}`
       : window.location.href;
-    return `[${new Date().toLocaleString()}] ${locationStr}`;
+    return `[${centralDateTime()}] ${locationStr}`;
   };
 
   // Open/close
@@ -450,7 +451,7 @@ export function notes(element, options = {}) {
         item.type = 'button';
         item.className = 'x-notes__lookup-item';
         const preview = note.content.replace(/\s+/g, ' ').trim().slice(0, 100);
-        const meta = [note.page ? `page: ${note.page}` : null, new Date(note.createdAt).toLocaleString()].filter(Boolean).join(' · ');
+        const meta = [note.page ? `page: ${note.page}` : null, centralDateTime(note.createdAt)].filter(Boolean).join(' · ');
         item.innerHTML = `<div class="x-notes__lookup-meta">${meta}</div><div class="x-notes__lookup-preview">${preview}${note.content.length > 100 ? '…' : ''}</div>`;
         item.onclick = () => {
           textarea.value = note.content;

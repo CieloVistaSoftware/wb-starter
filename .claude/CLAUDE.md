@@ -95,6 +95,17 @@ release or push) with one line, in this order, in these words:
 - The badge is the number only, no marks (John: "I only want numbers"). Behind GitHub or local edits are said in its tooltip.
 - Get the numbers from git, never from memory: `node scripts/stamp-version.js` prints it for your checkout, or read `release`/`sinceRelease` in `src/core/version.js` on main.
 
+## Times — US Central, everywhere
+
+John, 2026-10-05: "make all datetime use cst", and on a status update that said
+"22:26 UTC": "why did you use utc? i want cst". Every time you write for John
+(status updates, check-in times, issue and PR comments) is US Central with its
+label: `5:26 PM CDT` (CDT until the first Sunday of November, CST after). GitHub
+and CI report UTC; convert before you write it. On the site every displayed date
+and time goes through `src/core/central-time.js` (`window.WBTime` in a classic
+script); `tests/regression/times-are-central.spec.ts` fails on a display that
+formats in the viewer's own zone (#1553).
+
 ## Filing an Issue — every time, no exceptions
 
 John, 2026-10-02, after five issues went up without a Signature block: "are you

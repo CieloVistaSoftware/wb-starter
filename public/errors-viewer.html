@@ -193,6 +193,8 @@
       color: var(--text-secondary);
     }
   </style>
+  <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
+  <script type="module" src="../src/core/central-time.js"></script>
 </head>
 <body id="errors-body">
 
@@ -332,7 +334,7 @@
       
       // Update stats
       document.getElementById('total-count').textContent = errors.length;
-      document.getElementById('last-updated').textContent = data.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : '-';
+      document.getElementById('last-updated').textContent = data.lastUpdated ? WBTime.time(data.lastUpdated) : '-';
       
       // Most errors are plain window.onerror/unhandledrejection captures
       // with no `source` at all (only Events.error()-routed ones set it) --
@@ -360,7 +362,7 @@
               <span>${escapeHtml(error.message)}</span>
             </div>
             <div class="error-meta">
-              ${new Date(error.timestamp).toLocaleString()}
+              ${WBTime.dateTime(error.timestamp)}
             </div>
           </div>
           <div class="error-body" id="details-${index}">
@@ -529,8 +531,8 @@
         .replace(/'/g, "&#039;");
     }
 
-    // Initial load
-    loadErrors();
+    // Initial load, once central-time.js (a module) has set WBTime.
+    document.addEventListener('DOMContentLoaded', loadErrors);
   </script>
 </body>
 </html>
