@@ -29,43 +29,35 @@ x-grid {
 
 ## Skip Auto-Injection
 
-Prevent WB from automatically applying behaviors to elements:
+Prevent WB from automatically applying behaviors to an element with
+`x-ignore`. It opts that one element out of every behavior, the one its tag
+would inject and any `x-*` it carries (#1168); its children are still enhanced.
+There is no `skip` or `skip-children` attribute.
 
-```html
-<!-- Skip specific element -->
-<pre skip>This won't get syntax highlighting</pre>
-<!-- Ignore auto-injection for this element -->
+<div x-demo>
 <button x-ignore>Not enhanced by WB</button>
-<!-- Skip all children -->
-<div skip-children>
-  <code>Not highlighted</code>
-  <button>Not enhanced</button>
+<button>Enhanced</button>
 </div>
-```
 
 ## Override Behavior Options
 
-Pass options via `data-*` attributes:
+Pass options as plain attributes on the element, named as the behavior's
+schema names them:
 
-```html
-<!-- Override mdhtml defaults -->
-<div x-mdhtml
-  size="lg"
-  highlight="false"
-  breaks="false">
-</div>
-<!-- Override card variant -->
+<div x-demo>
 <article
-  variant="outline"
+  title="Compact card"
+  variant="bordered"
   size="sm">
+  Small and outlined.
 </article>
-<!-- Override toast duration -->
 <button
   x-toast
+  message="This stays for 10 seconds"
   duration="10000">
   Show for 10 seconds
 </button>
-```
+</div>
 
 ## Override Injected CSS
 

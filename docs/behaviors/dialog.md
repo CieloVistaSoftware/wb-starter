@@ -18,9 +18,9 @@ No attribute needed on `<dialog>`. Don't add `x-dialog` to it (#746).
 
 On another element, write `x-dialog`:
 
-```html
+<div x-demo>
 <button x-dialog modalTitle="Delete branch?" modalContent="fix/706-dropdown will be removed. This cannot be undone.">Delete branch…</button>
-```
+</div>
 
 `<dialog x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

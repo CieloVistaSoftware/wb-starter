@@ -14,9 +14,9 @@ No attribute needed on `<button>`. Don't add `x-button` to it (#746).
 
 On another element, write `x-button`:
 
-```html
+<div x-demo>
 <div x-button variant="primary" icon="download">Download report</div>
-```
+</div>
 
 `<button x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

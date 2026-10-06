@@ -35,30 +35,23 @@ const ALLOWED_TAGS = ['ARTICLE', 'SECTION', 'DIV', 'PRICE-CARD', 'PRODUCT-CARD']
 ### 3. IntelliSense Cleanup
 We pruned the `.vscode/html-custom-data.json` file. Instead of listing every specific attribute (like `price`, `plan`), we reduced it to global/common attributes. This keeps the autocomplete menu clean while still supporting the custom tags.
 
-## Usage Comparison
+## Usage Today
 
-**Before (Div Soup):**
-```html
-<div
+The custom tags this refactor introduced were removed in 4.0.0, so there is no
+"after" to compare any more: a pricing card is the `x-cardpricing` attribute on
+an `<article>`.
+
+<div x-demo>
+<article
   x-cardpricing
   plan="Pro"
   price="$29"
   period="/mo"
-  features="Feature 1, Feature 2">
+  features="Feature 1,Feature 2">
+</article>
 </div>
-```
 
-**After (Custom Tag):**
-```html
-<div x-cardpricing
-  plan="Pro"
-  price="$29"
-  period="/mo"
-  features="Feature 1, Feature 2">
-</div>
-```
-
-## Supported Tags
-Currently supported custom tags:
-- `<div x-cardpricing>` → `cardpricing`
-- `<div x-cardproduct>` → `cardproduct`
+## Attribute Forms
+The two behaviors this refactor was about, as they are written now:
+- `<article x-cardpricing>` → `cardpricing`
+- `<article x-cardproduct>` → `cardproduct`

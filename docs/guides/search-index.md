@@ -157,12 +157,22 @@ const results = search('card behavior');
 
 ### With WB Search Behavior
 
-```html
-<div x-searchfield
-  placeholder="Search docs..."
-  src="/data/search.json"
-  limit="10">
+`x-searchfield` is the input, not the search: it does not fetch the index. It
+fires `wb:search` with the query as you type, and your handler runs `search()`
+above against `/data/search.json`:
+
+<div x-demo>
+<div
+  x-searchfield
+  placeholder="Search docs...">
 </div>
+</div>
+
+```javascript
+document.addEventListener('wb:search', (e) => {
+  const results = search(e.detail.query);
+  // render results
+});
 ```
 
 ## Document Types

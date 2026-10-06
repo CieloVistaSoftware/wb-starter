@@ -111,13 +111,11 @@ attribute on a host.
 > label did not mean what it says. Renamed under **#465**: the architecture is
 > composition, so the vocabulary is too.
 
-```html
-<!-- Native: the semantic tag is the behavior -->
+<div x-demo>
 <article
   title="Hello">
   Content
 </article>
-<!-- Extension: an attribute names the behavior on a host -->
 <div
   x-cardstats
   value="1,234"
@@ -129,7 +127,7 @@ attribute on a host.
   x-tooltip="Save changes">
   Save
 </button>
-```
+</div>
 
 ---
 
@@ -321,29 +319,39 @@ These are WB-standard attributes that have no native equivalent:
 Use `data-*` attributes for complex data (arrays, objects, external sources):
 
 ### Simple Arrays (CSV)
-```html
-<!-- For simple string lists, CSV is fine -->
-<div x-tabs items="Home,About,Contact">
-  <nav x-breadcrumb items="Home,Products,Shoes">
-    <input x-tags items="JavaScript,HTML,CSS">
-```
+
+For a simple string list, CSV is fine:
+
+<div x-demo>
+<nav x-breadcrumb items="Home,Products,Shoes"></nav>
+<div x-steps items="Cart,Shipping,Payment" current="1"></div>
+</div>
 
 ### JSON Arrays
-```html
-<!-- For arrays needing preservation (commas in values, etc.) -->
-<div x-tabs items='["Home","About","Contact Us"]'>
-```
+
+When a value needs its own commas, or a row needs several values, pass JSON:
+
+<div x-demo>
+<table
+  headers="City,Population"
+  rows='[["Paris, France","2,102,650"],["Austin, Texas","979,882"]]'>
+</table>
+</div>
 
 ### Objects
-```html
-<!-- Single object -->
-<div x-cardprofile user='{"name":"John","role":"Admin"}'>
-  <!-- Array of objects -->
-  <table rows='[
-  {"name":"Alice","email":"alice@example.com"},
-  {"name":"Bob","email":"bob@example.com"}
-]'>
-```
+
+An object is spread into one attribute per field, never passed whole:
+`<article x-cardprofile name="John" role="Admin">`, not
+`user='{"name":"John","role":"Admin"}'`. That keeps every field in the schema,
+where it is documented and checked.
+
+<div x-demo>
+<article
+  x-cardprofile
+  name="John"
+  role="Admin">
+</article>
+</div>
 
 ### External Data
 ```html-static
@@ -376,19 +384,26 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 Extensions use `x-` prefix with optional value:
 
 ### Boolean Extensions (no value needed)
-```html
+
+<div x-demo>
 <button x-ripple>Click me</button>
-<img x-lazy>
-<div x-draggable>
-```
+<div x-draggable>Drag me</div>
+</div>
 
 ### Configured Extensions
-```html
-<button x-tooltip="Save changes">
-  <div x-animate="bounce">
-    <div x-delay="0.5">
-      <img x-placeholder="blur">
-```
+
+The value of the `x-` attribute is the behavior's main option; further options
+are plain attributes beside it:
+
+<div x-demo>
+<button x-tooltip="Save changes">Save</button>
+<button
+  x-animate
+  animation="bounce"
+  duration="0.8s">
+  Bounce
+</button>
+</div>
 
 ---
 
@@ -459,14 +474,16 @@ is about the ones we invent.
 | `column` | `columns` | Plural for count, singular for single |
 | `row` | `rows` | Plural when multiple |
 
-```html
-<!-- Count = singular noun -->
-<div x-grid columns="4"> <!-- Number of columns -->
-  <!-- List = plural noun -->
-  <div x-tabs items="Home,About,Contact"> <!-- Multiple items -->
-    <!-- Single = singular noun -->
-    <table column="name"> <!-- Single column reference -->
-```
+`columns="3"` is a count; `items="Cart,Shipping,Payment"` is a list:
+
+<div x-demo>
+<div x-grid columns="3">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+</div>
+<div x-steps items="Cart,Shipping,Payment"></div>
+</div>
 
 ### Boolean Attributes
 
@@ -531,15 +548,14 @@ up, down, flat, neutral
 
 ARIA attributes should pass through unchanged:
 
-```html
-<dialog
-  aria-label="Settings dialog"
-  aria-describedby="modal-desc"
-  role="dialog">
-</dialog>
-<div x-tabs aria-label="Main navigation">
-</nav>
-```
+<div x-demo>
+<section
+  x-tabs
+  aria-label="Account settings">
+  <section title="Profile">Name and photo.</section>
+  <section title="Security">Password and two-factor sign-in.</section>
+</section>
+</div>
 
 ### Behavior-Managed ARIA
 
@@ -555,18 +571,16 @@ Some ARIA attributes are set automatically by behaviors:
 
 ### Label Attributes
 
-```html
-<!-- Use 'label' for visible label text -->
-<div x-switch label="Enable notifications">
-  <!-- Use 'aria-label' for screen-reader-only label -->
-  <button
-    aria-label="Close"
-    icon="✕">
-    <!-- Use 'aria-labelledby' to reference another element -->
-    <section aria-labelledby="section-title">
-      <h2 id="section-title">Features</h2>
-    </section>
-```
+Use `label` for visible label text, `aria-label` for a name only a screen
+reader hears, and `aria-labelledby` to point at another element's text:
+
+<div x-demo>
+<div x-switch label="Enable notifications"></div>
+<button aria-label="Close">✕</button>
+<section aria-labelledby="features-title">
+  <h2 id="features-title">Features</h2>
+</section>
+</div>
 
 ---
 
@@ -584,34 +598,41 @@ Some ARIA attributes are set automatically by behaviors:
 | `value`, `min`, `max` | Unitless (number) | `value="75"` |
 | `perPage` | Unitless (count) | `perPage="10"` |
 
-```html
-<!-- Units included -->
-<div x-grid
+Lengths carry their unit (`gap="1.5rem"`, `minWidth="160px"`), counts and
+values do not (`perPage="10"`, `value="75"`), and `duration` is milliseconds
+(`5000` is five seconds):
+
+<div x-demo>
+<div
+  x-grid
   gap="1.5rem"
-  minWidth="280px">
-  <!-- Unitless -->
-  <nav
-    x-pagination
-    total="100"
-    perPage="10"
-    current="3">
-    <progress
-      value="75"
-      max="100">
-      <!-- Time: milliseconds for JS, seconds for CSS -->
-      <div x-toast duration="5000"> <!-- 5 seconds -->
-        <div
-          x-animate="fade"
-          x-delay="0.3">
-          <!-- 0.3 seconds -->
-```
+  minWidth="160px">
+  <div>One</div>
+  <div>Two</div>
+</div>
+<nav
+  x-pagination
+  total="100"
+  perPage="10"
+  current="3">
+</nav>
+<progress
+  value="75"
+  max="100">
+</progress>
+<button
+  x-toast
+  message="Saved"
+  duration="5000">
+  Save
+</button>
+</div>
 
 ### Number Formatting
 
 Display values can include formatting - they're strings, not numbers:
 
-```html
-<!-- Display value (string) - can have formatting -->
+<div x-demo>
 <div
   x-cardstats
   value="$1,234.56"
@@ -622,7 +643,6 @@ Display values can include formatting - they're strings, not numbers:
   value="99.9%"
   label="Uptime">
 </div>
-<!-- Numeric value (number) - no formatting -->
 <progress
   value="75"
   max="100">
@@ -632,7 +652,7 @@ Display values can include formatting - they're strings, not numbers:
   value="5"
   min="0"
   max="10">
-```
+</div>
 
 ---
 
@@ -640,14 +660,14 @@ Display values can include formatting - they're strings, not numbers:
 
 wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no `<slot>` mechanism. Element children ARE the behavior's body content, exactly as authored:
 
-```html
-<article heading="Title">
+<div x-demo>
+<article title="Title">
   <p>This paragraph is the card's body content.</p>
 </article>
 <div x-alert variant="warning">
   <strong>Warning:</strong> This is the alert content.
 </div>
-```
+</div>
 
 There's no named-slot equivalent for routing children into specific internal regions (a header area, a footer area, etc.) — that's what dedicated attributes are for (`heading`, `subheading`, `footer`, ...; see [Standard Custom Attributes](#standard-custom-attributes)). If a behavior needs to place content in more than one internal region, give it more than one attribute — never a `slot="…"` attribute.
 
@@ -685,7 +705,7 @@ Behaviors should expose CSS custom properties for theming:
 ## Migration from Legacy Syntax
 
 ### Before (Legacy — explicit `x-behavior="…"` on a plain element)
-```html
+```html-static
 <div
   x-behavior="card"
   title="Hello"
@@ -700,7 +720,8 @@ Behaviors should expose CSS custom properties for theming:
 ```
 
 ### After (v3 — current standard)
-```html
+
+<div x-demo>
 <article
   title="Hello"
   elevated>
@@ -710,15 +731,16 @@ Behaviors should expose CSS custom properties for theming:
   variant="warning"
   message="Caution!">
 </div>
-```
+</div>
 
 Modifier behaviors (applied to any element) didn't change — they were
 already the direct `x-{name}` form, not `x-behavior="{name}"`:
-```html
+
+<div x-demo>
 <button x-ripple x-tooltip="Click me">
   Save
 </button>
-```
+</div>
 
 ### Migration Checklist
 
@@ -816,65 +838,77 @@ name         attribute with DIFFERENT meaning?
 ## Examples by Behavior
 
 ### Cards
-```html
+
+<div x-demo>
 <article
-  heading="Welcome"
-  subheading="Get started"
-  elevated
-  hoverable>
+  title="Welcome"
+  subtitle="Get started"
+  elevated>
   Card content here
 </article>
-<div x-cardpricing
+<article
+  x-cardpricing
   plan="Pro"
   price="$29"
   period="/mo"
   featured
   cta="Get Started">
-</div>
-<div x-cardstats
+</article>
+<article
+  x-cardstats
   value="1,234"
   label="Users"
   icon="👥"
   trend="up"
   trendValue="+12%">
-</div>
-<div x-cardimage
+</article>
+<article
+  x-cardimage
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
-  alt="Description"
-  heading="Photo Title"
+  alt="Snow-covered mountains above a lake"
+  title="Photo Title"
   loading="lazy">
 </article>
-```
+</div>
 
 ### Feedback
-```html
-<div x-alert
+
+<div x-demo>
+<div
+  x-alert
   variant="warning"
-  heading="Caution"
+  title="Caution"
   message="Check your input"
   dismissible>
 </div>
-<span x-badge variant="success">Active</div>
-<span x-avatar
+<span x-badge label="Active" variant="success"></span>
+<span
+  x-avatar
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg"
   alt="John Doe"
   size="lg"
   status="online">
-</div>
-<div x-toast
+</span>
+<button
+  x-toast
   variant="success"
   message="Saved successfully!"
   duration="3000">
+  Save
+</button>
 </div>
-```
 
 ### Navigation
-```html
+
+<div x-demo>
 <nav x-breadcrumb items="Home,Products,Shoes"></nav>
-<div x-tabs
-  items="Overview,Features,Pricing"
-  active="0">
-</nav>
+<div
+  x-tabs
+  activeTab="0">
+  <section title="Overview">What it is.</section>
+  <section title="Features">What it does.</section>
+  <section title="Pricing">What it costs.</section>
+</div>
 <nav
   x-pagination
   total="100"
@@ -886,96 +920,87 @@ name         attribute with DIFFERENT meaning?
   items="Cart,Shipping,Payment"
   current="1">
 </div>
-```
+</div>
 
 ### Forms
-```html
+
+<div x-demo>
 <input
   placeholder="Enter your name"
   required
   maxlength="100"
   pattern="[A-Za-z ]+">
-<span x-rating
+<div
+  x-rating
   value="4"
-  max="5"
-  icon="⭐">
+  max="5">
 </div>
-<div x-switch
+<div
+  x-switch
   label="Enable notifications"
   checked>
 </div>
-<div x-slider
+<input
+  x-slider
+  type="range"
   min="0"
   max="100"
   value="50"
   step="5">
 </div>
-```
 
 ### Media
-```html
+
+<div x-demo>
 <video
   src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   controls
-  autoplay
   muted>
 </video>
 <div
   x-gallery
-  columns="4"
-  gap="1rem"
-  images='[
-  {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg", "alt": "Photo 1"},
-  {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg", "alt": "Photo 2"}
-]'>
+  columns="2"
+  gap="1rem">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg" alt="Glacier Point over Yosemite Valley">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg" alt="The tip of a fjord">
 </div>
-```
+</div>
 
 ### Data Display
-```html
+
+<div x-demo>
 <table
-  columns='["Name","Email","Role"]'
-  rows='[
-    ["Alice","alice@example.com","Admin"],
-    ["Bob","bob@example.com","User"]
-  ]'
-  sortable
-  hoverable>
+  headers="Name,Email,Role"
+  rows='[["Alice","alice@example.com","Admin"],["Bob","bob@example.com","User"]]'
+  striped>
 </table>
-<div x-timeline items='[
-  {"date": "2024-01", "label": "Project Start"},
-  {"date": "2024-06", "label": "Beta Launch"}
-]'>
+<div
+  x-timeline
+  items="Project Start,Beta Launch,Release">
 </div>
-```
+</div>
 
 ### Extensions
-```html
-<!-- Ripple + Tooltip -->
+
+<div x-demo>
 <button
   x-ripple
   x-tooltip="Save your work">
   Save
 </button>
-<!-- Animations -->
-<div
-  x-animate="bounce"
-  x-delay="0.5">
+<button
+  x-animate
+  animation="bounce"
+  delay="0.5s">
   Animated
-</div>
-<!-- Lazy loading -->
-<img
-  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
-  x-lazy
-  x-placeholder="blur">
-<!-- Draggable + Resizable -->
+</button>
 <div
   x-draggable
   x-resizable>
   Drag and resize me
 </div>
-```
+</div>
 
 ---
 

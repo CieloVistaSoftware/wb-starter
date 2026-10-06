@@ -9,10 +9,10 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 | Attribute form | `<div x-container>` |
 | Behavior | `container` |
 | Semantic | `<div>` (structural/CSS-only -- no `$methods`; a `semantic/container.schema.json` exists for the plain `<container>` semantic element, not for this behavior) |
-| Root CSS Class | *(none -- purely inline-style driven; see below)* |
+| Root CSS Class | `x-container` (`x-container--grid` in grid mode) |
 | Category | Layout |
 
-`container()` (`src/wb-viewmodels/layouts.js`) is a plain structural behavior driven entirely by attributes, applied as inline styles.
+`container()` (`src/wb-viewmodels/layouts.js`) is a plain structural behavior driven entirely by attributes.
 
 ## Properties
 
@@ -40,69 +40,61 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 ### Row Direction
 
-```html
+<div x-demo>
 <div x-container direction="row" gap="0.75rem">
   <button variant="primary">Save</button>
   <button variant="ghost">Cancel</button>
 </div>
-```
+</div>
 
 ### Grid Mode (2+ Columns)
 
-```html
+<div x-demo>
 <div x-container columns="3" gap="1rem">
   <article title="A">Card A</article>
   <article title="B">Card B</article>
   <article title="C">Card C</article>
 </div>
-```
+</div>
 
 ### Centered, Max-Width
 
-```html
+<div x-demo>
 <div x-container maxWidth="640px" padding="2rem">
   <p>Centered reading-width content block.</p>
 </div>
-```
+</div>
 
 ### Alignment
 
-```html
+<div x-demo>
 <div x-container direction="row" justify="space-between" align="center">
   <span>Left</span>
   <span>Right</span>
 </div>
-```
+</div>
 
 ## Generated Structure
 
-`container()` does not add or remove elements -- it applies inline styles directly to the host and leaves its children untouched:
+`container()` does not add or remove elements, and it writes no inline style. It adds the `x-container` class, plus `x-container--grid` when `columns` is 2 or more; those rules in `src/styles/behaviors/layout.css` carry the defaults. Any value you change from a default (`gap`, `padding`, `align`, `justify`, `direction`, `maxWidth`, or the grid's minimum column width) travels as a generated rule, named by a `data-x-style` token on the host. Children are left untouched. With `columns="2"` the host becomes:
 
-```html
-<!-- columns > 1: grid mode -->
-<div x-container
-  style="display:grid;
-         grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-         align-items:stretch;
-         justify-content:flex-start;
-         gap:1rem;
-         padding:1rem;">
+```html-static
+<div x-container columns="2" class="x-container x-container--grid" data-x-style="xs…">
   <!-- original children, unmodified -->
 </div>
 ```
 
 ## CSS Classes
 
-`container()` adds no CSS classes -- layout is applied entirely via inline styles (`display`, `flex-direction`/`grid-template-columns`, `gap`, `align-items`, `justify-content`, `padding`, `max-width`). The `x-container` **tag** itself has a small base rule in `src/styles/behaviors/effects.css` (`position: relative`, a hover border-color transition, and a `.drop-target` state for drag-and-drop) -- but no class is ever added by the behavior.
-
 | Selector | Applied When | Description |
 |----------|--------------|--------------|
-| `x-container` (tag selector) | Always | `position: relative`, hover border-color transition |
-| `x-container.drop-target` | External drag-and-drop code adds `.drop-target` | Success-colored border/background |
+| `.x-container` | Always | Flex column: `align-items: stretch`, `gap: 1rem`, `padding: 1rem`, wrapping (`layout.css`) |
+| `.x-container--grid` | `columns` is 2 or more | `display: grid`, auto-fit columns (`layout.css`) |
+| `[x-container].drop-target` | External drag-and-drop code adds `.drop-target` | Success-colored border/background (`effects.css`) |
 
 ## Methods
 
-None. `container()` returns a cleanup function that clears `element.style.cssText` entirely, and attaches no API to the element.
+None. `container()` returns a cleanup function that clears its generated rules and removes `x-container--grid`, and attaches no API to the element.
 
 ## Events
 
@@ -110,7 +102,7 @@ None. `<div x-container>` dispatches no custom events.
 
 ## CSS API
 
-`container()` has no dedicated CSS custom properties -- `gap`/`align`/`justify`/`padding`/`maxWidth` are all set directly from attributes as inline styles.
+`container()` has no dedicated CSS custom properties -- `gap`/`align`/`justify`/`padding`/`maxWidth` reach the host as a generated rule, not as variables.
 
 | Variable | Used For | Description |
 |----------|----------|--------------|

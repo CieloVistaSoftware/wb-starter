@@ -126,6 +126,11 @@ test('audit: markdown code fences that should be live [x-demo] blocks (Rule 4, #
   console.log(
     `Rule 4 audit: ${totalFences} static fence(s) across ${offenders.length} file(s) still need [x-demo] conversion:\n${report}`
   );
+  // #307: every one has been converted or marked html-static, so this is a
+  // gate now, not an audit: a renderable ```html fence anywhere under docs/
+  // fails. Write it as <div x-demo>, or ```html-static for the exceptions
+  // in docs/code-examples-standard.md Rule 4.
+  expect(offenders, `static fences with behavior markup -- make each a <div x-demo>, or html-static if it is a Rule 4 exception:\n${report}`).toEqual([]);
   expect(
     unexpectedZeroDemoFiles,
     'New markdown files with executable HTML examples must use [x-demo]; add a live demo or explicitly migrate a named legacy file.'

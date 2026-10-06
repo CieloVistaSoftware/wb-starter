@@ -260,24 +260,24 @@ Documents CSS custom properties for theming:
 
 ### With Behaviors
 
-```html
+<div x-demo>
 <article
   title="Interactive Card"
   x-draggable
   x-ripple>
   <p>This card is draggable with ripple effect.</p>
 </article>
-```
+</div>
 
 ### Behavior Only (No Component)
 
-```html
+<div x-demo>
 <button
   x-ripple
   x-tooltip="Click to save">
   💾 Save
 </button>
-```
+</div>
 
 ### CSS Customization
 

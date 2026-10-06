@@ -141,89 +141,71 @@
 
 ### Accordion/Expandable
 
-```html
-<!-- CORRECT - using native HTML5 -->
-<details x-accordion-item>
+Use the native `<details>`: it is the expandable, and it gets the `details`
+behavior from its tag. There is no `x-accordion-item`; a group of panels is
+`x-accordion` (see [accordion](./behaviors/accordion.md)).
+
+<div x-demo>
+<details>
   <summary>Section Title</summary>
   <p>Section content</p>
 </details>
-<!-- CORRECT - custom (when native doesn't fit) -->
-<section x-accordion-item>
-  <header>
-    <button aria-expanded="false">Section Title</button>
-  </header>
-  <main hidden>Section content</main>
-</section>
-```
+</div>
 
 ### Tabs
 
-```html
-<!-- CORRECT -->
+Each child `<section>` is a panel and its `title` is the tab label. `x-tabs`
+builds the `role="tablist"` nav, the tab buttons and the ARIA wiring itself, so
+they are never hand-written:
+
+<div x-demo>
 <section x-tabs>
-  <nav role="tablist">
-    <button
-      role="tab"
-      aria-selected="true">
-      Tab 1
-    </button>
-    <button role="tab">Tab 2</button>
-  </nav>
-  <section role="tabpanel">Panel 1</section>
-  <section
-    role="tabpanel"
-    hidden>
-    Panel 2
-  </section>
+  <section title="Tab 1">Panel 1</section>
+  <section title="Tab 2">Panel 2</section>
 </section>
-```
+</div>
 
 ### Sidebar/Aside
 
-```html
-<!-- CORRECT -->
-<aside x-sidebar>
-  <nav>
-    <ul>...</ul>
-  </nav>
+`x-sidebar` builds its links from `items`; children are replaced, not kept:
+
+<div x-demo>
+<aside
+  x-sidebar
+  items="Dashboard,Projects,Settings"
+  active="Projects">
 </aside>
-```
+</div>
 
 ### Testimonials/Quotes
 
-```html
-<!-- CORRECT -->
-<article x-cardtestimonial>
-  <blockquote>
-    <p>This product changed my life!</p>
-  </blockquote>
-  <footer>
-    <cite>John Doe</cite>
-    <p>CEO, Company</p>
-  </footer>
+The quote and its author are attributes; the behavior builds the
+`<blockquote>`, `<cite>` and footer from them:
+
+<div x-demo>
+<article
+  x-cardtestimonial
+  quote="This product changed my life!"
+  author="John Doe"
+  role="CEO, Company">
 </article>
-```
+</div>
 
 ### Progress/Stats
 
-```html
-<!-- CORRECT -->
-<article x-cardstats>
-  <header>
-    <span class="icon">📈</span>
-  </header>
-  <div class="x-card__body">
-    <data value="1234">1,234</data>
-    <p>Total Users</p>
-  </div>
+<div x-demo>
+<article
+  x-cardstats
+  value="1,234"
+  label="Total Users"
+  icon="📈">
 </article>
-<!-- Progress bar -->
 <progress
   value="75"
   max="100">
   75%
 </progress>
-```
+</div>
 
 ### Forms
 
@@ -259,35 +241,18 @@ Only use `<div>` for:
 
 **MANDATORY RULE: All elements, including `<div>`s, MUST have a unique `id` attribute.**
 
-```html
-<!-- OK - layout wrapper with ID -->
+A layout wrapper with an ID:
+
+<div x-demo>
 <div
   id="grid-layout-1"
-  class="x-grid"
   x-grid
   columns="3">
-  <article id="card-1">...</article>
-  <article id="card-2">...</article>
-  <article id="card-3">...</article>
+  <article id="card-1" title="One">First card</article>
+  <article id="card-2" title="Two">Second card</article>
+  <article id="card-3" title="Three">Third card</article>
 </div>
-<!-- OK - styling wrapper with ID -->
-<article
-  id="card-4">
-  <header id="card-header-4">
-    <div
-      id="header-content-4"
-      class="x-card__header-content">
-      <h3 id="card-title-4">Title</h3>
-      <p id="card-subtitle-4">Subtitle</p>
-    </div>
-    <div
-      id="header-actions-4"
-      class="x-card__header-actions">
-      <button id="btn-action-4">...</button>
-    </div>
-  </header>
-</article>
-```
+</div>
 
 ---
 

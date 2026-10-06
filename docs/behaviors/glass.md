@@ -29,11 +29,14 @@ It needs something behind it to carry. Over a flat colour an `x-glass` element
 is only a slightly lighter box. Over an image, an SVG scene or a gradient, the
 scene shows through.
 
-```html
+<div x-demo>
 <button x-glass>Read the Guide</button>
 <span x-glass>Zero build</span>
-<nav x-glass>…</nav>
-```
+<nav x-glass>
+  <a href="#">Docs</a>
+  <a href="#">Demos</a>
+</nav>
+</div>
 
 ## Attributes
 
@@ -51,9 +54,9 @@ The tint stops at 30% on purpose. Past that the element stops carrying the
 scene and starts hiding it, and light text on it loses contrast against a dark
 scene.
 
-```html
+<div x-demo>
 <button x-glass amount="least">Read the Guide</button>
-```
+</div>
 
 ## Colour
 

@@ -127,15 +127,13 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 
 ### Explicit Syntax
 
-```html
-<!-- Explicit behavior injection -->
+<div x-demo>
 <div
   x-card
   title="My Card"
   elevated="true">
   Content here
 </div>
-<!-- Combining multiple behaviors -->
 <button
   x-ripple
   x-toast
@@ -143,13 +141,12 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
   message="Saved!">
   Save
 </button>
-<!-- Form element with all attributes -->
 <input
   type="checkbox"
   id="agree"
   name="terms"
   checked>
-```
+</div>
 
 ---
 
@@ -178,7 +175,7 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 
 Each code example should include an explanatory note in xs font:
 
-```html
+```html-static
 <p
   class="code-note"
   style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem;">
@@ -209,18 +206,17 @@ element renders each attribute on its own line (see
 line, one element per line. Never split a short tag pointlessly, and never cram a long
 multi-attribute tag onto one line.
 
-```html
-<!-- Short tags: one element per line -->
-<span x-badge label="New"></div>
-<span x-badge label="Done" variant="success"></div>
+Short tags, one element per line; a long tag, one attribute per line:
 
-<!-- Long tags: one attribute per line -->
+<div x-demo>
+<span x-badge label="New"></span>
+<span x-badge label="Done" variant="success"></span>
 <button
   variant="primary"
   size="lg">
   Click Me
 </button>
-```
+</div>
 
 ---
 
