@@ -832,7 +832,7 @@
           "file": "behaviors/navbar.md",
           "title": "Navbar",
           "description": "x-navbar builds a navigation bar in a <nav>: the brand (and optional logo) linking to brand-href, a tagline, and links from the items JSON, collapsing into…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/notes.md",
@@ -1318,7 +1318,7 @@
           "file": "audits/HOST-CHILD-DISPATCH-AUDIT.md",
           "title": "Host/Child Dispatch Audit",
           "description": "Schema-built native elements vs. their behavior JS -- collision patterns and fixes (#360-#369)",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "audits/INLINE-STYLES-AUDIT.md",
@@ -1462,7 +1462,7 @@
           "file": "INTELLISENSE-TOOLTIPS.md",
           "title": "INTELLISENSE TOOLTIPS",
           "description": "Documentation for INTELLISENSE TOOLTIPS",
-          "modified": "2026-09-03"
+          "modified": "2026-10-05"
         },
         {
           "file": "escape-hatches.md",
@@ -1558,7 +1558,7 @@
           "file": "semantic-standard.md",
           "title": "Semantic Standard",
           "description": "Semantic HTML standard documentation",
-          "modified": "2026-10-04"
+          "modified": "2026-10-05"
         },
         {
           "file": "wbservices.md",

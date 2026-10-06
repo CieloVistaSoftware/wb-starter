@@ -13,6 +13,16 @@
 
 ---
 
+**Updated 2026-10-05, night.** `<nav>` picks up navbar (#958).
+
+**Files touched:** `src/core/tag-map.js` (`nav: 'navbar'`), `src/core/replacement-guard.js`, `src/wb-viewmodels/navigation.js`, `src/styles/behaviors/navbar.css`, `demos/site/layout.html`, `data/behavior-examples.json`, `docs/behaviors/navbar.md`, `docs/behavior-cross-reference.md`, `docs/semantic-standard.md`, `docs/INTELLISENSE-TOOLTIPS.md`, `docs/audits/HOST-CHILD-DISPATCH-AUDIT.md`.
+
+**Last action:** a plain `<nav>` gets the link look and keeps its layout; `brand|items|logo|sticky|variant` make it the header; a `<nav>` with its own behavior keeps only that. The attribute form on a nav is now redundant and was removed (16 places).
+
+**Next step:** work the open issues.
+
+---
+
 **Updated 2026-10-05, evening.** Central time (#1553) and x-glow (#816).
 
 **Files touched:** `src/core/central-time.js` (new), the displays that used `toLocale*String`, `scripts/lib/git-dates.mjs`, `scripts/lib/release-date.mjs`; `src/styles/behaviors/effects.css`, `src/wb-viewmodels/effects.js`, `src/wb-models/glow.schema.json`, `docs/behaviors/glow.md`; `src/wb-viewmodels/helpers.js` (x-clock), `src/wb-models/clock.schema.json`, `docs/behaviors/clock.md`.

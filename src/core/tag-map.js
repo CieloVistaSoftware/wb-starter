@@ -89,7 +89,13 @@ export const nativeMap = {
   'dialog': 'dialog',
   'progress': 'progress',
   'header': 'header',
-  'footer': 'footer'
+  'footer': 'footer',
+  // #958 -- John, 2026-09-10: "in html5 there is a nav element, when we
+  // created the navbar our intent was to give the nav links a look and feel of
+  // our site". A <nav> picks up navbar the way an <article> picks up card. A
+  // plain <nav> gets the link look only (navbar() leaves its layout alone);
+  // brand/items/logo/sticky/variant make it the site header.
+  'nav': 'navbar'
 };
 
 // ============================================================================

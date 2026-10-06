@@ -99,13 +99,15 @@ test.describe('.x-footer', () => {
   });
 });
 
+// #958: the demos are plain <nav brand|sticky|variant> now -- <nav> picks up
+// navbar without the attribute -- so they are selected as nav.x-navbar.
 test.describe('[x-navbar]', () => {
   test('brand renders, bare `sticky` applies position:sticky', async ({ page }) => {
     await ready(page);
-    const navbars = page.locator('#navbar-navbar [x-navbar]');
+    const navbars = page.locator('#navbar-navbar nav.x-navbar');
     await expect(navbars.nth(0).locator('.x-navbar__brand-text')).toHaveText('MySite');
 
-    const stickyNavbar = page.locator('#navbar-toggles [x-navbar]');
+    const stickyNavbar = page.locator('#navbar-toggles nav.x-navbar');
     await expect
       .poll(() => stickyNavbar.evaluate((el) => getComputedStyle(el).position))
       .toBe('sticky');
@@ -114,7 +116,7 @@ test.describe('[x-navbar]', () => {
   for (const variant of ['default', 'dark', 'transparent']) {
     test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`#navbar-variant-variants [x-navbar][variant="${variant}"]`);
+      const el = page.locator(`#navbar-variant-variants nav.x-navbar[variant="${variant}"]`);
       await expect(el).toBeVisible();
     });
   }
@@ -123,9 +125,9 @@ test.describe('[x-navbar]', () => {
     await ready(page);
     const bg = (sel) => page.locator(sel).evaluate((el) => getComputedStyle(el).backgroundColor);
     const [defaultBg, darkBg, transparentBg] = await Promise.all([
-      bg('#navbar-variant-variants [x-navbar][variant="default"]'),
-      bg('#navbar-variant-variants [x-navbar][variant="dark"]'),
-      bg('#navbar-variant-variants [x-navbar][variant="transparent"]'),
+      bg('#navbar-variant-variants nav.x-navbar[variant="default"]'),
+      bg('#navbar-variant-variants nav.x-navbar[variant="dark"]'),
+      bg('#navbar-variant-variants nav.x-navbar[variant="transparent"]'),
     ]);
     expect(darkBg).not.toBe(defaultBg);
     expect(transparentBg).not.toBe(defaultBg);

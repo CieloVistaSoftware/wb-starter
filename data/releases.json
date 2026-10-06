@@ -6,6 +6,133 @@
   ],
   "releases": [
     {
+      "version": "1.0.307",
+      "date": "2026-10-05",
+      "summary": "A &lt;nav&gt; needed x-navbar to look like the site, and adding it to plain navs moved their links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1582\" target=\"_blank\" rel=\"noopener\">PR 1582</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Measure plain-nav links once the page has stopped moving</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A generated nav demo holds links, not a loose sentence</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>A semantic host counts as a behavior host by its class</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Every &lt;nav&gt; picks up navbar; a plain one keeps its layout</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        }
+      ],
+      "seeIt": "Open demos/site/layout.html and look at the &quot;← Back to Index&quot; link, then the navbar demos. Before: the demos needed x-navbar seven times, and turning it on for plain navs pushed the Back link 854px to the right. Now: every &lt;nav&gt; gets the site&#39;s link colour without moving, and &lt;nav brand=&quot;MySite&quot;&gt; builds the full navbar with no attribute."
+    },
+    {
+      "version": "1.0.306",
+      "date": "2026-10-05",
+      "summary": "An issue could be marked in progress with no note saying what was being done, and nothing flagged it until John saw the row in red on the Issues page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1583\" target=\"_blank\" rel=\"noopener\">#1583</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1587\" target=\"_blank\" rel=\"noopener\">#1587</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The in-progress sweep flags a claim that never posted a status note</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1583\" target=\"_blank\" rel=\"noopener\">#1583</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1587\" target=\"_blank\" rel=\"noopener\">#1587</a>",
+          "issues": [
+            1583,
+            1587
+          ]
+        }
+      ],
+      "seeIt": "Label an issue status:in-progress without posting a note and wait 10 minutes. Before: nothing happened; the Issues page just showed &quot;No status posted&quot;. Now: the In progress sweep comments on the issue saying no status note was posted and listing the four lines to write."
+    },
+    {
+      "version": "1.0.305",
+      "date": "2026-10-05",
+      "summary": "Sharing the site link on LinkedIn showed a generic purple lightning-bolt icon instead of the wb-starter logo. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1586\" target=\"_blank\" rel=\"noopener\">PR 1586</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Link-share preview shows the wb logo, not the lightning bolt</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+          "issues": [
+            1585
+          ]
+        }
+      ],
+      "seeIt": "Paste https://cielovistasoftware.github.io/wb-starter/ into the LinkedIn Post Inspector (linkedin.com/post-inspector) and press Inspect. Before: the preview image is a white lightning bolt on a purple square. Now: the preview image is the wb-starter logo (browser window with brush, pencil and &lt;/&gt; globe)."
+    },
+    {
+      "version": "1.0.304",
+      "date": "2026-10-05",
+      "summary": "On the Issues page, wheeling over an expanded issue scrolled the issue and the whole page together, so the reader lost their place mid-issue: the site-wide wheel fallback (#636) took &quot;the page did not move&quot; as &quot;native scrolling failed&quot; and pushed the page. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1584\" target=\"_blank\" rel=\"noopener\">PR 1584</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A wheel over an expanded issue scrolls only the issue</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
+          "issues": [
+            1037
+          ]
+        }
+      ],
+      "seeIt": "Open ?page=issues, expand a long issue and wheel over its body. Before: the issue and the page scrolled together. Now: only the issue scrolls until its end, then the page."
+    },
+    {
+      "version": "1.0.303",
+      "date": "2026-10-05",
+      "summary": "The Behaviors page once wrote multi-word options squashed (fullwidth, showplaybutton), a third spelling that matched neither the schema nor the docs; the page now writes them dashed, but no test refused the squashed form, so it could come back unnoticed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1581\" target=\"_blank\" rel=\"noopener\">PR 1581</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/952\" target=\"_blank\" rel=\"noopener\">#952</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The option rows never write the squashed spelling again</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/952\" target=\"_blank\" rel=\"noopener\">#952</a>",
+          "issues": [
+            952
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/behaviors-page-options-write-kebab-attributes.spec.ts --project=regression</code>. Before: 6 tests, and the &quot;must not be written&quot; check was case-sensitive, so a page writing fullwidth passed it. Now: 8 tests, including x-button fullWidth and x-audio showPlayButton from #952; with the page made to write squashed names again they fail."
+    },
+    {
+      "version": "1.0.302",
+      "date": "2026-10-05",
+      "summary": "Code panels used to appear at less than half their width and snap out about a second later; they now appear at their final width, and a test keeps it that way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1580\" target=\"_blank\" rel=\"noopener\">PR 1580</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/985\" target=\"_blank\" rel=\"noopener\">#985</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No code panel widens after it first paints</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/985\" target=\"_blank\" rel=\"noopener\">#985</a>",
+          "issues": [
+            985
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/demos/site/layout.html in a fresh tab and watch the code panels under each demo as it loads. Before: each appeared at 40-52% of its width and snapped out ~1.3s later (366px to 933px). Now: each appears at its final width; measured from first paint, none moves by more than 2px."
+    },
+    {
+      "version": "1.0.301",
+      "date": "2026-10-05",
+      "summary": "When the doc-viewer link check lost its connection to the test server, it failed looking like a dead link and left no clue why. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1570\" target=\"_blank\" rel=\"noopener\">PR 1570</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A transport error in doc-viewer-links says it is not a dead link, and when the socket was last used</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+          "issues": [
+            1549
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/integration/doc-viewer-links.spec.ts --project=integration</code> and stop the server mid-run. Before: the failure read only &quot;apiRequestContext.get: read ECONNRESET&quot;. Now: it reads &quot;transport error requesting /&lt;doc&gt; (not a dead link) ... this worker last used the server Nms earlier&quot;, which is the number that decides the keep-alive question."
+    },
+    {
       "version": "1.0.300",
       "date": "2026-10-05",
       "summary": "The cards demo page used to build all 293 demos on load and froze for over nine seconds; it now builds only what is on screen, and a test keeps it that way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1576\" target=\"_blank\" rel=\"noopener\">PR 1576</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/987\" target=\"_blank\" rel=\"noopener\">#987</a>",
