@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.295",
+      "date": "2026-10-05",
+      "summary": "After a deploy, visitors kept getting the old JavaScript for up to ten minutes, because the service worker answered from the browser&#39;s HTTP cache. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1574\" target=\"_blank\" rel=\"noopener\">PR 1574</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/989\" target=\"_blank\" rel=\"noopener\">#989</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The service worker revalidates same-origin requests instead of serving the HTTP cache</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/989\" target=\"_blank\" rel=\"noopener\">#989</a>",
+          "issues": [
+            989
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/ once, deploy a change to any module under src/, then reload. Before: the reload ran the old module for up to 600 seconds (Cache-Control: max-age=600 on every file), which is how #988&#39;s fix stayed invisible. Now: the reload revalidates each same-origin file with the server and runs the deployed module at once; unchanged files answer 304."
+    },
+    {
+      "version": "1.0.294",
+      "date": "2026-10-05",
+      "summary": "The #1462 test demanded scrollTop === 400 after the page finished building, so it failed a correct page on Windows CI (486), where Chrome&#39;s scroll anchoring moved the scroll down to keep the reader&#39;s text in view as content above grew. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1567\" target=\"_blank\" rel=\"noopener\">PR 1567</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1566\" target=\"_blank\" rel=\"noopener\">#1566</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1573\" target=\"_blank\" rel=\"noopener\">#1573</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Fail on a scroll thrown back to the top, not on scroll anchoring</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1573\" target=\"_blank\" rel=\"noopener\">#1573</a>",
+          "issues": [
+            1573
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Keep the spawned server&#39;s output, and take its port like every other run</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1566\" target=\"_blank\" rel=\"noopener\">#1566</a>",
+          "issues": [
+            1566
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/scroll-survives-page-build.spec.ts --project=regression</code> with an 86px block inserted above the reader when the held scan is released. Before: it failed with &quot;Expected: 400, Received: 486&quot;, as on CI. Now: it passes, and it still fails with &quot;Received: 0&quot; if the scroll is reset to the top, the #1462 bug."
+    },
+    {
       "version": "1.0.293",
       "date": "2026-10-05",
       "summary": "Session folders piled up in Downloads\\AI after their work merged (89 of them); one command now removes the merged, clean ones and keeps the rest with a reason. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1547\" target=\"_blank\" rel=\"noopener\">PR 1547</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
