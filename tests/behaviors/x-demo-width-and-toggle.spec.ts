@@ -208,7 +208,7 @@ test.describe('<div x-demo> code panel has no "hide code" toggle (no max-height 
   });
 
   test('a pre with an explicit max-height still gets the toggle', async ({ page }) => {
-    await setup(page, '<pre id="p1" x-behavior="pre" max-height="100px"><code>line1\nline2\nline3</code></pre>');
+    await setup(page, '<pre id="p1" max-height="100px"><code>line1\nline2\nline3</code></pre>');
     await expect(page.locator('#p1').locator('xpath=..').locator('.x-pre__toggle')).toHaveCount(1);
   });
 });

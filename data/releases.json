@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.344",
+      "date": "2026-10-06",
+      "summary": "Behaviors were written two ways, x-behavior=&quot;cardimage&quot; and x-cardimage, and 46 behaviors only worked the first way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1643\" target=\"_blank\" rel=\"noopener\">PR 1643</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1642\" target=\"_blank\" rel=\"noopener\">#1642</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wb-lazy: honour x-eager on every injection path</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1642\" target=\"_blank\" rel=\"noopener\">#1642</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/947ceff439c6a933c1375500040753c08eca0402\" target=\"_blank\" rel=\"noopener\"><code>947ceff</code></a>",
+          "issues": [
+            1642
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Deprecate x-behavior=&quot;name&quot;: every behavior is written x-name</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1642\" target=\"_blank\" rel=\"noopener\">#1642</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4d891a7853d76b82a4547aacb3aaf51c685ec078\" target=\"_blank\" rel=\"noopener\"><code>4d891a7</code></a>",
+          "issues": [
+            1642
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/forms.html\" target=\"_blank\" rel=\"noopener\">demos/site/forms.html</a>, go to Input &gt; With Prefix/Suffix and open its code panel. Before: the markup carried x-behavior=&quot;input&quot; under a label saying plain &lt;input&gt; needs it. Now: it is a plain &lt;input&gt; and renders the same; &lt;ul x-list items=&quot;a, b&quot;&gt; now builds its list.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9bdb13a4bc55fe71480e26cf29f5ea8de99d1b9a\" target=\"_blank\" rel=\"noopener\"><code>9bdb13a</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.343",
       "date": "2026-10-06",
       "summary": "Main gained the hero gallery (#1617) and the sleep guard (#1635) while this PR waited, so releases.json is regenerated at main&#39;s tip with this branch&#39;s generator; both new versions carry their commits&#39; Links blocks. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">PR 1624</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1617\" target=\"_blank\" rel=\"noopener\">#1617</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1635\" target=\"_blank\" rel=\"noopener\">#1635</a>",

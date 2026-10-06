@@ -1,6 +1,6 @@
 /**
  * Switch - Toggle switch component
- * Helper Attribute: [x-behavior="switch"]
+ * Helper Attribute: [x-switch]
  *
  * Wires the schema-built <div x-switch> host: its inner <input> becomes a real
  * checkbox, the host's checked/disabled/label/name/value are reflected onto it,

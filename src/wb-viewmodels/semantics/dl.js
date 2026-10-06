@@ -3,7 +3,7 @@ import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * DL - Enhanced <dl> element (Description List)
  * Adds styling variants, term/definition formatting
- * Helper Attribute: [x-behavior="dl"]
+ * Helper Attribute: [x-dl]
  */
 export function dl(element, options = {}) {
   if (element.tagName !== 'DL') {

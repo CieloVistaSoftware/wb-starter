@@ -32,10 +32,11 @@
  *    element.querySelector('textarea') is null after an eager scan). This
  *    is the SAME class of gap as #322, just never documented for textarea
  *    — see the final report for details. Because of this, every x-textarea
- *    assertion below targets the native `<textarea x-behavior="textarea">`
- *    path instead of `<textarea>` — textarea() is the exact same
- *    function either way; the native element is simply the one that's
- *    actually reachable on this runtime.
+ *    assertion below targets a real native `<textarea>`, which the tag alone
+ *    gives the textarea behavior (it used to add x-behavior="textarea",
+ *    deprecated in #1642) — textarea() is the exact same function either
+ *    way; the native element is simply the one that's actually reachable on
+ *    this runtime.
  *
  * 3. A few declared attributes were empirically confirmed to have NO real
  *    effect at all on this runtime (traced to root cause, not guessed):
@@ -201,12 +202,12 @@ test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
   });
 });
 
-test.describe('.x-textarea\'s textarea() behavior — real effects (native <textarea x-behavior="textarea"> path; see file header re: <textarea> gap)', () => {
+test.describe('.x-textarea\'s textarea() behavior — real effects (native <textarea> path; see file header re: <textarea> gap)', () => {
   test('rows: real rendered row count differs, backed by the actual DOM property', async ({ page }) => {
     await setup(
       page,
-      '<textarea id="ta-rows3" x-behavior="textarea" rows="3"></textarea>' +
-      '<textarea id="ta-rows8" x-behavior="textarea" rows="8"></textarea>'
+      '<textarea id="ta-rows3" rows="3"></textarea>' +
+      '<textarea id="ta-rows8" rows="8"></textarea>'
     );
     const rows3 = page.locator('#ta-rows3');
     const rows8 = page.locator('#ta-rows8');
@@ -220,7 +221,7 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
   });
 
   test('max-length + show-count: counter reflects the real current/max count as you type', async ({ page }) => {
-    await setup(page, '<textarea id="ta-count" x-behavior="textarea" show-count max-length="20"></textarea>');
+    await setup(page, '<textarea id="ta-count" show-count max-length="20"></textarea>');
     const ta = page.locator('#ta-count');
     const counter = page.locator('#ta-count').locator('xpath=..').locator('.x-textarea__counter');
 
@@ -235,7 +236,7 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
   // and never set the native maxLength, so 20 typed characters stayed in a
   // max-length="10" field. It sets element.maxLength now.
   test('max-length enforces the character limit', async ({ page }) => {
-    await setup(page, '<textarea id="ta-limit" x-behavior="textarea" show-count max-length="10"></textarea>');
+    await setup(page, '<textarea id="ta-limit" show-count max-length="10"></textarea>');
     const ta = page.locator('#ta-limit');
     await ta.pressSequentially('12345678901234567890'); // 20 chars typed, limit is 10
     const value = await ta.inputValue();
@@ -243,7 +244,7 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
   });
 
   test('autosize: element height actually grows as multi-line content is typed', async ({ page }) => {
-    await setup(page, '<textarea id="ta-autosize" x-behavior="textarea" autosize style="width:200px;"></textarea>');
+    await setup(page, '<textarea id="ta-autosize" autosize style="width:200px;"></textarea>');
     const ta = page.locator('#ta-autosize');
     const before = await ta.evaluate((el) => el.getBoundingClientRect().height);
 
@@ -254,7 +255,7 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
   });
 
   test('disabled: typing has no effect on value', async ({ page }) => {
-    await setup(page, '<textarea id="ta-disabled" x-behavior="textarea" disabled></textarea>');
+    await setup(page, '<textarea id="ta-disabled" disabled></textarea>');
     const ta = page.locator('#ta-disabled');
     await expect(ta).toBeDisabled();
 
@@ -268,7 +269,7 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
 
     // ...and prove that assertion isn't vacuous: the same markup WITHOUT
     // `disabled` must accept the very same typing and end up with the text.
-    await setup(page, '<textarea id="ta-enabled" x-behavior="textarea"></textarea>');
+    await setup(page, '<textarea id="ta-enabled"></textarea>');
     const enabled = page.locator('#ta-enabled');
     await enabled.pressSequentially('hello', { timeout: 1000 });
     expect(await enabled.inputValue()).toBe('hello');
@@ -279,10 +280,10 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
     // and always set vertical (or none under autosize). It now reads it (#768 sweep).
     await setup(
       page,
-      '<textarea id="ta-resize-none" x-behavior="textarea" resize="none"></textarea>' +
-      '<textarea id="ta-resize-h" x-behavior="textarea" resize="horizontal"></textarea>' +
-      '<textarea id="ta-resize-both" x-behavior="textarea" resize="both"></textarea>' +
-      '<textarea id="ta-resize-v" x-behavior="textarea" resize="vertical"></textarea>'
+      '<textarea id="ta-resize-none" resize="none"></textarea>' +
+      '<textarea id="ta-resize-h" resize="horizontal"></textarea>' +
+      '<textarea id="ta-resize-both" resize="both"></textarea>' +
+      '<textarea id="ta-resize-v" resize="vertical"></textarea>'
     );
     const computedResize = async (id: string) => page.locator(`#${id}`).evaluate((el) => getComputedStyle(el).resize);
 
@@ -295,8 +296,8 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
   test('variant: the x-textarea--{variant} class is applied for the real element', async ({ page }) => {
     await setup(
       page,
-      '<textarea id="ta-variant-success" x-behavior="textarea" variant="success"></textarea>' +
-      '<textarea id="ta-variant-error" x-behavior="textarea" variant="error"></textarea>'
+      '<textarea id="ta-variant-success" variant="success"></textarea>' +
+      '<textarea id="ta-variant-error" variant="error"></textarea>'
     );
     await expect(page.locator('#ta-variant-success')).toHaveClass(/x-textarea--success/);
     await expect(page.locator('#ta-variant-error')).toHaveClass(/x-textarea--error/);
@@ -311,9 +312,9 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
     // variant="success" -- confirmed live before unmarking.
     await setup(
       page,
-      '<textarea id="ta-border-default" x-behavior="textarea"></textarea>' +
-      '<textarea id="ta-border-success" x-behavior="textarea" variant="success"></textarea>' +
-      '<textarea id="ta-border-error" x-behavior="textarea" variant="error"></textarea>'
+      '<textarea id="ta-border-default"></textarea>' +
+      '<textarea id="ta-border-success" variant="success"></textarea>' +
+      '<textarea id="ta-border-error" variant="error"></textarea>'
     );
     const borderColor = async (id: string) => page.locator(`#${id}`).evaluate((el) => getComputedStyle(el).borderColor);
     const def = await borderColor('ta-border-default');

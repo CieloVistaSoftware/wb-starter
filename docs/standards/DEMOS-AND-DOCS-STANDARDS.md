@@ -110,7 +110,7 @@ first word of the info string, so `html static` would arrive as `html` and run.
 - **Superseded (#583/#589 session):** this rule used to require wrapping (`white-space:
   pre-wrap`) with a carve-out for `<div x-demo>` panels only. John's direct, repeated
   instruction — "CODE TEXT CANNOT WRAP EVER" — reverses that: **no code text wraps,
-  anywhere, on any element that displays code** (`<pre x-behavior="pre">`, `<div x-demo>`
+  anywhere, on any element that displays code** (`<pre>`, `<div x-demo>`
   panels, `<div x-mdhtml>`-rendered fenced code blocks, hand-written `<pre language="…">`
   samples). Long lines get horizontal scroll instead (`white-space: pre`; `overflow-x:
   auto`) — this is `pre.css`'s own editor-style default (`pre.js`, `defaultWrap=false`,

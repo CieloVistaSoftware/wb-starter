@@ -733,7 +733,7 @@ export async function demo(element, options = {}) {
     // parsing raw HTML into real custom elements that get inflated
     const pre = document.createElement('pre');
     pre.className = 'x-demo__code';
-    pre.setAttribute('x-behavior', 'pre');
+    pre.setAttribute('x-pre', '');
     pre.dataset.language = 'html';
     pre.dataset.showCopy = 'true';
     // #390: John's explicit override for x-demo code panels specifically --
@@ -741,12 +741,12 @@ export async function demo(element, options = {}) {
     // pre.css's default applies (overflow-x: auto, white-space: pre; see
     // pre.css "Default (no wrap modifier): editor style -- long lines
     // scroll, never break"). Standard §6 (never a horizontal scrollbar)
-    // still governs plain <pre x-behavior="pre"> elsewhere; this carve-out
+    // still governs plain <pre> elsewhere; this carve-out
     // is scoped to x-demo-generated code panels only.
 
     const code = document.createElement('code');
     code.className = 'language-html';
-    code.setAttribute('x-behavior', 'code');
+    code.setAttribute('x-code', '');
     code.dataset.language = 'html';
     // Standard §5: source is pretty-printed VERTICAL (one attribute per line).
     if (sourceUnavailable) {
@@ -804,12 +804,12 @@ export async function demo(element, options = {}) {
     // ended up listener-less ~90% of the time. The grid's children are
     // already covered by the global scan; only the new pre/code panel
     // needs one here.
-    // eager:true -- WB.scan()'s default lazy path defers [x-behavior]
+    // eager:true -- WB.scan()'s default lazy path defers [x-pre]/[x-code]
     // elements to an IntersectionObserver instead of applying them
     // synchronously, so the code panel could sit unstyled/unscanned for
     // an indeterminate delay (confirmed live on public/doc-viewer.html:
-    // the nested <code x-behavior="code"> got hljs highlighting while
-    // the wrapping <pre x-behavior="pre"> sat with no x-pre class at
+    // the nested <code> got hljs highlighting while
+    // the wrapping <pre> sat with no x-pre class at
     // the same snapshot). The panel is built and appended synchronously
     // right above -- there's no perf reason to defer scanning it lazily.
     //
@@ -1204,13 +1204,13 @@ export async function demo(element, options = {}) {
 
         const eventsPre = document.createElement('pre');
         eventsPre.className = 'x-demo__code x-demo__events-code';
-        eventsPre.setAttribute('x-behavior', 'pre');
+        eventsPre.setAttribute('x-pre', '');
         eventsPre.dataset.language = 'javascript';
         eventsPre.dataset.showCopy = 'true';
 
         const eventsCode = document.createElement('code');
         eventsCode.className = 'language-javascript';
-        eventsCode.setAttribute('x-behavior', 'code');
+        eventsCode.setAttribute('x-code', '');
         eventsCode.dataset.language = 'javascript';
         eventsCode.textContent = buildEventListenerCode(eventNames);
         eventsPre.appendChild(eventsCode);

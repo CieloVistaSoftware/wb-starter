@@ -327,8 +327,9 @@ Behaviors can be **schema-driven**: a `*.schema.json` declares the behavior's
 **schema builder** (`src/core/mvvm/schema-builder.js`) loads them (listed in
 `src/wb-models/index.json`) and builds the behavior's DOM before behaviors run.
 This is how a `<article>` knows its header/body/footer structure declaratively.
-Processed elements are marked `x-schema="<name>"`; legacy `x-behavior=` usage is
-rejected with a console error in strict mode.
+Processed elements are marked `x-schema="<name>"`. The generic `x-behavior=`
+form is deprecated (#1642): it still runs, and warns once per spelling with the
+`x-{name}` attribute to write instead.
 
 ### File map
 

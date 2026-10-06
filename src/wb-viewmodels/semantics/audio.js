@@ -4,7 +4,7 @@ import { setRule } from '../../core/dynamic-style.js';
 /**
  * Audio - Enhanced <audio> element with 15-Band Graphic Equalizer
  * Premium audio player with Web Audio API EQ, presets, and master volume
- * Helper Attribute: [x-behavior="audio"]
+ * Helper Attribute: [x-audio]
  */
 
 // 15-BAND GRAPHIC EQUALIZER FREQUENCIES (ISO standard)

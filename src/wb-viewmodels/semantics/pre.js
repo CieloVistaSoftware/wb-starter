@@ -5,7 +5,7 @@ import { writeToClipboard } from '../copy.js';
 /**
  * Pre - Enhanced <pre> element (Preformatted Text)
  * Adds line numbers, copy button, scrollability, code block features
- * Helper Attribute: [x-behavior="pre"]
+ * Helper Attribute: [x-pre]
  *
  * The copy control below is a header row item positioned alongside the
  * language badge and hide/show toggle inside this behavior's OWN

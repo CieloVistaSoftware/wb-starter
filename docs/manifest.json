@@ -16,7 +16,7 @@
           "file": "V3-GUIDE.md",
           "title": "wb-starter v3 — Complete Guide",
           "description": "How to use wb-starter and how it works internally",
-          "modified": "2026-10-03"
+          "modified": "2026-10-06"
         }
       ]
     },
@@ -176,9 +176,9 @@
         },
         {
           "file": "behaviors/x-behavior.md",
-          "title": "X-Behavior",
-          "description": "Generic behavior attribute",
-          "modified": "2026-09-27"
+          "title": "X-Behavior (deprecated)",
+          "description": "Deprecated generic behavior attribute: write x-name instead",
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/x-collapse.md",
@@ -796,7 +796,7 @@
           "file": "behaviors/list.md",
           "title": "List Behavior",
           "description": "The List behavior (semantics/list.js) is a utility behavior that populates a list (<ul> or <ol>) from a items attribute.",
-          "modified": "2026-09-28"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/mark.md",
@@ -1210,7 +1210,7 @@
           "file": "code-examples-standard.md",
           "title": "Code Examples Standard",
           "description": "Formatting rules for code examples",
-          "modified": "2026-10-04"
+          "modified": "2026-10-06"
         }
       ]
     },
@@ -1222,13 +1222,13 @@
           "file": "testing-strategy.md",
           "title": "Testing Strategy",
           "description": "How to test WB behaviors",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "test-schema-standard.md",
           "title": "Schema Testing",
           "description": "Schema-based testing approach",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "schema-test-value.md",
@@ -1258,7 +1258,7 @@
           "file": "auto-injection.md",
           "title": "Auto-Injection",
           "description": "Automatic behavior injection",
-          "modified": "2026-09-28"
+          "modified": "2026-10-06"
         },
         {
           "file": "inline-editing.md",
@@ -1438,7 +1438,7 @@
           "file": "pce-candidates.md",
           "title": "Pce-candidates",
           "description": "Documentation for Pce-candidates",
-          "modified": "2026-10-05"
+          "modified": "2026-10-06"
         },
         {
           "file": "pricecard.md",
@@ -1468,7 +1468,7 @@
           "file": "escape-hatches.md",
           "title": "Escape Hatches",
           "description": "Override and customize WB behavior behavior",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "mcp.md",
@@ -1528,7 +1528,7 @@
           "file": "architecture/standards/SCHEMA-SPECIFICATION.md",
           "title": "Schema Specification",
           "description": "Detailed schema specification standard",
-          "modified": "2026-10-04"
+          "modified": "2026-10-06"
         },
         {
           "file": "claude/SCHEMAS-GUIDE.md",
@@ -1570,7 +1570,7 @@
           "file": "WB_BEHAVIOR_SYSTEM.md",
           "title": "WB Behavior System",
           "description": "Core behavior system documentation",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "architecture/WB-PREFIX-AUDIT.md",

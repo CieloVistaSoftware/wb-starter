@@ -749,7 +749,7 @@ Private: .wb-{behavior}__-{name}   ← Note the dash prefix
   "test": {
     "setup": [
       "<div x-alert message=\"Test alert\"></div>",
-      "<div x-behavior=\"alert\" message=\"Test\"></div>"
+      "<div x-alert message=\"Test\"></div>"
     ],
     "matrix": {
       "combinations": [

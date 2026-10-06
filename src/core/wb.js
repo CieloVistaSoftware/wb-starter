@@ -138,6 +138,7 @@ function traceMediaLoads() {
 import { behaviors } from '../wb-viewmodels/index.js';
 import { markReady, isReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
+import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
 import { isComponentLandmark, COMPONENT_HOST } from './component-landmark.js';
 import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
@@ -843,9 +844,10 @@ const WB = {
       });
     });
 
-      // Generic [x-behavior="name1 name2"] dispatch — the convention demo.js
-      // uses for its dynamically-created <pre x-behavior="pre">/<code
-      // x-behavior="code">, and the one wb-lazy.js has always understood.
+      // Generic [x-behavior="name1 name2"] dispatch — DEPRECATED (#1642): old
+      // markup still runs and warns once per spelling; write x-name instead.
+      // demo.js used it for its dynamically-created code panels (now
+      // <pre x-pre>/<code x-code>), and wb-lazy.js has always understood it.
       // scan() itself never handled it (only observe()'s MutationObserver
       // did, and only for attribute VALUE CHANGES on already-tracked nodes,
       // never for a brand-new node arriving with the attribute already set —
@@ -862,7 +864,7 @@ const WB = {
       //
       // querySelectorAll() only matches DESCENDANTS of root, never root
       // itself — invisible until demo.js's `WB.scan(pre, { eager: true })`
-      // call, where `pre` (the exact <pre x-behavior="pre"> just created)
+      // call, where `pre` (the exact code-panel <pre> just created)
       // IS root. That left pre.js's behavior never invoked, so the code
       // panel never got its `.x-pre` class/wrapper (pre.css's overflow-x:
       // auto), and its un-wrapped raw-source width fed back into x-demo's
@@ -872,6 +874,7 @@ const WB = {
       const xBehaviorEls = matchingElements(root, '[x-behavior]');
       xBehaviorEls.forEach(element => {
         const htmlEl = /** @type {HTMLElement} */ (element);
+        warnXBehaviorDeprecated(htmlEl); // #1642: still runs, but says so
         const behaviorList = (htmlEl.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean);
         behaviorList.forEach(name => {
           if (knownBehaviors.has(name)) {
@@ -1026,6 +1029,7 @@ const WB = {
     // runs this and injectShorthand() on an added node and on its matching
     // descendants; each site had its own copy (#883).
     const injectBehaviorList = (el) => {
+      warnXBehaviorDeprecated(el); // #1642
       (el.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean).forEach(name => {
         if (knownBehaviors.has(name)) WB.inject(el, name);
       });
@@ -1152,6 +1156,7 @@ dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length
           const element = /** @type {HTMLElement} */ (mutation.target);
           
           if (mutation.attributeName === 'x-behavior') {
+            warnXBehaviorDeprecated(element); // #1642
             const behaviorList = (element.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean);
             const current = applied.get(element) || [];
             current.forEach(({ name, cleanup }) => {

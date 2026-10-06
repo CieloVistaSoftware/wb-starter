@@ -49,7 +49,7 @@ function langFromClass(el) {
 /**
  * Code - Enhanced <code> element
  * Adds syntax styling, copy button, language badge
- * Helper Attribute: [x-behavior="code"]
+ * Helper Attribute: [x-code]
  */
 export function code(element, options = {}) {
   // Handle <pre> wrapper - delegate to pre behavior for chrome, and apply code behavior to inner code for highlighting

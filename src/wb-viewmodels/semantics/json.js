@@ -1,6 +1,6 @@
 /**
  * JSON Viewer - Pretty print JSON
- * Helper Attribute: [x-behavior="json"]
+ * Helper Attribute: [x-json]
  */
 import hljs from '../../lib/highlight.js';
 

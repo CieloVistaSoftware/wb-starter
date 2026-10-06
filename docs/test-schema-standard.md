@@ -261,7 +261,7 @@ All custom events the behavior dispatches:
 ```json
 "test": {
   "setup": [
-    "<div x-behavior=\"cardbutton\" title=\"Test\" primary=\"Save\" secondary=\"Cancel\">Content</div>"
+    "<div x-cardbutton title=\"Test\" primary=\"Save\" secondary=\"Cancel\">Content</div>"
   ],
   
   "matrix": {
@@ -279,7 +279,7 @@ All custom events the behavior dispatches:
     "buttons": [
       {
         "name": "primary button click",
-        "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\"></div>",
+        "setup": "<div x-cardbutton primary=\"Save\"></div>",
         "selector": ".x-card__btn--primary",
         "action": "click",
         "expect": {
@@ -289,7 +289,7 @@ All custom events the behavior dispatches:
       },
       {
         "name": "secondary button click",
-        "setup": "<div x-behavior=\"cardbutton\" secondary=\"Cancel\"></div>",
+        "setup": "<div x-cardbutton secondary=\"Cancel\"></div>",
         "selector": ".x-card__btn--secondary",
         "action": "click",
         "expect": {
@@ -301,7 +301,7 @@ All custom events the behavior dispatches:
     "interactions": [
       {
         "name": "hover effect",
-        "setup": "<div x-behavior=\"card\" hoverable></div>",
+        "setup": "<div x-card hoverable></div>",
         "action": "hover",
         "expect": {
           "style": {
@@ -311,7 +311,7 @@ All custom events the behavior dispatches:
       },
       {
         "name": "click toggle",
-        "setup": "<div x-behavior=\"card\" clickable></div>",
+        "setup": "<div x-card clickable></div>",
         "action": "click",
         "expect": {
           "class": "x-card--active",
@@ -323,7 +323,7 @@ All custom events the behavior dispatches:
     "keyboard": [
       {
         "name": "Enter activates clickable card",
-        "setup": "<div x-behavior=\"card\" clickable></div>",
+        "setup": "<div x-card clickable></div>",
         "key": "Enter",
         "expect": {
           "class": "x-card--active"
@@ -334,7 +334,7 @@ All custom events the behavior dispatches:
     "dismiss": [
       {
         "name": "close button removes notification",
-        "setup": "<div x-behavior=\"cardnotification\" dismissible message=\"Test\"></div>",
+        "setup": "<div x-cardnotification dismissible message=\"Test\"></div>",
         "selector": ".x-card__notif-close",
         "action": "click",
         "expect": {
@@ -348,7 +348,7 @@ All custom events the behavior dispatches:
     "methods": [
       {
         "name": "expand() method",
-        "setup": "<div x-behavior=\"cardexpandable\" title=\"Test\">Long content here</div>",
+        "setup": "<div x-cardexpandable title=\"Test\">Long content here</div>",
         "call": "element.wbCardExpandable.show()",
         "expect": {
           "class": "x-card--expanded",
@@ -357,7 +357,7 @@ All custom events the behavior dispatches:
       },
       {
         "name": "collapse() method",
-        "setup": "<div x-behavior=\"cardexpandable\" expanded>Content</div>",
+        "setup": "<div x-cardexpandable expanded>Content</div>",
         "call": "element.wbCardExpandable.hide()",
         "expect": {
           "notClass": "x-card--expanded",
@@ -497,7 +497,7 @@ All custom events the behavior dispatches:
   
   "test": {
     "setup": [
-      "<div x-behavior=\"cardbutton\" title=\"Actions\" primary=\"Save\" secondary=\"Cancel\">Content</div>"
+      "<div x-cardbutton title=\"Actions\" primary=\"Save\" secondary=\"Cancel\">Content</div>"
     ],
     
     "matrix": {
@@ -516,7 +516,7 @@ All custom events the behavior dispatches:
       "buttons": [
         {
           "name": "primary button is clickable",
-          "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\"></div>",
+          "setup": "<div x-cardbutton primary=\"Save\"></div>",
           "selector": ".x-card__btn--primary",
           "action": "click",
           "expect": {
@@ -526,7 +526,7 @@ All custom events the behavior dispatches:
         },
         {
           "name": "primary button as link has href",
-          "setup": "<div x-behavior=\"cardbutton\" primary=\"Go\" primaryHref=\"/test\"></div>",
+          "setup": "<div x-cardbutton primary=\"Go\" primaryHref=\"/test\"></div>",
           "selector": ".x-card__btn--primary",
           "expect": {
             "tagName": "A",
@@ -535,7 +535,7 @@ All custom events the behavior dispatches:
         },
         {
           "name": "secondary button is clickable",
-          "setup": "<div x-behavior=\"cardbutton\" secondary=\"Cancel\"></div>",
+          "setup": "<div x-cardbutton secondary=\"Cancel\"></div>",
           "selector": ".x-card__btn--secondary",
           "action": "click",
           "expect": {
@@ -547,7 +547,7 @@ All custom events the behavior dispatches:
       "visual": [
         {
           "name": "buttons have proper styling",
-          "setup": "<div x-behavior=\"cardbutton\" primary=\"Save\" secondary=\"Cancel\"></div>",
+          "setup": "<div x-cardbutton primary=\"Save\" secondary=\"Cancel\"></div>",
           "checks": [
             { "selector": ".x-card__btn--primary", "style": "backgroundColor", "pattern": "rgb\\(99, 102, 241\\)" },
             { "selector": ".x-card__btn--secondary", "style": "backgroundColor", "notEmpty": true }

@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.343">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.344">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -2486,9 +2486,9 @@
       (codebar || liveCode).appendChild(copy);
 
       const pre = document.createElement('pre');
-      pre.setAttribute('x-behavior', 'pre');
+      pre.setAttribute('x-pre', '');
       const code = document.createElement('code');
-      code.setAttribute('x-behavior', 'code');
+      code.setAttribute('x-code', '');
       code.dataset.language = 'html';
       code.textContent = pretty;
       pre.appendChild(code);
@@ -2837,7 +2837,7 @@
       eventsHint.textContent = 'interact with the example above';
       eventsEmpty.hidden = false;
 
-      // Highlighted like the source panel, via the same x-behavior pre/code
+      // Highlighted like the source panel, via the same x-pre/x-code
       // pair -- a plain <pre> rendered the handler as unstyled text, and it
       // overflowed its box rather than wrapping. A FRESH host each time:
       // WB.inject() will not re-apply a behavior to an element that already
@@ -2849,9 +2849,9 @@
       eventsSnippet = fresh;
 
       const pre = document.createElement('pre');
-      pre.setAttribute('x-behavior', 'pre');
+      pre.setAttribute('x-pre', '');
       const code = document.createElement('code');
-      code.setAttribute('x-behavior', 'code');
+      code.setAttribute('x-code', '');
       code.dataset.language = 'javascript';
       code.textContent = handlerSnippet(hostTag, token, rootId);
       pre.appendChild(code);
