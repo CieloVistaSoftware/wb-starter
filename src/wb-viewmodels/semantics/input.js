@@ -284,6 +284,16 @@ export function input(element, options = {}) {
     ...options
   };
 
+  // #1645: already wrapped -- a second pass over the same <input> (a rescan,
+  // or the OTHER runtime: pages/behaviors.html runs inside the site shell's
+  // wb.js and also imports wb-lazy.js, each with its own record of what it has
+  // applied) wrapped the wrapper, so #behaviors-search sat inside two nested
+  // .x-input__wrapper--native divs on most loads. The first pass owns it.
+  if (element.parentElement?.classList.contains('x-input__wrapper--native')
+      && element.classList.contains('x-input__field')) {
+    return () => {};
+  }
+
   const wrapper = document.createElement('div');
   // #485: NOT .x-input -- that class is input.css's border/padding/background
   // styling for the real text field itself. Putting it on this wrapper div

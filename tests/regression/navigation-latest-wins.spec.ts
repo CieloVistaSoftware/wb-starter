@@ -42,6 +42,7 @@ test('a slow earlier navigation does not paint over a newer one (#1519)', async 
   // Give the released navigation every chance to land: it would write #main
   // after the fragment, its text and its CSS (capped at 2s) have resolved.
   await page.waitForResponse(/pages\/about\.html/, { timeout: 5000 }).catch(() => {});
+  // sleep-proves-negative: the released older navigation must NOT write #main; a correct router does nothing, so there is no event to wait for
   await page.waitForTimeout(2500);
 
   const state = await page.evaluate(() => ({

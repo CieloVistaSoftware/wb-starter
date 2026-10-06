@@ -49,10 +49,10 @@ test.describe('#184 — home feature cards are clickable', () => {
 
   test('clicking a feature card navigates via the SPA', async ({ page }) => {
     await page.click('.feature-card-link[href="?page=behaviors"]');
-    await page.waitForTimeout(800);
     // The card still says ?page=behaviors; the site files it under the page's
-    // real path (#1001).
-    const url = await page.evaluate(() => location.pathname + location.search);
-    expect(url, 'clicking the Behavior Library card did not navigate').toBe(pagePath('behaviors'));
+    // real path (#1001). Polled until the SPA navigates (#1516: not 800ms).
+    await expect.poll(() => page.evaluate(() => location.pathname + location.search), {
+      message: 'clicking the Behavior Library card did not navigate',
+    }).toBe(pagePath('behaviors'));
   });
 });

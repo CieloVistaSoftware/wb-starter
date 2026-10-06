@@ -14,8 +14,9 @@ import { test, expect } from '../fixtures/offline';
 
 test('tests/fixtures/cards-permutation-matrix.html: page content keeps >=1rem clearance from the viewport edge', async ({ page }) => {
   await page.goto('/tests/fixtures/cards-permutation-matrix.html', { waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
-  await page.waitForTimeout(500);
+  // The page is built once WB settles (#1516: not 500ms).
+  await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
   const bodyPaddingLeft = await page.evaluate(() => parseFloat(getComputedStyle(document.body).paddingLeft));
   expect(bodyPaddingLeft, 'body (or its content wrapper) must have >=1rem left padding').toBeGreaterThanOrEqual(16);

@@ -1219,5 +1219,6 @@
   "1633": "release-bump spec times out at 30s while release.mjs is allowed 120s",
   "1640": "Cards with a body are padded twice: the host-padding fallback checks a class nothing emits",
   "1642": "x-behavior=\"name\" is deprecated: use x-name everywhere (src, demos, pages, docs, tests)",
-  "1645": "Behaviors page: the search input is sometimes wrapped twice (nested x-input__wrapper)"
+  "1645": "Behaviors page: the search input is sometimes wrapped twice (nested x-input__wrapper)",
+  "1653": "Hero gallery / playground heroes: on 20 of 120 heroes both buttons go to the same page"
 }

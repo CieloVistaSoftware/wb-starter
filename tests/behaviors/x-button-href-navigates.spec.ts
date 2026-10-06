@@ -118,6 +118,7 @@ test.describe('x-button href navigates from any host', () => {
 
     const before = page.url();
     await page.locator('#b').click({ force: true });
+    // sleep-proves-negative: a disabled control must NOT navigate; staying put fires no event
     await page.waitForTimeout(500);
 
     expect(page.url(), 'a disabled control navigated anyway').toBe(before);

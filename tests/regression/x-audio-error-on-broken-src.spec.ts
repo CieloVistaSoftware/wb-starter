@@ -38,16 +38,13 @@ test('.x-audio throws a catchable runtime error when its src is missing/empty', 
     return await (window as any).WB.scan(container, { eager: true });
   });
 
-  await page.waitForFunction(
-    () => (window as any).__wbAudioTestErrors?.length > 0 || true,
-    { timeout: 1000 }
-  ).catch(() => {});
-  await page.waitForTimeout(1500);
 
   // audio.js's errors begin "x-audio:" (the behavior's token). This filter
   // read '.x-audio' -- a class-selector spelling no message contains -- so
   // it could never match: a real error went unseen and a false positive
   // would have passed unnoticed.
+  // Polled until the error arrives (#1516), not a 1500ms sleep.
+  await expect.poll(() => pageErrors.some(e => e.includes('x-audio:') && e.includes('broken-audio-0-bytes.mp3')), { timeout: 15000 }).toBe(true);
   const audioError = pageErrors.find(e => e.includes('x-audio:') && e.includes('broken-audio-0-bytes.mp3'));
   expect(audioError, `expected a .x-audio runtime error for the empty file, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });

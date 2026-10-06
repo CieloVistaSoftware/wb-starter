@@ -10,7 +10,9 @@ test.describe('Mobile nav backdrop click-through (#171)', () => {
   test('closed drawer: backdrop does not intercept clicks over page content', async ({ page }) => {
     await page.goto('/?page=docs');
     await page.waitForSelector('a.docs-card', { timeout: 20000 });
-    await page.waitForTimeout(800);
+    // The shell and its backdrop are built once WB settles (#1516: not 800ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const r = await page.evaluate(() => {
       const card = document.querySelector('a.docs-card') as HTMLElement;

@@ -36,6 +36,7 @@ test('a slow doc never lands under a behavior picked after it (#1488)', async ({
   }, token);
 
   expect(await pick('x-tooltip'), 'x-tooltip has a row').toBe(true);
+  // sleep-proves-negative: lands the second pick while the first doc fetch is held; the timing is the scenario
   await page.waitForTimeout(100); // within the 2s hold: the slow fetch is in flight
   expect(await pick('x-toast'), 'x-toast has a row').toBe(true);
 

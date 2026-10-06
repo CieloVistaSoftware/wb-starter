@@ -5,7 +5,6 @@ test.describe('Card Hero (integration)', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -35,7 +34,6 @@ test.describe('Card Hero (integration)', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -54,7 +52,6 @@ test.describe('Card Hero (integration)', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -75,7 +72,6 @@ test.describe('Card Hero (integration)', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');

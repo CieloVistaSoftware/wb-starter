@@ -53,11 +53,13 @@ test('single-item demo self-corrects width after its lazily-loaded control rende
 
   // Let everything -- including any legitimate delayed re-measure -- settle,
   // still under throttling, before removing it and reading the final state.
+  // sleep-proves-negative: a late re-measure must NOT shrink the control; there is no event for a resize that correctly never happens
   await page.waitForTimeout(1000);
   await client.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   // One more settle pass at normal speed so a resize triggered right at the
-  // throttle boundary has a frame to actually paint before we measure.
-  await page.waitForTimeout(500);
+  // throttle boundary has a frame to actually paint before we measure: two
+  // frames, not 500ms (#1516).
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
   const m = await demo.evaluate((el) => {
     const grid = el.querySelector('.x-demo__grid') as HTMLElement;
