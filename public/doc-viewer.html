@@ -30,6 +30,13 @@
     .hljs-attribute, .hljs-variable, .hljs-template-variable, .hljs-symbol, .hljs-link { color: var(--danger-color, #f85149); }
     .hljs-emphasis { font-style: italic; }
     .hljs-strong { font-weight: 700; }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .doc-viewer-block-1 { display:flex; gap:0.5rem; align-items:center; margin-bottom:2rem; flex-wrap:wrap; }
+    #back-to-docs { margin-bottom:0; }
+    #text-smaller { margin-bottom:0; cursor:pointer; }
+    #text-larger { margin-bottom:0; cursor:pointer; }
+    #text-reset { margin-bottom:0; cursor:pointer; }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,17 +108,17 @@
   </style>
 </head>
 <body id="doc-viewer-body">
-  <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:2rem;flex-wrap:wrap;">
+  <div class="doc-viewer-block-1">
     <!-- #243: docs open target="_blank" from ?page=docs — a real user-navigated
          tab, not one opened via window.open(). Browsers silently block
          window.close() on tabs like that (it only works on script-opened
          windows), so the old "✕ Close" button did nothing and there was no
          way back except browser-back/re-navigating. A real href to the Docs
          index works regardless of how the tab got here. -->
-    <a id="back-to-docs" href="#" class="back-link" style="margin-bottom:0;">← Back to Docs</a>
-    <button id="text-smaller" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Smaller text" aria-label="Decrease text size">A−</button>
-    <button id="text-larger" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Larger text" aria-label="Increase text size">A+</button>
-    <button id="text-reset" class="back-link" style="margin-bottom:0;cursor:pointer;" title="Reset text size" aria-label="Reset text size">Reset</button>
+    <a id="back-to-docs" href="#" class="back-link">← Back to Docs</a>
+    <button id="text-smaller" class="back-link" title="Smaller text" aria-label="Decrease text size">A−</button>
+    <button id="text-larger" class="back-link" title="Larger text" aria-label="Increase text size">A+</button>
+    <button id="text-reset" class="back-link" title="Reset text size" aria-label="Reset text size">Reset</button>
   </div>
   <script>
     (function () {
