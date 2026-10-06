@@ -8,32 +8,66 @@
     {
       "version": "1.0.332",
       "date": "2026-10-06",
-      "summary": "The iPhone (WebKit) test run took no review screenshots, because a capture of any page with an audio player that never loads hung until it timed out. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1629\" target=\"_blank\" rel=\"noopener\">PR 1629</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
+      "summary": "The iPhone (WebKit) test run took no review screenshots, because a capture of any page with an audio player that never loads hung until it timed out. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
       "items": [
         {
           "kind": "fixed",
-          "html": "<strong>WebKit review screenshots run again; media is unloaded first</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
+          "html": "<strong>WebKit review screenshots run again; media is unloaded first</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/751f27ff524483c94742d68780899fa8d6d188f1\" target=\"_blank\" rel=\"noopener\"><code>751f27f</code></a>",
           "issues": [
             1439
           ]
-        }
-      ],
-      "seeIt": "Open the &quot;Playwright (mobile-validation-iphone)&quot; job on this PR and find the five &quot;screenshot:&quot; tests. Before: all five were skipped (&quot;WebKit screenshots stall on the CI runner&quot;). Now: all five run and pass, Home included."
-    },
-    {
-      "version": "1.0.331",
-      "date": "2026-10-06",
-      "summary": "Striped table rows had no contrast rule, and on the light and arctic themes the stripes were fainter than on any other theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1625\" target=\"_blank\" rel=\"noopener\">PR 1625</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
-      "items": [
+        },
         {
           "kind": "fixed",
-          "html": "<strong>Striped rows differ by at least 1.2:1 on every theme</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
+          "html": "<strong>Striped rows differ by at least 1.2:1 on every theme</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/15d554728b589fe674f8067e648c7c0a00562f83\" target=\"_blank\" rel=\"noopener\"><code>15d5547</code></a>",
           "issues": [
             680
           ]
         }
       ],
-      "seeIt": "Open the Behaviors page, pick the table behavior with striped on, and switch to the Light theme. Before: alternate rows were barely distinguishable. Now: they are as distinct as on the other light themes, and the rule is written down in §33."
+      "seeIt": "Open the &quot;Playwright (mobile-validation-iphone)&quot; job on this PR and find the five &quot;screenshot:&quot; tests. Before: all five were skipped (&quot;WebKit screenshots stall on the CI runner&quot;). Now: all five run and pass, Home included.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e79fd2821a3b527109718bc1c928f809b084e5cb\" target=\"_blank\" rel=\"noopener\"><code>e79fd28</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.331",
+      "date": "2026-10-06",
+      "summary": "Main gained 1.0.329 and 1.0.330 (the #1620 merge) in the old format while this PR was open; releases.json is regenerated so every entry has its commit links and 1.0.330 shows #1620&#39;s Links block (PR, issue, see-it pages). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json after merging main (1.0.329, 1.0.330)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/957ac676af978605bba3db2403b25f797cb488aa\" target=\"_blank\" rel=\"noopener\"><code>957ac67</code></a>",
+          "issues": [
+            1623
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/957ac676af978605bba3db2403b25f797cb488aa\" target=\"_blank\" rel=\"noopener\"><code>957ac67</code></a>"
+        },
+        {
+          "label": "PR (releases links)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1624</a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1623</a>"
+        },
+        {
+          "label": "See it (live site, after deploy)",
+          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=releases</a>"
+        },
+        {
+          "label": "See it (local)",
+          "html": "<a href=\"http://localhost:3000/?page=releases\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/?page=releases</a>"
+        }
+      ]
     },
     {
       "version": "1.0.330",
