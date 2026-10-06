@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.292",
+      "date": "2026-10-05",
+      "summary": "Four regression specs still loaded /demos/sample.wav or (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1555\" target=\"_blank\" rel=\"noopener\">PR 1555</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Point the remaining audio specs at the test fixture</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
+          "issues": [
+            762
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>No audio or video ships in demos/; a gate keeps it that way</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
+          "issues": [
+            762
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/x-audio-detached-element-no-false-error.spec.ts --project=regression</code>. Before: it failed because /demos/sample.wav returned 404. Now: it passes, loading the same file from tests/fixtures/media/."
+    },
+    {
       "version": "1.0.291",
       "date": "2026-10-05",
       "summary": "Every request for a schema a behavior does not have (desclist, empty, json) printed an ENOENT stack trace in the server log, and the 404 body was Express&#39;s error page showing the server&#39;s own file path. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1558\" target=\"_blank\" rel=\"noopener\">PR 1558</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
