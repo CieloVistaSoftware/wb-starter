@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.327",
+      "date": "2026-10-06",
+      "summary": "The installed app&#39;s icon was still the purple lightning bolt, while link previews now show the wb logo. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1615\" target=\"_blank\" rel=\"noopener\">PR 1615</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1614\" target=\"_blank\" rel=\"noopener\">#1614</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>App icons are the wb logo, generated from the share image</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1614\" target=\"_blank\" rel=\"noopener\">#1614</a>",
+          "issues": [
+            1614
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/assets/icons/icon-192.png (or install the site as an app / add it to the home screen). Before: a white lightning bolt on a purple square. Now: the wb logo (browser window with brush, pencil and &lt;/&gt; globe) on white."
+    },
+    {
       "version": "1.0.326",
       "date": "2026-10-06",
       "summary": "The nightly&#39;s home-page speed test failed because it was timed while other tests were starting their browsers on the same machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1616\" target=\"_blank\" rel=\"noopener\">PR 1616</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1613\" target=\"_blank\" rel=\"noopener\">#1613</a>",
