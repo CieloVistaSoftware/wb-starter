@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.321",
+      "date": "2026-10-06",
+      "summary": "The schema-vs-behavior audit matched a schema to src/wb-viewmodels/&lt;name&gt;.js by filename, so every behavior in a grouped file (alert in feedback.js, center in layouts.js) came back &quot;no behavior source found&quot; -- 78 schemas unaudited. It now resolves through the runtime&#39;s own behavior registry (behaviorModules in wb-viewmodels/index.js), by schemaFor then filename, and counts a property as read when the module names it in any spelling, the schema builder applies it (appliesClass/appliesAttribute/$view), an enum value is a modifier class a stylesheet defines, or a stylesheet styles the attribute on the behavior&#39;s host. Unresolved schemas: 78 -&gt; 0. The one real unread property was sticky.animated: the schema, docs and demo say `animated`, sticky.js read `animate` and then used it for nothing, so animated=&quot;false&quot; did nothing. It now drops the transition (.x-sticky--static), with `animate` kept as back-compat. A new compliance gate asserts zero unresolved and zero unread across more than 100 schemas, and audit-orphan-schemas.mjs shares the not-a-component list instead of keeping its own. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1608\" target=\"_blank\" rel=\"noopener\">PR 1608</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/669\" target=\"_blank\" rel=\"noopener\">#669</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Audit resolves every schema through the registry; sticky reads `animated`</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/669\" target=\"_blank\" rel=\"noopener\">#669</a>",
+          "issues": [
+            669
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;div x-sticky animated=&quot;false&quot;&gt;Bar&lt;/div&gt; and read its computed transition-duration in DevTools. Before: 0.2s, the same as without the attribute. Now: 0s, and a plain &lt;div x-sticky&gt; still reads 0.2s."
+    },
+    {
       "version": "1.0.320",
       "date": "2026-10-06",
       "summary": "The parking lot now records that real page paths shipped, and what is left for #1001. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1607\" target=\"_blank\" rel=\"noopener\">PR 1607</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1601\" target=\"_blank\" rel=\"noopener\">#1601</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
