@@ -37,7 +37,7 @@ const HARNESS = '/demos/test-harness.html';
  * asserts on decode state — only on what is served and on the resulting box.
  * A missing path 404s for real: server.js 404s anything naming a file.
  */
-const GOOD_VIDEO = '/demos/movie.mp4';
+const GOOD_VIDEO = '/tests/fixtures/media/placeholder-13-bytes.mp4';
 const GOOD_IMAGE = '/images/demo-image.jpg';
 const MISSING_VIDEO = '/demos/no-such-video-871.mp4';
 
@@ -91,7 +91,7 @@ test.describe('[x-cardvideo] aspect-ratio parity with [x-cardimage] (#482)', () 
     await gotoHarness(page);
 
     // The differentiator is the HTTP response, recorded here rather than
-    // inferred from decode state: demos/movie.mp4 is a 13-byte placeholder, so
+    // inferred from decode state: the fixture is a 13-byte placeholder, so
     // asserting readyState would only prove Chromium cannot decode a stub.
     // What the figure must be independent of is the RESPONSE, and that is
     // observable exactly.
