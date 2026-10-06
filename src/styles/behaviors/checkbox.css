@@ -9,7 +9,7 @@
  * -----------------------------------------------------------------------------
  */
 
-.x-checkbox, x-checkbox {
+.x-checkbox{
   display: inline-flex;
   align-items: center;
   gap: var(--x-checkbox-label-gap, 0.5rem);

@@ -14,7 +14,7 @@
    class -- progress() skips the bare 'x-progress' token only for a literal
    <progress> host; a native <progress> (autoInject) or a plain
    <div x-progress> still gets the class, and still needs it selected here. */
-x-progress, [x-progress],
+[x-progress],
 .x-progress {
   position: relative;
   height: 6px;
@@ -236,5 +236,5 @@ x-progress, [x-progress],
 }
 
 /* Custom <progress> must be block to honor height (issue #127) */
-x-progress, [x-progress],
+[x-progress],
 .x-progress { display: block; width: 100%; }

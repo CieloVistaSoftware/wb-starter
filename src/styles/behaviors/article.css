@@ -27,7 +27,7 @@
   gap: 1.5rem;
 }
 
-.x-articles--grid > x-article {
+.x-articles--grid > article {
   border: 1px solid var(--border-color, #374151);
   border-radius: var(--radius-lg, 8px);
   padding: 1rem;
@@ -40,7 +40,7 @@
   gap: 1.5rem;
 }
 
-.x-articles--list > x-article {
+.x-articles--list > article {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-color, #374151);
 }
@@ -50,7 +50,7 @@
   column-gap: 1.5rem;
 }
 
-.x-articles--masonry > x-article {
+.x-articles--masonry > article {
   break-inside: avoid;
   margin-bottom: 1.5rem;
 }
