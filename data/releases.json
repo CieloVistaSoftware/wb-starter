@@ -6,6 +6,62 @@
   ],
   "releases": [
     {
+      "version": "1.0.352",
+      "date": "2026-10-06",
+      "summary": "Autoinject-select-variant-colors.spec.ts read the theme-variant selects&#39; style= attribute to check for theme variables; this PR moved those colours into <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/autoinject.html\" target=\"_blank\" rel=\"noopener\">demos/autoinject.html</a>&#39;s &lt;style&gt; rules (#779), so the attribute is gone and the check failed with &quot;received value must not be null&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1646\" target=\"_blank\" rel=\"noopener\">PR 1646</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The autoinject select-variant check reads the page&#39;s CSS rule, not a style attribute</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/124f62ecf0ea3ab500f7e117cdc67f710e0c9338\" target=\"_blank\" rel=\"noopener\"><code>124f62e</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Demos/index.html&#39;s class comes from its generator, not a hand edit</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/67f0a3cb25c6b107c988154c4a5a0da9907a0b02\" target=\"_blank\" rel=\"noopener\"><code>67f0a3c</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Demos/ carries no inline styles; the gate scans demos/</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f1bd089fb41e62006218e8c294688c98f68eaa0d\" target=\"_blank\" rel=\"noopener\"><code>f1bd089</code></a>",
+          "issues": [
+            779
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/autoinject-select-variant-colors.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/autoinject-select-variant-colors.spec.ts</a>. Before: &quot;Matcher error: received value must not be null nor undefined&quot;. Now: it passes, asserting no style= attribute and that the #autoinject-select-success/-error rules use var(--alert-success-bg)/var(--alert-danger-bg), not rgba().",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/60f6364042f43d5312d701eda44e2d4265b19586\" target=\"_blank\" rel=\"noopener\"><code>60f6364</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.351",
+      "date": "2026-10-06",
+      "summary": "Source comments, a schema title, a component-library page heading and two docs still called things a &quot;base card&quot;, &quot;base element&quot;, &quot;base behavior&quot; or &quot;base class&quot;, and card.css&#39;s header said &quot;ALL CARDS INHERIT FROM THIS&quot;, which reads as the OOP inheritance model the project has dropped (John: &quot;Don&#39;t use the name base anywhere in this project we are no longer OOP&quot;). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1654\" target=\"_blank\" rel=\"noopener\">PR 1654</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/462\" target=\"_blank\" rel=\"noopener\">#462</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No OOP &quot;base&quot; wording in shipped code, pages or docs; a guard keeps it out</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/462\" target=\"_blank\" rel=\"noopener\">#462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/962c66bbb3313d197aea7274149e6fe2d38b9a5b\" target=\"_blank\" rel=\"noopener\"><code>962c66b</code></a>",
+          "issues": [
+            462
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-legacy-component-inheritance-docs.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-legacy-component-inheritance-docs.spec.ts</a>. Before: the new #462 test lists the offending lines (card.css &quot;BASE CARD - ALL CARDS INHERIT FROM THIS&quot;, the component-library &quot;Base Card&quot; heading, demo.js &quot;base-card blocks&quot;). Now: all pass, and the x-component-library page heading reads &quot;Card&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b5216565d0749de943e197d09d012815dc39f825\" target=\"_blank\" rel=\"noopener\"><code>b521656</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.350",
       "date": "2026-10-06",
       "summary": "The Behaviors page&#39;s search box sat inside two nested .x-input__wrapper divs on most loads: the page runs in the site shell&#39;s wb.js and also imports wb-lazy.js, each runtime applies input() on its own, and the native-input path of input() had no guard against wrapping an input it had already wrapped. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1652\" target=\"_blank\" rel=\"noopener\">PR 1652</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1645\" target=\"_blank\" rel=\"noopener\">#1645</a>",

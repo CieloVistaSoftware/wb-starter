@@ -18,8 +18,8 @@ import { dragStartPoint } from '../core/drag-start.js';
  * - Shared structure changes propagate to ALL variants automatically
  * 
  * cardimage composes the shared card structure and adds a <figure>. It does
- * not inherit anything: composeCard() is a function this file calls, not a
- * base class it descends from. (The IS-A / HAS-A wording that used to sit here
+ * not inherit anything: composeCard() is a function this file calls, and
+ * nothing here descends from it. (The IS-A / HAS-A wording that used to sit here
  * described a schema-layer inheritance model that no code ever implemented.)
  * 
  * SEMANTIC STANDARD (MANDATORY):
@@ -370,7 +370,7 @@ export function composeCard(element, options = {}) {
   // Validate semantic container
   validateSemanticContainer(element, config.behavior);
 
-  // Apply base classes. Skip the bare 'x-card' class when the host tag IS
+  // Apply root classes. Skip the bare 'x-card' class when the host tag IS
   // literally <article> -- redundant (card.css selects the tag directly too,
   // see its own comment) and flagged by tests/compliance/
   // no-redundant-tag-name-class.spec.ts (#478). Every OTHER card variant
@@ -471,7 +471,7 @@ export function composeCard(element, options = {}) {
   // allowlist so <article size="xs"> silently did nothing (#282). 'auto'
   // (a real schema-declared enum value, matching .x-card--auto in
   // card.css) was missing too, for the same reason.
-  // 'auto' is the default, and card.css declares it on the base class, so a
+  // 'auto' is the default, and card.css declares it on the root class, so a
   // --auto modifier would appear on every card and mean nothing.
   if (config.size && config.size !== 'auto' && ['xs','sm','md','lg','xl','full'].includes(config.size)) {
     element.classList.add(`x-card--${config.size}`);

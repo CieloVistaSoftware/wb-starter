@@ -12,8 +12,8 @@
 </head>
 
 <body class="demo-page">
-  <nav style="margin-bottom: 1rem;">
-    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>📄 Content & Media</h1>
   <p>Articles, markdown rendering, audio, tables</p>
@@ -385,17 +385,17 @@
   <div class="demo-section">
     <p>Standard Video</p>
     <div x-demo>
-      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" style="width: 100%; border-radius: 8px;"></video>
+      <video class="site-demo__media" controls src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
     </div>
 
     <p>Background Video (Muted Loop)</p>
     <div x-demo>
-      <video
+      <video class="site-demo__media site-demo__media--dim"
         src="https://www.w3schools.com/html/movie.mp4"
         autoplay
         muted
         loop
-        style="width: 100%; border-radius: 8px; opacity: 0.6;">
+>
       </video>
     </div>
   </div>
@@ -405,12 +405,12 @@
   <div class="demo-section">
     <p>Zoomable Image (Lightbox)</p>
     <div x-demo>
-      <img src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" style="width: 100%; border-radius: 8px;">
+      <img class="site-demo__media" src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene">
     </div>
 
     <p>Lazy Loaded with Aspect Ratio</p>
     <div x-demo>
-      <img src="https://picsum.photos/id/1015/800/600" lazy aspectRatio="4/3" alt="River" style="width: 100%; border-radius: 8px;">
+      <img class="site-demo__media" src="https://picsum.photos/id/1015/800/600" lazy aspectRatio="4/3" alt="River">
     </div>
   </div>
 
@@ -420,7 +420,7 @@
     <p>Standard Figure</p>
     <div x-demo>
       <figure zoom>
-        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
+        <img class="site-demo__fill" src="https://picsum.photos/id/1016/800/600" alt="Canyon">
         <figcaption>A beautiful canyon view</figcaption>
       </figure>
     </div>
@@ -428,7 +428,7 @@
     <p>Overlay Caption</p>
     <div x-demo>
       <figure captionPosition="overlay" lightbox>
-        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
+        <img class="site-demo__fill" src="https://picsum.photos/id/1019/800/600" alt="Technology">
         <figcaption>Technology and Nature</figcaption>
       </figure>
     </div>
@@ -497,7 +497,7 @@
       <form method="dialog">
         <h3>Confirmation</h3>
         <p>This is a native dialog.</p>
-        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+        <div class="site-demo__actions">
           <button value="cancel">Cancel</button>
           <button value="confirm" autofocus>Confirm</button>
         </div>

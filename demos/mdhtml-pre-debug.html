@@ -4,14 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MDHTML Pre Debug</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.350">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.350">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.352">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.352">
   <script type="module">
     import WB from '../src/core/wb.js';
     WB.init({ debug: true });
   </script>
+  <style id="mdhtml-pre-debug-moved-styles">
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .p-2rem { padding: 2rem; }
+  </style>
 </head>
-<body style="padding: 2rem;">
+<body class="p-2rem">
   <h1>MDHTML -> Pre Debug</h1>
 
   <h2>1. MDHTML generating Code Block</h2>

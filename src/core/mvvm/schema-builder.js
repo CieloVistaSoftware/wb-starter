@@ -225,7 +225,7 @@ export function getSchema(identifier) {
 // =============================================================================
 
 /**
- * Get base class from schema
+ * Get the root CSS class from schema
  */
 function getBaseClass(schema) {
   // See wb.js's `base` -- same computed-prefix trap.
@@ -354,7 +354,7 @@ function applyDefaults(data, properties) {
 function buildStructure(element, schema, data) {
   const baseClass = getBaseClass(schema);
 
-  // Apply base class -- skip when the host tag already IS baseClass (e.g.
+  // Apply the root class -- skip when the host tag already IS baseClass (e.g.
   // <div x-mdhtml> getting classList.add('x-mdhtml')); redundant, and flagged
   // by tests/compliance/no-redundant-tag-name-class.spec.ts (#478). Every
   // per-component behavior fn's OWN identical guard (card.js, checkbox.js,

@@ -634,7 +634,7 @@
           "file": "behaviors/fill.md",
           "title": "fill — as wide as the container allows",
           "description": "x-fill makes an element take all the width its container will give it.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/fireworks.md",
@@ -1138,7 +1138,7 @@
           "file": "behaviors/toast.md",
           "title": "toast",
           "description": "Turns any element into a click trigger that pops a real, auto-dismissing toast notification in the corner of the screen.",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/toggle.md",

@@ -7,8 +7,8 @@
   <meta name="description" content="A research paper on how Schema First Architecture solves AI hallucination in web development.">
   
   <!-- Import project styles for functional behaviors -->
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.350">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.350">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.352">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.352">
   
   <style>
     /* Scientific Paper Theme */
@@ -443,6 +443,23 @@
       margin-top: 0.5rem;
       display: block;
     }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). A doubled
+       class (.x.x) is one that has to outrank a page rule, as the inline did. */
+    .ta-center { text-align: center; }
+    .fs-10pt { font-size: 10pt; }
+    .fs-9pt { font-size: 9pt; }
+    .schema-first-architecture-block-1 { text-indent: 0; margin: 0; }
+    .schema-first-architecture-block-2 { display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; border-radius: 8px; }
+    .d-flex-gap-1rem-ai-center { display: flex; gap: 1rem; align-items: center; }
+    .fs-9pt-c-22c55e-fw-bold { font-size: 9pt; color: #22c55e; font-weight: bold; }
+    .schema-first-architecture-block-3.schema-first-architecture-block-3 { padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; background: #6366f1; color: white; }
+    .schema-first-architecture-block-4.schema-first-architecture-block-4 { padding: 0.5rem 1rem; border-radius: 6px; border: 2px solid #6366f1; cursor: pointer; font-weight: 500; background: transparent; color: #6366f1; }
+    .fs-9pt-c-ef4444-fw-bold { font-size: 9pt; color: #ef4444; font-weight: bold; }
+    .schema-first-architecture-block-5.schema-first-architecture-block-5 { padding: 0.5rem 1rem; font-size: 0.85rem; border: 2px dashed #ef4444; color: #ef4444; background: transparent; cursor: not-allowed; }
+    .schema-first-architecture-block-6 { text-indent: 0; font-size: 9.5pt; margin-bottom: 0.75rem; }
+    .schema-first-architecture-block-7 { margin-top: 3rem; text-align: center; border-top: 2px solid #000; padding-top: 1rem; font-size: 9pt; color: #4b5563; }
+    .fs-8pt-c-9ca3af { font-size: 8pt; color: #9ca3af; }
   </style>
 </head>
 <body>
@@ -452,7 +469,7 @@
   <div class="paper-container">
     <h1 class="paper-title">Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development</h1>
     
-    <div class="addressee-container" style="text-align: center;">
+    <div class="addressee-container ta-center">
       <div class="addressee">
         Prepared for: Michael Vendetti, New York City
       </div>
@@ -460,13 +477,13 @@
 
     <div class="authors">
       Dr. Elena Vance<br>
-      <span style="font-size: 10pt;">Cielo Vista Research</span><br>
-      <span style="font-size: 9pt;">Department of Automated Engineering</span>
+      <span class="fs-10pt">Cielo Vista Research</span><br>
+      <span class="fs-9pt">Department of Automated Engineering</span>
     </div>
 
     <div class="abstract-box">
       <span class="abstract-title">Abstract</span>
-      <p style="text-indent: 0; margin: 0;">
+      <p class="schema-first-architecture-block-1">
         Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as "hallucination." When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a "lie"—a confident assertion of correctness for structurally invalid code. This paper introduces "Schema-First Architecture," a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI behaviors with high reliability. We present the three pillars of this architecture—Site, Behavior, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project.
       </p>
     </div>
@@ -496,7 +513,7 @@
 
       <div class="critical-box">
         <span class="critical-label">The Problem</span>
-        <p style="text-indent: 0; margin: 0;"><strong>Prompt Engineering cannot guarantee correctness.</strong> It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate.</p>
+        <p class="schema-first-architecture-block-1"><strong>Prompt Engineering cannot guarantee correctness.</strong> It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate.</p>
       </div>
 
       <p>
@@ -563,18 +580,18 @@
       <figure>
         <div class="demo-box">
           <span class="demo-label">Live Interactive Figure 2: Schema-Driven Rendering</span>
-          <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; justify-content: center; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
-            <div style="display: flex; gap: 1rem; align-items: center;">
-              <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
-              <button variant="primary" style="padding: 0.5rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; background: #6366f1; color: white;">Schema Valid</button>
+          <div class="schema-first-architecture-block-2">
+            <div class="d-flex-gap-1rem-ai-center">
+              <span class="fs-9pt-c-22c55e-fw-bold">✓</span>
+              <button variant="primary" class="schema-first-architecture-block-3">Schema Valid</button>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
-              <span style="font-size: 9pt; color: #22c55e; font-weight: bold;">✓</span>
-              <button variant="outlined" style="padding: 0.5rem 1rem; border-radius: 6px; border: 2px solid #6366f1; cursor: pointer; font-weight: 500; background: transparent; color: #6366f1;">Schema Valid</button>
+            <div class="d-flex-gap-1rem-ai-center">
+              <span class="fs-9pt-c-22c55e-fw-bold">✓</span>
+              <button variant="outlined" class="schema-first-architecture-block-4">Schema Valid</button>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
-              <span style="font-size: 9pt; color: #ef4444; font-weight: bold;">✗</span>
-              <button class="btn-fake-blue" style="padding: 0.5rem 1rem; font-size: 0.85rem; border: 2px dashed #ef4444; color: #ef4444; background: transparent; cursor: not-allowed;" title="Hallucinated class - not in schema">Hallucination (Invalid)</button>
+            <div class="d-flex-gap-1rem-ai-center">
+              <span class="fs-9pt-c-ef4444-fw-bold">✗</span>
+              <button class="btn-fake-blue schema-first-architecture-block-5" title="Hallucinated class - not in schema">Hallucination (Invalid)</button>
             </div>
           </div>
         </div>
@@ -668,7 +685,7 @@
 
       <div class="success-box">
         <span class="success-label">Paradigm Shift</span>
-        <p style="text-indent: 0; margin: 0;">The AI is no longer a one-shot generator—it becomes a <strong>convergent system</strong> that iteratively approaches correctness through validation feedback loops.</p>
+        <p class="schema-first-architecture-block-1">The AI is no longer a one-shot generator—it becomes a <strong>convergent system</strong> that iteratively approaches correctness through validation feedback loops.</p>
       </div>
 
       <h2>4. Discussion</h2>
@@ -685,7 +702,7 @@
       <p>
         The implications extend beyond web pages. By treating the UI as a projection of a schema, we enable a new class of "Self-Correcting" AI agents capable of:
       </p>
-      <ol style="font-size: 10pt;">
+      <ol class="fs-10pt">
         <li><strong>Reading</strong> the schema to understand capabilities</li>
         <li><strong>Generating</strong> JSON/HTML based on that schema</li>
         <li><strong>Validating</strong> the output against the schema</li>
@@ -714,7 +731,7 @@
       
       <div class="peer-review full-width">
         <div class="peer-review-header">Peer Review Commentary</div>
-        <p style="text-indent: 0; font-size: 9.5pt; margin-bottom: 0.75rem;">
+        <p class="schema-first-architecture-block-6">
           The following limitations were identified during external review and represent important caveats to the claims made in this paper.
         </p>
       </div>
@@ -726,14 +743,14 @@
 
       <div class="critical-box">
         <span class="critical-label">Critical Distinction</span>
-        <p style="text-indent: 0; margin: 0;"><strong>Structural validity ≠ Semantic correctness.</strong> An AI can generate a perfectly valid card with completely wrong content. This remains an open problem.</p>
+        <p class="schema-first-architecture-block-1"><strong>Structural validity ≠ Semantic correctness.</strong> An AI can generate a perfectly valid card with completely wrong content. This remains an open problem.</p>
       </div>
 
       <h3>5.2. The Determinism Question</h3>
       <p>
         The term "deterministic" requires clarification. The <em>generation</em> step remains stochastic—LLMs produce variable outputs. What is deterministic are:
       </p>
-      <ul style="font-size: 10pt;">
+      <ul class="fs-10pt">
         <li><strong>Validation:</strong> Binary pass/fail against schema</li>
         <li><strong>Repair:</strong> Lookup of known fixes from database</li>
       </ul>
@@ -790,7 +807,7 @@
       <p>
         Several extensions warrant investigation:
       </p>
-      <ul style="font-size: 10pt;">
+      <ul class="fs-10pt">
         <li><strong>Semantic validation:</strong> Integration of content-aware validators</li>
         <li><strong>Schema evolution:</strong> Version migration strategies without breaking implementations</li>
         <li><strong>Performance profiling:</strong> Quantifying validate-repair loop overhead</li>
@@ -822,9 +839,9 @@
       </ul>
     </div>
     
-    <div style="margin-top: 3rem; text-align: center; border-top: 2px solid #000; padding-top: 1rem; font-size: 9pt; color: #4b5563;">
+    <div class="schema-first-architecture-block-7">
       © 2026 Cielovista Software. All Rights Reserved.<br>
-      <span style="font-size: 8pt; color: #9ca3af;">Document Version 3.0 — Includes Empirical Data &amp; Peer Review</span>
+      <span class="fs-8pt-c-9ca3af">Document Version 3.0 — Includes Empirical Data &amp; Peer Review</span>
     </div>
   </div>
 

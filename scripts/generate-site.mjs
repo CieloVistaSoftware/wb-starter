@@ -702,8 +702,9 @@ function generatePageHtml(pageSchema) {
   lines.push('<body class="demo-page">');
 
   // Nav back to index
-  lines.push('  <nav style="margin-bottom: 1rem;">');
-  lines.push('    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>');
+  // #779: no inline styles; showcase.css styles the nav and link.
+  lines.push('  <nav class="site-demo__nav">');
+  lines.push('    <a href="index.html" class="site-demo__back">← Back to Index</a>');
   lines.push('  </nav>');
 
   if (pageSchema.header) {

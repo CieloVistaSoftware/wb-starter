@@ -1,5 +1,5 @@
 /**
- * Behavior - Base behavior
+ * Behavior - the generic x-behavior marker
  * Helper Attribute: [x-behavior="behavior"]
  */
 export function behavior(element, options = {}) {

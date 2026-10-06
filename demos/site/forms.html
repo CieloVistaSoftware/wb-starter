@@ -12,8 +12,8 @@
 </head>
 
 <body class="demo-page">
-  <nav style="margin-bottom: 1rem;">
-    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>📝 Form Controls</h1>
   <p>Buttons, inputs, selects, checkboxes, switches, textareas</p>
@@ -1129,7 +1129,7 @@
   <section id="x-autosize-textarea-that-grows-with-content">
   <h2>🧩 x-autosize — textarea that grows with content</h2>
   <div x-demo>
-    <textarea x-autosize style="width: 100%; min-height: 2rem;">Type here and watch me grow!</textarea>
+    <textarea class="site-demo__autosize" x-autosize>Type here and watch me grow!</textarea>
   </div>
   </section>
 
@@ -1387,7 +1387,7 @@
     <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
     <div x-demo>
       <form ajax action="#">
-        <div style="display: grid; gap: 1rem; max-width: 400px;">
+        <div class="site-demo__form-stack">
           <input name="name" placeholder="Name" required>
           <input type="email" name="email" placeholder="Email" required>
           <textarea name="message" placeholder="Message" required></textarea>

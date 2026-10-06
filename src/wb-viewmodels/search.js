@@ -29,7 +29,7 @@ export function search(element, options = {}) {
     ...options
   };
 
-  // Apply base classes
+  // Apply root classes
   element.classList.add('x-search');
 
   if (config.size !== 'md') {

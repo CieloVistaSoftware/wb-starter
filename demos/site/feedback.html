@@ -12,8 +12,8 @@
 </head>
 
 <body class="demo-page">
-  <nav style="margin-bottom: 1rem;">
-    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>🔔 Feedback & Status</h1>
   <p>Alerts, badges, progress bars, ratings, spinners, toasts, tooltips</p>
@@ -1278,10 +1278,10 @@
   <h2>🧩 x-progress — on any element</h2>
   <p>A <code>&lt;progress&gt;</code> is the progress behavior on its own; <code>x-progress</code> applies the same behavior to any other element.</p>
   <div x-demo>
-    <div x-progress value="40" style="width: 300px; height: 24px;"></div>
+    <div class="site-demo__meter" x-progress value="40"></div>
   </div>
   <div x-demo>
-    <div x-progress value="80" variant="success" style="width: 300px; height: 24px;"></div>
+    <div class="site-demo__meter" x-progress value="80" variant="success"></div>
   </div>
   </section>
 
