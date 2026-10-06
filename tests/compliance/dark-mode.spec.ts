@@ -89,7 +89,6 @@ test.describe('Dark Mode Compliance', () => {
   // gh-backed server. Nothing here measures the worker; dark mode is CSS.
   test.use({ serviceWorkers: 'block' });
 
-
   for (const htmlFile of relativeHtmlFiles) {
     // Skip pages known to redirect/navigate and destroy context
     if (SKIP_DARK_MODE.some(skip => htmlFile.includes(skip))) continue;
@@ -217,8 +216,6 @@ test.describe('Dark Mode Compliance', () => {
         response?.status(),
         `/${htmlFile} did not load (status ${response?.status()})`,
       ).toBeLessThan(400);
-
-      await page.waitForTimeout(300);
 
       // Poll rather than snapshot once: site-engine stamps the attribute during
       // init, and under full-suite worker load that can land after a fixed

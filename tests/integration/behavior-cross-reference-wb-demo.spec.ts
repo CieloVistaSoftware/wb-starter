@@ -47,7 +47,6 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
     for (let i = 0; i < count; i++) {
       await demos.nth(i).scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
     }
-    await page.waitForTimeout(500);
 
     // §1/§16: every <div x-demo> shows both a live grid and its source panel.
     for (let i = 0; i < count; i++) {

@@ -119,6 +119,21 @@ async function readState(page: Page) {
   }, BUTTON_ID);
 }
 
+/**
+ * Wait for the fullscreen state the last action should produce (#1516): in
+ * fullscreen with the button offering the exit, or out of it with the label
+ * back to `label`. Polled, not slept, so a busy machine takes longer instead
+ * of failing.
+ */
+async function untilFullscreen(page: Page, entered: boolean, label?: string) {
+  await expect.poll(async () => {
+    const s = await readState(page);
+    return entered
+      ? s.targetIsFullscreen && s.offersExit
+      : !s.anythingFullscreen && !s.offersExit && (label === undefined || s.label === label);
+  }, { message: entered ? 'the target went fullscreen and the button offers the exit' : 'fullscreen ended and the button reads its idle label again' }).toBe(true);
+}
+
 test.describe('#738 — the fullscreen label follows the browser, not the request', () => {
   test('a resolve that did not go fullscreen never leaves the button offering Exit', async ({ page }) => {
     await openFullscreenButton(page);
@@ -127,9 +142,11 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
 
     await stubResolveWithoutGrant(page);
     await page.locator(BUTTON).click();
-    // The verification runs in the request's .then(); give the microtask queue
-    // and the behavior's own handler a turn.
-    await page.waitForTimeout(400);
+    // The verification runs in the request's .then(): wait until it has
+    // reported, not for a guessed 400ms (#1516).
+    await expect.poll(async () => (await readState(page)).errors.some((e) => e.includes('[WB:fullscreen]') && /not the fullscreen element/i.test(e)), {
+      message: 'a resolve that did not go fullscreen must be reported, not assumed to be a success',
+    }).toBe(true);
 
     const after = await readState(page);
 
@@ -149,7 +166,7 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
 
     await installFakeFullscreenEngine(page);
     await page.locator(BUTTON).click();
-    await page.waitForTimeout(300);
+    await untilFullscreen(page, true);
 
     const entered = await readState(page);
     expect(entered.targetIsFullscreen, 'a granted request puts the target in fullscreen').toBe(true);
@@ -158,7 +175,7 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
 
     // The user presses Escape. No click reaches the button.
     await page.keyboard.press('Escape');
-    await page.waitForTimeout(300);
+    await untilFullscreen(page, false, idle.label);
 
     const exited = await readState(page);
     expect(exited.anythingFullscreen, 'Escape leaves fullscreen').toBe(false);
@@ -173,12 +190,12 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
 
     await installFakeFullscreenEngine(page);
     await page.locator(BUTTON).click();
-    await page.waitForTimeout(300);
+    await untilFullscreen(page, true);
     expect((await readState(page)).targetIsFullscreen, 'precondition: in fullscreen').toBe(true);
 
     // The second click is the one John could not get to work.
     await page.locator(BUTTON).click();
-    await page.waitForTimeout(300);
+    await untilFullscreen(page, false, idle.label);
 
     const after = await readState(page);
     expect(after.anythingFullscreen, 'the second click must EXIT, not request again').toBe(false);
@@ -193,7 +210,7 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
 
     await installFakeFullscreenEngine(page);
     await page.locator(BUTTON).click();
-    await page.waitForTimeout(300);
+    await untilFullscreen(page, true);
     expect((await readState(page)).offersExit, 'precondition: the button offers the exit').toBe(true);
 
     // Something else takes the top layer. The target is no longer fullscreen,
@@ -204,7 +221,12 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
       document.body.appendChild(probe);
       (window as any).__fsEnter(probe);
     });
-    await page.waitForTimeout(300);
+    // Wait for the hand-over itself: the probe holds fullscreen and this
+    // button has stopped offering the exit.
+    await expect.poll(async () => {
+      const s = await readState(page);
+      return s.anythingFullscreen && !s.targetIsFullscreen && !s.offersExit;
+    }, { message: 'fullscreen moved to the probe and the button stopped offering Exit' }).toBe(true);
 
     const after = await readState(page);
     expect(after.anythingFullscreen, 'precondition: fullscreen is held by the other element').toBe(true);
@@ -240,11 +262,9 @@ test.describe('#738 — the fullscreen label follows the browser, not the reques
 
     await installFakeFullscreenEngine(page);
     await page.locator('#fs-custom-738').click();
-    await page.waitForTimeout(300);
-    expect(await read(), 'in fullscreen it offers the exit').toMatch(/exit/i);
+    await expect.poll(read, { message: 'in fullscreen it offers the exit' }).toMatch(/exit/i);
 
     await page.keyboard.press('Escape');
-    await page.waitForTimeout(300);
-    expect(await read(), 'and leaving restores ITS label, not the behavior default').toBe('Expand');
+    await expect.poll(read, { message: 'and leaving restores ITS label, not the behavior default' }).toBe('Expand');
   });
 });

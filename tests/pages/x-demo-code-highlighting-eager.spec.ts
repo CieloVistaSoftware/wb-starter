@@ -30,7 +30,6 @@ test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA)
 
     const codeEl = page.locator('[x-demo] code').first();
     await codeEl.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(500);
 
     await expect(codeEl).toHaveAttribute('data-highlighted', 'yes');
     await expect(codeEl).toHaveClass(/hljs/);

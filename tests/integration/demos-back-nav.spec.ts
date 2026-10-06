@@ -59,7 +59,6 @@ test('links survive opening a demo in a new tab and returning (#264)', async ({ 
 
   // Back on the original tab, the links must still be there.
   await page.bringToFront();
-  await page.waitForTimeout(500); // let any visibility/pageshow handlers run
   await expect
     .poll(() => page.locator('#app [x-cardlink]').count(), {
       timeout: 10000,
