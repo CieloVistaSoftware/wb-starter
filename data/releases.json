@@ -6,6 +6,63 @@
   ],
   "releases": [
     {
+      "version": "1.0.357",
+      "date": "2026-10-06",
+      "summary": "Data/docs-manifest.json was generated before <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fstatus.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/status.md</a> had a commit, so its entry had no created date: the Docs page showed it without &quot;Created&quot;, and the manifest step no longer reproduced the committed file. Both manifests are regenerated, which also moves the modified dates of the docs this branch changed. docs-illustrations-never-render-live.spec.ts proved #1169 on <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fauto-injection.md\" target=\"_blank\" rel=\"noopener\">docs/auto-injection.md</a>&#39;s html fences, which #307 made authored x-demo blocks; it now reads <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/fixtures/doc-viewer-semantic-fences.md\" target=\"_blank\" rel=\"noopener\">tests/fixtures/doc-viewer-semantic-fences.md</a>, a fixture with one plain &lt;article&gt; fence and one with an x- attribute, so the doc viewer&#39;s fence-to-demo path is still tested. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1657\" target=\"_blank\" rel=\"noopener\">PR 1657</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1105\" target=\"_blank\" rel=\"noopener\">#1105</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/307\" target=\"_blank\" rel=\"noopener\">#307</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/940\" target=\"_blank\" rel=\"noopener\">#940</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1185\" target=\"_blank\" rel=\"noopener\">#1185</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The docs manifests carry status.md&#39;s creation date, and the doc-viewer spec reads a fixture with real html fences</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fcd540896cd6cb456ff12822615f0352d4416615\" target=\"_blank\" rel=\"noopener\"><code>fcd5408</code></a>",
+          "issues": [
+            1169
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Container.md writes no data-* attribute, card.js names the ready attribute through ready-signal.js, and the card id spec waits on settled()</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d1466fa43042aacd02237fdbac0af7f2b45ff306\" target=\"_blank\" rel=\"noopener\"><code>d1466fa</code></a>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The registered-names gate reads attribute names, not class names inside quoted values</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1185\" target=\"_blank\" rel=\"noopener\">#1185</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/54614493ab97120b29ce3992e84faa6cf28359b8\" target=\"_blank\" rel=\"noopener\"><code>5461449</code></a>",
+          "issues": [
+            1185
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop the conflict markers <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=themes\" target=\"_blank\" rel=\"noopener\">pages/themes.html</a> has carried since fc4a700e, and guard against committed markers</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2823d8413e3e22472410d19b53a7fab5fab5461b\" target=\"_blank\" rel=\"noopener\"><code>2823d84</code></a>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A card&#39;s parts carry ids from its host, so a double render is reported</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/940\" target=\"_blank\" rel=\"noopener\">#940</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/db5bb59fd9000604724b7def778196b6f4ae7ebf\" target=\"_blank\" rel=\"noopener\"><code>db5bb59</code></a>",
+          "issues": [
+            940
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Code examples are live x-demo blocks, exceptions are html-static</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/307\" target=\"_blank\" rel=\"noopener\">#307</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a4f33abe66a1f1c13e367821cc37e21b2b65720d\" target=\"_blank\" rel=\"noopener\"><code>a4f33ab</code></a>",
+          "issues": [
+            307
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Rename x-span to x-status, keep x-span as an alias, and put the inline-element decisions on record</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1105\" target=\"_blank\" rel=\"noopener\">#1105</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9528c5e09e28d518a76e10fdd61f2edf263573a4\" target=\"_blank\" rel=\"noopener\"><code>9528c5e</code></a>",
+          "issues": [
+            1105
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/docs-by-created-date.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/docs-by-created-date.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/docs-illustrations-never-render-live.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/docs-illustrations-never-render-live.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/server-start-leaves-tree-clean.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/server-start-leaves-tree-clean.spec.ts</a> --project=regression. Before: four tests failed, three on the missing date and one on &quot;the doc still has both article fences&quot;. Now: all pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6717278804c3c1e3363716ebee6a185602083d07\" target=\"_blank\" rel=\"noopener\"><code>6717278</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.356",
       "date": "2026-10-06",
       "summary": "The classes that replaced the generated demo pages&#39; inline styles sized the meter, form stack, media corners and toggle box in px, which grew the px audit from 545 to 546 (#294). They now use rem at the same sizes: 18.75rem by 1.5rem, 25rem, 0.5rem and 3.125rem. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1639\" target=\"_blank\" rel=\"noopener\">PR 1639</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1530\" target=\"_blank\" rel=\"noopener\">#1530</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1125\" target=\"_blank\" rel=\"noopener\">#1125</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/945\" target=\"_blank\" rel=\"noopener\">#945</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
