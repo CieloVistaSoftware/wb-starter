@@ -5,7 +5,7 @@
  *
  * John: "i love the 120 card hero example, can we make them a jpg with
  * hotspots for the two buttons." The heroes come from
- * demos/lib/hero-permutations.js, the same module the playground's
+ * src/lib/hero-permutations.js, the same module the playground's
  * "120 card heroes" example renders, so the gallery always matches it.
  *
  * For each hero this:
@@ -29,7 +29,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { heroPermutations } from '../demos/lib/hero-permutations.js';
+import { galleryHref, heroPermutations } from '../src/lib/hero-permutations.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = path.join(ROOT, 'pages', 'hero-gallery.html');
@@ -167,7 +167,7 @@ async function render(heroes) {
         // The link is the module's, not whatever the DOM ended up with: the
         // gallery promises each hero's own cta-href.
         hotspots: box.ctas.map((c, k) => ({
-          label: expected[k].label, href: expected[k].href,
+          label: expected[k].label, href: galleryHref(expected[k].href),
           x: Math.round(c.x), y: Math.round(c.y), w: Math.round(c.w), h: Math.round(c.h),
         })),
       });
@@ -194,11 +194,11 @@ async function main() {
       const expected = [h.cta, h.cta2].filter(Boolean);
       return {
         index: h.index, title: h.title, width: p.width, height: p.height,
-        hotspots: expected.map((e, j) => ({ ...p.hotspots[j], label: e.label, href: e.href })),
+        hotspots: expected.map((e, j) => ({ ...p.hotspots[j], label: e.label, href: galleryHref(e.href) })),
       };
     });
     if (rows.includes(null) || replaceBlock(page, galleryBlock(rows)) !== page) {
-      console.error('pages/hero-gallery.html is out of date with demos/lib/hero-permutations.js.');
+      console.error('pages/hero-gallery.html is out of date with src/lib/hero-permutations.js.');
       console.error('Run: node scripts/render-hero-gallery.mjs');
       process.exit(1);
     }

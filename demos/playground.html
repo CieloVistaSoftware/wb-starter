@@ -243,7 +243,7 @@
     // below don't hand-roll their own navigator.clipboard try/catch.
     import { writeToClipboard } from '../src/wb-viewmodels/copy.js';
     import { getExtensionBehavior } from '../src/core/tag-map.js';
-    import { oneTwentyHeroes } from './lib/hero-permutations.js';
+    import { oneTwentyHeroes } from '../src/lib/hero-permutations.js';
 
     const input = document.getElementById('pg-input');
     const preview = document.getElementById('pg-preview');
@@ -645,7 +645,7 @@
       return out.join('\n');
     }
 
-    // The 120 heroes live in demos/lib/hero-permutations.js (#1597), so
+    // The 120 heroes live in src/lib/hero-permutations.js (#1597), so
     // pages/hero-gallery.html renders exactly the heroes this example shows.
 
     // All 5 x-cardhero variant= values (cardhero.schema.json enum:

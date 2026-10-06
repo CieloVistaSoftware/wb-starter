@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test, expect } from '../fixtures/offline';
-import { heroPermutations } from '../../demos/lib/hero-permutations.js';
+import { galleryHref, heroPermutations } from '../../src/lib/hero-permutations.js';
 
 /**
  * pages/hero-gallery.html shows the playground's 120 card heroes as JPGs, and
@@ -10,7 +10,7 @@ import { heroPermutations } from '../../demos/lib/hero-permutations.js';
  *
  * John: "i love the 120 card hero example, can we make them a jpg with
  * hotspots for the two buttons." scripts/render-hero-gallery.mjs renders the
- * images and writes the page from demos/lib/hero-permutations.js, the module
+ * images and writes the page from src/lib/hero-permutations.js, the module
  * the playground's "120 card heroes" example also uses.
  *
  * Holds:
@@ -18,7 +18,8 @@ import { heroPermutations } from '../../demos/lib/hero-permutations.js';
  *     size the page says (a re-render that changed a hero's height without
  *     rewriting the page would misplace every hotspot below its button);
  *   - each hero's hotspots are its own CTAs: same labels, same links, same
- *     count (cta2 is absent on some heroes);
+ *     count (cta2 is absent on some heroes). A link to the live doc viewer is
+ *     written relative (galleryHref), so it opens the same page;
  *   - in the browser, the point at the middle of each button in the image
  *     is a link to that button's href. The first render measured the
  *     buttons mid-entrance-animation and drew every hotspot 16px low; a click
@@ -67,7 +68,7 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
   test("each hero's hotspots are its own buttons and links", () => {
     expect(items, 'the page has one figure per hero').toHaveLength(heroes.length);
     for (const [k, h] of heroes.entries()) {
-      const expected = [h.cta, h.cta2].filter(Boolean).map((c) => ({ label: c!.label, href: c!.href }));
+      const expected = [h.cta, h.cta2].filter(Boolean).map((c) => ({ label: c!.label, href: galleryHref(c!.href) }));
       expect(items[k].spots.map((s) => ({ label: s.label, href: s.href })), `hero #${h.index}`).toEqual(expected);
       for (const s of items[k].spots) {
         expect(s.x + s.w <= items[k].width && s.y + s.h <= items[k].height, `hero #${h.index} ${s.label} lies inside the image`).toBe(true);
