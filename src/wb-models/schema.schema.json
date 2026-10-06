@@ -3,7 +3,7 @@
   "$id": "schema.schema.json",
   "schemaType": "definition",
   "title": "WB Behavior Schema Meta-Schema",
-  "description": "Validates WB schema files across 3 tiers. Behavior schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
+  "description": "Validates WB schema files across 3 tiers. Behavior schemas (default) require all fields. Base schemas (shared fragments other schemas include, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
   "type": "object",
   "_schemaTypes": {
     "component": {
@@ -19,7 +19,7 @@
       "propertyRules": "type + default mandatory on every property"
     },
     "base": {
-      "description": "Abstract schemas inherited by other schemas. Never instantiated directly.",
+      "description": "Shared fragments whose properties other schemas include. Never instantiated directly.",
       "required": [
         "title",
         "description",
@@ -78,7 +78,7 @@
         "page"
       ],
       "default": "component",
-      "description": "Schema tier. 'behavior' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
+      "description": "Schema tier. 'behavior' (default) = full rules. 'base' = shared fragment other schemas include, $view/$methods optional. 'definition' = reference doc, only title+description required."
     },
     "$schema": {
       "type": "string",

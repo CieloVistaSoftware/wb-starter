@@ -18,8 +18,7 @@ test.describe('Card Hero (integration)', () => {
     });
     
     const card = page.locator('#test-hero');
-    await expect(card).toHaveClass(/x-card/);
-    await expect(card).toHaveClass(/x-card--hero/);
+    await expect(card).toHaveClass(/\bx-hero\b/);
     
     // Check title exists
     const title = card.locator('.x-card__hero-title');

@@ -158,7 +158,7 @@ test.describe('#1114 — no cardfile example contradicts its own filename', () =
       });
 
       const seen = await page.evaluate(() => {
-        const card = document.querySelector('#behaviors-live-stage [x-cardfile], #behaviors-live-stage .x-card-file');
+        const card = document.querySelector('#behaviors-live-stage [x-cardfile]');
         if (!card) return null;
         return {
           icon: (card.querySelector('span')?.textContent || '').trim(),

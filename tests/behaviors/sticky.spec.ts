@@ -26,17 +26,17 @@ test.describe('Sticky Behavior', () => {
       `;
     });
     
-    // Wait for WB to scan and initialize
-    await page.waitForTimeout(500);
-    
-    // Manually trigger WB.scan
+    // Manually trigger WB.scan once the runtime is up.
+    await page.waitForFunction(() => typeof (window as any).WB?.scan === 'function');
     await page.evaluate(async () => {
       if (window.WB && typeof window.WB.scan === 'function') {
         await window.WB.scan(document.body);
       }
     });
     
-    await page.waitForTimeout(200);
+    // Built means the behavior attached its API to the element: wait for that,
+    // not for a guessed 200ms (#1516).
+    await page.waitForFunction(() => !!(document.getElementById('stickyNav') as any)?.wbSticky);
   });
 
   test('adds [x-sticky] class on init', async ({ page }) => {
@@ -52,7 +52,6 @@ test.describe('Sticky Behavior', () => {
     
     // Scroll past the nav
     await page.evaluate(() => window.scrollTo(0, 300));
-    await page.waitForTimeout(100);
     
     // Should now be stuck
     await expect(nav).toHaveClass(/is-stuck/);
@@ -67,21 +66,19 @@ test.describe('Sticky Behavior', () => {
     
     // Scroll down to stick
     await page.evaluate(() => window.scrollTo(0, 300));
-    await page.waitForTimeout(100);
     await expect(nav).toHaveClass(/is-stuck/);
     
     // Scroll back up
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(100);
     
-    // Should no longer be stuck
+    // Should no longer be stuck. The class is on now, so the retrying matcher
+    // waits for it to come off; no sleep needed (#1516).
     await expect(nav).not.toHaveClass(/is-stuck/);
   });
 
   test('creates placeholder to prevent layout shift', async ({ page }) => {
     // Scroll to trigger sticky
     await page.evaluate(() => window.scrollTo(0, 300));
-    await page.waitForTimeout(100);
     
     // Check for placeholder
     const placeholder = page.locator('.sticky-placeholder');
@@ -110,17 +107,18 @@ test.describe('Sticky Behavior', () => {
       }
     });
     
-    await page.waitForTimeout(200);
+    // Built means the behavior attached its API to the element: wait for that,
+    // not for a guessed 200ms (#1516).
+    await page.waitForFunction(() => !!(document.getElementById('stickyNav') as any)?.wbSticky);
     
     // Scroll to trigger
     await page.evaluate(() => window.scrollTo(0, 200));
-    await page.waitForTimeout(100);
     
     // Check top position is 50px. Computed, not el.style: #779 moved the
-    // stuck geometry off the style attribute into a generated rule.
+    // stuck geometry off the style attribute into a generated rule. Polled:
+    // the scroll handler sticks it on its own frame (#1516).
     const nav = page.locator('#stickyNav');
-    const top = await nav.evaluate(el => getComputedStyle(el).top);
-    expect(top).toBe('50px');
+    await expect.poll(() => nav.evaluate(el => getComputedStyle(el).top), { message: 'stuck at the 50px offset' }).toBe('50px');
   });
 
   test('respects custom stuck class via data-class', async ({ page }) => {
@@ -145,11 +143,12 @@ test.describe('Sticky Behavior', () => {
       }
     });
     
-    await page.waitForTimeout(200);
+    // Built means the behavior attached its API to the element: wait for that,
+    // not for a guessed 200ms (#1516).
+    await page.waitForFunction(() => !!(document.getElementById('stickyNav') as any)?.wbSticky);
     
     // Scroll to trigger
     await page.evaluate(() => window.scrollTo(0, 200));
-    await page.waitForTimeout(100);
     
     // Check custom class is applied
     const nav = page.locator('#stickyNav');
@@ -167,13 +166,11 @@ test.describe('Sticky Behavior', () => {
     
     // Scroll and check again
     await page.evaluate(() => window.scrollTo(0, 300));
-    await page.waitForTimeout(100);
     
-    isStuck = await page.evaluate(() => {
+    await expect.poll(() => page.evaluate(() => {
       const nav = document.getElementById('stickyNav');
       return nav && nav.wbSticky ? nav.wbSticky.isStuck() : null;
-    });
-    expect(isStuck).toBe(true);
+    }), { message: 'isStuck() reports true once scrolled past' }).toBe(true);
   });
 
   test('API: stick() forces element to stick', async ({ page }) => {
@@ -184,7 +181,6 @@ test.describe('Sticky Behavior', () => {
       const nav = document.getElementById('stickyNav');
       if (nav && nav.wbSticky) nav.wbSticky.stick();
     });
-    await page.waitForTimeout(50);
     
     await expect(nav).toHaveClass(/is-stuck/);
   });
@@ -194,7 +190,6 @@ test.describe('Sticky Behavior', () => {
     
     // Scroll to trigger sticky
     await page.evaluate(() => window.scrollTo(0, 300));
-    await page.waitForTimeout(100);
     await expect(nav).toHaveClass(/is-stuck/);
     
     // Force unstick
@@ -202,7 +197,6 @@ test.describe('Sticky Behavior', () => {
       const nav = document.getElementById('stickyNav');
       if (nav && nav.wbSticky) nav.wbSticky.unstick();
     });
-    await page.waitForTimeout(50);
     
     await expect(nav).not.toHaveClass(/is-stuck/);
   });

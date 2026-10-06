@@ -210,8 +210,10 @@ test.describe('Fix Verification Tests', () => {
     // (wb.js), not data-x-error.
     await expect(card).not.toHaveAttribute('x-error', 'true');
 
-    // 027: Compliance classes
-    await expect(card).toHaveClass(/x-card/);
+    // 027: built. #969: a typed card is its x-cardproduct attribute -- no
+    // x-card--product / x-card-product class is injected to restate it.
+    await expect(card).toHaveAttribute('x-ready', '');
+    await expect(card).toHaveClass(/\bx-product\b/);
 
     // 024: Product event
     const eventFired = await page.evaluate(async () => {

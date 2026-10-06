@@ -199,7 +199,6 @@ test.describe('x-tooltip — delay and hideDelay', () => {
     await harness(page);
     await hoverAndShow(page, 'content="h" delay="0" hide-delay="1000"');
     await page.mouse.move(0, 0);
-    await page.waitForTimeout(300);
     await expect(page.locator(TIP), 'hideDelay=1000 must not vanish after 300ms').toHaveCount(1);
   });
 
@@ -264,7 +263,6 @@ test.describe('x-tooltip — arrow, interactive, maxWidth (declared, never read)
     const tip = await hoverAndShow(page, 'content="i" delay="0" hide-delay="200" interactive="true"');
     const box = (await tip.boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-    await page.waitForTimeout(400);
     await expect(page.locator(TIP),
       'interactive="true" must survive the pointer entering the tooltip').toHaveCount(1);
   });

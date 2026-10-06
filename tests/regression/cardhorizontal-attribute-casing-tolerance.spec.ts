@@ -37,7 +37,6 @@ test.describe('[x-cardhorizontal] tolerates both image-position and imagepositio
           await WB.scan(document.body, { eager: true });
         `,
       });
-      await page.waitForTimeout(1000);
 
       const card = page.locator('[x-cardhorizontal]').first();
       await expect(card.locator('.x-card__figure')).toBeVisible();
@@ -68,7 +67,6 @@ test.describe('[x-cardhorizontal] tolerates both image-position and imagepositio
           await WB.scan(document.body, { eager: true });
         `,
       });
-      await page.waitForTimeout(1000);
 
       const figure = page.locator('.x-card__figure').first();
       await expect(figure).toBeVisible();

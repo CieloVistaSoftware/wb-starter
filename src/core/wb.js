@@ -138,7 +138,7 @@ function traceMediaLoads() {
 import { behaviors } from '../wb-viewmodels/index.js';
 import { markReady, isReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
-import { isComponentLandmark } from './component-landmark.js';
+import { isComponentLandmark, CARD_HOST } from './component-landmark.js';
 import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
@@ -249,7 +249,7 @@ function getAutoInjectBehavior(element) {
     // <header>/<footer>, and <dialog class="x-dialog"> matched none of the
     // three, so the chrome got the page navbar's x-header (0.8em text,
     // min-height 60px) and the page footer's x-footer on top of its own.
-    if (element.parentElement && element.parentElement.closest('article, dialog, [class*="x-card"], [class*="__"]')) {
+    if (element.parentElement && element.parentElement.closest(`article, dialog, ${CARD_HOST}, [class*="__"]`)) {
       return null;
     }
   }

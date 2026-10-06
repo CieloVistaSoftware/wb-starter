@@ -13,7 +13,6 @@ test.describe('Progress Bars', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -55,7 +54,6 @@ test.describe('Progress Bars', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -67,13 +65,12 @@ test.describe('Progress Bars', () => {
       await (window as any).WB.scan();
     });
 
-    // Wait for animation to complete
-    await page.waitForTimeout(1200);
-
-    // Check final width matches value
-    const progressBar = page.locator('#test-progress-anim .x-progress__bar');
     // #779: rendered fill, not the style attribute nothing writes any more.
-    expect(await settledWidthPercent(progressBar)).toBeCloseTo(75, 0);
+    // Polled (#1516): settledWidthPercent awaits the animation once it is
+    // running, but it starts after the scan, so a single read can land
+    // before it and see an empty track. A 1200ms sleep guessed past that.
+    const progressBar = page.locator('#test-progress-anim .x-progress__bar');
+    await expect.poll(() => settledWidthPercent(progressBar), { message: 'the bar animates to its value' }).toBeCloseTo(75, 0);
   });
 });
 
@@ -82,7 +79,6 @@ test.describe('Spinners', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -113,7 +109,6 @@ test.describe('Spinners', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const primary = document.createElement('div');
@@ -146,7 +141,6 @@ test.describe('Skeleton Loaders', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -175,7 +169,6 @@ test.describe('Skeleton Loaders', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -202,7 +195,6 @@ test.describe('Clickable Card', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');
@@ -226,14 +218,12 @@ test.describe('Clickable Card', () => {
     
     // Click and check for active class
     await card.click();
-    await page.waitForTimeout(150);
     
     await expect(card).toHaveClass(/x-card--active/);
     
     // Click again to toggle off
+    // A retrying matcher: waits for the class to come off, no sleep needed.
     await card.click();
-    await page.waitForTimeout(150);
-    
     await expect(card).not.toHaveClass(/x-card--active/);
   });
 });
@@ -243,7 +233,6 @@ test.describe('Card Structure', () => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
-    await page.waitForTimeout(100);
     
     await page.evaluate(async () => {
       const el = document.createElement('div');

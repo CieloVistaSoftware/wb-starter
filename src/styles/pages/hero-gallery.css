@@ -1,0 +1,67 @@
+/* pages/hero-gallery.html (#1597): the playground's 120 card heroes as JPGs,
+   each with an SVG overlay whose transparent rects are the hero's buttons. */
+
+.hg-lead,
+.hg-note {
+  max-width: 60rem;
+  color: var(--text-secondary);
+}
+
+.hg-list {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 32rem), 1fr));
+  gap: 1.5rem;
+}
+
+.hg-figure {
+  margin: 0;
+}
+
+.hg-frame {
+  position: relative;
+}
+
+.hg-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  background: var(--bg-secondary);
+}
+
+/* Exactly the image's box, and the viewBox is the image's own pixel size, so
+   a rect drawn at a button's pixels covers that button at any width. */
+.hg-hotspots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hg-hotspot {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 3;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.hg-hotspots a:hover .hg-hotspot,
+.hg-hotspots a:focus-visible .hg-hotspot {
+  stroke: var(--primary);
+  fill: color-mix(in srgb, var(--primary) 15%, transparent);
+}
+
+.hg-hotspots a:focus-visible {
+  outline: none;
+}
+
+.hg-caption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}

@@ -464,7 +464,6 @@ test.describe('Interactive Cards', () => {
       
       // Click to expand
       await expandBtn.click();
-      await page.waitForTimeout(400);
       
       // Check expanded state
       await expect(card).toHaveClass(/x-card--expanded/);
@@ -499,14 +498,13 @@ test.describe('Interactive Cards', () => {
       `);
       
       const card = page.locator('[x-cardminimizable]');
-      await expect(card).toHaveClass(/x-card--minimizable/);
+      await expect(card).toHaveAttribute('x-ready', '');
       
       const minBtn = card.locator('.x-card__minimize-btn, button');
       await expect(minBtn).toBeVisible();
       
       // Click to minimize
       await minBtn.click();
-      await page.waitForTimeout(400);
       
       await expect(card).toHaveClass(/x-card--minimized/);
     });
@@ -525,7 +523,7 @@ test.describe('Interactive Cards', () => {
       `);
       
       const card = page.locator('[x-carddraggable]');
-      await expect(card).toHaveClass(/x-card--draggable/);
+      await expect(card).toHaveAttribute('x-ready', '');
       
       const handle = card.locator('.x-card__drag-handle, header');
       await expect(handle).toBeVisible();

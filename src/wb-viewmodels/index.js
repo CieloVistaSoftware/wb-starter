@@ -72,13 +72,12 @@ const behaviorModules = {
   cardexpandable: 'card', cardminimizable: 'card', cardoverlay: 'card', cardportfolio: 'card',
 
   // Fix Card (#365) → fix-card.js. Own file, not part of card.js's
-  // family -- a hand-rolled WBCard subclass that self-registers via
-  // customElements.define(). Was never wired into this lazy-load registry
-  // (nor tag-map.js's elementMap), so <div x-fix-card> never upgraded to the
-  // real class and .data= silently did nothing. This entry + the matching
-  // '[x-fix-card]' elementMap entry (tag-map.js) makes WB.scan() actually
-  // import fix-card.js on first encounter, which is what runs the
-  // customElements.define() side effect.
+  // family. Was never wired into this lazy-load registry (nor tag-map.js's
+  // elementMap), so <div x-fix-card> stayed inert and .data= silently did
+  // nothing. This entry + the matching '[x-fix-card]' elementMap entry
+  // (tag-map.js) makes WB.scan() import fix-card.js on first encounter and
+  // apply its fixCard() behavior. (#789: the <x-fix-card> tag is a shim that
+  // applies the same behavior; it no longer subclasses a card class.)
   'fix-card': 'fix-card',
 
   // UI Core

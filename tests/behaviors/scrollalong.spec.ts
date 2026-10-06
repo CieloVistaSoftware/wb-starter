@@ -39,7 +39,6 @@ test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
     expect(initialBox).not.toBeNull();
     // Scroll the container
     await scrollContainer.evaluate(el => el.scrollTop = 500);
-    await page.waitForTimeout(100);
     // Nav should still be visible and near top of its container
     await expect(nav).toBeVisible();
     const scrolledBox = await nav.boundingBox();
@@ -59,15 +58,12 @@ test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
     const scrollContainer = page.locator('#scrollContainer');
     // Scroll down
     await scrollContainer.evaluate(el => el.scrollTop = 800);
-    await page.waitForTimeout(100);
     await expect(nav).toBeVisible();
     // Scroll back up
     await scrollContainer.evaluate(el => el.scrollTop = 0);
-    await page.waitForTimeout(100);
     await expect(nav).toBeVisible();
     // Scroll down again
     await scrollContainer.evaluate(el => el.scrollTop = 1200);
-    await page.waitForTimeout(100);
     await expect(nav).toBeVisible();
   });
 
@@ -76,7 +72,6 @@ test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
     const scrollContainer = page.locator('#scrollContainer');
     // Scroll down
     await scrollContainer.evaluate(el => el.scrollTop = 600);
-    await page.waitForTimeout(100);
     // Find a nav item and verify it's clickable
     const navItem = nav.locator('.nav__item').first();
     await expect(navItem).toBeVisible();

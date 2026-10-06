@@ -376,7 +376,6 @@ test.describe('Notes Behavior', () => {
       await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.show());
       await page.fill('#test-container .x-notes__textarea', '');
       await page.click('#test-container .x-notes__wide-btn[data-action="new"]');
-      await page.waitForTimeout(200);
       const status = page.locator('#test-container .x-notes__status');
       await expect(status).toContainText('Started a new note');
     });
