@@ -45,8 +45,6 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'architecture/standards/SCHEMA-SPECIFICATION.md',
   'architecture/WBVIEWS.md',
   'auto-injection.md',
-  'behaviors/autosize.md',
-  'behaviors/label.md',
   'behaviors/x-card.md',
   'behaviors/x-control.md',
   'behaviors/x-repeater.md',
