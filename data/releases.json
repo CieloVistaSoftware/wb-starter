@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.359",
+      "date": "2026-10-06",
+      "summary": "The behavior docs were rewritten, but 36 properties across ten layout schemas (center, container, cover, frame, grid, icon, reel, sidebarlayout, stat, switcher) still described themselves as &quot;Read by grid().&quot; and the like. A schema property&#39;s description is what VS Code shows on hover, so the most-read documentation named the function that reads an attribute instead of saying what it does. Each now says what it changes, what values it takes and its default where that matters, written from layouts.js and stat.js. A compliance spec fails on any schema property described as &quot;Read by x()&quot;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> is regenerated, which also picks up the camelCase property names from #1125 that the committed index had missed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1659\" target=\"_blank\" rel=\"noopener\">PR 1659</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1094\" target=\"_blank\" rel=\"noopener\">#1094</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Every layout attribute says what it does, not &quot;Read by x()&quot;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0c9b391d59b69f5cb7d33fa0eedb1c44fece85ca\" target=\"_blank\" rel=\"noopener\"><code>0c9b391</code></a>",
+          "issues": [
+            749
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Both runtimes answer WB.isReady(), and a spec proves a real visitor&#39;s DOM carries no x-ready</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1094\" target=\"_blank\" rel=\"noopener\">#1094</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a686b02473563d5dd2e9370b32c5b6aaf6af1faf\" target=\"_blank\" rel=\"noopener\"><code>a686b02</code></a>",
+          "issues": [
+            1094
+          ]
+        }
+      ],
+      "seeIt": "Hover columns in &lt;div x-grid columns=&quot;3&quot;&gt; in VS Code after running node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/update-intellisense.js\" target=\"_blank\" rel=\"noopener\">scripts/update-intellisense.js</a>. Before: &quot;Read by grid().&quot; Now: &quot;How many columns to aim for. Each column has a minimum width, so the grid drops to fewer columns on narrow screens.&quot;",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2c1f02faa79b0a329bf856381f266ac04453744e\" target=\"_blank\" rel=\"noopener\"><code>2c1f02f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.358",
       "date": "2026-10-06",
       "summary": "The text between a card&#39;s tags is now its content everywhere. The schema builder stored it as `slot` (Web Components vocabulary) and aliased it to `body` (the document body&#39;s name); both are now `content`, and the _wbOriginalSlot stash is _wbOriginalContent, with templates written {{content}}. A `content=&quot;…&quot;` attribute is only a fallback, and every card example, doc, schema setup and showcase that wrote one now puts the text between the tags. `description` rendered as the subtitle on cardproduct and cardvideo, and cardlink put a `subtitle` into the description slot; now `subtitle` is always the line under the title and `description` is always .x-card__description. Drawers and popovers still read `description` as panel text; they are overlays, not cards, and are left for their own issue. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1658\" target=\"_blank\" rel=\"noopener\">PR 1658</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/968\" target=\"_blank\" rel=\"noopener\">#968</a>",
