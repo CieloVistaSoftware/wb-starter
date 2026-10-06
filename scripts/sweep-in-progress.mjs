@@ -35,16 +35,35 @@
  * mysteriously un-labelled, and whoever picks it up knows it was dropped, not
  * done.
  *
+ * WHY IT ALSO CHECKS FOR A STATUS NOTE (#1583)
+ *
+ * A claim can be alive -- commits, PRs -- and still never say what it is
+ * doing. `.claude/CLAUDE.md` requires a status comment (Now / Why / See it /
+ * Next) when work starts; the Issues page paints a claim without one red, and
+ * on 2026-10-05 six of twelve claims were red with nobody told. So a live
+ * claim older than the grace period with no status note since the label went
+ * on gets ONE comment saying so. It is a flag, not a release: the work may be
+ * real. The flag carries a marker so it neither repeats nor counts as
+ * activity -- otherwise the sweep's own comment would keep a dead claim alive.
+ *
  * Usage:
  *   node scripts/sweep-in-progress.mjs                 release stale labels
  *   node scripts/sweep-in-progress.mjs --dry-run       report, change nothing
  *   node scripts/sweep-in-progress.mjs --hours 12      a different threshold
+ *   node scripts/sweep-in-progress.mjs --note-minutes 30   a different grace for the note
  *   node scripts/sweep-in-progress.mjs --json          machine-readable report
  */
 import { execFileSync } from 'node:child_process';
 
 export const LABEL = 'status:in-progress';
 export const DEFAULT_HOURS = 6;
+export const DEFAULT_NOTE_MINUTES = 10;
+
+/** Marks the sweep's own "no status note" comment (#1583). */
+export const NO_NOTE_MARKER = '<!-- in-progress-sweep:no-status-note -->';
+
+/** A status note, as the Issues page reads it: a bold "Now:" line. */
+const STATUS_NOTE = /\*\*Now:\*\*/;
 
 /**
  * The timeline event types that mean somebody did something about this issue.
@@ -84,6 +103,8 @@ export function freshestSignal(timeline) {
     const isClaim = kind === 'labeled'
       && String(ev.label?.name || '').trim().toLowerCase() === LABEL;
     if (!isClaim && !WORK_EVENTS.has(kind)) continue;
+    // The sweep's own flag is not somebody working (#1583).
+    if (kind === 'commented' && String(ev.body || '').includes(NO_NOTE_MARKER)) continue;
 
     // A commit event carries its date on the committer, not on the event.
     const iso = ev.created_at || ev.committer?.date || ev.author?.date;
@@ -104,6 +125,51 @@ function describe(kind) {
     return 'the last commit or PR referencing it';
   }
   return 'the last activity (' + kind + ')';
+}
+
+/**
+ * When the current claim was staked: the newest time THIS label went on, as
+ * epoch ms, or null when the timeline does not show it.
+ *
+ * @param {Array<object>} timeline
+ */
+export function latestClaimAt(timeline) {
+  let at = null;
+  for (const ev of timeline || []) {
+    if (ev.event !== 'labeled') continue;
+    if (String(ev.label?.name || '').trim().toLowerCase() !== LABEL) continue;
+    const t = Date.parse(ev.created_at || '');
+    if (Number.isFinite(t) && (at === null || t > at)) at = t;
+  }
+  return at;
+}
+
+/**
+ * Does this claim need the "no status note" flag (#1583)?
+ *
+ * Yes when the claim is older than the grace period and no comment since the
+ * claim is a status note -- and the sweep has not already flagged this claim.
+ * A claim the timeline cannot date is measured from the beginning: the label
+ * is on, so some note should exist.
+ *
+ * @param {Array<object>} timeline
+ * @param {number} now          epoch ms
+ * @param {number} graceMs
+ * @returns {{claimAt: number|null, minutes: number|null}|null}  null = nothing to flag
+ */
+export function missingStatusNote(timeline, now, graceMs) {
+  const claimAt = latestClaimAt(timeline);
+  if (claimAt !== null && now - claimAt < graceMs) return null;
+  const since = claimAt === null ? -Infinity : claimAt;
+  for (const ev of timeline || []) {
+    if (ev.event !== 'commented') continue;
+    const t = Date.parse(ev.created_at || '');
+    if (!Number.isFinite(t) || t < since) continue;
+    const body = String(ev.body || '');
+    if (body.includes(NO_NOTE_MARKER)) return null;   // already flagged this claim
+    if (STATUS_NOTE.test(body)) return null;          // a note exists
+  }
+  return { claimAt, minutes: claimAt === null ? null : Math.round((now - claimAt) / 60000) };
 }
 
 /**
@@ -176,6 +242,26 @@ function releaseNote(signal, now, hours) {
   ].join('\n');
 }
 
+function noNoteComment(missing) {
+  const when = missing.minutes === null
+    ? 'The label is on, but the timeline does not show when it went on.'
+    : `The label went on ${missing.minutes} minutes ago.`;
+  return [
+    NO_NOTE_MARKER,
+    '### No status note on this in-progress issue',
+    '',
+    `${when} Since then, no comment has said what is being done. The Issues page shows this`,
+    'row in red as "No status posted" (#1583).',
+    '',
+    'Whoever is working this: post a status comment with four bold-label lines, as',
+    '`.claude/CLAUDE.md` describes -- **Now** (what has been done), **Why**, **See it**',
+    '(exactly what to open or click to see the fix, or "nothing to see yet") and **Next**.',
+    'If nobody is working it, take `status:in-progress` off.',
+    '',
+    'This is a flag, not a release: the label stays on.',
+  ].join('\n');
+}
+
 function describeWhen(signal, now) {
   return `${signal.why}, ${hoursSince(signal.at, now)} hours ago`;
 }
@@ -191,14 +277,21 @@ async function main() {
     process.exit(2);
   }
   const thresholdMs = hours * 3600000;
+  const noteArg = argv.indexOf('--note-minutes');
+  const noteMinutes = noteArg >= 0 ? Number(argv[noteArg + 1]) : DEFAULT_NOTE_MINUTES;
+  if (!Number.isFinite(noteMinutes) || noteMinutes < 0) {
+    console.error('--note-minutes needs a number of minutes');
+    process.exit(2);
+  }
   const now = Date.now();
 
   const slug = repoSlug();
   const issues = openInProgress(slug);
-  const report = { repo: slug, hours, scanned: issues.length, released: [], alive: [] };
+  const report = { repo: slug, hours, noteMinutes, scanned: issues.length, released: [], alive: [], noNote: [] };
 
   for (const issue of issues) {
-    const signal = freshestSignal(timelineFor(slug, issue.number));
+    const timeline = timelineFor(slug, issue.number);
+    const signal = freshestSignal(timeline);
     const row = {
       number: issue.number,
       title: issue.title,
@@ -208,6 +301,18 @@ async function main() {
 
     if (!isStale(signal, now, thresholdMs)) {
       report.alive.push(row);
+      const missing = missingStatusNote(timeline, now, noteMinutes * 60000);
+      if (missing) {
+        const flag = { number: issue.number, title: issue.title, claimedMinutesAgo: missing.minutes };
+        report.noNote.push(flag);
+        if (!dryRun) {
+          try {
+            gh(['issue', 'comment', String(issue.number), '--repo', slug, '--body', noNoteComment(missing)]);
+          } catch (err) {
+            flag.error = String(err.message || err).split('\n')[0];
+          }
+        }
+      }
       continue;
     }
 
@@ -238,6 +343,12 @@ async function main() {
   }
   for (const r of report.alive) {
     console.log(`  #${r.number}  alive, ${r.quietHours}h since ${r.signal}`);
+  }
+  const flagVerb = dryRun ? 'would flag' : 'flagged';
+  console.log(`no status note: ${flagVerb} ${report.noNote.length}`);
+  for (const r of report.noNote) {
+    const age = r.claimedMinutesAgo === null ? 'claim time unknown' : `claimed ${r.claimedMinutesAgo} min ago`;
+    console.log(`  #${r.number}  ${age}${r.error ? '  FAILED: ' + r.error : ''}`);
   }
 }
 

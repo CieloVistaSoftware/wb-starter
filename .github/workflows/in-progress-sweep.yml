@@ -18,9 +18,16 @@ name: In progress sweep
 # Hourly, because the tab's whole value is being true when he looks at it, and
 # he looks at it at unpredictable times. A daily sweep would leave a full day
 # in which it can be as wrong as it was.
+#
+# #1583: it also flags a live claim that never posted a status note. The hourly
+# run catches that within the hour; the `labeled` trigger below catches it ten
+# minutes after the claim, which is the whole point -- the claimer is told
+# while the work is fresh, not John an hour later from a red row.
 on:
   schedule:
     - cron: '7 * * * *'            # every hour, at :07
+  issues:
+    types: [labeled]
   workflow_dispatch:
     inputs:
       hours:
@@ -47,7 +54,15 @@ jobs:
   sweep:
     name: release status:in-progress where nobody is working
     runs-on: ubuntu-latest
+    # Only the in-progress label wakes it; every other label is noise.
+    if: github.event_name != 'issues' || github.event.label.name == 'status:in-progress'
     steps:
+      # A note is required when work starts, not the instant the label lands:
+      # give the claimer the same 10 minutes the sweep's grace allows.
+      - name: Wait out the note grace period
+        if: github.event_name == 'issues'
+        run: sleep 630
+
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -59,6 +74,7 @@ jobs:
         run: |
           node scripts/sweep-in-progress.mjs \
             --hours "${{ github.event.inputs.hours || '6' }}" \
+            --note-minutes 10 \
             ${{ github.event.inputs.dry-run == 'true' && '--dry-run' || '' }} \
             --json > sweep.json
           cat sweep.json
@@ -79,6 +95,10 @@ jobs:
             out += '**' + r.scanned + '** labelled \`status:in-progress\`, **' + r.alive.length + '** alive, **' + r.released.length + '** released (threshold: ' + r.hours + ' h of silence).\n\n';
             if (r.released.length) out += '### Released\n\n' + table(r.released) + '\n';
             if (r.alive.length) out += '### Still being worked on\n\n' + table(r.alive) + '\n';
+            if ((r.noNote || []).length) {
+              out += '### Flagged: no status note since the claim\n\n| issue | claimed |\n|---|---|\n'
+                + r.noNote.map((x) => '| #' + x.number + ' | ' + (x.claimedMinutesAgo === null ? 'unknown' : x.claimedMinutesAgo + ' min ago') + (x.error ? ' FAILED: ' + x.error : '') + ' |').join('\n') + '\n\n';
+            }
             if (!r.scanned) out += 'Nothing is labelled in progress.\n';
             fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out);
           "
