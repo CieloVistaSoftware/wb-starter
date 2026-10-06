@@ -187,7 +187,7 @@ export const BEHAVIOR_CSS_MAP = {
   draggable: ['draggable.css'],
   resizable: ['resizable.css'],
   scrollalong: ['scrollalong.css'],
-  codecontrol: ['codecontrol.css'],
+  codetheme: ['codetheme.css'],
   ratio: ['ratio.css'],
   video: ['video.css'],
   toggle: ['toggle.css'],

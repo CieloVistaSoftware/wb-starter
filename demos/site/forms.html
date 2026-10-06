@@ -706,30 +706,44 @@
   <!-- 22. 📋 Select -->
   <section id="select-select">
   <h2>📋 Select</h2>
+  <!-- #682: <select> is the control for choosing a VALUE. Each sample shows
+       one thing it does; x-dropdown (overlays.html) is for menus of actions. -->
   <div x-demo columns="1">
-    <div x-select>
-      This is example select content.
-    </div>
+    <select name="branch" aria-label="Branch">
+      <option value="main">main</option>
+      <option value="develop">develop</option>
+      <option value="release">release</option>
+    </select>
   </div>
   <div x-demo columns="1">
-    <div x-select searchable>
-      This is example select content.
-    </div>
+    <select name="country" aria-label="Country" searchable>
+      <option value="ca">Canada</option>
+      <option value="de">Germany</option>
+      <option value="jp">Japan</option>
+      <option value="mx">Mexico</option>
+      <option value="us">United States</option>
+    </select>
   </div>
   <div x-demo columns="1">
-    <div x-select clearable>
-      This is example select content.
-    </div>
+    <select name="fruit" aria-label="Fruit" clearable>
+      <option value="apple">Apple</option>
+      <option value="banana" selected>Banana</option>
+      <option value="cherry">Cherry</option>
+    </select>
   </div>
   <div x-demo columns="1">
-    <div x-select multiple>
-      This is example select content.
-    </div>
+    <select name="toppings" aria-label="Toppings" multiple>
+      <option value="cheese" selected>Cheese</option>
+      <option value="mushroom">Mushroom</option>
+      <option value="olive" selected>Olive</option>
+      <option value="pepper">Pepper</option>
+    </select>
   </div>
   <div x-demo columns="1">
-    <div x-select disabled>
-      This is example select content.
-    </div>
+    <select name="plan" aria-label="Plan" disabled>
+      <option value="pro" selected>Pro (locked)</option>
+      <option value="team">Team</option>
+    </select>
   </div>
   </section>
 

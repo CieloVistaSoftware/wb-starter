@@ -6,6 +6,371 @@
   ],
   "releases": [
     {
+      "version": "1.0.325",
+      "date": "2026-10-06",
+      "summary": "Release-lines.spec.ts is red on main: version 1.0.318, the merge of #1599 (x-cardexpandable examples reveal content), shipped without a See it line, because its commits did not carry one -- only the PR description did. Old versions get their steps from data/release-see-it.json, so 1.0.318 now has an entry there, taken from #1599&#39;s own description, and data/releases.json carries the same text as release-versions.mjs would render it. Ported here because it turned this PR&#39;s (#683) regression job red. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1609\" target=\"_blank\" rel=\"noopener\">PR 1609</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/683\" target=\"_blank\" rel=\"noopener\">#683</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>1.0.318 says how to see its change (ported into)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/683\" target=\"_blank\" rel=\"noopener\">#683</a>",
+          "issues": [
+            683
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Content attribute wins over children on every path; no empty body box</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/683\" target=\"_blank\" rel=\"noopener\">#683</a>",
+          "issues": [
+            683
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/release-lines.spec.ts --project=regression</code>. Before: &quot;every version, old ones included, says how to recreate it by hand&quot; failed with &quot;1.0.318: there is no See it line&quot;. Now: all 8 pass, and Releases shows 1.0.318&#39;s steps."
+    },
+    {
+      "version": "1.0.324",
+      "date": "2026-10-06",
+      "summary": "The overlap gate&#39;s page list was hand-written and had drifted to one SPA page (listed twice) and nine demos while the site grew. It is now read from pages/, demos/site/ and demos/ at run time, so a page is covered the day it is added; SPA pages still load through the site shell. That adds the 17 top-level demos (playground, test-harness, landing-page-showcase, ...) and the last SPA pages, all of which pass. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1612\" target=\"_blank\" rel=\"noopener\">PR 1612</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the page list from disk</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
+          "issues": [
+            274
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Cover every page; clip rects to their scroll container</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
+          "issues": [
+            274
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/integration/overlap.spec.ts --project=integration --list</code>. Before: 11 page tests, two of them the same page. Now: 47 page tests plus the detector self-test, one per .html file in pages/, demos/site/ and demos/, and all 48 pass."
+    },
+    {
+      "version": "1.0.323",
+      "date": "2026-10-06",
+      "summary": "Nothing said which control to use, so &lt;select&gt; and x-dropdown read as substitutes and deprecation got aimed at x-dropdown. V3-STANDARDS.md now has the rule and a one-line test -- does the user pick a value the form submits (&lt;select&gt;) or run an action (x-dropdown)? -- and select.md and dropdown.md point to it. The decision #682 asked for: &lt;wb-select&gt; went in 4.0.0, and what is left, &lt;div x-select options=&#39;...&#39;&gt;, is recorded as deprecated, still working, because a native &lt;select&gt; now handles variant, size, clearable, searchable and multiple itself. The forms.html Select samples were placeholder text with no options; they are now real &lt;select&gt;s, one per feature. And a bare &lt;select&gt; got none of the padding .x-input gives inputs, so next to a filter box or in the clearable wrapper it was 19px tall against a 42px input; it now matches, at zero specificity. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1611\" target=\"_blank\" rel=\"noopener\">PR 1611</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/682\" target=\"_blank\" rel=\"noopener\">#682</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>&lt;select&gt; for a value, x-dropdown for an action; bare select gets the input box</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/682\" target=\"_blank\" rel=\"noopener\">#682</a>",
+          "issues": [
+            682
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/site/forms.html and scroll to &quot;Select&quot;. Before: five boxes reading &quot;This is example select content.&quot; with nothing to choose, and the searchable and clearable ones 19px tall. Now: five working selects (plain, searchable with a filter box, clearable with a clear button, multiple, disabled), each as tall as a text input."
+    },
+    {
+      "version": "1.0.322",
+      "date": "2026-10-06",
+      "summary": "Release-lines.spec.ts is red on main: version 1.0.318, the merge of #1599 (x-cardexpandable examples reveal content), shipped without a See it line, because its commits did not carry one -- only the PR description did. Old versions get their steps from data/release-see-it.json, so 1.0.318 now has an entry there, taken from #1599&#39;s own description, and data/releases.json carries the same text as release-versions.mjs would render it. Ported here because it turned this PR&#39;s (#323) regression job red. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1610\" target=\"_blank\" rel=\"noopener\">PR 1610</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/323\" target=\"_blank\" rel=\"noopener\">#323</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>1.0.318 says how to see its change (ported into)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/323\" target=\"_blank\" rel=\"noopener\">#323</a>",
+          "issues": [
+            323
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>A plain &lt;label&gt; needs no x-label</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/323\" target=\"_blank\" rel=\"noopener\">#323</a>",
+          "issues": [
+            323
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Label.md and autosize.md show live demos</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/323\" target=\"_blank\" rel=\"noopener\">#323</a>",
+          "issues": [
+            323
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/release-lines.spec.ts --project=regression</code>. Before: &quot;every version, old ones included, says how to recreate it by hand&quot; failed with &quot;1.0.318: there is no See it line&quot;. Now: all 8 pass, and Releases shows 1.0.318&#39;s steps."
+    },
+    {
+      "version": "1.0.321",
+      "date": "2026-10-06",
+      "summary": "The schema-vs-behavior audit matched a schema to src/wb-viewmodels/&lt;name&gt;.js by filename, so every behavior in a grouped file (alert in feedback.js, center in layouts.js) came back &quot;no behavior source found&quot; -- 78 schemas unaudited. It now resolves through the runtime&#39;s own behavior registry (behaviorModules in wb-viewmodels/index.js), by schemaFor then filename, and counts a property as read when the module names it in any spelling, the schema builder applies it (appliesClass/appliesAttribute/$view), an enum value is a modifier class a stylesheet defines, or a stylesheet styles the attribute on the behavior&#39;s host. Unresolved schemas: 78 -&gt; 0. The one real unread property was sticky.animated: the schema, docs and demo say `animated`, sticky.js read `animate` and then used it for nothing, so animated=&quot;false&quot; did nothing. It now drops the transition (.x-sticky--static), with `animate` kept as back-compat. A new compliance gate asserts zero unresolved and zero unread across more than 100 schemas, and audit-orphan-schemas.mjs shares the not-a-component list instead of keeping its own. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1608\" target=\"_blank\" rel=\"noopener\">PR 1608</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/669\" target=\"_blank\" rel=\"noopener\">#669</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Audit resolves every schema through the registry; sticky reads `animated`</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/669\" target=\"_blank\" rel=\"noopener\">#669</a>",
+          "issues": [
+            669
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;div x-sticky animated=&quot;false&quot;&gt;Bar&lt;/div&gt; and read its computed transition-duration in DevTools. Before: 0.2s, the same as without the attribute. Now: 0s, and a plain &lt;div x-sticky&gt; still reads 0.2s."
+    },
+    {
+      "version": "1.0.320",
+      "date": "2026-10-06",
+      "summary": "The parking lot now records that real page paths shipped, and what is left for #1001. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1607\" target=\"_blank\" rel=\"noopener\">PR 1607</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1601\" target=\"_blank\" rel=\"noopener\">#1601</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Merged, closed; waits on a real file per page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1601\" target=\"_blank\" rel=\"noopener\">#1601</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1601,
+            957,
+            1001
+          ]
+        }
+      ],
+      "seeIt": "Open docs/_today/CURRENT-STATUS.md and read the parking lot. Before: it said #1601 was a draft waiting on CI. Now: it says #1601 is merged, #957 is closed, and #1001 needs a real index.html per page on GitHub Pages."
+    },
+    {
+      "version": "1.0.319",
+      "date": "2026-10-06",
+      "summary": "The parking lot did not record tonight&#39;s link-preview change (#1585) or the open question about the app icons. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1604\" target=\"_blank\" rel=\"noopener\">PR 1604</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name the old logo without its path</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+          "issues": [
+            1585
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Parking lot for the link-share preview fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+          "issues": [
+            1585
+          ]
+        }
+      ],
+      "seeIt": "Open docs/_today/CURRENT-STATUS.md and read the first dated entry under PARKING LOT. Before: it starts with the 2026-10-05 night &lt;nav&gt; entry (#958). Now: it starts with the 9:55 PM CDT entry for #1585, listing files touched, the last action, the post-inspector next step, and the open question about the PWA icons."
+    },
+    {
+      "version": "1.0.318",
+      "date": "2026-10-06",
+      "summary": "The long demo text went into each card&#39;s body, which shows before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1599\" target=\"_blank\" rel=\"noopener\">PR 1599</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1605\" target=\"_blank\" rel=\"noopener\">#1605</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Cards.html keeps anchor arrival and reveal margins on Windows</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Port keep-alive timeout from so integration CI is not reset</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1605\" target=\"_blank\" rel=\"noopener\">#1605</a>",
+          "issues": [
+            1549,
+            1605
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Truncate test waits for helpers.css instead of racing it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Expandable examples spec uses the page fixture, not browser.newPage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardexpandable examples reveal content; no toggle when nothing is hidden</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors, search &quot;expan&quot;, pick &quot;four lines visible&quot; and click Show More. Before: the same two lines stayed, only the label changed. Now: the card grows to show the rest of the changelog, and a card whose text already fits shows no Show More button."
+    },
+    {
+      "version": "1.0.317",
+      "date": "2026-10-06",
+      "summary": "The behavior is a highlight.js theme picker: its own header said so, its sync event was already x:codetheme:sync and its tests were already named code-theme-*. Only the name said &quot;code control&quot;, and the schema called it an &quot;Interactive code editor/viewer control&quot;. The module, schema, stylesheet, doc, demos, scripts and tests are now codetheme, and the schema says it picks a highlight.js theme. x-codecontrol keeps working: it is declared once in BEHAVIOR_ALIASES (src/core/attribute-aliases.js), and wb-lazy.js, the wb.js behavior registry and the CSS loader all read it from there. It is deliberately not in tag-map.js, so the inventories, reference docs and behaviors page list one behavior, not two. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1606\" target=\"_blank\" rel=\"noopener\">PR 1606</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/668\" target=\"_blank\" rel=\"noopener\">#668</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Rename x-codecontrol to x-codetheme, keep the old name as an alias</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/668\" target=\"_blank\" rel=\"noopener\">#668</a>",
+          "issues": [
+            668
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;div x-codecontrol&gt;&lt;/div&gt; and &lt;div x-codetheme&gt;&lt;/div&gt;. Before: only x-codecontrol rendered the theme dropdown, and the schema described it as a code editor. Now: both render the same dropdown, and the schema says it picks a highlight.js code theme."
+    },
+    {
+      "version": "1.0.316",
+      "date": "2026-10-06",
+      "summary": "4.0.0&#39;s prefix rename turned tag selectors like wb-card into x-card, a tag that no longer exists, so 300 selector parts in src/styles matched nothing; most were dead weight beside a working [x-card] twin, but some rules had no live selector at all, so hero cards kept animating for readers who asked for reduced motion, the loading spinner kept spinning beside &quot;Error loading&quot;, and masonry article cards sat flush with no gap. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1590\" target=\"_blank\" rel=\"noopener\">PR 1590</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No selector names an x-* tag nothing renders; a gate keeps it so</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+          "issues": [
+            857
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick articles and choose layout=masonry. Before: the cards in each column touched, with no gap between them. Now: they are spaced 1.5rem apart and a card never splits across columns. Also run <code>npx playwright test tests/compliance/css-tag-selectors-name-real-tags.spec.ts --project=compliance</code>. Before: 283 dead tag selectors listed. Now: none."
+    },
+    {
+      "version": "1.0.315",
+      "date": "2026-10-05",
+      "summary": "The check that the not-found page matches the home page failed after every release, because each release changes the version number in the home page&#39;s file links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1601\" target=\"_blank\" rel=\"noopener\">PR 1601</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The 404.html check leaves out the ?v= stamp</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The shell spec finds Home by its path; 404.html follows main&#39;s index</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Specs find nav links by the page&#39;s real path; /name/ moves to /name</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Pages live at real paths; an unknown path is a 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
+          "issues": [
+            1001,
+            957
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/pages-have-real-paths.spec.ts</code> on a branch made before main&#39;s latest release. Before: &quot;404.html is index.html plus the site root&quot; failed on the version number alone. Now: it passes, and still fails if anything else differs."
+    },
+    {
+      "version": "1.0.314",
+      "date": "2026-10-05",
+      "summary": "Doc-viewer-links failed CI with ECONNRESET, never a dead link, because server.js closed an idle keep-alive socket after Node&#39;s default ~5-6s while a test&#39;s pooled request context reused it (idle 6037ms and 6066ms on Windows CI). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1605\" target=\"_blank\" rel=\"noopener\">PR 1605</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Server keeps idle keep-alive sockets open; no ECONNRESET on reuse</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+          "issues": [
+            1549
+          ]
+        }
+      ],
+      "seeIt": "Run tests/regression/server-keeps-idle-keepalive-sockets-open.spec.ts. Before: the server closed the idle socket at 6004ms and a second request on it got no answer. Now: the socket is still open after 7s and the second request is answered."
+    },
+    {
+      "version": "1.0.313",
+      "date": "2026-10-05",
+      "summary": "The behavior-API verb gate only recognised members written (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1602\" target=\"_blank\" rel=\"noopener\">PR 1602</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Verb gate reads every API member; retire clear/open/close</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
+          "issues": [
+            782
+          ]
+        }
+      ],
+      "seeIt": "Open any page with an x-notes drawer and, in the browser console, run document.querySelector(&#39;[x-notes]&#39;).wbNotes.show() and then .hide(&#39;left&#39;). Before: show and hide were undefined (open() and collapseToSide(&#39;left&#39;) did it). Now: show() opens the drawer and hide(&#39;left&#39;) docks it left as it closes."
+    },
+    {
+      "version": "1.0.312",
+      "date": "2026-10-05",
+      "summary": "On the home page a hard-edged band swept back and forth across the &quot;Build stunning UIs&quot; hero every 7 seconds, because the cosmic nebula layer is hero-sized but kept the card hero&#39;s sideways sheen animation. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1596\" target=\"_blank\" rel=\"noopener\">PR 1596</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Cosmic hero spec uses the page fixture, not browser.newPage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+          "issues": [
+            1595
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The cosmic hero&#39;s nebula no longer slides a hard band across it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+          "issues": [
+            1595
+          ]
+        }
+      ],
+      "seeIt": "Open the home page and watch the hero for 7 seconds. Before: a vertical band with a brighter side slid across the hero. Now: the nebula and stars stay still."
+    },
+    {
+      "version": "1.0.311",
+      "date": "2026-10-05",
+      "summary": "The card&#39;s FEATURED badge once had 2.2px of side padding, so its last letter sat at the badge edge and read as cut off, every badge was the same yellow, and the category/date/author block sat against the card edge; all three are fixed on main, but no test held any of them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1594\" target=\"_blank\" rel=\"noopener\">PR 1594</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1006\" target=\"_blank\" rel=\"noopener\">#1006</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Hold the featured badge&#39;s fit, its tone, and the meta block&#39;s clearance</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1006\" target=\"_blank\" rel=\"noopener\">#1006</a>",
+          "issues": [
+            1006
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/card-featured-badge-fits-and-takes-a-tone.spec.ts --project=regression</code>. Before: no test, and with the badge padding put back to 0.1em 0.2em the suite stayed green. Now: 4 tests, and with that padding the two fit tests fail."
+    },
+    {
+      "version": "1.0.310",
+      "date": "2026-10-05",
+      "summary": "The gate-scripts self-test failed &quot;Priority gate... it reaches its specs&quot; on a loaded machine while the same gate went on to pass, because it gave the gate a fixed 20 seconds to print its start signal; a slow start read as a missing one. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1593\" target=\"_blank\" rel=\"noopener\">PR 1593</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1589\" target=\"_blank\" rel=\"noopener\">#1589</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wait for the gate&#39;s own signal, not a fixed 20 seconds</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1589\" target=\"_blank\" rel=\"noopener\">#1589</a>",
+          "issues": [
+            1589
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node scripts/test-gate-guards.mjs</code> while the machine is busy. Before: &quot;it reaches its specs&quot; could fail after 20s though the gate later passed. Now: each wait lasts as long as the child is allowed to live (its 60s bound), and a gate that never starts still fails -- with its start marker renamed, 4 checks fail at the bound."
+    },
+    {
+      "version": "1.0.309",
+      "date": "2026-10-05",
+      "summary": "An issue&#39;s Signature that wrote its test as a YAML block (test: | and indented lines) was read as the literal &quot;|&quot;, so #852, which names a runnable spec, counted as having no test in every issue check built on scripts/signature-field.mjs. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1592\" target=\"_blank\" rel=\"noopener\">PR 1592</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1588\" target=\"_blank\" rel=\"noopener\">#1588</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Signature-field reads a block test: | as its lines, not &#39;|&#39;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1588\" target=\"_blank\" rel=\"noopener\">#1588</a>",
+          "issues": [
+            1588
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node scripts/signature-field.mjs &lt;file&gt; test --runnable</code> on a Signature whose test: is a block naming tests/behaviors/progress-fill.spec.ts. Before: it printed nothing. Now: it prints the block, spec path included."
+    },
+    {
+      "version": "1.0.308",
+      "date": "2026-10-05",
+      "summary": "A dialog&#39;s title row and footer took the page navbar&#39;s and page footer&#39;s behavior (class &quot;x-dialog__header x-header&quot;), so the header text shrank to 0.8em under the navbar rule, and the footer was one footer.css change away from losing its padding the way the header once did. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1591\" target=\"_blank\" rel=\"noopener\">PR 1591</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/874\" target=\"_blank\" rel=\"noopener\">#874</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A dialog&#39;s header and footer are its own, not the page&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/874\" target=\"_blank\" rel=\"noopener\">#874</a>",
+          "issues": [
+            874
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;button x-modal modal-title=&quot;Hello&quot;&gt;Open&lt;/button&gt;, click it and inspect the dialog&#39;s header. Before: class &quot;x-dialog__header x-header&quot; and 12.8px text. Now: class &quot;x-dialog__header&quot; and the dialog&#39;s own 16px text."
+    },
+    {
       "version": "1.0.307",
       "date": "2026-10-05",
       "summary": "A &lt;nav&gt; needed x-navbar to look like the site, and adding it to plain navs moved their links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1582\" target=\"_blank\" rel=\"noopener\">PR 1582</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",

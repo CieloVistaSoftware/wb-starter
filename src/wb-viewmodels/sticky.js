@@ -52,8 +52,16 @@ export function sticky(element, options = {}) {
     // docs render as stuck-class -- the one spelling not read here (#861).
     // `class-name` and dataset.class stay as back-compat.
     stuckClass: options.class ?? element.getAttribute('stuck-class') ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
-    animate: options.animate !== false && (element.getAttribute('animate') !== 'false') && (element.dataset.animate !== 'false')
+    // #669: the schema, docs and demo all say `animated`; this read only
+    // `animate`, and nothing used the result, so animated="false" did nothing.
+    // `animated` is the name now, `animate` stays as back-compat, and false
+    // turns the stick/unstick transition off (.x-sticky--static).
+    animate: options.animated !== false && options.animate !== false
+      && element.getAttribute('animated') !== 'false'
+      && element.getAttribute('animate') !== 'false'
+      && element.dataset.animate !== 'false'
   };
+  element.classList.toggle('x-sticky--static', !config.animate);
 
   // #779: nothing is written to element.style any more, so there are no
   // authored inline values to save and restore -- unstick() just drops the
@@ -140,8 +148,8 @@ export function sticky(element, options = {}) {
     // Weight 3 matches that class's (0,3,0): these used to be inline, above
     // any rule the host's own page styles it with, and a sticky header that
     // a (0,2,0) page rule pins back to position:relative does not stick.
-    // The box-shadow transition config.animate asked for is .x-sticky's own
-    // rule in effects.css, which every host carries.
+    // The box-shadow transition is .x-sticky's own rule in effects.css, which
+    // every host carries; animated="false" adds .x-sticky--static to drop it.
     element.classList.add('x-sticky--fixed');
     setRule(element, 'stuck', {
       top: `${config.offset}px`,
@@ -260,7 +268,7 @@ export function sticky(element, options = {}) {
     window.removeEventListener('scroll', handleScroll);
     window.removeEventListener('resize', handleResize);
     unstick();
-    element.classList.remove(config.stuckClass);
+    element.classList.remove(config.stuckClass, 'x-sticky--static');
     delete element.wbSticky;
   };
 }

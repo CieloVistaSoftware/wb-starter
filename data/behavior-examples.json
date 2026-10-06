@@ -1148,12 +1148,12 @@
       "alternates": []
     },
     "x-cardexpandable": {
-      "source": "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
+      "source": "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through. Behaviors load on demand, so a page pays only for the ones it uses. Every attribute is declared in a schema, and that one schema drives validation, editor IntelliSense and these docs. Themes flow from a single set of variables, so changing one value recolors every behavior on the page. And there is still no build step: add the script tag and the browser does the rest.\"\n  lines=\"2\"></article>",
       "alternates": [],
       "examples": [
         {
           "label": "four lines visible",
-          "source": "<article x-cardexpandable title=\"Changelog\" content=\"Faster scans. A new dropdown. Fewer network requests. Better focus handling in dialogs. Smaller CSS. Lazy behavior loading. A rewritten docs viewer.\" lines=\"4\"></article>"
+          "source": "<article x-cardexpandable title=\"Changelog\" content=\"Faster scans of the page for x-* attributes. A new dropdown behavior. Fewer network requests: a behavior's CSS loads with the behavior instead of all at once. Better focus handling in dialogs: focus moves into the dialog when it opens and returns to the button that opened it when it closes. Smaller CSS. Lazy behavior loading: a behavior's code loads only when a page uses it. A rewritten docs viewer. Times on the site now show in US Central. The Issues page shows what is being worked on now, with a note on what was done and how to see it. The version badge counts pushes to main, so the number on the page matches the release. The Releases page lists every release with what it fixed and how to see the change. Card heroes come in five variants: default, cosmic, split, minimal and gradient. Every date and time on the site goes through one helper, so no page shows the viewer's own time zone by mistake.\" lines=\"4\"></article>"
         }
       ]
     },
@@ -2181,29 +2181,29 @@
         }
       ]
     },
-    "x-codecontrol": {
-      "source": "<div x-codecontrol></div>\n<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
+    "x-codetheme": {
+      "source": "<div x-codetheme></div>\n<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
       "alternates": [],
       "examples": [
         {
           "label": "small",
-          "source": "<div x-codecontrol size=\"sm\"></div>"
+          "source": "<div x-codetheme size=\"sm\"></div>"
         },
         {
           "label": "large",
-          "source": "<div x-codecontrol size=\"lg\"></div>"
+          "source": "<div x-codetheme size=\"lg\"></div>"
         },
         {
           "label": "extra small",
-          "source": "<div x-codecontrol size=\"xs\"></div>"
+          "source": "<div x-codetheme size=\"xs\"></div>"
         },
         {
           "label": "without its label",
-          "source": "<div x-codecontrol show-label=\"false\" size=\"sm\"></div>"
+          "source": "<div x-codetheme show-label=\"false\" size=\"sm\"></div>"
         },
         {
           "label": "medium, beside code",
-          "source": "<div x-codecontrol size=\"md\"></div>\n<code language=\"css\">.card { border-radius: 8px; }</code>"
+          "source": "<div x-codetheme size=\"md\"></div>\n<code language=\"css\">.card { border-radius: 8px; }</code>"
         }
       ]
     },

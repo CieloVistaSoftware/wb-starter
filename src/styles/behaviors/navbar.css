@@ -3,7 +3,7 @@
  * ============================================================================
  */
 
-x-navbar, :is([x-navbar], .x-navbar--site){
+:is([x-navbar], .x-navbar--site){
   position: sticky;
   top: 0;
   left: 0;
@@ -31,7 +31,7 @@ x-navbar, :is([x-navbar], .x-navbar--site){
    SCROLL STATE - Enhanced shadow on scroll
    ============================================================================ */
 
-x-navbar.scrolled, :is([x-navbar], .x-navbar--site).scrolled{
+:is([x-navbar], .x-navbar--site).scrolled{
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -43,8 +43,8 @@ x-navbar.scrolled, :is([x-navbar], .x-navbar--site).scrolled{
    BRAND SECTION - Logo + Text
    ============================================================================ */
 
-x-navbar a[href="#home"], :is([x-navbar], .x-navbar--site) a[href="#home"],
-x-navbar a:first-of-type, :is([x-navbar], .x-navbar--site) a:first-of-type{
+:is([x-navbar], .x-navbar--site) a[href="#home"],
+:is([x-navbar], .x-navbar--site) a:first-of-type{
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -57,22 +57,22 @@ x-navbar a:first-of-type, :is([x-navbar], .x-navbar--site) a:first-of-type{
   flex-shrink: 0;
 }
 
-x-navbar a[href="#home"] img, :is([x-navbar], .x-navbar--site) a[href="#home"] img,
-x-navbar a:first-of-type img, :is([x-navbar], .x-navbar--site) a:first-of-type img{
+:is([x-navbar], .x-navbar--site) a[href="#home"] img,
+:is([x-navbar], .x-navbar--site) a:first-of-type img{
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.5rem;
   transition: all 0.3s ease;
 }
 
-x-navbar a[href="#home"]:hover, :is([x-navbar], .x-navbar--site) a[href="#home"]:hover,
-x-navbar a:first-of-type:hover, :is([x-navbar], .x-navbar--site) a:first-of-type:hover{
+:is([x-navbar], .x-navbar--site) a[href="#home"]:hover,
+:is([x-navbar], .x-navbar--site) a:first-of-type:hover{
   color: #6366f1;
   transform: translateY(-2px);
 }
 
-x-navbar a[href="#home"]:hover img, :is([x-navbar], .x-navbar--site) a[href="#home"]:hover img,
-x-navbar a:first-of-type:hover img, :is([x-navbar], .x-navbar--site) a:first-of-type:hover img{
+:is([x-navbar], .x-navbar--site) a[href="#home"]:hover img,
+:is([x-navbar], .x-navbar--site) a:first-of-type:hover img{
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
   transform: scale(1.05);
 }
@@ -81,7 +81,7 @@ x-navbar a:first-of-type:hover img, :is([x-navbar], .x-navbar--site) a:first-of-
    NAV LINKS CONTAINER
    ============================================================================ */
 
-x-navbar > div, :is([x-navbar], .x-navbar--site) > div{
+:is([x-navbar], .x-navbar--site) > div{
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -93,7 +93,7 @@ x-navbar > div, :is([x-navbar], .x-navbar--site) > div{
    NAV LINKS - Animated Underline
    ============================================================================ */
 
-x-navbar a:not(:first-of-type), :is([x-navbar], .x-navbar--site) a:not(:first-of-type){
+:is([x-navbar], .x-navbar--site) a:not(:first-of-type){
   position: relative;
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
@@ -105,7 +105,7 @@ x-navbar a:not(:first-of-type), :is([x-navbar], .x-navbar--site) a:not(:first-of
 }
 
 /* Animated underline */
-x-navbar a:not(:first-of-type)::after, :is([x-navbar], .x-navbar--site) a:not(:first-of-type)::after{
+:is([x-navbar], .x-navbar--site) a:not(:first-of-type)::after{
   content: '';
   position: absolute;
   bottom: 0;
@@ -116,21 +116,21 @@ x-navbar a:not(:first-of-type)::after, :is([x-navbar], .x-navbar--site) a:not(:f
   transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-x-navbar a:not(:first-of-type):hover, :is([x-navbar], .x-navbar--site) a:not(:first-of-type):hover{
+:is([x-navbar], .x-navbar--site) a:not(:first-of-type):hover{
   color: #fff;
   transform: translateY(-2px);
 }
 
-x-navbar a:not(:first-of-type):hover::after, :is([x-navbar], .x-navbar--site) a:not(:first-of-type):hover::after{
+:is([x-navbar], .x-navbar--site) a:not(:first-of-type):hover::after{
   left: 0;
 }
 
 /* Active state for second link (Home) */
-x-navbar a:nth-of-type(2), :is([x-navbar], .x-navbar--site) a:nth-of-type(2){
+:is([x-navbar], .x-navbar--site) a:nth-of-type(2){
   color: #6366f1;
 }
 
-x-navbar a:nth-of-type(2)::after, :is([x-navbar], .x-navbar--site) a:nth-of-type(2)::after{
+:is([x-navbar], .x-navbar--site) a:nth-of-type(2)::after{
   left: 0;
 }
 
@@ -139,7 +139,7 @@ x-navbar a:nth-of-type(2)::after, :is([x-navbar], .x-navbar--site) a:nth-of-type
    ============================================================================ */
 
 .navbar-cta,
-x-navbar button, :is([x-navbar], .x-navbar--site) button{
+:is([x-navbar], .x-navbar--site) button{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@ x-navbar button, :is([x-navbar], .x-navbar--site) button{
 
 /* Hover state - scale + glow */
 .navbar-cta:hover,
-x-navbar button:hover, :is([x-navbar], .x-navbar--site) button:hover{
+:is([x-navbar], .x-navbar--site) button:hover{
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6),
               inset 0 1px 0 rgba(255, 255, 255, 0.3),
@@ -174,14 +174,14 @@ x-navbar button:hover, :is([x-navbar], .x-navbar--site) button:hover{
 
 /* Active/Click state */
 .navbar-cta:active,
-x-navbar button:active, :is([x-navbar], .x-navbar--site) button:active{
+:is([x-navbar], .x-navbar--site) button:active{
   transform: translateY(-1px) scale(1.02);
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
 }
 
 /* Animated background shimmer */
 .navbar-cta::before,
-x-navbar button::before, :is([x-navbar], .x-navbar--site) button::before{
+:is([x-navbar], .x-navbar--site) button::before{
   content: '';
   position: absolute;
   top: 0;
@@ -193,7 +193,7 @@ x-navbar button::before, :is([x-navbar], .x-navbar--site) button::before{
 }
 
 .navbar-cta:hover::before,
-x-navbar button:hover::before, :is([x-navbar], .x-navbar--site) button:hover::before{
+:is([x-navbar], .x-navbar--site) button:hover::before{
   left: 100%;
 }
 
@@ -201,7 +201,7 @@ x-navbar button:hover::before, :is([x-navbar], .x-navbar--site) button:hover::be
    RIGHT SIDE CONTAINER
    ============================================================================ */
 
-x-navbar > div:last-of-type, :is([x-navbar], .x-navbar--site) > div:last-of-type{
+:is([x-navbar], .x-navbar--site) > div:last-of-type{
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -214,18 +214,18 @@ x-navbar > div:last-of-type, :is([x-navbar], .x-navbar--site) > div:last-of-type
    ============================================================================ */
 
 @media (max-width: 768px) {
-  x-navbar, :is([x-navbar], .x-navbar--site){
+  :is([x-navbar], .x-navbar--site){
     padding: 0.75rem 1rem;
     gap: 1rem;
   }
   
-  x-navbar a:not(:first-of-type), :is([x-navbar], .x-navbar--site) a:not(:first-of-type){
+  :is([x-navbar], .x-navbar--site) a:not(:first-of-type){
     padding: 0.4rem 0.75rem;
     font-size: 0.85rem;
   }
   
   .navbar-cta,
-  x-navbar button, :is([x-navbar], .x-navbar--site) button{
+:is([x-navbar], .x-navbar--site) button{
     padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
   }
@@ -235,7 +235,7 @@ x-navbar > div:last-of-type, :is([x-navbar], .x-navbar--site) > div:last-of-type
    BRAND NAME & TAGLINE
    ============================================================================ */
 
-x-navbar [data-brand]::after, :is([x-navbar], .x-navbar--site) [data-brand]::after{
+:is([x-navbar], .x-navbar--site) [data-brand]::after{
   content: attr(data-tagline);
   display: block;
   font-size: 0.65rem;
@@ -251,11 +251,11 @@ x-navbar [data-brand]::after, :is([x-navbar], .x-navbar--site) [data-brand]::aft
    ============================================================================ */
 
 @supports not (backdrop-filter: blur(1px)) {
-  x-navbar, :is([x-navbar], .x-navbar--site){
+  :is([x-navbar], .x-navbar--site){
     background: rgba(15, 23, 42, 0.95);
   }
   
-  x-navbar.scrolled, :is([x-navbar], .x-navbar--site).scrolled{
+  :is([x-navbar], .x-navbar--site).scrolled{
     background: rgba(15, 23, 42, 0.98);
   }
 }
@@ -290,7 +290,7 @@ x-navbar [data-brand]::after, :is([x-navbar], .x-navbar--site) [data-brand]::aft
 }
 
 /* Base appearance, moved out of navigation.js's inline writes (#903). */
-:is([x-navbar], .x-navbar--site), x-navbar {
+:is([x-navbar], .x-navbar--site){
   display: flex;
   align-items: center;
   justify-content: space-between;

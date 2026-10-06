@@ -109,7 +109,7 @@ All three are equivalent and produce the same result.
 |-----|----------|-------------|
 | `<span x-icon>` | `icon` | Icon display |
 | `<div x-mdhtml>` | `mdhtml` | Markdown to HTML |
-| `<div x-codecontrol>` | `codecontrol` | Code theme selector |
+| `<div x-codetheme>` | `codetheme` | Code theme selector |
 | `<div x-collapse>` | `collapse` | Collapsible content |
 | `<div x-darkmode>` | `darkmode` | Dark mode toggle |
 | `<div x-dropdown>` | `dropdown` | Dropdown menu |

@@ -198,7 +198,7 @@ export const extensionMap = {
   'x-button': 'button',
   'x-checkbox': 'checkbox',
   'x-chip': 'chip',
-  'x-codecontrol': 'codecontrol',
+  'x-codetheme': 'codetheme',
   'x-control': 'control',
   'x-demo': 'demo',
   'x-details': 'details',

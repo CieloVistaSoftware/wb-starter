@@ -700,8 +700,13 @@ export function notes(element, options = {}) {
   document.addEventListener('keydown', handleGlobalKeydown);
 
   // Public API
+  // #782: show/hide, not open/close -- the canonical verbs. hide(side) docks
+  // the panel to that side as it closes (was collapseToSide), so 'collapse',
+  // a retired verb, is not a second way to say hide.
   element.wbNotes = {
-    open, close, toggle, setPosition, collapseToSide,
+    show: open,
+    hide: (side) => (side ? collapseToSide(side) : close()),
+    toggle, setPosition,
     save: saveToFile, copy: copyToClipboard, newNote: startNewNote, lookup: viewSavedNotes,
     get content() { return textarea.value; },
     set content(val) { textarea.value = val; saveToLocal(); },

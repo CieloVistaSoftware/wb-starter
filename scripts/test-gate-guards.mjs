@@ -122,8 +122,15 @@ function start(script, { cwd, env, boundMs, args = [], command = process.execPat
     });
   });
 
-  /** Resolves true when `text` appears, false on timeout or exit without it. */
-  const waitFor = (text, ms) => new Promise((res) => {
+  /**
+   * Resolves true when `text` appears, false when the child exits without it.
+   * #1589: the wait is the child's own bound, not a separate guess. A fixed 20s
+   * failed "it reaches its specs" on a loaded machine while the same gate went
+   * on to pass -- a slow start is not a missing one. A child that truly never
+   * prints `text` still fails: it exits, or the bound above kills it, and
+   * either way the waiter settles false.
+   */
+  const waitFor = (text, ms = boundMs) => new Promise((res) => {
     if (output.includes(text)) return res(true);
     const w = {
       text,
@@ -604,7 +611,7 @@ const priorityHoldsASlot = () => pathCase(
   priorityFiles(),
   async ({ fx, guards, launch }) => {
     const gate = launch(PRIORITY, { env: { GIT_DIR: join(fx.root, '.git'), GIT_INDEX_FILE: join(fx.root, '.git', 'index') } });
-    const started = await gate.waitFor('FAKE-PW-STARTED', 20_000);
+    const started = await gate.waitFor('FAKE-PW-STARTED');
     const checks = [['it reaches its specs', started, tail(gate.output())]];
     checks.push(...await holdsASlot(gate.child, fx, guards));
     const run = fakeRun(fx.root);
@@ -628,13 +635,13 @@ const priorityWaitsForASuite = () => pathCase(
     await guards.acquireSuiteLock(new Date().toISOString(), 'holder suite');
     await guards.bindSuiteLock(process.pid, { command: 'holder suite' });
     const gate = launch(PRIORITY);
-    const waited = await gate.waitFor('the machine is busy', 20_000);
+    const waited = await gate.waitFor('the machine is busy');
     const checks = [
       ['it reports it is waiting', waited, tail(gate.output())],
       ['its specs do not start beside the suite', !gate.output().includes('FAKE-PW-STARTED') && !fakeRun(fx.root), tail(gate.output())],
     ];
     await guards.removeLock();
-    checks.push(['the release notifies it, and its specs start', await gate.waitFor('FAKE-PW-STARTED', 20_000), tail(gate.output())]);
+    checks.push(['the release notifies it, and its specs start', await gate.waitFor('FAKE-PW-STARTED'), tail(gate.output())]);
     gate.child.stdin.end();
     const r = await gate.exited;
     checks.push(['it finishes', r.code === 0 && !r.boundHit, `exit ${r.code}`]);
@@ -693,7 +700,7 @@ const releaseHoldsTheMachine = () => pathCase(
   releaseFiles(),
   async ({ fx, guards, launch }) => {
     const rel = launch(RELEASE, { args: ['--check'] });
-    const started = await rel.waitFor('STUB-RATCHET-STARTED', 20_000);
+    const started = await rel.waitFor('STUB-RATCHET-STARTED');
     const checks = [['it reaches its ratchet', started, tail(rel.output())]];
     const held = await guards.readLock();
     checks.push(['the lock names the release as holder', !!held && held.pid === rel.child.pid,

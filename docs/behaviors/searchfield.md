@@ -73,7 +73,7 @@ Applied directly to a real `<input>`, it delegates straight to the plain
 | Event | Bubbles | `detail` | Fired when |
 |---|---|---|---|
 | `wb:search` | yes | `{ query, instant }` | A search is triggered (debounced or instant) |
-| `wb:search:clear` | yes | — | The clear button is clicked, or `.clear()` is called |
+| `wb:search:clear` | yes | — | The clear button is clicked, or `.reset()` is called |
 | `wb:search:focus` | yes | — | The input gains focus |
 | `wb:search:blur` | yes | — | The input loses focus |
 | `wb:search:navigate` | yes | `{ direction: 'up' \| 'down' }` | Arrow keys pressed in the input |
@@ -82,7 +82,7 @@ Applied directly to a real `<input>`, it delegates straight to the plain
 ## API
 
 The container form exposes an imperative API on `element.wbSearch`:
-`value` (get/set), `focus()`, `blur()`, `clear()`, `search()`, `setLoading(bool)`.
+`value` (get/set), `focus()`, `blur()`, `reset()`, `search()`, `setLoading(bool)`.
 
 - [Schema (underlying `search` behavior)](../../src/wb-models/search.schema.json)
 - [Test](../../tests/behaviors/x-search-select-effect.spec.ts)

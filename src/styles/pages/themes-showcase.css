@@ -568,19 +568,6 @@ code.harmony-formula {
   flex-shrink: 0;
 }
 
-.progress-demo-row x-progress {
-  flex: 1;
-  min-width: 0;
-}
-
-/* Ensure badges display properly */
-x-badge {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  overflow: visible;
-}
-
 /* Variables group overflow fix */
 .variables-group {
   overflow: hidden;

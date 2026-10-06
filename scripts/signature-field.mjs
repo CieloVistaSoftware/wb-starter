@@ -40,11 +40,28 @@ try {
   process.exit(2);
 }
 
-const pattern = new RegExp('^' + field + ':[^\\S\\n]*(\\S.*?)[^\\S\\n]*$', 'm');
+const pattern = new RegExp('^([^\\S\\n]*)' + field + ':[^\\S\\n]*(\\S.*?)[^\\S\\n]*$', 'm');
 const m = body.match(pattern);
-const value = m ? m[1].replace(/^["']|["']$/g, '').trim() : '';
+let value = m ? m[2].replace(/^["']|["']$/g, '').trim() : '';
+
+// #1588: a YAML block value -- `test: |` (or `>`, with an optional - or +)
+// followed by indented lines -- was read as the literal '|', so an issue
+// whose test is written as a block (#852) read as having none. The value is
+// the lines indented deeper than the field, up to the first line that is not.
+if (m && /^[|>][-+]?$/.test(value)) {
+  const fieldIndent = m[1].length;
+  const after = body.slice(m.index + m[0].length).split('\n').slice(1);
+  const lines = [];
+  for (const line of after) {
+    if (line.trim() === '') { lines.push(''); continue; }
+    if (line.match(/^[^\S\n]*/)[0].length <= fieldIndent) break;
+    lines.push(line.trim());
+  }
+  value = lines.join(value.startsWith('>') ? ' ' : '\n').trim();
+}
 
 if (!value || value === 'null') process.exit(0);
-if (runnableOnly && !/\.spec\.ts|^node\s/.test(value)) process.exit(0);
+// m: a block value's `node …` command can start any of its lines.
+if (runnableOnly && !/\.spec\.ts|^node\s/m.test(value)) process.exit(0);
 
 process.stdout.write(value);

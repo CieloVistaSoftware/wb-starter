@@ -7,11 +7,11 @@
  *   #1012  "put the codecolor behavior on the page or any page that shows code
  *           so user can swithc at will" — the code theme was reachable only
  *           from /themes, nowhere near the code it recolours.
- *   #1022  "there should not be two themes side by side anywhere" — codecontrol
+ *   #1022  "there should not be two themes side by side anywhere" — codetheme
  *           had no re-init guard, so a second WB pass appended a SECOND
- *           dropdown inside the same <div x-codecontrol>. Measured live: two
- *           .x-codecontrol__wrapper elements, 46 options each, in one host.
- *           themecontrol.js already had this exact guard; codecontrol never got
+ *           dropdown inside the same <div x-codetheme>. Measured live: two
+ *           .x-codetheme__wrapper elements, 46 options each, in one host.
+ *           themecontrol.js already had this exact guard; codetheme never got
  *           it.
  *   #1016  x-code on a host that is not <code>/<pre> was refused outright, so
  *           the documented attribute form rendered nothing. It now wraps the
@@ -42,16 +42,16 @@ test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
     });
 
     const counted = await page.evaluate(() => ({
-      hosts: document.querySelectorAll('[x-codecontrol]').length,
-      wrappers: document.querySelectorAll('.x-codecontrol__wrapper').length,
-      selects: document.querySelectorAll('.x-codecontrol__select').length,
-      insideCodebar: document.querySelectorAll('.behaviors-live__codebar .x-codecontrol__select').length,
+      hosts: document.querySelectorAll('[x-codetheme]').length,
+      wrappers: document.querySelectorAll('.x-codetheme__wrapper').length,
+      selects: document.querySelectorAll('.x-codetheme__select').length,
+      insideCodebar: document.querySelectorAll('.behaviors-live__codebar .x-codetheme__select').length,
     }));
 
     expect(
       counted.selects,
-      'TWO CODE-THEME DROPDOWNS AGAIN: codecontrol() appended a second wrapper on a '
-      + 're-init. Check the _wbCodeControlInit guard is still the first thing the '
+      'TWO CODE-THEME DROPDOWNS AGAIN: codetheme() appended a second wrapper on a '
+      + 're-init. Check the _wbCodeThemeInit guard is still the first thing the '
       + 'function does (same pattern as themecontrol.js).',
     ).toBe(1);
     expect(counted.wrappers).toBe(1);
@@ -62,7 +62,7 @@ test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
 
   test('picking a theme swaps the highlight stylesheet the page is using', async ({ page }) => {
     await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
-    const select = page.locator('.behaviors-live__codebar .x-codecontrol__select');
+    const select = page.locator('.behaviors-live__codebar .x-codetheme__select');
     await select.waitFor({ state: 'attached', timeout: 20_000 });
 
     const before = await page.evaluate(
@@ -72,7 +72,7 @@ test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
     // Any option that is not the current one — the list is long and its contents
     // are data, so pick by position rather than hardcoding a theme name.
     const target = await page.evaluate(() => {
-      const s = document.querySelector('.x-codecontrol__select') as HTMLSelectElement;
+      const s = document.querySelector('.x-codetheme__select') as HTMLSelectElement;
       const other = [...s.options].find((o) => o.value && o.value !== s.value);
       return other ? other.value : '';
     });

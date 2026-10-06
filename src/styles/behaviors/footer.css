@@ -6,7 +6,7 @@
    footer() skips adding `.x-footer` only for a literal <footer> host; a
    native <footer> host (autoInject) still gets the class, and still needs
    it selected here. */
-x-footer, [x-footer],
+[x-footer],
 .x-footer {
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@ x-footer, [x-footer],
 
 /* Responsive */
 @media (max-width: 768px) {
-  x-footer, [x-footer],
+  [x-footer],
   .x-footer {
     flex-direction: column;
     text-align: center;

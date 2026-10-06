@@ -451,7 +451,7 @@ test.describe('Interactive Cards', () => {
       await createTestPage(page, `
         <div x-cardexpandable 
           title="Expandable" 
-          content="<p>Hidden content that can be revealed</p>">
+          content="${'The collapsed card holds this paragraph to its 100px limit, so part of it stays hidden until Show More releases the limit. '.repeat(8)}">
         </div>
       `);
       

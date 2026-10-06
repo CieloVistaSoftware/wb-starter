@@ -6,7 +6,7 @@
 
 /* #448: tag selectors -- notes() no longer adds a redundant classList.add
    ('x-notes') that just duplicated the <div x-notes> tag name. */
-x-notes, [x-notes]{
+[x-notes]{
   --notes-max-width: 50vw;
   --notes-min-width: 200px;
   /* default-width="320px" -- notes.js used to write it inline (#779). */
@@ -14,11 +14,11 @@ x-notes, [x-notes]{
 }
 
 /* Start hidden - only show when x-notes--open class is added */
-x-notes .x-notes__drawer, [x-notes] .x-notes__drawer{
+[x-notes] .x-notes__drawer{
   display: none !important;
 }
 
-x-notes.x-notes--open .x-notes__drawer, [x-notes].x-notes--open .x-notes__drawer{
+[x-notes].x-notes--open .x-notes__drawer{
   display: flex !important;
 }
 

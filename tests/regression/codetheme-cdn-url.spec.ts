@@ -1,18 +1,18 @@
 /**
- * REGRESSION: codecontrol.js's own applyTheme() (distinct from
+ * REGRESSION: codetheme.js's own applyTheme() (distinct from
  * semantics/code.js's separate fallback loader, already covered by
  * code-theme-local-vs-cdn.spec.ts) built every non-local theme's stylesheet
  * URL from HLJS_STYLES_PATH ('/node_modules/highlight.js/styles/') -- a
  * dev-only path never deployed to production. applyTheme() runs
- * immediately on <div x-codecontrol> init (not just on user selection), so
+ * immediately on <div x-codetheme> init (not just on user selection), so
  * this broke syntax highlighting for the DEFAULT theme ('atom-one-dark')
- * on every page load that includes a <div x-codecontrol>, plus any of the
+ * on every page load that includes a <div x-codetheme>, plus any of the
  * ~40 other non-local themes a user could pick from the dropdown.
  * Confirmed live: setting the theme link to that node_modules path on the
  * deployed .io site produces a real network 404, wiping out all coloring.
  *
  * Tested against demos/site/content.html, a real page that already ships
- * a <div x-codecontrol> instance, rather than synthetic injection.
+ * a <div x-codetheme> instance, rather than synthetic injection.
  *
  * The cdnjs stylesheet is fetched from inside the page, so the offline
  * fixture answers it from its recorded copy -- the test never needs the
@@ -23,17 +23,17 @@ import { test, expect, Page } from '../fixtures/offline';
 const PAGE_URL = '/demos/site/content.html';
 
 /**
- * Load the page and build its <div x-codecontrol>.
+ * Load the page and build its <div x-codetheme>.
  *
  * Scrolled to first: the lazy runtime (#491) injects a behavior only once its
- * element nears the viewport, so waiting for `wbCodeControl` without scrolling
+ * element nears the viewport, so waiting for `wbCodeTheme` without scrolling
  * worked only while the control happened to sit within the observer's margin
  * of the top. content.html's table demos now hold real rows (twelve tables of
  * three people, not one line of placeholder text each), which put the Code
  * Control section below that margin -- it was never built, and every test here
  * timed out waiting for it.
  */
-async function openCodeControl(page: Page): Promise<void> {
+async function openCodeTheme(page: Page): Promise<void> {
   await page.goto(PAGE_URL);
   // Re-centred on every poll rather than scrolled to once: everything above it
   // (article images, audio players, eleven tables) is still building and web
@@ -41,21 +41,21 @@ async function openCodeControl(page: Page): Promise<void> {
   // was overtaken by the page growing above it and the control never came
   // near enough to build (seen on a cold first run: never x-ready in 15s).
   await page.waitForFunction(() => {
-    const el = document.querySelector('[x-codecontrol]') as any;
+    const el = document.querySelector('[x-codetheme]') as any;
     if (!el) return false;
-    if (el.wbCodeControl) return true;
+    if (el.wbCodeTheme) return true;
     el.scrollIntoView({ block: 'center' });
     return false;
   }, undefined, { timeout: 15000, polling: 250 });
 }
 
-test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', () => {
+test.describe('[x-codetheme] theme URLs must never point at a dev-only path', () => {
   test.beforeEach(async ({ page }) => {
     await page.evaluate(() => localStorage.removeItem('x-code-theme')).catch(() => {});
   });
 
   test('the default theme (atom-one-dark) resolves to a real cdnjs URL, not /node_modules/', async ({ page }) => {
-    await openCodeControl(page);
+    await openCodeTheme(page);
 
     const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
 
@@ -69,11 +69,11 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
   });
 
   test('selecting a non-local theme from the dropdown (e.g. monokai) also resolves to a working cdnjs URL', async ({ page }) => {
-    await openCodeControl(page);
+    await openCodeTheme(page);
 
     await page.evaluate(() => {
-      const el = document.querySelector('[x-codecontrol]') as any;
-      el.wbCodeControl.setTheme('monokai');
+      const el = document.querySelector('[x-codetheme]') as any;
+      el.wbCodeTheme.setTheme('monokai');
     });
     await page.waitForTimeout(200);
 
@@ -88,11 +88,11 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
   });
 
   test('selecting the local x-grayscale-dark theme still resolves to its real local file, not a CDN URL', async ({ page }) => {
-    await openCodeControl(page);
+    await openCodeTheme(page);
 
     await page.evaluate(() => {
-      const el = document.querySelector('[x-codecontrol]') as any;
-      el.wbCodeControl.setTheme('x-grayscale-dark');
+      const el = document.querySelector('[x-codetheme]') as any;
+      el.wbCodeTheme.setTheme('x-grayscale-dark');
     });
     await page.waitForTimeout(200);
 

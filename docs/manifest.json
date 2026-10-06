@@ -70,7 +70,7 @@
           "file": "standards/V3-STANDARDS.md",
           "title": "V3 STANDARDS",
           "description": "Documentation for V3 STANDARDS",
-          "modified": "2026-10-01"
+          "modified": "2026-10-06"
         },
         {
           "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
@@ -100,7 +100,7 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-01"
+          "modified": "2026-10-05"
         },
         {
           "file": "behavior-cross-reference.md",
@@ -118,13 +118,13 @@
           "file": "behaviors/autosize.md",
           "title": "Autosize Behavior",
           "description": "Auto-resize textarea behavior",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
-          "file": "behaviors/codecontrol.md",
-          "title": "Code Control",
+          "file": "behaviors/codetheme.md",
+          "title": "Code Theme",
           "description": "Dropdown to switch the highlight.js code theme site-wide",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/help.md",
@@ -136,7 +136,7 @@
           "file": "behaviors/label.md",
           "title": "Label Behavior",
           "description": "Label behavior",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/move.md",
@@ -328,7 +328,7 @@
           "file": "behaviors/card.md",
           "title": "Card",
           "description": "Card.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardbutton.md",
@@ -346,7 +346,7 @@
           "file": "behaviors/cardexpandable.md",
           "title": "Expandable Card",
           "description": "x-cardexpandable renders a card whose body is clipped to lines lines (or max-height) with a control that expands it to full length and back.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/cardfile.md",
@@ -598,7 +598,7 @@
           "file": "behaviors/dropdown.md",
           "title": "dropdown",
           "description": "Click (or hover) to open a menu — from either a comma-separated items list or real child <a>/<button>/<div> elements.",
-          "modified": "2026-10-01"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/error.md",
@@ -838,7 +838,7 @@
           "file": "behaviors/notes.md",
           "title": "Notes",
           "description": "x-notes adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to…",
-          "modified": "2026-10-04"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/notify.md",
@@ -976,13 +976,13 @@
           "file": "behaviors/searchfield.md",
           "title": "x-searchfield Behavior",
           "description": "A complete search input: icon, debounced/instant search events, clear button, and loading state.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/select.md",
           "title": "Select",
           "description": "A plain <select> gets the form styling, with variant for validation state, size, and clearable for a button that resets it.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/shake.md",
@@ -1270,7 +1270,7 @@
           "file": "NOTES-V3-GUIDE.md",
           "title": "Notes System",
           "description": "Notes feature guide",
-          "modified": "2026-08-26"
+          "modified": "2026-10-05"
         },
         {
           "file": "guides/search-index.md",
@@ -1438,7 +1438,7 @@
           "file": "pce-candidates.md",
           "title": "Pce-candidates",
           "description": "Documentation for Pce-candidates",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "pricecard.md",

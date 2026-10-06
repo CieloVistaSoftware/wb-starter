@@ -20,7 +20,7 @@ const COMPONENTS = [
   'cardvideo', 'code', 'grid', 'row', 'column', 'span', 'details',
   'repeater', 'control', 'themecontrol', 'input', 'select', 'textarea',
   'checkbox', 'dialog', 'audio', 'video', 'table', 'pre', 'ul', 'ol', 'dl',
-  'codecontrol', 'statusbar', 'mdhtml', 'sheet', 'json', 'empty',
+  'codetheme', 'statusbar', 'mdhtml', 'sheet', 'json', 'empty',
   'breadcrumb', 'pagination', 'steps', 'timeline', 'stat', 'list', 'desclist',
   'tags', 'autocomplete', 'file', 'otp', 'colorpicker', 'masked', 'password',
   'search', 'stepper', 'counter', 'image', 'gallery', 'youtube', 'ratio',

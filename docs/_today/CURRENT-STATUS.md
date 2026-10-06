@@ -2,6 +2,20 @@
 
 ## 🅿️ PARKING LOT
 
+**Parked 2026-10-05, 11:55 PM CDT.** main = v1.0.315.
+
+**Task:** real paths for pages (#1001), which also settled #957.
+
+**Last action:** #1601 merged at 11:50 PM CDT, CI green. #957 closed (an unknown path is a 404, not home). Signatures filled on both. The live site serves `/wb-starter/behaviors` from `404.html`, re-stamped on every release.
+
+**Next step:** #1001 stays open on one acceptance line. GitHub Pages answers `/wb-starter/behaviors` with a 404 status (the page renders; the status is wrong). Closing it needs a generated `<page>/index.html` per page, made by `scripts/generate-404.mjs`'s shell builder and kept in step by the stamp workflow. That is about 20 folders at the repo root, see the comment on #1001. Optional: change the 44 `?page=` content links to paths (they redirect, so they work as is).
+
+**Open questions for John:** #827 wire up or delete the list modules (`<ul>/<ol>/<dl>` would change on every page); #969 the typed-card class refactor, do now or later.
+
+**Done today (merged):** #1532 (release steps, video maker, 12 fixes), #1559 (Central time everywhere, x-clock default Central, x-glow), #1582 (`<nav>` picks up navbar, #958). Closed as already fixed: #864, #916, #1004, #1319; #1037 fixed by another session's #1584.
+
+---
+
 **Updated 2026-10-02.** Build process changed (John's decision).
 
 - Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.
@@ -10,6 +24,70 @@
 - Nightly: full suite on main vs the register. A new failure files one `priority:2` issue. It does not release.
 - The live site serves `main`; a merge is live in minutes. The pre-push rule (#1076) is gone.
 - **Version number** (John: "1.0.what the latest push is e.g. 1.0.41 simple"): the badge shows the last tag's patch plus the commits since it — `v1.0.41`. Numbers only, no marks; the tooltip says if the copy is behind or edited.
+
+---
+
+**Updated 2026-10-06, morning.** Rule for `<select>` vs `x-dropdown` (#682).
+
+**Files touched:** `docs/standards/V3-STANDARDS.md`, `docs/behaviors/select.md`, `docs/behaviors/dropdown.md`, `demos/site/forms.html`.
+
+**Last action:** written rule with a one-line test (a value is `<select>`, an action is `x-dropdown`); `<div x-select options='…'>` recorded as deprecated, still working; the forms.html Select samples were placeholder text with no options and are now real `<select>`s, one per feature.
+
+**Next step:** #274 (widen overlap pages); later, migrate the remaining `<div x-select>` markup (pages/contact.html, demos/playground.html).
+
+---
+
+**Updated 2026-10-06, morning.** Card content precedence (#683).
+
+**Files touched:** `src/wb-viewmodels/card.js`, `tests/regression/cards-keep-authored-content.spec.ts`, `docs/behaviors/card.md`.
+
+**Last action:** `content="..."` wins over the children on every card path (card() left the children loose beside the attribute's body, so both rendered); a contentless card gets no empty `<main>`. The old empty-body test selected `.x-card__main`, which no card body carries, so it could never fail.
+
+**Next step:** remaining triage findings: #323 (label.md live demo), #682 (write the select vs x-dropdown rule), #274 (widen overlap pages).
+
+---
+
+**Updated 2026-10-06, morning.** Last two behavior docs without a live demo (#323).
+
+**Files touched:** `docs/behaviors/label.md`, `docs/behaviors/autosize.md`, `tests/compliance/md-wb-demo-required.spec.ts`.
+
+**Last action:** both docs show their examples as live `<div x-demo>` blocks instead of static fences, and are off the gate's legacy zero-demo list so they cannot slide back.
+
+**Next step:** #682 (write the select vs x-dropdown rule), #274 (widen overlap pages).
+
+---
+
+**Updated 2026-10-06.** x-codecontrol renamed to x-codetheme (#668).
+
+**Files touched:** `src/wb-viewmodels/codetheme.js`, `src/wb-models/codetheme.schema.json`, `src/styles/behaviors/codetheme.css`, `docs/behaviors/codetheme.md` (all renamed from codecontrol), `src/core/attribute-aliases.js` (new `BEHAVIOR_ALIASES`), `src/core/tag-map.js`, `src/core/wb-lazy.js`, `src/core/style-loader.js`, `src/wb-viewmodels/index.js`, `src/styles/behavior-css-manifest.js`, `docs/manifest.json`, `docs/behavior-cross-reference.md`, `docs/behaviors-reference.md`, `docs/pce-candidates.md`, demos/pages that used the old name.
+
+**Last action:** the behavior, module, schema, stylesheet and doc are codetheme; the schema says it picks a highlight.js theme (it said "code editor/viewer"). `x-codecontrol` still works: it is declared once, in `BEHAVIOR_ALIASES` (attribute-aliases.js), and wb-lazy.js, the wb.js registry and the CSS loader all read it from there. It is not in tag-map.js, so the inventories and docs list one behavior, not two.
+
+**Next step:** retire the x-codecontrol alias once nothing outside the repo uses it.
+
+---
+
+**Updated 2026-10-06.** Behavior API verbs gate sees every member (#782).
+
+**Files touched:** `tests/regression/behavior-api-verbs.spec.ts`, `src/wb-viewmodels/search.js`, `src/wb-viewmodels/notes.js`, `src/wb-models/notes.schema.json`, `tests/components/notes.spec.ts`, `tests/components/notes-updates.spec.ts`, `tests/regression/variants-render-differently.spec.ts`, `docs/behaviors/notes.md`, `docs/behaviors/searchfield.md`, `docs/NOTES-V3-GUIDE.md`.
+
+**Last action:** the gate only read `name: (` / `name(` members, so `wbSearch.clear` and `wbNotes.open/close` passed it. It now reads every depth-1 member. Renamed: `wbSearch.clear` -> `reset`, `wbNotes.open/close` -> `show/hide`, `collapseToSide(side)` -> `hide(side)`. Domain verbs (fire, type, count, stick, save, copy, focus, blur, search...) are allowed per API only.
+
+**Next step:** #668 (rename x-codecontrol to x-codetheme), #669 (schema properties never read).
+
+---
+
+**Updated 2026-10-05, 9:55 PM CDT.** Link-share preview shows the wb logo (#1585, PR #1586, merged).
+
+**Task:** John, from a LinkedIn post of the site: change the preview icon (the white lightning bolt on purple) to `wb.png`.
+
+**Files touched:** `assets/icons/og-image.jpg` (new), `index.html` (`og:image`, `twitter:image`, plus `og:image:width`/`height`/`alt`).
+
+**Last action:** the 1.5 MB logo bitmap was deleted in #795, so it came back from history as a 512x512 JPEG of 25,875 bytes in `assets/icons/`, under the 100 KB ceiling of `header-logo-is-not-a-megabyte.spec.ts`. The PWA icons in `manifest.json` are unchanged. All 17 PR checks were green.
+
+**Next step:** John re-runs linkedin.com/post-inspector on the site URL once, so posts already shared drop the cached bolt. Then work the open issues.
+
+**Open questions:** should the PWA/app icons (`assets/icons/icon-*.png`, made by `scripts/generate-icons.js` from the bolt SVG) also become the wb logo? Not changed here; only the share card was asked for.
 
 ---
 

@@ -3,7 +3,7 @@
  * Handles height, layout, and responsiveness
  */
 
-x-hero, [x-hero]{
+[x-hero]{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,7 +13,7 @@ x-hero, [x-hero]{
   overflow: hidden;
 }
 
-x-cardhero, [x-cardhero]{
+[x-cardhero]{
   /* Fill the container, NOT the viewport. The previous 100vw + negative-margin
      full-bleed broke the cardhero out of its grid cell and overlapped
      neighbouring cards (e.g. the overlay card in the components demo).
@@ -44,7 +44,7 @@ x-cardhero, [x-cardhero]{
 
 /* Default background — a rich, animated gradient built from THEME hues (no
    literals): a diagonal brand gradient with two radial glows in adjacent hues. */
-x-cardhero:not([background]), [x-cardhero]:not([background]){
+[x-cardhero]:not([background]){
   background-image:
     radial-gradient(130% 130% at 0% 0%, hsl(var(--hue-primary, 240) 85% 58% / 0.85), transparent 55%),
     radial-gradient(130% 130% at 100% 100%, hsl(calc(var(--hue-primary, 240) + 55) 85% 52% / 0.85), transparent 55%),
@@ -52,7 +52,7 @@ x-cardhero:not([background]), [x-cardhero]:not([background]){
 }
 
 /* Animated diagonal sheen sweeping across the hero. */
-x-cardhero::before, [x-cardhero]::before{
+[x-cardhero]::before{
   content: '';
   position: absolute;
   inset: -60%;
@@ -62,10 +62,10 @@ x-cardhero::before, [x-cardhero]::before{
   animation: x-cardhero-sheen 7s linear infinite;
 }
 @keyframes x-cardhero-sheen { from { transform: translateX(-30%); } to { transform: translateX(30%); } }
-@media (prefers-reduced-motion: reduce) { x-cardhero::before { animation: none; } }
+@media (prefers-reduced-motion: reduce) { [x-cardhero]::before { animation: none; } }
 
 /* Legibility scrim (top-to-bottom, darker at the base). */
-x-cardhero .x-card__overlay, [x-cardhero] .x-card__overlay{
+[x-cardhero] .x-card__overlay{
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -85,7 +85,7 @@ x-cardhero .x-card__overlay, [x-cardhero] .x-card__overlay{
    `align-items: stretch` (the default) lets each child take the column's full
    width; `text-align` then does the aligning, which is what it is for, and the
    heading keeps a whole line's worth of room to break on word boundaries. */
-x-cardhero .x-card__hero-content, [x-cardhero] .x-card__hero-content{
+[x-cardhero] .x-card__hero-content{
   /* The title and subtitle size off THIS column's width (cqi), not the
      hero's. The split variant gives the text a column about half the hero's
      width, so a title sized at 6cqi of the hero was twice what its column
@@ -115,7 +115,7 @@ x-cardhero .x-card__hero-content, [x-cardhero] .x-card__hero-content{
    a full-width bar. `width: fit-content` opts this one child back out, and
    `margin-inline` follows whatever the hero's alignment is — the same job
    `text-align` does for the text around it. */
-x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
+[x-cardhero] .x-card__hero-pretitle{
   width: fit-content;
   margin-inline: auto;
 }
@@ -125,13 +125,13 @@ x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
 [x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-pretitle { margin-inline: auto 0; }
 
 @keyframes x-cardhero-in { from { opacity: 0; transform: translateY(1rem); } }
-@media (prefers-reduced-motion: reduce) { x-cardhero .x-card__hero-content { animation: none; } }
+@media (prefers-reduced-motion: reduce) { [x-cardhero] .x-card__hero-content { animation: none; } }
 
 [x-cardhero].x-card--xalign-left  .x-card__hero-content { text-align: left;  margin-right: auto; }
 [x-cardhero].x-card--xalign-right .x-card__hero-content { text-align: right; margin-left: auto; }
 
 /* Eyebrow / pretitle — a frosted pill. */
-x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
+[x-cardhero] .x-card__hero-pretitle{
   display: inline-block;
   margin-bottom: 0.75rem;
   padding: 0.3rem 0.9rem;
@@ -158,7 +158,7 @@ x-cardhero .x-card__hero-pretitle, [x-cardhero] .x-card__hero-pretitle{
    ALSO 0,1,1 and ties, so which one wins came down to stylesheet load
    order (site.css won). The extra class guarantees this rule wins
    regardless of load order. */
-x-cardhero .x-card__title.x-card__hero-title, [x-cardhero] .x-card__title.x-card__hero-title{
+[x-cardhero] .x-card__title.x-card__hero-title{
   margin: 0;
   font-weight: 800;
   line-height: 1.05;
@@ -176,7 +176,7 @@ x-cardhero .x-card__title.x-card__hero-title, [x-cardhero] .x-card__title.x-card
   text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
 }
 
-x-cardhero .x-card__subtitle.x-card__hero-subtitle, [x-cardhero] .x-card__subtitle.x-card__hero-subtitle{
+[x-cardhero] .x-card__subtitle.x-card__hero-subtitle{
   margin: 0.75rem 0 0;
   font-size: clamp(1rem, 4.5cqi, 1.35rem);
   line-height: 1.5;
@@ -188,14 +188,14 @@ x-cardhero .x-card__subtitle.x-card__hero-subtitle, [x-cardhero] .x-card__subtit
 }
 
 /* CTA group + buttons. */
-x-cardhero .x-card__cta-group, [x-cardhero] .x-card__cta-group{
+[x-cardhero] .x-card__cta-group{
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: inherit;
   margin-top: 1.75rem;
 }
-x-cardhero .x-hero-cta, [x-cardhero] .x-hero-cta{
+[x-cardhero] .x-hero-cta{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -207,7 +207,7 @@ x-cardhero .x-hero-cta, [x-cardhero] .x-hero-cta{
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
-x-cardhero .x-hero-cta--primary, [x-cardhero] .x-hero-cta--primary{
+[x-cardhero] .x-hero-cta--primary{
   background: var(--text-on-accent, #fff);
   color: var(--primary);
   box-shadow: 0 12px 30px hsl(var(--overlay-dark-hsl) / 0.35);
@@ -219,7 +219,7 @@ x-cardhero .x-hero-cta--primary, [x-cardhero] .x-hero-cta--primary{
    are custom properties, so they live in themes.css with the other
    definitions. Together that reproduces the button exactly as it was before
    x-glass existed. */
-x-cardhero .x-hero-cta--secondary, [x-cardhero] .x-hero-cta--secondary{
+[x-cardhero] .x-hero-cta--secondary{
   color: var(--text-on-accent, #fff);
 }
 [x-cardhero] .x-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }
@@ -230,7 +230,7 @@ x-cardhero .x-hero-cta--secondary, [x-cardhero] .x-hero-cta--secondary{
 }
 
 /* Opt-in full-bleed for page-top heroes that should span the viewport. */
-x-cardhero.x-cardhero--fullbleed, [x-cardhero].x-cardhero--fullbleed{
+[x-cardhero].x-cardhero--fullbleed{
   width: 100vw;
   margin-left: calc(-50vw + 50%);
 }
@@ -253,7 +253,7 @@ x-cardhero.x-cardhero--fullbleed, [x-cardhero].x-cardhero--fullbleed{
    exactly the technique the 3 big color glows two layers down already use,
    which is why those never looked gridded. No background-size/repeat
    trickery needed; a plain 'cover'/'no-repeat' applies to every layer. */
-x-cardhero.x-cardhero--cosmic:not([background]), [x-cardhero].x-cardhero--cosmic:not([background]){
+[x-cardhero].x-cardhero--cosmic:not([background]){
   background-image:
     radial-gradient(circle at 6% 12%,  hsl(var(--overlay-light-hsl) / 0.55) 0 1px, transparent 1px),
     radial-gradient(circle at 14% 55%, hsl(var(--overlay-light-hsl) / 0.85) 0 1px, transparent 1px),
@@ -283,10 +283,10 @@ x-cardhero.x-cardhero--cosmic:not([background]), [x-cardhero].x-cardhero--cosmic
 
 /* split — content pinned to one half, background visible on the other,
    instead of the default centered treatment. */
-x-cardhero.x-cardhero--split, [x-cardhero].x-cardhero--split{
+[x-cardhero].x-cardhero--split{
   justify-content: flex-start;
 }
-x-cardhero.x-cardhero--split .x-card__hero-content, [x-cardhero].x-cardhero--split .x-card__hero-content{
+[x-cardhero].x-cardhero--split .x-card__hero-content{
   text-align: left;
   max-width: 46%;
   /* Both sides: the base rule's `margin-inline: auto` would otherwise keep the
@@ -294,10 +294,10 @@ x-cardhero.x-cardhero--split .x-card__hero-content, [x-cardhero].x-cardhero--spl
   margin-left: 0;
   margin-right: auto;
 }
-x-cardhero.x-cardhero--split.x-card--xalign-right, [x-cardhero].x-cardhero--split.x-card--xalign-right{
+[x-cardhero].x-cardhero--split.x-card--xalign-right{
   justify-content: flex-end;
 }
-x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content, [x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-content{
+[x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-content{
   text-align: right;
   margin-right: 0;
   margin-left: auto;
@@ -318,9 +318,7 @@ x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content, [x-card
    40rem is where 46% stops being a usable measure: below it the column is
    under ~18rem, narrower than the title alone wants. */
 @container (max-width: 40rem) {
-  x-cardhero.x-cardhero--split .x-card__hero-content,
   [x-cardhero].x-cardhero--split .x-card__hero-content,
-  x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content,
   [x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__hero-content {
     max-width: 100%;
     margin-left: 0;
@@ -330,30 +328,29 @@ x-cardhero.x-cardhero--split.x-card--xalign-right .x-card__hero-content, [x-card
 
 /* minimal — flat theme surface, no sheen sweep, no legibility scrim, no
    CTA drama: the opposite instinct of the default's rich animated glow. */
-x-cardhero.x-cardhero--minimal:not([background]), [x-cardhero].x-cardhero--minimal:not([background]){
+[x-cardhero].x-cardhero--minimal:not([background]){
   background-image: none;
   background-color: var(--bg-secondary, #1f2937);
 }
-x-cardhero.x-cardhero--minimal::before, [x-cardhero].x-cardhero--minimal::before{
+[x-cardhero].x-cardhero--minimal::before{
   content: none; /* no sheen sweep */
 }
-x-cardhero.x-cardhero--minimal .x-card__overlay, [x-cardhero].x-cardhero--minimal .x-card__overlay{
+[x-cardhero].x-cardhero--minimal .x-card__overlay{
   content: none;
   background: none;
 }
-x-cardhero.x-cardhero--minimal .x-card__hero-content, [x-cardhero].x-cardhero--minimal .x-card__hero-content{
+[x-cardhero].x-cardhero--minimal .x-card__hero-content{
   color: var(--text-primary, #f9fafb);
 }
-x-cardhero.x-cardhero--minimal .x-card__hero-title, [x-cardhero].x-cardhero--minimal .x-card__hero-title,
-x-cardhero.x-cardhero--minimal .x-card__hero-subtitle, [x-cardhero].x-cardhero--minimal .x-card__hero-subtitle{
+[x-cardhero].x-cardhero--minimal .x-card__hero-title, [x-cardhero].x-cardhero--minimal .x-card__hero-subtitle{
   text-shadow: none;
 }
-x-cardhero.x-cardhero--minimal .x-hero-cta--primary, [x-cardhero].x-cardhero--minimal .x-hero-cta--primary{
+[x-cardhero].x-cardhero--minimal .x-hero-cta--primary{
   background: var(--primary);
   color: var(--text-on-accent, #fff);
   box-shadow: none;
 }
-x-cardhero.x-cardhero--minimal .x-hero-cta--secondary, [x-cardhero].x-cardhero--minimal .x-hero-cta--secondary{
+[x-cardhero].x-cardhero--minimal .x-hero-cta--secondary{
   background: transparent;
   border-color: var(--border-color, #374151);
   backdrop-filter: none;
@@ -361,71 +358,71 @@ x-cardhero.x-cardhero--minimal .x-hero-cta--secondary, [x-cardhero].x-cardhero--
 
 /* gradient — a clean two-hue linear sweep, no radial glows, no sheen
    animation, no starfield: simpler and calmer than cosmic or the default. */
-x-cardhero.x-cardhero--gradient:not([background]), [x-cardhero].x-cardhero--gradient:not([background]){
+[x-cardhero].x-cardhero--gradient:not([background]){
   background-image: linear-gradient(135deg, var(--primary), hsl(calc(var(--hue-primary, 240) + 120) 70% 45%));
 }
-x-cardhero.x-cardhero--gradient::before, [x-cardhero].x-cardhero--gradient::before{
+[x-cardhero].x-cardhero--gradient::before{
   content: none; /* no sheen sweep -- the gradient itself is the whole point */
 }
 
 /* Apply height from data attribute */
-x-hero[data-height="100vh"], [x-hero][data-height="100vh"]{
+[x-hero][data-height="100vh"]{
   height: 100vh;
   min-height: 100vh;
 }
 
-x-hero[data-height="80vh"], [x-hero][data-height="80vh"]{
+[x-hero][data-height="80vh"]{
   height: 80vh;
   min-height: 80vh;
 }
 
-x-hero[data-height="60vh"], [x-hero][data-height="60vh"]{
+[x-hero][data-height="60vh"]{
   height: 60vh;
   min-height: 60vh;
 }
 
-x-hero[data-height="50vh"], [x-hero][data-height="50vh"]{
+[x-hero][data-height="50vh"]{
   height: 50vh;
   min-height: 50vh;
 }
 
 /* Alignment */
-x-hero[data-align="center"], [x-hero][data-align="center"]{
+[x-hero][data-align="center"]{
   text-align: center;
 }
 
-x-hero[data-align="left"], [x-hero][data-align="left"]{
+[x-hero][data-align="left"]{
   text-align: left;
 }
 
-x-hero[data-align="right"], [x-hero][data-align="right"]{
+[x-hero][data-align="right"]{
   text-align: right;
 }
 
 /* Variants - Always ensure visible background */
-x-hero[data-variant="gradient"], [x-hero][data-variant="gradient"]{
+[x-hero][data-variant="gradient"]{
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
-x-hero[data-variant="dark"], [x-hero][data-variant="dark"]{
+[x-hero][data-variant="dark"]{
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   color: white;
 }
 
-x-hero[data-variant="light"], [x-hero][data-variant="light"]{
+[x-hero][data-variant="light"]{
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   color: #0f172a;
 }
 
 /* Default gradient if no variant */
-x-hero:not([data-variant]), [x-hero]:not([data-variant]){
+[x-hero]:not([data-variant]){
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 /* Hero Content Container */
-x-hero > div, [x-hero] > div{
+[x-hero] > div{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -435,21 +432,21 @@ x-hero > div, [x-hero] > div{
   padding: 2rem;
 }
 
-x-hero h1, [x-hero] h1{
+[x-hero] h1{
   font-size: clamp(2rem, 8vw, 4rem);
   margin: 0 0 1rem 0;
   font-weight: 700;
   line-height: 1.2;
 }
 
-x-hero h2, [x-hero] h2{
+[x-hero] h2{
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   margin: 0 0 1rem 0;
   font-weight: 700;
   line-height: 1.3;
 }
 
-x-hero p, [x-hero] p{
+[x-hero] p{
   font-size: clamp(1rem, 2vw, 1.25rem);
   margin: 0 0 2rem 0;
   line-height: 1.6;
@@ -457,7 +454,7 @@ x-hero p, [x-hero] p{
 }
 
 /* CTA Buttons */
-x-hero .cta-buttons, [x-hero] .cta-buttons{
+[x-hero] .cta-buttons{
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -465,8 +462,7 @@ x-hero .cta-buttons, [x-hero] .cta-buttons{
   margin-top: 2rem;
 }
 
-x-hero .cta-button, [x-hero] .cta-button,
-x-hero button, [x-hero] button{
+[x-hero] .cta-button, [x-hero] button{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -480,29 +476,25 @@ x-hero button, [x-hero] button{
   text-decoration: none;
 }
 
-x-hero .cta-button--primary, [x-hero] .cta-button--primary,
-x-hero button[data-primary], [x-hero] button[data-primary]{
+[x-hero] .cta-button--primary, [x-hero] button[data-primary]{
   background: white;
   color: #667eea;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-x-hero .cta-button--primary:hover, [x-hero] .cta-button--primary:hover,
-x-hero button[data-primary]:hover, [x-hero] button[data-primary]:hover{
+[x-hero] .cta-button--primary:hover, [x-hero] button[data-primary]:hover{
   transform: translateY(-2px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-x-hero .cta-button--secondary, [x-hero] .cta-button--secondary,
-x-hero button[data-secondary], [x-hero] button[data-secondary]{
+[x-hero] .cta-button--secondary, [x-hero] button[data-secondary]{
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
 }
 
-x-hero .cta-button--secondary:hover, [x-hero] .cta-button--secondary:hover,
-x-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
+[x-hero] .cta-button--secondary:hover, [x-hero] button[data-secondary]:hover{
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
@@ -510,52 +502,51 @@ x-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
 
 /* Responsive */
 @media (max-width: 768px) {
-  x-hero, [x-hero]{
+  [x-hero]{
     min-height: 300px;
   }
 
-  x-hero[data-height="100vh"], [x-hero][data-height="100vh"]{
+  [x-hero][data-height="100vh"]{
     height: auto;
     min-height: 60vh;
   }
 
-  x-hero > div, [x-hero] > div{
+  [x-hero] > div{
     padding: 1.5rem;
   }
 
-  x-hero h1, [x-hero] h1{
+  [x-hero] h1{
     font-size: clamp(1.5rem, 7vw, 2.5rem);
   }
 
-  x-hero p, [x-hero] p{
+  [x-hero] p{
     font-size: clamp(0.9rem, 4vw, 1.1rem);
   }
 
-  x-hero .cta-buttons, [x-hero] .cta-buttons{
+  [x-hero] .cta-buttons{
     flex-direction: column;
     gap: 0.75rem;
   }
 
-  x-hero .cta-button, [x-hero] .cta-button,
-  x-hero button, [x-hero] button{
+  [x-hero] .cta-button, [x-hero] button{
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  x-hero, [x-hero]{
+  [x-hero]{
     min-height: 250px;
   }
 
-  x-hero > div, [x-hero] > div{
+  [x-hero] > div{
     padding: 1rem;
   }
 
-  x-hero h1, [x-hero] h1{
+  [x-hero] h1{
     font-size: 1.5rem;
   }
 
-  x-hero p, [x-hero] p{
+  [x-hero] p{
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
   }
@@ -563,7 +554,7 @@ x-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
 
 /* full-height (cardhero.schema.json fullHeight) — fill the viewport.
    svh keeps mobile browser chrome from pushing the fold below the screen. */
-x-cardhero.x-cardhero--full-height, [x-cardhero].x-cardhero--full-height{
+[x-cardhero].x-cardhero--full-height{
   min-height: 100vh;
   min-height: 100svh;
 }
@@ -595,6 +586,11 @@ x-cardhero.x-cardhero--full-height, [x-cardhero].x-cardhero--full-height{
   position: absolute;
   inset: 0;
   pointer-events: none;
+  /* #1595: on an x-cardhero this is the same layer as the sheen, which slides
+     ±30% of its width. The sheen is inset -60% so its edges stay hidden; this
+     nebula is inset 0, so sliding it swept a hard edge across the hero. The
+     nebula stays put. */
+  animation: none;
   background:
     radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0px, transparent 40%),
     radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0px, transparent 40%),

@@ -114,13 +114,15 @@
     }
   ],
   "$methods": {
-    "open": {
+    "show": {
       "description": "Opens the drawer",
       "params": []
     },
-    "close": {
-      "description": "Closes the drawer",
-      "params": []
+    "hide": {
+      "description": "Closes the drawer; hide(side) docks it to that side first",
+      "params": [
+        "side"
+      ]
     },
     "toggle": {
       "description": "Toggles drawer",

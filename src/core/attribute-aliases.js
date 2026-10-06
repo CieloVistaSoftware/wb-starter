@@ -43,6 +43,23 @@ export const ATTRIBUTE_ALIASES = Object.freeze({
 });
 
 /**
+ * Renamed behaviors: the old attribute name -> the behavior it now runs.
+ * Keyed and valued without the `x-` prefix.
+ *
+ * A rename keeps the old spelling working for pages written against it, but
+ * the old name is NOT a second behavior: it has no doc, schema or examples of
+ * its own, and the inventories (tag-map.js, the reference docs, the behaviors
+ * page) list only the new name. The two loaders read this table directly --
+ * wb-lazy.js adds an `[x-old]` selector, wb-viewmodels/index.js registers the
+ * old key -- so the alias is written here once and nowhere else.
+ */
+export const BEHAVIOR_ALIASES = Object.freeze({
+  // #668: a highlight.js theme picker; its sync event was already
+  // x:codetheme:sync and its tests were already named code-theme-*.
+  codecontrol: 'codetheme',
+});
+
+/**
  * Synonyms declared for one property. Never includes the `data-`/camelCase
  * variants, which the two generic rules above already cover.
  * @param {string} behavior schemaFor name, with or without the `x-` prefix

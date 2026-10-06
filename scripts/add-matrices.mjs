@@ -83,7 +83,7 @@ const matrices = {
     { gfm: true },
     { sanitize: true, gfm: true }
   ],
-  'codecontrol': [
+  'codetheme': [
     { }
   ],
   'stagelight': [

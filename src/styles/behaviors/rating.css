@@ -11,13 +11,13 @@
    `.x-rating span` / `span.active` rules are gone: they never matched
    anything while the class was absent, and once present they would have
    restyled every star. */
-x-rating, .x-rating {
+.x-rating {
   display: inline-flex;
   gap: 0.25rem;
   cursor: pointer;
 }
-x-rating.x-rating--readonly, .x-rating.x-rating--readonly { cursor: default; }
-x-rating.x-rating--disabled, .x-rating.x-rating--disabled { cursor: not-allowed; }
+.x-rating.x-rating--readonly { cursor: default; }
+.x-rating.x-rating--disabled { cursor: not-allowed; }
 
 /* Star colours: an author color="…" / empty-color="…" arrives as a generated
    rule setting --x-rating-color / --x-rating-empty-color on the host;

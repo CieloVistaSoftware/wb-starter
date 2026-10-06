@@ -13,6 +13,7 @@
  */
 import { test, expect, Page } from '../fixtures/offline';
 import fs from 'node:fs';
+import { pagePath } from '../helpers/page-path';
 
 // #1432: read from the site's own menu. A hard-coded list kept 'components',
 // which 4.0.0 removed, so 14 tests failed on "nav link not found" and the
@@ -28,13 +29,13 @@ async function clickNav(page: Page, id: string): Promise<number> {
   // handler exactly as a user tap would. The scroll offset is read in the same
   // task as the click: that is the moment the site remembers, and a page still
   // building can move between a separate read and the click.
-  const leftAt = await page.evaluate((p) => {
-    const link = document.querySelector(`.nav__item[href="?page=${p}"]`) as HTMLElement;
+  const leftAt = await page.evaluate(({ p, href }) => {
+    const link = document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement;
     if (!link) throw new Error('nav link not found: ' + p);
     const y = document.getElementById('siteBody')!.scrollTop;
     link.click();
     return y;
-  }, id);
+  }, { p: id, href: pagePath(id) });
   await page.waitForFunction(
     (p) => (window as any).WBSite?.currentPage === p && !!document.querySelector(`#mainPage-${p}`),
     id,

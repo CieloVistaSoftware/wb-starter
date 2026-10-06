@@ -14,8 +14,7 @@
  */
 
 .x-input,
-.x-textarea,
-x-select, [x-select]{
+.x-textarea, [x-select]{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -41,6 +40,22 @@ textarea {
   border-radius: var(--radius-md, 6px);
 }
 
+/* #682: a bare <select> is THE control for choosing a value, but it got no
+   class from any behavior and so none of the padding .x-input gives the inputs
+   beside it: alone in a demo grid it was stretched to 40px, anywhere else it
+   sat at its 19px intrinsic height. Same box as .x-input, at zero
+   specificity so the size variants (.x-select--sm, ...) and any author rule
+   still win. A listbox (multiple, or size > 1) keeps its own row height. */
+:where(select:not([multiple]):not([size]), select[size="1"]) {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  /* A <select> ignores line-height for its own box, so padding alone comes
+     out 5px short of .x-input: match the input's line + padding + border. */
+  box-sizing: border-box;
+  min-height: calc(1.5em + 1rem + 2px);
+}
+
 /* date/time/datetime-local/week/month's native calendar/clock picker icon
    defaults to a dark glyph baked into the browser's own UA rendering --
    invisible against this theme's dark input background (confirmed live,
@@ -57,8 +72,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 }
 
 .x-input:focus,
-.x-textarea:focus,
-x-select:focus, [x-select]:focus{
+.x-textarea:focus, [x-select]:focus{
   border-color: var(--primary);
   outline: 0;
   box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
@@ -75,8 +89,7 @@ x-select:focus, [x-select]:focus{
    match -- so a disabled field in either authoring form looked enabled. */
 .x-input:disabled,
 .x-input__field:disabled,
-.x-textarea:disabled,
-x-select:disabled, [x-select]:disabled{
+.x-textarea:disabled, [x-select]:disabled{
   background-color: var(--bg-secondary);
   opacity: 1;
   cursor: not-allowed;
@@ -329,8 +342,7 @@ input[type="radio"] {
 
 /* Native <input x-input> path only: it always set outline and a per-size
    padding (md unless a known size says otherwise), and styled its prefix,
-   suffix and clear button; the <div x-input> builder never did. Two classes,
-   so these beat `.x-input { padding }` and the single-class size rules. */
+   suffix and clear button; so these beat `.x-input { padding }` and the single-class size rules. */
 .x-input__wrapper--native > .x-input__field {
   outline: none;
   padding: 0.5rem 0.75rem;

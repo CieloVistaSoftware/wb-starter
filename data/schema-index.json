@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T23:17:47.261Z",
+  "generatedAt": "2026-10-06T03:51:43.324Z",
   "count": 160,
   "schemas": [
     {
@@ -1740,12 +1740,12 @@
       }
     },
     {
-      "file": "codecontrol.schema.json",
-      "name": "codecontrol",
-      "title": "Code Control",
-      "description": "Interactive code editor/viewer control.",
-      "tag": "x-codecontrol",
-      "baseClass": "x-codecontrol",
+      "file": "codetheme.schema.json",
+      "name": "codetheme",
+      "title": "Code Theme",
+      "description": "Dropdown that picks a highlight.js code theme and applies it to every code block on the page at once.",
+      "tag": "x-codetheme",
+      "baseClass": "x-codetheme",
       "properties": {},
       "matrix": [
         {}

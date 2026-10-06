@@ -8,7 +8,7 @@
 
 /* #448: tag selector -- collapse() no longer adds a redundant classList.add
    ('x-collapse') that just duplicated the <div x-collapse> tag name. */
-x-collapse, [x-collapse]{
+[x-collapse]{
   display: block;
 }
 

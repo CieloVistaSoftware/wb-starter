@@ -8,6 +8,7 @@
  * src/wb-models/stack.schema.json registration.
  */
 import { test, expect } from '../fixtures/offline';
+import { pagePath } from '../helpers/page-path';
 import { wbIdle } from '../base';
 
 test.describe('#174 — no spurious "Schema not found" warnings', () => {
@@ -35,10 +36,10 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     // navigate away and back — this is what tripped x-demo's disconnectedCallback (#174/#175)
-    await page.evaluate(() => {
-      const home = document.querySelector('.nav__item[href="?page=home"]') as HTMLElement;
+    await page.evaluate((href) => {
+      const home = document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement;
       home?.click();
-    });
+    }, pagePath('home'));
     await page.waitForTimeout(800);
     await page.goto('/?page=behaviors');
     await wbIdle(page);

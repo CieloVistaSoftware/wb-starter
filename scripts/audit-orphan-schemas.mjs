@@ -22,6 +22,9 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// Schema names that are not components at all -- one list, shared with the
+// schema-reads audit (#669).
+import { NOT_COMPONENTS } from './lib/schema-behavior-reads.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MODELS = path.join(ROOT, 'src', 'wb-models');
@@ -58,11 +61,6 @@ const lazy = fs.readFileSync(path.join(CORE, 'wb-lazy.js'), 'utf8');
  * and still have a job.
  */
 
-/** Schema names that are not components at all. */
-const NOT_COMPONENTS = new Set([
-  'schema', 'views', 'search-index', 'home-page', 'behaviors',
-  'x-behavior', 'x-collapse', 'x-copy', 'x-draggable', 'x-effects', 'x-enhancements',
-]);
 
 const rows = [];
 for (const file of fs.readdirSync(MODELS).filter((f) => f.endsWith('.schema.json'))) {
