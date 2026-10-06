@@ -340,13 +340,13 @@ function generateComponentSections(schema) {
         // default, OFF must be written out -- name="false", which the behaviors
         // read as off since #747. When it is off by default, false IS the
         // default, so it stays unwritten and {x:false} still dedupes with {}.
-        // Written in the schema's own camelCase (#1125), not kebab: the dashed
-        // spelling everywhere else in this generator is #1526.
+        // Written in the schema's own camelCase (#1125), as every attribute
+        // this generator writes is now.
         if (val === false) {
           if (props[key]?.default === true) attrs[key] = 'false';
           continue;
         }
-        attrs[camelToKebab(key)] = val;
+        attrs[key] = val;
       }
       return buildDemo(schema, tag, attrs);
     });
@@ -365,12 +365,14 @@ function generateComponentSections(schema) {
     def.enum && Array.isArray(def.enum) && def.enum.length > 1
   );
   for (const [propName, propDef] of enumProps) {
+    // #1125: the attribute is the schema's camelCase name; only the section
+    // id stays dashed, because pages and specs link to it.
     const attrName = camelToKebab(propName);
     const demos = propDef.enum.map(val => {
-      const attrs = { [attrName]: val, ...(DEMO_COMPANIONS[propName] || {}) };
+      const attrs = { [propName]: val, ...(DEMO_COMPANIONS[propName] || {}) };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
+          attrs[rk] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -399,10 +401,10 @@ function generateComponentSections(schema) {
   );
   if (boolProps.length > 0) {
     const demos = boolProps.map(([propName]) => {
-      const attrs = { [camelToKebab(propName)]: true };
+      const attrs = { [propName]: true };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
+          attrs[rk] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -427,9 +429,9 @@ function generateComponentSections(schema) {
     const defaultAttrs = {};
     for (const [propName, propDef] of Object.entries(props)) {
       if (propDef.default !== undefined && propDef.default !== '' && propDef.default !== false) {
-        defaultAttrs[camelToKebab(propName)] = propDef.default;
+        defaultAttrs[propName] = propDef.default;
       } else if (propDef.required) {
-        defaultAttrs[camelToKebab(propName)] = samplePropValue(propName, propDef);
+        defaultAttrs[propName] = samplePropValue(propName, propDef);
       }
     }
     if (Object.keys(defaultAttrs).length > 0) {

@@ -44,8 +44,8 @@
   </div>
 
     <h2>Hero Card</h2>
-    <div x-demo id="demo-hero" columns="1" full-width>
-      <div x-cardhero title="Summer Collection 2026" subtitle="Fresh styles, bold colors" cta="Shop Now" cta-secondary="Learn More" background="https://picsum.photos/seed/hero99/1200/600" height="400px"></div>
+    <div x-demo id="demo-hero" columns="1" fullWidth>
+      <div x-cardhero title="Summer Collection 2026" subtitle="Fresh styles, bold colors" cta="Shop Now" ctaSecondary="Learn More" background="https://picsum.photos/seed/hero99/1200/600" height="400px"></div>
     </div>
 
     <h2>Profile Card</h2>
@@ -79,16 +79,16 @@
     <h2>Stats Cards</h2>
     <div id="demo-stats" class="demo-section__grid demo-section__grid--cols-4">
     <div x-demo id="demo-stats-1" columns="1">
-      <div x-cardstats value="42K" label="Users" icon="👥" trend="up" trend-value="+12.5%"></div>
+      <div x-cardstats value="42K" label="Users" icon="👥" trend="up" trendValue="+12.5%"></div>
     </div>
     <div x-demo id="demo-stats-2" columns="1">
-      <div x-cardstats value="$1.2M" label="Revenue" icon="💰" trend="up" trend-value="+8.3%"></div>
+      <div x-cardstats value="$1.2M" label="Revenue" icon="💰" trend="up" trendValue="+8.3%"></div>
     </div>
     <div x-demo id="demo-stats-3" columns="1">
-      <div x-cardstats value="99.9%" label="Uptime" icon="⚡" trend="up" trend-value="+0.1%"></div>
+      <div x-cardstats value="99.9%" label="Uptime" icon="⚡" trend="up" trendValue="+0.1%"></div>
     </div>
     <div x-demo id="demo-stats-4" columns="1">
-      <div x-cardstats value="4.8" label="Rating" icon="⭐" trend="up" trend-value="+0.3"></div>
+      <div x-cardstats value="4.8" label="Rating" icon="⭐" trend="up" trendValue="+0.3"></div>
     </div>
   </div>
 
@@ -300,32 +300,32 @@
   <section id="card-featured-tone-variants">
   <h2>featuredTone variants</h2>
   <div x-demo columns="1">
-    <article featured-tone="primary">
+    <article featuredTone="primary">
       This is example card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article featured-tone="success">
+    <article featuredTone="success">
       This is example card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article featured-tone="warning">
+    <article featuredTone="warning">
       This is example card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article featured-tone="danger">
+    <article featuredTone="danger">
       This is example card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article featured-tone="info">
+    <article featuredTone="info">
       This is example card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article featured-tone="neutral">
+    <article featuredTone="neutral">
       This is example card content.
     </article>
   </div>
@@ -470,17 +470,17 @@
   <section id="cardexpandable-expandable-card">
   <h2>➕ Expandable Card</h2>
   <div x-demo columns="1">
-    <article x-cardexpandable title="Basic" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
+    <article x-cardexpandable title="Basic" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
       This is example expandable card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardexpandable title="Expanded" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree." expanded>
+    <article x-cardexpandable title="Expanded" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree." expanded>
       This is example expandable card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardexpandable title="Custom" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree. This card sets max-height to 150px instead of the default 100px, so it shows about two more lines before the button. Use a taller limit when the first few lines carry the point and the rest is detail, and a shorter one when the card sits in a dense grid. The limit is a ceiling, not a fixed size: content shorter than it simply ends, and the card shows no button. Use lines instead of max-height when the content is plain text, so the cut always falls between two whole lines rather than through the middle of one." max-height="150px">
+    <article x-cardexpandable title="Custom" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree. This card sets maxHeight to 150px instead of the default 100px, so it shows about two more lines before the button. Use a taller limit when the first few lines carry the point and the rest is detail, and a shorter one when the card sits in a dense grid. The limit is a ceiling, not a fixed size: content shorter than it simply ends, and the card shows no button. Use lines instead of maxHeight when the content is plain text, so the cut always falls between two whole lines rather than through the middle of one." maxHeight="150px">
       This is example expandable card content.
     </article>
   </div>
@@ -490,17 +490,17 @@
   <section id="cardexpandable-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <article x-cardexpandable variant="default" title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
+    <article x-cardexpandable variant="default" title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
       This is example expandable card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardexpandable variant="elevated" title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
+    <article x-cardexpandable variant="elevated" title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
       This is example expandable card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardexpandable variant="bordered" title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
+    <article x-cardexpandable variant="bordered" title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
       This is example expandable card content.
     </article>
   </div>
@@ -510,7 +510,7 @@
   <section id="cardexpandable-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <article x-cardexpandable expanded title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (max-height) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and max-height are set, lines wins. Without either, the collapsed limit is a max-height of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
+    <article x-cardexpandable expanded title="Sample title" content="An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree.">
       This is example expandable card content.
     </article>
   </div>
@@ -610,7 +610,7 @@
     </section>
   </div>
   <div x-demo columns="1">
-    <section x-cardhero background="https://picsum.photos/seed/cardhero/600/400" title="Welcome" full-height>
+    <section x-cardhero background="https://picsum.photos/seed/cardhero/600/400" title="Welcome" fullHeight>
       This is example hero card content.
     </section>
   </div>
@@ -670,32 +670,32 @@
   <section id="cardhero-heading-level-variants">
   <h2>headingLevel variants</h2>
   <div x-demo columns="1">
-    <section x-cardhero heading-level="1" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero headingLevel="1" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
   <div x-demo columns="1">
-    <section x-cardhero heading-level="2" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero headingLevel="2" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
   <div x-demo columns="1">
-    <section x-cardhero heading-level="3" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero headingLevel="3" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
   <div x-demo columns="1">
-    <section x-cardhero heading-level="4" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero headingLevel="4" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
   <div x-demo columns="1">
-    <section x-cardhero heading-level="5" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero headingLevel="5" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
   <div x-demo columns="1">
-    <section x-cardhero heading-level="6" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero headingLevel="6" background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
@@ -705,7 +705,7 @@
   <section id="cardhero-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <section x-cardhero full-height background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
+    <section x-cardhero fullHeight background="https://picsum.photos/seed/cardhero/600/400" title="this is the title">
       This is example hero card content.
     </section>
   </div>
@@ -725,7 +725,7 @@
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardhorizontal image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" image-position="right">
+    <article x-cardhorizontal image="https://picsum.photos/seed/cardhorizontal/600/400" title="Title" imagePosition="right">
       This is example horizontal card content.
     </article>
   </div>
@@ -740,12 +740,12 @@
   <section id="cardhorizontal-image-position-variants">
   <h2>imagePosition variants</h2>
   <div x-demo columns="1">
-    <article x-cardhorizontal image-position="left">
+    <article x-cardhorizontal imagePosition="left">
       This is example horizontal card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardhorizontal image-position="right">
+    <article x-cardhorizontal imagePosition="right">
       This is example horizontal card content.
     </article>
   </div>
@@ -1425,7 +1425,7 @@
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardproduct title="Product" price="$29" original-price="$49">
+    <article x-cardproduct title="Product" price="$29" originalPrice="$49">
       This is example product card content.
     </article>
   </div>
@@ -1585,17 +1585,17 @@
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardstats value="100" trend="up" trend-value="+10%">
+    <article x-cardstats value="100" trend="up" trendValue="+10%">
       This is example stats card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardstats value="100" trend="down" trend-value="-5%">
+    <article x-cardstats value="100" trend="down" trendValue="-5%">
       This is example stats card content.
     </article>
   </div>
   <div x-demo columns="1">
-    <article x-cardstats value="$50K" label="Revenue" icon="💰" trend="up" trend-value="+12%">
+    <article x-cardstats value="$50K" label="Revenue" icon="💰" trend="up" trendValue="+12%">
       This is example stats card content.
     </article>
   </div>

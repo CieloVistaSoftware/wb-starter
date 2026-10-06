@@ -192,9 +192,9 @@ test.describe('[x-tabs]', () => {
     expect(lg).toBeGreaterThan(sm);
   });
 
-  test('full-width attribute applies its class', async ({ page }) => {
+  test('fullWidth attribute applies its class', async ({ page }) => {
     await ready(page);
-    await expect(page.locator('[x-tabs][full-width]')).toBeVisible();
+    await expect(page.locator('[x-tabs][fullWidth]')).toBeVisible();
   });
 
   test('vertical attribute lays the nav out as a column, not a row', async ({ page }) => {

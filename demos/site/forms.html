@@ -187,12 +187,12 @@
   <section id="button-icon-position-variants">
   <h2>iconPosition variants</h2>
   <div x-demo columns="1">
-    <button icon-position="start" icon="★">
+    <button iconPosition="start" icon="★">
       This is example button content.
     </button>
   </div>
   <div x-demo columns="1">
-    <button icon-position="end" icon="★">
+    <button iconPosition="end" icon="★">
       This is example button content.
     </button>
   </div>
@@ -302,12 +302,12 @@
     </button>
   </div>
   <div x-demo columns="1">
-    <button full-width>
+    <button fullWidth>
       This is example button content.
     </button>
   </div>
   <div x-demo columns="1">
-    <button icon-only>
+    <button iconOnly>
       This is example button content.
     </button>
   </div>
@@ -427,12 +427,12 @@
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input label="Email" input-type="email" placeholder="you@example.com">
+    <div x-input label="Email" inputType="email" placeholder="you@example.com">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input label="Password" input-type="password" placeholder="••••••••">
+    <div x-input label="Password" inputType="password" placeholder="••••••••">
       This is example input content.
     </div>
   </div>
@@ -477,52 +477,52 @@
   <section id="input-input-type-variants">
   <h2>inputType variants</h2>
   <div x-demo columns="1">
-    <div x-input input-type="text">
+    <div x-input inputType="text">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="email">
+    <div x-input inputType="email">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="password">
+    <div x-input inputType="password">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="number">
+    <div x-input inputType="number">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="tel">
+    <div x-input inputType="tel">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="url">
+    <div x-input inputType="url">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="search">
+    <div x-input inputType="search">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="date">
+    <div x-input inputType="date">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="time">
+    <div x-input inputType="time">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="datetime-local">
+    <div x-input inputType="datetime-local">
       This is example input content.
     </div>
   </div>
@@ -572,12 +572,12 @@
   <section id="input-icon-position-variants">
   <h2>iconPosition variants</h2>
   <div x-demo columns="1">
-    <div x-input icon-position="start" icon="★">
+    <div x-input iconPosition="start" icon="★">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input icon-position="end" icon="★">
+    <div x-input iconPosition="end" icon="★">
       This is example input content.
     </div>
   </div>
@@ -826,12 +826,12 @@
   <section id="switch-label-position-variants">
   <h2>labelPosition variants</h2>
   <div x-demo columns="1">
-    <div x-switch label-position="start">
+    <div x-switch labelPosition="start">
       This is example switch content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-switch label-position="end">
+    <div x-switch labelPosition="end">
       This is example switch content.
     </div>
   </div>
@@ -906,7 +906,7 @@
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-textarea max-length="500" show-count>
+    <div x-textarea maxLength="500" showCount>
       This is example textarea content.
     </div>
   </div>
@@ -971,7 +971,7 @@
   <section id="textarea-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-textarea show-count>
+    <div x-textarea showCount>
       This is example textarea content.
     </div>
   </div>
@@ -1100,9 +1100,9 @@
   <div x-demo>
     <input x-label="Label for input:" type="text">
   </div>
-  <p>RTL layouts (Hebrew, Arabic) via <code>label-position="right"</code>:</p>
+  <p>RTL layouts (Hebrew, Arabic) via <code>labelPosition="right"</code>:</p>
   <div x-demo>
-    <input x-label="שם מלא" label-position="right" dir="rtl" type="text">
+    <input x-label="שם מלא" labelPosition="right" dir="rtl" type="text">
   </div>
   <div id="label-schema-validation"></div>
   <script type="module">
@@ -1174,7 +1174,7 @@
     </div>
   </div>
 
-    <p>The <code>loading</code>/<code>icon</code>/<code>icon-position</code> attributes only work on the <code>&lt;x-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
+    <p>The <code>loading</code>/<code>icon</code>/<code>iconPosition</code> attributes only work on the <code>&lt;x-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
     <div class="demo-section__grid demo-section__grid--cols-3">
     <div x-demo columns="1">
       <button variant="primary" loading>Loading</button>
@@ -1183,7 +1183,7 @@
       <button variant="secondary" icon="💾">Save</button>
     </div>
     <div x-demo columns="1">
-      <button variant="danger" icon="🗑️" icon-position="right">Delete</button>
+      <button variant="danger" icon="🗑️" iconPosition="right">Delete</button>
     </div>
   </div>
   </div>
@@ -1251,8 +1251,8 @@
         <label id="semanticsforms-label-59">Character Count (Max 100)</label>
         <div x-demo>
           <textarea
-            show-count
-            max-length="100"
+            showCount
+            maxLength="100"
             placeholder="Limited bio..."></textarea>
         </div>
       </div>

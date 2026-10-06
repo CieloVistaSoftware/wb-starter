@@ -491,8 +491,8 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('product card with original price shows strikethrough', async ({ page }) => {
-      // 4.0.0: original-price, not data-original-price.
-      const productCard = page.locator('[x-cardproduct][original-price]').first();
+      // 4.0.0: not data-original-price; #1125: the schema's camelCase name.
+      const productCard = page.locator('[x-cardproduct][originalPrice]').first();
       await expect(productCard).toBeVisible();
       // #491: a card is built only as it nears the viewport; scroll to it
       // as a reader does before looking inside it.
