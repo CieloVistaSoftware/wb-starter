@@ -1642,7 +1642,7 @@ details[open] > .behaviors-live__doc-summary {
      16px     #behaviors-hero padding-top   <- the only one I had touched
 
    That header margin is the same defect already found on .behaviors-search and
-   .behaviors-live__head today: a base element margin nobody set deliberately,
+   .behaviors-live__head today: a browser-default element margin nobody set deliberately,
    invisible while a page had a big heading to absorb it.
 
    Zeroed globally, because a sticky site header with a 42px bottom margin is

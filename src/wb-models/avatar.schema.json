@@ -7,7 +7,8 @@
   "baseClass": "x-avatar",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "img"
+    "implicitRole": "img",
+    "genericHost": "shows initials or an image with a status ring, so a block, not a bare <img>"
   },
   "compliance": {
     "baseClass": "x-avatar",

@@ -26,7 +26,9 @@ test.describe('pages/behaviors.html: every x-* behavior demo shows a Docs: link 
   test('layout decoration forms are registered and link to their dedicated docs', async ({ page }) => {
     await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors-reference.md'));
     await page.waitForSelector('[x-demo] .x-demo__grid', { timeout: 10000 });
-    await page.waitForTimeout(1000);
+    // The demos are built once WB settles (#1516: not 1000ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const registry = await page.evaluate(async () => {
       const { extensionMap } = await import('/src/core/tag-map.js');

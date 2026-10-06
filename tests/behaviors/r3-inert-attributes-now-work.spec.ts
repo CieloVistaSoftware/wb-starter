@@ -93,6 +93,7 @@ test.describe('R3: attributes that were declared and inert', () => {
     await host.locator('#tt').hover();
     await expect(page.locator('.x-tooltip--visible')).toHaveCount(1, { timeout: 5000 });
     await host.locator('#away').hover();
+    // sleep-proves-negative: hide-delay must keep the tooltip up 300ms after the pointer leaves; the delay is the property under test
     await page.waitForTimeout(300);
     expect(
       await page.locator('.x-tooltip--visible').count(),

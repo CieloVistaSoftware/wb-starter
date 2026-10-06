@@ -30,7 +30,9 @@ test.describe('#312 follow-up — <div x-demo> blocks build lazily, not all at o
   test('only a handful of demo blocks are built on initial load, not all of them', async ({ page }) => {
     await page.goto(PAGE);
     await page.waitForSelector('[x-demo] .x-demo__grid', { timeout: 20000 });
-    await page.waitForTimeout(1000);
+    // The eager blocks are done when the runtime says it is idle (#1516), not
+    // after a guessed 1000ms; the deferred ones are then still unbuilt.
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const counts = await page.evaluate(() => {
       const all = [...document.querySelectorAll('[x-demo]')];
@@ -47,21 +49,26 @@ test.describe('#312 follow-up — <div x-demo> blocks build lazily, not all at o
   test('scrolling through the page eventually builds every demo block', async ({ page }) => {
     await page.goto(PAGE);
     await page.waitForSelector('[x-demo] .x-demo__grid', { timeout: 20000 });
-    await page.waitForTimeout(1000);
 
     // Walk the page the way a reader does: bring the next still-unbuilt block
-    // into view, let the observer fire, repeat. Scrolling by a fixed step
-    // undershoots here -- the page grows taller as blocks build.
+    // into view and keep it there, frame by frame, until the observer has
+    // built it; repeat. Scrolling by a fixed step undershoots here -- the page
+    // grows taller as blocks build -- and a fixed 50ms per step guessed how
+    // fast that happens (#1516).
     for (let i = 0; i < 400; i++) {
-      const remaining = await page.evaluate(() => {
+      const remaining = await page.evaluate(async () => {
         const next = [...document.querySelectorAll('[x-demo]')].find((el) => !el.querySelector('.x-demo__grid'));
-        if (next) next.scrollIntoView({ block: 'center' });
-        return !!next;
+        if (!next) return false;
+        const end = performance.now() + 10000;
+        while (!next.querySelector('.x-demo__grid')) {
+          if (performance.now() > end) throw new Error(`an [x-demo] block never built after 10s in view: ${next.outerHTML.slice(0, 120)}`);
+          next.scrollIntoView({ block: 'center' });
+          await new Promise((r) => requestAnimationFrame(() => r(null)));
+        }
+        return true;
       });
       if (!remaining) break;
-      await page.waitForTimeout(50);
     }
-    await page.waitForTimeout(500);
 
     const counts = await page.evaluate(() => {
       const all = [...document.querySelectorAll('[x-demo]')];

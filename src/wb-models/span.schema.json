@@ -7,7 +7,8 @@
   "baseClass": "x-span",
   "semanticElement": {
     "tagName": "span",
-    "implicitRole": "generic"
+    "implicitRole": "generic",
+    "genericHost": "it is the generic inline element by definition"
   },
   "compliance": {
     "baseClass": "x-span",

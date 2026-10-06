@@ -7,7 +7,8 @@
   "baseClass": "x-timeline",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "list"
+    "implicitRole": "list",
+    "genericHost": "it builds its own entries from an items list; an <ol> host would hold non-<li> children"
   },
   "compliance": {
     "baseClass": "x-timeline",

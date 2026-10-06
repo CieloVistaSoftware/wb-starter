@@ -77,7 +77,7 @@ export function rating(element, options = {}) {
   // Disabled is readonly plus the disabled presentation (rating.css).
   const interactive = !config.readonly && !config.disabled;
   // #779: layout and the per-state cursor are rating.css, keyed on the
-  // x-rating base class (the schema's compliance.baseClass) and --readonly /
+  // x-rating root class (the schema's compliance.baseClass) and --readonly /
   // --disabled. Skipped on a literal <x-rating> tag, where it would only
   // repeat the tag name (#448); rating.css selects the tag too.
   if (element.tagName !== 'X-RATING') element.classList.add('x-rating');

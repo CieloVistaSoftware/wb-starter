@@ -92,8 +92,14 @@ test.describe('Every page loads without errors', () => {
         if (!ignored(text)) errors.push(`console.error: ${text}`);
       });
 
-      const response = await page.goto(url, { waitUntil: 'networkidle' });
+      const response = await page.goto(url, { waitUntil: 'load' });
       expect(response?.status(), `${pageId}: ${url} did not load`).toBeLessThan(400);
+      // Let the page's own requests settle, but bounded: the issues page pages
+      // through the live GitHub API via /api/issues, and on a loaded CI runner
+      // "network idle" arrived after the whole 30s test budget, so the test
+      // timed out without ever looking for an error. Errors thrown by then are
+      // still collected; one thrown later is caught by the wait below.
+      await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
       // Behaviors attach after the fragment is injected, so an error thrown
       // during enhancement lands after load. Waiting only for `load` would
       // miss exactly the class of bug this exists for.

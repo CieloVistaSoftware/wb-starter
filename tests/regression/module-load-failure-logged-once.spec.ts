@@ -182,11 +182,10 @@ test.describe('#513 one module-load failure = one logged error', () => {
     h.setFailing(false);
     await page.waitForTimeout(FAILURE_COOLDOWN_MS + 1000);
     await page.evaluate(() => (window as any).__retry());
-    await page.waitForTimeout(1000);
-
-    expect(
-      h.moduleRequests(),
-      'After the cooldown the module must be retried, not permanently poisoned.'
+    // Polled until the retry's request goes out (#1516), not a 1000ms sleep.
+    await expect.poll(
+      () => h.moduleRequests(),
+      { message: 'After the cooldown the module must be retried, not permanently poisoned.', timeout: 10000 },
     ).toBeGreaterThan(requestsAfterFailure);
 
     await expect(page.locator('#later')).not.toHaveAttribute('x-error', 'true');

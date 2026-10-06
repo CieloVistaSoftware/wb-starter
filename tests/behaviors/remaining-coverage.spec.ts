@@ -160,7 +160,9 @@ test.describe('Behaviors page — key interactions', () => {
   test('tooltip appears on hover', async ({ page }) => {
     await loadBrowse(page);
     await show(page, 'x-tooltip');
-    await page.locator('#behaviors-live-example [x-tooltip]').first().hover();
+    // .x-tooltip-trigger is added in the same step as the mouseenter listener
+    // (tooltip.js); hovering before it lands showed nothing on a loaded CI runner.
+    await page.locator('#behaviors-live-example [x-tooltip].x-tooltip-trigger').first().hover();
     // .x-tooltip is the base class the behavior's own injected stylesheet keys
     // on for position/background/opacity — see src/wb-viewmodels/tooltip.js:21.
     // #858 found it being written as the literal string "[x-tooltip]", brackets

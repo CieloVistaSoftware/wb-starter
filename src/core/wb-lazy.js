@@ -25,6 +25,10 @@ import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
+import {
+  beginInFlight, failInjection, removeApplied, installReadiness,
+  startObserving, stopObserving, commonInitOptions, bootDocument,
+} from './runtime-shared.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { aliasesFor, BEHAVIOR_ALIASES } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
@@ -796,10 +800,7 @@ const WB = {
       pendingInjections.set(element, pending);
     }
     pending.add(behaviorName);
-    let settle = () => {};
-    const done = new Promise((resolve) => { settle = resolve; });
-    if (!inFlight.has(element)) inFlight.set(element, new Map());
-    inFlight.get(element).set(behaviorName, done);
+    const settle = beginInFlight(inFlight, element, behaviorName);
     // Counted here, AFTER every early return above, so start/end always pair:
     // an invalid element, an unknown behavior, an already-applied or
     // already-pending behavior all bail before this line and never reach the
@@ -851,18 +852,11 @@ const WB = {
 
       return cleanup;
     } catch (error) {
-      // Pass full Error object for stack trace extraction
-      if (!error?.wbModuleLoadReported) {
-        if (error?.wbModuleLoadFailure) error.wbModuleLoadReported = true;
-        Events.error(`WB: ${behaviorName}`, error, {
-          element: element.tagName,
-          id: element.id,
-          behavior: behaviorName
-        });
-      }
-      
-      // Mark element as having an error
-      element.setAttribute('x-error', 'true');
+      // Reported with its stack (once: a module-load failure is reported by
+      // the first element that hit it), and marked x-error on the element.
+      const report = !error?.wbModuleLoadReported;
+      if (report && error?.wbModuleLoadFailure) error.wbModuleLoadReported = true;
+      failInjection(element, behaviorName, error, { report });
       
       return null;
     } finally {
@@ -911,64 +905,9 @@ const WB = {
     }
   },
 
-  /**
-   * How many behavior injections are in flight right now (#961/#962).
-   *
-   * Zero does NOT mean "the page is finished": this runtime defers
-   * below-the-fold elements to an IntersectionObserver on purpose, so idle
-   * means "no work in flight", not "everything is injected". Scroll first.
-   *
-   * @type {number}
-   */
-  get pendingCount() {
-    return injectionTracker.count();
-  },
+  // pendingCount, pendingBehaviors, whenIdle() and settled(): installed from
+  // runtime-shared.js just after this object, the same for both runtimes (#883).
 
-  /**
-   * Which behaviors are in flight right now, e.g. "card x3, table" (#961/#962).
-   * "Timed out" on its own has cost this project enough time; a stuck
-   * readiness signal has to say what it is stuck on.
-   * @type {string}
-   */
-  get pendingBehaviors() {
-    return injectionTracker.describe();
-  },
-
-  /**
-   * Resolve once no injection has been in flight for `quiet` ms (#961/#962).
-   *
-   *     await WB.whenIdle();              // default: 10s budget, 50ms quiet
-   *
-   * Replaces `await page.waitForTimeout(...)` — a guess at how long building
-   * takes — with a wait for building actually being over. Rejects rather than
-   * resolving on timeout: a readiness signal that gives up quietly turns a hung
-   * build into a green test.
-   *
-   * @param {{ timeout?: number, quiet?: number }} [options]
-   * @returns {Promise<void>}
-   */
-  whenIdle(options) {
-    return injectionTracker.whenIdle(options);
-  },
-
-  /**
-   * Resolve when every unit of work has called back (#962): injections,
-   * elements waiting on the viewport observer's first report, and the work
-   * they start. No quiet window, no timer.
-   *
-   *     await WB.settled();                 // promise
-   *     WB.settled(() => start());          // callback
-   *     document.addEventListener('wb:settled', start);   // event
-   *
-   * Rejects at the deadline (default 15s), naming what never finished.
-   *
-   * @param {(() => void) | { timeout?: number }} [callbackOrOptions]
-   * @param {{ timeout?: number }} [options]
-   * @returns {Promise<void>}
-   */
-  settled(callbackOrOptions, options) {
-    return settledCall(callbackOrOptions, options);
-  },
 
   /**
    * Inject a behavior when element enters viewport
@@ -1020,24 +959,7 @@ const WB = {
    * @param {string} behaviorName - Behavior to remove (or all if not specified)
    */
   remove(element, behaviorName = null) {
-    const elementBehaviors = applied.get(element);
-    if (!elementBehaviors) return;
-
-    if (behaviorName) {
-      // Remove specific behavior
-      const index = elementBehaviors.findIndex(b => b.name === behaviorName);
-      if (index !== -1) {
-        const { cleanup } = elementBehaviors[index];
-        if (typeof cleanup === 'function') cleanup();
-        elementBehaviors.splice(index, 1);
-      }
-    } else {
-      // Remove all behaviors
-      elementBehaviors.forEach(({ cleanup }) => {
-        if (typeof cleanup === 'function') cleanup();
-      });
-      applied.delete(element);
-    }
+    removeApplied(applied, element, behaviorName);
   },
 
   /**
@@ -1234,25 +1156,14 @@ const WB = {
       }
     });
 
-    observer.observe(root, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['x-behavior']
-    });
-
-    WB._observer = observer;
-    return observer;
+    return startObserving(WB, observer, root, ['x-behavior']);
   },
 
   /**
    * Stop observing DOM changes
    */
   disconnect() {
-    if (WB._observer) {
-      WB._observer.disconnect();
-      WB._observer = null;
-    }
+    stopObserving(WB);
     if (lazyObserver) {
       lazyObserver.disconnect();
       lazyObserver = null;
@@ -1311,12 +1222,9 @@ const WB = {
    * @param {Object} options - Configuration options
    */
   async init(options = {}) {
+    // autoInject has no default — see the setConfig() call below for why.
+    const { shouldScan, shouldObserve, theme, debug, autoInject } = commonInitOptions(options);
     const {
-      scan: shouldScan = true,
-      observe: shouldObserve = true,
-      theme = null,
-      debug = false,
-      autoInject, // No default here — see the setConfig() call below for why.
       preload = [], // Array of behavior names to preload
       onSettled = null, // #962: called once the first build has finished
     } = options;
@@ -1398,25 +1306,8 @@ const WB = {
     // awaiting here would defer the rest of init (observe registration, the
     // ready log) until DOM ready and change boot timing for every page. The
     // promise is only retained, not waited on.
-    if (shouldScan && typeof document !== 'undefined') {
-      WB.ready = document.readyState === 'loading'
-        ? new Promise((resolve) => {
-            document.addEventListener('DOMContentLoaded', () => resolve(WB.scan()));
-          })
-        : WB.scan();
-      if (document.readyState !== 'loading') await WB.ready;
-    } else {
-      WB.ready = Promise.resolve();
-    }
-
-    // Start observing
-    if (shouldObserve && typeof document !== 'undefined') {
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => WB.observe());
-      } else {
-        WB.observe();
-      }
-    }
+    // The scan and observer start themselves live in runtime-shared.js.
+    await bootDocument(WB, shouldScan, shouldObserve);
 
     console.log(`✅ WB v${WB.version} initialized (lazy loading enabled)`);
     
@@ -1521,6 +1412,8 @@ const WB = {
   Theme,
   config: { get: getConfig, set: setConfig }
 };
+
+installReadiness(WB, injectionTracker, settledCall);
 
 
 /**

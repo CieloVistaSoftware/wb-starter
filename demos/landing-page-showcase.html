@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>wb-starter — Zero-build behaviors for developers</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.344">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.344">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.353">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.353">
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     import { VERSION } from '../src/core/version.js';
@@ -49,6 +49,18 @@
     .lp-stat { text-align: center; }
     .lp-stat strong { display: block; font-size: 2rem; color: var(--primary); }
     .lp-footer { text-align: center; padding: 3rem 1.5rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). A doubled
+       class (.x.x) is one that has to outrank a page rule, as the inline did. */
+    .pt-0 { padding-top:0; }
+    .landing-page-showcase-block-1 { display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center; align-items:center; margin-bottom:2rem; }
+    .maxw-640px-m-0-auto { max-width:640px; margin:0 auto; }
+    .w-100pct-mb-05rem { width:100%; margin-bottom:0.5rem; }
+    p.m-0-fs-085rem.m-0-fs-085rem { margin:0; font-size:0.85rem; }
+    .ta-center { text-align:center; }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .maxw-700px-m-0-auto-r-8px-ov-hidden { max-width:700px; margin:0 auto; border-radius:8px; overflow:hidden; }
   </style>
 </head>
 <body>
@@ -66,7 +78,7 @@
   </section>
 
   <!-- STATS -->
-  <section class="lp-section" style="padding-top:0;">
+  <section class="lp-section pt-0">
     <div class="lp-stats">
       <div class="lp-stat"><strong>100+</strong>Behaviors</div>
       <div class="lp-stat"><strong>23</strong>Themes</div>
@@ -121,7 +133,7 @@
   <section class="lp-section">
     <h2>The behavior library</h2>
     <p class="sub">A slice of what ships in the box — every piece below is live, not a screenshot.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;align-items:center;margin-bottom:2rem;">
+    <div class="landing-page-showcase-block-1">
       <span x-badge label="Default" variant="default"></span>
       <span x-badge label="Primary" variant="primary"></span>
       <span x-badge label="Success" variant="success" pill></span>
@@ -131,9 +143,9 @@
       <span x-avatar src="https://i.pravatar.cc/80?img=12" alt="User avatar"></span>
       <button class="x-btn" x-tooltip="Tooltips, for free" x-ripple>Hover + click me</button>
     </div>
-    <div style="max-width:640px;margin:0 auto;">
-      <progress value="72" max="100" style="width:100%;margin-bottom:0.5rem;"></progress>
-      <p class="sub" style="margin:0;font-size:0.85rem;">A native <code>&lt;progress&gt;</code> element — auto-enhanced, no wrapper tag needed.</p>
+    <div class="maxw-640px-m-0-auto">
+      <progress value="72" max="100" class="w-100pct-mb-05rem"></progress>
+      <p class="sub m-0-fs-085rem">A native <code>&lt;progress&gt;</code> element — auto-enhanced, no wrapper tag needed.</p>
     </div>
   </section>
 
@@ -141,7 +153,7 @@
   <section class="lp-section">
     <h2>What the markup actually looks like</h2>
     <p class="sub">Every behavior on this page, in the same handful of lines.</p>
-    <pre style="max-width:700px;margin:0 auto;border-radius:8px;overflow:hidden;"><code class="language-html">&lt;x-card title="Themeable" variant="glass" elevated&gt;
+    <pre class="maxw-700px-m-0-auto-r-8px-ov-hidden"><code class="language-html">&lt;x-card title="Themeable" variant="glass" elevated&gt;
   Every color is a CSS variable.
 &lt;/x-card&gt;
 
@@ -170,7 +182,7 @@
   </section>
 
   <!-- THEME PICKER — the actual differentiator vs. a single hardcoded dark palette -->
-  <section class="lp-section" style="text-align:center;">
+  <section class="lp-section ta-center">
     <h2>Try a different theme</h2>
     <p class="sub">This entire page — cards, badges, switches, code blocks — re-themes live.</p>
     <div x-themecontrol></div>

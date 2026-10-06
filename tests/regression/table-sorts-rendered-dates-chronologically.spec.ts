@@ -119,15 +119,14 @@ test('a column of prose is still sorted as text, not guessed at as dates', async
   await page.waitForTimeout(400);
 
   await page.locator('#prose-sort thead th').first().click();
-  await page.waitForTimeout(300);
-
-  const order = await page.$$eval('#prose-sort tbody tr', (rows) =>
-    rows.map((r) => r.children[0]?.textContent?.trim() || ''),
-  );
 
   const alphabetical = ['April in Paris', 'Before Sunrise', 'March of the Penguins'];
-  expect(
-    order.join('|') === alphabetical.join('|') || order.join('|') === [...alphabetical].reverse().join('|'),
-    `A Title column sorted to:\n  ${order.join('\n  ')}\nExpected plain alphabetical order.`,
-  ).toBe(true);
+  const readOrder = () => page.$$eval('#prose-sort tbody tr', (rows) =>
+    rows.map((r) => r.children[0]?.textContent?.trim() || ''),
+  );
+  // Polled until the sort lands (#1516: not 300ms).
+  await expect.poll(async () => {
+    const order = (await readOrder()).join('|');
+    return order === alphabetical.join('|') || order === [...alphabetical].reverse().join('|');
+  }, { message: `A Title column did not sort to plain alphabetical order (now: ${(await readOrder()).join(' | ')})` }).toBe(true);
 });

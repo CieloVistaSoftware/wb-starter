@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WB Layout Tags Demo</title>
-    <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.344">
-    <link rel="stylesheet" href="../src/styles/site.css?v=1.0.344">
+    <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.353">
+    <link rel="stylesheet" href="../src/styles/site.css?v=1.0.353">
     <script type="module">
         import WB from '../src/core/wb-lazy.js';
         WB.init({ debug: true, scan: true, observe: true });
@@ -24,7 +24,14 @@
             font-weight: bold;
         }
         h2 { margin-top: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
-    </style>
+    
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .maxw-400px-bd-1px-dashed-555-p-1rem { max-width: 400px; border: 1px dashed #555; padding: 1rem; }
+    .layout-test-block-1 { min-height: 50px; }
+    .bd-1px-solid-var-border-color-h-300px { border: 1px solid var(--border-color); height: 300px; }
+    .bg-bg-tertiary-h-100pct-p-1rem { background: var(--bg-tertiary); height: 100%; padding: 1rem; }
+    .bg-bg-secondary-h-100pct-p-1rem { background: var(--bg-secondary); height: 100%; padding: 1rem; }
+  </style>
 </head>
 <body>
     <div x-container>
@@ -50,19 +57,19 @@
         </div>
 
         <h2>3. Stack (&lt;x-stack&gt;)</h2>
-        <div x-stack gap="1rem" style="max-width: 400px; border: 1px dashed #555; padding: 1rem;">
-            <div class="box" style="min-height: 50px;">Item 1</div>
-            <div class="box" style="min-height: 50px;">Item 2</div>
-            <div class="box" style="min-height: 50px;">Item 3</div>
+        <div x-stack gap="1rem" class="maxw-400px-bd-1px-dashed-555-p-1rem">
+            <div class="box layout-test-block-1">Item 1</div>
+            <div class="box layout-test-block-1">Item 2</div>
+            <div class="box layout-test-block-1">Item 3</div>
         </div>
 
         <h2>4. Sidebar Layout (&lt;x-sidebar&gt;)</h2>
-        <div style="border: 1px solid var(--border-color); height: 300px;">
+        <div class="bd-1px-solid-var-border-color-h-300px">
             <div x-sidebarlayout side="left" width="200px" gap="1rem">
-                <div slot="sidebar" style="background: var(--bg-tertiary); height: 100%; padding: 1rem;">
+                <div slot="sidebar" class="bg-bg-tertiary-h-100pct-p-1rem">
                     Sidebar Content
                 </div>
-                <div slot="content" style="background: var(--bg-secondary); height: 100%; padding: 1rem;">
+                <div slot="content" class="bg-bg-secondary-h-100pct-p-1rem">
                     Main Content Area. The sidebar stays fixed width, I take the rest.
                 </div>
             </div>

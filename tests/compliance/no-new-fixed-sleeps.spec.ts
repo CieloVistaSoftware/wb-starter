@@ -7,7 +7,9 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * A fixed sleep is a guess about how fast the machine is: it passes on an idle
  * box and fails on a loaded one, which is #961's signature ("passes alone,
  * fails under load"). On 2026-10-06, 202 of 798 spec files held 426 sleeps;
- * the first pass (#1516) took that to 345 and the positive ones from 88 to 68.
+ * the first pass (#1516) took that to 345 and the positive ones from 88 to 68;
+ * the second took the positive ones to 43, the third to 26, the fourth to 3
+ * (the three left are mobile-validation, which also runs under WebKit).
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -29,10 +31,10 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   - `elementReady(locator)` / `buildInView(locator)` in tests/base.ts
  */
 const CEILING = {
-  positive: 68,
+  positive: 3,
   redundant: 0,
-  setup: 213,
-  negative: 64,
+  setup: 201,
+  negative: 59,
 };
 
 test.describe('no new fixed sleeps (#1516)', () => {

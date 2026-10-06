@@ -6,6 +6,279 @@
   ],
   "releases": [
     {
+      "version": "1.0.353",
+      "date": "2026-10-06",
+      "summary": "Two behaviors-project tests failed on CI under load and passed 8 of 8 locally. &quot;tooltip appears on hover&quot; hovered the example before tooltip.js had attached its mouseenter listener, so no .x-tooltip appeared; &quot;issues — no uncaught errors&quot; waited for networkidle while the issues page paged through the live GitHub API via /api/issues, and the whole 30s budget ran out before any error check. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1650\" target=\"_blank\" rel=\"noopener\">PR 1650</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The tooltip hover waits for its listener; page smoke bounds its network-idle wait</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/790f6b7b86aef6677d5bee58fd8df47c1c13f853\" target=\"_blank\" rel=\"noopener\"><code>790f6b7</code></a>",
+          "issues": [
+            918
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-input/select/textarea/checkbox/switch keep their div host, with the reason</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e525bc1975881327ce58cd915e96bf7d9b0b5790\" target=\"_blank\" rel=\"noopener\"><code>e525bc1</code></a>",
+          "issues": [
+            918
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Schemas name each behavior&#39;s real HTML host; IntelliSense stops teaching &lt;div&gt;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d9eaa504173d2fccc9f344a265cfff3a69ff5fb\" target=\"_blank\" rel=\"noopener\"><code>0d9eaa5</code></a>",
+          "issues": [
+            918
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/remaining-coverage.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/remaining-coverage.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/pages/every-page-loads-without-errors.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/pages/every-page-loads-without-errors.spec.ts</a>. Before: on CI, &quot;element(s) not found&quot; for .x-tooltip and &quot;Test timeout of 30000ms exceeded&quot; on issues. Now: the hover targets [x-tooltip].x-tooltip-trigger (set in the same step as the listener), and the page check loads, then waits at most 15s for the network to settle; 45 of 45 pass locally.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/99a84b5b7a3abe1072add36b1a3f487e7c19387f\" target=\"_blank\" rel=\"noopener\"><code>99a84b5</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.352",
+      "date": "2026-10-06",
+      "summary": "Autoinject-select-variant-colors.spec.ts read the theme-variant selects&#39; style= attribute to check for theme variables; this PR moved those colours into <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/autoinject.html\" target=\"_blank\" rel=\"noopener\">demos/autoinject.html</a>&#39;s &lt;style&gt; rules (#779), so the attribute is gone and the check failed with &quot;received value must not be null&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1646\" target=\"_blank\" rel=\"noopener\">PR 1646</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The autoinject select-variant check reads the page&#39;s CSS rule, not a style attribute</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/124f62ecf0ea3ab500f7e117cdc67f710e0c9338\" target=\"_blank\" rel=\"noopener\"><code>124f62e</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Demos/index.html&#39;s class comes from its generator, not a hand edit</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/67f0a3cb25c6b107c988154c4a5a0da9907a0b02\" target=\"_blank\" rel=\"noopener\"><code>67f0a3c</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Demos/ carries no inline styles; the gate scans demos/</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f1bd089fb41e62006218e8c294688c98f68eaa0d\" target=\"_blank\" rel=\"noopener\"><code>f1bd089</code></a>",
+          "issues": [
+            779
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/autoinject-select-variant-colors.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/autoinject-select-variant-colors.spec.ts</a>. Before: &quot;Matcher error: received value must not be null nor undefined&quot;. Now: it passes, asserting no style= attribute and that the #autoinject-select-success/-error rules use var(--alert-success-bg)/var(--alert-danger-bg), not rgba().",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/60f6364042f43d5312d701eda44e2d4265b19586\" target=\"_blank\" rel=\"noopener\"><code>60f6364</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.351",
+      "date": "2026-10-06",
+      "summary": "Source comments, a schema title, a component-library page heading and two docs still called things a &quot;base card&quot;, &quot;base element&quot;, &quot;base behavior&quot; or &quot;base class&quot;, and card.css&#39;s header said &quot;ALL CARDS INHERIT FROM THIS&quot;, which reads as the OOP inheritance model the project has dropped (John: &quot;Don&#39;t use the name base anywhere in this project we are no longer OOP&quot;). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1654\" target=\"_blank\" rel=\"noopener\">PR 1654</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/462\" target=\"_blank\" rel=\"noopener\">#462</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No OOP &quot;base&quot; wording in shipped code, pages or docs; a guard keeps it out</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/462\" target=\"_blank\" rel=\"noopener\">#462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/962c66bbb3313d197aea7274149e6fe2d38b9a5b\" target=\"_blank\" rel=\"noopener\"><code>962c66b</code></a>",
+          "issues": [
+            462
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-legacy-component-inheritance-docs.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-legacy-component-inheritance-docs.spec.ts</a>. Before: the new #462 test lists the offending lines (card.css &quot;BASE CARD - ALL CARDS INHERIT FROM THIS&quot;, the component-library &quot;Base Card&quot; heading, demo.js &quot;base-card blocks&quot;). Now: all pass, and the x-component-library page heading reads &quot;Card&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b5216565d0749de943e197d09d012815dc39f825\" target=\"_blank\" rel=\"noopener\"><code>b521656</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.350",
+      "date": "2026-10-06",
+      "summary": "The Behaviors page&#39;s search box sat inside two nested .x-input__wrapper divs on most loads: the page runs in the site shell&#39;s wb.js and also imports wb-lazy.js, each runtime applies input() on its own, and the native-input path of input() had no guard against wrapping an input it had already wrapped. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1652\" target=\"_blank\" rel=\"noopener\">PR 1652</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1645\" target=\"_blank\" rel=\"noopener\">#1645</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A native input is wrapped once, however many passes reach it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1645\" target=\"_blank\" rel=\"noopener\">#1645</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14bc4a8d8f272a498813d9e4fa5d628273805dde\" target=\"_blank\" rel=\"noopener\"><code>14bc4a8</code></a>",
+          "issues": [
+            1645
+          ]
+        }
+      ],
+      "seeIt": "Open /behaviors and run document.querySelectorAll(&#39;.x-input__wrapper &gt; .x-input__wrapper&#39;).length in the console. Before: 1 on most loads (3 of 4). Now: 0 on every load.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6a6a8b59e8266e92b4e289c719342cde0794aa0a\" target=\"_blank\" rel=\"noopener\"><code>6a6a8b5</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.349",
+      "date": "2026-10-06",
+      "summary": "16 &quot;sleep, then check it IS true&quot; waits across behaviour, card, mobile, page, view and regression specs now wait on what they check (WB.settled, expect.poll on the URL, sort order, menu, height or nav, image load, two frames), 7 sleeps that prove nothing happened (a disabled control not navigating, a page not moving, a link not appearing) are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 3, setup 201, negative 59; the three left are mobile-validation, which also runs under WebKit. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1651\" target=\"_blank\" rel=\"noopener\">PR 1651</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Twenty-three more specs wait on the condition, not a clock (positive 26 -&gt; 3)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0c5bef8a3bd93679f32cd0393385e68bcbfd47f2\" target=\"_blank\" rel=\"noopener\"><code>0c5bef8</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: positive 26, setup 208, negative 61, marked 5. Now: positive 3, setup 201, negative 59, marked 12, and every edited spec passes in Chromium.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ff1dc1cb570f28937d75af173f45a8639b1c27e\" target=\"_blank\" rel=\"noopener\"><code>6ff1dc1</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1648\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1648</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.348",
+      "date": "2026-10-06",
+      "summary": "15 &quot;sleep, then check it IS true&quot; waits in thirteen regression and compliance specs now wait on what they check (WB.settled after the page or doc renders, expect.poll on the page error or retry request, the doc-viewer End gap polled to the bottom), 2 sleeps that prove nothing moved or overwrote the page are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 26 and setup 208. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1648\" target=\"_blank\" rel=\"noopener\">PR 1648</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Thirteen more specs wait on the condition, not a clock (positive 43 -&gt; 26)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f7dea938453fb209fa6e7171490f8c2bcc0e8788\" target=\"_blank\" rel=\"noopener\"><code>f7dea93</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: positive 43, setup 209, marked 3. Now: positive 26, setup 208, marked 5, and every edited spec passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/222177cff3000d19a63fc934d1e16442dbb293d9\" target=\"_blank\" rel=\"noopener\"><code>222177c</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1644\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1644</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.347",
+      "date": "2026-10-06",
+      "summary": "Behaviors injected their CSS with hardcoded fallback colours that would paint dark-theme colours into a light theme whenever a token went missing, and no check looked at JavaScript. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1649\" target=\"_blank\" rel=\"noopener\">PR 1649</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No hex fallbacks in JS-injected styles; guard JS colours too</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd101ac0b5f2e419cc894529cc07ac6a95fc7239\" target=\"_blank\" rel=\"noopener\"><code>cd101ac</code></a>",
+          "issues": [
+            790
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-hardcoded-colors-in-js.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-hardcoded-colors-in-js.spec.ts</a> --project=compliance. Before: no such check existed, and grep found 57 var(--x, #hex) fallbacks in src/ JS. Now: 3 passed, 0 fallbacks, and any new hex colour in JS fails it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/45e04665491d6d10dba2fee97ea16e238594309b\" target=\"_blank\" rel=\"noopener\"><code>45e0466</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.346",
+      "date": "2026-10-06",
+      "summary": "25 &quot;sleep, then check it IS true&quot; waits in eleven behaviour and regression specs now wait on what they check (a retrying matcher, expect.poll, WB.settled, a finished animation or one frame), 3 sleeps that prove nothing happened are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 43, setup 209, negative 61. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1644\" target=\"_blank\" rel=\"noopener\">PR 1644</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Eleven more specs wait on the condition, not a clock (positive 68 -&gt; 43)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7fe37882573b1cc7da3370195db0ce3f75d07dcc\" target=\"_blank\" rel=\"noopener\"><code>7fe3788</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: positive 68, setup 213, negative 64. Now: positive 43, setup 209, negative 61, marked 3, and every edited spec passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e93e7c2094f61fcd52c33a85c607dd179083236d\" target=\"_blank\" rel=\"noopener\"><code>e93e7c2</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "First pass",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1635\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1635</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.345",
+      "date": "2026-10-06",
+      "summary": "Wheel-over-inner-scroller-scrolls-only-it.spec.ts put its inner box in and scrolled it to the end before the site had finished its first navigation, so on the slow Windows runner late styles and fonts could leave the box short of its end and the wheel went to the box, not the page (red on this PR&#39;s regression job, green on the three runs before it). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1641\" target=\"_blank\" rel=\"noopener\">PR 1641</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The wheel spec waits for the page to land before scrolling its box</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fbc8cb816fff90476b1b5417d2a879b2b04457dc\" target=\"_blank\" rel=\"noopener\"><code>fbc8cb8</code></a>",
+          "issues": [
+            883,
+            1037
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The code both runtimes ran twice lives once, in runtime-shared.js</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ff2d31efbc16b653151d9a57d011370bf4d4691\" target=\"_blank\" rel=\"noopener\"><code>6ff2d31</code></a>",
+          "issues": [
+            883
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/wheel-over-inner-scroller-scrolls-only-it.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/wheel-over-inner-scroller-scrolls-only-it.spec.ts</a> --project=regression --repeat-each=10. Before: it waited only for #siteBody to exist. Now: it waits for wbIdle() and document.fonts.ready, asserts the box is at its end right before the wheel, and passes 20 of 20.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/749178bf660e913a7ada2df1245dd76b379ddcf9\" target=\"_blank\" rel=\"noopener\"><code>749178b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.344",
       "date": "2026-10-06",
       "summary": "Behaviors were written two ways, x-behavior=&quot;cardimage&quot; and x-cardimage, and 46 behaviors only worked the first way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1643\" target=\"_blank\" rel=\"noopener\">PR 1643</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1642\" target=\"_blank\" rel=\"noopener\">#1642</a>",

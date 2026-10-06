@@ -8,9 +8,9 @@ Your test suite is organized into strict tiers, enforced by Playwright and npm s
 - Runs fast, no browser/server required
 - If any fail, all other tiers are blocked
 
-**Tier 2: Base Behavior Tests**
+**Tier 2: Core Behavior Tests**
 - Location: tests/behaviors/ui/
-- Tests core rendering and initialization of behaviors (e.g., cards, base elements)
+- Tests core rendering and initialization of behaviors (e.g., cards, native elements)
 - Requires browser/server
 - Stops if Tier 1 fails
 

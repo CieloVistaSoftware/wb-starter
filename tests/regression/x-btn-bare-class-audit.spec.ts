@@ -220,7 +220,8 @@ test.describe('Bare .x-btn (no modifier) renders with real visible styling', () 
   test('demos/landing-page-showcase.html: bare x-btn demo button is visibly styled', async ({ page }) => {
     await page.goto('/demos/landing-page-showcase.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-    await page.waitForTimeout(500);
+    // The demo is styled once WB settles (#1516: not 500ms).
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const style = await hasVisibleBoxStyle(page, 'button.x-btn');
     expect(style.hasBg || style.hasBorder, `"Hover + click me" demo button must be visibly styled, got ${JSON.stringify(style)}`).toBe(true);

@@ -101,8 +101,8 @@ test.describe('Nav link scroll behavior', () => {
     test(`returning to "${id}" restores the prior scroll position`, async ({ page }) => {
       test.setTimeout(RETURN_TEST_BUDGET);
       await clickNav(page, id);
+      // No sleep (#1516): the site reads siteBody.scrollTop when it leaves the page.
       await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 400; });
-      await page.waitForTimeout(150);
 
       const other = id === 'home' ? LINKS.find((l) => l !== 'home')! : 'home';
       const before = await clickNav(page, other);

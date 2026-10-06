@@ -10,8 +10,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.344">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.344">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.353">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.353">
   <style>
     /* 1200px is a prose measure, and this page is a tool, not an article.
        Capped there, the preview pane was 562px on a 1280px window -- half a
@@ -156,6 +156,25 @@
       font-size: 0.85rem; }
     .pg-btn:hover { filter: brightness(1.08); }
     .pg-error { color: var(--danger-color, #f85149); font-size: 0.85rem; padding: 0.5rem 1rem; }
+  
+    /* The form-endpoint panel's generated report (#779: was inline). */
+    .pg-endpoint__line { color: var(--text-secondary); }
+    .pg-endpoint__block { margin: 0.75rem 0; }
+    .pg-endpoint__value { color: var(--success-color); }
+    .pg-endpoint__json { margin: 0.25rem 0 0; white-space: pre-wrap; }
+    .pg-endpoint__warn { color: var(--warning-color); }
+    .pg-endpoint__warn--spaced { margin-top: 0.5rem; }
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    #pg-sort { background:var(--bg-tertiary); color:var(--text-primary); appearance:auto; }
+    #pg-endpoint { margin-top: 1.5rem; }
+    #pg-endpoint-body { padding: 1rem; background: var(--bg-primary); font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.85rem; line-height: 1.6; overflow-x: auto; }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    #pg-clear { background:var(--bg-tertiary); color:var(--text-primary); }
+    #pg-examples { background:var(--bg-tertiary); color:var(--text-primary); appearance:auto; }
+    #pg-format { background:var(--bg-tertiary); color:var(--text-primary); }
+    #pg-standalone { background:var(--bg-tertiary); color:var(--text-primary); }
+    #pg-copy { background:var(--bg-tertiary); color:var(--text-primary); }
   </style>
 </head>
 <body>
@@ -170,9 +189,9 @@
         <span class="pg-panel__label">HTML</span>
         <span class="pg-toolbar">
           <button id="pg-clear" class="pg-btn" type="button"
-            style="background:var(--bg-tertiary); color:var(--text-primary);">Clear</button>
+           >Clear</button>
           <select id="pg-examples" class="pg-btn" title="Load an example set"
-            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+           >
             <option value="">🎴 Examples…</option>
             <option value="form">Sample form</option>
             <option value="cards">50 cards</option>
@@ -187,13 +206,13 @@
             <option value="hero-fullwidth">Full-width hero (500px)</option>
           </select>
           <button id="pg-format" class="pg-btn" type="button"
-            style="background:var(--bg-tertiary); color:var(--text-primary);"
+           
             title="Format vertically (one attribute per line)">⭹ Format</button>
           <button id="pg-standalone" class="pg-btn" type="button"
-            style="background:var(--bg-tertiary); color:var(--text-primary);"
+           
             title="Open this markup on its own page at full browser width (#659)">&#x29C9; Standalone</button>
           <button id="pg-copy" class="pg-btn" type="button"
-            style="background:var(--bg-tertiary); color:var(--text-primary);" title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
+            title="Copy the HTML (or right-click a preview element)">📋 Copy</button>
         </span>
       </div>
       <textarea id="pg-input" x-ignore spellcheck="false" aria-label="HTML input"></textarea>
@@ -204,7 +223,7 @@
         <span class="pg-toolbar">
           <div x-themecontrol id="pg-themecontrol" show-label="false"></div>
           <select id="pg-sort" class="pg-btn" title="Sort the previewed elements"
-            style="background:var(--bg-tertiary); color:var(--text-primary); appearance:auto;">
+           >
             <option value="">↕ Sort by…</option>
           </select>
           <span class="pg-hint">live</span>
@@ -216,14 +235,12 @@
   </div>
 
   <!-- Appears when a previewed <form> is submitted: what an endpoint would receive. -->
-  <div class="pg-panel" id="pg-endpoint" hidden style="margin-top: 1.5rem;">
+  <div class="pg-panel" id="pg-endpoint" hidden>
     <div class="pg-panel__head">
       <span>📮 Endpoint sees</span>
       <span class="pg-hint" id="pg-endpoint-meta"></span>
     </div>
-    <div id="pg-endpoint-body" style="padding: 1rem; background: var(--bg-primary);
-      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.85rem;
-      line-height: 1.6; overflow-x: auto;"></div>
+    <div id="pg-endpoint-body"></div>
   </div>
 
   <!-- #780 -- John: "Playground shouldn't show behavior gallery."
@@ -294,7 +311,7 @@
       '    <label><input type="radio" name="contract"> Contractor</label>',
       '  </fieldset>',
       '',
-      '  <button type="submit" style="width: 100%;">Submit Application</button>',
+      '  <button type="submit">Submit Application</button>',
       '</form>',
     ].join('\n');
 
@@ -375,14 +392,14 @@
 
       endpointMeta.textContent = `${method} ${action}`;
       endpointBody.innerHTML =
-        `<div style="color:var(--text-secondary)"># ${esc(method)} ${esc(action)} · ${esc(enctype)}</div>` +
+        `<div class="pg-endpoint__line"># ${esc(method)} ${esc(action)} · ${esc(enctype)}</div>` +
         (entries.length
-          ? `<div style="margin:0.75rem 0"><strong>Fields</strong><br>` +
-              entries.map(([k, v]) => `&nbsp;&nbsp;${esc(k)} = <span style="color:var(--success-color)">${esc(typeof v === 'string' ? v : '(file) ' + v.name)}</span>`).join('<br>') +
-            `</div><div style="margin:0.75rem 0"><strong>Request body</strong><br>&nbsp;&nbsp;${esc(body)}</div>` +
-            `<div><strong>As JSON</strong><pre style="margin:0.25rem 0 0;white-space:pre-wrap">${esc(JSON.stringify(obj, null, 2))}</pre></div>`
-          : `<div style="color:var(--warning-color)">No named fields — a browser only submits controls that have a <code>name</code> attribute.</div>`) +
-        (unnamed ? `<div style="color:var(--warning-color);margin-top:0.5rem">⚠ ${unnamed} control(s) without <code>name</code> were omitted.</div>` : '');
+          ? `<div class="pg-endpoint__block"><strong>Fields</strong><br>` +
+              entries.map(([k, v]) => `&nbsp;&nbsp;${esc(k)} = <span class="pg-endpoint__value">${esc(typeof v === 'string' ? v : '(file) ' + v.name)}</span>`).join('<br>') +
+            `</div><div class="pg-endpoint__block"><strong>Request body</strong><br>&nbsp;&nbsp;${esc(body)}</div>` +
+            `<div><strong>As JSON</strong><pre class="pg-endpoint__json">${esc(JSON.stringify(obj, null, 2))}</pre></div>`
+          : `<div class="pg-endpoint__warn">No named fields — a browser only submits controls that have a <code>name</code> attribute.</div>`) +
+        (unnamed ? `<div class="pg-endpoint__warn pg-endpoint__warn--spaced">⚠ ${unnamed} control(s) without <code>name</code> were omitted.</div>` : '');
       endpointPanel.hidden = false;
       endpointPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
@@ -501,7 +518,6 @@
         '  cta-secondary="Read the guide"',
         '  cta-secondary-href="https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md"',
         '  background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"',
-        '  style="display:block; width:100%;"',
         '  x-fadein>',
         '</section>',
       ].join('\n');

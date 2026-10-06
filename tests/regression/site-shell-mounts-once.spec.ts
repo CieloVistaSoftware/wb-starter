@@ -60,7 +60,9 @@ test.describe('#1340 the site shell mounts once', () => {
 
     await page.goto('/?page=home');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-    await page.waitForTimeout(600);
+    // Boot is over when every injection has called back (#1516: not 600ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const counts = await shellCounts(page, SHELL);
     expect(counts, 'the shell is present exactly once').toEqual({ 'app': 1, 'error-template': 1 });
@@ -85,7 +87,10 @@ test.describe('#1340 the site shell mounts once', () => {
     const home = page.locator(`.nav__item[href="${pagePath('home')}"]`).first();
     await expect(home, 'no nav link to home').toBeVisible({ timeout: 10000 });
     await home.click();
-    await page.waitForTimeout(1200);
+    // The navigation is over once home has rendered and its work settled (#1516: not 1200ms).
+    await page.waitForFunction(() => !!document.getElementById('mainPage-home'), null, { timeout: 20000 });
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const counts = await shellCounts(page, SHELL);
     expect(counts, 'navigating re-mounted part of the shell').toEqual({ 'app': 1, 'error-template': 1 });

@@ -26,7 +26,11 @@ test.describe('[x-demo] code panels never collapse to unreadable vertical strips
   test('V3-GUIDE.md: no [x-demo] widget renders narrower than the readable-code floor', async ({ page }) => {
     await page.goto('/public/doc-viewer.html?file=docs%2FV3-GUIDE.md', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content', { timeout: 15000 });
-    await page.waitForTimeout(2000);
+    await page.waitForSelector('[x-demo]', { timeout: 15000 });
+    // Every demo has built and laid out once WB settles (#1516: not 2000ms).
+    // The doc viewer loads WB as a module, so wait for it to exist first.
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const demos = page.locator('[x-demo]');
     const count = await demos.count();

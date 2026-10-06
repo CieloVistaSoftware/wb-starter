@@ -263,7 +263,7 @@ const next = page.replace(re, block);
 const indexSiteSections = SITE_CATEGORIES.map(({ title, icon, description, href, stats }) => (
 `      <details>
         <summary>${icon} ${title}</summary>
-        <p style="margin: 0.5rem 0 0.75rem;">${description}${stats ? ` — ${stats}` : ''}</p>
+        <p class="site-category__summary">${description}${stats ? ` — ${stats}` : ''}</p>
         <ul>
           <li><a href="./site/${href.split('/').pop()}">Open ${title} →</a></li>
         </ul>
@@ -301,6 +301,7 @@ const indexHtml = `<!DOCTYPE html>
     li { border: 1px solid var(--border-color); border-radius: 6px; }
     a { display: block; padding: 0.75rem 1rem; color: var(--text-primary); text-decoration: none; }
     a:hover { background: var(--bg-secondary); }
+    .site-category__summary { margin: 0.5rem 0 0.75rem; }
   </style>
 </head>
 <body>

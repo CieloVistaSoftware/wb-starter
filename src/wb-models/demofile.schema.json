@@ -68,7 +68,7 @@
         "required": true
       },
       "siteCSS": {
-        "description": "Must link to site.css for base behavior styles",
+        "description": "Must link to site.css for the shared behavior styles",
         "pattern": "href=\"...site.css\"",
         "required": true
       }

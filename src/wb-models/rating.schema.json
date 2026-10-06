@@ -7,7 +7,8 @@
   "baseClass": "x-rating",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "slider"
+    "implicitRole": "slider",
+    "genericHost": "a row of stars it builds itself; HTML has no rating element"
   },
   "compliance": {
     "baseClass": "x-rating",

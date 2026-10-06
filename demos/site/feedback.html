@@ -9,11 +9,17 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
+  <style id="feedback-moved-styles">
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .mb-1rem { margin-bottom: 1rem; }
+    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
+    .w-300px-h-24px { width: 300px; height: 24px; }
+  </style>
 </head>
 
 <body class="demo-page">
-  <nav style="margin-bottom: 1rem;">
-    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  <nav class="mb-1rem">
+    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
   </nav>
   <h1>🔔 Feedback & Status</h1>
   <p>Alerts, badges, progress bars, ratings, spinners, toasts, tooltips</p>
@@ -1278,10 +1284,10 @@
   <h2>🧩 x-progress — on any element</h2>
   <p>A <code>&lt;progress&gt;</code> is the progress behavior on its own; <code>x-progress</code> applies the same behavior to any other element.</p>
   <div x-demo>
-    <div x-progress value="40" style="width: 300px; height: 24px;"></div>
+    <div x-progress value="40" class="w-300px-h-24px"></div>
   </div>
   <div x-demo>
-    <div x-progress value="80" variant="success" style="width: 300px; height: 24px;"></div>
+    <div x-progress value="80" variant="success" class="w-300px-h-24px"></div>
   </div>
   </section>
 

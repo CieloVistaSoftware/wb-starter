@@ -171,7 +171,7 @@ function renderFixCard(host, card, fix) {
     </div>
   `;
 
-  // Use the base card to build the structure
+  // Use card() to build the structure
   // We pass showHeader: true explicitly, and provide content
   const { main } = card.buildStructure({
     headerContent: headerContent,
@@ -271,7 +271,7 @@ export default function fixCard(element) {
 // wb-viewmodels/index.js, behavior-css-manifest.js and wb-lazy.js's eager list.
 //
 // #789: this used to be `class WBFixCard extends WBCard`, a variant subclassing
-// a base component -- the two-level hierarchy Tier 1 §2 forbids. It is now the
+// another component -- the two-level hierarchy Tier 1 §2 forbids. It is now the
 // shape §2 permits: a class the Custom Elements API requires, extending only
 // HTMLElement and holding no behavior logic. It applies fixCard() to itself
 // on connect, exactly as WB.scan() applies it to a <div x-fix-card>, so the two

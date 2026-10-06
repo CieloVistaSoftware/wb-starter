@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uganda Community Food Bank - WB Charity Site</title>
     <!-- Core styles -->
-    <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.344">
-    <link rel="stylesheet" href="../src/styles/site.css?v=1.0.344">
+    <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.353">
+    <link rel="stylesheet" href="../src/styles/site.css?v=1.0.353">
     <!-- WB Behaviors -->
     <script type="module">
         import WB from '../src/core/wb-lazy.js';
@@ -17,13 +17,33 @@
         :root {
             --primary-color: #10b981; /* Emerald green for food/freshness */
         }
-    </style>
+    
+    /* Moved from style= attributes: no inline styles anywhere (#779). A doubled
+       class (.x.x) is one that has to outrank a page rule, as the inline did. */
+    .fw-bold-fs-12rem { font-weight: bold; font-size: 1.2rem; }
+    .c-064e3b { color: #064e3b; }
+    .charity-food-block-1 { background-image: linear-gradient(to right, #059669, #10b981); }
+    .c-065f46 { color: #065f46; }
+    .bg-bg-secondary { background: var(--bg-secondary); }
+    .fs-25rem { font-size: 2.5rem; }
+    .mt-1rem { margin-top: 1rem; }
+    #programs { padding: 4rem 1rem; }
+    .charity-food-block-2 { text-align: center; marginBottom: 3rem; }
+    .ai-center-gap-2rem { align-items: center; gap: 2rem; }
+    .charity-food-block-3.charity-food-block-3 { border-radius: 1rem; width: 100%; max-width: 300px; aspect-ratio: 3/2; object-fit: cover; }
+    .bg-064e3b-c-white-p-3rem-1rem { background: #064e3b; color: white; padding: 3rem 1rem; }
+    .d-flex-fd-column-gap-05rem { display: flex; flex-direction: column; gap: 0.5rem; }
+    .c-white-td-none { color:white; text-decoration: none; }
+    .d-flex-gap-05rem { display: flex; gap: 0.5rem; }
+    .charity-food-block-4 { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; }
+    .ta-center-mt-3rem-op-07-fs-09rem { text-align: center; margin-top: 3rem; opacity: 0.7; font-size: 0.9rem; }
+  </style>
 </head>
 <body class="site">
 
     <!-- Navigation -->
     <header fixed>
-        <div slot="brand" style="font-weight: bold; font-size: 1.2rem;">🇺🇬 Uganda Food Bank</div>
+        <div slot="brand" class="fw-bold-fs-12rem">🇺🇬 Uganda Food Bank</div>
         <button variant="ghost" onclick="window.location.href='/?page=home'">Back to Home</button>
         <button variant="primary" onclick="alert('Donation flow would open here!')">Donate Now</button>
     </header>
@@ -44,55 +64,55 @@
         <div slot="pretitle">
             <span x-badge variant="success">Serving 5,000+ Families</span>
         </div>
-        <h1 slot="title" style="color: #064e3b;">
+        <h1 slot="title" class="c-064e3b">
             Nourishing Our <br>
-            <span class="x-gradient-text" style="background-image: linear-gradient(to right, #059669, #10b981);">Nation Together</span>
+            <span class="x-gradient-text charity-food-block-1">Nation Together</span>
         </h1>
-        <p slot="subtitle" style="color: #065f46;">
+        <p slot="subtitle" class="c-065f46">
             We believe no one in Uganda should go to bed hungry. Join us in our mission to provide nutritious meals to families across the region.
         </p>
     </section>
 
     <!-- Urgent Needs / Stats -->
-    <div x-container padding="3rem 1rem" style="background: var(--bg-secondary);">
+    <div x-container padding="3rem 1rem" class="bg-bg-secondary">
         <div x-grid columns="3" gap="2rem">
             <article variant="float" xalign="center">
-                <div style="font-size: 2.5rem;">🌽</div>
+                <div class="fs-25rem">🌽</div>
                 <h3>Maize & Beans</h3>
                 <p>Urgently need posho (cornmeal) and beans as staples.</p>
-                <progress value="75" max="100" variant="warning" style="margin-top: 1rem;"></progress>
+                <progress value="75" max="100" variant="warning" class="mt-1rem"></progress>
                 <small>75% goal reached</small>
             </article>
 
             <article variant="float" xalign="center">
-                <div style="font-size: 2.5rem;">🥕</div>
+                <div class="fs-25rem">🥕</div>
                 <h3>Fresh Produce</h3>
                 <p>Partnering with local farms to bring fresh items.</p>
                 <span x-badge variant="success">Fully Stocked</span>
             </article>
 
             <article variant="float" xalign="center">
-                <div style="font-size: 2.5rem;">🤝</div>
+                <div class="fs-25rem">🤝</div>
                 <h3>Volunteers</h3>
                 <p>We need 50 more volunteers for this weekend.</p>
-                <button variant="outline" size="small" style="margin-top: 1rem;">Sign Up</button>
+                <button variant="outline" size="small" class="mt-1rem">Sign Up</button>
             </article>
         </div>
     </div>
 
     <!-- Our Programs -->
-    <section id="programs" style="padding: 4rem 1rem;">
+    <section id="programs">
         <div x-container>
-            <h2 style="text-align: center; marginBottom: 3rem;">Our Programs</h2>
+            <h2 class="charity-food-block-2">Our Programs</h2>
             
             <div x-grid columns="2" gap="2rem">
                 <!-- Program 1 -->
-                <div class="x-row" style="align-items: center; gap: 2rem;">
+                <div class="x-row ai-center-gap-2rem">
                     <!-- Fixed: Added height/width/loading to ensure rendering -->
                     <img src="https://images.unsplash.com/photo-1519238360173-04e9ae6031fa?auto=format&fit=crop&w=400&q=80" 
                          alt="Happy children at pantry" 
                          width="300" height="200"
-                         style="border-radius: 1rem; width: 100%; max-width: 300px; aspect-ratio: 3/2; object-fit: cover;">
+                         class="charity-food-block-3">
                     <div>
                         <h3>Weekly Pantry</h3>
                         <p>Open every Tuesday and Thursday, providing staples to registered families.</p>
@@ -101,11 +121,11 @@
                 </div>
 
                 <!-- Program 2 -->
-                <div class="x-row" style="align-items: center; gap: 2rem;">
+                <div class="x-row ai-center-gap-2rem">
                     <img src="https://images.unsplash.com/photo-1543354786-8a5f4c51571d?auto=format&fit=crop&w=400&q=80" 
                          alt="Hot Meals Sharing" 
                          width="300" height="200"
-                         style="border-radius: 1rem; width: 100%; max-width: 300px; aspect-ratio: 3/2; object-fit: cover;">
+                         class="charity-food-block-3">
                     <div>
                         <h3>Hot Meals</h3>
                         <p>Community kitchen serving hot dinner every evening at 6:00 PM.</p>
@@ -117,7 +137,7 @@
     </section>
 
     <!-- Footer -->
-    <footer style="background: #064e3b; color: white; padding: 3rem 1rem;">
+    <footer class="bg-064e3b-c-white-p-3rem-1rem">
         <div x-grid columns="3" gap="2rem">
             <div>
                 <h4>Uganda Community Food Bank</h4>
@@ -126,22 +146,22 @@
             </div>
             <div>
                 <h4>Quick Links</h4>
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <a href="#" style="color:white; text-decoration: none;">Donate</a>
-                    <a href="#" style="color:white; text-decoration: none;">Volunteer</a>
-                    <a href="#" style="color:white; text-decoration: none;">About Us</a>
+                <div class="d-flex-fd-column-gap-05rem">
+                    <a href="#" class="c-white-td-none">Donate</a>
+                    <a href="#" class="c-white-td-none">Volunteer</a>
+                    <a href="#" class="c-white-td-none">About Us</a>
                 </div>
             </div>
             <div>
                 <h4>Newsletter</h4>
                 <p>Stay updated with our needs.</p>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="email" placeholder="Your email" class="x-input" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white;">
+                <div class="d-flex-gap-05rem">
+                    <input type="email" placeholder="Your email" class="x-input charity-food-block-4">
                     <button variant="primary">Subscribe</button>
                 </div>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 3rem; opacity: 0.7; font-size: 0.9rem;">
+        <div class="ta-center-mt-3rem-op-07-fs-09rem">
             &copy; 2026 Community Food Bank. Built with WB.
         </div>
     </footer>
