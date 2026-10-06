@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { test, expect, newOfflinePage } from '../fixtures/offline';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Every x-cardexpandable example on the Behaviors page reveals something when
@@ -47,9 +47,8 @@ const WIDTHS = [1100, 1600];
 type Measure = { label: string; width: number; scroll: number; client: number; toggleShown: boolean; grew: boolean; collapsed: number; expanded: number };
 
 test.describe('x-cardexpandable examples reveal content when expanded (#1598)', () => {
-  test('every catalogue example hides content collapsed and grows on Show More', async ({ browser }) => {
+  test('every catalogue example hides content collapsed and grows on Show More', async ({ page }) => {
     expect(EXAMPLES.length, 'the catalogue has x-cardexpandable examples').toBeGreaterThan(0);
-    const page = await newOfflinePage(browser);
     await page.setViewportSize({ width: 1800, height: 1000 });
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
@@ -91,11 +90,9 @@ test.describe('x-cardexpandable examples reveal content when expanded (#1598)', 
       expect(r.toggleShown, `${where}: Show More is shown`).toBe(true);
       expect(r.grew, `${where}: Show More makes the content taller (${r.collapsed}px -> ${r.expanded}px)`).toBe(true);
     }
-    await page.close();
   });
 
-  test('a card whose content fits offers no toggle', async ({ browser }) => {
-    const page = await newOfflinePage(browser);
+  test('a card whose content fits offers no toggle', async ({ page }) => {
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 
@@ -115,6 +112,5 @@ test.describe('x-cardexpandable examples reveal content when expanded (#1598)', 
 
     expect(result.marked, 'the card is marked x-card--nothing-to-expand').toBe(true);
     expect(result.toggleShown, 'no Show More toggle is shown').toBe(false);
-    await page.close();
   });
 });
