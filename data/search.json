@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5833
+    "totalWords": 5834
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.307\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.307\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.314\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.314\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -756,10 +756,10 @@
       "title": "NOTES-V3-GUIDE",
       "description": null,
       "headings": [],
-      "content": "# Notes Behavior v3.0 - Updates Summary ## ✅ What's New ### 1. **TODO List Button & Panel** - Added new `✓` TODO button in the header - Collapsible TODO panel that appears when clicked - Can be toggled open/closed without closing notes ### 2. **TODO Management Features** - **Add**: Type in input field + press Enter or click + button - **Check/Uncheck**: Click checkbox to mark complete (strikethrough text) - **Delete**: Click ✕ button to remove individual TODOs - **Reorder**: Drag and drop TODOs to rearrange order - **All persisted**: TODOs save to localStorage automatically ### 3. **Fixed Save Functionality** - Auto-save to localStorage every 500ms as you type (notes) - Manual save button (💾) with duplicate prevention - Status messages show success/warning/error - All state persists: position, width, modal position/size, content, todos ### 4. **Enhanced State Management** - Two separate storage keys: - ` `: Full notes state (content + position + size) - `x-todo`: TODO items array - Proper load order on initialization - All data survives page reload ## 📋 TODO List Features ```javascript // Public API for TODOs element.wbNotes.addTodo(text) // Add new TODO element.wbNotes.deleteTodo(id) // Delete by ID element.wbNotes.toggleTodo(id) // Mark done/undone element.wbNotes.todos // Get all TODOs array ``` ## 🎯 Button Layout (Icon Only) Header buttons from left to right: ``` « ◀ ◻ ▶ » ✓ 📋 💾 ✕ ``` - `«` Collapse left - `◀` Position: Left - `◻` Position: Modal - `▶` Position: Right - `»` Collapse right - `✓` **NEW: Toggle TODO panel** - `📋` Copy to clipboard - `💾` Save notes to history - `✕` Close drawer Footer: `Status message` | `🗑️ Clear` ## 📦 Files to Replace Replace your existing files with: 1. **JavaScript**: `/home/claude/notes-v3.js` - Copy to: `src/behaviors/js/notes.js` 2. **CSS**: `/home/claude/notes-v3.css` - Copy to: `src/behaviors/css/notes.css` ## 🔧 Key Implementation Details ### State Variables ```javascript isTodoOpen = false // TODO panel open/closed state todoItems = [] // Array of {id, text, done, createdAt} draggedTodoId = null // For drag-drop reordering ``` ### Storage Structure ```javascript // localStorage['x-notes'] { content: \"note text...\", position: \"left|modal|right\", width: \"320px\", modalPos: {x, y}, modalSize: {width, height}, isOpen: true, lastUpdated: \"2025-12-15T...\" } // localStorage['x-todo'] [ { id: \"todo-1702234567890\", text: \"Task description\", done: false, createdAt: \"2025-12-15T...\" }, ... ] ``` ## 🎨 CSS Updates ### New Classes ```css .x-notes__todo-panel /* Main TODO container */ .x-notes__todo-header /* TODO header bar */ .x-notes__todo-input-row /* Input + add button */ .x-notes__todo-list /* Scrollable items container */ .x-notes__todo-item /* Individual TODO item */ .x-notes__todo-checkbox /* Checkbox input */ .x-notes__todo-text /* TODO text (with .done state) */ .x-notes__todo-delete /* Delete button per item */ .x-notes__todo-drag /* Drag handle indicator */ ``` ### Key Features - TODO panel takes ~60% of drawer height max - Scrollable if many TODOs - Proper scrollbar styling - Hover states for interactivity - Done items get strikethrough + muted color - Drag items highlight during drag ## 🚀 Quick Test 1. Click `✓` button in notes header 2. Type \"Buy groceries\" in TODO input 3. Press Enter 4. Click checkbox - text strikes through 5. Drag TODO up/down to reorder 6. Click ✕ to delete 7. Close browser, reopen - TODO still there! ✅ ## 📝 Notes About Save **Auto-save (localStorage)**: - Happens every 500ms while typing - Preserves notes + position + size + TODOs **Manual Save (💾 button)**: - Saves note to persistent history - Prevents duplicates - Shows success message - Dispatches `wb:notes:save` event ## ✨ What This Fixes ❌ **Before**: - No TODO management - Save functionality unclear - No persistent todo tracking ✅ **After**: - Full TODO list with CRUD operations - Clear auto-save + manual save distinction - All data persists to localStorage - Drag-drop reordering - Status feedback for all actions ## 🔗 Public API ```javascript const notes = element.wbNotes; // Existing notes.open() notes.close() notes.toggle() notes.setPosition('left'|'modal'|'right') notes.collapseToSide('left'|'right') notes.save() // Manual save notes.copy() // To clipboard notes.clear() // Clear notes notes.content // Get/set notes text // NEW notes.addTodo(text) notes.deleteTodo(id) notes.toggleTodo(id) notes.todos // Get all todos array ``` ## 💡 Tips - Todos are ordered by insertion unless dragged - Strikethrough doesn't delete - click ✕ to remove - TODO panel closes when main notes close - Each TODO has unique timestamp-based ID - Modal can be dragged AND resized - works great with TODOs visible --- **Questions?** Check browser DevTools → Application → localStorage for the actual stored data!",
+      "content": "# Notes Behavior v3.0 - Updates Summary ## ✅ What's New ### 1. **TODO List Button & Panel** - Added new `✓` TODO button in the header - Collapsible TODO panel that appears when clicked - Can be toggled open/closed without closing notes ### 2. **TODO Management Features** - **Add**: Type in input field + press Enter or click + button - **Check/Uncheck**: Click checkbox to mark complete (strikethrough text) - **Delete**: Click ✕ button to remove individual TODOs - **Reorder**: Drag and drop TODOs to rearrange order - **All persisted**: TODOs save to localStorage automatically ### 3. **Fixed Save Functionality** - Auto-save to localStorage every 500ms as you type (notes) - Manual save button (💾) with duplicate prevention - Status messages show success/warning/error - All state persists: position, width, modal position/size, content, todos ### 4. **Enhanced State Management** - Two separate storage keys: - ` `: Full notes state (content + position + size) - `x-todo`: TODO items array - Proper load order on initialization - All data survives page reload ## 📋 TODO List Features ```javascript // Public API for TODOs element.wbNotes.addTodo(text) // Add new TODO element.wbNotes.deleteTodo(id) // Delete by ID element.wbNotes.toggleTodo(id) // Mark done/undone element.wbNotes.todos // Get all TODOs array ``` ## 🎯 Button Layout (Icon Only) Header buttons from left to right: ``` « ◀ ◻ ▶ » ✓ 📋 💾 ✕ ``` - `«` Collapse left - `◀` Position: Left - `◻` Position: Modal - `▶` Position: Right - `»` Collapse right - `✓` **NEW: Toggle TODO panel** - `📋` Copy to clipboard - `💾` Save notes to history - `✕` Close drawer Footer: `Status message` | `🗑️ Clear` ## 📦 Files to Replace Replace your existing files with: 1. **JavaScript**: `/home/claude/notes-v3.js` - Copy to: `src/behaviors/js/notes.js` 2. **CSS**: `/home/claude/notes-v3.css` - Copy to: `src/behaviors/css/notes.css` ## 🔧 Key Implementation Details ### State Variables ```javascript isTodoOpen = false // TODO panel open/closed state todoItems = [] // Array of {id, text, done, createdAt} draggedTodoId = null // For drag-drop reordering ``` ### Storage Structure ```javascript // localStorage['x-notes'] { content: \"note text...\", position: \"left|modal|right\", width: \"320px\", modalPos: {x, y}, modalSize: {width, height}, isOpen: true, lastUpdated: \"2025-12-15T...\" } // localStorage['x-todo'] [ { id: \"todo-1702234567890\", text: \"Task description\", done: false, createdAt: \"2025-12-15T...\" }, ... ] ``` ## 🎨 CSS Updates ### New Classes ```css .x-notes__todo-panel /* Main TODO container */ .x-notes__todo-header /* TODO header bar */ .x-notes__todo-input-row /* Input + add button */ .x-notes__todo-list /* Scrollable items container */ .x-notes__todo-item /* Individual TODO item */ .x-notes__todo-checkbox /* Checkbox input */ .x-notes__todo-text /* TODO text (with .done state) */ .x-notes__todo-delete /* Delete button per item */ .x-notes__todo-drag /* Drag handle indicator */ ``` ### Key Features - TODO panel takes ~60% of drawer height max - Scrollable if many TODOs - Proper scrollbar styling - Hover states for interactivity - Done items get strikethrough + muted color - Drag items highlight during drag ## 🚀 Quick Test 1. Click `✓` button in notes header 2. Type \"Buy groceries\" in TODO input 3. Press Enter 4. Click checkbox - text strikes through 5. Drag TODO up/down to reorder 6. Click ✕ to delete 7. Close browser, reopen - TODO still there! ✅ ## 📝 Notes About Save **Auto-save (localStorage)**: - Happens every 500ms while typing - Preserves notes + position + size + TODOs **Manual Save (💾 button)**: - Saves note to persistent history - Prevents duplicates - Shows success message - Dispatches `wb:notes:save` event ## ✨ What This Fixes ❌ **Before**: - No TODO management - Save functionality unclear - No persistent todo tracking ✅ **After**: - Full TODO list with CRUD operations - Clear auto-save + manual save distinction - All data persists to localStorage - Drag-drop reordering - Status feedback for all actions ## 🔗 Public API ```javascript const notes = element.wbNotes; // Existing notes.show() notes.hide() notes.toggle() notes.setPosition('left'|'modal'|'right') notes.hide('left'|'right') // dock to a side as it closes notes.save() // Manual save notes.copy() // To clipboard notes.clear() // Clear notes notes.content // Get/set notes text // NEW notes.addTodo(text) notes.deleteTodo(id) notes.toggleTodo(id) notes.todos // Get all todos array ``` ## 💡 Tips - Todos are ordered by insertion unless dragged - Strikethrough doesn't delete - click ✕ to remove - TODO panel closes when main notes close - Each TODO has unique timestamp-based ID - Modal can be dragged AND resized - works great with TODOs visible --- **Questions?** Check browser DevTools → Application → localStorage for the actual stored data!",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-08-26"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/V3-GUIDE",
@@ -2297,10 +2297,10 @@
       "title": "notes",
       "description": null,
       "headings": [],
-      "content": "# Notes `x-notes` adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to `localStorage` as you type. ## Usage Notes stay pinned beside the content while you scroll. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `position` | `left` · `right` · `modal` | `left` | | | `max-width` | `string` | `50vw` | Max width when resizing | | `min-width` | `string` | `200px` | Min width when resizing | | `default-width` | `string` | `320px` | Default width | | `auto-save` | `boolean` | `true` | Auto-save to localStorage | | `placeholder` | `string` | `Add your notes here...` | Textarea placeholder | ## Events - `wb:notes:open` — Drawer opened - `wb:notes:close` — Drawer closed - `wb:notes:save` — Notes saved - `wb:notes:copy` — Notes copied to clipboard - `wb:notes:clear` — Notes cleared - `wb:notes:position` — Position changed ## Methods - `open()` — Opens the drawer - `close()` — Closes the drawer - `toggle()` — Toggles drawer - `setPosition()` — Sets position - `save()` — Saves notes to JSON - `copy()` — Copies notes to clipboard - `clear()` — Clears all notes - `getContent()` — Gets notes content - `setContent()` — Sets notes content Schema: [`notes.schema.json`](../../src/wb-models/notes.schema.json)",
+      "content": "# Notes `x-notes` adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to `localStorage` as you type. ## Usage Notes stay pinned beside the content while you scroll. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `position` | `left` · `right` · `modal` | `left` | | | `max-width` | `string` | `50vw` | Max width when resizing | | `min-width` | `string` | `200px` | Min width when resizing | | `default-width` | `string` | `320px` | Default width | | `auto-save` | `boolean` | `true` | Auto-save to localStorage | | `placeholder` | `string` | `Add your notes here...` | Textarea placeholder | ## Events - `wb:notes:open` — Drawer opened - `wb:notes:close` — Drawer closed - `wb:notes:save` — Notes saved - `wb:notes:copy` — Notes copied to clipboard - `wb:notes:clear` — Notes cleared - `wb:notes:position` — Position changed ## Methods - `show()` — Opens the drawer - `hide(side?)` — Closes the drawer; with `'left'` or `'right'` it docks there first - `toggle()` — Toggles drawer - `setPosition()` — Sets position - `save()` — Saves notes to JSON - `copy()` — Copies notes to clipboard - `clear()` — Clears all notes - `getContent()` — Gets notes content - `setContent()` — Sets notes content Schema: [`notes.schema.json`](../../src/wb-models/notes.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-04"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/notify",
@@ -2583,10 +2583,10 @@
       "title": "searchfield",
       "description": null,
       "headings": [],
-      "content": "# x-searchfield Behavior A complete search input: icon, debounced/instant search events, clear button, and loading state. See `searchField()` in [src/wb-viewmodels/search.js](../../src/wb-viewmodels/search.js) — the container-aware wrapper around the lower-level `search()`/`x-search` behavior in the same file. - **Root CSS class:** `x-searchfield` - **Schema:** none dedicated (the plain `x-search` behavior it wraps has [search.schema.json](../../src/wb-models/search.schema.json); `searchfield` itself has no separate schema file) - **Tag form:** ` ` (see `elementMap` in [src/core/tag-map.js](../../src/core/tag-map.js)) — a **container** tag, not an input itself. ## Usage On a plain container, `searchField()` finds (or creates) a child ` ` and wires the full search UI around it: The ` ` custom tag is the same behavior, applied via the element map instead of the attribute: Applied directly to a real ` `, it delegates straight to the plain `search()` behavior (no container is built): ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `placeholder` | string | `Search...` | Input placeholder. | | `value` | string | `\"\"` | Initial search value. | | `name` | string | `\"\"` | Form field `name`. | | `debounce` | integer (ms) | `300` | Delay before a non-instant `wb:search` event fires after typing stops. | | `instant` | boolean (presence) | `false` | Fire `wb:search` on every keystroke instead of debouncing. | | `disabled` | boolean (presence) | `false` | Disables the input. | | `size` | `sm` \\| `md` \\| `lg` | `md` | Applies `x-search--{size}` (omitted for `md`). | | `variant` | `default` \\| `glass` \\| `minimal` | `default` | Applies `x-search--{variant}` (omitted for `default`). | | `icon` | string | `🔍` | Icon shown before the input. | | `clearable` | boolean | `true` | Set `clearable=\"false\"` to hide the clear (✕) button. | | `loading` | boolean (presence) | `false` | Shows a loading indicator (⏳) and `x-search--loading`. | ## CSS Classes | Class | Applies to | When | |---|---|---| | ` ` | host element (and the inner ` `) | always | | `x-search--{size}` | host element | `size` ≠ `md` | | `x-search--{variant}` | host element | `variant` ≠ `default` | | `x-search--disabled` | host element | `disabled` present | | `x-search--loading` | host element (and toggled via `setLoading()`) | `loading` present | | `x-search__wrapper` | generated wrapper ` ` around the input | always | | `x-search__icon` | generated icon ` ` | always | | `x-search__input` | the ` ` | always | | `x-search__clear` | generated clear ` ` | `clearable` | | `x-search__loading` | generated loading ` ` | `loading` present | ## Events | Event | Bubbles | `detail` | Fired when | |---|---|---|---| | `wb:search` | yes | `{ query, instant }` | A search is triggered (debounced or instant) | | `wb:search:clear` | yes | — | The clear button is clicked, or `.clear()` is called | | `wb:search:focus` | yes | — | The input gains focus | | `wb:search:blur` | yes | — | The input loses focus | | `wb:search:navigate` | yes | `{ direction: 'up' \\| 'down' }` | Arrow keys pressed in the input | | `wb:search:select` | yes | `{ query }` | Enter pressed in the input | ## API The container form exposes an imperative API on `element.wbSearch`: `value` (get/set), `focus()`, `blur()`, `clear()`, `search()`, `setLoading(bool)`. - [Schema (underlying `search` behavior)](../../src/wb-models/search.schema.json) - [Test](../../tests/behaviors/x-search-select-effect.spec.ts) - [Source](../../src/wb-viewmodels/search.js)",
+      "content": "# x-searchfield Behavior A complete search input: icon, debounced/instant search events, clear button, and loading state. See `searchField()` in [src/wb-viewmodels/search.js](../../src/wb-viewmodels/search.js) — the container-aware wrapper around the lower-level `search()`/`x-search` behavior in the same file. - **Root CSS class:** `x-searchfield` - **Schema:** none dedicated (the plain `x-search` behavior it wraps has [search.schema.json](../../src/wb-models/search.schema.json); `searchfield` itself has no separate schema file) - **Tag form:** ` ` (see `elementMap` in [src/core/tag-map.js](../../src/core/tag-map.js)) — a **container** tag, not an input itself. ## Usage On a plain container, `searchField()` finds (or creates) a child ` ` and wires the full search UI around it: The ` ` custom tag is the same behavior, applied via the element map instead of the attribute: Applied directly to a real ` `, it delegates straight to the plain `search()` behavior (no container is built): ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `placeholder` | string | `Search...` | Input placeholder. | | `value` | string | `\"\"` | Initial search value. | | `name` | string | `\"\"` | Form field `name`. | | `debounce` | integer (ms) | `300` | Delay before a non-instant `wb:search` event fires after typing stops. | | `instant` | boolean (presence) | `false` | Fire `wb:search` on every keystroke instead of debouncing. | | `disabled` | boolean (presence) | `false` | Disables the input. | | `size` | `sm` \\| `md` \\| `lg` | `md` | Applies `x-search--{size}` (omitted for `md`). | | `variant` | `default` \\| `glass` \\| `minimal` | `default` | Applies `x-search--{variant}` (omitted for `default`). | | `icon` | string | `🔍` | Icon shown before the input. | | `clearable` | boolean | `true` | Set `clearable=\"false\"` to hide the clear (✕) button. | | `loading` | boolean (presence) | `false` | Shows a loading indicator (⏳) and `x-search--loading`. | ## CSS Classes | Class | Applies to | When | |---|---|---| | ` ` | host element (and the inner ` `) | always | | `x-search--{size}` | host element | `size` ≠ `md` | | `x-search--{variant}` | host element | `variant` ≠ `default` | | `x-search--disabled` | host element | `disabled` present | | `x-search--loading` | host element (and toggled via `setLoading()`) | `loading` present | | `x-search__wrapper` | generated wrapper ` ` around the input | always | | `x-search__icon` | generated icon ` ` | always | | `x-search__input` | the ` ` | always | | `x-search__clear` | generated clear ` ` | `clearable` | | `x-search__loading` | generated loading ` ` | `loading` present | ## Events | Event | Bubbles | `detail` | Fired when | |---|---|---|---| | `wb:search` | yes | `{ query, instant }` | A search is triggered (debounced or instant) | | `wb:search:clear` | yes | — | The clear button is clicked, or `.reset()` is called | | `wb:search:focus` | yes | — | The input gains focus | | `wb:search:blur` | yes | — | The input loses focus | | `wb:search:navigate` | yes | `{ direction: 'up' \\| 'down' }` | Arrow keys pressed in the input | | `wb:search:select` | yes | `{ query }` | Enter pressed in the input | ## API The container form exposes an imperative API on `element.wbSearch`: `value` (get/set), `focus()`, `blur()`, `reset()`, `search()`, `setLoading(bool)`. - [Schema (underlying `search` behavior)](../../src/wb-models/search.schema.json) - [Test](../../tests/behaviors/x-search-select-effect.spec.ts) - [Source](../../src/wb-viewmodels/search.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/select",
@@ -6294,7 +6294,7 @@
       "docs/behaviors/searchfield",
       "docs/search"
     ],
-    "307": [
+    "314": [
       "pages/home"
     ],
     "320": [
@@ -7607,6 +7607,7 @@
       "docs/behaviors/floatinglabel",
       "docs/behaviors/frame",
       "docs/behaviors/icon",
+      "docs/behaviors/notes",
       "docs/behaviors/notify",
       "docs/behaviors/ol",
       "docs/behaviors/relativetime",
@@ -9607,6 +9608,7 @@
       "docs/behaviors/address",
       "docs/behaviors/carddraggable",
       "docs/behaviors/progress",
+      "docs/behaviors/searchfield",
       "docs/home-page"
     ],
     "use": [
@@ -14413,6 +14415,7 @@
       "docs/behaviors/input",
       "docs/behaviors/list",
       "docs/behaviors/modal",
+      "docs/behaviors/notes",
       "docs/behaviors/notify",
       "docs/behaviors/password",
       "docs/behaviors/pre",
@@ -17168,6 +17171,7 @@
       "docs/behaviors/fix-card",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/move",
+      "docs/behaviors/notes",
       "docs/behaviors/pagination",
       "docs/behaviors/password",
       "docs/behaviors/radio",
@@ -30549,6 +30553,7 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
+      "docs/NOTES-V3-GUIDE",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/behaviors/alert",
@@ -30568,6 +30573,7 @@
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardstats",
       "docs/behaviors/cardtestimonial",
+      "docs/behaviors/notes",
       "docs/behaviors/password",
       "docs/behaviors/searchfield",
       "docs/behaviors/spinner",
@@ -33296,8 +33302,40 @@
       "docs/behaviors/carddraggable",
       "docs/behaviors/notes"
     ],
-    "collapsetoside": [
+    "dock": [
       "docs/NOTES-V3-GUIDE"
+    ],
+    "side": [
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/aside",
+      "docs/behaviors/cardhorizontal",
+      "docs/behaviors/center",
+      "docs/behaviors/drawerLayout",
+      "docs/behaviors/glass",
+      "docs/behaviors/inputgroup",
+      "docs/behaviors/notes",
+      "docs/behaviors/popover",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/stack",
+      "docs/guides/search-index",
+      "docs/pce-candidates",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/styles",
+      "demos/site/content"
+    ],
+    "closes": [
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/details",
+      "docs/behaviors/dialog",
+      "docs/behaviors/drawer",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/lightbox",
+      "docs/behaviors/navbar",
+      "docs/behaviors/notes",
+      "docs/behaviors/select"
     ],
     "tips": [
       "docs/NOTES-V3-GUIDE",
@@ -33316,18 +33354,6 @@
     "dragged": [
       "docs/NOTES-V3-GUIDE",
       "docs/container-pattern"
-    ],
-    "closes": [
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/details",
-      "docs/behaviors/dialog",
-      "docs/behaviors/drawer",
-      "docs/behaviors/dropdown",
-      "docs/behaviors/lightbox",
-      "docs/behaviors/navbar",
-      "docs/behaviors/notes",
-      "docs/behaviors/select"
     ],
     "unique": [
       "docs/NOTES-V3-GUIDE",
@@ -35995,25 +36021,6 @@
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/sidebarlayout",
       "docs/pce-candidates"
-    ],
-    "side": [
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors/aside",
-      "docs/behaviors/cardhorizontal",
-      "docs/behaviors/center",
-      "docs/behaviors/drawerLayout",
-      "docs/behaviors/glass",
-      "docs/behaviors/inputgroup",
-      "docs/behaviors/notes",
-      "docs/behaviors/popover",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/stack",
-      "docs/guides/search-index",
-      "docs/pce-candidates",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/styles",
-      "demos/site/content"
     ],
     "centered": [
       "docs/architecture/proposals/proposed-custom-elements",
@@ -44114,6 +44121,9 @@
       "docs/container-pattern"
     ],
     "50vw": [
+      "docs/behaviors/notes"
+    ],
+    "docks": [
       "docs/behaviors/notes"
     ],
     "getcontent": [

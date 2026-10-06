@@ -6,6 +6,118 @@
   ],
   "releases": [
     {
+      "version": "1.0.314",
+      "date": "2026-10-05",
+      "summary": "Doc-viewer-links failed CI with ECONNRESET, never a dead link, because server.js closed an idle keep-alive socket after Node&#39;s default ~5-6s while a test&#39;s pooled request context reused it (idle 6037ms and 6066ms on Windows CI). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1605\" target=\"_blank\" rel=\"noopener\">PR 1605</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Server keeps idle keep-alive sockets open; no ECONNRESET on reuse</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+          "issues": [
+            1549
+          ]
+        }
+      ],
+      "seeIt": "Run tests/regression/server-keeps-idle-keepalive-sockets-open.spec.ts. Before: the server closed the idle socket at 6004ms and a second request on it got no answer. Now: the socket is still open after 7s and the second request is answered."
+    },
+    {
+      "version": "1.0.313",
+      "date": "2026-10-05",
+      "summary": "The behavior-API verb gate only recognised members written (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1602\" target=\"_blank\" rel=\"noopener\">PR 1602</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Verb gate reads every API member; retire clear/open/close</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
+          "issues": [
+            782
+          ]
+        }
+      ],
+      "seeIt": "Open any page with an x-notes drawer and, in the browser console, run document.querySelector(&#39;[x-notes]&#39;).wbNotes.show() and then .hide(&#39;left&#39;). Before: show and hide were undefined (open() and collapseToSide(&#39;left&#39;) did it). Now: show() opens the drawer and hide(&#39;left&#39;) docks it left as it closes."
+    },
+    {
+      "version": "1.0.312",
+      "date": "2026-10-05",
+      "summary": "On the home page a hard-edged band swept back and forth across the &quot;Build stunning UIs&quot; hero every 7 seconds, because the cosmic nebula layer is hero-sized but kept the card hero&#39;s sideways sheen animation. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1596\" target=\"_blank\" rel=\"noopener\">PR 1596</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Cosmic hero spec uses the page fixture, not browser.newPage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+          "issues": [
+            1595
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The cosmic hero&#39;s nebula no longer slides a hard band across it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+          "issues": [
+            1595
+          ]
+        }
+      ],
+      "seeIt": "Open the home page and watch the hero for 7 seconds. Before: a vertical band with a brighter side slid across the hero. Now: the nebula and stars stay still."
+    },
+    {
+      "version": "1.0.311",
+      "date": "2026-10-05",
+      "summary": "The card&#39;s FEATURED badge once had 2.2px of side padding, so its last letter sat at the badge edge and read as cut off, every badge was the same yellow, and the category/date/author block sat against the card edge; all three are fixed on main, but no test held any of them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1594\" target=\"_blank\" rel=\"noopener\">PR 1594</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1006\" target=\"_blank\" rel=\"noopener\">#1006</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Hold the featured badge&#39;s fit, its tone, and the meta block&#39;s clearance</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1006\" target=\"_blank\" rel=\"noopener\">#1006</a>",
+          "issues": [
+            1006
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/card-featured-badge-fits-and-takes-a-tone.spec.ts --project=regression</code>. Before: no test, and with the badge padding put back to 0.1em 0.2em the suite stayed green. Now: 4 tests, and with that padding the two fit tests fail."
+    },
+    {
+      "version": "1.0.310",
+      "date": "2026-10-05",
+      "summary": "The gate-scripts self-test failed &quot;Priority gate... it reaches its specs&quot; on a loaded machine while the same gate went on to pass, because it gave the gate a fixed 20 seconds to print its start signal; a slow start read as a missing one. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1593\" target=\"_blank\" rel=\"noopener\">PR 1593</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1589\" target=\"_blank\" rel=\"noopener\">#1589</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wait for the gate&#39;s own signal, not a fixed 20 seconds</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1589\" target=\"_blank\" rel=\"noopener\">#1589</a>",
+          "issues": [
+            1589
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node scripts/test-gate-guards.mjs</code> while the machine is busy. Before: &quot;it reaches its specs&quot; could fail after 20s though the gate later passed. Now: each wait lasts as long as the child is allowed to live (its 60s bound), and a gate that never starts still fails -- with its start marker renamed, 4 checks fail at the bound."
+    },
+    {
+      "version": "1.0.309",
+      "date": "2026-10-05",
+      "summary": "An issue&#39;s Signature that wrote its test as a YAML block (test: | and indented lines) was read as the literal &quot;|&quot;, so #852, which names a runnable spec, counted as having no test in every issue check built on scripts/signature-field.mjs. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1592\" target=\"_blank\" rel=\"noopener\">PR 1592</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1588\" target=\"_blank\" rel=\"noopener\">#1588</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Signature-field reads a block test: | as its lines, not &#39;|&#39;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1588\" target=\"_blank\" rel=\"noopener\">#1588</a>",
+          "issues": [
+            1588
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node scripts/signature-field.mjs &lt;file&gt; test --runnable</code> on a Signature whose test: is a block naming tests/behaviors/progress-fill.spec.ts. Before: it printed nothing. Now: it prints the block, spec path included."
+    },
+    {
+      "version": "1.0.308",
+      "date": "2026-10-05",
+      "summary": "A dialog&#39;s title row and footer took the page navbar&#39;s and page footer&#39;s behavior (class &quot;x-dialog__header x-header&quot;), so the header text shrank to 0.8em under the navbar rule, and the footer was one footer.css change away from losing its padding the way the header once did. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1591\" target=\"_blank\" rel=\"noopener\">PR 1591</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/874\" target=\"_blank\" rel=\"noopener\">#874</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A dialog&#39;s header and footer are its own, not the page&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/874\" target=\"_blank\" rel=\"noopener\">#874</a>",
+          "issues": [
+            874
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;button x-modal modal-title=&quot;Hello&quot;&gt;Open&lt;/button&gt;, click it and inspect the dialog&#39;s header. Before: class &quot;x-dialog__header x-header&quot; and 12.8px text. Now: class &quot;x-dialog__header&quot; and the dialog&#39;s own 16px text."
+    },
+    {
       "version": "1.0.307",
       "date": "2026-10-05",
       "summary": "A &lt;nav&gt; needed x-navbar to look like the site, and adding it to plain navs moved their links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1582\" target=\"_blank\" rel=\"noopener\">PR 1582</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
