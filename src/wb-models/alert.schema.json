@@ -7,7 +7,8 @@
   "baseClass": "x-alert",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "alert"
+    "implicitRole": "alert",
+    "genericHost": "HTML has no alert element; role=\"alert\" on a block is the platform pattern"
   },
   "compliance": {
     "baseClass": "x-alert",

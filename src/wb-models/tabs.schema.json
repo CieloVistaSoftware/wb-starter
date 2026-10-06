@@ -7,7 +7,8 @@
   "baseClass": "x-tabs",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "tablist"
+    "implicitRole": "tablist",
+    "genericHost": "a tab list plus its panels; HTML has no tabs element"
   },
   "compliance": {
     "baseClass": "x-tabs",
