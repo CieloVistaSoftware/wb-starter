@@ -6,8 +6,9 @@
   "schemaFor": "select",
   "baseClass": "x-select",
   "semanticElement": {
-    "tagName": "select",
-    "implicitRole": "combobox"
+    "tagName": "div",
+    "implicitRole": "combobox",
+    "genericHost": "schema-built form: the div is a wrapper that builds a native <select> from its options attribute, a label and its styling inside it; a bare native control gets the lighter styling with no wrapper"
   },
   "compliance": {
     "baseClass": "x-select",

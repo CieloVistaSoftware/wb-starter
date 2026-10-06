@@ -6,8 +6,9 @@
   "schemaFor": "input",
   "baseClass": "x-input",
   "semanticElement": {
-    "tagName": "input",
-    "implicitRole": "textbox"
+    "tagName": "div",
+    "implicitRole": "textbox",
+    "genericHost": "schema-built form: the div is a wrapper that builds a native <input>, a label and its styling inside it; a bare native control gets the lighter styling with no wrapper"
   },
   "compliance": {
     "baseClass": "x-input",

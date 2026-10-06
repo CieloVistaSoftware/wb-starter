@@ -6,9 +6,9 @@
   "schemaFor": "switch",
   "baseClass": "x-switch",
   "semanticElement": {
-    "tagName": "input",
-    "type": "checkbox",
-    "implicitRole": "switch"
+    "tagName": "div",
+    "implicitRole": "switch",
+    "genericHost": "schema-built form: the div is a wrapper that builds a native <input type=checkbox role=switch>, a label and its styling inside it; a bare native control gets the lighter styling with no wrapper"
   },
   "compliance": {
     "baseClass": "x-switch",

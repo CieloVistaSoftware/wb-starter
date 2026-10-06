@@ -2,9 +2,11 @@
  * A schema names a <div> or <span> host only with a reason (#918).
  *
  * semanticElement is what IntelliSense tells an author to type
- * (scripts/update-intellisense.js). It taught `<div x-checkbox>` for 41 of 73
- * behaviors, Law 0 inverted at the moment the author is typing: HTML already
- * has <input type="checkbox">, <select>, <textarea>.
+ * (scripts/update-intellisense.js) when no native host auto-injects the
+ * behavior. Unargued, a <div> there is Law 0 inverted at the moment the author
+ * is typing. Some divs are right: <div x-select options="…"> is a schema-built
+ * form that builds the native control inside it, while a bare <select> gets the
+ * lighter styling (IntelliSense shows that bare host first, from nativeMap).
  *
  * So a generic host must be argued. A schema whose semanticElement is div or
  * span carries `genericHost`: why HTML has no better element. A decorator that
