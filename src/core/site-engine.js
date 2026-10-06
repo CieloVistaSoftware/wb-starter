@@ -476,6 +476,14 @@ export default class WBSite {
     if (!body) return;
 
     body.addEventListener('wheel', (e) => {
+      // #1037: over an inner scroller that can still move this way (an
+      // expanded issue, a code panel), the browser scrolls THAT, and #siteBody
+      // staying put is the correct outcome -- not native scrolling failing.
+      // The fallback used to read it as failure and push the page too, so the
+      // reader lost their place mid-issue. At the inner scroller's end it can
+      // no longer move, and the wheel chains to the page as normal.
+      if (innerScrollerTakesWheel(e.target, body, e.deltaY)) return;
+
       const beforeTop = body.scrollTop;
       const maxTop = body.scrollHeight - body.clientHeight;
       if (maxTop <= 0) return; // nothing to scroll
@@ -809,3 +817,25 @@ export default class WBSite {
     document.body.classList.remove('x-scroll-lock');
   }
 }
+
+/**
+ * Is there a scroll container between `target` and `page` that can still
+ * scroll in the wheel's direction? Then the browser is scrolling it (#1037).
+ * @param {EventTarget|null} target
+ * @param {HTMLElement} page
+ * @param {number} deltaY
+ * @returns {boolean}
+ */
+function innerScrollerTakesWheel(target, page, deltaY) {
+  for (let el = target instanceof Element ? target : null; el && el !== page; el = el.parentElement) {
+    if (el.scrollHeight <= el.clientHeight + 1) continue;
+    const overflowY = getComputedStyle(el).overflowY;
+    if (overflowY !== 'auto' && overflowY !== 'scroll') continue;
+    const canMove = deltaY > 0
+      ? el.scrollTop < el.scrollHeight - el.clientHeight - 1
+      : el.scrollTop > 0;
+    if (canMove) return true;
+  }
+  return false;
+}
+
