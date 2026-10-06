@@ -20,7 +20,9 @@ test('the search counter measures rows against rows, not rows against behaviours
 
   await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.behaviors-search-results__row', { timeout: 20_000 });
-  await page.waitForTimeout(800);
+  // The list is complete once the unfiltered counter reads "N behaviors"
+  // (#1516), not after 800ms: applyFilter renders every row, then sets it.
+  await expect(page.locator('#behaviors-search-count')).toHaveText(/^\d+ behaviors$/, { timeout: 20_000 });
 
   const rowsUnfiltered = await page.locator('.behaviors-search-results__row').count();
   expect(rowsUnfiltered, 'no rows rendered — nothing to count').toBeGreaterThan(50);
@@ -30,7 +32,13 @@ test('the search counter measures rows against rows, not rows against behaviours
 
   // A query that matches something, but not everything.
   await search.fill('avatar');
-  await page.waitForTimeout(600);
+  // Wait for the filter to apply (#1516): the counter's shown number drops
+  // below the total.
+  await expect.poll(async () => {
+    const t = (await page.locator('text=/Showing \\d+ of \\d+/').first().textContent()) || '';
+    const mm = t.match(/Showing\s+(\d+)\s+of\s+(\d+)/);
+    return !!mm && Number(mm[1]) < Number(mm[2]);
+  }, { message: 'the "avatar" query never narrowed the list' }).toBe(true);
 
   const rowsFiltered = await page.locator('.behaviors-search-results__row').count();
   const label = (await page.locator('text=/Showing \\d+ of \\d+/').first().textContent()) || '';

@@ -35,11 +35,12 @@ test.describe('Behaviors page examples never navigate the page (#742)', () => {
     context.on('page', (p) => popups.push(p.url()));
 
     await page.locator('#behaviors-live-example [href]').first().click();
-    await page.waitForTimeout(800);
+    // The click is handled once the block is logged: wait for that signal
+    // (#1516), then check nothing navigated, instead of sleeping 800ms first.
+    await expect.poll(() => logged(page)).toContainEqual(expect.stringMatching(/navigation blocked.*would open .*docs\.html/));
 
     expect(page.url(), 'the page navigated').toBe(before);
     expect(popups, 'the example opened another page').toEqual([]);
-    await expect.poll(() => logged(page)).toContainEqual(expect.stringMatching(/navigation blocked.*would open .*docs\.html/));
   });
 
   test('a normal button example still fires click and wb:button:click', async ({ page }) => {
@@ -60,8 +61,8 @@ test.describe('Behaviors page examples never navigate the page (#742)', () => {
         '<form id="form742" action="/somewhere-else"><button id="submit742" type="submit">Go</button></form>');
     });
     await page.locator('#submit742').click();
-    await page.waitForTimeout(800);
-    expect(page.url(), 'the form submission navigated the page').toBe(before);
+    // Handled once logged (#1516); then the URL must not have changed.
     await expect.poll(() => logged(page)).toContainEqual(expect.stringMatching(/navigation blocked.*would submit to .*somewhere-else/));
+    expect(page.url(), 'the form submission navigated the page').toBe(before);
   });
 });

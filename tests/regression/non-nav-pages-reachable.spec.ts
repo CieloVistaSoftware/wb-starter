@@ -34,7 +34,11 @@ test.describe('#725 — every page is reachable by URL', () => {
     test(`?page=${id} renders ${id}, not home`, async ({ page }) => {
       await page.goto(`/?page=${id}`);
       await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 25000 });
-      await page.waitForTimeout(900);
+      // Wait for the outcome, not 900ms (#1516): a page container or the 404 state.
+      await page.waitForFunction(() => {
+        const first = document.getElementById('main')?.firstElementChild as HTMLElement | null;
+        return !!document.getElementById('empty404') || /^mainPage-/.test(first?.id || '');
+      }, null, { timeout: 25000 });
 
       const state = await page.evaluate(() => {
         const main = document.getElementById('main');
@@ -66,9 +70,11 @@ test.describe('#725 — every page is reachable by URL', () => {
       const id = pageFromUrl(new URL(href, 'http://localhost/'), 'http://localhost/').page;
       await page.goto(href);
       await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 25000 });
-      await page.waitForTimeout(700);
-      const landed = await page.evaluate(() => (window as any).WBSite?.currentPage);
-      expect(landed, `footer link ${href} landed on ${landed}`).toBe(id);
+      // Polled (#1516): the router may still be settling on the page it routes to.
+      await expect.poll(() => page.evaluate(() => (window as any).WBSite?.currentPage), {
+        message: `footer link ${href} lands on ${id}`,
+        timeout: 25000,
+      }).toBe(id);
     }
   });
 });
@@ -77,7 +83,9 @@ test.describe('#725 — a page that does not exist says so', () => {
   test('an unknown page renders the 404 state, not home', async ({ page }) => {
     await page.goto('/?page=definitely-not-a-page');
     await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 25000 });
-    await page.waitForTimeout(900);
+    // Wait for the router to render SOMETHING -- the 404 state or home -- then
+    // check which (#1516: no guessed 900ms).
+    await page.waitForFunction(() => !!document.getElementById('empty404') || !!document.getElementById('mainPage-home'), null, { timeout: 25000 });
 
     const state = await page.evaluate(() => ({
       currentPage: (window as any).WBSite?.currentPage,

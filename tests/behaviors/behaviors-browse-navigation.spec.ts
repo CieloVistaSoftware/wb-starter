@@ -40,7 +40,15 @@ test.describe('#686 — stacked layout reveals the demo when a result is tapped'
 
     await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 0; });
     await page.locator('.behaviors-search-results__row').first().click();
-    await page.waitForTimeout(400);
+    // Wait for the reveal itself (#1516): the stage and its HTML are on screen.
+    await expect.poll(() => page.evaluate(() => {
+      const inView = (el: Element | null) => {
+        if (!el) return false;
+        const b = el.getBoundingClientRect();
+        return b.top < window.innerHeight && b.bottom > 0 && b.height > 0;
+      };
+      return inView(document.getElementById('behaviors-live-stage')) && inView(document.getElementById('behaviors-live-code'));
+    }), { message: 'tapping a result brings the demo and its HTML into view' }).toBe(true);
 
     const seen = await page.evaluate(() => {
       const inView = (el: Element | null) => {
@@ -64,6 +72,7 @@ test.describe('#686 — stacked layout reveals the demo when a result is tapped'
     await loadBrowse(page, '');
     await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 0; });
     await page.type('#behaviors-search', 'x-tool', { delay: 40 });
+    // sleep-proves-negative: nothing may scroll the page after typing, and a scroll that never happens has no event to wait for
     await page.waitForTimeout(400);
     const scrollTop = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
     expect(scrollTop, 'search must not scroll the page while the reader types').toBe(0);
@@ -79,6 +88,7 @@ test.describe('#686 — two-column layout still does not scroll', () => {
 
     await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 0; });
     await page.locator('.behaviors-search-results__row').first().click();
+    // sleep-proves-negative: side-by-side, picking a result must not scroll the page; there is no event for a scroll that never comes
     await page.waitForTimeout(400);
 
     const scrollTop = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
@@ -152,7 +162,13 @@ test.describe('#710 — the list matches the panel height', () => {
   test('both columns are the same height, and the list still scrolls itself', async ({ page }) => {
     await loadBrowse(page, 'x-');           // all 585 rows — the case that blew up
     await page.locator('.behaviors-search-results__row').first().click();
-    await page.waitForTimeout(500);
+    // Wait for the panel to render and the two columns to settle at one height,
+    // the condition this test asserts, instead of a guessed 500ms (#1516).
+    await expect.poll(() => page.evaluate(() => {
+      const list = document.getElementById('behaviors-search-results')!.getBoundingClientRect().height;
+      const panel = document.getElementById('behaviors-live')!.getBoundingClientRect().height;
+      return Math.abs(Math.round(list) - Math.round(panel));
+    }), { message: 'the two columns must be the same height' }).toBeLessThanOrEqual(2);
 
     const geo = await page.evaluate(() => {
       const list = document.getElementById('behaviors-search-results')!;
@@ -230,7 +246,8 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
   test('the control is wired to the STAGE, not the page', async ({ page }) => {
     await loadBrowse(page, 'table');
     await page.locator('.behaviors-search-results__row').first().click();
-    await page.waitForTimeout(400);
+    // Built means the framework upgraded the control (#1516: no guessed sleep).
+    await expect(page.locator('#behaviors-live-fullscreen')).toHaveClass(/x-fullscreen/);
 
     const wiring = await page.evaluate(() => {
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
@@ -432,8 +449,10 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
   test('clicking a row still leaves the list scroll where the reader put it', async ({ page }) => {
     await loadBrowse(page, 'x-');
     await page.evaluate(() => { document.getElementById('behaviors-search-results')!.scrollTop = 500; });
-    await page.waitForTimeout(80);
+    // One frame, so the scroll event has fired before the click.
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(null))));
     await page.locator('.behaviors-search-results__row').nth(12).click();
+    // sleep-proves-negative: a click must not move the list, and a move that never happens has no event to wait for
     await page.waitForTimeout(300);
     const after = await page.evaluate(() => document.getElementById('behaviors-search-results')!.scrollTop);
     expect(Math.round(after), 'a click must not move the list').toBe(500);

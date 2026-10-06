@@ -267,9 +267,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       // #1092: switching needs at least two tabs
       expect(await buttons.count(), 'x-tabs created fewer than 2 .x-tabs__nav buttons').toBeGreaterThanOrEqual(2);
       await buttons.nth(1).click();
-      await page.waitForTimeout(300);
-      const active = await buttons.nth(1).getAttribute('aria-selected');
-      expect(active).toBe('true');
+      // Retrying matcher, not a 300ms sleep then one read (#1516).
+      await expect(buttons.nth(1)).toHaveAttribute('aria-selected', 'true');
     });
   });
 
@@ -315,7 +314,6 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       await page.goto('/?page=behaviors');
       await page.waitForFunction(() => (window as any).WB, { timeout: 10000 });
       await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-      await page.waitForTimeout(1000);
 
       const wbExists = await page.evaluate(() => !!(window as any).WB);
       expect(wbExists).toBe(true);

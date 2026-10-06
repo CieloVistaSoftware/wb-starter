@@ -52,15 +52,17 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
     await page.locator('#s-instant input').pressSequentially('a');
     await page.locator('#s-normal input').pressSequentially('a');
 
-    // Well under the 300ms default debounce (search.js config.debounce).
-    await page.waitForTimeout(60);
+    // The instant field fires on input; wait for that (#1516), then read at
+    // once -- still well inside the 300ms default debounce (search.js
+    // config.debounce) -- that the debounced field has not fired yet.
+    await expect.poll(() => page.evaluate(() => (window as any).__events.instant.length)).toBeGreaterThan(0);
     const early = await page.evaluate(() => (window as any).__events);
     expect(early.instant.length).toBeGreaterThan(0);
     expect(early.instant[0].instant).toBe(true);
     expect(early.normal.length).toBe(0); // non-instant hasn't fired yet -- still debouncing
 
-    // Let the debounce timer elapse and confirm it fires eventually, flagged non-instant.
-    await page.waitForTimeout(400);
+    // The debounced field fires once its timer elapses, flagged non-instant.
+    await expect.poll(() => page.evaluate(() => (window as any).__events.normal.length)).toBeGreaterThan(0);
     const later = await page.evaluate(() => (window as any).__events);
     expect(later.normal.length).toBeGreaterThan(0);
     expect(later.normal[0].instant).toBe(false);
