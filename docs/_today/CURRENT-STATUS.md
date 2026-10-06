@@ -2,15 +2,13 @@
 
 ## 🅿️ PARKING LOT
 
-**Parked 2026-10-05, 11:00 PM CDT.** main = v1.0.311.
+**Parked 2026-10-05, 11:55 PM CDT.** main = v1.0.315.
 
-**Task:** real paths for pages (#1001, John: "I want regular routing for navigation pull out the pages thing"), which also settles #957 (an unknown path is a 404, not home). PR #1601.
+**Task:** real paths for pages (#1001), which also settled #957.
 
-**Files touched:** `src/core/routes.js` (new), `src/core/site-engine.js`, `server.js`, `scripts/generate-404.mjs` (new), `404.html` (new, generated), `.github/workflows/stamp-version-on-main.yml`, `tests/helpers/page-path.ts` (new), `tests/regression/pages-have-real-paths.spec.ts` (new), and the specs that looked nav links up by `?page=`: `mobile/nav-scroll`, `views/feature-cards-clickable`, `pages/home-links`, `integration/repro-card-bug`, `behaviors/no-schema-not-found`, `regression/{navigation-latest-wins,non-nav-pages-reachable,issues-activity-survives-navigation,behaviors-live-selector,releases-page,scroll-survives-page-build}`, `compliance/repo-layout`.
+**Last action:** #1601 merged at 11:50 PM CDT, CI green. #957 closed (an unknown path is a 404, not home). Signatures filled on both. The live site serves `/wb-starter/behaviors` from `404.html`, re-stamped on every release.
 
-**Last action:** fixed every spec CI and the local run showed red (all pass locally; the iPhone project needs WebKit, which this sandbox lacks, so nav-scroll was checked on Pixel). Added a redirect `/behaviors/` → `/behaviors` (the shell's relative assets broke under a trailing slash). Merged main and pushed; the PR is still DRAFT, waiting on CI.
-
-**Next step:** CI green → mark ready, merge (merge commit), fill in the signatures for #1001 and #957. Then, optionally, change the 44 `?page=` content links to paths (they still work; they redirect).
+**Next step:** #1001 stays open on one acceptance line. GitHub Pages answers `/wb-starter/behaviors` with a 404 status (the page renders; the status is wrong). Closing it needs a generated `<page>/index.html` per page, made by `scripts/generate-404.mjs`'s shell builder and kept in step by the stamp workflow. That is about 20 folders at the repo root, see the comment on #1001. Optional: change the 44 `?page=` content links to paths (they redirect, so they work as is).
 
 **Open questions for John:** #827 wire up or delete the list modules (`<ul>/<ol>/<dl>` would change on every page); #969 the typed-card class refactor, do now or later.
 
