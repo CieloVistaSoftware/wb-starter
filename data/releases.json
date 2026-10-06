@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.315",
+      "date": "2026-10-05",
+      "summary": "The check that the not-found page matches the home page failed after every release, because each release changes the version number in the home page&#39;s file links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1601\" target=\"_blank\" rel=\"noopener\">PR 1601</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The 404.html check leaves out the ?v= stamp</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The shell spec finds Home by its path; 404.html follows main&#39;s index</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Specs find nav links by the page&#39;s real path; /name/ moves to /name</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Pages live at real paths; an unknown path is a 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
+          "issues": [
+            1001,
+            957
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/pages-have-real-paths.spec.ts</code> on a branch made before main&#39;s latest release. Before: &quot;404.html is index.html plus the site root&quot; failed on the version number alone. Now: it passes, and still fails if anything else differs."
+    },
+    {
       "version": "1.0.314",
       "date": "2026-10-05",
       "summary": "Doc-viewer-links failed CI with ECONNRESET, never a dead link, because server.js closed an idle keep-alive socket after Node&#39;s default ~5-6s while a test&#39;s pooled request context reused it (idle 6037ms and 6066ms on Windows CI). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1605\" target=\"_blank\" rel=\"noopener\">PR 1605</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
