@@ -44,6 +44,12 @@ const SCAN_EXT = new Set(['.html', '.js', '.json', '.md']);
 /** Historical prose is a record of what happened; it is not an example. */
 const EXEMPT_FILES = [
   /releases\.html$/,
+  // #1597: the hero gallery is the site's own screenshots of its playground
+  // heroes, rendered by scripts/render-hero-gallery.mjs into images/hero-gallery/.
+  // It is not an example anyone copies, so a relative src cannot 404 on a
+  // customer's page -- the reason this rule exists. John approved the
+  // exemption, 2026-10-06.
+  /pages[/\\]hero-gallery\.html$/,
   /CHANGELOG/i,
   /[/]data[/]/,          // generated indexes, rebuilt from the sources above
   /node_modules/,
