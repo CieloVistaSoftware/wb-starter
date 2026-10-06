@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.312",
+      "date": "2026-10-05",
+      "summary": "On the home page a hard-edged band swept back and forth across the &quot;Build stunning UIs&quot; hero every 7 seconds, because the cosmic nebula layer is hero-sized but kept the card hero&#39;s sideways sheen animation. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1596\" target=\"_blank\" rel=\"noopener\">PR 1596</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Cosmic hero spec uses the page fixture, not browser.newPage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+          "issues": [
+            1595
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The cosmic hero&#39;s nebula no longer slides a hard band across it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
+          "issues": [
+            1595
+          ]
+        }
+      ],
+      "seeIt": "Open the home page and watch the hero for 7 seconds. Before: a vertical band with a brighter side slid across the hero. Now: the nebula and stars stay still."
+    },
+    {
       "version": "1.0.311",
       "date": "2026-10-05",
       "summary": "The card&#39;s FEATURED badge once had 2.2px of side padding, so its last letter sat at the badge edge and read as cut off, every badge was the same yellow, and the category/date/author block sat against the card edge; all three are fixed on main, but no test held any of them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1594\" target=\"_blank\" rel=\"noopener\">PR 1594</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1006\" target=\"_blank\" rel=\"noopener\">#1006</a>",
