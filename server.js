@@ -1667,6 +1667,14 @@ const PORT_WAS_REQUESTED = Boolean(process.env.PORT);
 
 function tryListen(p, attemptsLeft) {
   const server = app.listen(p, () => onListening(p));
+  // #1549: Node closes an idle keep-alive socket after keepAliveTimeout (5s by
+  // default). Playwright request contexts in one worker share pooled sockets,
+  // so a test that left the server idle ~6s sent its next GET on a socket the
+  // server was closing, and got ECONNRESET (CI: 6037ms and 6066ms idle; a raw
+  // socket probe saw the close at ~6s). Idle sockets now stay open far longer
+  // than any client reuse window. headersTimeout must exceed keepAliveTimeout.
+  server.keepAliveTimeout = 65_000;
+  server.headersTimeout = 66_000;
   server.on('error', (err) => {
     if (err.code === 'EADDRINUSE' && attemptsLeft > 0) {
       console.log(`[port] :${p} in use -- trying :${p + 1}`);
