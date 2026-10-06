@@ -6,71 +6,79 @@
   ],
   "releases": [
     {
-      "version": "1.0.336",
+      "version": "1.0.334",
       "date": "2026-10-06",
-      "summary": "The v3 standards page described components that no longer exist and had been garbled by a find-and-replace. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1630\" target=\"_blank\" rel=\"noopener\">PR 1630</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a>",
+      "summary": "The v3 standards page described components that no longer exist and had been garbled by a find-and-replace. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a>",
       "items": [
         {
           "kind": "changed",
-          "html": "<strong>V3-STANDARDS.md says what ships, checked against the source</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a>",
+          "html": "<strong>V3-STANDARDS.md says what ships, checked against the source</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/340\" target=\"_blank\" rel=\"noopener\">#340</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4f634c2f8246b0798ee08b402ac5d91063525abb\" target=\"_blank\" rel=\"noopener\"><code>4f634c2</code></a>",
           "issues": [
             340
           ]
-        }
-      ],
-      "seeIt": "Open docs/standards/V3-STANDARDS.md in the doc viewer. Before: headings like &quot;Behavior vs. Behavior&quot; and an example using the removed x-as-article. Now: it explains behaviors, auto-injection and schemas as the code works today, with examples that render."
-    },
-    {
-      "version": "1.0.335",
-      "date": "2026-10-06",
-      "summary": "To get a green glow you had to write color=&quot;var(--success-color)&quot;, knowing the theme&#39;s internal token name; color=&quot;success&quot; produced --glow-color: success, which is no colour, so the glow silently stayed primary. The same token spelling was taught for x-grid background and x-stack bg. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1632\" target=\"_blank\" rel=\"noopener\">PR 1632</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a>",
-      "items": [
+        },
         {
           "kind": "fixed",
-          "html": "<strong>Colour attributes take the theme&#39;s colour name, not var(--token)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a>",
-          "issues": [
-            907
-          ]
-        }
-      ],
-      "seeIt": "Open /demos/playground.html and find &quot;Glowing (always on, no click)&quot;. Before: its markup read color=&quot;var(--success-color)&quot;. Now: it reads color=&quot;success&quot; and glows green. On the Grid doc, the Background example now reads background=&quot;bg-tertiary&quot;."
-    },
-    {
-      "version": "1.0.334",
-      "date": "2026-10-06",
-      "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1628\" target=\"_blank\" rel=\"noopener\">PR 1628</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
-      "items": [
-        {
-          "kind": "fixed",
-          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2efb2fbe322200f99069ea6ea8f0803bdf029b7d\" target=\"_blank\" rel=\"noopener\"><code>2efb2fb</code></a>",
           "issues": [
             1633
           ]
         },
         {
+          "kind": "fixed",
+          "html": "<strong>Colour attributes take the theme&#39;s colour name, not var(--token)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2f928e3954172aec9affc445aefd6dcc305d65ca\" target=\"_blank\" rel=\"noopener\"><code>2f928e3</code></a>",
+          "issues": [
+            907
+          ]
+        },
+        {
           "kind": "changed",
-          "html": "<strong>CLAUDE.md says to work open issues when idle</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a>",
+          "html": "<strong>CLAUDE.md says to work open issues when idle</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fd8390cdf0fe27173c0fe82da9d194c26dddc65d\" target=\"_blank\" rel=\"noopener\"><code>fd8390c</code></a>",
           "issues": [
             1627
           ]
         }
       ],
-      "seeIt": "Run npx playwright test tests/regression/release-bump-touches-only-project-version.spec.ts --project=regression. Before: on a slow runner, &quot;Test timeout of 30000ms exceeded&quot;. Now: the test waits as long as the script&#39;s own 120s budget (plus a minute), and passes (2 passed locally)."
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fstandards%2FV3-STANDARDS.md\" target=\"_blank\" rel=\"noopener\">docs/standards/V3-STANDARDS.md</a> in the doc viewer. Before: headings like &quot;Behavior vs. Behavior&quot; and an example using the removed x-as-article. Now: it explains behaviors, auto-injection and schemas as the code works today, with examples that render.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/97e589a805337357f5cb3d92720355dbd816d66e\" target=\"_blank\" rel=\"noopener\"><code>97e589a</code></a>"
+        }
+      ]
     },
     {
       "version": "1.0.333",
       "date": "2026-10-06",
-      "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1634\" target=\"_blank\" rel=\"noopener\">PR 1634</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+      "summary": "Main gained 1.0.331 and 1.0.332 while this PR waited, so CI&#39;s merge of the two disagreed with the generator (releases-list-every-version: &quot;1.0.330 items&quot;); releases.json is regenerated from the merged history. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a>",
       "items": [
         {
-          "kind": "fixed",
-          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json after merging main (1.0.331, 1.0.332)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/164230f912cc5199ce57e51c682f37a2f90fe245\" target=\"_blank\" rel=\"noopener\"><code>164230f</code></a>",
           "issues": [
-            1633
+            1623
           ]
         }
       ],
-      "seeIt": "Run npx playwright test tests/regression/release-bump-touches-only-project-version.spec.ts --project=regression. Before: on a slow runner, &quot;Test timeout of 30000ms exceeded&quot;. Now: the test waits as long as the script&#39;s own 120s budget (plus a minute), and passes (2 passed locally)."
+      "seeIt": "Run <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/releases-list-every-version.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/releases-list-every-version.spec.ts</a>. Before: &quot;1.0.330 items&quot; differed by the #1621 favicon item. Now: 2/2.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/164230f912cc5199ce57e51c682f37a2f90fe245\" target=\"_blank\" rel=\"noopener\"><code>164230f</code></a>"
+        },
+        {
+          "label": "PR (releases links)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1624</a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1623</a>"
+        },
+        {
+          "label": "See it (live site, after deploy)",
+          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=releases</a>"
+        }
+      ]
     },
     {
       "version": "1.0.332",
