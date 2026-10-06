@@ -224,7 +224,7 @@ test.describe('Notes Behavior', () => {
       await injectNotes(page, '<div x-notes></div>');
       await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        el.wbNotes.open();
+        el.wbNotes.show();
       });
       const notes = page.locator('#test-container [x-notes]');
       await expect(notes).toHaveClass(/x-notes--open/);
@@ -234,8 +234,8 @@ test.describe('Notes Behavior', () => {
       await injectNotes(page, '<div x-notes></div>');
       await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        el.wbNotes.open();
-        el.wbNotes.close();
+        el.wbNotes.show();
+        el.wbNotes.hide();
       });
       const notes = page.locator('#test-container [x-notes]');
       await expect(notes).not.toHaveClass(/x-notes--open/);
@@ -255,7 +255,7 @@ test.describe('Notes Behavior', () => {
       await injectNotes(page, '<div x-notes></div>');
       await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        el.wbNotes.open();
+        el.wbNotes.show();
       });
       await page.click('#test-container .x-notes__close-corner[data-action="close"]');
       const notes = page.locator('#test-container [x-notes]');
@@ -271,7 +271,7 @@ test.describe('Notes Behavior', () => {
       await injectNotes(page, '<div x-notes position="right"></div>');
       await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        el.wbNotes.open();
+        el.wbNotes.show();
       });
       await page.click('#test-container .x-notes__wide-btn[data-action="collapse-left"]');
       const notes = page.locator('#test-container [x-notes]');
@@ -283,7 +283,7 @@ test.describe('Notes Behavior', () => {
       await injectNotes(page, '<div x-notes position="left"></div>');
       await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        el.wbNotes.open();
+        el.wbNotes.show();
       });
       await page.click('#test-container .x-notes__wide-btn[data-action="collapse-right"]');
       const notes = page.locator('#test-container [x-notes]');
@@ -298,7 +298,7 @@ test.describe('Notes Behavior', () => {
   test.describe('Save with Duplicate Prevention', () => {
     test('should show warning when no content to save', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
-      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.open());
+      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.show());
       await page.fill('#test-container .x-notes__textarea', ''); // open() prepends a header line -- clear it back out
       await page.click('#test-container .x-notes__wide-btn[data-action="save"]');
       const status = page.locator('#test-container .x-notes__status');
@@ -307,7 +307,7 @@ test.describe('Notes Behavior', () => {
 
     test('should show success when saving content', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
-      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.open());
+      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.show());
       await page.fill('#test-container .x-notes__textarea', 'Test note content ' + Date.now());
       await page.click('#test-container .x-notes__wide-btn[data-action="save"]');
       const status = page.locator('#test-container .x-notes__status');
@@ -316,7 +316,7 @@ test.describe('Notes Behavior', () => {
 
     test('should prevent duplicate content on second save', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
-      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.open());
+      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.show());
       const content = 'Duplicate test ' + Date.now();
 
       // First save
@@ -359,7 +359,7 @@ test.describe('Notes Behavior', () => {
 
     test('clicking New saves the outgoing note, then starts a fresh one', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
-      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.open());
+      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.show());
       const content = 'Outgoing note ' + Date.now();
       await page.fill('#test-container .x-notes__textarea', content);
       await page.click('#test-container .x-notes__wide-btn[data-action="new"]');
@@ -373,7 +373,7 @@ test.describe('Notes Behavior', () => {
 
     test('clicking New with empty content just starts fresh (nothing to save)', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
-      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.open());
+      await page.evaluate(() => (document.querySelector('#test-container [x-notes]') as any).wbNotes.show());
       await page.fill('#test-container .x-notes__textarea', '');
       await page.click('#test-container .x-notes__wide-btn[data-action="new"]');
       await page.waitForTimeout(200);
@@ -395,20 +395,20 @@ test.describe('Notes Behavior', () => {
       expect(hasApi).toBe(true);
     });
 
-    test('should have open method', async ({ page }) => {
+    test('should have show method', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
       const hasMethod = await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        return typeof el.wbNotes.open === 'function';
+        return typeof el.wbNotes.show === 'function';
       });
       expect(hasMethod).toBe(true);
     });
 
-    test('should have close method', async ({ page }) => {
+    test('should have hide method', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
       const hasMethod = await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        return typeof el.wbNotes.close === 'function';
+        return typeof el.wbNotes.hide === 'function';
       });
       expect(hasMethod).toBe(true);
     });
@@ -431,13 +431,18 @@ test.describe('Notes Behavior', () => {
       expect(hasMethod).toBe(true);
     });
 
-    test('should have collapseToSide method', async ({ page }) => {
+    // #782: collapseToSide(side) became hide(side) -- 'collapse' is a retired
+    // verb, and docking to a side as the panel closes is still hiding it.
+    test('hide(side) docks the panel to that side and closes it', async ({ page }) => {
       await injectNotes(page, '<div x-notes></div>');
-      const hasMethod = await page.evaluate(() => {
+      const state = await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        return typeof el.wbNotes.collapseToSide === 'function';
+        el.wbNotes.show();
+        const openBefore = el.wbNotes.isOpen;
+        el.wbNotes.hide('left');
+        return { openBefore, open: el.wbNotes.isOpen, position: el.wbNotes.position, retired: typeof el.wbNotes.collapseToSide };
       });
-      expect(hasMethod).toBe(true);
+      expect(state).toEqual({ openBefore: true, open: false, position: 'left', retired: 'undefined' });
     });
 
     test('content property should get/set textarea value', async ({ page }) => {
@@ -455,7 +460,7 @@ test.describe('Notes Behavior', () => {
       const states = await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
         const before = el.wbNotes.isOpen;
-        el.wbNotes.open();
+        el.wbNotes.show();
         const after = el.wbNotes.isOpen;
         return { before, after };
       });
@@ -481,7 +486,7 @@ test.describe('Notes Behavior', () => {
       await injectNotes(page, '<div x-notes></div>');
       await page.evaluate(() => {
         const el = document.querySelector('[x-notes]') as any;
-        el.wbNotes.open();
+        el.wbNotes.show();
       });
       await page.keyboard.press('Escape');
       const notes = page.locator('#test-container [x-notes]');

@@ -102,44 +102,94 @@ const PREDICATE = /^is[A-Z][A-Za-z0-9]*$/;
 const COLLECTION_OP = /^(add|remove)[A-Z][A-Za-z0-9]*$/;
 
 /**
- * Read-only computed properties (declared `get foo()`) describe state rather
- * than commanding it, so they are not verbs and are not policed here.
+ * Domain verbs, allowed ONLY on the API they are listed under. Each names an
+ * action the canonical set has no word for; folding it into one would lose
+ * meaning (fire() is not play() -- a confetti burst has nothing to pause).
+ * Scoped per API so a domain verb cannot spread into a general second
+ * vocabulary. A RETIRED verb can never be listed here: the test below
+ * enforces that.
+ */
+const DOMAIN: Record<string, string[]> = {
+  // HTMLElement.focus()/blur(), and the search the field exists to run.
+  wbSearch: ['focus', 'blur', 'search'],
+  // The notes panel's own file operations.
+  wbNotes: ['save', 'copy', 'newNote', 'lookup'],
+  // Pin or release the element; show/hide would say it disappears.
+  wbSticky: ['stick', 'unstick'],
+  // One-shot effects, and the repeat loop two of them run.
+  wbConfetti: ['fire'],
+  wbSparkle: ['fire'],
+  wbFireworks: ['fire', 'startRepeat', 'stopRepeat'],
+  wbSnow: ['fire', 'startRepeat', 'stopRepeat'],
+  wbTypewriter: ['type'],
+  wbCountup: ['count'],
+};
+
+/** The verbs #782 retired, each with its replacement. */
+const RETIRED: Record<string, string> = {
+  open: 'show', expand: 'show',
+  close: 'hide', collapse: 'hide', minimize: 'hide',
+  reanimate: 'play', reload: 'refresh',
+  clear: 'reset', clearErrors: 'reset',
+  cleanup: 'destroy', toggleMute: 'toggle',
+};
+
+/** Blank comments and string contents so neither can open or close a block. */
+function blankNoise(source: string): string {
+  return source
+    .replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '))
+    .replace(/\/\/[^\n]*/g, (c) => ' '.repeat(c.length))
+    .replace(/(['"`])(?:\\.|(?!\1)[^\\])*\1/g, (q) => q[0] + ' '.repeat(q.length - 2) + q[0]);
+}
+
+/**
+ * Every member of every `element.wbX = { ... }` object, in EVERY form a member
+ * can take at depth 1:
+ *
+ *   foo: () => {}     foo: function () {}     foo() {}     async foo() {}
+ *   foo: api.foo      foo: someFn             foo          (shorthand)
+ *
+ * #782: the first version matched only the first three, by line. A member
+ * assigned by reference (`clear: api.clear`) or written shorthand
+ * (`open, close, toggle`) was invisible, so wbSearch.clear and wbNotes.open
+ * shipped past a gate that reported green. Accessors (`get foo()`,
+ * `set foo(v)`) describe state, not commands, and are not policed.
  */
 function collectApiMembers(source: string, file: string) {
   const found: { member: string; file: string; api: string }[] = [];
-
-  // element.wbSomething = { ... }
+  const text = blankNoise(source);
   const re = /element\.(wb[A-Za-z0-9]*)\s*=\s*\{/g;
   let m: RegExpExecArray | null;
 
-  while ((m = re.exec(source)) !== null) {
-    const apiName = m[1];
-    // Walk braces from the opening one so a nested object cannot end the block
-    // early — a regex to the first '}' would stop inside the first method.
+  while ((m = re.exec(text)) !== null) {
+    const api = m[1];
+    // Split the object body at depth-1 commas; nested (), [] and {} are
+    // skipped whole, so a method body cannot end the object early.
+    const parts: string[] = [];
     let depth = 0;
-    let i = m.index + m[0].length - 1;
-    const start = i;
-    for (; i < source.length; i++) {
-      if (source[i] === '{') depth++;
-      else if (source[i] === '}') { depth--; if (depth === 0) break; }
+    let cur = '';
+    let i = m.index + m[0].length;
+    for (; i < text.length; i++) {
+      const ch = text[i];
+      if ('([{'.includes(ch)) depth++;
+      else if (')]}'.includes(ch)) {
+        if (depth === 0) break;
+        depth--;
+      } else if (ch === ',' && depth === 0) {
+        parts.push(cur);
+        cur = '';
+        continue;
+      }
+      cur += ch;
     }
-    const body = source.slice(start + 1, i);
+    parts.push(cur);
 
-    // Members at depth 1 only: `foo: () =>`, `foo() {`, `get foo()`.
-    let d = 0;
-    for (const line of body.split('\n')) {
-      const trimmed = line.trim();
-      if (d === 0) {
-        const member = trimmed.match(/^(?:get\s+)?([a-zA-Z_$][\w$]*)\s*(?::\s*(?:async\s*)?(?:\(|function)|\()/);
-        if (member && !/^(if|for|while|switch|return|catch)$/.test(member[1])) {
-          const isGetter = /^get\s/.test(trimmed);
-          if (!isGetter) found.push({ member: member[1], file, api: apiName });
-        }
-      }
-      for (const ch of line) {
-        if (ch === '{') d++;
-        else if (ch === '}') d--;
-      }
+    for (const raw of parts) {
+      const part = raw.trim();
+      if (!part || part.startsWith('...')) continue;
+      if (/^(get|set)\s+[A-Za-z_$]/.test(part)) continue;
+      const name = part.match(/^(?:async\s+)?([A-Za-z_$][\w$]*)/);
+      if (name) found.push({ member: name[1], file, api });
     }
   }
   return found;
@@ -172,7 +222,9 @@ test.describe('Behavior APIs use the canonical verbs', () => {
         if (TYPED_ACCESSOR.test(member)) continue;
         if (PREDICATE.test(member)) continue;
         if (COLLECTION_OP.test(member)) continue;
-        offenders.push(`${f}  ${api}.${member}()`);
+        if (DOMAIN[api]?.includes(member)) continue;
+        const instead = RETIRED[member] ? `  -> ${RETIRED[member]}` : '';
+        offenders.push(`${f}  ${api}.${member}()${instead}`);
       }
     }
 
@@ -191,5 +243,31 @@ test.describe('Behavior APIs use the canonical verbs', () => {
       `on <dialog> and <details>, and assigning to it silently does nothing (#778).\n\n` +
       unique.join('\n  '),
     ).toEqual([]);
+  });
+
+  test('no domain verb is a retired verb', () => {
+    const bad = Object.entries(DOMAIN).flatMap(([api, verbs]) =>
+      verbs.filter((v) => v in RETIRED).map((v) => `${api}.${v} -> ${RETIRED[v]}`));
+    expect(bad, 'a retired verb was allowed back in as a domain verb').toEqual([]);
+  });
+
+  test('the member scan sees every form a member can take', () => {
+    const probe = `
+      element.wbProbe = {
+        arrow: () => { const inner = { nope: 1 }; return inner; },
+        fn: function () {},
+        method() { if (x) { y(); } },
+        async later() {},
+        byRef: api.byRef,
+        shorthand, other,
+        get value() { return 1; },
+        set value(v) {},
+        ...rest,
+        // commented: () => {},
+        str: 'a, b: c',
+        last
+      };`;
+    const names = collectApiMembers(probe, 'probe.js').map((x) => x.member);
+    expect(names).toEqual(['arrow', 'fn', 'method', 'later', 'byRef', 'shorthand', 'other', 'str', 'last']);
   });
 });

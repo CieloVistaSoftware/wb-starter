@@ -32,8 +32,8 @@
 
 ## Methods
 
-- `open()` — Opens the drawer
-- `close()` — Closes the drawer
+- `show()` — Opens the drawer
+- `hide(side?)` — Closes the drawer; with `'left'` or `'right'` it docks there first
 - `toggle()` — Toggles drawer
 - `setPosition()` — Sets position
 - `save()` — Saves notes to JSON
