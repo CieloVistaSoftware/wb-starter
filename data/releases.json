@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.349",
+      "date": "2026-10-06",
+      "summary": "16 &quot;sleep, then check it IS true&quot; waits across behaviour, card, mobile, page, view and regression specs now wait on what they check (WB.settled, expect.poll on the URL, sort order, menu, height or nav, image load, two frames), 7 sleeps that prove nothing happened (a disabled control not navigating, a page not moving, a link not appearing) are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 3, setup 201, negative 59; the three left are mobile-validation, which also runs under WebKit. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1651\" target=\"_blank\" rel=\"noopener\">PR 1651</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Twenty-three more specs wait on the condition, not a clock (positive 26 -&gt; 3)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0c5bef8a3bd93679f32cd0393385e68bcbfd47f2\" target=\"_blank\" rel=\"noopener\"><code>0c5bef8</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: positive 26, setup 208, negative 61, marked 5. Now: positive 3, setup 201, negative 59, marked 12, and every edited spec passes in Chromium.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ff1dc1cb570f28937d75af173f45a8639b1c27e\" target=\"_blank\" rel=\"noopener\"><code>6ff1dc1</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1648\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1648</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.348",
       "date": "2026-10-06",
       "summary": "15 &quot;sleep, then check it IS true&quot; waits in thirteen regression and compliance specs now wait on what they check (WB.settled after the page or doc renders, expect.poll on the page error or retry request, the doc-viewer End gap polled to the bottom), 2 sleeps that prove nothing moved or overwrote the page are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 26 and setup 208. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1648\" target=\"_blank\" rel=\"noopener\">PR 1648</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
