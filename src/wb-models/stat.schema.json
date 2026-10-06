@@ -7,7 +7,7 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Read by stat().",
+      "description": "The small caption shown under the value, such as \"Active users\".",
       "default": "this is the label",
       "examples": [
         "Monthly revenue"
@@ -15,7 +15,7 @@
     },
     "variant": {
       "type": "string",
-      "description": "Read by stat().",
+      "description": "Colour of the value: blue, green, orange or purple.",
       "default": "this is the variant",
       "examples": [
         "blue",

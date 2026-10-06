@@ -7,7 +7,7 @@
   "properties": {
     "minHeight": {
       "type": "string",
-      "description": "Read by cover().",
+      "description": "Smallest height of the cover, as any CSS length. 100vh fills the screen.",
       "default": "100vh",
       "examples": [
         "8rem",
@@ -17,7 +17,7 @@
     },
     "padding": {
       "type": "string",
-      "description": "Read by cover().",
+      "description": "Space inside the cover around its header, content and footer, as any CSS length.",
       "default": "1rem",
       "examples": [
         "0",

@@ -7,7 +7,7 @@
   "properties": {
     "direction": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Flow of the children at one column: column stacks them, row lines them up side by side. Ignored in grid mode.",
       "default": "column",
       "examples": [
         "column"
@@ -15,12 +15,12 @@
     },
     "columns": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "1 is a flex stack or row. 2 or more switches to a responsive grid whose columns auto-fit down to one on narrow screens.",
       "default": "1"
     },
     "gap": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Space between the children, as any CSS length.",
       "default": "1rem",
       "examples": [
         "3rem"
@@ -28,12 +28,12 @@
     },
     "align": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Cross-axis alignment of the children: start, center, end or stretch.",
       "default": "stretch"
     },
     "justify": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Main-axis placement of the children: start, center, end, space-between, space-around or space-evenly.",
       "default": "start",
       "examples": [
         "flex-start",
@@ -42,7 +42,7 @@
     },
     "padding": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Space inside the container around its children, as any CSS length.",
       "default": "1rem",
       "examples": [
         "2.5rem"
@@ -50,12 +50,12 @@
     },
     "maxWidth": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Widest the container may grow; it is then centred. Any CSS length.",
       "default": "this is the max width"
     },
     "wrap": {
       "type": "string",
-      "description": "Read by container().",
+      "description": "Let a row wrap onto more lines when it runs out of room. wrap=\"false\" keeps every child on one line.",
       "default": "this is the wrap"
     }
   },

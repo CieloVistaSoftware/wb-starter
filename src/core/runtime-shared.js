@@ -13,6 +13,7 @@
  * duplicated blocks.
  */
 import { Events } from './events.js';
+import { isReady } from './ready-signal.js';
 
 /**
  * Record that `behaviorName` is being injected into `element`, so a second
@@ -98,6 +99,9 @@ export function removeApplied(applied, element, behaviorName, onRemoved = () => 
  *   readiness signal that gives up quietly turns a hung build into a green test.
  * - `settled(callbackOrOptions, options)`: resolves when every unit of work has
  *   called back. Promise, callback, or listen for `wb:settled`.
+ * - `isReady(element)`: has this element finished building (#1094)? The
+ *   answer lives in ready-signal.js, not in an attribute on the element. It was
+ *   on the eager runtime only, so a page run by wb-lazy.js could not ask.
  *
  * @param {object} runtime - the WB object
  * @param {{ count(): number, describe(): string, whenIdle(o?: object): Promise<void> }} tracker
@@ -109,6 +113,7 @@ export function installReadiness(runtime, tracker, settledCall) {
     pendingBehaviors: { get: () => tracker.describe(), enumerable: true, configurable: true },
     whenIdle: { value: (options) => tracker.whenIdle(options), writable: true, enumerable: true, configurable: true },
     settled: { value: (cb, options) => settledCall(cb, options), writable: true, enumerable: true, configurable: true },
+    isReady: { value: (element) => isReady(element), writable: true, enumerable: true, configurable: true },
   });
 }
 

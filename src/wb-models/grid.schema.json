@@ -7,7 +7,7 @@
   "properties": {
     "columns": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "How many columns to aim for. Each column has a minimum width, so the grid drops to fewer columns on narrow screens.",
       "default": "3",
       "examples": [
         "4",
@@ -16,12 +16,12 @@
     },
     "rows": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Number of auto-height rows to lay out, for a grid that should not grow past them.",
       "default": "this is the rows"
     },
     "gap": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Space between the cells, as any CSS length.",
       "default": "1rem",
       "examples": [
         "0",
@@ -30,17 +30,17 @@
     },
     "minWidth": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Smallest a column may get before the grid wraps to fewer columns, as any CSS length. Overrides the width columns implies.",
       "default": "this is the min width"
     },
     "align": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Vertical alignment of each item in its cell: start, center, end or stretch.",
       "default": "this is the align"
     },
     "justify": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Horizontal alignment of each item in its cell: start, center, end or stretch.",
       "default": "this is the justify"
     },
     "background": {
@@ -50,17 +50,17 @@
     },
     "headers": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Comma-separated header labels; each becomes a header cell at the top of the grid.",
       "default": "this is the headers"
     },
     "center": {
       "type": "boolean",
-      "description": "Read by grid(). Bare attribute.",
+      "description": "Centre every item in its cell, and its text. Bare attribute.",
       "default": false
     },
     "altRows": {
       "type": "boolean",
-      "description": "Read by grid(). Bare attribute.",
+      "description": "Shade every other row so rows are easier to follow. Bare attribute.",
       "default": false
     }
   },

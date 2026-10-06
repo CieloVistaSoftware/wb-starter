@@ -7,7 +7,7 @@
   "properties": {
     "ratio": {
       "type": "string",
-      "description": "Read by frame().",
+      "description": "Width-to-height shape the first child is held to, written as width/height: 16/9, 4/3, 1/1.",
       "default": "16/9"
     }
   },

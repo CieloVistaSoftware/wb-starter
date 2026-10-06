@@ -7,7 +7,7 @@
   "properties": {
     "side": {
       "type": "string",
-      "description": "Read by sidebarlayout().",
+      "description": "Which child is the sidebar: left makes the first child the sidebar, right the second.",
       "default": "left",
       "examples": [
         "right"
@@ -15,7 +15,7 @@
     },
     "sideWidth": {
       "type": "string",
-      "description": "Read by sidebarlayout().",
+      "description": "Width of the sidebar, as any CSS length.",
       "default": "300px",
       "examples": [
         "8rem",
@@ -24,12 +24,12 @@
     },
     "contentMin": {
       "type": "string",
-      "description": "Read by sidebarlayout().",
+      "description": "Narrowest the main area may get before the sidebar wraps underneath it, as a CSS length or percentage.",
       "default": "50%"
     },
     "gap": {
       "type": "string",
-      "description": "Read by sidebarlayout().",
+      "description": "Space between the sidebar and the main area, as any CSS length.",
       "default": "1rem",
       "examples": [
         "0",
