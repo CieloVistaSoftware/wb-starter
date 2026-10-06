@@ -256,10 +256,66 @@ function validateSemanticContainer(element, behaviorName) {
 }
 
 /**
+ * Parts that legitimately repeat inside one card (measured over every card
+ * schema's test setups, 2026-10-06): the primary and secondary buttons, a
+ * portfolio's tag pills, a pricing card's features and their check marks.
+ * They are numbered. Every other part appears once, so it gets a plain id.
+ */
+const REPEATING_CARD_PARTS = new Set(['btn', 'pill', 'feature', 'feature-check']);
+
+/**
+ * #940 -- give a card's built parts ids derived from its host:
+ * `${hostId}__header`, `${hostId}__body`, `${hostId}__feature-2`.
+ *
+ * John: "if all elements on the page have an id then duplicate work would
+ * have a run time error." #923 rendered a card twice into the same host --
+ * two headers, two titles -- and nothing said so; it was found by eye.
+ * With these ids the second copy repeats them, and duplicate-ids.js (#730)
+ * logs it. That is why a non-repeating part is never numbered: numbering
+ * would give the double render fresh ids and hide it again.
+ *
+ * Only when the host has an id: nothing invents ids for an anonymous card.
+ * Only the card's own parts -- an element with an x-*__part class, or the
+ * card's direct header, footer or figure -- and never inside a nested
+ * behavior host, whose parts are its own. An id the
+ * behavior already set (an aria-controls target) is kept.
+ *
+ * @param {HTMLElement} element the card host
+ */
+function stampCardPartIds(element) {
+  const hostId = element.id;
+  if (!hostId) return;
+  const counts = new Map();
+  const walk = (node) => {
+    for (const child of node.children) {
+      if ([...child.attributes].some((a) => a.name.startsWith('x-') && a.name !== 'x-ready')) continue;
+      // A base card's own header, footer and figure carry no class (#964:
+      // the element says what it is), so those are named by their tag.
+      const part = [...child.classList].map((c) => c.match(/^x-[a-z-]+__([a-z0-9-]+)$/)?.[1]).find(Boolean)
+        || (node === element && ['HEADER', 'FOOTER', 'FIGURE'].includes(child.tagName) ? child.tagName.toLowerCase() : null);
+      if (part && !child.id) {
+        if (REPEATING_CARD_PARTS.has(part)) {
+          const n = (counts.get(part) || 0) + 1;
+          counts.set(part, n);
+          child.id = `${hostId}__${part}-${n}`;
+        } else {
+          child.id = `${hostId}__${part}`;
+        }
+      }
+      walk(child);
+    }
+  };
+  walk(element);
+}
+
+/**
  * Shared Card Composition
  * All variants compose this shared structure
  */
 export function composeCard(element, options = {}) {
+  // #940: every card builder runs synchronously after this call, so a
+  // microtask stamps the parts once the whole card is built.
+  queueMicrotask(() => stampCardPartIds(element));
   // v3.0: Check if schema builder already processed this element
   // When true, DOM structure is already built from $view - we only add interactivity
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
@@ -1846,6 +1902,8 @@ export function cardproduct(element, options = {}) {
  * Attribute: variant="info|success|warning|error" (NOT "type")
  */
 export function cardnotification(element, options = {}) {
+  // #940: the one card that does not go through composeCard().
+  queueMicrotask(() => stampCardPartIds(element));
   const schemaProcessed = options.schemaProcessed || element.getAttribute('x-schema');
 
   // Read variant (primary) with fallback to type (legacy).
