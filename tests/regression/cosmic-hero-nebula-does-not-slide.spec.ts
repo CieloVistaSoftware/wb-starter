@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { test, expect, newOfflinePage } from '../fixtures/offline';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * The cosmic hero's nebula layer stays put (#1595).
@@ -36,8 +36,7 @@ async function readLayer(page: Page, selector: string): Promise<Layer> {
 }
 
 test.describe('cosmic hero nebula does not slide (#1595)', () => {
-  test('a cosmic card hero with x-hero--cosmic keeps its ::before still; a default one keeps the sheen', async ({ browser }) => {
-    const page = await newOfflinePage(browser);
+  test('a cosmic card hero with x-hero--cosmic keeps its ::before still; a default one keeps the sheen', async ({ page }) => {
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 
@@ -61,11 +60,9 @@ test.describe('cosmic hero nebula does not slide (#1595)', () => {
 
     const plain = await readLayer(page, '#hero-default');
     expect(plain.animation, 'a default card hero still runs its sheen').toBe('x-cardhero-sheen');
-    await page.close();
   });
 
-  test('the home page hero does not move', async ({ browser }) => {
-    const page = await newOfflinePage(browser);
+  test('the home page hero does not move', async ({ page }) => {
     await page.goto('/');
     const hero = page.locator('[x-cardhero]').first();
     await expect(hero).toHaveClass(/x-card--hero/, { timeout: 20000 });
@@ -78,6 +75,5 @@ test.describe('cosmic hero nebula does not slide (#1595)', () => {
     const later = await readLayer(page, '[x-cardhero]');
     expect(first.animation, 'the home hero nebula runs no slide animation').toBe('none');
     expect(later.transform, 'the home hero ::before has not moved after 1.5s').toBe(first.transform);
-    await page.close();
   });
 });
