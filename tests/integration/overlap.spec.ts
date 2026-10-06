@@ -1,4 +1,6 @@
 import { test, expect, type Page } from '../fixtures/offline';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Standard §24 (#274): elements must never unintentionally overlap. Reported
@@ -70,35 +72,16 @@ type OverlapHit = {
   area: number;
 };
 
+// Every page the site serves, read from disk so a new page is covered the day
+// it is added (#274 asked for a project-wide gate; the hand-written list had
+// drifted to one SPA page -- listed twice -- and nine demos). SPA pages load
+// through the site shell, the way a visitor reaches them.
+const htmlIn = (dir: string) => fs.readdirSync(path.join(process.cwd(), dir))
+  .filter((f) => f.endsWith('.html')).sort().map((f) => f.slice(0, -5));
 const TARGET_PAGES: { name: string; url: string }[] = [
-  { name: 'pages/behaviors', url: '/?page=behaviors' },
-  { name: 'pages/about', url: '/?page=about' },
-  { name: 'pages/ai-docs', url: '/?page=ai-docs' },
-  { name: 'pages/contact', url: '/?page=contact' },
-  { name: 'pages/demos', url: '/?page=demos' },
-  { name: 'pages/docs', url: '/?page=docs' },
-  { name: 'pages/features', url: '/?page=features' },
-  { name: 'pages/hero-variants', url: '/?page=hero-variants' },
-  { name: 'pages/home', url: '/?page=home' },
-  { name: 'pages/issues', url: '/?page=issues' },
-  { name: 'pages/links', url: '/?page=links' },
-  { name: 'pages/offshoring', url: '/?page=offshoring' },
-  { name: 'pages/privacy', url: '/?page=privacy' },
-  { name: 'pages/releases', url: '/?page=releases' },
-  { name: 'pages/services', url: '/?page=services' },
-  { name: 'pages/terms', url: '/?page=terms' },
-  { name: 'pages/themes', url: '/?page=themes' },
-  { name: 'demos/site/cards', url: '/demos/site/cards.html' },
-  { name: 'demos/site/content', url: '/demos/site/content.html' },
-  { name: 'demos/site/effects', url: '/demos/site/effects.html' },
-  { name: 'demos/site/feedback', url: '/demos/site/feedback.html' },
-  { name: 'demos/site/forms', url: '/demos/site/forms.html' },
-  { name: 'demos/site/index', url: '/demos/site/index.html' },
-  { name: 'demos/site/interactive', url: '/demos/site/interactive.html' },
-  { name: 'demos/site/layout', url: '/demos/site/layout.html' },
-  { name: 'demos/site/learn-more', url: '/demos/site/learn-more.html' },
-  { name: 'demos/site/overlays', url: '/demos/site/overlays.html' },
-  { name: 'demos/site/shop-now', url: '/demos/site/shop-now.html' },
+  ...htmlIn('pages').map((p) => ({ name: `pages/${p}`, url: `/?page=${p}` })),
+  ...htmlIn('demos/site').map((p) => ({ name: `demos/site/${p}`, url: `/demos/site/${p}.html` })),
+  ...htmlIn('demos').map((p) => ({ name: `demos/${p}`, url: `/demos/${p}.html` })),
 ];
 
 async function detectOverlaps(page: Page): Promise<OverlapHit[]> {
