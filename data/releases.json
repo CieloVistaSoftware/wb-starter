@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.329",
+      "date": "2026-10-06",
+      "summary": "The browser tab showed a blue star instead of the wb logo used everywhere else. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1622\" target=\"_blank\" rel=\"noopener\">PR 1622</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1621\" target=\"_blank\" rel=\"noopener\">#1621</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Browser-tab favicon is the wb logo</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1621\" target=\"_blank\" rel=\"noopener\">#1621</a>",
+          "issues": [
+            1621
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/ and look at the browser tab (hard-refresh with Ctrl+Shift+R if it is cached). Before: a blue five-point star. Now: the wb logo tile (blue, with the orange brush and pencil)."
+    },
+    {
       "version": "1.0.328",
       "date": "2026-10-06",
       "summary": "On the Cards demo page, the Horizontal Card&#39;s code panel narrowed by about 70px a second after it appeared. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1618\" target=\"_blank\" rel=\"noopener\">PR 1618</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1600\" target=\"_blank\" rel=\"noopener\">#1600</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1579\" target=\"_blank\" rel=\"noopener\">#1579</a>",
