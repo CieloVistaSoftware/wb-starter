@@ -28,7 +28,7 @@
  *
  *   dialog.x-dialog
  *     header.x-dialog__header  >  h2.x-dialog__title + button.x-dialog__close
- *     main.x-dialog__body
+ *     main.x-dialog__main
  *     footer.x-dialog__footer  >  button.x-dialog__cancel + button.x-dialog__ok
  *
  * and src/styles/behaviors/dialog.css sets the spacing: header `1rem 1.5rem`,
@@ -182,7 +182,7 @@ function insets(container: Rect, child: Rect): Padding {
 async function collectPaddingViolations(dialog: Locator, label: string): Promise<string[]> {
   const found: string[] = [];
 
-  const body = dialog.locator('.x-dialog__body');
+  const body = dialog.locator('.x-dialog__main');
   await expect(body, `${label}: dialog.js must build a body`).toHaveCount(1);
   const bodyPadding = await paddingOf(body);
   for (const [side, value] of Object.entries(bodyPadding)) {
@@ -228,7 +228,7 @@ test.describe('Modal spacing compliance — the shipped x-dialog', () => {
     // it, so measure the rendered result too rather than trusting the
     // declaration: an overflowing or negatively-offset child would pass the
     // computed-style check above and still look broken.
-    const body = dialog.locator('.x-dialog__body');
+    const body = dialog.locator('.x-dialog__main');
     const content = body.locator('> *').first();
     await expect(content, 'the authored modal-content must render into the body').toHaveCount(1);
     const measured = insets(await rectOf(body), await rectOf(content));
@@ -284,7 +284,7 @@ test.describe('Modal spacing compliance — the shipped x-dialog', () => {
     const dialog = await openDialog(page);
 
     const title = dialog.locator('.x-dialog__title');
-    const body = dialog.locator('.x-dialog__body');
+    const body = dialog.locator('.x-dialog__main');
     await expect(title).toHaveCount(1);
     await expect(body).toHaveCount(1);
 
