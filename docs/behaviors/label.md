@@ -3,36 +3,37 @@
 Generates a real, associated `<label>` from an `x-label="text"` attribute on a
 form control — no separate `<label for="...">` to write by hand.
 
-- **Usage:**
-  ```html
-  <input
-    x-label="Label for input:"
-    id="input1"
-    type="text">
-  ```
-  The value is the label text. The behavior creates the `<label>`, wires up
-  `for`/`id` (assigning an id to the control if it doesn't have one), and
-  inserts it right before the control (so it renders to its left). Add `required` / `optional` for the
-  matching `x-label--required` / `x-label--optional` style:
-  ```html
-  <input
-    x-label="Email"
-    required>
-  ```
-- **`label-position="right"`** — puts the label after the control instead
-  (to its right). For RTL layouts (Hebrew, Arabic) where the label
-  conventionally sits on the right:
-  ```html
-  <input
-    x-label="שם מלא"
-    label-position="right">
-  ```
-- **Legacy form:** a bare `x-label` (no value) on an actual `<label>` element
-  just adds the `<label>` styling classes to that label directly — for when
-  you already have your own `<label for="...">` markup:
-  ```html
-  <label required for="input1">Label</label>
-  ```
+<div x-demo>
+<input x-label="Full name" id="label-demo-name" type="text">
+<input x-label="Email" type="email" required>
+<input x-label="Nickname" type="text" optional>
+</div>
+
+The value is the label text. The behavior creates the `<label>`, wires up
+`for`/`id` (assigning an id to the control if it doesn't have one), and
+inserts it right before the control, so it renders to its left. `required` /
+`optional` on the control add the matching `x-label--required` /
+`x-label--optional` style.
+
+## Label on the right
+
+`label-position="right"` puts the label after the control instead. Use it for
+RTL layouts (Hebrew, Arabic), where the label conventionally sits on the right:
+
+<div x-demo>
+<input x-label="שם מלא" label-position="right" type="text">
+</div>
+
+## On your own label
+
+A bare `x-label` (no value) on an actual `<label>` element just adds the label
+styling to it — for when you already have your own `<label for="...">` markup:
+
+<div x-demo>
+<label x-label required for="label-demo-own">Project name</label>
+<input id="label-demo-own" type="text">
+</div>
+
 - [Demo](../../demos/site/forms.html#x-label-including-rtl-layouts)
 - [Schema](../../src/wb-models/label.schema.json)
 - [Test](../../tests/behaviors/label.spec.ts)
