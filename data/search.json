@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5846
+    "totalWords": 5861
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.322\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.322\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.323\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.323\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -1814,10 +1814,10 @@
       "title": "dropdown",
       "description": null,
       "headings": [],
-      "content": "# dropdown Click (or hover) to open a menu — from either a comma-separated `items` list or real child ` `/` `/` ` elements. Implemented by `dropdown()` in [src/wb-viewmodels/dropdown.js](../../src/wb-viewmodels/dropdown.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-dropdown` | | Attribute form | ` ` | | Behavior function | `dropdown()` — `src/wb-viewmodels/dropdown.js` | | Semantic element | ` ` | | Root CSS Class | ` ` (plus `x-dropdown-trigger` on the host itself) | | Category | Overlay | | Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — `close-on-outside=\"false\"` keeps the menu open on outside clicks; `offset` is the gap in px between trigger and menu (default 4) | ## Properties | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `items` | string | `\"\"` | Comma-separated list of menu item labels (e.g. `\"Profile,Settings,Logout\"`). Ignored if the host already has real ` `/` `/` ` children | | `label` | string | `\"\"` | Trigger button text. If set (or the host has real child items), a dedicated ` ` is built; otherwise the host's own text content is the clickable trigger | | `position` | string | `\"bottom-start\"` | `bottom-start`, `bottom-end`, `top-start`, `top-end` — sets which corner the menu opens from | | `close-on-select` | boolean | `true` (unless the value is literally `\"false\"`) | Whether choosing a menu item closes the dropdown | | `trigger` | string | `\"click\"` | `click` or `hover`. In hover mode there's a 150ms close delay so the pointer can travel from the trigger into the menu | ## Usage ### Items list ### Real child links, open on the right edge Edit Duplicate Delete ### Hover trigger ### Host text as its own trigger (no `label`, no child items) Click me ▾ ## CSS Classes `dropdown()` sets almost all of the trigger/menu positioning and colors via **inline styles** written directly in `dropdown.js`, not the classes below — `src/styles/behaviors/dropdown.css`'s own `.x-dropdown-menu`/`.x-dropdown-item` selectors (singular hyphen) are stale and don't match anything this behavior actually creates (it builds `x-dropdown__menu`/`x-dropdown__item`, BEM-style). The classes below are the ones genuinely applied and meaningfully stylable. | Class | Applied to | Description | |-------|-----------|-------------| | ` ` | host isn't already a ` ` tag | Marker class (`x-dropdown.css`'s tag selector covers real ` ` hosts) | | `.x-dropdown-trigger` | host, always | Button-like affordance (background/border/padding/cursor) for when the host's own text is the trigger | | `.x-dropdown__trigger` | the generated trigger ` ` | Only exists when `label` is set or there are real child items | | `.x-dropdown__menu` | the generated menu ` ` | Positioned via inline styles; visibility toggled via inline `display` | | `.x-dropdown__item` | each menu item (generated from `items`, or moved-in child elements) | `role=\"menuitem\"` | | `.open` | host, while the menu is visible | Toggled alongside the inline `display` | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:dropdown:select` | a menu item is clicked | `{ value, href }` — `value` is the item's trimmed text, `href` is the link URL or `null` | ```javascript document.querySelector('[x-dropdown]').addEventListener('wb:dropdown:select', (e) => { console.log('Chosen:', e.detail.value); }); ``` - [Demo](../../demos/site/overlays.html#dropdown-dropdown) - [Schema](../../src/wb-models/dropdown.schema.json)",
+      "content": "# dropdown Click (or hover) to open a menu — from either a comma-separated `items` list or real child ` `/` `/` ` elements. Implemented by `dropdown()` in [src/wb-viewmodels/dropdown.js](../../src/wb-viewmodels/dropdown.js). A dropdown is for actions, rich items, or a menu that stays open. To choose a value that a form submits, use a plain [` `](select.md) ([the rule](../standards/V3-STANDARDS.md#choosing-a-value-or-an-action-select-or-x-dropdown), #682). ## Overview | Property | Value | |----------|-------| | Attribute | `x-dropdown` | | Attribute form | ` ` | | Behavior function | `dropdown()` — `src/wb-viewmodels/dropdown.js` | | Semantic element | ` ` | | Root CSS Class | ` ` (plus `x-dropdown-trigger` on the host itself) | | Category | Overlay | | Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — `close-on-outside=\"false\"` keeps the menu open on outside clicks; `offset` is the gap in px between trigger and menu (default 4) | ## Properties | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `items` | string | `\"\"` | Comma-separated list of menu item labels (e.g. `\"Profile,Settings,Logout\"`). Ignored if the host already has real ` `/` `/` ` children | | `label` | string | `\"\"` | Trigger button text. If set (or the host has real child items), a dedicated ` ` is built; otherwise the host's own text content is the clickable trigger | | `position` | string | `\"bottom-start\"` | `bottom-start`, `bottom-end`, `top-start`, `top-end` — sets which corner the menu opens from | | `close-on-select` | boolean | `true` (unless the value is literally `\"false\"`) | Whether choosing a menu item closes the dropdown | | `trigger` | string | `\"click\"` | `click` or `hover`. In hover mode there's a 150ms close delay so the pointer can travel from the trigger into the menu | ## Usage ### Items list ### Real child links, open on the right edge Edit Duplicate Delete ### Hover trigger ### Host text as its own trigger (no `label`, no child items) Click me ▾ ## CSS Classes `dropdown()` sets almost all of the trigger/menu positioning and colors via **inline styles** written directly in `dropdown.js`, not the classes below — `src/styles/behaviors/dropdown.css`'s own `.x-dropdown-menu`/`.x-dropdown-item` selectors (singular hyphen) are stale and don't match anything this behavior actually creates (it builds `x-dropdown__menu`/`x-dropdown__item`, BEM-style). The classes below are the ones genuinely applied and meaningfully stylable. | Class | Applied to | Description | |-------|-----------|-------------| | ` ` | host isn't already a ` ` tag | Marker class (`x-dropdown.css`'s tag selector covers real ` ` hosts) | | `.x-dropdown-trigger` | host, always | Button-like affordance (background/border/padding/cursor) for when the host's own text is the trigger | | `.x-dropdown__trigger` | the generated trigger ` ` | Only exists when `label` is set or there are real child items | | `.x-dropdown__menu` | the generated menu ` ` | Positioned via inline styles; visibility toggled via inline `display` | | `.x-dropdown__item` | each menu item (generated from `items`, or moved-in child elements) | `role=\"menuitem\"` | | `.open` | host, while the menu is visible | Toggled alongside the inline `display` | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:dropdown:select` | a menu item is clicked | `{ value, href }` — `value` is the item's trimmed text, `href` is the link URL or `null` | ```javascript document.querySelector('[x-dropdown]').addEventListener('wb:dropdown:select', (e) => { console.log('Chosen:', e.detail.value); }); ``` - [Demo](../../demos/site/overlays.html#dropdown-dropdown) - [Schema](../../src/wb-models/dropdown.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-01"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/error",
@@ -2594,10 +2594,10 @@
       "title": "select",
       "description": null,
       "headings": [],
-      "content": "# Select A plain ` ` gets the form styling, with `variant` for validation state, `size`, and `clearable` for a button that resets it. Its ` ` children stay the source of choices. ## Usage main develop fix/706-dropdown No attribute needed on ` `. Don't add `x-select` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | `string` | — | Select label | | `placeholder` | `string` | `Select...` | Placeholder text | | `options` | `string` | — | Options as JSON [{value, label}] | | `value` | `string` | — | Selected value | | `name` | `string` | — | Form field name | | `searchable` | `boolean` | `false` | Enable search | | `clearable` | `boolean` | `false` | Enable clear button | | `multiple` | `boolean` | `false` | Allow multiple selection | | `disabled` | `boolean` | `false` | Disabled state | | `required` | `boolean` | `false` | Required field | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `success` · `error` | `default` | | ## Events - `wb:select:change` — Selection changed - `wb:select:open` — Dropdown opened - `wb:select:close` — Dropdown closed ## Methods - `getValue()` — Gets selected value(s) - `setValue()` — Sets selected value(s) - `clear()` — Clears selection - `open()` — Opens dropdown - `close()` — Closes dropdown - `toggle()` — Toggles dropdown - `focus()` — Focuses the select - `enable()` — Enables the select - `disable()` — Disables the select - `setOptions()` — Updates options Schema: [`select.schema.json`](../../src/wb-models/select.schema.json)",
+      "content": "# Select A plain ` ` gets the form styling, with `variant` for validation state, `size`, and `clearable` for a button that resets it. Its ` ` children stay the source of choices. ## Usage main develop fix/706-dropdown No attribute needed on ` `. Don't add `x-select` to it (#746). ` ` is for choosing a value; a menu of actions is [x-dropdown](dropdown.md). The ` ` form is deprecated: write a ` ` with ` ` children ([the rule](../standards/V3-STANDARDS.md#choosing-a-value-or-an-action-select-or-x-dropdown), #682). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | `string` | — | Select label | | `placeholder` | `string` | `Select...` | Placeholder text | | `options` | `string` | — | Options as JSON [{value, label}] | | `value` | `string` | — | Selected value | | `name` | `string` | — | Form field name | | `searchable` | `boolean` | `false` | Enable search | | `clearable` | `boolean` | `false` | Enable clear button | | `multiple` | `boolean` | `false` | Allow multiple selection | | `disabled` | `boolean` | `false` | Disabled state | | `required` | `boolean` | `false` | Required field | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `success` · `error` | `default` | | ## Events - `wb:select:change` — Selection changed - `wb:select:open` — Dropdown opened - `wb:select:close` — Dropdown closed ## Methods - `getValue()` — Gets selected value(s) - `setValue()` — Sets selected value(s) - `clear()` — Clears selection - `open()` — Opens dropdown - `close()` — Closes dropdown - `toggle()` — Toggles dropdown - `focus()` — Focuses the select - `enable()` — Enables the select - `disable()` — Disables the select - `setOptions()` — Updates options Schema: [`select.schema.json`](../../src/wb-models/select.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/shake",
@@ -3678,10 +3678,10 @@
           "text": "Article title"
         }
       ],
-      "content": "# WB-Starter v3 Standards ## Purpose WB-Starter v3 is a composition-only system. Behavior functions receive an existing DOM element and apply capability to it in Light DOM. There is no behavior base class, no behavior inheritance hierarchy, and no Shadow DOM. The words **behavior** and **behavior** describe the contract of the markup and the responsibility of the function. They do not describe two different runtime mechanisms: both are resolved by the WB registry and invoked as functions. ## Behavior vs. Behavior ### Behavior Use a behavior when the markup needs a named WB-Starter boundary with a defined presentation or structure. A behavior is reached by its semantic element (` ` is a card, ` ` a dialog) or by its `x-*` attribute on any element. The mapped behavior may create or normalize the behavior's internal Light DOM, apply its classes, bind events, and expose its API. Changes in this release. Continue? The element is the behavior's public boundary. It is not a class instance that must extend a shared base class. Semantic elements and `x-*` attributes are mapped to behaviors in `src/core/tag-map.js`; registration shims required by the Custom Elements API do not create an inheritance model or hold shared behavior logic. Behavior schemas live in `src/wb-models/{name}.schema.json`. Behavior behavior functions live in `src/wb-viewmodels/{name}.js`, and their styles live in the appropriate file under `src/styles/behaviors/`. ### Behavior Use a behavior when an existing element already has the right semantic meaning and only needs an enhancement. An explicit behavior uses an `x-*` attribute: Save Release notes Top Docs An `x-*` attribute is an opt-in declaration. It does not replace the host element, and it does not turn that element into a subclass. A behavior function must work with the element it receives and must preserve the element's native semantics. Effects, utilities, and enhancements generally belong here. An enhancement can also be added to an element that already carries a behavior (` `) when that combination is meaningful. ### Semantic auto-injection Use native semantic HTML first when it expresses the meaning of the content or control. When auto-injection is enabled for the page, WB can map selected native elements to behaviors through `nativeMap`: ```html Save More information Additional details. Recent releases ... ``` These elements remain native HTML elements. The behavior decorates them in place; it must not replace a meaningful native element with a generic ` ` or require an unnecessary `x-*` marker. The supported mappings are maintained in `src/core/tag-map.js` (`nativeMap`). Auto-injection is a page configuration choice, so do not assume that a bare native element is enhanced on every page. The native element's own semantics remain authoritative. Use correct headings, labels, captions, landmarks, button types, form relationships, alternative text, and keyboard behavior before adding visual enhancements. Add ARIA only when native HTML cannot express the required state or relationship. ## Choosing a Markup Form Use this order when authoring markup: 1. Choose the correct native semantic element when it expresses the requirement. 2. Add an `x-*` behavior when an existing element needs an explicit enhancement. 3. Put a structural behavior's `x-*` attribute on a neutral host (` `) when no semantic element carries it. Do not add a structural behavior merely to style an element, and do not use a generic ` ` when a native semantic element is available. Do not use both a generic native mapping and an explicit replacement behavior on the same host unless the combination is intentional and supported. More-specific mappings, such as `input[type=\"checkbox\"]`, take precedence over generic mappings such as `input`. ## Naming and Attributes ### Tags and behavior attributes - Behaviors use lowercase ` ` tags. - Explicit behaviors use lowercase `x-behavior-name` attributes. - Behavior attributes may be boolean or carry the behavior's configuration value. Ready Save ### Configuration attributes Configuration attributes use clean names. Do not add `x-` or `data-` to a behavior or behavior property: ```html ``` `data-*` is not the canonical configuration API for behavior elements. Follow the behavior schema or behavior documentation for the accepted property names and values. Do not use `data-*` attributes as a substitute for declared properties. ## Light DOM and Composition Rules - Never use `attachShadow()`, `this.shadowRoot`, or `ShadowRoot`. - Never create or extend `WBBaseComponent` or another shared behavior base class. - Behavior functions receive `(element, options)` and operate on that element. - Put reusable logic in exported helper functions, behaviors, schemas, and design tokens rather than parent classes. - Preserve existing child content unless the behavior contract explicitly owns and transforms it. - Generate per-instance IDs when ARIA relationships require them; never hardcode an ID inside ",
+      "content": "# WB-Starter v3 Standards ## Purpose WB-Starter v3 is a composition-only system. Behavior functions receive an existing DOM element and apply capability to it in Light DOM. There is no behavior base class, no behavior inheritance hierarchy, and no Shadow DOM. The words **behavior** and **behavior** describe the contract of the markup and the responsibility of the function. They do not describe two different runtime mechanisms: both are resolved by the WB registry and invoked as functions. ## Behavior vs. Behavior ### Behavior Use a behavior when the markup needs a named WB-Starter boundary with a defined presentation or structure. A behavior is reached by its semantic element (` ` is a card, ` ` a dialog) or by its `x-*` attribute on any element. The mapped behavior may create or normalize the behavior's internal Light DOM, apply its classes, bind events, and expose its API. Changes in this release. Continue? The element is the behavior's public boundary. It is not a class instance that must extend a shared base class. Semantic elements and `x-*` attributes are mapped to behaviors in `src/core/tag-map.js`; registration shims required by the Custom Elements API do not create an inheritance model or hold shared behavior logic. Behavior schemas live in `src/wb-models/{name}.schema.json`. Behavior behavior functions live in `src/wb-viewmodels/{name}.js`, and their styles live in the appropriate file under `src/styles/behaviors/`. ### Behavior Use a behavior when an existing element already has the right semantic meaning and only needs an enhancement. An explicit behavior uses an `x-*` attribute: Save Release notes Top Docs An `x-*` attribute is an opt-in declaration. It does not replace the host element, and it does not turn that element into a subclass. A behavior function must work with the element it receives and must preserve the element's native semantics. Effects, utilities, and enhancements generally belong here. An enhancement can also be added to an element that already carries a behavior (` `) when that combination is meaningful. ### Semantic auto-injection Use native semantic HTML first when it expresses the meaning of the content or control. When auto-injection is enabled for the page, WB can map selected native elements to behaviors through `nativeMap`: ```html Save More information Additional details. Recent releases ... ``` These elements remain native HTML elements. The behavior decorates them in place; it must not replace a meaningful native element with a generic ` ` or require an unnecessary `x-*` marker. The supported mappings are maintained in `src/core/tag-map.js` (`nativeMap`). Auto-injection is a page configuration choice, so do not assume that a bare native element is enhanced on every page. The native element's own semantics remain authoritative. Use correct headings, labels, captions, landmarks, button types, form relationships, alternative text, and keyboard behavior before adding visual enhancements. Add ARIA only when native HTML cannot express the required state or relationship. ## Choosing a Markup Form Use this order when authoring markup: 1. Choose the correct native semantic element when it expresses the requirement. 2. Add an `x-*` behavior when an existing element needs an explicit enhancement. 3. Put a structural behavior's `x-*` attribute on a neutral host (` `) when no semantic element carries it. Do not add a structural behavior merely to style an element, and do not use a generic ` ` when a native semantic element is available. Do not use both a generic native mapping and an explicit replacement behavior on the same host unless the combination is intentional and supported. More-specific mappings, such as `input[type=\"checkbox\"]`, take precedence over generic mappings such as `input`. ### Choosing a value or an action: select or x-dropdown **The test: does the user pick a value that the form submits, or run an action?** A value is ` `; an action is `x-dropdown` (#682). - **` `** is the control for choosing a value. The platform supplies the popup, keyboard model, mobile rendering, form participation and accessibility, and nothing hand-built matches it. It takes `variant`, `size`, `clearable`, `searchable` and `multiple` itself, so no wrapper is needed. - **`x-dropdown`** is for what ` ` structurally cannot do: a menu of actions (\"Duplicate\", \"Export\", \"Delete\"), items with rich content (icons, secondary text, links), or a menu that stays open across several choices (`close-on-select=\"false\"`). An ` ` holds text only and closes on pick. - **` `** is deprecated. It rebuilt a native control in the light DOM to accept options as a JSON attribute, the one thing it still adds now that ` ` honours the attributes above, and that rebuild is where #390, #448 and #497 came from. It keeps working; new markup writes a ` ` with ` ` children. ## Naming and Attributes ### Tags and behavior attributes - Behaviors use lowercase ` ` tags. - Explicit behaviors use lowercase `x-behavior-name",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-01"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/styles",
@@ -5267,10 +5267,10 @@
           "id": "semanticsforms-h2-77"
         }
       ],
-      "content": "Form Controls ← Back to Index 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 🔘 Button This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. icon variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. iconPosition variants This is example button content. This is example button content. Variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. size variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. target variants This is example button content. This is example button content. Toggles This is example button content. This is example button content. This is example button content. This is example button content. ☑️ Checkbox This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. size variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Toggles This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. 📝 Input This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. inputType variants This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. Variants This is example input content. This is example input content. This is example input content. size variants This is example input content. This is example input content. This is example input content. iconPosition variants This is example input content. This is example input content. Toggles This is example input content. This is example input content. This is example input content. This is example input content. 🔍 Search This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. size variants This is example search content. This is example search content. This is example search content. Variants This is example search content. This is example search content. This is example search content. Toggles This is example search content. This is example search content. This is example search content. 📋 Select This is example select content. This is example select content. This is example select content. This is example select content. This is example select content. size variants This is example select content. This is example select content. This is example select content. Variants This is example select content. This is example select content. This is example select content. Toggles This is example select content. 🔘 Switch This is example switch content. This is example switch content. This is example switch content. This is example switch content. labelPosition variants This is example switch content. This is example switch content. size variants This is example switch content. This is example switch content. This is example switch content. Variants This is example switch content. This is example switch content. This is example switch content. Toggles This is example switch content. This is example sw",
+      "content": "Form Controls ← Back to Index 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 🔘 Button This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. icon variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. iconPosition variants This is example button content. This is example button content. Variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. size variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. target variants This is example button content. This is example button content. Toggles This is example button content. This is example button content. This is example button content. This is example button content. ☑️ Checkbox This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. size variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Toggles This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. 📝 Input This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. inputType variants This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. Variants This is example input content. This is example input content. This is example input content. size variants This is example input content. This is example input content. This is example input content. iconPosition variants This is example input content. This is example input content. Toggles This is example input content. This is example input content. This is example input content. This is example input content. 🔍 Search This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. size variants This is example search content. This is example search content. This is example search content. Variants This is example search content. This is example search content. This is example search content. Toggles This is example search content. This is example search content. This is example search content. 📋 Select is the control for choosing a VALUE. Each sample shows one thing it does; x-dropdown (overlays.html) is for menus of actions. --> main develop release Canada Germany Japan Mexico United States Apple Banana Cherry Cheese Mushroom Olive Pepper Pro (locked) Team size variants This is example select content. This is example select content. This is example select content. Variants This is example select content. This is example select content. This is example select content. Toggles This is example select content. 🔘 Switch This is example switch content. This is example switch content. This is example switch content. This is example switch content. labelPosition variants This is example switch content. This is example switch content. size variants This is example switch content. This is example switch content. This is example switch content. Variants This is example switch content. This is example switch",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/site/index",
@@ -6301,7 +6301,7 @@
     "321": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "322": [
+    "323": [
       "pages/home"
     ],
     "331": [
@@ -6361,6 +6361,9 @@
     "385": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
+    "390": [
+      "docs/standards/V3-STANDARDS"
+    ],
     "400": [
       "docs/behaviors/address"
     ],
@@ -6369,7 +6372,8 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "448": [
-      "pages/ai-permutation-test"
+      "pages/ai-permutation-test",
+      "docs/standards/V3-STANDARDS"
     ],
     "453": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
@@ -6385,6 +6389,9 @@
     ],
     "484": [
       "docs/architecture/WB-PREFIX-AUDIT"
+    ],
+    "497": [
+      "docs/standards/V3-STANDARDS"
     ],
     "503": [
       "docs/behaviors/address"
@@ -6438,6 +6445,11 @@
     ],
     "668": [
       "docs/behaviors/codetheme"
+    ],
+    "682": [
+      "docs/behaviors/dropdown",
+      "docs/behaviors/select",
+      "docs/standards/V3-STANDARDS"
     ],
     "700": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -6836,7 +6848,8 @@
       "pages/about",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/behaviors/dl",
-      "docs/schema.migration"
+      "docs/schema.migration",
+      "demos/site/forms"
     ],
     "behind": [
       "pages/about",
@@ -7286,6 +7299,7 @@
       "docs/behaviors/navbar",
       "docs/behaviors/progress",
       "docs/behaviors/range",
+      "docs/behaviors/select",
       "docs/behaviors/table",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
@@ -8007,6 +8021,7 @@
       "docs/behaviors/data",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
+      "docs/behaviors/dropdown",
       "docs/behaviors/figure",
       "docs/behaviors/file",
       "docs/behaviors/fill",
@@ -8152,6 +8167,7 @@
       "demos/landing-page-showcase",
       "demos/playground",
       "demos/site/content",
+      "demos/site/forms",
       "demos/site/interactive",
       "demos/site/learn-more",
       "demos/site/shop-now",
@@ -8234,6 +8250,7 @@
       "docs/mcp",
       "docs/npx-commands",
       "docs/property-viewer",
+      "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
       "demos/charity-food",
       "demos/index",
@@ -8919,7 +8936,6 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
-      "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/themes",
@@ -8954,6 +8970,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "demos/frameworks",
       "demos/multi-behavior-demo-generated"
@@ -9006,6 +9023,7 @@
       "docs/guides/create-a-website",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "demos/autoinject",
       "demos/charity-food",
@@ -9341,6 +9359,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -9609,6 +9628,7 @@
       "docs/property-viewer",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/site/forms"
     ],
@@ -9616,6 +9636,7 @@
       "pages/ai-permutation-test",
       "pages/privacy",
       "docs/AI",
+      "docs/behaviors/dropdown",
       "docs/semantic-standard",
       "docs/standards/V3-STANDARDS",
       "demos/autoinject"
@@ -9665,6 +9686,7 @@
       "docs/behaviors/confetti",
       "docs/behaviors/control",
       "docs/behaviors/data",
+      "docs/behaviors/dropdown",
       "docs/behaviors/error",
       "docs/behaviors/fill",
       "docs/behaviors/flex",
@@ -10020,7 +10042,6 @@
       "docs/schema.migration",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/wbservices",
@@ -10120,7 +10141,6 @@
       "docs/home-page",
       "docs/properties",
       "docs/search",
-      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "demos/schema-first-architecture"
@@ -10781,6 +10801,7 @@
       "pages/ai-permutation-test",
       "docs/behaviors/carddraggable",
       "docs/guides/create-a-website",
+      "docs/standards/V3-STANDARDS",
       "demos/landing-page-showcase",
       "demos/site/cards"
     ],
@@ -10802,7 +10823,9 @@
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject",
+      "demos/site/forms",
       "demos/site/interactive",
       "demos/site/overlays"
     ],
@@ -11287,7 +11310,6 @@
       "docs/schema.migration",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/wbservices"
@@ -11581,7 +11603,6 @@
       "docs/properties",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes",
@@ -11715,6 +11736,7 @@
       "docs/search",
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "demos/autoinject",
       "demos/frameworks",
@@ -11828,7 +11850,8 @@
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "demos/autoinject",
-      "demos/frameworks"
+      "demos/frameworks",
+      "demos/site/forms"
     ],
     "true": [
       "pages/ai-permutation-test",
@@ -11974,6 +11997,7 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy"
     ],
@@ -12156,6 +12180,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
+      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/test-schema-standard",
       "docs/testing-runbook",
@@ -12163,7 +12188,8 @@
       "demos/landing-page-showcase",
       "demos/schema-first-architecture",
       "demos/site/cards",
-      "demos/site/content"
+      "demos/site/content",
+      "demos/site/forms"
     ],
     "diff": [
       "pages/ai-permutation-test",
@@ -12429,6 +12455,7 @@
       "docs/behaviors/flex",
       "docs/linkedin-update-article",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/wbservices",
       "demos/charity-food",
@@ -13000,7 +13027,8 @@
       "docs/inline-editing",
       "docs/property-viewer",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/RELEASE-PROCESS",
+      "demos/site/forms"
     ],
     "untested": [
       "pages/ai-permutation-test"
@@ -13146,7 +13174,8 @@
       "docs/linkedin-framework-agnostic",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS"
     ],
     "directly": [
       "pages/ai-permutation-test",
@@ -13568,6 +13597,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy"
@@ -14578,6 +14608,7 @@
       "docs/index",
       "docs/semantic-standard",
       "docs/standards/REPO-LAYOUT",
+      "docs/standards/V3-STANDARDS",
       "demos/charity-food",
       "demos/site/learn-more",
       "demos/site/shop-now"
@@ -15227,6 +15258,7 @@
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS",
       "docs/testing-strategy"
     ],
     "jump": [
@@ -15378,6 +15410,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
+      "docs/standards/V3-STANDARDS",
       "demos/frameworks",
       "demos/standalone"
     ],
@@ -15604,7 +15637,6 @@
       "docs/guides/search-index",
       "docs/inline-editing",
       "docs/semantic-standard",
-      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "demos/frameworks",
@@ -15685,7 +15717,8 @@
       "docs/behaviors/x-enhancements",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
-      "docs/linkedin-update-article"
+      "docs/linkedin-update-article",
+      "docs/standards/V3-STANDARDS"
     ],
     "injected": [
       "pages/behaviors",
@@ -15744,7 +15777,6 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
-      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/wbservices"
     ],
@@ -15963,7 +15995,6 @@
       "docs/behaviors/x-copybutton",
       "docs/container-pattern",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "demos/intellisense-check"
     ],
@@ -16543,7 +16574,6 @@
       "docs/schema.migration",
       "docs/search",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/testing-strategy",
       "docs/themes",
@@ -16743,6 +16773,7 @@
       "docs/schema-first-audit-report",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/frameworks"
     ],
@@ -16806,7 +16837,6 @@
       "pages/behaviors",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/guides/search-index",
-      "docs/standards/V3-STANDARDS",
       "docs/testing-strategy"
     ],
     "classes": [
@@ -17120,6 +17150,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/frameworks"
     ],
@@ -17440,7 +17471,8 @@
       "docs/styles",
       "docs/testing-runbook",
       "demos/layout-test",
-      "demos/scrollalong-test"
+      "demos/scrollalong-test",
+      "demos/site/forms"
     ],
     "street": [
       "pages/contact"
@@ -17901,6 +17933,7 @@
       "docs/behaviors/x-copybutton",
       "docs/linkedin-update-article",
       "demos/index",
+      "demos/site/forms",
       "demos/site/index",
       "demos/site/overlays"
     ],
@@ -18267,6 +18300,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
+      "docs/behaviors/dropdown",
       "docs/behaviors/glass",
       "docs/behaviors/mark",
       "docs/behaviors/notify",
@@ -18276,6 +18310,7 @@
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS",
       "demos/layout-test"
     ],
     "regardless": [
@@ -18919,6 +18954,7 @@
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "demos/autoinject",
       "demos/multi-behavior-demo-generated",
@@ -18941,7 +18977,8 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/navbar",
       "docs/behaviors/video",
-      "docs/home-page"
+      "docs/home-page",
+      "docs/standards/V3-STANDARDS"
     ],
     "devices": [
       "pages/features",
@@ -19676,6 +19713,7 @@
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/dropdown",
       "docs/behaviors/navbar",
+      "docs/behaviors/select",
       "docs/guides/create-a-website",
       "docs/pce-candidates",
       "docs/pricecard",
@@ -19683,6 +19721,7 @@
       "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
+      "docs/standards/V3-STANDARDS",
       "demos/charity-food"
     ],
     "pagination": [
@@ -20666,7 +20705,6 @@
       "docs/property-viewer",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/V3-STANDARDS",
       "demos/autoinject"
     ],
     "simple": [
@@ -21261,7 +21299,9 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/V3-GUIDE",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/auto-injection"
+      "docs/auto-injection",
+      "docs/behaviors/dropdown",
+      "docs/standards/V3-STANDARDS"
     ],
     "immersive": [
       "pages/hero-variants"
@@ -21986,6 +22026,7 @@
       "docs/pce-candidates",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
       "demos/autoinject",
       "demos/landing-page-showcase"
@@ -22326,8 +22367,7 @@
       "docs/behaviors/table",
       "docs/linkedin-update-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/V3-STANDARDS"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "twice": [
       "pages/home",
@@ -22401,6 +22441,7 @@
       "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "demos/site/interactive"
     ],
@@ -22470,7 +22511,8 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/dropdown",
-      "docs/claude/TIER3-REFERENCE"
+      "docs/claude/TIER3-REFERENCE",
+      "docs/standards/V3-STANDARDS"
     ],
     "h1": [
       "pages/home",
@@ -22603,7 +22645,6 @@
       "docs/behaviors/x-darkmode",
       "docs/linkedin-framework-agnostic",
       "docs/schema-first-audit-report",
-      "docs/standards/V3-STANDARDS",
       "docs/wbservices",
       "demos/schema-first-architecture",
       "demos/site/content"
@@ -22676,8 +22717,7 @@
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/behaviors/accordion",
       "docs/claude/TIER3-REFERENCE",
-      "docs/performance",
-      "docs/standards/V3-STANDARDS"
+      "docs/performance"
     ],
     "including": [
       "pages/home",
@@ -22847,6 +22887,8 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/select",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
@@ -23401,7 +23443,8 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/guides/create-a-website",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS"
     ],
     "completed": [
       "pages/issues",
@@ -23675,7 +23718,8 @@
       "demos/site/content"
     ],
     "rebuilt": [
-      "pages/issues"
+      "pages/issues",
+      "docs/standards/V3-STANDARDS"
     ],
     "sorts": [
       "pages/issues",
@@ -23828,6 +23872,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/themes",
@@ -23978,7 +24023,6 @@
       "docs/claude/TIER1-LAWS",
       "docs/guides/create-a-website",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
       "demos/schema-first-architecture"
     ],
     "country": [
@@ -24415,7 +24459,8 @@
       "docs/behaviors/dropdown",
       "docs/claude/TIER1-LAWS",
       "docs/home-page",
-      "docs/standards/ERROR-LOG-RETENTION"
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/V3-STANDARDS"
     ],
     "object": [
       "pages/privacy",
@@ -24571,7 +24616,8 @@
       "docs/linkedin-update-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS"
+      "docs/standards/V3-STANDARDS",
+      "demos/site/forms"
     ],
     "number": [
       "pages/releases",
@@ -24745,7 +24791,6 @@
       "docs/behaviors/ul",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/standards/V3-STANDARDS",
       "docs/wbservices",
       "demos/autoinject",
       "demos/schema-first-architecture",
@@ -24910,6 +24955,7 @@
       "docs/behaviors/footer",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
+      "docs/standards/V3-STANDARDS",
       "demos/site/content"
     ],
     "smoothly": [
@@ -25004,7 +25050,8 @@
       "pages/terms",
       "docs/V3-GUIDE",
       "docs/container-pattern",
-      "docs/pricecard"
+      "docs/pricecard",
+      "docs/standards/V3-STANDARDS"
     ],
     "bound": [
       "pages/terms",
@@ -25591,6 +25638,7 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/search",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard"
     ],
     "harmonics": [
@@ -25937,7 +25985,6 @@
       "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/V3-STANDARDS",
       "demos/index",
       "demos/multi-behavior-demo-generated",
       "demos/schema-first-architecture"
@@ -26618,7 +26665,6 @@
       "docs/behaviors/release",
       "docs/claude/TIER1-LAWS",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "docs/wbservices"
     ],
@@ -26989,8 +27035,7 @@
       "docs/AI"
     ],
     "operate": [
-      "docs/AI",
-      "docs/standards/V3-STANDARDS"
+      "docs/AI"
     ],
     "distributions": [
       "docs/AI"
@@ -27579,7 +27624,6 @@
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/claude/TIER3-REFERENCE",
-      "docs/standards/V3-STANDARDS",
       "docs/styles"
     ],
     "stored": [
@@ -27750,6 +27794,7 @@
       "docs/inline-editing",
       "docs/semantic-audit",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "demos/site/overlays"
     ],
@@ -28048,6 +28093,7 @@
       "docs/behaviors/codetheme",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
+      "docs/behaviors/dropdown",
       "docs/behaviors/figure",
       "docs/behaviors/footer",
       "docs/behaviors/form",
@@ -28376,13 +28422,17 @@
     "actions": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/NOTES-V3-GUIDE",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/select",
       "docs/behaviors/x-copybutton",
       "docs/home-page",
       "docs/pce-candidates",
       "docs/properties",
       "docs/search",
       "docs/semantic-standard",
-      "docs/testing-runbook"
+      "docs/standards/V3-STANDARDS",
+      "docs/testing-runbook",
+      "demos/site/forms"
     ],
     "labeler": [
       "docs/ANNOUNCE_TEST_POLICY"
@@ -28563,8 +28613,7 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/REPO-LAYOUT",
-      "docs/standards/V3-STANDARDS"
+      "docs/standards/REPO-LAYOUT"
     ],
     "track": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28821,7 +28870,8 @@
       "docs/search",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/REPO-LAYOUT",
-      "demos/playground"
+      "demos/playground",
+      "demos/site/forms"
     ],
     "config": [
       "docs/BRANCH_PROTECTION",
@@ -28901,6 +28951,8 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/auto-injection",
       "docs/behaviors/container",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/select",
       "docs/behaviors/skeleton",
       "docs/claude/README",
       "docs/claude/TIER3-REFERENCE",
@@ -28930,8 +28982,10 @@
       "docs/behaviors/cardproduct",
       "docs/behaviors/confirm",
       "docs/behaviors/control",
+      "docs/behaviors/dropdown",
       "docs/behaviors/form",
       "docs/behaviors/pagination",
+      "docs/behaviors/select",
       "docs/behaviors/shake",
       "docs/behaviors/tabs",
       "docs/behaviors/toast",
@@ -28941,6 +28995,7 @@
       "docs/schema-first-architecture",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard"
     ],
     "enforcement": [
@@ -29817,7 +29872,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/testing-strategy",
       "docs/themes"
@@ -30408,6 +30462,7 @@
       "docs/schema",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/wbservices",
       "demos/autoinject",
@@ -30748,6 +30803,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
       "docs/wbservices",
       "demos/autoinject"
     ],
@@ -31202,6 +31258,7 @@
       "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
+      "docs/behaviors/dropdown",
       "docs/behaviors/icon",
       "docs/behaviors/move",
       "docs/behaviors/reel",
@@ -31209,6 +31266,7 @@
       "docs/behaviors/ripple",
       "docs/behaviors/scrollable",
       "docs/behaviors/scrollalong",
+      "docs/behaviors/select",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/stagelight",
       "docs/behaviors/switcher",
@@ -31265,8 +31323,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/glass",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "cssapi": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31665,7 +31722,8 @@
     "choices": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/select"
+      "docs/behaviors/select",
+      "docs/standards/V3-STANDARDS"
     ],
     "flags": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31760,7 +31818,6 @@
       "docs/property-viewer",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/wbservices",
       "demos/site/interactive"
@@ -32621,7 +32678,6 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
       "docs/themes",
       "demos/frameworks",
@@ -32872,6 +32928,7 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/charity-food",
       "demos/code",
@@ -33255,7 +33312,8 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS"
     ],
     "scrollbar": [
       "docs/NOTES-V3-GUIDE",
@@ -33273,7 +33331,8 @@
       "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/test-schema-standard"
+      "docs/test-schema-standard",
+      "demos/site/forms"
     ],
     "interactivity": [
       "docs/NOTES-V3-GUIDE",
@@ -33413,7 +33472,8 @@
       "docs/behaviors/lightbox",
       "docs/behaviors/navbar",
       "docs/behaviors/notes",
-      "docs/behaviors/select"
+      "docs/behaviors/select",
+      "docs/standards/V3-STANDARDS"
     ],
     "tips": [
       "docs/NOTES-V3-GUIDE",
@@ -33694,8 +33754,7 @@
       "docs/V3-GUIDE",
       "docs/architecture/solidjscomparison",
       "docs/behaviors/release",
-      "docs/behaviors/stagelight",
-      "docs/standards/V3-STANDARDS"
+      "docs/behaviors/stagelight"
     ],
     "readable": [
       "docs/V3-GUIDE",
@@ -33848,6 +33907,7 @@
       "docs/schema",
       "docs/semantic-audit",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard"
     ],
     "come": [
@@ -33927,7 +33987,6 @@
     ],
     "hardcode": [
       "docs/V3-GUIDE",
-      "docs/standards/V3-STANDARDS",
       "docs/styles"
     ],
     "literals": [
@@ -34138,6 +34197,7 @@
       "docs/behaviors/code",
       "docs/behaviors/release",
       "docs/claude/TIER1-LAWS",
+      "docs/standards/V3-STANDARDS",
       "demos/frameworks",
       "demos/layout-test"
     ],
@@ -34809,7 +34869,9 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
-      "demos/playground"
+      "docs/standards/V3-STANDARDS",
+      "demos/playground",
+      "demos/site/forms"
     ],
     "four": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35686,7 +35748,6 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
-      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/testing-strategy"
     ],
@@ -35777,6 +35838,7 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "docs/wbservices",
       "demos/frameworks",
@@ -35929,8 +35991,7 @@
       "docs/behaviors/switcher",
       "docs/behaviors/tabs",
       "docs/container-pattern",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "supports": [
       "docs/architecture/proposals/proposed-custom-elements",
@@ -36266,7 +36327,8 @@
       "docs/behaviors/footer",
       "docs/behaviors/ul",
       "docs/semantic-standard",
-      "docs/standards/REPO-LAYOUT"
+      "docs/standards/REPO-LAYOUT",
+      "docs/standards/V3-STANDARDS"
     ],
     "objects": [
       "docs/architecture/proposals/proposed-custom-elements",
@@ -36500,6 +36562,7 @@
       "docs/pricecard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
       "docs/wbservices"
     ],
     "customer": [
@@ -37411,8 +37474,7 @@
       "docs/architecture/solidjscomparison"
     ],
     "owns": [
-      "docs/architecture/solidjscomparison",
-      "docs/standards/V3-STANDARDS"
+      "docs/architecture/solidjscomparison"
     ],
     "rendering": [
       "docs/architecture/solidjscomparison",
@@ -37422,6 +37484,7 @@
       "docs/performance",
       "docs/property-viewer",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/V3-STANDARDS",
       "docs/testing-strategy",
       "demos/index",
       "demos/site/content",
@@ -38710,6 +38773,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "demos/frameworks",
+      "demos/site/forms",
       "demos/site/interactive"
     ],
     "instance": [
@@ -38906,6 +38970,7 @@
     ],
     "structurally": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/standards/V3-STANDARDS",
       "demos/schema-first-architecture"
     ],
     "reflects": [
@@ -38936,7 +39001,8 @@
       "docs/behaviors/skeleton",
       "docs/guides/search-index",
       "docs/linkedin-update-article",
-      "docs/properties"
+      "docs/properties",
+      "docs/standards/V3-STANDARDS"
     ],
     "overwrites": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -39044,6 +39110,7 @@
       "docs/behaviors/search",
       "docs/behaviors/searchfield",
       "docs/behaviors/select",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject"
     ],
     "buildwbselect": [
@@ -39128,7 +39195,8 @@
       "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/claude/SCHEMAS-GUIDE",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS"
     ],
     "tonight": [
       "docs/audits/INLINE-STYLES-AUDIT"
@@ -39480,8 +39548,7 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/articles",
       "docs/behaviors/dl",
-      "docs/behaviors/ol",
-      "docs/standards/V3-STANDARDS"
+      "docs/behaviors/ol"
     ],
     "option": [
       "docs/audits/X-USAGE-AUDIT",
@@ -39964,9 +40031,11 @@
     ],
     "deprecated": [
       "docs/behaviors/accordion",
+      "docs/behaviors/select",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
-      "docs/linkedin-framework-agnostic"
+      "docs/linkedin-framework-agnostic",
+      "docs/standards/V3-STANDARDS"
     ],
     "assistive": [
       "docs/behaviors/accordion",
@@ -40009,8 +40078,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/countdown",
       "docs/behaviors/relativetime",
-      "docs/compliance/iso-42001-alignment",
-      "docs/standards/V3-STANDARDS"
+      "docs/compliance/iso-42001-alignment"
     ],
     "aliases": [
       "docs/behaviors/accordion",
@@ -40542,7 +40610,9 @@
     "choosing": [
       "docs/behaviors/articles",
       "docs/behaviors/dropdown",
-      "docs/standards/V3-STANDARDS"
+      "docs/behaviors/select",
+      "docs/standards/V3-STANDARDS",
+      "demos/site/forms"
     ],
     "vitals": [
       "docs/behaviors/articles",
@@ -40869,11 +40939,13 @@
     ],
     "apple": [
       "docs/behaviors/autocomplete",
-      "demos/autoinject"
+      "demos/autoinject",
+      "demos/site/forms"
     ],
     "banana": [
       "docs/behaviors/autocomplete",
-      "demos/autoinject"
+      "demos/autoinject",
+      "demos/site/forms"
     ],
     "filtered": [
       "docs/behaviors/autocomplete",
@@ -42009,7 +42081,8 @@
       "docs/linkedin-update-article"
     ],
     "pro": [
-      "docs/behaviors/cardpricing"
+      "docs/behaviors/cardpricing",
+      "demos/site/forms"
     ],
     "enterprise": [
       "docs/behaviors/cardpricing",
@@ -42311,7 +42384,8 @@
       "docs/property-viewer"
     ],
     "participation": [
-      "docs/behaviors/checkbox"
+      "docs/behaviors/checkbox",
+      "docs/standards/V3-STANDARDS"
     ],
     "unchecks": [
       "docs/behaviors/checkbox"
@@ -43099,7 +43173,8 @@
     ],
     "supplies": [
       "docs/behaviors/details",
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/standards/V3-STANDARDS"
     ],
     "slides": [
       "docs/behaviors/details",
@@ -43336,6 +43411,11 @@
     ],
     "iscollapsed": [
       "docs/behaviors/drawerLayout"
+    ],
+    "submits": [
+      "docs/behaviors/dropdown",
+      "docs/behaviors/switch",
+      "docs/standards/V3-STANDARDS"
     ],
     "offset": [
       "docs/behaviors/dropdown",
@@ -43904,7 +43984,6 @@
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
       "docs/mcp",
-      "docs/standards/V3-STANDARDS",
       "docs/themes",
       "docs/wbservices"
     ],
@@ -44863,12 +44942,14 @@
       "docs/behaviors/searchfield"
     ],
     "develop": [
-      "docs/behaviors/select"
+      "docs/behaviors/select",
+      "demos/site/forms"
     ],
     "searchable": [
       "docs/behaviors/select",
       "docs/behaviors/table",
       "docs/guides/search-index",
+      "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/site/content"
     ],
@@ -44880,6 +44961,7 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS",
       "demos/multi-behavior-demo-generated",
       "demos/schema-first-architecture"
     ],
@@ -45139,9 +45221,6 @@
     "backed": [
       "docs/behaviors/switch"
     ],
-    "submits": [
-      "docs/behaviors/switch"
-    ],
     "ison": [
       "docs/behaviors/switch"
     ],
@@ -45308,7 +45387,8 @@
     ],
     "rebuild": [
       "docs/behaviors/time",
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/standards/V3-STANDARDS"
     ],
     "january": [
       "docs/behaviors/time",
@@ -45656,8 +45736,7 @@
     ],
     "sw": [
       "docs/behaviors/x-resizable",
-      "docs/standards/REPO-LAYOUT",
-      "demos/site/forms"
+      "docs/standards/REPO-LAYOUT"
     ],
     "immediate": [
       "docs/behaviors/x-toggle"
@@ -45874,12 +45953,10 @@
       "docs/claude/TIER1-LAWS"
     ],
     "shadowroot": [
-      "docs/claude/TIER1-LAWS",
-      "docs/standards/V3-STANDARDS"
+      "docs/claude/TIER1-LAWS"
     ],
     "attachshadow": [
-      "docs/claude/TIER1-LAWS",
-      "docs/standards/V3-STANDARDS"
+      "docs/claude/TIER1-LAWS"
     ],
     "wbservices": [
       "docs/claude/TIER1-LAWS",
@@ -45894,8 +45971,7 @@
       "docs/claude/TIER1-LAWS"
     ],
     "wbbasecomponent": [
-      "docs/claude/TIER1-LAWS",
-      "docs/standards/V3-STANDARDS"
+      "docs/claude/TIER1-LAWS"
     ],
     "register": [
       "docs/claude/TIER1-LAWS",
@@ -45912,7 +45988,6 @@
     "exported": [
       "docs/claude/TIER1-LAWS",
       "docs/schema-test-value",
-      "docs/standards/V3-STANDARDS",
       "docs/wbservices"
     ],
     "es": [
@@ -47073,7 +47148,6 @@
     "reusable": [
       "docs/guides/search-index",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/V3-STANDARDS",
       "docs/styles",
       "demos/site/content"
     ],
@@ -48546,7 +48620,8 @@
       "docs/semantic-standard"
     ],
     "menus": [
-      "docs/semantic-standard"
+      "docs/semantic-standard",
+      "demos/site/forms"
     ],
     "breadcrumbs": [
       "docs/semantic-standard"
@@ -49322,7 +49397,13 @@
     "intentional": [
       "docs/standards/V3-STANDARDS"
     ],
-    "substitute": [
+    "popup": [
+      "docs/standards/V3-STANDARDS"
+    ],
+    "honours": [
+      "docs/standards/V3-STANDARDS"
+    ],
+    "came": [
       "docs/standards/V3-STANDARDS"
     ],
     "prime": [
@@ -49714,7 +49795,8 @@
       "demos/autoinject"
     ],
     "cherry": [
-      "demos/autoinject"
+      "demos/autoinject",
+      "demos/site/forms"
     ],
     "elderberry": [
       "demos/autoinject"
@@ -50371,6 +50453,36 @@
       "demos/site/content"
     ],
     "inputtype": [
+      "demos/site/forms"
+    ],
+    "canada": [
+      "demos/site/forms"
+    ],
+    "germany": [
+      "demos/site/forms"
+    ],
+    "japan": [
+      "demos/site/forms"
+    ],
+    "mexico": [
+      "demos/site/forms"
+    ],
+    "united": [
+      "demos/site/forms"
+    ],
+    "cheese": [
+      "demos/site/forms"
+    ],
+    "mushroom": [
+      "demos/site/forms"
+    ],
+    "olive": [
+      "demos/site/forms"
+    ],
+    "pepper": [
+      "demos/site/forms"
+    ],
+    "locked": [
       "demos/site/forms"
     ],
     "labelposition": [
