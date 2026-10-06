@@ -2,116 +2,83 @@
 
 ## Purpose
 
-WB-Starter v3 is a composition-only system. Behavior functions receive an existing
-DOM element and apply capability to it in Light DOM. There is no behavior base
-class, no behavior inheritance hierarchy, and no Shadow DOM.
+WB-Starter is semantic HTML plus behaviors. A behavior is a plain function that
+receives an element that already exists and enhances it in Light DOM. There are
+no components, no base classes, no inheritance and no Shadow DOM.
 
-The words **behavior** and **behavior** describe the contract of the markup and
-the responsibility of the function. They do not describe two different runtime
-mechanisms: both are resolved by the WB registry and invoked as functions.
+John: *"Our goal is to honor html semantic elements but add other wb-* markup
+where we want."* So the guiding rule is: **write the native element that means
+what you want, and let a behavior enhance it.** Reach for an `x-*` attribute only
+when no native element carries the meaning, or to add an enhancement on top.
 
-## Behavior vs. Behavior
+This page describes what ships, checked against the source on 2026-10-06 (#340).
+Where it names a file, that file is the authority if the two ever disagree.
 
-### Behavior
+## What a behavior is
 
-Use a behavior when the markup needs a named WB-Starter boundary with a defined
-presentation or structure. A behavior is reached by its semantic element (`<article>`
-is a card, `<dialog>` a dialog) or by its `x-*` attribute on any element. The mapped
-behavior may create or normalize the behavior's internal Light DOM, apply its
-classes, bind events, and expose its API.
+A behavior is a function in `src/wb-viewmodels/`:
 
-<div x-demo>
-<article title="Release notes" variant="glass">
-  <p>Changes in this release.</p>
-</article>
-</div>
-
-<div x-demo>
-<dialog title="Confirm action">
-  <p>Continue?</p>
-</dialog>
-</div>
-
-The element is the behavior's public boundary. It is not a class instance that must
-extend a shared base class. Semantic elements and `x-*` attributes are mapped to
-behaviors in `src/core/tag-map.js`; registration shims required by the Custom Elements API do
-not create an inheritance model or hold shared behavior logic.
-
-Behavior schemas live in `src/wb-models/{name}.schema.json`. Behavior behavior
-functions live in `src/wb-viewmodels/{name}.js`, and their styles live in the
-appropriate file under `src/styles/behaviors/`.
-
-### Behavior
-
-Use a behavior when an existing element already has the right semantic meaning and
-only needs an enhancement. An explicit behavior uses an `x-*` attribute:
-
-<div x-demo>
-<button x-ripple type="button">Save</button>
-</div>
-
-<div x-demo>
-<a x-tooltip="Open the release notes" href="#">Release notes</a>
-</div>
-
-<div x-demo>
-<nav x-sticky aria-label="Primary">
-  <a href="#top">Top</a>
-  <a href="#">Docs</a>
-</nav>
-</div>
-
-An `x-*` attribute is an opt-in declaration. It does not replace the host element,
-and it does not turn that element into a subclass. A behavior function must work
-with the element it receives and must preserve the element's native semantics.
-
-Effects, utilities, and enhancements generally belong here. An enhancement can also
-be added to an element that already carries a behavior (`<article x-ripple>`) when
-that combination is meaningful.
-
-### Semantic auto-injection
-
-Use native semantic HTML first when it expresses the meaning of the content or
-control. When auto-injection is enabled for the page, WB can map selected native
-elements to behaviors through `nativeMap`:
-
-```html
-<button variant="primary" type="button">Save</button>
-<details>
-  <summary>More information</summary>
-  <p>Additional details.</p>
-</details>
-<table sortable>
-  <caption>Recent releases</caption>
-  ...
-</table>
+```js
+export function ripple(element, options = {}) {
+  // enhance `element` in place: classes, listeners, built parts, an API
+  return () => { /* cleanup: undo listeners and observers */ };
+}
 ```
 
-These elements remain native HTML elements. The behavior decorates them in place;
-it must not replace a meaningful native element with a generic `<div>` or require
-an unnecessary `x-*` marker. The supported mappings are maintained in
-`src/core/tag-map.js` (`nativeMap`). Auto-injection is a page configuration choice,
-so do not assume that a bare native element is enhanced on every page.
+- It receives `(element, options)` and works on that element. It never replaces
+  the element and never changes its native role.
+- It may build the element's internal Light DOM (a card builds its header and
+  footer), add classes, bind events and expose an API on the element
+  (`element.wbCardExpandable.show()`).
+- It returns a cleanup function when it attached anything that outlives the call.
 
-The native element's own semantics remain authoritative. Use correct headings,
-labels, captions, landmarks, button types, form relationships, alternative text,
-and keyboard behavior before adding visual enhancements. Add ARIA only when native
-HTML cannot express the required state or relationship.
+There is no second kind of thing. Version 3 called some behaviors "components"
+because they were reached through a custom tag; those tags are deprecated, and
+4.0.0 removed all 104 of them (John: *"we are not using components any more"*), and every one became
+either the semantic element that already auto-injects it or an `x-*` attribute
+on a host. `elementMap` in `src/core/tag-map.js` is kept, empty on purpose, so
+nothing that imports it breaks.
 
-## Choosing a Markup Form
+## How a behavior reaches an element
 
-Use this order when authoring markup:
+There are two ways, both resolved in `src/core/tag-map.js`:
 
-1. Choose the correct native semantic element when it expresses the requirement.
-2. Add an `x-*` behavior when an existing element needs an explicit enhancement.
-3. Put a structural behavior's `x-*` attribute on a neutral host (`<div x-tabs>`)
-   when no semantic element carries it.
+| Markup | Map | Meaning |
+| --- | --- | --- |
+| `<article>`, `<dialog>`, `<details>`, `<table>`, `<button>`, `<nav>`, … | `nativeMap` | Auto-injection: the native element gets its behavior with no attribute |
+| `<button x-ripple>`, `<span x-badge>`, `<div x-alert>` | `extensionMap` | An explicit `x-*` attribute opts the element in |
 
-Do not add a structural behavior merely to style an element, and do not use a generic
-`<div>` when a native semantic element is available. Do not use both a generic
-native mapping and an explicit replacement behavior on the same host unless the
-combination is intentional and supported. More-specific mappings, such as
-`input[type="checkbox"]`, take precedence over generic mappings such as `input`.
+**Auto-injection is on by default** (`src/core/config.js`, `autoInject: true`). A
+page turns it off only with `WB.init({ autoInject: false })`, and then only `x-*`
+attributes are honoured. A more specific selector wins over a generic one:
+`input[type="checkbox"]` gets the checkbox behavior, not the generic input one.
+
+An `x-*` attribute is a declaration, not a replacement. Writing it does not turn
+the element into a subclass and does not hide what the element is. Any element
+can opt out of auto-injection with `x-ignore`
+([escape hatches](../escape-hatches.md)).
+
+`WB.init()` scans the page and observes markup added later. `WB.inject(element,
+name, options)` applies one behavior to one element once; every path (native,
+`x-*`, schema) goes through it, which is why `x-ignore` is checked there.
+
+## Choosing a markup form
+
+Use this order:
+
+1. **The native element that means what you want.** `<article>` for a card,
+   `<dialog>` for a dialog, `<details>` for a disclosure, `<table>` for tabular
+   data, `<nav>` for navigation. It is enhanced automatically.
+2. **An `x-*` enhancement on that element** when it needs more than its native
+   meaning: `<button x-ripple>`, `<a x-tooltip="…">`.
+3. **An `x-*` behavior on a neutral host** (`<div x-alert>`, `<div x-tabs>`) only
+   when no native element carries the meaning.
+
+Never add the behavior an element already gets: no `x-card` on an `<article>`, no
+`x-button` on a `<button>` (DEMOS-AND-DOCS-STANDARDS.md §32, #1141; enforced by
+`tests/compliance/no-redundant-x-attribute.spec.ts`). A *different* behavior or a
+variant (`<article x-cardimage>`) is an opt-in, not a duplicate. Never use a
+generic `<div>` when a native element means the right thing.
 
 ### Choosing a value or an action: select or x-dropdown
 
@@ -124,171 +91,143 @@ action?** A value is `<select>`; an action is `x-dropdown` (#682).
   `clearable`, `searchable` and `multiple` itself, so no wrapper is needed.
 - **`x-dropdown`** is for what `<select>` structurally cannot do: a menu of
   actions ("Duplicate", "Export", "Delete"), items with rich content (icons,
-  secondary text, links), or a menu that stays open across several choices
-  (`close-on-select="false"`). An `<option>` holds text only and closes on pick.
+  secondary text, links), or a menu that stays open across several choices.
+  An `<option>` holds text only and closes on pick.
 - **`<div x-select options='…'>`** is deprecated. It rebuilt a native control
-  in the light DOM to accept options as a JSON attribute, the one thing it still
-  adds now that `<select>` honours the attributes above, and that rebuild is
+  in the light DOM to accept options as a JSON attribute, and that rebuild is
   where #390, #448 and #497 came from. It keeps working; new markup writes a
   `<select>` with `<option>` children.
 
-## Naming and Attributes
+## Configuration attributes
 
-### Tags and behavior attributes
-
-- Behaviors use lowercase `<div>` tags.
-- Explicit behaviors use lowercase `x-behavior-name` attributes.
-- Behavior attributes may be boolean or carry the behavior's configuration value.
-
-<div x-demo>
-<span x-badge variant="success">Ready</div>
-</div>
-
-<div x-demo>
-<button x-tooltip="Save this record" type="button">Save</button>
-</div>
-
-### Configuration attributes
-
-Configuration attributes use clean names. Do not add `x-` or `data-` to a
-behavior or behavior property:
+- A behavior's options are plain attributes named exactly as its schema
+  property: `title`, `variant`, `hoverable`, `showClose`. No `x-` prefix and no
+  `data-` prefix on an option.
+- The spelling rules (camelCase for a multi-word name, the dashed spelling kept
+  as a read fallback) live in
+  [ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md).
+  It is the authority; this page does not restate it.
+- An attribute takes intent (`variant="success"`), never CSS internals.
+- Booleans are bare attributes: `hoverable`, not `hoverable="true"`.
 
 <div x-demo>
-<article title="Hello" variant="glass" hoverable></article>
+<article title="Release notes" subtitle="Version 3" variant="glass" hoverable>
+  <p>Changes in this release.</p>
+</article>
 </div>
 
-```html
-<input type="text" clearable>
-<table sortable searchable></table>
-```
+## Schemas
 
-`data-*` is not the canonical configuration API for behavior elements.
-Follow the behavior schema or behavior documentation for the accepted property
-names and values. Do not use `data-*` attributes as a substitute for declared
-properties.
+Each behavior with options has a schema, `src/wb-models/{name}.schema.json`. It
+declares the behavior's properties, events, methods and CSS variables, and the
+generated docs, IntelliSense and several compliance specs are built from it. So
+a schema must declare what the code does, no more and no less (#1600 found one
+naming an event and four methods the code never had).
 
-## Light DOM and Composition Rules
+A schema's `$view` can also build DOM: `SchemaBuilder.processElement()`
+(`src/core/mvvm/schema-builder.js`) constructs an element's parts from it. That
+is the one trap in this design: **a schema and a behavior must never both build
+the same element's DOM.** When they did, they raced, and the loser's markup
+silently overwrote the winner's (the cardimage and cardvideo failures in #279).
+A behavior that builds its own complete DOM is listed in `SCHEMA_EXCLUDED_TAGS`
+in schema-builder.js, or its schema has an empty `$view`, and the schema builder
+then leaves the element alone. Add a behavior to that list only after reading
+its source and confirming it builds everything it needs unconditionally.
 
-- Never use `attachShadow()`, `this.shadowRoot`, or `ShadowRoot`.
-- Never create or extend `WBBaseComponent` or another shared behavior base class.
-- Behavior functions receive `(element, options)` and operate on that element.
-- Put reusable logic in exported helper functions, behaviors, schemas, and design
-  tokens rather than parent classes.
-- Preserve existing child content unless the behavior contract explicitly owns
-  and transforms it.
-- Generate per-instance IDs when ARIA relationships require them; never hardcode
-  an ID inside reusable behavior behavior.
-- Use ES modules (`import` and `export`) throughout the implementation.
+## Light DOM and composition rules
 
-## File Layout
+- Never use `attachShadow()`, `this.shadowRoot` or `ShadowRoot`.
+- Never create or extend a shared base class. Shared logic is an exported helper
+  function (`src/wb-viewmodels/helpers.js`, `src/core/`), never a parent class.
+- Preserve the element's existing children unless the behavior's contract says
+  it owns and transforms them.
+- Generate per-instance IDs when ARIA relationships need them; never hard-code an
+  ID inside a behavior.
+- Styling belongs in a stylesheet under `src/styles/behaviors/`. A behavior sets
+  classes or custom properties; it does not write `element.style` for anything a
+  stylesheet can say (#779).
+- ES modules only (`import` / `export`).
+
+## File layout
 
 | Concern | Location |
 | --- | --- |
-| Behavior schema | `src/wb-models/{name}.schema.json` |
-| Behavior function | `src/wb-viewmodels/{name}.js` |
-| Behavior registry/index | `src/wb-viewmodels/index.js` |
-| Tag and selector mappings | `src/core/tag-map.js` |
-| Behavior styles | `src/styles/behaviors/{name}.css` |
-
-Keep behavior and behavior CSS in the existing behavior style files. Do not add
-inline style blocks or page-local copies of behavior styles.
-
-## Runtime Dispatch
-
-The WB runtime discovers declarations through three maps:
-
-| Markup | Map | Meaning |
-| --- | --- | --- |
-| `<article>` | `elementMap` | Named behavior boundary |
-| `<button x-ripple>` | `extensionMap` | Explicit enhancement |
-| `<button>`, `<details>`, `<table>` | `nativeMap` | Optional semantic auto-injection |
-
-`WB.init()` scans existing markup and can observe dynamically added markup.
-`WB.inject(element, name, options)` applies a resolved behavior once to the host
-element. The dispatch path is shared, but the markup contract determines whether
-the function is being used as a behavior or as an enhancement.
+| Behavior function | `src/wb-viewmodels/{name}.js` (semantic elements: `src/wb-viewmodels/semantics/`) |
+| Lazy-load registry | `src/wb-viewmodels/index.js` |
+| Element and attribute mappings | `src/core/tag-map.js` (`nativeMap`, `extensionMap`) |
+| Schema | `src/wb-models/{name}.schema.json` |
+| Styles | `src/styles/behaviors/{name}.css`, loaded per behavior by `src/styles/behavior-css-manifest.js` |
+| Generated doc | `docs/behaviors/{name}.md` |
 
 ## Examples
 
-### Behavior with semantic children
+### A native element, auto-injected
 
 <div x-demo>
-<div x-as-article>
-  <header>
-    <h2>Article title</h2>
-    <p>Short summary.</p>
-  </header>
-  <p>Article content.</p>
-  <footer>
-    <time datetime="2026-08-07">August 7, 2026</time>
-  </footer>
-</div>
+<details>
+  <summary>More information</summary>
+  <p>Additional details.</p>
+</details>
 </div>
 
-The `<div x-as-article>` boundary identifies the behavior, while its internal
-`<header>`, heading, paragraph, footer, and `<time>` elements retain their native
-meaning.
+No attribute: `<details>` is in `nativeMap`. Without WB it is still a working
+disclosure.
 
-### Native element with an explicit enhancement
+### A native element with an explicit enhancement
 
 <div x-demo>
-<button x-ripple type="submit">Submit</button>
+<button x-ripple type="button">Save</button>
 </div>
 
-The button remains a button. The behavior adds the interaction without changing
-the control's native role, focus model, or form behavior.
+The button stays a button: same role, focus order and form behavior. The ripple
+is added on top.
 
-### Native element with configured auto-injection
+### A behavior on a neutral host
 
-```html
-<form validate>
-  <label for="email">Email</label>
-  <input id="email" name="email" type="email" required>
-  <button type="submit">Continue</button>
-</form>
-```
+<div x-demo>
+<div x-alert variant="success" title="Saved">Your changes were saved.</div>
+</div>
 
-When the page enables the corresponding native mappings, WB enhances these
-elements in place. The markup remains valid and meaningful without WB.
+No native element means "alert box", so the behavior goes on a `<div>`.
 
-## Migration from Legacy Syntax
+## Deprecated: wb- prefixed tags
 
-Legacy v2 behavior declarations used behavior attributes for structures that are
-now named behaviors. Convert the structure to its semantic element, while retaining
-`x-*` for genuine enhancements:
+Every custom tag named with the `wb-` prefix is deprecated and was removed in
+4.0.0. Do not write one,
+and do not show one in an example. Write the native element that auto-injects
+the behavior, or put the `x-*` attribute on a host:
 
-```html
-<!-- Legacy v2 -->
-<div x-card title="Hello" variant="glass">Content</div>
-<button x-ripple type="button">Click me</button>
-
-<!-- v3 -->
+```html-static
 <article title="Hello" variant="glass">Content</article>
-<button x-ripple type="button">Click me</button>
+<div x-alert variant="info">Heads up</div>
 ```
 
-Do not convert semantic HTML to a custom tag just to obtain styling. Prefer the
-native form and use `nativeMap` or an explicit `x-*` behavior as appropriate.
+Do not wrap semantic HTML in a custom tag to get styling, and do not add the
+auto-injected behavior's `x-*` attribute to its own native element.
 
-## Quick Reference
+## Quick reference
 
 ```text
-BEHAVIOR BOUNDARY
+NATIVE ELEMENT, AUTO-INJECTED
 <article title="..." variant="glass">...</article>
+<details><summary>More</summary>...</details>
 
 EXPLICIT ENHANCEMENT
 <button x-ripple type="button">Save</button>
 
-SEMANTIC HTML WITH OPTIONAL AUTO-INJECTION
-<button type="button">Save</button>
-<details><summary>More</summary>...</details>
+BEHAVIOR ON A NEUTRAL HOST (no native element fits)
+<div x-alert variant="info">...</div>
 
-CONFIGURATION
-title="..." variant="glass" sortable
-No x- prefix. No data- prefix.
+OPTIONS
+title="..." variant="glass" hoverable
+Named as the schema property. No x- prefix. No data- prefix.
+
+OPT OUT
+<table x-ignore>...</table>
 
 IMPLEMENTATION
-Schema:   src/wb-models/{name}.schema.json
 Behavior: src/wb-viewmodels/{name}.js
+Mapping:  src/core/tag-map.js
+Schema:   src/wb-models/{name}.schema.json
 Styles:   src/styles/behaviors/{name}.css
 ```
