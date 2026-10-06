@@ -68,6 +68,15 @@
   color: var(--text-primary);
 }
 
+/* Links to the work: the version's commit and each commit's Links block. */
+.releases__links {
+  margin: -0.5rem 0 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+.releases__link { white-space: normal; }
+
 .releases__group-title,
 .releases__dated-title {
   display: flex;

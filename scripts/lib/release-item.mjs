@@ -88,3 +88,66 @@ export function seeItProblems(seeIt, summary = null) {
   if (summary && plain(text) === plain(summary)) problems.push('it repeats the Summary');
   return problems;
 }
+
+const SITE = 'https://cielovistasoftware.github.io/wb-starter/';
+const REPO_BLOB = 'https://github.com/CieloVistaSoftware/wb-starter/blob/main/';
+const anchor = (href, text) => `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+/** Where a repo path opens: the live page for something a browser shows, else the file on GitHub. */
+export function hrefForPath(path, hash = '') {
+  const page = path.match(/^pages\/([\w-]+)\.html$/);
+  if (page) return `${SITE}?page=${page[1]}${hash}`;
+  if (/^docs\/.+\.md$/.test(path)) return `${SITE}public/doc-viewer.html?file=${encodeURIComponent(path)}${hash}`;
+  if (/^(demos|public|images|assets)\/.+\.(html|png|jpe?g|svg|webp|gif)$/.test(path)) return `${SITE}${path}${hash}`;
+  return `${REPO_BLOB}${path}${hash}`;
+}
+// A real host (or localhost), never an elided example like "https://…".
+const URL_RE = /https?:\/\/(?:localhost|[\w-]+(?:\.[\w-]+)+)(?::\d+)?(?:&amp;|[^\s<"…&])*?(?=[.,;:)]*(?:\s|<|$|&#\d+;|&quot;|&lt;|&gt;))/g;
+const PATH_RE = /(?<![\w/.:-])((?:demos|pages|public|docs|tests|scripts|src|data|images|assets|\.github)\/[\w./-]*[\w-]\.(?:html|md|mjs|json|js|ts|css|yml|png|jpe?g|svg)(?![\w]))(#[\w-]+)?/g;
+const PAGE_RE = /(?<![\w/.-])\?page=([\w-]+)/g;
+/**
+ * Every place named in already-escaped HTML, as a clickable link. John:
+ * "the release page should show links to all work" and "A link always means
+ * a click-able link". Full URLs link as written; repo paths and ?page= open
+ * where they can be seen (hrefForPath). Text already inside an <a> is left
+ * alone, and so are tag attributes.
+ */
+export function linkify(html) {
+  let inLink = 0;
+  return String(html).split(/(<[^>]+>)/).map((part) => {
+    if (part.startsWith('<')) {
+      if (/^<a[\s>]/i.test(part)) inLink++;
+      else if (/^<\/a>/i.test(part)) inLink = Math.max(0, inLink - 1);
+      return part;
+    }
+    if (inLink) return part;
+    // One pass over the three patterns, so a link's own text is never re-linked.
+    const spans = [];
+    for (const m of part.matchAll(URL_RE)) spans.push({ i: m.index, len: m[0].length, html: anchor(m[0], m[0]) });
+    for (const m of part.matchAll(PATH_RE)) spans.push({ i: m.index, len: m[0].length, html: anchor(hrefForPath(m[1], m[2] || ''), m[0]) });
+    for (const m of part.matchAll(PAGE_RE)) spans.push({ i: m.index, len: m[0].length, html: anchor(`${SITE}?page=${m[1]}`, m[0]) });
+    spans.sort((x, y) => x.i - y.i);
+    let out = '';
+    let at = 0;
+    for (const sp of spans) {
+      if (sp.i < at) continue; // inside a span already linked (a path within a URL)
+      out += part.slice(at, sp.i) + sp.html;
+      at = sp.i + sp.len;
+    }
+    return out + part.slice(at);
+  }).join('');
+}
+/**
+ * The `Links:` block of a commit message, as [{ label, href }]:
+ *
+ *   Links:
+ *   - PR (hero gallery): https://github.com/…/pull/1617
+ *   - See it (local): http://localhost:3000/?page=hero-gallery
+ *
+ * Only http(s) URLs; the label is the text before the URL's colon.
+ */
+export function linksFrom(body) {
+  const block = String(body || '').match(/^Links:[ \t]*\n((?:[ \t]*-[^\n]*\n?)+)/m);
+  if (!block) return [];
+  return block[1].split('\n').map((l) => l.match(/^\s*-\s*(.+?):\s*(https?:\/\/\S+)(.*)$/)).filter(Boolean)
+    .map((m) => ({ label: `${m[1].trim()}${m[3].trim() ? ' ' + m[3].trim() : ''}`, href: m[2] }));
+}

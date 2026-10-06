@@ -11,7 +11,7 @@
   })();
 </script>
 <!-- Page styles: src/styles/pages/releases.css -->
-<link rel="stylesheet" href="src/styles/pages/releases.css?v=1.0.342">
+<link rel="stylesheet" href="src/styles/pages/releases.css?v=1.0.343">
 
 <div id="releases-hero" class="page__hero">
   <h1>Releases</h1>
@@ -69,6 +69,13 @@
       if (r.summary) html += `<p id="${id}-summary" class="releases__summary">${r.summary}</p>`;
       // #1533: what to do to see the change, under the summary of the issue.
       if (r.seeIt) html += `<p id="${id}-see-it" class="releases__see-it"><strong>See it:</strong> ${r.seeIt}</p>`;
+      // Links to the work itself: the version's commit, then each commit's
+      // own Links block (PR, issue, the page to look at). John: "the release
+      // page should show links to all work".
+      if ((r.links || []).length) {
+        html += `<p id="${id}-links" class="releases__links"><strong>Links:</strong> `
+          + r.links.map((l) => `<span class="releases__link">${l.label}: ${l.html}</span>`).join(' · ') + '</p>';
+      }
       html += itemsHtml(r.items || [], id) + '</section>';
     });
     if ((data.history || []).length) {
@@ -93,7 +100,7 @@
     }
     for (const block of host.querySelectorAll('.releases__group, .releases__release, .releases__dated, .releases__history')) {
       // A release also matches on its summary and "See it" line (#1533).
-      const own = [...block.querySelectorAll(':scope > .releases__summary, :scope > .releases__see-it')]
+      const own = [...block.querySelectorAll(':scope > .releases__summary, :scope > .releases__see-it, :scope > .releases__links')]
         .some((p) => p.textContent.toLowerCase().includes(term));
       block.hidden = !!term && !own && !block.querySelector('.releases__item:not([hidden])');
     }
