@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.316",
+      "date": "2026-10-06",
+      "summary": "4.0.0&#39;s prefix rename turned tag selectors like wb-card into x-card, a tag that no longer exists, so 300 selector parts in src/styles matched nothing; most were dead weight beside a working [x-card] twin, but some rules had no live selector at all, so hero cards kept animating for readers who asked for reduced motion, the loading spinner kept spinning beside &quot;Error loading&quot;, and masonry article cards sat flush with no gap. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1590\" target=\"_blank\" rel=\"noopener\">PR 1590</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No selector names an x-* tag nothing renders; a gate keeps it so</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+          "issues": [
+            857
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick articles and choose layout=masonry. Before: the cards in each column touched, with no gap between them. Now: they are spaced 1.5rem apart and a card never splits across columns. Also run <code>npx playwright test tests/compliance/css-tag-selectors-name-real-tags.spec.ts --project=compliance</code>. Before: 283 dead tag selectors listed. Now: none."
+    },
+    {
       "version": "1.0.315",
       "date": "2026-10-05",
       "summary": "The check that the not-found page matches the home page failed after every release, because each release changes the version number in the home page&#39;s file links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1601\" target=\"_blank\" rel=\"noopener\">PR 1601</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
