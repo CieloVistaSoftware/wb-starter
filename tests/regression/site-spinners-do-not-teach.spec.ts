@@ -10,6 +10,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync } from 'node:fs';
+import { wbIdle } from '../base';
 
 for (const pageId of ['home', 'docs', 'themes']) {
   test(`?page=${pageId} logs no teach-by-example hint for a spinner`, async ({ page }) => {
@@ -17,12 +18,19 @@ for (const pageId of ['home', 'docs', 'themes']) {
     page.on('console', (m) => { if (m.text().includes('spinner: nothing was given')) hints.push(m.text()); });
 
     await page.goto(`/?page=${pageId}`);
-    await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-    // Spinners build lazily as they come into view; bring each one in.
+    // #1577: the BOOTED site, not just WB.behaviors -- that is true while the
+    // first navigation is still running, so the spinners were counted with the
+    // page-loading one among them, which navigation then removed: nth=0 was
+    // waited for until the 30s test timeout (CI, PR #1570). The console
+    // listener above still hears any hint that loading spinner would log.
+    await wbIdle(page, { timeout: 20000 });
+    // Spinners build lazily as they come into view; bring each one in. Each
+    // wait is bounded: a spinner the page removes must not hang the test.
     for (const spinner of await page.locator('[x-spinner]').all()) {
-      await spinner.scrollIntoViewIfNeeded().catch(() => {});
+      await spinner.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
     }
-    await page.waitForTimeout(1000);
+    // Until those builds have settled -- their hints are logged by then.
+    await wbIdle(page, { timeout: 20000 });
 
     expect(hints).toEqual([]);
     await expect(page.locator('[x-teaching-example="spinner"]')).toHaveCount(0);
