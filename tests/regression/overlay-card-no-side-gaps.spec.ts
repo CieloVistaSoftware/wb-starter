@@ -40,7 +40,7 @@ test.describe('Overlay card fills its host', () => {
       await (window as any).WB.scan(host, { eager: true });
       await new Promise((r) => setTimeout(r, 400));
 
-      const card = host.querySelector('.x-card--overlay-card') as HTMLElement | null;
+      const card = host.querySelector('[x-cardoverlay]') as HTMLElement | null;
       if (!card) return null;
       const h = host.getBoundingClientRect();
       const c = card.getBoundingClientRect();

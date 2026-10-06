@@ -346,9 +346,10 @@ export function composeCard(element, options = {}) {
   // element can have tag name x-card since 4.0.0), so it always ran -- but it
   // read as a comment-only line, and the next statement anyone added after it
   // would have been silently swallowed into the dangling branch.
-  if (config.behavior !== 'card') {
-    element.classList.add(`x-card--${config.behavior.replace('card', '')}`);
-  }
+  // #969: no variant class either. A typed card already carries its own
+  // attribute (`x-cardimage`, `x-cardhero`, ...), which card.css and the shared
+  // :is([x-card], [x-cardbutton], ...) rules select directly, so an injected
+  // `x-card--image` only said the same thing a second time.
   
   // Apply hover text as a THEMED WB tooltip (x-tooltip / tooltip.js), not
   // the native browser `title` attribute -- native title tooltips are
@@ -400,7 +401,7 @@ export function composeCard(element, options = {}) {
   //
   // flex-direction was already left out for exactly this reason -- the comment
   // that used to sit here explained that setting it inline would block
-  // `.x-product.x-card--horizontal { flex-direction: row }`. That reasoning
+  // `.x-product[x-cardhorizontal] { flex-direction: row }`. That reasoning
   // applies to every property in the object, not just that one.
   // The single value no stylesheet can know: a background the AUTHOR passed
   // in. #779: a generated stylesheet rule, not the style attribute. Weight 3
@@ -951,7 +952,6 @@ export function cardimage(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardimage' });
-  element.classList.add('x-card-image');
   element.innerHTML = '';
 
   // Caption under the image, inside the same <figure> so it is announced
@@ -1047,7 +1047,6 @@ export function cardvideo(element, options = {}) {
   if (config.description && !config.subtitle) config.subtitle = config.description;
 
   const base = composeCard(element, { ...config, behavior: 'cardvideo' });
-  element.classList.add('x-card-video');
   element.innerHTML = '';
 
   // Build header/main/footer
@@ -1107,7 +1106,6 @@ export function cardbutton(element, options = {}) {
   };
 
   const base = composeCard(element, config);
-  element.classList.add('x-card-button');
   element.innerHTML = '';
   base.buildStructure();
 
@@ -1636,7 +1634,7 @@ export function cardtestimonial(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
   element.classList.add('x-testimonial');
   element.innerHTML = '';
-  // #779: the 1rem padding is `.x-card--testimonial` in card.css, and every
+  // #779: the 1rem padding is `[x-cardtestimonial]` in card.css, and every
   // part below is styled by its class there -- the cssText copies are gone.
 
   // Quote icon -- decorative only (#941).
@@ -1971,9 +1969,8 @@ export function cardfile(element, options = {}) {
   const icons = { pdf: '📄', doc: '📝', image: '🖼️', video: '🎬', audio: '🎵', zip: '📦', file: '📁' };
 
   const base = composeCard(element, { ...config, behavior: 'cardfile', hoverable: false });
-  element.classList.add('x-card-file');
   element.innerHTML = '';
-  // #779: the row layout is `.x-card--file`, and each part below is styled by
+  // #779: the row layout is `[x-cardfile]`, and each part below is styled by
   // its class in card.css (file-icon, filename, file-meta, file-download) --
   // the cssText copies are gone. #773: the inline copies had also outranked
   // card.css, which is why variant="compact" could never be styled.
@@ -2074,9 +2071,6 @@ export function cardlink(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardlink' });
-  // Redundant when the host tag IS <div> (#478) -- card.css matches
-  // the tag directly there via :is(.x-card-link, x-card-link).
-  element.classList.add('x-card-link');
   
   element.innerHTML = '';
   // #779: the host (cursor/position/1.25rem padding) and every part below
@@ -2176,10 +2170,9 @@ export function cardhorizontal(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
-  element.classList.add('x-card-horizontal');
   element.innerHTML = '';
   // The Law 9 migration (#370) moved every one of these declarations into
-  // card.css -- `.x-card-horizontal(--reverse)`, `.x-card__horizontal-figure`,
+  // card.css -- `[x-cardhorizontal]`, `.x-card-horizontal--reverse`, `.x-card__horizontal-figure`,
   // `.x-card__horizontal-image`, `.x-card__horizontal-content` -- but left the
   // inline writes here AND never emitted the classes those rules select. The
   // stylesheet was dead and the card unthemeable: an inline declaration beats
@@ -2262,13 +2255,11 @@ export function cardoverlay(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardoverlay', hoverable: false });
-  element.classList.add('x-card-overlay');
-  element.classList.add('x-card--overlay-card');
   element.classList.add(`x-card--overlay-${config.position}`);
   element.innerHTML = '';
   
   // #779: the card's box (position, cover sizing, the default gradient, the
-  // row direction and the per-position alignment) is `.x-card--overlay-card`
+  // row direction and the per-position alignment) is `[x-cardoverlay]`
   // and its `--overlay-top/-center` modifiers in card.css, which #370 wrote
   // for exactly these declarations -- the inline copies that kept beating
   // them are gone. What varies per card travels as generated rules: the
@@ -2344,7 +2335,6 @@ export function cardexpandable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardexpandable' });
-  element.classList.add('x-card-expandable');
   element.innerHTML = '';
 
   // Build header
@@ -2391,7 +2381,7 @@ export function cardexpandable(element, options = {}) {
 
   const btn = document.createElement('button');
   btn.className = 'x-card__expand-btn';
-  // (styling: .x-card-expandable .x-card__expand-btn in card.css -- #943)
+  // (styling: [x-cardexpandable] .x-card__expand-btn in card.css -- #943)
   btn.setAttribute('aria-expanded', config.expanded);
   btn.setAttribute('aria-controls', contentId);
   
@@ -2489,8 +2479,6 @@ export function cardminimizable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardminimizable' });
-  element.classList.add('x-card-minimizable');
-  element.classList.add('x-card--minimizable'); // Explicitly add for compliance
   element.innerHTML = '';
 
   // Header with minimize button. card.css targets the tag, not a class; the
@@ -2586,7 +2574,6 @@ export function carddraggable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'carddraggable', hoverable: false });
-  element.classList.add('x-card-draggable');
   
   element.innerHTML = '';
   // Only set position if not already positioned (absolute/fixed) -- a class
@@ -2595,7 +2582,6 @@ export function carddraggable(element, options = {}) {
   if (computed.position === 'static') {
     element.classList.add('x-card--draggable-positioned');
   }
-  element.classList.add('x-card--draggable');
 
   // Header with drag handle. Its look, the grip icon and the title are the
   // `.x-card__drag-handle*` / `.x-card__drag-title` rules card.css has had

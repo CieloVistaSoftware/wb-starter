@@ -32,7 +32,7 @@ const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
 
 /**
  * A card host: an <article> (a card by auto-injection), an explicit [x-card],
- * or anything a card variant has marked (`x-card--image`, `x-card-horizontal`).
+ * or anything a card variant has marked (`[x-cardimage]`, `[x-cardhorizontal]`).
  *
  * And a <dialog> (#874): dialog.js builds its chrome from real <header> and
  * <footer> elements too, and they came out `x-dialog__header x-header`, so the
