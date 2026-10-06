@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.319",
+      "date": "2026-10-06",
+      "summary": "The parking lot did not record tonight&#39;s link-preview change (#1585) or the open question about the app icons. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1604\" target=\"_blank\" rel=\"noopener\">PR 1604</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name the old logo without its path</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+          "issues": [
+            1585
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Parking lot for the link-share preview fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+          "issues": [
+            1585
+          ]
+        }
+      ],
+      "seeIt": "Open docs/_today/CURRENT-STATUS.md and read the first dated entry under PARKING LOT. Before: it starts with the 2026-10-05 night &lt;nav&gt; entry (#958). Now: it starts with the 9:55 PM CDT entry for #1585, listing files touched, the last action, the post-inspector next step, and the open question about the PWA icons."
+    },
+    {
       "version": "1.0.318",
       "date": "2026-10-06",
       "summary": "The long demo text went into each card&#39;s body, which shows before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1599\" target=\"_blank\" rel=\"noopener\">PR 1599</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1605\" target=\"_blank\" rel=\"noopener\">#1605</a>",
