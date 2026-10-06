@@ -1217,5 +1217,6 @@
   "1623": "Releases page: places named as plain text, and no links to the commits that did the work",
   "1627": "CLAUDE.md has no rule for idle time: sessions wait on CI instead of working open issues",
   "1633": "release-bump spec times out at 30s while release.mjs is allowed 120s",
-  "1640": "Cards with a body are padded twice: the host-padding fallback checks a class nothing emits"
+  "1640": "Cards with a body are padded twice: the host-padding fallback checks a class nothing emits",
+  "1642": "x-behavior=\"name\" is deprecated: use x-name everywhere (src, demos, pages, docs, tests)"
 }

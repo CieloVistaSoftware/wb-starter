@@ -6,6 +6,80 @@
   ],
   "releases": [
     {
+      "version": "1.0.343",
+      "date": "2026-10-06",
+      "summary": "Main gained the hero gallery (#1617) and the sleep guard (#1635) while this PR waited, so releases.json is regenerated at main&#39;s tip with this branch&#39;s generator; both new versions carry their commits&#39; Links blocks. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">PR 1624</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1617\" target=\"_blank\" rel=\"noopener\">#1617</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1635\" target=\"_blank\" rel=\"noopener\">#1635</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json at main&#39;s tip after and merged</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1617\" target=\"_blank\" rel=\"noopener\">#1617</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1635\" target=\"_blank\" rel=\"noopener\">#1635</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cf6cf3b76236596eab809fbdfbdceeb971f9c265\" target=\"_blank\" rel=\"noopener\"><code>cf6cf3b</code></a>",
+          "issues": [
+            1623,
+            1617,
+            1635
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json from main&#39;s own history (1.0.336)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ce40540eba2aac486b904cfb07a051950ae83d4\" target=\"_blank\" rel=\"noopener\"><code>6ce4054</code></a>",
+          "issues": [
+            1623
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json after merging main (to 1.0.336)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/893be888998e9dc6756892ca4862204335c0f253\" target=\"_blank\" rel=\"noopener\"><code>893be88</code></a>",
+          "issues": [
+            1623
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json after merging main (1.0.331, 1.0.332)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/164230f912cc5199ce57e51c682f37a2f90fe245\" target=\"_blank\" rel=\"noopener\"><code>164230f</code></a>",
+          "issues": [
+            1623
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate releases.json after merging main (1.0.329, 1.0.330)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/957ac676af978605bba3db2403b25f797cb488aa\" target=\"_blank\" rel=\"noopener\"><code>957ac67</code></a>",
+          "issues": [
+            1623
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Releases page links every place it names, every commit, and each commit&#39;s Links</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">#1623</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b79f9643835f044f297af82d8de6057120efb0ca\" target=\"_blank\" rel=\"noopener\"><code>b79f964</code></a>",
+          "issues": [
+            1623
+          ]
+        }
+      ],
+      "seeIt": "Run <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/releases-list-every-version.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/releases-list-every-version.spec.ts</a> on the PR merged into main. Before: the stale file lacked the two new versions. Now: it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/05855ed2ec956a4ea02d82b3e857bd1c255ed1d0\" target=\"_blank\" rel=\"noopener\"><code>05855ed</code></a>"
+        },
+        {
+          "label": "PR (releases links)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1624</a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1623\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1623</a>"
+        },
+        {
+          "label": "See it (live site, after deploy)",
+          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=releases</a>"
+        },
+        {
+          "label": "See it (local)",
+          "html": "<a href=\"http://localhost:3000/?page=releases\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/?page=releases</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.342",
       "date": "2026-10-06",
       "summary": "Tests-must-assert flags any spec whose text calls page.locator/evaluate/click without navigating, and the new no-new-fixed-sleeps guard tripped it with its classifier fixture (sample test code in a string) and a doc comment; the fixture&#39;s page is now named p and the comment no longer spells the call. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1635\" target=\"_blank\" rel=\"noopener\">PR 1635</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
