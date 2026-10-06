@@ -3,7 +3,7 @@ import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * OL - Enhanced <ol> element (Ordered List)
  * Adds numbering styles, custom start, variants
- * Helper Attribute: [x-behavior="ol"]
+ * Helper Attribute: [x-ol]
  */
 export function ol(element, options = {}) {
   if (element.tagName !== 'OL') {

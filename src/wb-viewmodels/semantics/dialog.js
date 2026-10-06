@@ -9,7 +9,7 @@ import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
  * - Footer: <footer>
  * 
  * The <dialog> element provides native accessibility features.
- * Helper Attribute: [x-behavior="dialog"]
+ * Helper Attribute: [x-dialog]
  */
 const SIZES = ['sm', 'md', 'lg', 'xl', 'full'];
 

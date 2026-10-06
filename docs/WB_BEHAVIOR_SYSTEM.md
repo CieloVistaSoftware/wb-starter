@@ -126,10 +126,12 @@ Use standard semantic HTML elements (Auto-Inject):
 </video>
 ```
 
-Or use `x-behavior` for explicit behavior injection (Legacy/Override):
+Or add behaviors explicitly, one `x-*` attribute each. (The old generic
+`x-behavior="ripple tooltip"` form is deprecated (#1642): it still runs, and
+warns.)
 
 ```html
-<!-- Multiple behaviors (space-separated) -->
+<!-- Multiple behaviors: one attribute each -->
 <button
   x-ripple
   x-tooltip
@@ -358,7 +360,7 @@ The Auto-Injection system allows standard HTML5 semantic elements to automatical
 When `WB.init({ autoInject: true })` is called:
 1.  **Mapping**: The system uses a predefined map of selectors to behaviors (e.g., `article` -> `card`, `nav` -> `navbar`).
 2.  **Scanning**: During `WB.scan()`, it queries for these selectors.
-3.  **Precedence**: Explicit `x-behavior` attributes **always** take precedence. If an element has `x-behavior` (even empty), auto-injection is skipped.
+3.  **Precedence**: An explicit `x-*` behavior attribute replaces the auto-injected one of the same family (`<article x-cardimage>` is one card, not two). The deprecated `x-behavior` attribute (#1642), even empty, still skips auto-injection.
 4.  **Opt-Out**: You can prevent auto-injection on a specific element by adding `ignore` or an empty ``.
 
 **Example Mapping:**
@@ -897,7 +899,7 @@ export function button(element, options) {
 ## Key Takeaways
 
 1. **Functional, not Class-based** - Behaviors are functions that enhance native elements
-2. **Progressive Enhancement** - Start with semantic HTML, enhance with `x-behavior`
+2. **Progressive Enhancement** - Start with semantic HTML, enhance with `x-*` attributes
 3. **No Class Hierarchy** - The element arrives with its full native DOM interface already on it; a behavior composes extra features onto that, it never subclasses anything
 4. **Declarative** - Configuration via data attributes
 5. **Composable** - Stack multiple behaviors on one element

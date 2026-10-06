@@ -2,7 +2,7 @@ import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Description List Behavior
  * Populates a dl from data-items JSON
- * Helper Attribute: [x-behavior="desclist"]
+ * Helper Attribute: [x-desclist]
  */
 export function desclist(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.

@@ -1,6 +1,6 @@
 /**
  * Timeline - Vertical timeline
- * Helper Attribute: [x-behavior="timeline"]
+ * Helper Attribute: [x-timeline]
  *
  * Builds the timeline from the `items` attribute (comma-separated). The CSS
  * (.x-timeline-item) draws the connecting line and the dots via ::before, so
