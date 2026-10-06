@@ -18,6 +18,12 @@
  *   button label         "action: /api/demo-form · successMessage: Sent —
  *                        check the events panel below." -- the form's own
  *                        attributes, written over the button's text
+ *
+ * See it by hand: Run `npx playwright test
+ * tests/regression/form-ajax-example-notifies.spec.ts --project=regression`.
+ * Before: 4 tests, none of which checked when validation runs. Now: 5 tests;
+ * the new one types a bad email, expects no red mark until the field loses
+ * focus, and fails if typing alone marks it invalid.
  */
 import { test, expect, Page } from '../fixtures/offline';
 
@@ -91,4 +97,39 @@ test('a <form ajax> with no method= submits as POST, not the .method default "ge
   expect((await posted).method()).toBe('POST');
   await expect(page.locator('.x-form__message--success')).toHaveText('Done');
   await expect.poll(() => events).toEqual(['wb:form:submit', 'wb:form:success']);
+});
+
+// #751 point 2: "validation must happen on blur not on every keystroke". The
+// focusout handler is on main; nothing held it, and a keystroke listener added
+// beside it would have passed every test above.
+test('a validating form marks a field invalid on blur, never while typing', async ({ page }) => {
+  await page.goto('/');
+  await page.setContent(`
+    <form ajax validate action="/api/demo-form">
+      <input id="email751" type="email" name="email" required>
+      <input id="next751" name="other">
+    </form>`);
+  await page.addScriptTag({
+    type: 'module',
+    content: `
+      import WB from '/src/core/wb-lazy.js';
+      await WB.init({ autoInject: true });
+      await WB.scan(document.body, { eager: true });
+      document.body.dataset.built = '1';
+    `,
+  });
+  await page.waitForFunction(() => document.body.dataset.built === '1');
+
+  const email = page.locator('#email751');
+  await email.click();
+  await email.pressSequentially('not-an-email');
+  await expect(email, 'typing must not mark the field invalid').not.toHaveClass(/x-form__field--invalid/);
+
+  await page.locator('#next751').click();   // blur
+  await expect(email, 'leaving an invalid field must mark it').toHaveClass(/x-form__field--invalid/);
+
+  await email.fill('reader@example.com');
+  await expect(email, 'fixing it while typing does not re-validate either').toHaveClass(/x-form__field--invalid/);
+  await page.locator('#next751').click();
+  await expect(email, 'blurring a now-valid field clears the mark').not.toHaveClass(/x-form__field--invalid/);
 });

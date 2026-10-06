@@ -17,6 +17,7 @@
  */
 
 import { test, expect, type Locator } from '../fixtures/offline';
+import { centralDate } from '../../src/core/central-time.js';
 
 /**
  * #1349 — the pin described above never reached the browser on its own. sw.js
@@ -97,11 +98,10 @@ test.describe('Fix Viewer Grouping', () => {
 
     await expect(page.locator('.group-header')).toHaveCount(2);
 
-    // The viewer localises the date, so the expected string is derived the same
-    // way rather than hard-coded — a hard-coded "1/1/2025" is a test that fails
-    // in another locale for no reason.
-    const day1 = new Date('2025-01-01T12:00:00Z').toLocaleDateString();
-    const day2 = new Date('2025-01-02T12:00:00Z').toLocaleDateString();
+    // The viewer writes the date in US Central (#1553), so the expected string
+    // comes from the same formatter rather than the test machine's own zone.
+    const day1 = centralDate('2025-01-01T12:00:00Z');
+    const day2 = centralDate('2025-01-02T12:00:00Z');
 
     await expect(rowsIn(page.locator('.fix-group').filter({ hasText: day1 }))).toHaveCount(2);
     await expect(rowsIn(page.locator('.fix-group').filter({ hasText: day2 }))).toHaveCount(1);

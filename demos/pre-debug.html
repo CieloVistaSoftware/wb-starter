@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pre Debug</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.280">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.280">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.298">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.298">
   <script type="module">
     import WB from '../src/core/wb.js';
     WB.init({ debug: true });
@@ -32,7 +32,7 @@ console.log(x + y);</code></pre>
     <pre class="double-pre" language="html"><code>&lt;div&gt;Test&lt;/div&gt;</code></pre>
   </div>
   <script type="module">
-    import { pre } from '../src/behaviors/js/semantics/pre.js';
+    import { pre } from '../src/wb-viewmodels/semantics/pre.js';
     
     setTimeout(() => {
         const el = document.querySelector('.double-pre');

@@ -10,7 +10,7 @@
           "file": "guides/create-a-website.md",
           "title": "How to Create a Website with wb-starter",
           "description": "npm create wb-starter: create, run, edit, add pages, publish and update a site",
-          "modified": "2026-10-02"
+          "modified": "2026-10-01"
         },
         {
           "file": "V3-GUIDE.md",
@@ -46,7 +46,7 @@
           "file": "claude/TIER2-DOMAIN-GUIDES.md",
           "title": "Tier 2 Domain Guides",
           "description": "Domain-specific implementation guides",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "linkedin-standards-article.md",
@@ -88,7 +88,7 @@
           "file": "claude/TOOLING-INVENTORY.md",
           "title": "Tooling Inventory — What This Repo Already Has",
           "description": "Read this before writing any new tooling.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-01"
         }
       ]
     },
@@ -106,7 +106,7 @@
           "file": "behavior-cross-reference.md",
           "title": "Behavior Cross-Reference",
           "description": "Relationships between every behavior",
-          "modified": "2026-10-03"
+          "modified": "2026-10-05"
         },
         {
           "file": "audio.md",
@@ -268,7 +268,7 @@
           "file": "behaviors/articles.md",
           "title": "articles",
           "description": "Wraps a set of article-like children in a grid/list/masonry layout, with an optional heading and static pagination controls.",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "behaviors/aside.md",
@@ -460,7 +460,7 @@
           "file": "behaviors/clock.md",
           "title": "Clock",
           "description": "x-clock shows the current time in the element and updates it every second.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/cluster.md",
@@ -724,7 +724,7 @@
           "file": "behaviors/glow.md",
           "title": "Glow",
           "description": "x-glow gives the element a pulsing halo in color, which defaults to the theme's primary colour.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/grid.md",
@@ -868,7 +868,7 @@
           "file": "behaviors/password.md",
           "title": "Password Behavior",
           "description": "x-password wraps a password <input> with a show/hide button, and with strength adds a meter that rates the password as it is typed.",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "behaviors/popover.md",
@@ -1006,7 +1006,7 @@
           "file": "behaviors/skeleton.md",
           "title": "skeleton",
           "description": "A shimmering placeholder block for loading states — a single line, multiple stacked lines, a circle, or a rectangle.",
-          "modified": "2026-09-26"
+          "modified": "2026-09-25"
         },
         {
           "file": "behaviors/slidein.md",
@@ -1126,7 +1126,7 @@
           "file": "behaviors/time.md",
           "title": "<time> Element",
           "description": "The <time> element represents a specific period in time.",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "behaviors/timeline.md",
@@ -1234,13 +1234,13 @@
           "file": "schema-test-value.md",
           "title": "Schema Test Value",
           "description": "Testing the schema test value",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "ANNOUNCE_TEST_POLICY.md",
           "title": "Test Policy Announcement",
           "description": "Testing policy and enforcement",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "testing-runbook.md",
@@ -1258,7 +1258,7 @@
           "file": "auto-injection.md",
           "title": "Auto-Injection",
           "description": "Automatic behavior injection",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "inline-editing.md",
@@ -1366,13 +1366,13 @@
           "file": "npx-commands.md",
           "title": "npx Commands",
           "description": "Copy-paste commands and PowerShell notes",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "standards/REPO-LAYOUT.md",
           "title": "Repo Layout",
           "description": "Where every file goes: the root, folders, names, archive",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         }
       ]
     },
@@ -1396,7 +1396,7 @@
           "file": "standards/ERROR-LOG-RETENTION.md",
           "title": "Error Log Retention — 30 Days",
           "description": "Rule, from John (2026-09-05): *\"all of our error logs must stay on the system for 30 days.\"* Stated after a session in which the test suite destroyed 26+…",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "standards/ISSUE-SIGNATURE-BLOCK.md",
@@ -1552,7 +1552,7 @@
           "file": "index.md",
           "title": "Docs Index",
           "description": "Documentation index page",
-          "modified": "2026-09-29"
+          "modified": "2026-09-28"
         },
         {
           "file": "semantic-standard.md",

@@ -193,6 +193,8 @@
       color: var(--text-secondary);
     }
   </style>
+  <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
+  <script type="module" src="../src/core/central-time.js"></script>
 </head>
 <body id="errors-body">
 
@@ -332,7 +334,7 @@
       
       // Update stats
       document.getElementById('total-count').textContent = errors.length;
-      document.getElementById('last-updated').textContent = data.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : '-';
+      document.getElementById('last-updated').textContent = data.lastUpdated ? WBTime.time(data.lastUpdated) : '-';
       
       // Most errors are plain window.onerror/unhandledrejection captures
       // with no `source` at all (only Events.error()-routed ones set it) --
@@ -360,7 +362,7 @@
               <span>${escapeHtml(error.message)}</span>
             </div>
             <div class="error-meta">
-              ${new Date(error.timestamp).toLocaleString()}
+              ${WBTime.dateTime(error.timestamp)}
             </div>
           </div>
           <div class="error-body" id="details-${index}">
@@ -498,22 +500,25 @@
     async function clearErrors() {
       if (!confirm('Are you sure you want to clear all errors?')) return;
 
-      try {
-        // Was posting straight to the generic /api/save with a hand-built
-        // empty log -- error-logger.js's OWN clear button already uses the
-        // dedicated /api/error-log/clear route; use the same one canonical
-        // path here instead of a second, parallel way to do the same thing.
-        const response = await fetch('/api/error-log/clear', { method: 'POST' });
+      // This browser's own log (readLocalLog) is cleared first, wherever the
+      // page is served. On GitHub Pages it is the ONLY log, and Clear used to
+      // leave it untouched and say "Failed to clear errors" (#1568).
+      try { localStorage.removeItem('wb:error-log'); } catch { /* storage unavailable */ }
 
-        if (response.ok) {
-          loadErrors();
-        } else {
-          alert('Failed to clear errors');
+      // Then the server's file, through the same route error-logger.js uses.
+      // Relative to this page, like loadErrors(): a root-absolute /api/...
+      // misses the /wb-starter/ base on Pages (#1000). A static host answers
+      // 404/405/501 -- there is no server log there, so that is not a failure.
+      try {
+        const response = await fetch(new URL('../api/error-log/clear', location.href), { method: 'POST' });
+        if (!response.ok && ![404, 405, 501].includes(response.status)) {
+          alert(`Failed to clear the server log (HTTP ${response.status})`);
         }
       } catch (err) {
         console.error(err);
-        alert('Error clearing logs');
+        alert('Error clearing the server log');
       }
+      loadErrors();
     }
 
     function escapeHtml(unsafe) {
@@ -526,8 +531,8 @@
         .replace(/'/g, "&#039;");
     }
 
-    // Initial load
-    loadErrors();
+    // Initial load, once central-time.js (a module) has set WBTime.
+    document.addEventListener('DOMContentLoaded', loadErrors);
   </script>
 </body>
 </html>

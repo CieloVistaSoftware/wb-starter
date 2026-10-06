@@ -279,9 +279,10 @@ export const EXAMPLES = {
 </div>`,
 
   // ── Media ──────────────────────────────────────────────────────────────────
-  'x-audio': `<div x-audio src="/demos/sample.wav" volume="0.8"></div>`,
+  // #762: remote media only. A local path resolves against the reader's page.
+  'x-audio': `<div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" volume="0.8"></div>`,
 
-  'x-video': `<video x-video src="/demos/sample.mp4" poster="${img('screening', 640, 360)}" controls></video>`,
+  'x-video': `<video x-video src="https://www.w3schools.com/html/mov_bbb.mp4" poster="${img('screening', 640, 360)}" controls></video>`,
 
   'x-img': `<img x-img src="${img('lens', 480, 320)}" alt="Prime lens on a wooden desk">`,
 

@@ -95,6 +95,17 @@ release or push) with one line, in this order, in these words:
 - The badge is the number only, no marks (John: "I only want numbers"). Behind GitHub or local edits are said in its tooltip.
 - Get the numbers from git, never from memory: `node scripts/stamp-version.js` prints it for your checkout, or read `release`/`sinceRelease` in `src/core/version.js` on main.
 
+## Times — US Central, everywhere
+
+John, 2026-10-05: "make all datetime use cst", and on a status update that said
+"22:26 UTC": "why did you use utc? i want cst". Every time you write for John
+(status updates, check-in times, issue and PR comments) is US Central with its
+label: `5:26 PM CDT` (CDT until the first Sunday of November, CST after). GitHub
+and CI report UTC; convert before you write it. On the site every displayed date
+and time goes through `src/core/central-time.js` (`window.WBTime` in a classic
+script); `tests/regression/times-are-central.spec.ts` fails on a display that
+formats in the viewer's own zone (#1553).
+
 ## Filing an Issue — every time, no exceptions
 
 John, 2026-10-02, after five issues went up without a Signature block: "are you
@@ -110,7 +121,7 @@ John, 2026-10-02: "I should be able to see what you are working on at all times
 via our issues view."
 
 1. **Before starting** work on an issue, put the `status:in-progress` label on it. The Issues page's **Working on now (N)** tab (formerly In Progress, #1501) shows exactly those issues.
-2. **Say what is happening, at every step.** John: "How can something be in progress with old dates and no update to indicate what is next, when and why?" Post an issue comment with three lines, `**Now:** …`, `**Next:** …`, `**Why:** …`, when you start and whenever the step changes. The green row on the Issues page shows the latest one and its age; a row with none, or none for a day, shows red.
+2. **Say what is happening, at every step.** John: "How can something be in progress with old dates and no update to indicate what is next, when and why?" Post an issue comment with four lines, `**Now:** …` (what has been done), `**Why:** …`, `**See it:** …` (exactly what to open or click to see the fix, or "nothing to see yet") and `**Next:** …`, when you start and whenever the step changes. John (#1571): "I want to see what was done, why it was done and what to do to see the fix." The green row on the Issues page shows all four and the note's age; a row with none, or none for a day, shows red. Write the note from the work itself: a note about the bookkeeping ("CI is running, merge when green") answers none of the three.
 3. **No work without an issue.** A request with no issue gets one filed first (with its Signature block), then labelled.
 4. **When the fix merges** (or the work stops), take the label off. Closing via `Fixes #N` closes it; remove the label anyway so the tab stays truthful.
 
@@ -146,7 +157,9 @@ change" check fails a PR without them, or whose See it line has no action, no
 John, 2026-10-05: "I want all the folders cleaned after all the merges are complete,
 don't leave artifacts on my computer" (#1534). A session that works in a worktree
 (`C:\Users\jwpmi\Downloads\AI\wb-NNNN`) removes it as soon as its PR merges, before
-it reports done:
+it reports done. `node scripts/clean-merged-worktrees.mjs --apply` does exactly this for every
+merged, clean worktree (dry run without `--apply`), and lists the rest with the reason
+it kept each; by hand, the steps are:
 
 1. **Unlink the `node_modules` junction first** (`cmd /c rmdir node_modules` inside the
    worktree). Never delete through it: it points at the real checkout's
@@ -163,7 +176,7 @@ When John says **"park"**:
 
 1. Update the 🅿️ PARKING LOT in `docs/_today/CURRENT-STATUS.md` (task, files touched, last action, next step, open questions).
 2. Merge the day's finished PRs into `main`.
-2a. Remove every worktree whose branch is merged (see **Worktrees** above).
+2a. Remove every worktree whose branch is merged: `node scripts/clean-merged-worktrees.mjs --apply` (see **Worktrees** above). Report what it kept and why.
 3. Trigger the **Nightly** test run: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST).
 
 Nightly runs the full suite on main against the known-failures register. A new failure files one `priority:2` issue linking the run. It does not release: the version number is counted from the last tag.

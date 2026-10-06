@@ -43,7 +43,7 @@ test.describe('.x-audio', () => {
     // OUTSIDE it, because <audio>'s children are fallback content and never
     // render. The original bug (BUG-2024-12-19-001, src landing on a div) is
     // still what this guards -- by asserting the src is on the real element.
-    await setup(page, '<audio id="a-src" src="/demos/audio.mp3"></audio>');
+    await setup(page, '<audio id="a-src" src="/tests/fixtures/media/sample.wav"></audio>');
     const host = page.locator('#a-src');
     await expect(host).toHaveCount(1);
 
@@ -52,14 +52,14 @@ test.describe('.x-audio', () => {
       src: el.getAttribute('src') || (el as HTMLAudioElement).src,
     }));
     expect(info.tag).toBe('audio');
-    expect(info.src).toContain('audio.mp3');
+    expect(info.src).toContain('sample.wav');
   });
 
   // BUG-2025-12-26-002
   test('show-eq renders the equalizer band controls', async ({ page }) => {
     await setup(page, `
-      <audio id="a-plain" src="/demos/audio.mp3"></audio>
-      <audio id="a-eq" src="/demos/audio.mp3" show-eq></audio>
+      <audio id="a-plain" src="/tests/fixtures/media/sample.wav"></audio>
+      <audio id="a-eq" src="/tests/fixtures/media/sample.wav" show-eq></audio>
     `);
     // The EQ mounts OUTSIDE the <audio> (#669) as `.x-audio__eq-container`, so
     // `#a-eq input[type=range]` -- a DESCENDANT query -- could only ever count

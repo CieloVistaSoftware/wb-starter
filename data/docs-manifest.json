@@ -200,7 +200,7 @@
         "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
         "name": "npx-commands",
         "category": "root",
-        "created": "2026-09-29"
+        "created": "2026-09-28"
       },
       {
         "path": "docs/pce-candidates.md",
@@ -1931,7 +1931,7 @@
         "title": "Repo Layout",
         "name": "REPO-LAYOUT",
         "category": "standards",
-        "created": "2026-09-29"
+        "created": "2026-09-28"
       },
       {
         "path": "docs/standards/V3-STANDARDS.md",
@@ -3649,7 +3649,7 @@
       "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
       "name": "npx-commands",
       "category": "root",
-      "created": "2026-09-29"
+      "created": "2026-09-28"
     },
     {
       "path": "docs/pce-candidates.md",
@@ -3789,7 +3789,7 @@
       "title": "Repo Layout",
       "name": "REPO-LAYOUT",
       "category": "standards",
-      "created": "2026-09-29"
+      "created": "2026-09-28"
     },
     {
       "path": "docs/standards/V3-STANDARDS.md",

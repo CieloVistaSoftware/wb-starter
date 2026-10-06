@@ -26,7 +26,7 @@ test.describe('Issues page', () => {
       status: 200, contentType: 'application/json',
       body: JSON.stringify([
         { body: 'unrelated chatter', created_at: postedAt },
-        { body: '**Now:** step 2 of 3 — reviewing test lines\n**Next:** the standards docs\n**Why:** guard is in', created_at: postedAt },
+        { body: '**Now:** step 2 of 3 — reviewing test lines\n**Next:** the standards docs\n**Why:** guard is in\n**See it:** open the Issues page and pick the Working on now tab', created_at: postedAt },
       ]),
     }));
     await context.route(/https:\/\/api\.github\.com\/repos\/CieloVistaSoftware\/wb-starter\/issues(?:\?|$)/, async (route) => {
@@ -108,6 +108,14 @@ test.describe('Issues page', () => {
     await expect(note).toContainText('Now: step 2 of 3 — reviewing test lines');
     await expect(note).toContainText('Next: the standards docs');
     await expect(note).toContainText('5 min ago');
+    // #1571 -- John: "I want to see what was done, why it was done and what to
+    // do to see the fix." All of it, one line each, in that order.
+    await expect(note.locator('.issue-now-note__line')).toHaveText([
+      'Now: step 2 of 3 — reviewing test lines',
+      'Why: guard is in',
+      'See it: open the Issues page and pick the Working on now tab',
+      'Next: the standards docs',
+    ]);
 
     // #1501 -- John: "Add a new button to show current working on issues."
     // The in-progress tab is that button: named after the green pill, carrying

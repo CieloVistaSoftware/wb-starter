@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "glow.schema.json",
   "title": "Glow",
-  "description": "x-glow gives the element a pulsing halo in color, which defaults to the theme's primary colour.",
+  "description": "x-glow gives the element a halo in color, which defaults to the theme's primary colour: a pulsing ring around the box, or with target=\"text\" a steady glow around the letters.",
   "schemaFor": "glow",
   "properties": {
     "color": {
@@ -16,6 +16,15 @@
         "#06b6d4",
         "#ec4899"
       ]
+    },
+    "target": {
+      "type": "string",
+      "enum": [
+        "box",
+        "text"
+      ],
+      "default": "box",
+      "description": "What glows. \"box\" haloes the element's rectangle and pulses; \"text\" haloes the letters with a steady text-shadow, for headings. The pulse stops when the reader prefers reduced motion."
     }
   },
   "$view": [],
@@ -27,7 +36,8 @@
   "test": {
     "setup": [
       "<div x-glow>Test Content</div>",
-      "<div x-glow color=\"var(--primary, #6366f1)\">Test Content</div>"
+      "<div x-glow color=\"var(--primary, #6366f1)\">Test Content</div>",
+      "<h3 x-glow target=\"text\">Test Content</h3>"
     ]
   },
   "_metadata": {

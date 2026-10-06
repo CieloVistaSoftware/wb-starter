@@ -6,6 +6,410 @@
   ],
   "releases": [
     {
+      "version": "1.0.298",
+      "date": "2026-10-05",
+      "summary": "An in-progress row on the Issues page said what was happening now and next, but never why, or how to see the fix. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1571\" target=\"_blank\" rel=\"noopener\">#1571</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1572\" target=\"_blank\" rel=\"noopener\">#1572</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Issues page shows what was done, why, and how to see the fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1571\" target=\"_blank\" rel=\"noopener\">#1571</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1572\" target=\"_blank\" rel=\"noopener\">#1572</a>",
+          "issues": [
+            1571,
+            1572
+          ]
+        }
+      ],
+      "seeIt": "Open Issues and pick the Working on now tab. Before: each green note read only &quot;Now: ... Next: ...&quot;. Now: each lists Now, Why, See it and Next on separate lines, then when it was posted."
+    },
+    {
+      "version": "1.0.297",
+      "date": "2026-10-05",
+      "summary": "X-clock showed each visitor&#39;s own time; John wants Central. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1559\" target=\"_blank\" rel=\"noopener\">PR 1559</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1553\" target=\"_blank\" rel=\"noopener\">#1553</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/816\" target=\"_blank\" rel=\"noopener\">#816</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1307\" target=\"_blank\" rel=\"noopener\">#1307</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the bordered card&#39;s border with transitions off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1307\" target=\"_blank\" rel=\"noopener\">#1307</a>",
+          "issues": [
+            1307
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>X-clock shows US Central by default</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1553\" target=\"_blank\" rel=\"noopener\">#1553</a>",
+          "issues": [
+            1553
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-glow pulses, can glow the letters, and respects reduced motion</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/816\" target=\"_blank\" rel=\"noopener\">#816</a>",
+          "issues": [
+            816
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every date and time the site shows is US Central</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1553\" target=\"_blank\" rel=\"noopener\">#1553</a>",
+          "issues": [
+            1553
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick clock, with your computer set to another time zone. Before: the clock showed your own local time. Now: it shows Central (e.g. 17:26 while it is 07:26 in Tokyo), and timezone=&quot;local&quot; shows yours."
+    },
+    {
+      "version": "1.0.296",
+      "date": "2026-10-05",
+      "summary": "On the live site the Error Log Viewer shows this browser&#39;s own log (localStorage), but Clear Log only asked a server that GitHub Pages does not have, so it said &quot;Failed to clear errors&quot; and every error stayed listed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1569\" target=\"_blank\" rel=\"noopener\">PR 1569</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Block the service worker so the Pages mocks apply</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",
+          "issues": [
+            1568
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Clear Log clears the browser&#39;s log on GitHub Pages</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",
+          "issues": [
+            1568
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html in a browser that has visited the site, click Clear Log and confirm. Before: an alert said &quot;Failed to clear errors&quot; and the list was unchanged. Now: the list is empty, there is no alert, and it stays empty on reload."
+    },
+    {
+      "version": "1.0.295",
+      "date": "2026-10-05",
+      "summary": "After a deploy, visitors kept getting the old JavaScript for up to ten minutes, because the service worker answered from the browser&#39;s HTTP cache. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1574\" target=\"_blank\" rel=\"noopener\">PR 1574</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/989\" target=\"_blank\" rel=\"noopener\">#989</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The service worker revalidates same-origin requests instead of serving the HTTP cache</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/989\" target=\"_blank\" rel=\"noopener\">#989</a>",
+          "issues": [
+            989
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/ once, deploy a change to any module under src/, then reload. Before: the reload ran the old module for up to 600 seconds (Cache-Control: max-age=600 on every file), which is how #988&#39;s fix stayed invisible. Now: the reload revalidates each same-origin file with the server and runs the deployed module at once; unchanged files answer 304."
+    },
+    {
+      "version": "1.0.294",
+      "date": "2026-10-05",
+      "summary": "The #1462 test demanded scrollTop === 400 after the page finished building, so it failed a correct page on Windows CI (486), where Chrome&#39;s scroll anchoring moved the scroll down to keep the reader&#39;s text in view as content above grew. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1567\" target=\"_blank\" rel=\"noopener\">PR 1567</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1566\" target=\"_blank\" rel=\"noopener\">#1566</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1573\" target=\"_blank\" rel=\"noopener\">#1573</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Fail on a scroll thrown back to the top, not on scroll anchoring</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1573\" target=\"_blank\" rel=\"noopener\">#1573</a>",
+          "issues": [
+            1573
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Keep the spawned server&#39;s output, and take its port like every other run</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1566\" target=\"_blank\" rel=\"noopener\">#1566</a>",
+          "issues": [
+            1566
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/scroll-survives-page-build.spec.ts --project=regression</code> with an 86px block inserted above the reader when the held scan is released. Before: it failed with &quot;Expected: 400, Received: 486&quot;, as on CI. Now: it passes, and it still fails with &quot;Received: 0&quot; if the scroll is reset to the top, the #1462 bug."
+    },
+    {
+      "version": "1.0.293",
+      "date": "2026-10-05",
+      "summary": "Session folders piled up in Downloads\\AI after their work merged (89 of them); one command now removes the merged, clean ones and keeps the rest with a reason. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1547\" target=\"_blank\" rel=\"noopener\">PR 1547</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines that start with what to do</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1534
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the merged-worktree cleaner</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1534
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>One command removes merged worktrees, junction first</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1534
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node scripts/clean-merged-worktrees.mjs</code> from the main checkout, then run it again with <code>--apply</code>. Before: 89 wb-NNNN folders sat in Downloads\\AI and nothing removed them; deleting one by hand could empty the real node_modules through its junction. Now: the first run lists what it would remove and why it keeps the rest, and --apply removes them junction-first (60 removed on 2026-10-05, node_modules intact)."
+    },
+    {
+      "version": "1.0.292",
+      "date": "2026-10-05",
+      "summary": "Four regression specs still loaded /demos/sample.wav or (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1555\" target=\"_blank\" rel=\"noopener\">PR 1555</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Point the remaining audio specs at the test fixture</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
+          "issues": [
+            762
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>No audio or video ships in demos/; a gate keeps it that way</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
+          "issues": [
+            762
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/x-audio-detached-element-no-false-error.spec.ts --project=regression</code>. Before: it failed because /demos/sample.wav returned 404. Now: it passes, loading the same file from tests/fixtures/media/."
+    },
+    {
+      "version": "1.0.291",
+      "date": "2026-10-05",
+      "summary": "Every request for a schema a behavior does not have (desclist, empty, json) printed an ENOENT stack trace in the server log, and the 404 body was Express&#39;s error page showing the server&#39;s own file path. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1558\" target=\"_blank\" rel=\"noopener\">PR 1558</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the served schema once in the quiet-404 spec</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
+          "issues": [
+            1557
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A missing /src/wb-models/*.json is a quiet 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
+          "issues": [
+            1557
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm start</code>, then open http://localhost:3000/src/wb-models/desclist.schema.json. Before: the server log printed &quot;Error: ENOENT ... wb-models/desclist.schema.json&quot; with a stack trace, and the page was an error page showing the server&#39;s file path. Now: the page says &quot;File not found: /src/wb-models/desclist.schema.json&quot; and nothing is logged."
+    },
+    {
+      "version": "1.0.290",
+      "date": "2026-10-05",
+      "summary": "Forms validate on blur, not on every keystroke (#751), but no test held it, so a keystroke validator added later would have passed every check. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1556\" target=\"_blank\" rel=\"noopener\">PR 1556</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+          "issues": [
+            751
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Validation happens on blur, never while typing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+          "issues": [
+            751
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/form-ajax-example-notifies.spec.ts --project=regression</code>. Before: 4 tests, none of which checked when validation runs. Now: 5 tests; the new one types a bad email, expects no red mark until the field loses focus, and fails if typing alone marks it invalid."
+    },
+    {
+      "version": "1.0.289",
+      "date": "2026-10-05",
+      "summary": "On the Behaviors page the x-img and x-figure examples drew the placeholder image 762px wide, across the whole panel, because the SVG had no width or height of its own; the &quot;never wider than itself&quot; half of the layout rule had nothing to measure against. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1565\" target=\"_blank\" rel=\"noopener\">PR 1565</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/759\" target=\"_blank\" rel=\"noopener\">#759</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The placeholder image has a natural size, so it is never stretched</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/759\" target=\"_blank\" rel=\"noopener\">#759</a>",
+          "issues": [
+            759
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick figure and look at the example. Before: the image filled the panel, about 762px wide. Now: it is 480px, its own size, and never wider than the panel."
+    },
+    {
+      "version": "1.0.288",
+      "date": "2026-10-05",
+      "summary": "Clicking the x-button variant=&quot;link&quot; example on the Behaviors page navigated the whole page to docs.html, losing the gallery, the search and the selection; nothing stopped any example with an href, or a form that submits, from doing the same. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1564\" target=\"_blank\" rel=\"noopener\">PR 1564</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/742\" target=\"_blank\" rel=\"noopener\">#742</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No example can navigate the Behaviors page away</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/742\" target=\"_blank\" rel=\"noopener\">#742</a>",
+          "issues": [
+            742
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick button, choose the variant=link example and click it. Before: the page left for docs.html. Now: the page stays put and the events log reads &quot;navigation blocked: would open /docs.html&quot;."
+    },
+    {
+      "version": "1.0.287",
+      "date": "2026-10-05",
+      "summary": "A dropdown with a label was styled as a trigger on its host as well as its button, so the host grew to the menu&#39;s width. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1545\" target=\"_blank\" rel=\"noopener\">PR 1545</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
+          "issues": [
+            702
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The host is styled as a trigger only when it is one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
+          "issues": [
+            702
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick dropdown and compare position=&quot;bottom-start&quot; with position=&quot;bottom-end&quot;. Before: both menus opened in nearly the same place, 2px apart. Now: one hangs from the host&#39;s left edge and the other from its right edge."
+    },
+    {
+      "version": "1.0.286",
+      "date": "2026-10-05",
+      "summary": "Cardimage position=&quot;left&quot; and &quot;right&quot; once rendered no image (#877); card.js was fixed, but no test held it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1541\" target=\"_blank\" rel=\"noopener\">PR 1541</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/877\" target=\"_blank\" rel=\"noopener\">#877</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/877\" target=\"_blank\" rel=\"noopener\">#877</a>",
+          "issues": [
+            877
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Hold cardimage left/right to rendering their image</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/877\" target=\"_blank\" rel=\"noopener\">#877</a>",
+          "issues": [
+            877
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/site/cards.html and scroll to the cardimage cards with position=&quot;left&quot; and position=&quot;right&quot;. Before: both showed text with no picture (#877). Now: each shows its picture beside the text, and the new cardimage-render test fails if either loses it."
+    },
+    {
+      "version": "1.0.285",
+      "date": "2026-10-05",
+      "summary": "Pages asked the server for schema files that do not exist (x-lazy and 50 others), filling every CI log with a 404 and an ENOENT error. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1561\" target=\"_blank\" rel=\"noopener\">PR 1561</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1550\" target=\"_blank\" rel=\"noopener\">#1550</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release lines for the schema-request fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1550\" target=\"_blank\" rel=\"noopener\">#1550</a>",
+          "issues": [
+            1550
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Ask only for schemas the index lists; one shared index loader</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1550\" target=\"_blank\" rel=\"noopener\">#1550</a>",
+          "issues": [
+            1550
+          ]
+        }
+      ],
+      "seeIt": "Open <code>public/doc-viewer.html?file=docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md</code> with the network panel open, filtered to &quot;schema.json&quot;. Before: <code>/src/wb-models/lazy.schema.json</code> returned 404 and the server printed &quot;Error: ENOENT ... lazy.schema.json&quot;. Now: no schema request fails; only schemas the index lists are asked for."
+    },
+    {
+      "version": "1.0.284",
+      "date": "2026-10-05",
+      "summary": "AutoScroll on the Behaviors page only showed each entry: it reported nothing and toured only the groups you had opened. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1538\" target=\"_blank\" rel=\"noopener\">PR 1538</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read AutoScroll&#39;s open groups without sleeping</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+          "issues": [
+            1536
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+          "issues": [
+            1536
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>AutoScroll tests every behavior in the nav</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+          "issues": [
+            1536
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors) and click AutoScroll in the header. Before: it toured only the groups you had opened and ended without a word. Now: it opens every group, walks all 1,333 entries and ends with &quot;Tested all 1333 entries: N passed, M failed&quot;, naming each failure."
+    },
+    {
+      "version": "1.0.283",
+      "date": "2026-10-05",
+      "summary": "The issue state engine credited #1075 with a spec that never mentions 1075, so &quot;has a test&quot; stopped meaning &quot;has a test for this&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1540\" target=\"_blank\" rel=\"noopener\">PR 1540</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1090\" target=\"_blank\" rel=\"noopener\">#1090</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1090\" target=\"_blank\" rel=\"noopener\">#1090</a>",
+          "issues": [
+            1090
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Never credit a spec to an issue it does not mention</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1090\" target=\"_blank\" rel=\"noopener\">#1090</a>",
+          "issues": [
+            1090
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/issue-state-credits-only-a-spec-that-names-the-issue.spec.ts --project=regression</code>. Before: a spec that never mentions #N still counted as N&#39;s test, and the unrecorded-test state was missing from STATES (its counter read NaN). Now: such an issue reads test-unrelated, and all 5 tests pass."
+    },
+    {
+      "version": "1.0.282",
+      "date": "2026-10-05",
+      "summary": "The live site&#39;s version badge once showed an asterisk (&quot;uncommitted changes&quot;) and named the wrong commit, because the version file was written on a developer&#39;s machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1562\" target=\"_blank\" rel=\"noopener\">PR 1562</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the deployed-version guard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+          "issues": [
+            1067
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>A clean checkout stamps dirty:false and names the commit it builds</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+          "issues": [
+            1067
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/src/core/version.js. Before: the deployed badge read &quot;v4.0.2 *&quot; with dirty: true and a parent commit from the committer&#39;s machine. Now: it reads dirty: false, branch main, and the commit it names is the code that was deployed."
+    },
+    {
+      "version": "1.0.281",
+      "date": "2026-10-05",
+      "summary": "The behavior cross-reference called itself a complete reference of all behaviors while its sections covered about a quarter of them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1554\" target=\"_blank\" rel=\"noopener\">PR 1554</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the cross-reference inventory</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Phrase the generated row count so the prose-count gate does not misread it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The cross-reference opens with a generated inventory of every behavior</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        }
+      ],
+      "seeIt": "Open <code>docs/behavior-cross-reference.md</code> in the doc viewer. Before: it opened &quot;A complete reference of all WB Behaviors&quot; and most behaviors appeared nowhere in it. Now: it opens with an inventory table listing every behavior the runtime can reach, how each is written, its reference page, and whether a section below covers it."
+    },
+    {
       "version": "1.0.280",
       "date": "2026-10-05",
       "summary": "Three versions on the Releases page (1.0.277, 1.0.278, 1.0.279) said nothing about how to see their change, which failed the release check on main and blocked every open PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1563\" target=\"_blank\" rel=\"noopener\">PR 1563</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",

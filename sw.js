@@ -82,8 +82,17 @@ self.addEventListener('fetch', event => {
   // Network-first: always try the network so a refresh gets current code.
   // Only fall back to the cached copy when the network fetch itself fails
   // (offline) — the cache is never allowed to shadow a live response.
+  //
+  // #989: "the network" has to mean the server. fetch(request) with the
+  // default cache mode answers from the browser's HTTP cache, and GitHub Pages
+  // serves everything with max-age=600 -- so for ten minutes after a deploy
+  // this returned the old module, and a module imported by another module has
+  // no ?v= key to dodge it. Same-origin requests revalidate instead: an
+  // unchanged file costs a 304, a deployed one arrives on the next load.
+  // Cross-origin requests (CDNs) keep the browser default.
+  const sameOrigin = new URL(event.request.url).origin === self.location.origin;
   event.respondWith(
-    fetch(event.request).then(response => {
+    (sameOrigin ? fetch(event.request, { cache: 'no-cache' }) : fetch(event.request)).then(response => {
       if (response.ok && response.status !== 206 && !DEVELOPMENT_ORIGIN) {
         const clone = response.clone();
         caches.open(CACHE_VERSION)

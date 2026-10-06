@@ -3,6 +3,7 @@ import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
 import { getNativeBehavior } from '../core/tag-map.js';
+import { centralTime } from '../core/central-time.js';
 
 /** Behaviors that fill their row by nature: a demo holding only one of them is full width (#1387). */
 const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero'];
@@ -1224,7 +1225,7 @@ export async function demo(element, options = {}) {
                 }
                 const entry = document.createElement('div');
                 entry.className = 'x-demo__events-log-entry';
-                const time = new Date().toLocaleTimeString();
+                const time = centralTime(); // #1553: Central, like every time the site shows
                 entry.textContent = `[${time}] ${name}` + (detailStr ? ' ' + detailStr : '');
                 log.insertBefore(entry, log.firstChild);
                 while (log.children.length > MAX_ENTRIES) {

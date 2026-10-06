@@ -24,7 +24,7 @@ import { test, expect, type Page } from '../fixtures/offline';
  */
 
 const FIXTURE = '/tests/fixtures/blank.html';
-const SRC = '/demos/sample.wav';
+const SRC = '/tests/fixtures/media/sample.wav';
 
 /** Render markup through WB in a clean page and return the container selector. */
 async function render(page: Page, markup: string) {

@@ -156,6 +156,8 @@
       100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
   </style>
+  <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
+  <script type="module" src="../src/core/central-time.js"></script>
 </head>
 <body>
   <div class="container">
@@ -314,7 +316,7 @@
         
         return `
           <tr>
-            <td>${new Date(e.timestamp).toLocaleTimeString()}</td>
+            <td>${WBTime.time(e.timestamp)}</td>
             <td>${e.name}</td>
             <td>${e.value.toFixed(2)} ${e.unit}</td>
             <td>${e.threshold ? '< ' + e.threshold + ' ' + e.unit : '-'}</td>
@@ -324,8 +326,8 @@
       }).join('');
     }
 
-    // Initial load
-    loadData();
+    // Initial load, once central-time.js (a module) has set WBTime.
+    document.addEventListener('DOMContentLoaded', loadData);
 
     async function runTests() {
       const btn = document.getElementById('runBtn');

@@ -263,7 +263,7 @@
     function log(icon, msg, detail) {
       show('log-panel');
       const row = el('div', 'pt-log__entry');
-      row.append(el('span', 'pt-log__icon', icon), el('span', 'pt-log__time', new Date().toLocaleTimeString()),
+      row.append(el('span', 'pt-log__icon', icon), el('span', 'pt-log__time', WBTime.time()),
         el('span', 'pt-log__msg', msg));
       if (detail) row.append(el('span', 'pt-log__detail', detail));
       $('activity-log').append(row);
@@ -729,4 +729,4 @@
   })();
 </script>
 
-<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css?v=1.0.280">
+<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css?v=1.0.298">
