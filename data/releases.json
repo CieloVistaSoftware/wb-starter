@@ -6,6 +6,42 @@
   ],
   "releases": [
     {
+      "version": "1.0.307",
+      "date": "2026-10-05",
+      "summary": "A &lt;nav&gt; needed x-navbar to look like the site, and adding it to plain navs moved their links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1582\" target=\"_blank\" rel=\"noopener\">PR 1582</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Measure plain-nav links once the page has stopped moving</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A generated nav demo holds links, not a loose sentence</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>A semantic host counts as a behavior host by its class</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Every &lt;nav&gt; picks up navbar; a plain one keeps its layout</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/958\" target=\"_blank\" rel=\"noopener\">#958</a>",
+          "issues": [
+            958
+          ]
+        }
+      ],
+      "seeIt": "Open demos/site/layout.html and look at the &quot;← Back to Index&quot; link, then the navbar demos. Before: the demos needed x-navbar seven times, and turning it on for plain navs pushed the Back link 854px to the right. Now: every &lt;nav&gt; gets the site&#39;s link colour without moving, and &lt;nav brand=&quot;MySite&quot;&gt; builds the full navbar with no attribute."
+    },
+    {
       "version": "1.0.306",
       "date": "2026-10-05",
       "summary": "An issue could be marked in progress with no note saying what was being done, and nothing flagged it until John saw the row in red on the Issues page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1583\" target=\"_blank\" rel=\"noopener\">#1583</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1587\" target=\"_blank\" rel=\"noopener\">#1587</a>",
