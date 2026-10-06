@@ -24,7 +24,7 @@ export function rating(element, options = {}) {
   // showcase markup `<span x-rating value="3" icon="❤️">` was ignored — stars never
   // filled on first paint and the custom icon was dropped. (#177)
   const attr = (name) => element.getAttribute(name);
-  const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
+  const authoredValue = (element._wbOriginalContent || element.textContent || '').trim();
   // Declared in rating.schema.json / docs/behaviors/rating.md and read by
   // nothing until now: `half` (allow x.5 values) and `disabled` (no
   // interaction, dimmed, aria-disabled). Read first because `half` decides

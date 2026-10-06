@@ -377,7 +377,7 @@ The `$view` section defines **DOM structure** - what gets rendered.
       "parent": "wrapper",
       "public": true,
       "required": true,
-      "content": "{{body}}"
+      "content": "{{content}}"
     },
     { 
       "name": "footer", 

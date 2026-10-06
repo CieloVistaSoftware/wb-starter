@@ -145,7 +145,7 @@
       "<div x-cardexpandable variant=\"bordered\">variant=bordered</div>",
       "<div x-cardexpandable expanded>with expanded</div>",
       "<div x-cardexpandable title=\"Sample title\">title=\"Sample title\"</div>",
-      "<div x-cardexpandable content=\"Sample content\">content=\"Sample content\"</div>",
+      "<div x-cardexpandable>Sample content</div>",
       "<div x-cardexpandable maxHeight=\"100px\">maxHeight=\"100px\"</div>",
       "<div x-cardexpandable title=\"Details\">Content here</div>"
     ],

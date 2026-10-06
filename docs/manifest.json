@@ -382,7 +382,7 @@
           "file": "behaviors/cardminimizable.md",
           "title": "Minimizable Card",
           "description": "x-cardminimizable renders a card with a minimise button in its header that collapses the body to just the title bar and restores it again.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardnotification.md",
@@ -1330,7 +1330,7 @@
           "file": "MVVM-MIGRATION-PLAN.md",
           "title": "MVVM MIGRATION PLAN",
           "description": "Documentation for MVVM MIGRATION PLAN",
-          "modified": "2026-10-04"
+          "modified": "2026-10-06"
         },
         {
           "file": "MVVM-MIGRATION.md",

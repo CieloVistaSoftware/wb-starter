@@ -139,7 +139,7 @@
       "views": {
         "btn": {
           "description": "Button behavior",
-          "template": "<button class=\"btn btn--{{variant || 'primary'}}\"><slot>{{body}}</slot></button>",
+          "template": "<button class=\"btn btn--{{variant || 'primary'}}\">{{content}}</button>",
           "attributes": {
             "variant": {
               "type": "string",

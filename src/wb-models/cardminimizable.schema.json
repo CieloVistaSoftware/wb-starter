@@ -128,7 +128,7 @@
       "<div x-cardminimizable variant=\"bordered\">variant=bordered</div>",
       "<div x-cardminimizable minimized>with minimized</div>",
       "<div x-cardminimizable title=\"Sample title\">title=\"Sample title\"</div>",
-      "<div x-cardminimizable content=\"Sample content\">content=\"Sample content\"</div>",
+      "<div x-cardminimizable>Sample content</div>",
       "<div x-cardminimizable title=\"Panel\">Content</div>"
     ],
     "matrix": {
