@@ -1,4 +1,6 @@
 import { test, expect, type Page } from '../fixtures/offline';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Standard §24 (#274): elements must never unintentionally overlap. Reported
@@ -54,6 +56,11 @@ import { test, expect, type Page } from '../fixtures/offline';
  * border-adjacency touches that aren't a real visual collision.
  *
  * Ancestor/descendant pairs are always skipped (nesting isn't overlap).
+ *
+ * Each rect is CLIPPED to every ancestor that clips its content (overflow
+ * other than visible) before comparing: content scrolled out of a scroll
+ * container is not painted, so it cannot overlap what is (#274 -- the SPA
+ * scrolls pages inside .site__body above the footer).
  */
 
 type OverlapHit = {
@@ -65,18 +72,16 @@ type OverlapHit = {
   area: number;
 };
 
+// Every page the site serves, read from disk so a new page is covered the day
+// it is added (#274 asked for a project-wide gate; the hand-written list had
+// drifted to one SPA page -- listed twice -- and nine demos). SPA pages load
+// through the site shell, the way a visitor reaches them.
+const htmlIn = (dir: string) => fs.readdirSync(path.join(process.cwd(), dir))
+  .filter((f) => f.endsWith('.html')).sort().map((f) => f.slice(0, -5));
 const TARGET_PAGES: { name: string; url: string }[] = [
-  { name: 'pages/behaviors', url: '/?page=behaviors' },
-  { name: 'pages/components', url: '/?page=behaviors' },
-  { name: 'demos/site/cards', url: '/demos/site/cards.html' },
-  { name: 'demos/site/content', url: '/demos/site/content.html' },
-  { name: 'demos/site/effects', url: '/demos/site/effects.html' },
-  { name: 'demos/site/feedback', url: '/demos/site/feedback.html' },
-  { name: 'demos/site/forms', url: '/demos/site/forms.html' },
-  { name: 'demos/site/index', url: '/demos/site/index.html' },
-  { name: 'demos/site/interactive', url: '/demos/site/interactive.html' },
-  { name: 'demos/site/layout', url: '/demos/site/layout.html' },
-  { name: 'demos/site/overlays', url: '/demos/site/overlays.html' },
+  ...htmlIn('pages').map((p) => ({ name: `pages/${p}`, url: `/?page=${p}` })),
+  ...htmlIn('demos/site').map((p) => ({ name: `demos/site/${p}`, url: `/demos/site/${p}.html` })),
+  ...htmlIn('demos').map((p) => ({ name: `demos/${p}`, url: `/demos/${p}.html` })),
 ];
 
 async function detectOverlaps(page: Page): Promise<OverlapHit[]> {
@@ -119,6 +124,27 @@ async function detectOverlaps(page: Page): Promise<OverlapHit[]> {
       return `${el.tagName.toLowerCase()}${id}${cls}`;
     }
 
+    /** The box an element is visible within: every ancestor that clips its content. */
+    function clipBoxFor(el: Element): DOMRect | null {
+      let box: DOMRect | null = null;
+      for (let cur = el.parentElement; cur && cur !== document.documentElement; cur = cur.parentElement) {
+        const cs = getComputedStyle(cur);
+        if (cs.overflowX === 'visible' && cs.overflowY === 'visible') continue;
+        const r = cur.getBoundingClientRect();
+        box = box ? clipTo(box, r) : r;
+        if (!box) return new DOMRect(0, 0, 0, 0);
+      }
+      return box;
+    }
+
+    function clipTo(r: DOMRect, c: DOMRect): DOMRect | null {
+      const left = Math.max(r.left, c.left);
+      const top = Math.max(r.top, c.top);
+      const right = Math.min(r.right, c.right);
+      const bottom = Math.min(r.bottom, c.bottom);
+      return right > left && bottom > top ? new DOMRect(left, top, right - left, bottom - top) : null;
+    }
+
     const all = Array.from(document.body.querySelectorAll<HTMLElement>('*'));
     const candidates: { el: HTMLElement; rects: DOMRect[] }[] = [];
 
@@ -136,7 +162,15 @@ async function detectOverlaps(page: Page): Promise<OverlapHit[]> {
       if (!hasOwnVisibleContent(el)) continue;
       if (isDecorative(el)) continue;
 
-      const rects = Array.from(el.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
+      // Only the PAINTED part of each box counts. The site scrolls its page
+      // content inside .site__body (overflow:auto) above the footer, so text
+      // scrolled below that container's bottom edge has a rect "under" the
+      // footer while being clipped away -- the footer is what is actually on
+      // screen there. Unclipped rects reported the footer overlapping 7 pages.
+      const clip = clipBoxFor(el);
+      const rects = Array.from(el.getClientRects())
+        .map((r) => (clip ? clipTo(r, clip) : r))
+        .filter((r): r is DOMRect => !!r && r.width > 0 && r.height > 0);
       if (rects.length === 0) continue;
 
       candidates.push({ el, rects });
@@ -206,6 +240,25 @@ function formatReport(pageName: string, hits: OverlapHit[]): string {
   );
   return `Unintended overlap on ${pageName}:\n${lines.join('\n')}`;
 }
+
+test('the detector catches a real overlap and ignores content clipped out of view (#274)', async ({ page }) => {
+  await page.goto('/tests/fixtures/blank.html', { waitUntil: 'load' });
+  await page.setContent(`
+    <div style="font: 16px/20px sans-serif; width: 400px">
+      <p id="first">First line of real text</p>
+      <p id="second" style="position: relative; margin-top: -30px">Second line drawn on the first</p>
+    </div>
+    <div style="height: 60px; overflow: auto; width: 400px">
+      <p style="margin: 0 0 40px; font: 16px/20px sans-serif">Inside a scroller</p>
+      <p id="scrolled-away" style="margin: 0; font: 16px/20px sans-serif">Scrolled out of view</p>
+    </div>
+    <p id="below" style="margin: 0; font: 16px/20px sans-serif; width: 400px">Text directly below the scroller</p>
+  `);
+  const hits = await detectOverlaps(page);
+  const pairs = hits.map((h) => `${h.a} / ${h.b}`).join('\n');
+  expect(pairs, 'a real overlap must be reported').toMatch(/#first[^\n]*#second|#second[^\n]*#first/);
+  expect(pairs, 'content clipped by its scroller is not painted, so it overlaps nothing').not.toMatch(/scrolled-away/);
+});
 
 for (const target of TARGET_PAGES) {
   test(`no unintended element overlap on ${target.name} (#274, §24)`, async ({ page }) => {
