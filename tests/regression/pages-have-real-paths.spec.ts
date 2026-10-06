@@ -41,7 +41,12 @@ test('a page that is also a folder of the site is listed, and only those', () =>
 test('404.html is index.html plus the site root, nothing else', () => {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const committed = fs.readFileSync(path.join(ROOT, '404.html'), 'utf8');
-  expect(committed, 'run node scripts/generate-404.mjs').toBe(build404(index, pagesBase()));
+  // The ?v= cache keys are left out: main's stamp workflow rewrites them in
+  // index.html on every merge and regenerates 404.html in the same step, so a
+  // branch is one stamp behind main's index until it merges.
+  const unstamped = (html: string) => html.replace(/\?v=\d+\.\d+\.\d+/g, '?v=');
+  expect(unstamped(committed), 'run node scripts/generate-404.mjs')
+    .toBe(unstamped(build404(index, pagesBase())));
   expect(committed).toContain('<base href="/wb-starter/">');
 });
 
