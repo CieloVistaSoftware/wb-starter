@@ -54,15 +54,15 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     await expect(card).toHaveAttribute('x-ready', '', { timeout: 20000 });
     await expect(card.locator(':scope > header > h3')).toHaveText('Build resilient interfaces');
     await expect(card.locator(':scope > header > p')).toHaveText('Separate structure from behavior');
-    await expect(card.locator(':scope > main')).toContainText('Keep content readable and focused');
-    await expect(card.locator(':scope > main')).toContainText('applies behavior directly to the element');
+    await expect(card.locator(':scope > .x-card__body')).toContainText('Keep content readable and focused');
+    await expect(card.locator(':scope > .x-card__body')).toContainText('applies behavior directly to the element');
 
     // Get detailed measurements
     const measurements = await card.evaluate((node: HTMLElement) => {
       const rect = node.getBoundingClientRect();
       const styles = getComputedStyle(node);
       const header = (node as any).querySelector(':scope > header');
-      const main = (node as any).querySelector(':scope > main');
+      const main = (node as any).querySelector(':scope > .x-card__body');
 
       // Parse padding values (handle rem, px, etc.)
       const parseSize = (value: string) => {
@@ -157,7 +157,7 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     // Check header/body spacing
     const spacingData = await card.evaluate((node: HTMLElement) => {
       const header = (node as any).querySelector(':scope > header');
-      const main = (node as any).querySelector(':scope > main');
+      const main = (node as any).querySelector(':scope > .x-card__body');
       const title = header?.querySelector(':scope > h3');
       const body = main?.querySelector('p');
 
@@ -203,7 +203,7 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
 
     const card = demo.locator(`.x-demo__grid ${QUICK_START_CARD}`).first();
-    await expect(card.locator(':scope > main')).toContainText('Keep content readable and focused');
+    await expect(card.locator(':scope > .x-card__body')).toContainText('Keep content readable and focused');
     // The doc link is anchored on the OUTER x-demo, not inside the card
     // (#630/#641: one link per demo block, never clipped by the card), so a
     // card rebuilding its Light DOM can no longer wipe it -- count it there.

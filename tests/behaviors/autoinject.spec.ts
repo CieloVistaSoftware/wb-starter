@@ -67,7 +67,7 @@ test.describe('Auto-Inject Demo', () => {
       const article = page.locator('#fixture-article');
       await expect(article).toHaveAttribute('x-ready', '');
       await expect(article).not.toHaveClass(/x-card/);
-      await expect(article.locator(':scope > main')).toHaveText('An article, auto-injected as a card.');
+      await expect(article.locator(':scope > .x-card__body')).toHaveText('An article, auto-injected as a card.');
       await expect(article).toHaveCSS('display', 'flex');
     });
   });

@@ -75,7 +75,8 @@
     },
     {
       "name": "main",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "createdWhen": "content OR body",
       "description": "Card content"

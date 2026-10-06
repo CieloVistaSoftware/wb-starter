@@ -17,7 +17,7 @@
 | `<aside>` | Tangentially related | Sidebars, callouts, pull quotes |
 | `<nav>` | Navigation | Menus, breadcrumbs, pagination |
 | `<header>` | Introductory content | Card headers, page headers, section headers |
-| `<main>` | Main content | Primary content area, card body |
+| `<main>` | Main content | The page's one primary content area. Never inside a card: `<main>` is only valid under `html`, `body`, `div` or `form`, so a card body is `<div class="x-card__body">` (#945) |
 | `<footer>` | Footer content | Card footers, page footers, actions |
 | `<figure>` | Self-contained media | Images with captions, diagrams |
 | `<figcaption>` | Figure caption | Caption for figure |
@@ -83,7 +83,7 @@
   <header class="x-card__header">
     <h3>Title</h3>
   </header>
-  <main class="x-card__main"> Content goes here </main>
+  <div class="x-card__body"> Content goes here </div>
   <footer class="x-card__footer">
     <button>Action</button>
   </footer>
@@ -212,10 +212,10 @@
   <header>
     <span class="icon">📈</span>
   </header>
-  <main>
+  <div class="x-card__body">
     <data value="1234">1,234</data>
     <p>Total Users</p>
-  </main>
+  </div>
 </article>
 <!-- Progress bar -->
 <progress
@@ -317,7 +317,7 @@ element.innerHTML = `
 // CORRECT
 element.innerHTML = `
   <header class="x-card__header"><h3>${title}</h3></header>
-  <main class="x-card__main">${content}</main>
+  <div class="x-card__body">${content}</div>
 `;
 ```
 
@@ -351,8 +351,8 @@ Schemas MUST enforce semantic elements:
         "tagName": "HEADER",
         "required": false
       },
-      ".x-card__main": {
-        "tagName": "MAIN",
+      ".x-card__body": {
+        "tagName": "DIV",
         "required": true
       },
       ".x-card__footer": {

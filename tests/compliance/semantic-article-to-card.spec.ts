@@ -13,7 +13,7 @@ test('semantic <article> should be processed to card synchronously on page load'
 
   // Should keep its authored card structure as direct children
   await expect(article.locator(':scope > header')).toHaveCount(1);
-  await expect(article.locator(':scope > main')).toHaveCount(1);
+  await expect(article.locator(':scope > .x-card__body')).toHaveCount(1);
   await expect(article.locator(':scope > footer')).toHaveCount(1);
 
   // Should be styled as a card (not just a plain article)

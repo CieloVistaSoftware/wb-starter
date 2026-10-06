@@ -46,13 +46,13 @@ test.describe('.page__hero never swallows page sections (unclosed-div structural
       // Cards carry no .x-card/.x-card__header/.x-card__main (a8a7362e); the
       // parts are the article's own <header>, <main> and <footer>.
       const card = [...document.querySelectorAll('#behaviors-live-example article')]
-        .find((c) => c.querySelector(':scope > header') && c.querySelector(':scope > main') && c.querySelector(':scope > footer'));
+        .find((c) => c.querySelector(':scope > header') && c.querySelector(':scope > .x-card__body') && c.querySelector(':scope > footer'));
       if (!card) return null;
       const ta = (sel: string) => {
         const el = card.querySelector(sel);
         return el ? getComputedStyle(el).textAlign : null;
       };
-      return { header: ta(':scope > header'), main: ta(':scope > main'), footer: ta(':scope > footer') };
+      return { header: ta(':scope > header'), main: ta(':scope > .x-card__body'), footer: ta(':scope > footer') };
     });
     expect(aligns).not.toBeNull();
     // 'start' (the browser default, no rule matched) and 'left' (an explicit

@@ -259,7 +259,7 @@ test.describe('Card Structure', () => {
     const card = page.locator('#test-card-structure');
     
     const header = card.locator('header');
-    const main = card.locator('main');
+    const main = card.locator('.x-card__body'); // #945: the body is a div, not <main>
     const footer = card.locator('footer');
     
     expect(await header.count()).toBe(1);

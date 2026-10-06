@@ -15,7 +15,7 @@ test.describe('Card Schema-First Architecture', () => {
     
     // Check that the original content is still there
     await expect(card.locator('h3')).toHaveText('Semantic Title');
-    await expect(card.locator('main')).toHaveText('Semantic Body');
+    await expect(card.locator('.x-card__body')).toHaveText('Semantic Body');
     await expect(card.locator('footer')).toHaveText('Semantic Footer');
   });
 
@@ -38,7 +38,7 @@ test.describe('Card Schema-First Architecture', () => {
     
     // The schema-builder should have built the structure
     await expect(card.locator('h3')).toHaveText('Builder Title');
-    await expect(card.locator('main')).toHaveText('Builder Body');
+    await expect(card.locator('.x-card__body')).toHaveText('Builder Body');
   });
 
 });

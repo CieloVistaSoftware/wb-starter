@@ -158,7 +158,7 @@ test.describe('Card Rendering', () => {
     // The authored body, verbatim from cards.html's #demo-card-1. It used to
     // expect the word "article", which that demo's text no longer contains --
     // the card was rendering its content correctly all along.
-    await expect(card.locator('main')).toContainText('This is a basic card with default styling.');
+    await expect(card.locator('.x-card__body')).toContainText('This is a basic card with default styling.');
   });
 
   // #964: `variant` is an ATTRIBUTE now, not a `--glass` class, and the badge

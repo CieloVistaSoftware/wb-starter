@@ -89,7 +89,8 @@
     },
     {
       "name": "main",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "required": true,
       "content": "<slot>{{content}}</slot>",

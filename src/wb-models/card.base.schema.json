@@ -25,7 +25,8 @@
         "createdWhen": "title property is set"
       },
       "main": {
-        "tag": "MAIN",
+        "tag": "DIV",
+        "class": "x-card__body",
         "contains": [
           "user content"
         ],
@@ -126,9 +127,9 @@
       "warnIf": "DIV"
     },
     "requiredChildren": {
-      ".x-card__main": {
-        "description": "Main content area - always created",
-        "tagName": "MAIN",
+      ".x-card__body": {
+        "description": "Body content area (a <div>, never <main>: #945)",
+        "tagName": "DIV",
         "required": true
       }
     },

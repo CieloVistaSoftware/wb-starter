@@ -22,7 +22,7 @@ test('Semantic Article should have Card behavior', async ({ page }) => {
   await expect(header).toHaveCSS('display', 'grid');
 
   // 3. The authored main was preserved and gets the card body's 1rem padding.
-  const main = article.locator(':scope > main');
+  const main = article.locator(':scope > .x-card__body');
   await expect(main).toContainText('This is the main content');
   await expect(main).toHaveCSS('padding-left', '16px');
 

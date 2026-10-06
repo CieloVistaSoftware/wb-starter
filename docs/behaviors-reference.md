@@ -63,7 +63,7 @@ behavior name, and on a semantic element it is injected for you.
   <header>
     <h3>Title</h3>
   </header>
-  <main>Content</main>
+  <p>Content</p>
 </article>
 </div>
 

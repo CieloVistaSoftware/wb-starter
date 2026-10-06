@@ -148,11 +148,14 @@ and position, so the markup is exactly what it looks like:
     <h3>                 ← the TITLE, from `title`: article > header > h3
     <p>                  ← the SUBTITLE, from `subtitle`: article > header > p
     <span>               ← the BADGE, from `badge`: article > header > span:last-child
-  <main>                 ← the BODY, your content: article > main
+  <div class="x-card__body">  ← the BODY, your content (#945)
   <footer>               ← the FOOTER, from `footer`: .x-card__footer
 ```
 
-The footer is the one part still named by class. `variant`, `elevated` and
+The body and the footer are the two parts named by class. The body is a
+`<div>`, not a `<main>`: HTML only allows `<main>` under `html`, `body`, `div`
+or `form`, so a `<main>` inside a card is invalid, and an authored `<main>`
+becomes this same `<div class="x-card__body">` (#945). `variant`, `elevated` and
 `clickable` are read straight off the element as attributes
 (`article[variant="glass"]`); `size` becomes an `x-card--{size}` class.
 

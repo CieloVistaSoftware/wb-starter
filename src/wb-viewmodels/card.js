@@ -25,7 +25,8 @@ import { dragStartPoint } from '../core/drag-start.js';
  * SEMANTIC STANDARD (MANDATORY):
  * - Container: <article> (preferred) or <section>
  * - Header content (title, subtitle): <header>
- * - Main content: <main>
+ * - Body content: <div class="x-card__body"> -- never <main>, which is only
+ *   valid under html/body/div/form, not inside an <article> (#945)
  * - Footer content (actions, buttons): <footer>
  * 
  * ALL text elements are EDITABLE via double-click in the builder
@@ -137,6 +138,44 @@ function cardHtmlPart(parent, tag, className, html) {
   return el;
 }
 
+// THE CARD BODY (#945). It used to be a <main>, built at eight sites. The spec
+// only allows <main> under html, body, div or form, so every card body inside
+// an <article>, <section> or <aside> was invalid HTML -- 273 of them on
+// cards.html, each one also a "main" landmark competing with the page's own.
+// John: "the main context should fit without needing a main tag."
+//
+// One element, one class, every card: <div class="x-card__body">. A typed card
+// whose body has its own part class (x-notification__content, ...) keeps it as
+// a second class; the body is still the same element everywhere.
+const CARD_BODY_CLASS = 'x-card__body';
+
+function cardBody(parent, partClass) {
+  return cardPart(parent, 'div', partClass ? `${CARD_BODY_CLASS} ${partClass}` : CARD_BODY_CLASS);
+}
+
+/** The card's body, if it already has one: built, or still an authored <main>. */
+function findCardBody(element) {
+  return element.querySelector(`:scope > .${CARD_BODY_CLASS}, :scope > main`);
+}
+
+// An AUTHORED <main> inside a card (`<article><header>..</header><main>..
+// </main></article>`, the shape card.md taught) is the card's body, and is
+// invalid there for the same reason. It becomes the body element: the same
+// attributes and the same live child nodes, moved rather than copied, so
+// anything already holding a reference to a child keeps working.
+function adoptAsCardBody(el) {
+  if (el.tagName !== 'MAIN') {
+    el.classList.add(CARD_BODY_CLASS);
+    return el;
+  }
+  const body = document.createElement('div');
+  for (const { name, value } of Array.from(el.attributes)) body.setAttribute(name, value);
+  body.classList.add(CARD_BODY_CLASS);
+  body.append(...el.childNodes);
+  el.replaceWith(body);
+  return body;
+}
+
 function cardImg(parent, className, src, alt) {
   const img = cardPart(null, 'img', className);
   img.src = src;
@@ -246,11 +285,11 @@ export function composeCard(element, options = {}) {
   //   - schemaProcessed: the structure came from $view, so innerHTML is the
   //     BUILT markup, not the author's -- re-injecting it would nest the card
   //     inside itself.
-  //   - an existing .x-card__main/__header: a MutationObserver re-visit of an
+  //   - an existing .x-card__body/__header: a MutationObserver re-visit of an
   //     already-built card, same nesting hazard.
   //   - trim(): whitespace-only innerHTML is truthy, and would otherwise
-  //     manufacture an empty <main> -- the blank-line problem #608 removed.
-  const alreadyBuilt = !!element.querySelector(':scope > .x-card__main, :scope > .x-card__header, :scope > .x-card__body');
+  //     manufacture an empty body -- the blank-line problem #608 removed.
+  const alreadyBuilt = !!element.querySelector(`:scope > .x-card__header, :scope > .${CARD_BODY_CLASS}`);
   const authoredContent = (schemaProcessed || alreadyBuilt) ? '' : (element.innerHTML || '').trim();
 
   const config = {
@@ -547,25 +586,27 @@ export function composeCard(element, options = {}) {
      * Each of them calls this once after building, rather than growing eight
      * copies of the same six lines.
      *
-     * No-ops when there is nothing authored, or when a <main> already carries
+     * No-ops when there is nothing authored, or when a body already carries
      * it -- appending an empty box is the blank-line problem #608 removed.
      */
     renderAuthoredContent: () => {
       if (!config.content) return null;
-      // An existing <main> is filled rather than skipped. cardstats builds its
-      // own EMPTY .x-card__main, so bailing out on "a main already exists"
-      // left the content homeless AND left a styled empty box on screen -- the
+      // An existing body is filled rather than skipped. cardstats builds its
+      // own EMPTY body, so bailing out on "a body already exists" left the
+      // content homeless AND left a styled empty box on screen -- the
       // blank-line problem of #608 with the content loss of #678 on top.
-      // Only fill it when it is empty: a main with real content in it is
+      // Only fill it when it is empty: a body with real content in it is
       // somebody else's, and overwriting it would be a different bug.
-      const existing = element.querySelector(':scope > main');
-      if (existing) {
+      const found = findCardBody(element);
+      if (found) {
+        const existing = adoptAsCardBody(found);
         if (existing.innerHTML.trim()) return null;
         existing.innerHTML = config.content;
         return existing;
       }
-      // card.css targets `article > main`.
-      return cardHtmlPart(element, 'main', '', config.content);
+      const body = cardBody(element);
+      body.innerHTML = config.content;
+      return body;
     },
     
     // =========================================
@@ -598,11 +639,10 @@ export function composeCard(element, options = {}) {
     },
     
     /**
-     * Create the main content area
+     * Create the body content area (a <div class="x-card__body">, #945)
      */
     createMain: (content = '') => {
-      const m = document.createElement('main');
-      // card.css targets `article > main`.
+      const m = cardBody(null);
       
       // Use config.content if no content passed
       const finalContent = content || config.content;
@@ -727,11 +767,14 @@ export function composeCard(element, options = {}) {
       // MAIN — render ONLY authored content. Never inject placeholder text: a card
       // with no body (e.g. an image card) must show nothing there, not phantom
       // "Lorem ipsum" that isn't in the source. (#202)
+      //
+      // An authored <main> handed in as the existing body becomes the body
+      // element first (#945): a <main> is invalid inside the card.
+      if (main) main = adoptAsCardBody(main);
       if (showMain) {
         const mainText = mainContent || config.content;
         if (!main && mainText) {
-          const mainEl = document.createElement('main');
-          // card.css targets `article > main`.
+          const mainEl = cardBody(null);
           mainEl.innerHTML = mainText;
           main = mainEl;
           if (footer) {
@@ -746,7 +789,7 @@ export function composeCard(element, options = {}) {
              main.innerHTML = config.content;
           }
           // #608: John -- "if there is no content, then don't show blank
-          // lines." A schema-built <main> shell with genuinely nothing to
+          // lines." A schema-built body shell with genuinely nothing to
           // show (no config.content, no authored innerHTML) used to get
           // enhanced anyway (padding/flex/color applied), leaving a
           // styled-but-empty box that reads as a blank line -- the same
@@ -758,9 +801,8 @@ export function composeCard(element, options = {}) {
             main.remove();
             main = null;
           }
-          // Already a <main> inside the card -- card.css matches the tag. The
-          // padding/flex/colour fallbacks written onto an AUTHORED <main> here
-          // were card.css's `article > main` values; deleted (#779).
+          // The padding/flex/colour fallbacks once written onto an AUTHORED
+          // body here were card.css's own body values; deleted (#779).
         }
       }
       
@@ -825,8 +867,8 @@ function badgeAlreadyRendered(element, badge) {
   );
 }
 
-/** <main> elements card() built around loose body content (see card()). */
-const gatheredMains = new WeakSet();
+/** Bodies card() built around loose body content (see card()). */
+const gatheredBodies = new WeakSet();
 
 export function card(element, options = {}) {
   // #202: a legacy MVVM template (schema $view / views-registry / partial) may
@@ -841,10 +883,10 @@ export function card(element, options = {}) {
     element.innerHTML = legacyBody ? legacyBody.innerHTML : '';
   }
 
-  // FIX: Un-wrap auto-generated main if it contains semantic elements
-  // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
-  const autoMain = element.querySelector(':scope > main');
-  if (autoMain && (autoMain.querySelector('header') || autoMain.querySelector('main'))) {
+  // FIX: Un-wrap an auto-generated body if it contains semantic elements
+  // This happens because SchemaBuilder wraps ALL content in the body part defined in schema
+  const autoMain = findCardBody(element);
+  if (autoMain && autoMain.querySelector(`header, main, .${CARD_BODY_CLASS}`)) {
     const fragment = document.createDocumentFragment();
     while (autoMain.firstChild) {
       fragment.appendChild(autoMain.firstChild);
@@ -855,31 +897,31 @@ export function card(element, options = {}) {
 
   // Check for existing semantic structure (direct children)
   const hasHeader = element.querySelector(':scope > header');
-  let hasMain = element.querySelector(':scope > main');
+  // A built body, or an authored <main> (buildStructure adopts it, #945).
+  let hasMain = findCardBody(element);
   const hasFooter = element.querySelector(':scope > footer');
   
   // Determine if we are upgrading raw content
   const isSemantic = hasHeader || hasMain || hasFooter;
 
-  // A semantic card with no <main> but loose body content between its
+  // A semantic card with no body but loose body content between its
   // header/footer -- <article><div x-demo>…</div><footer></footer></article>
   // (pages/offshoring.html). Nothing below captures that content (semantic
   // mode passes content ''), so composeCard() fell back to the WHOLE
-  // innerHTML and buildStructure() pasted it, as a string, into a new <main>
+  // innerHTML and buildStructure() pasted it, as a string, into a new body
   // while the originals stayed put: the body rendered twice, and the copy was
   // a frozen snapshot of whatever the behaviors inside had built so far -- a
   // <div x-demo> copied mid-measurement kept `x-demo--measuring` forever.
-  // MOVE the loose nodes into the <main> instead: one body, live elements.
+  // MOVE the loose nodes into the body instead: one body, live elements.
   if (isSemantic && !hasMain) {
     const loose = Array.from(element.childNodes).filter((n) => n !== hasHeader && n !== hasFooter
       && n.nodeType !== Node.COMMENT_NODE
       && !(n.nodeType === Node.ELEMENT_NODE && /^(HEADER|FOOTER)$/.test(n.tagName)));
     if (loose.some((n) => n.nodeType === Node.ELEMENT_NODE || (n.textContent || '').trim())) {
-      const bodyEl = document.createElement('main');
+      const bodyEl = cardBody(null);
       loose.forEach((n) => bodyEl.appendChild(n));
-      // Styled by card.css like any <main> this file creates -- not given the
-      // inline fallbacks an AUTHORED <main> gets below.
-      gatheredMains.add(bodyEl);
+      // Styled by card.css like any body this file creates.
+      gatheredBodies.add(bodyEl);
       element.insertBefore(bodyEl, hasFooter || null);
       hasMain = bodyEl;
     }
@@ -894,7 +936,7 @@ export function card(element, options = {}) {
   // #683: the precedence rule, one for every card path -- an explicit
   // content="..." attribute WINS over the text between the tags, the same
   // order composeCard() and the typed cards (cardimage, ...) already use.
-  // The children used to be left in place beside the attribute's <main>, so
+  // The children used to be left in place beside the attribute's body, so
   // both rendered: the attribute in the body and the children loose above it.
   const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
 
@@ -910,7 +952,7 @@ export function card(element, options = {}) {
 
   // Clear the authored children once they are accounted for: in raw mode
   // they were captured above and buildStructure() rebuilds them inside the
-  // new <main> (clearing stops it duplicating them); when the attribute wins
+  // new body (clearing stops it duplicating them); when the attribute wins
   // (#683) they are the losing side of the precedence rule above.
   if (!isSemantic && element.innerHTML.trim()) {
     element.innerHTML = '';
@@ -918,9 +960,9 @@ export function card(element, options = {}) {
   
   // Build structure handles both creation and enhancement. A semantic card
   // with no body keeps none: its authored header/footer are not body content,
-  // and building a <main> from innerHTML would paste copies of them.
+  // and building a body from innerHTML would paste copies of them.
   // #683: nor does a card with no content at all -- a whitespace-only
-  // <div x-card> got an empty padded <main>, the blank line #608 removed
+  // <div x-card> got an empty padded body, the blank line #608 removed
   // from the schema-built path.
   base.buildStructure({ showMain: isSemantic ? !!hasMain : !!String(initialContent || '').trim() });
   
@@ -1585,8 +1627,7 @@ export function cardstats(element, options = {}) {
   }
 
   // Semantic: Main content
-  const content = document.createElement('main');
-  // card.css targets `article > main`.
+  const content = cardBody(null);
 
   if (config.value) {
     const valueEl = document.createElement('data');
@@ -1891,7 +1932,7 @@ export function cardnotification(element, options = {}) {
   cardPart(element, 'span', 'x-notification__icon', iconText);
 
   // Content
-  const content = cardPart(null, 'main', 'x-notification__content');
+  const content = cardBody(null, 'x-notification__content');
   if (title) cardPart(content, 'strong', 'x-notification__title', title);
   if (message) cardPart(content, 'div', 'x-notification__message', message);
   element.appendChild(content);
@@ -2362,8 +2403,7 @@ export function cardexpandable(element, options = {}) {
   const applyMaxHeight = (el, value) => setRule(el, 'max-height', { '--x-card-expandable-max-height': value });
 
   // Content
-  const contentWrap = document.createElement('main');
-  contentWrap.className = 'x-card__expandable-content';
+  const contentWrap = cardBody(null, 'x-card__expandable-content');
   // #943: padding / overflow / transition are ALL already in card.css's
   // `.x-card__expandable-content` -- the audit classified them COVERED
   // (removing the inline declaration changed nothing on the live element).
@@ -2502,9 +2542,8 @@ export function cardminimizable(element, options = {}) {
   element.appendChild(header);
 
   // Content
-  const content = document.createElement('main');
   // Box and the collapsed state (`.x-card--minimized ...`) are card.css.
-  content.className = 'x-card__minimizable-content';
+  const content = cardBody(null, 'x-card__minimizable-content');
   // Same placeholder as cardexpandable's.
   content.innerHTML = base.config.content || rawContent || CARD_CONTENT_PLACEHOLDER;
   element.appendChild(content);
@@ -2969,7 +3008,7 @@ export function cardportfolio(element, options = {}) {
   element.appendChild(header);
 
   // ==================== MAIN CONTENT ====================
-  const main = cardPart(null, 'main', 'x-portfolio__main');
+  const main = cardBody(null, 'x-portfolio__main');
   // padding now lives in card.css's `.x-portfolio__main` base rule -- see
   // the avatarWrap comment above; lets the compact variant's own padding
   // override win without !important.

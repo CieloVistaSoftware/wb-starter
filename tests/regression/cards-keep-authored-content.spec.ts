@@ -106,7 +106,7 @@ test.describe('cards keep the author content (#678)', () => {
       await new Promise((r) => setTimeout(r, 60));
       const card = document.querySelector('#c') as HTMLElement;
       // The card's own body: a direct <main> child (it carries no class).
-      const main = card.querySelector(':scope > main') as HTMLElement | null;
+      const main = card.querySelector(':scope > .x-card__body') as HTMLElement | null;
       return { all: card.innerText.trim(), body: (main?.innerText || '').trim() };
     });
     expect(text.body, 'the attribute fills the card body').toBe('FROM_ATTRIBUTE');
@@ -129,7 +129,7 @@ test.describe('cards keep the author content (#678)', () => {
       const el = document.querySelector('#e')!;
       // Any direct <main> body, classed or not: the old .x-card__main
       // selector matched no card body at all, so this could never fail.
-      return [...el.querySelectorAll(':scope > main')].filter((m) => !m.innerHTML.trim()).length;
+      return [...el.querySelectorAll(':scope > .x-card__body')].filter((m) => !m.innerHTML.trim()).length;
     });
     expect(mains, 'a whitespace-only card must not get an empty body box').toBe(0);
   });

@@ -16,12 +16,13 @@ import { elementReady } from '../base';
 /*
  * a8a7362e ("specificity replaces class injection") stopped cards emitting
  * x-card / x-card__header / __main / __title: card.css names each part by
- * tag and position (`article > header`, `article > main`, `article > header
- * > h3`). The selectors below name the same parts the same way.
+ * tag and position (`article > header`, `article > header > h3`). The body
+ * is the exception since #945: a <div class="x-card__body">, because a <main>
+ * is invalid inside a card. The selectors below name the same parts the same way.
  */
 const CARD = 'article';
 const CARD_HEADER = 'article > header';
-const CARD_MAIN = 'article > main';
+const CARD_MAIN = 'article > .x-card__body'; // #945: the body is a div, not <main>
 const CARD_TITLE = 'article > header > :is(h1, h2, h3, h4)';
 
 test.describe('Card Spacing — Standard §13 Compliance', () => {
@@ -134,7 +135,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       return {
         minHeight: getComputedStyle(el).minHeight,
         height: getComputedStyle(el).height,
-        lineHeight: getComputedStyle(el.querySelector(':scope > main') || el).lineHeight,
+        lineHeight: getComputedStyle(el.querySelector(':scope > .x-card__body') || el).lineHeight,
       };
     });
 

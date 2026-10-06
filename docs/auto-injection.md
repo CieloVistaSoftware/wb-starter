@@ -82,7 +82,7 @@ The following HTML elements are automatically mapped to WB behaviors:
   <header>
     <h3>Title</h3>
   </header>
-  <main>Content</main>
+  <p>Content</p>
 </article>
 ```
 
@@ -92,7 +92,7 @@ The following HTML elements are automatically mapped to WB behaviors:
   <header>
     <h3>Title</h3>
   </header>
-  <main>Content</main>
+  <p>Content</p>
 </article>
 ```
 
