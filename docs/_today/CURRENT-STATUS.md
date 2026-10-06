@@ -13,6 +13,20 @@
 
 ---
 
+**Updated 2026-10-05, 9:55 PM CDT.** Link-share preview shows the wb logo (#1585, PR #1586, merged).
+
+**Task:** John, from a LinkedIn post of the site: change the preview icon (the white lightning bolt on purple) to `wb.png`.
+
+**Files touched:** `assets/icons/og-image.jpg` (new), `index.html` (`og:image`, `twitter:image`, plus `og:image:width`/`height`/`alt`).
+
+**Last action:** `images/wb.png` was deleted in #795 (1.5 MB), so it came back from history as a 512x512 JPEG of 25,875 bytes in `assets/icons/`, under the 100 KB ceiling of `header-logo-is-not-a-megabyte.spec.ts`. The PWA icons in `manifest.json` are unchanged. All 17 PR checks were green.
+
+**Next step:** John re-runs linkedin.com/post-inspector on the site URL once, so posts already shared drop the cached bolt. Then work the open issues.
+
+**Open questions:** should the PWA/app icons (`assets/icons/icon-*.png`, made by `scripts/generate-icons.js` from the bolt SVG) also become the wb logo? Not changed here; only the share card was asked for.
+
+---
+
 **Updated 2026-10-05, night.** `<nav>` picks up navbar (#958).
 
 **Files touched:** `src/core/tag-map.js` (`nav: 'navbar'`), `src/core/replacement-guard.js`, `src/wb-viewmodels/navigation.js`, `src/styles/behaviors/navbar.css`, `demos/site/layout.html`, `data/behavior-examples.json`, `docs/behaviors/navbar.md`, `docs/behavior-cross-reference.md`, `docs/semantic-standard.md`, `docs/INTELLISENSE-TOOLTIPS.md`, `docs/audits/HOST-CHILD-DISPATCH-AUDIT.md`.
