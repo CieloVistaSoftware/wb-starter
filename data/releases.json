@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.335",
+      "date": "2026-10-06",
+      "summary": "To get a green glow you had to write color=&quot;var(--success-color)&quot;, knowing the theme&#39;s internal token name; color=&quot;success&quot; produced --glow-color: success, which is no colour, so the glow silently stayed primary. The same token spelling was taught for x-grid background and x-stack bg. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1632\" target=\"_blank\" rel=\"noopener\">PR 1632</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Colour attributes take the theme&#39;s colour name, not var(--token)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/907\" target=\"_blank\" rel=\"noopener\">#907</a>",
+          "issues": [
+            907
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/playground.html and find &quot;Glowing (always on, no click)&quot;. Before: its markup read color=&quot;var(--success-color)&quot;. Now: it reads color=&quot;success&quot; and glows green. On the Grid doc, the Background example now reads background=&quot;bg-tertiary&quot;."
+    },
+    {
       "version": "1.0.334",
       "date": "2026-10-06",
       "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1628\" target=\"_blank\" rel=\"noopener\">PR 1628</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",

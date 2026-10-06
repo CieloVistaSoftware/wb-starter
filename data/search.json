@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5862
+    "totalWords": 5863
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.334\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.334\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.335\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.335\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -2050,10 +2050,10 @@
           "text": "Night mode"
         }
       ],
-      "content": "# Glow `x-glow` gives the element a halo in `color`, which defaults to the theme's primary colour: a pulsing ring around the box, or with `target=\"text\"` a steady glow around the letters. Use it sparingly to pull attention to one control or one heading. ## Usage Start trial A glowing heading: the letters glow, not the line box, and it holds steady. Night mode The box glow pulses; a reader who prefers reduced motion gets the glow without the pulse. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `target` | `box` \\| `text` | `box` | What glows. `box` haloes the element's rectangle and pulses; `text` haloes the letters with a steady text-shadow, for headings. | | `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. | Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)",
+      "content": "# Glow `x-glow` gives the element a halo in `color`, which defaults to the theme's primary colour: a pulsing ring around the box, or with `target=\"text\"` a steady glow around the letters. Use it sparingly to pull attention to one control or one heading. ## Usage Start trial A glowing heading: the letters glow, not the line box, and it holds steady. Night mode A theme colour by name: `color=\"success\"`, never the token behind it (`var(--success-color)`). Saved The box glow pulses; a reader who prefers reduced motion gets the glow without the pulse. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `target` | `box` \\| `text` | `box` | What glows. `box` haloes the element's rectangle and pulses; `text` haloes the letters with a steady text-shadow, for headings. | | `color` | `primary` \\| `secondary` \\| `accent` \\| `success` \\| `warning` \\| `danger` \\| `info`, or any CSS colour | `primary` | Colour of the glow. A theme name follows the active theme; a hex, `rgb()` or `hsl()` pins it. Never a `var(--…)` token. | Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/grid",
@@ -2061,10 +2061,10 @@
       "title": "grid",
       "description": null,
       "headings": [],
-      "content": "# x-grid A responsive CSS Grid layout — items auto-fit into columns based on a minimum item width, so the column count collapses naturally on narrow screens without a media query. - **Type:** Behavior (works as ` ` or `x-grid` on any element) - **Source:** [`grid()` in `src/wb-viewmodels/layouts.js`](../../src/wb-viewmodels/layouts.js) ## Basic Usage Cell 1 Cell 2 Cell 3 ## Attributes | Attribute | Type | Default | Description | |-----------|------|---------|--------------| | `columns` | number | `3` | Target column count. Columns auto-collapse on narrow viewports — this sets the minimum item width used for that collapse (2→280px, 3→250px, 4→200px, 5→180px, 6→150px), not a hard column count. | | `rows` | number | *(auto)* | Explicit row track count (`grid-template-rows: repeat(N, auto)`). Omit to let rows grow automatically as content is added. | | `gap` | string | `1rem` | Any CSS gap value. | | `min-width` | string | *(computed from `columns`)* | Overrides the auto-computed minimum item width used for column collapse. | | `align` | string | *(none)* | `align-items` — vertical alignment of each cell's content. | | `justify` | string | *(none)* | `justify-items` — horizontal alignment of each cell's content. | | `center` | boolean | `false` | Shorthand for `align=\"center\" justify=\"center\"` plus centered text — the common case of \"center everything in every cell.\" | | `background` | string | *(none)* | Any CSS background value (a `var(--…)` token, not a literal color). | | `alt-rows` | boolean | `false` | Zebra-stripes even-position children using `var(--bg-secondary)`. | | `headers` | string | *(none)* | Comma-separated column labels, rendered as a header row prepended before the grid's own content. | ## Column Count 1 2 3 4 ## Explicit Rows A B C D ## Centered Content Centered Content ## Background On a themed background ## Alternating Row Colors Row 1 Row 2 Row 3 Row 4 ## Column Headers Alice 30 alice@example.com Bob 25 bob@example.com ## Mixed: Data Table Style Headers, alt-rows, and a fixed column count combine into a lightweight data-table look without a real ` `. Widget $9.99 42 Gadget $19.99 7 Gizmo $14.99 0 ## Notes - `xalign` is a **card** property (aligns a card's own content left/center/right) — it is not a grid property. Use `align`/`justify`/`center` for grid content alignment instead. - `alt-rows` stripes every other **child element** in DOM order, not visual grid rows — with a fixed `columns` count this lines up with actual rows (as in the examples above); with the default auto-fit column count it stripes by item position instead.",
+      "content": "# x-grid A responsive CSS Grid layout — items auto-fit into columns based on a minimum item width, so the column count collapses naturally on narrow screens without a media query. - **Type:** Behavior (works as ` ` or `x-grid` on any element) - **Source:** [`grid()` in `src/wb-viewmodels/layouts.js`](../../src/wb-viewmodels/layouts.js) ## Basic Usage Cell 1 Cell 2 Cell 3 ## Attributes | Attribute | Type | Default | Description | |-----------|------|---------|--------------| | `columns` | number | `3` | Target column count. Columns auto-collapse on narrow viewports — this sets the minimum item width used for that collapse (2→280px, 3→250px, 4→200px, 5→180px, 6→150px), not a hard column count. | | `rows` | number | *(auto)* | Explicit row track count (`grid-template-rows: repeat(N, auto)`). Omit to let rows grow automatically as content is added. | | `gap` | string | `1rem` | Any CSS gap value. | | `min-width` | string | *(computed from `columns`)* | Overrides the auto-computed minimum item width used for column collapse. | | `align` | string | *(none)* | `align-items` — vertical alignment of each cell's content. | | `justify` | string | *(none)* | `justify-items` — horizontal alignment of each cell's content. | | `center` | boolean | `false` | Shorthand for `align=\"center\" justify=\"center\"` plus centered text — the common case of \"center everything in every cell.\" | | `background` | string | *(none)* | A theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour. Never a `var(--…)` token: name the colour, not its implementation. | | `alt-rows` | boolean | `false` | Zebra-stripes even-position children using `var(--bg-secondary)`. | | `headers` | string | *(none)* | Comma-separated column labels, rendered as a header row prepended before the grid's own content. | ## Column Count 1 2 3 4 ## Explicit Rows A B C D ## Centered Content Centered Content ## Background On a themed background ## Alternating Row Colors Row 1 Row 2 Row 3 Row 4 ## Column Headers Alice 30 alice@example.com Bob 25 bob@example.com ## Mixed: Data Table Style Headers, alt-rows, and a fixed column count combine into a lightweight data-table look without a real ` `. Widget $9.99 42 Gadget $19.99 7 Gizmo $14.99 0 ## Notes - `xalign` is a **card** property (aligns a card's own content left/center/right) — it is not a grid property. Use `align`/`justify`/`center` for grid content alignment instead. - `alt-rows` stripes every other **child element** in DOM order, not visual grid rows — with a fixed `columns` count this lines up with actual rows (as in the examples above); with the default auto-fit column count it stripes by item position instead.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-08-26"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/header",
@@ -2715,10 +2715,10 @@
       "title": "stack",
       "description": null,
       "headings": [],
-      "content": "# Stack Layout Behavior `x-stack` lays its children out in a single column with `gap` between them, and can set a background (`bg`), padding (`pad`) and corner `radius` on the stack itself. ## Usage Queued Running Passed ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `gap` | `string` | `1rem` | CSS gap between stacked children. Accepts any valid CSS length value. | | `bg` | `string` | — | Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables. | | `pad` | `string` | — | CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges). | | `radius` | `string` | — | CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value. | Schema: [`stack.schema.json`](../../src/wb-models/stack.schema.json)",
+      "content": "# Stack Layout Behavior `x-stack` lays its children out in a single column with `gap` between them, and can set a background (`bg`), padding (`pad`) and corner `radius` on the stack itself. ## Usage Queued Running Passed ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `gap` | `string` | `1rem` | CSS gap between stacked children. Accepts any valid CSS length value. | | `bg` | `string` | — | Background of the stack: a theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour (hex, rgb, hsl). | | `pad` | `string` | — | CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges). | | `radius` | `string` | — | CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value. | Schema: [`stack.schema.json`](../../src/wb-models/stack.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/stagelight",
@@ -6309,7 +6309,7 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles"
     ],
-    "334": [
+    "335": [
       "pages/home"
     ],
     "344": [
@@ -6863,6 +6863,7 @@
       "docs/behaviors/cardoverlay",
       "docs/behaviors/collapse",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/x-collapse",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -8494,6 +8495,7 @@
       "docs/behaviors/figure",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/gallery",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/icon",
       "docs/behaviors/kbd",
@@ -8832,7 +8834,9 @@
       "docs/behaviors/darkmode",
       "docs/behaviors/glass",
       "docs/behaviors/glow",
+      "docs/behaviors/grid",
       "docs/behaviors/navbar",
+      "docs/behaviors/stack",
       "docs/behaviors/themecontrol",
       "docs/behaviors/x-darkmode",
       "docs/claude/PAGE-GENERATION",
@@ -14138,6 +14142,7 @@
       "docs/behaviors/formrow",
       "docs/behaviors/fullscreen",
       "docs/behaviors/gallery",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/icon",
       "docs/behaviors/img",
@@ -14370,10 +14375,12 @@
       "docs/behaviors/data",
       "docs/behaviors/glass",
       "docs/behaviors/glow",
+      "docs/behaviors/grid",
       "docs/behaviors/progress",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/span",
       "docs/behaviors/spinner",
+      "docs/behaviors/stack",
       "docs/behaviors/switch",
       "docs/behaviors/time",
       "docs/behaviors/toast",
@@ -15138,6 +15145,8 @@
       "docs/behaviors/floatinglabel",
       "docs/behaviors/footer",
       "docs/behaviors/formrow",
+      "docs/behaviors/glow",
+      "docs/behaviors/grid",
       "docs/behaviors/icon",
       "docs/behaviors/input",
       "docs/behaviors/label",
@@ -15147,6 +15156,7 @@
       "docs/behaviors/searchfield",
       "docs/behaviors/select",
       "docs/behaviors/spinner",
+      "docs/behaviors/stack",
       "docs/behaviors/switch",
       "docs/behaviors/table",
       "docs/behaviors/tabs",
@@ -15762,6 +15772,8 @@
       "docs/behaviors/fieldset",
       "docs/behaviors/figure",
       "docs/behaviors/fix-card",
+      "docs/behaviors/glow",
+      "docs/behaviors/grid",
       "docs/behaviors/img",
       "docs/behaviors/ratio",
       "docs/behaviors/skeleton",
@@ -20923,6 +20935,7 @@
       "pages/themes",
       "docs/behaviors/cardstats",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/search"
     ],
     "eye": [
@@ -22725,7 +22738,6 @@
       "pages/issues",
       "docs/behaviors/label",
       "docs/behaviors/mdhtml",
-      "docs/behaviors/stack",
       "docs/behaviors/time",
       "docs/linkedin-update-article",
       "docs/schema-test-value",
@@ -25465,13 +25477,11 @@
       "docs/behaviors/container",
       "docs/behaviors/data",
       "docs/behaviors/glow",
-      "docs/behaviors/grid",
       "docs/behaviors/mark",
       "docs/behaviors/progress",
       "docs/behaviors/radio",
       "docs/behaviors/release",
       "docs/behaviors/ripple",
-      "docs/behaviors/stack",
       "docs/behaviors/stagelight",
       "docs/behaviors/time",
       "docs/behaviors/toast",
@@ -25631,9 +25641,11 @@
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardhero",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/span",
+      "docs/behaviors/stack",
       "docs/behaviors/toast",
       "docs/code-examples-standard",
       "docs/home-page",
@@ -25778,6 +25790,7 @@
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/grid",
       "docs/behaviors/toast",
       "docs/behaviors/x-behavior",
       "docs/card",
@@ -27606,7 +27619,6 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/clock",
       "docs/behaviors/dropdown",
-      "docs/behaviors/glow",
       "docs/behaviors/pre",
       "docs/behaviors/rating",
       "docs/behaviors/toggle",
@@ -29528,7 +29540,6 @@
       "docs/NOTES-V3-GUIDE",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/stack",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/escape-hatches",
       "docs/schema",
@@ -29781,6 +29792,7 @@
       "docs/behaviors/button",
       "docs/behaviors/cardnotification",
       "docs/behaviors/chip",
+      "docs/behaviors/glow",
       "docs/behaviors/mark",
       "docs/behaviors/notify",
       "docs/behaviors/progress",
@@ -29811,6 +29823,8 @@
       "docs/behaviors/copybutton",
       "docs/behaviors/data",
       "docs/behaviors/form",
+      "docs/behaviors/glow",
+      "docs/behaviors/grid",
       "docs/behaviors/input",
       "docs/behaviors/mark",
       "docs/behaviors/notify",
@@ -29818,6 +29832,7 @@
       "docs/behaviors/select",
       "docs/behaviors/span",
       "docs/behaviors/spinner",
+      "docs/behaviors/stack",
       "docs/behaviors/switch",
       "docs/behaviors/textarea",
       "docs/behaviors/toast",
@@ -29842,6 +29857,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/clock",
       "docs/behaviors/counter",
+      "docs/behaviors/glow",
       "docs/behaviors/mark",
       "docs/behaviors/notify",
       "docs/behaviors/progress",
@@ -31022,7 +31038,6 @@
       "docs/behaviors/footer",
       "docs/behaviors/fullscreen",
       "docs/behaviors/gallery",
-      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/header",
       "docs/behaviors/icon",
@@ -31967,6 +31982,7 @@
     "danger": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/data",
+      "docs/behaviors/glow",
       "docs/behaviors/mark",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "demos/autoinject"
@@ -35376,7 +35392,6 @@
     ],
     "literal": [
       "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/behaviors/grid",
       "docs/behaviors/masked",
       "docs/behaviors/release",
       "docs/behaviors/ripple",
@@ -38190,6 +38205,7 @@
     ],
     "saved": [
       "docs/architecture/standards/ERROR-MESSAGE",
+      "docs/behaviors/glow",
       "docs/behaviors/notes"
     ],
     "optionally": [
@@ -40424,10 +40440,12 @@
       "docs/behaviors/button",
       "docs/behaviors/glass",
       "docs/behaviors/glow",
+      "docs/behaviors/grid",
       "docs/behaviors/mark",
       "docs/behaviors/navbar",
       "docs/behaviors/progress",
       "docs/behaviors/rainbow",
+      "docs/behaviors/stack",
       "docs/behaviors/stat"
     ],
     "belongs": [
@@ -42764,6 +42782,7 @@
     ],
     "hex": [
       "docs/behaviors/colorpicker",
+      "docs/behaviors/glow",
       "docs/behaviors/stack",
       "docs/behaviors/stagelight",
       "docs/styles"
@@ -43638,6 +43657,7 @@
     ],
     "token": [
       "docs/behaviors/fill",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/standards/RELEASE-PROCESS",
       "demos/site/content"
@@ -43729,8 +43749,7 @@
       "docs/behaviors/floatinglabel"
     ],
     "pin": [
-      "docs/behaviors/footer",
-      "docs/behaviors/glow"
+      "docs/behaviors/footer"
     ],
     "setcopyright": [
       "docs/behaviors/footer"
@@ -43894,7 +43913,19 @@
       "docs/behaviors/skeleton",
       "docs/themes"
     ],
-    "6366f1": [
+    "rgb": [
+      "docs/behaviors/glow",
+      "docs/behaviors/stack",
+      "docs/behaviors/stagelight",
+      "docs/search",
+      "docs/test-schema-standard"
+    ],
+    "hsl": [
+      "docs/behaviors/glow",
+      "docs/behaviors/stack",
+      "docs/themes"
+    ],
+    "pins": [
       "docs/behaviors/glow"
     ],
     "screens": [
@@ -43908,6 +43939,10 @@
     ],
     "180px": [
       "docs/behaviors/grid"
+    ],
+    "tertiary": [
+      "docs/behaviors/grid",
+      "docs/behaviors/stack"
     ],
     "zebra": [
       "docs/behaviors/grid"
@@ -45092,12 +45127,6 @@
     ],
     "queued": [
       "docs/behaviors/stack"
-    ],
-    "rgb": [
-      "docs/behaviors/stack",
-      "docs/behaviors/stagelight",
-      "docs/search",
-      "docs/test-schema-standard"
     ],
     "75rem": [
       "docs/behaviors/stack",
@@ -49690,9 +49719,6 @@
       "demos/site/content"
     ],
     "h4": [
-      "docs/themes"
-    ],
-    "hsl": [
       "docs/themes"
     ],
     "bootstrapper": [

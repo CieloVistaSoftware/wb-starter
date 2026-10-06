@@ -724,13 +724,13 @@
           "file": "behaviors/glow.md",
           "title": "Glow",
           "description": "x-glow gives the element a pulsing halo in color, which defaults to the theme's primary colour.",
-          "modified": "2026-10-05"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/grid.md",
           "title": "x-grid",
           "description": "A responsive CSS Grid layout — items auto-fit into columns based on a minimum item width, so the column count collapses naturally on narrow screens without…",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/header.md",
@@ -1048,7 +1048,7 @@
           "file": "behaviors/stack.md",
           "title": "Stack Layout Behavior",
           "description": "x-stack lays its children out in a single column with gap between them, and can set a background (bg), padding (pad) and corner radius on the stack itself.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/stat.md",
