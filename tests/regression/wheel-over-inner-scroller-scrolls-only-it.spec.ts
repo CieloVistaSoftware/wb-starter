@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * A WHEEL OVER AN INNER SCROLLER SCROLLS ONLY IT, UNTIL ITS END (#1037)
@@ -26,6 +27,14 @@ test.describe('wheel over an inner scroller (#1037)', () => {
     await page.setViewportSize({ width: 1200, height: 800 });
     await page.goto('/?page=about', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#siteBody', { timeout: 20_000 });
+    // The site must have finished booting and the about page must be written
+    // before the box goes in: the first navigation resets #siteBody's scroll
+    // as the page lands (_placeScroll), and late styles and fonts change line
+    // heights, so a box scrolled to its end too early is no longer at its end
+    // when the wheel arrives -- the wheel then (correctly) scrolls the box,
+    // and the page-moves assertion below failed on the Windows runner (#1641).
+    await wbIdle(page);
+    await page.evaluate(() => document.fonts.ready);
     await page.evaluate(() => {
       const body = document.getElementById('siteBody')!;
       const box = document.createElement('div');
@@ -57,10 +66,12 @@ test.describe('wheel over an inner scroller (#1037)', () => {
   });
 
   test('at the inner box\'s end the wheel moves the page', async ({ page }) => {
-    await page.evaluate(() => {
+    const atEnd = await page.evaluate(() => {
       const box = document.getElementById('inner-1037')!;
       box.scrollTop = box.scrollHeight;
+      return box.scrollTop >= box.scrollHeight - box.clientHeight - 1;
     });
+    expect(atEnd, 'the inner box is at its end before the wheel').toBe(true);
     const pageBefore = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
     const box = (await page.locator('#inner-1037').boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
