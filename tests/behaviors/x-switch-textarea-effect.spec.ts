@@ -249,9 +249,8 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
     const before = await ta.evaluate((el) => el.getBoundingClientRect().height);
 
     await ta.fill('line1\nline2\nline3\nline4\nline5\nline6\nline7\nline8');
-    await page.waitForTimeout(100);
-    const after = await ta.evaluate((el) => el.getBoundingClientRect().height);
-    expect(after, 'autosize textarea should grow taller as multi-line content is added').toBeGreaterThan(before);
+    // Polled (#1516): autosize resizes on the input event's own frame.
+    await expect.poll(() => ta.evaluate((el) => el.getBoundingClientRect().height), { message: 'autosize textarea should grow taller as multi-line content is added' }).toBeGreaterThan(before);
   });
 
   test('disabled: typing has no effect on value', async ({ page }) => {
@@ -333,9 +332,8 @@ test.describe('Native <textarea> section (bare attributes + autoInject, matching
 
     const before = await ta.evaluate((el) => el.getBoundingClientRect().height);
     await ta.fill('line1\nline2\nline3\nline4\nline5\nline6\nline7\nline8');
-    await page.waitForTimeout(100);
-    const after = await ta.evaluate((el) => el.getBoundingClientRect().height);
-    expect(after, 'native autosize textarea should grow taller with multi-line content').toBeGreaterThan(before);
+    // Polled (#1516): autosize resizes on the input event's own frame.
+    await expect.poll(() => ta.evaluate((el) => el.getBoundingClientRect().height), { message: 'native autosize textarea should grow taller with multi-line content' }).toBeGreaterThan(before);
   });
 
   test('native <textarea show-count max-length="100">: counter reflects the real current/max count as you type', async ({ page }) => {
