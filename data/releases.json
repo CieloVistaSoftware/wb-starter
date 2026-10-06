@@ -6,6 +6,80 @@
   ],
   "releases": [
     {
+      "version": "1.0.291",
+      "date": "2026-10-05",
+      "summary": "Every request for a schema a behavior does not have (desclist, empty, json) printed an ENOENT stack trace in the server log, and the 404 body was Express&#39;s error page showing the server&#39;s own file path. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1558\" target=\"_blank\" rel=\"noopener\">PR 1558</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the served schema once in the quiet-404 spec</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
+          "issues": [
+            1557
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A missing /src/wb-models/*.json is a quiet 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1557\" target=\"_blank\" rel=\"noopener\">#1557</a>",
+          "issues": [
+            1557
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm start</code>, then open http://localhost:3000/src/wb-models/desclist.schema.json. Before: the server log printed &quot;Error: ENOENT ... wb-models/desclist.schema.json&quot; with a stack trace, and the page was an error page showing the server&#39;s file path. Now: the page says &quot;File not found: /src/wb-models/desclist.schema.json&quot; and nothing is logged."
+    },
+    {
+      "version": "1.0.290",
+      "date": "2026-10-05",
+      "summary": "Forms validate on blur, not on every keystroke (#751), but no test held it, so a keystroke validator added later would have passed every check. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1556\" target=\"_blank\" rel=\"noopener\">PR 1556</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+          "issues": [
+            751
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Validation happens on blur, never while typing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+          "issues": [
+            751
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/form-ajax-example-notifies.spec.ts --project=regression</code>. Before: 4 tests, none of which checked when validation runs. Now: 5 tests; the new one types a bad email, expects no red mark until the field loses focus, and fails if typing alone marks it invalid."
+    },
+    {
+      "version": "1.0.289",
+      "date": "2026-10-05",
+      "summary": "On the Behaviors page the x-img and x-figure examples drew the placeholder image 762px wide, across the whole panel, because the SVG had no width or height of its own; the &quot;never wider than itself&quot; half of the layout rule had nothing to measure against. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1565\" target=\"_blank\" rel=\"noopener\">PR 1565</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/759\" target=\"_blank\" rel=\"noopener\">#759</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The placeholder image has a natural size, so it is never stretched</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/759\" target=\"_blank\" rel=\"noopener\">#759</a>",
+          "issues": [
+            759
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick figure and look at the example. Before: the image filled the panel, about 762px wide. Now: it is 480px, its own size, and never wider than the panel."
+    },
+    {
+      "version": "1.0.288",
+      "date": "2026-10-05",
+      "summary": "Clicking the x-button variant=&quot;link&quot; example on the Behaviors page navigated the whole page to docs.html, losing the gallery, the search and the selection; nothing stopped any example with an href, or a form that submits, from doing the same. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1564\" target=\"_blank\" rel=\"noopener\">PR 1564</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/742\" target=\"_blank\" rel=\"noopener\">#742</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No example can navigate the Behaviors page away</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/742\" target=\"_blank\" rel=\"noopener\">#742</a>",
+          "issues": [
+            742
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick button, choose the variant=link example and click it. Before: the page left for docs.html. Now: the page stays put and the events log reads &quot;navigation blocked: would open /docs.html&quot;."
+    },
+    {
       "version": "1.0.287",
       "date": "2026-10-05",
       "summary": "A dropdown with a label was styled as a trigger on its host as well as its button, so the host grew to the menu&#39;s width. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1545\" target=\"_blank\" rel=\"noopener\">PR 1545</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
