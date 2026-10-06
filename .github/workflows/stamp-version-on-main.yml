@@ -61,6 +61,9 @@ jobs:
           # Deterministic since #1503 (commit dates, sorted, no timestamp), so
           # an unchanged main regenerates it byte-identical.
           node scripts/generate-search-index.js
+          # #1001: 404.html is index.html plus a <base>, and stamp-version.js
+          # just rewrote index.html's ?v= keys, so regenerate it here too.
+          node scripts/generate-404.mjs
           # John: "A release has no meaning if i can't read about the content."
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.

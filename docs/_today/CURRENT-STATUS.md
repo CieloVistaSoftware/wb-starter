@@ -2,6 +2,22 @@
 
 ## 🅿️ PARKING LOT
 
+**Parked 2026-10-05, 10:15 PM CDT.** main = v1.0.306.
+
+**Task:** real paths for pages (#1001, John: "I want regular routing for navigation pull out the pages thing"), which also settles #957 (an unknown path is a 404, not home).
+
+**Files touched:** `src/core/routes.js` (new), `src/core/site-engine.js`, `server.js`, `scripts/generate-404.mjs` (new), `404.html` (new, generated), `.github/workflows/stamp-version-on-main.yml`, `tests/compliance/repo-layout.spec.ts`, `tests/regression/pages-have-real-paths.spec.ts` (new).
+
+**Last action:** built and pushed as a DRAFT PR, not merged. Its own spec passed 9/9; a full local run was stopped at 8132/9109 for park with 12 failures. Expected fallout to fix (tests that click a link and expect `?page=` in the URL, or count on the old fallback): `views/feature-cards-clickable`, `pages/home-links`, `regression/navigation-latest-wins`, `regression/non-nav-pages-reachable`, `regression/issues-activity-survives-navigation`, `regression/behaviors-live-selector`, `regression/cardhorizontal-doc-demos`, `compliance/mocked-specs-block-the-service-worker` (the new spec mocks routes: add `serviceWorkers: 'block'`), `regression/pages-have-real-paths` (GitHub Pages simulation). Not this change: `error-log-empty` and `no-external-requests` (sandbox CDN), `repo-layout` (local config file).
+
+**Next step:** fix those specs (or the code, where a test shows a real regression), let CI go green, merge. Then delete the 44 `?page=` content links in favour of paths (optional; they redirect).
+
+**Open questions for John:** #827 wire up or delete the list modules (`<ul>/<ol>/<dl>` would change on every page); #969 the typed-card class refactor, do now or later.
+
+**Done today (merged):** #1532 (release steps, video maker, 12 fixes), #1559 (Central time everywhere, x-clock default Central, x-glow), #1582 (`<nav>` picks up navbar, #958). Closed as already fixed: #864, #916, #1004, #1319; #1037 fixed by another session's #1584.
+
+---
+
 **Updated 2026-10-02.** Build process changed (John's decision).
 
 - Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.

@@ -17,6 +17,7 @@ const execFileAsync = promisify(execFile);
 import { marked } from 'marked';
 import { updateToLatest } from './scripts/lib/pull-latest.mjs';
 import { mergeIntoLog } from './scripts/lib/error-log-merge.mjs';
+import { FOLDER_PAGES } from './src/core/routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -624,6 +625,17 @@ if (!isProduction) {
     res.sendFile(localFile, { dotfiles: 'allow' });
   });
 }
+
+// #1001 -- John: "I want regular routing for navigation pull out the pages
+// thing". /behaviors is the Behaviors page: any path naming a page in pages/
+// gets the site shell, which reads the page from the path (src/core/routes.js).
+// Ahead of express.static so a page is never shadowed by a folder of the same
+// name; demos and docs ARE folders and keep ?page= (routes.js FOLDER_PAGES).
+app.get(/^\/([a-z0-9][a-z0-9-]*)\/?$/i, (req, res, next) => {
+  const name = req.params[0];
+  if (FOLDER_PAGES.has(name) || !fs.existsSync(path.join(rootDir, 'pages', `${name}.html`))) return next();
+  res.sendFile(path.join(rootDir, 'index.html'));
+});
 
 app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
@@ -1650,7 +1662,12 @@ app.use((req, res, next) => {
     return res.status(404).send(`File not found: ${req.path}`);
   }
 
-  res.sendFile(path.join(rootDir, 'index.html'));
+  // #957: a path naming no page used to get the shell with a 200, and the
+  // shell rendered HOME -- the address said /behaviorz, the page said home, and
+  // neither the reader nor a test could tell. Now it is a 404, and the shell
+  // (still sent, so the site's chrome and its not-found page render) shows
+  // "Page not found". Real pages are answered by the route above.
+  res.status(404).sendFile(path.join(rootDir, 'index.html'));
 });
 
 // Bind to the preferred port, falling through to the next free one when
