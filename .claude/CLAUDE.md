@@ -125,6 +125,17 @@ via our issues view."
 3. **No work without an issue.** A request with no issue gets one filed first (with its Signature block), then labelled.
 4. **When the fix merges** (or the work stops), take the label off. Closing via `Fixes #N` closes it; remove the label anyway so the tab stays truthful.
 
+## When idle — work the open issues
+
+John, 2026-10-06: "always work on open issues when idle" (#1627). Idle means
+waiting on CI, a reviewer or a reply, with nothing else in hand. A PR's CI takes
+about 20 minutes; that time goes to the next issue, not to waiting.
+
+1. **Your own PRs come first.** Red CI, a merge conflict or a review comment on a PR you opened is never idle time. Fix it before picking anything new.
+2. **Pick from the open issues, highest priority first.** Skip any issue labelled `status:in-progress` (another session has it) and any issue waiting on John's decision.
+3. **Claim it the usual way:** the label and a Now/Why/See it/Next note (see **Working on an issue** above).
+4. **When it turns out to be blocked or to need a decision,** write what you found on the issue (measurements, cause, a step-by-step plan), take the label off, put the question to John in one line, and pick the next issue. Don't start a fix that depends on an undecided rule.
+
 ## Merging — Claude merges when the tests say so
 
 John, 2026-10-02: "you trigger the merges when the tests indicate to do it."
