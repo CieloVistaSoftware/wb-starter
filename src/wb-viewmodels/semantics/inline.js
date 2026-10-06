@@ -7,7 +7,7 @@ import { setRule, clearRules } from '../../core/dynamic-style.js';
 
 /**
  * Kbd - Keyboard Input
- * Helper Attribute: [x-behavior="kbd"]
+ * Helper Attribute: [x-kbd]
  */
 export function kbd(element, options = {}) {
   element.classList.add('x-kbd');
@@ -21,7 +21,7 @@ export function kbd(element, options = {}) {
 
 /**
  * Mark - Highlight text
- * Helper Attribute: [x-behavior="mark"]
+ * Helper Attribute: [x-mark]
  *
  * `variant="success|warning|danger|info"` picks a themed highlight tint
  * (styling lives in inline.css). `color="blue"` / `color="#ff00ff"` sets an

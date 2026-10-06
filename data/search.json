@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 304,
-    "totalWords": 5898
+    "totalWords": 5899
   },
   "documents": [
     {
@@ -315,7 +315,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.343\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.343\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.345\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.345\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -787,7 +787,7 @@
       "content": "# wb-starter v3 — Complete Guide wb-starter is a **zero-build, light-DOM behavior framework**. You write plain HTML, include one script, and elements upgrade themselves into rich behaviors. No bundler, no JSX, no Shadow DOM — the browser does the work. This guide covers **how to use it** and **how it works internally**. ## Contents 1. [Mental model](#1-mental-model) 2. [Quick start](#2-quick-start) 3. [Using behaviors (semantic elements)](#3-using-behaviors-semantic-elements) 4. [Using behaviors (x-prefixed attributes)](#4-using-behaviors-x-prefixed-attributes) 5. [Auto-enhanced plain elements](#5-auto-enhanced-plain-elements) 6. [Theming](#6-theming) 7. [How it works internally](#7-how-it-works-internally) 8. [Render from JSON](#8-render-from-json) 9. [Writing your own behavior (recipe)](#9-writing-your-own-behavior-recipe) --- ## 1. Mental model There are three ways UI gets enhanced, all by the same runtime: | You write | What happens | |---|---| | **Custom tag** — ` ` | The tag is mapped to a *behavior* that builds the card | | **Behavior attribute** — ` ` | Any element gains a behavior via an `x-*` attribute | | **Plain element** — ` ` (with `autoInject`) | Native elements are auto-enhanced | A **behavior** is just a function that receives an element and decorates it. A **schema** (optional) describes a behavior's structure declaratively. The **runtime** (`WB`) scans the DOM, maps tags/attributes to behaviors, and injects them lazily as they scroll into view. Key principles: - **No build step.** Ship HTML + JS; browsers are fast. - **Light DOM only.** No Shadow DOM — styles and scripts compose normally. - **Plain attributes.** v3 reads `title`, `variant`, `size` directly (not `data-*`). Many behaviors still accept `data-*` for back-compat, but **plain is canonical**. --- ## 2. Quick start A standalone page needs the theme + base styles and one module script: Keep content readable and focused by giving each card one clear job. WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse. Save The full page this comes from — everything outside ` ` is boilerplate ` ` can't represent (a ` `/` `/module script aren't renderable fragments), so it's shown separately below rather than folded into the live example above: ```html Keep content readable and focused by giving each card one clear job. WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse. Start with semantic HTML, then compose focused behaviors. Save ``` `WB.init(options)`: - `scan` (default `true`) — process existing elements on load. - `observe` (default `true`) — watch for elements added later (MutationObserver). - `autoInject` (default `false`) — also enhance plain native elements (` `, ` `, ` `, …). - `preload: ['ripple','tooltip']` — eagerly load critical behaviors. - `theme: 'dark'` — set the starting theme. (Inside the full SPA the runtime is wired by `src/main.js` + `src/core/site-engine.js`, so pages loaded via `?page=…` don't need their own init.) --- ## 3. Using behaviors (semantic elements) A semantic element maps to its behavior, and any other element takes the `x-*` attribute. Pass **plain attributes**; children stay as content. **Card** — ` `: Card body. **Spinner** — ` `: **Progress bar** — ` `: **Badge** — ` `: New **Tabs** — ` `: … … **Accordion** — ` `: A zero-build behavior library. Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …). Each behavior's exact attributes live in its schema at `src/wb-models/ .schema.json`. --- ## 4. Using behaviors (x-prefixed attributes) Attach a behavior to **any** element with an `x- ` attribute. These don't need a custom tag: Notify Slide Bounce The full attribute → behavior map is in `src/core/wb-lazy.js` (`customElementMappings`). Every behavior name resolves to a module via `src/wb-viewmodels/index.js`. --- ## 5. Auto-enhanced plain elements With `autoInject: true`, native elements are upgraded without any attribute — e.g. ` `, ` `, ` `, ` `, ` `, ` `, and ` ` (→ card). The map lives in `wb-lazy.js` (`autoInjectMappings`) / `src/core/tag-map.js` (`nativeMap`). Auto-inject is **off by default** so it never surprises an existing page; opt in per page. --- ## 6. Theming Themes are pure CSS variables in `src/styles/themes.css`, selected by the `data-theme` attribute on ` `: ```html ``` Switch at runtime with the `Theme` API (`src/core/theme.js`) or drop in a ` ` for a ready-made selector. **Never hardcode colors** — only `themes.css` holds literals; everything else references `var(--…)` tokens. --- ## 7. How it works internally ### The runtime — `WB` (`src/core/wb-lazy.js`) A single object exposes: ```js WB.init(options) // boot: scan + observe + preload WB.inject(el, name, opts) // apply a behavior now (async; loads it on demand) WB.lazyInject(el, name) // apply when the element scrolls into view WB.scan(root = document.body) // find & schedule behaviors under root WB.observe(root) // Mut",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-03"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/WB_BEHAVIOR_SYSTEM",
@@ -795,10 +795,10 @@
       "title": "WB_BEHAVIOR_SYSTEM",
       "description": null,
       "headings": [],
-      "content": "# WB-Starter Behavior System - Technical Workflow [Edit this file](./WB_BEHAVIOR_SYSTEM.md) ## Overview The **WB (Web Behavior)** system is a functional, progressive enhancement library that injects behaviors into native HTML elements. Unlike Behaviors or class-based frameworks, WB uses **pure functions** that enhance existing DOM elements with additional capabilities. --- ## Table of Contents 1. [Core Concept: Functional Enhancement](#core-concept-functional-enhancement) 2. [How Behaviors Build On Native HTML Elements](#how-behaviors-build-on-native-html-elements) 3. [The Complete Call Chain](#the-complete-call-chain) 4. [HTML Declaration Pattern](#html-declaration-pattern) 5. [Behavior Anatomy](#behavior-anatomy) 6. [Advanced Features](#advanced-features) 7. [Creating Custom Behaviors](#creating-custom-behaviors) 8. [Best Practices](#best-practices) --- ## Core Concept: Functional Enhancement ### Functional Behavior Pattern WB behaviors are **pure functions that enhance an element in place** — composition, never a class hierarchy or customized built-in: ```javascript // ✅ THIS (WB Behaviors) export function button(element, options = {}) { // element is already an HTMLButtonElement // We just enhance it with additional features element.classList.add('x-button'); element.style.padding = '0.5rem 1rem'; // Return cleanup function return () => element.classList.remove('x-button'); } ``` **Key Points:** - Each behavior is a **pure function** - Takes a native HTML element as first parameter - Enhances the element in place - Returns a cleanup function - No classes, no inheritance — a behavior composes onto any element --- ## How Behaviors Build On Native HTML Elements ### The Element Already Has Its Native API A behavior never needs to acquire DOM capability, because it never creates the object in the first place. You hand it a **native HTML element** that the parser already built, with every standard property and method on it. The behavior only adds what's missing: ```javascript import { button } from './behaviors/js/semantics/button.js'; // Get a native element const myButton = document.querySelector('button'); // myButton is already an HTMLButtonElement // It already has: .click(), .disabled, .type, etc. // Enhance it with the button behavior button(myButton, { variant: 'primary' }); // Now it ALSO has: x-button classes, custom styling, loading states, etc. ``` ### Semantic Behaviors Map to Native Elements Each behavior is written against the element type it decorates, and checks that it got one. The interface column is what the browser already put on that element — the behavior composes on top of it, it does not redefine or subclass it. | Behavior File | Expects Element Type | Native Interface Already Present | |--------------|---------------------|-------------------| | `button.js` | ` ` | `HTMLButtonElement` | | `img.js` | ` ` | `HTMLImageElement` | | `form.js` | ` ` | `HTMLFormElement` | | `video.js` | ` ` | `HTMLVideoElement` | | `input.js` | ` ` | `HTMLInputElement` | | `table.js` | ` ` | `HTMLTableElement` | **Example from `button.js:6`:** ```javascript export function button(element, options = {}) { if (element.tagName !== 'BUTTON') { console.warn('[button] Element must be a '); return () => {}; } // element is guaranteed to be HTMLButtonElement // with all native button properties already available } ``` --- ## The Complete Call Chain ### 1. HTML Declaration Use standard semantic HTML elements (Auto-Inject): ```html Click me ... ... ``` Or use `x-behavior` for explicit behavior injection (Legacy/Override): ```html Hover ``` **From `src/site-engine.js:95`:** ```javascript ☰ ``` ### 2. WB.init() - Initialization Called once when the page loads: ```javascript import WB from './wb.js'; // Initialize the system WB.init({ scan: true, // Scan existing elements observe: true, // Watch for new elements theme: 'dark', // Optional theme debug: false // Debug mode }); ``` **From `src/site-engine.js:29`:** ```javascript WB.init({ debug: false }); ``` This triggers: - **WB.scan()** - Finds all existing `[x-behavior]` elements - **WB.observe()** - Starts MutationObserver for dynamic elements ### 3. WB.scan() - Discovery Finds and processes all elements with `x-behavior` AND auto-injects behaviors on semantic tags (if enabled): **From `src/wb.js:112-124`:** ```javascript scan(root = document.body) { // 1. Find all elements with x-behavior attribute const elements = root.querySelectorAll('[x-behavior]'); elements.forEach(element => { // Parse behavior list (space-separated) const behaviorList = element.dataset.wb.split(/\\s+/).filter(Boolean); // Inject each behavior behaviorList.forEach(name => { WB.inject(element, name); // { const autoElements = root.querySelectorAll(selector); autoElements.forEach(element => { // Skip if x-behavior is present (already handled) or ignored if (!element.hasAttribute('x-behavior') && !element.hasAttribute('ignore')) { WB.inject(element, behavior); } }); }); } Events.log('info', 'wb', `",
+      "content": "# WB-Starter Behavior System - Technical Workflow [Edit this file](./WB_BEHAVIOR_SYSTEM.md) ## Overview The **WB (Web Behavior)** system is a functional, progressive enhancement library that injects behaviors into native HTML elements. Unlike Behaviors or class-based frameworks, WB uses **pure functions** that enhance existing DOM elements with additional capabilities. --- ## Table of Contents 1. [Core Concept: Functional Enhancement](#core-concept-functional-enhancement) 2. [How Behaviors Build On Native HTML Elements](#how-behaviors-build-on-native-html-elements) 3. [The Complete Call Chain](#the-complete-call-chain) 4. [HTML Declaration Pattern](#html-declaration-pattern) 5. [Behavior Anatomy](#behavior-anatomy) 6. [Advanced Features](#advanced-features) 7. [Creating Custom Behaviors](#creating-custom-behaviors) 8. [Best Practices](#best-practices) --- ## Core Concept: Functional Enhancement ### Functional Behavior Pattern WB behaviors are **pure functions that enhance an element in place** — composition, never a class hierarchy or customized built-in: ```javascript // ✅ THIS (WB Behaviors) export function button(element, options = {}) { // element is already an HTMLButtonElement // We just enhance it with additional features element.classList.add('x-button'); element.style.padding = '0.5rem 1rem'; // Return cleanup function return () => element.classList.remove('x-button'); } ``` **Key Points:** - Each behavior is a **pure function** - Takes a native HTML element as first parameter - Enhances the element in place - Returns a cleanup function - No classes, no inheritance — a behavior composes onto any element --- ## How Behaviors Build On Native HTML Elements ### The Element Already Has Its Native API A behavior never needs to acquire DOM capability, because it never creates the object in the first place. You hand it a **native HTML element** that the parser already built, with every standard property and method on it. The behavior only adds what's missing: ```javascript import { button } from './behaviors/js/semantics/button.js'; // Get a native element const myButton = document.querySelector('button'); // myButton is already an HTMLButtonElement // It already has: .click(), .disabled, .type, etc. // Enhance it with the button behavior button(myButton, { variant: 'primary' }); // Now it ALSO has: x-button classes, custom styling, loading states, etc. ``` ### Semantic Behaviors Map to Native Elements Each behavior is written against the element type it decorates, and checks that it got one. The interface column is what the browser already put on that element — the behavior composes on top of it, it does not redefine or subclass it. | Behavior File | Expects Element Type | Native Interface Already Present | |--------------|---------------------|-------------------| | `button.js` | ` ` | `HTMLButtonElement` | | `img.js` | ` ` | `HTMLImageElement` | | `form.js` | ` ` | `HTMLFormElement` | | `video.js` | ` ` | `HTMLVideoElement` | | `input.js` | ` ` | `HTMLInputElement` | | `table.js` | ` ` | `HTMLTableElement` | **Example from `button.js:6`:** ```javascript export function button(element, options = {}) { if (element.tagName !== 'BUTTON') { console.warn('[button] Element must be a '); return () => {}; } // element is guaranteed to be HTMLButtonElement // with all native button properties already available } ``` --- ## The Complete Call Chain ### 1. HTML Declaration Use standard semantic HTML elements (Auto-Inject): ```html Click me ... ... ``` Or add behaviors explicitly, one `x-*` attribute each. (The old generic `x-behavior=\"ripple tooltip\"` form is deprecated (#1642): it still runs, and warns.) ```html Hover ``` **From `src/site-engine.js:95`:** ```javascript ☰ ``` ### 2. WB.init() - Initialization Called once when the page loads: ```javascript import WB from './wb.js'; // Initialize the system WB.init({ scan: true, // Scan existing elements observe: true, // Watch for new elements theme: 'dark', // Optional theme debug: false // Debug mode }); ``` **From `src/site-engine.js:29`:** ```javascript WB.init({ debug: false }); ``` This triggers: - **WB.scan()** - Finds all existing `[x-behavior]` elements - **WB.observe()** - Starts MutationObserver for dynamic elements ### 3. WB.scan() - Discovery Finds and processes all elements with `x-behavior` AND auto-injects behaviors on semantic tags (if enabled): **From `src/wb.js:112-124`:** ```javascript scan(root = document.body) { // 1. Find all elements with x-behavior attribute const elements = root.querySelectorAll('[x-behavior]'); elements.forEach(element => { // Parse behavior list (space-separated) const behaviorList = element.dataset.wb.split(/\\s+/).filter(Boolean); // Inject each behavior behaviorList.forEach(name => { WB.inject(element, name); // { const autoElements = root.querySelectorAll(selector); autoElements.forEach(element => { // Skip if x-behavior is present (already handled) or ignored if (!element.hasAttribute('x-behavior') && !element.hasAttri",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/architecture/WB-PREFIX-AUDIT",
@@ -920,7 +920,7 @@
       "content": "# WB-Starter Schema Specification v3.0 **Version:** 3.1 **Created:** 2026-01-05 **Updated:** 2026-02-18 **Status:** Active --- ## Table of Contents - [Schema Types](#schema-types) - [Page Schemas](#page-schemas) - [Golden Rule](#golden-rule) - [Schema Structure](#schema-structure) - [Properties (Model)](#properties-model) - [$view (View)](#view-view) - [$methods (ViewModel)](#methods-viewmodel) - [$cssAPI (CSS Custom Properties)](#cssapi-css-custom-properties) - [Public vs Private Parts](#public-vs-private-parts) - [Complete Example](#complete-example) - [Test Configuration](#test-configuration) - [Migration Guide](#migration-guide) --- ## Schema Types Every `.schema.json` file has a `schemaType` that determines what's required: | Type | Purpose | Required Fields | |------|---------|----------------| | `behavior` | Real behaviors users interact with | title, description, properties, $view, $methods, behavior | | `base` | Abstract schemas inherited by others | title, description, properties | | `definition` | Pure reference documents | title, description | | `page` | Page-level layout and content placement | title, description, pageRules, $layout | Behavior schemas define **what a behavior is**. Page schemas define **how behaviors are arranged on a page**. --- ## Page Schemas Page schemas (`schemaType: \"page\"`) define layout, rules, and content placement for an entire page. ### pageRules Page-level rules that govern generation and validation: ```json \"pageRules\": { \"showcase\": false, \"fragment\": true, \"noInlineStyles\": true, \"noPageSpecificCSS\": true } ``` | Field | Type | Description | |-------|------|-------------| | `showcase` | boolean | If true, all sections wrap in `x-demo` (shows source code). False for production pages. | | `fragment` | boolean | Page is a fragment — no DOCTYPE/html/head/body. Server shell wraps it. | | `noInlineStyles` | boolean | No inline styles allowed on any element. | | `noPageSpecificCSS` | boolean | No page-specific CSS file. All styling from behavior CSS. | ### $layout — Row-Based Layout System Pages are built from **rows stacked vertically**. Each row is a **grid** with a defined shape. ```json \"$layout\": { \"gap\": \"2rem\", \"maxWidth\": \"1200px\", \"rows\": [ { \"columns\": 1, \"width\": \"full-bleed\", \"content\": [\"hero\"] }, { \"columns\": 1, \"width\": \"900px\", \"content\": [\"stats\"] }, { \"columns\": 3, \"width\": \"1200px\", \"content\": [\"card1\", \"card2\", \"card3\"] }, { \"columns\": 2, \"ratio\": \"60/40\", \"content\": [\"notifications\", \"audio\"] } ] } ``` #### Layout-Level Fields | Field | Type | Default | Description | |-------|------|---------|-------------| | `gap` | string | `\"2rem\"` | Vertical gap between rows AND horizontal gap between columns. | | `maxWidth` | string | `\"1200px\"` | Default max-width for contained rows. Individual rows can override. | | `rows` | array | — | Ordered list of layout rows. Each row stacks on top of the next. | #### Row Fields | Field | Type | Default | Description | |-------|------|---------|-------------| | `columns` | integer | — | Number of columns: 1, 2, or 3. Collapses to 1 on mobile. | | `rows` | integer | (auto) | Number of rows. If omitted, rows expand as content fills cells. | | `direction` | string | `\"row\"` | Fill order: `\"row\"` = left to right then down. `\"column\"` = top to bottom then right. | | `ratio` | string | (equal) | Column width ratio. Examples: `\"50/50\"`, `\"70/30\"`, `\"33/33/33\"`, `\"25/50/25\"`. | | `width` | string | contained | `\"full-bleed\"` = edge to edge. A CSS value (e.g. `\"900px\"`) = contained with max-width. | | `align` | string | `\"stretch\"` | Vertical alignment of items: `\"top\"`, `\"center\"`, `\"bottom\"`, `\"stretch\"`. | | `gap` | string | (inherit) | Override gap for this row only. | | `content` | array | — | Section names placed in this row. Must match `$view` or `properties` section names. | #### Grid Shape: Fixed vs Auto **Fixed shape** — define exact rows × columns. Content maps to cells: ```json { \"columns\": 3, \"rows\": 2, \"content\": [\"a\", \"b\", \"c\", \"d\", \"e\", \"f\"] } ``` Result (direction: row): `a b c / d e f` **Auto-flow** — define columns only, rows expand as needed: ```json { \"columns\": 3, \"content\": [\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\"] } ``` Result (direction: row): `a b c / d e f / g h i` #### Fill Direction `direction` controls how content fills the grid: **`\"row\"`** (default) — fill left to right, then next row: ``` a b c d e f g h i ``` **`\"column\"`** — fill top to bottom, then next column: ``` a d g b e h c f i ``` #### Layout Primitives All layouts reduce to grid configuration: | Pattern | Grid Equivalent | |---------|-----------------| | Stack (vertical) | `columns: 1, direction: \"column\"` | | Row (horizontal) | `columns: N, rows: 1, direction: \"row\"` | | Grid (2D) | `columns: N, direction: \"row\"` or `\"column\"` | | 2-col with ratio | `columns: 2, ratio: \"60/40\"` | | Full-bleed section | `columns: 1, width: \"full-bleed\"` | #### Mobile-First Behavior All multi-column rows collapse to single column on small viewports. ",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-04"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/audio",
@@ -989,10 +989,10 @@
           "text": "Welcome"
         }
       ],
-      "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-behavior` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`). If you want to **prevent** Auto Injection for a specific element, you must use the `ignore` attribute. ```html gets 'button' behavior (auto) AND 'ripple' behavior (explicit) --> Click Me gets 'card' behavior (auto) AND 'hero' behavior (explicit) --> ... will NOT become a WB Navbar --> ... ``` --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `sidebar` | Becomes a sidebar/drawer | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `image` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (Shorthand):** ```html Title Content ``` **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `ignore` attribute. ```html will NOT become a WB Navbar --> Just a link ``` ## Overriding If you want to use a semantic element but apply a *different* behavior, simply use the explicit syntax. ```html Welcome ```",
+      "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-*` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`). If you want to **prevent** Auto Injection for a specific element, you must use the `ignore` attribute. ```html gets 'button' behavior (auto) AND 'ripple' behavior (explicit) --> Click Me gets 'card' behavior (auto) AND 'hero' behavior (explicit) --> ... will NOT become a WB Navbar --> ... ``` --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `sidebar` | Becomes a sidebar/drawer | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `image` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (Shorthand):** ```html Title Content ``` **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `ignore` attribute. ```html will NOT become a WB Navbar --> Just a link ``` ## Overriding If you want to use a semantic element but apply a *different* behavior, simply use the explicit syntax. ```html Welcome ```",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-28"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behavior-cross-reference",
@@ -2226,10 +2226,10 @@
       "title": "list",
       "description": null,
       "headings": [],
-      "content": "# List Behavior The List behavior (`semantics/list.js`) is a utility behavior that populates a list (` ` or ` `) from a `items` attribute. ## Usage `list` has no `x-list` attribute of its own; it is applied through the generic `x-behavior=\"list\"` form. (This page used to show `is=\"x-list\"`, a customized-built-in spelling nothing in the runtime reads -- copying it rendered an empty list.) ## Attributes - `items`: A comma-separated list of items or a JSON array string. - `dividers`: If present, adds dividers between list items. ## CSS Classes - `.x-list`: Added to the list element. - `.x-list__item`: Added to each list item. - `.x-list--dividers`: Added if dividers are enabled.",
+      "content": "# List Behavior The List behavior (`semantics/list.js`) is a utility behavior that populates a list (` ` or ` `) from a `items` attribute. ## Usage `list` is applied with its own `x-list` attribute. (This page used to show the generic `x-behavior=\"list\"` form, now deprecated (#1642), and before that `is=\"x-list\"`, a customized-built-in spelling nothing in the runtime reads -- copying it rendered an empty list.) ## Attributes - `items`: A comma-separated list of items or a JSON array string. - `dividers`: If present, adds dividers between list items. ## CSS Classes - `.x-list`: Added to the list element. - `.x-list__item`: Added to each list item. - `.x-list--dividers`: Added if dividers are enabled.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-28"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/mark",
@@ -3012,10 +3012,10 @@
       "title": "x-behavior",
       "description": null,
       "headings": [],
-      "content": "# x-behavior `x-behavior=\"name\"` applies the behavior named in its value, and takes several separated by spaces: ` ` does what ` ` does. The runtime uses it for elements it creates itself, such as the ` ` blocks in code panels. When writing markup by hand, prefer the direct attribute (`x-chip`). Do not name a behavior the element already gets from its tag: ` ` is redundant, the same way writing `x-button` on a ` ` is (#967). - **Implementation:** [src/wb-viewmodels/behavior.js](../../src/wb-viewmodels/behavior.js) adds the `x-behavior` class; the dispatch by value is in `src/core/wb.js`. - **Demo:** [autoinject.html](../../demos/autoinject.html).",
+      "content": "# x-behavior (deprecated) > **Deprecated (#1642).** John, 2026-10-06: `x-behavior=\"cardimage\"` — \"this format is deprecated in entire project\". Write the behavior's own attribute instead. | Instead of | Write | |---|---| | ` ` | ` ` | | ` ` | ` ` | | ` ` | ` ` | | ` `, ` `, ` ` | ` `, ` `, ` `: the tag already is the behavior, so it needs no attribute (#967) | Old markup still works: the runtime applies the behaviors it names, and prints one console warning per spelling with the markup to write instead. Nothing in this project writes it any more, and `tests/compliance/no-x-behavior-attribute.spec.ts` fails if a page, demo or src file starts to again. - **Implementation:** the legacy dispatch is in `src/core/wb.js` and `src/core/wb-lazy.js`; the warning is `src/core/x-behavior-deprecation.js`. - **Demo:** [autoinject.html](../../demos/autoinject.html) shows which tags need no attribute at all.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/x-collapse",
@@ -3237,10 +3237,10 @@
       "title": "code-examples-standard",
       "description": null,
       "headings": [],
-      "content": "# Code Examples Standard ## Overview This document defines formatting standards for code examples in documentation, demos, and HTML files throughout the WB-Starter Starter project. --- ## Formatting Rules ### Rule 1: ALL HTML attributes MUST start on their own line - NO EXCEPTIONS When writing HTML code examples, **every attribute** must be placed on its own line with proper indentation (2 spaces from the tag). This applies to: - Behavior config attributes (`title`, `variant`, `size`, `value`, …) — plain v3 attributes, **never** `data-*` (deprecated) - `id`, `class`, `style` attributes - `type`, `name`, `value` attributes - Event handlers (`onclick`, etc.) - **ALL other attributes** ### Rule 2: Prefer Auto-Inject (Semantic HTML) Format Code examples should prefer the **auto-inject format** using semantic HTML elements. The explicit `x-behavior` format should be shown as a secondary option or note. ### Rule 3: Include Format Notes Each code example should include an xs-font note explaining alternative syntax options. ### Rule 4: Every renderable code example MUST use ` ` — no static, un-rendered code fences A code example that shows real `x-*` behavior markup must be a LIVE ` ` block, not a plain ` ```html ` fenced code block that only shows text. ` ` renders the markup for real AND auto-generates the formatted code sample (with copy button) from it — one source of truth, always in sync, never a hand-typed sample that silently drifts from what actually renders. ❌ **Wrong** — static, never rendered, can drift from reality: ````html-static ```html It just works. ``` ```` ✅ **Correct** — live, rendered, the code sample generated from the real markup: It just works. The only exception: a block illustrating something that genuinely isn't renderable in isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference table, or intentionally-invalid markup demonstrating what NOT to do. Those stay as plain fenced code. If the block shows a real behavior/behavior usage, it must be ` `. --- ## Configuration Options The code example display system supports configurable formatting: | Option | Default | Description | |--------|---------|-------------| | `format` | `\"multiline\"` | `\"multiline\"` or `\"inline\"` attribute placement | | `showAutoinject` | `true` | Show semantic HTML (autoinject) format | | `showExplicit` | `true` | Show explicit `x-behavior` format in notes | | `showNotes` | `true` | Display format notes below examples | ### Programmatic Configuration ```javascript // In code example generators const codeDisplayConfig = { format: 'multiline', // Default: attributes on new lines showAutoinject: true, // Default: show semantic format showExplicit: true, // Show x-behavior alternative showNotes: true // Show explanatory notes }; ``` --- ## Auto-Inject Format (Default) The preferred format uses semantic HTML elements that auto-inject behaviors: ### ✅ CORRECT (Auto-Inject / Semantic) ```html element --> Click Me element --> Content here Home ``` --- ## Explicit Format (Legacy/Override) When you need to override auto-injection or apply behaviors to non-semantic elements: ### Explicit Syntax ```html Content here Save ``` --- ## Semantic Element Mapping | Behavior | Auto-Inject Element | Explicit Alternative | |----------|---------------------|---------------------| | `button` | ` ` | ` ` | | `card` | ` ` | ` ` | | `details` | ` ` | ` ` | | `dialog` | ` ` | ` ` | | `navbar` | ` ` | ` ` | | `sidebar` | ` ` | ` ` | | `audio` | ` ` | ` ` | | `video` | ` ` | ` ` | | `figure` | ` ` | ` ` | | `table` | ` ` | ` ` | | `input` | — (not auto-injected; bare ` ` needs `x-input`) | ` ` | | `textarea` | ` ` | — (auto-injects, `x-textarea` is redundant) | | `select` | ` ` | — (auto-injects, `x-select` is redundant) | | `progress` | ` ` | ` ` | --- ## Example Notes Format Each code example should include an explanatory note in xs font: ```html ℹ️ Auto-injects via button . Explicit: x-button ``` ### Note Templates by Behavior Type | Behavior | Note Text | |-----------|-----------| | Button | `ℹ️ Auto-injects via . Explicit: x-button` | | Card | `ℹ️ Auto-injects via . Explicit: x-card` | | Details | `ℹ️ Auto-injects via . Explicit: x-details` | | Input | `ℹ️ Auto-injects via . Explicit: x-input` | | No Auto-Inject | `ℹ️ No auto-inject. Use: x-behaviorname` | --- ## Vertical Format Is the ONLY Format There is **no inline override**. Code examples are always vertical — a multi-attribute element renders each attribute on its own line (see [Demos & Documentation Standards](./standards/DEMOS-AND-DOCS-STANDARDS.md) §5). **The one exception — short elements:** an element whose entire tag is short (roughly **under 25 characters**, e.g. ` `) may stay on a single line, one element per line. Never split a short tag pointlessly, and never cram a long multi-attribute tag onto one line. ```html Click Me ``` --- ## Attribute Indentation Rules | Context | Indentation | |---------|-------------| | First attribute | Same line as ta",
+      "content": "# Code Examples Standard ## Overview This document defines formatting standards for code examples in documentation, demos, and HTML files throughout the WB-Starter Starter project. --- ## Formatting Rules ### Rule 1: ALL HTML attributes MUST start on their own line - NO EXCEPTIONS When writing HTML code examples, **every attribute** must be placed on its own line with proper indentation (2 spaces from the tag). This applies to: - Behavior config attributes (`title`, `variant`, `size`, `value`, …) — plain v3 attributes, **never** `data-*` (deprecated) - `id`, `class`, `style` attributes - `type`, `name`, `value` attributes - Event handlers (`onclick`, etc.) - **ALL other attributes** ### Rule 2: Prefer Auto-Inject (Semantic HTML) Format Code examples should prefer the **auto-inject format** using semantic HTML elements. The explicit `x-*` attribute should be shown as a secondary option or note. ### Rule 3: Include Format Notes Each code example should include an xs-font note explaining alternative syntax options. ### Rule 4: Every renderable code example MUST use ` ` — no static, un-rendered code fences A code example that shows real `x-*` behavior markup must be a LIVE ` ` block, not a plain ` ```html ` fenced code block that only shows text. ` ` renders the markup for real AND auto-generates the formatted code sample (with copy button) from it — one source of truth, always in sync, never a hand-typed sample that silently drifts from what actually renders. ❌ **Wrong** — static, never rendered, can drift from reality: ````html-static ```html It just works. ``` ```` ✅ **Correct** — live, rendered, the code sample generated from the real markup: It just works. The only exception: a block illustrating something that genuinely isn't renderable in isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference table, or intentionally-invalid markup demonstrating what NOT to do. Those stay as plain fenced code. If the block shows a real behavior/behavior usage, it must be ` `. --- ## Configuration Options The code example display system supports configurable formatting: | Option | Default | Description | |--------|---------|-------------| | `format` | `\"multiline\"` | `\"multiline\"` or `\"inline\"` attribute placement | | `showAutoinject` | `true` | Show semantic HTML (autoinject) format | | `showExplicit` | `true` | Show the explicit `x-*` attribute in notes | | `showNotes` | `true` | Display format notes below examples | ### Programmatic Configuration ```javascript // In code example generators const codeDisplayConfig = { format: 'multiline', // Default: attributes on new lines showAutoinject: true, // Default: show semantic format showExplicit: true, // Show the x-* attribute alternative showNotes: true // Show explanatory notes }; ``` --- ## Auto-Inject Format (Default) The preferred format uses semantic HTML elements that auto-inject behaviors: ### ✅ CORRECT (Auto-Inject / Semantic) ```html element --> Click Me element --> Content here Home ``` --- ## Explicit Format (Legacy/Override) When you need to override auto-injection or apply behaviors to non-semantic elements: ### Explicit Syntax ```html Content here Save ``` --- ## Semantic Element Mapping | Behavior | Auto-Inject Element | Explicit Alternative | |----------|---------------------|---------------------| | `button` | ` ` | ` ` | | `card` | ` ` | ` ` | | `details` | ` ` | ` ` | | `dialog` | ` ` | ` ` | | `navbar` | ` ` | ` ` | | `sidebar` | ` ` | ` ` | | `audio` | ` ` | ` ` | | `video` | ` ` | ` ` | | `figure` | ` ` | ` ` | | `table` | ` ` | ` ` | | `input` | — (not auto-injected; bare ` ` needs `x-input`) | ` ` | | `textarea` | ` ` | — (auto-injects, `x-textarea` is redundant) | | `select` | ` ` | — (auto-injects, `x-select` is redundant) | | `progress` | ` ` | ` ` | --- ## Example Notes Format Each code example should include an explanatory note in xs font: ```html ℹ️ Auto-injects via button . Explicit: x-button ``` ### Note Templates by Behavior Type | Behavior | Note Text | |-----------|-----------| | Button | `ℹ️ Auto-injects via . Explicit: x-button` | | Card | `ℹ️ Auto-injects via . Explicit: x-card` | | Details | `ℹ️ Auto-injects via . Explicit: x-details` | | Input | `ℹ️ Auto-injects via . Explicit: x-input` | | No Auto-Inject | `ℹ️ No auto-inject. Use: x-behaviorname` | --- ## Vertical Format Is the ONLY Format There is **no inline override**. Code examples are always vertical — a multi-attribute element renders each attribute on its own line (see [Demos & Documentation Standards](./standards/DEMOS-AND-DOCS-STANDARDS.md) §5). **The one exception — short elements:** an element whose entire tag is short (roughly **under 25 characters**, e.g. ` `) may stay on a single line, one element per line. Never split a short tag pointlessly, and never cram a long multi-attribute tag onto one line. ```html Click Me ``` --- ## Attribute Indentation Rules | Context | Indentation | |---------|-------------| | First attribute | Same line as",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-04"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/committing-fixes",
@@ -3290,10 +3290,10 @@
           "text": "Title"
         }
       ],
-      "content": "# wb-starter Escape Hatches Override or customize any WB-Starter behavior behavior when defaults don't fit your needs. ## CSS Custom Properties Every behavior respects CSS variables for styling overrides: ```css /* Override card styling */ x-card { --card-padding: 2rem; --card-radius: 0; --card-bg: transparent; --card-border: 2px solid red; } /* Override button styling */ button[x-behavior=\"button\"] { --btn-padding: 1rem 2rem; --btn-radius: 999px; } /* Override any behavior's gap */ x-grid { --gap: 2rem; } ``` ## Skip Auto-Injection Prevent WB from automatically applying behaviors to elements: ```html This won't get syntax highlighting Not enhanced by WB Not highlighted Not enhanced ``` ## Override Behavior Options Pass options via `data-*` attributes: ```html Show for 10 seconds ``` ## Override Injected CSS WB behaviors inject minimal CSS. Override with higher specificity: ```css /* Override injected styles */ x-card.custom { all: unset; /* Nuclear option - removes ALL styles */ display: block; } /* Or target specific properties */ [x-behavior=\"button\"].my-button { background: var(--my-brand-color) !important; } ``` ## Disable Behaviors Programmatically ```javascript // Remove a specific behavior WB.remove(element, 'tooltip'); // Remove all behaviors from element WB.remove(element); // Check if behavior is applied const applied = WB.applied.get(element); console.log(applied); // [{ name: 'card', cleanup: fn }, ...] ``` ## Use Raw Elements Just don't use WB attributes/tags: ```html Title Content Title Content ``` ## Override Theme Variables ```css :root { /* Override any theme variable */ --primary: #ff6b6b; --bg-primary: #1a1a2e; --text-primary: #eee; --radius-md: 0; /* Square corners everywhere */ } ``` ## Custom Behavior Registration Add your own behaviors that override or extend built-ins: ```javascript // In your app's init import { WB } from '/src/core/wb-lazy.js'; // Register a custom card variant WB.register('card-fancy', (element, options) => { // Your custom logic element.classList.add('fancy-card'); // Return cleanup function return () => { element.classList.remove('fancy-card'); }; }); ``` ## Debug Mode Enable debug output to see what WB is doing: ```javascript WB.init({ debug: true, autoInject: true // See what gets auto-injected }); ``` ## Force Re-scan If dynamic content isn't getting behaviors: ```javascript // Scan specific container WB.scan(document.querySelector('#dynamic-content')); // Or manually inject WB.inject(myElement, 'card'); ```",
+      "content": "# wb-starter Escape Hatches Override or customize any WB-Starter behavior behavior when defaults don't fit your needs. ## CSS Custom Properties Every behavior respects CSS variables for styling overrides: ```css /* Override card styling */ x-card { --card-padding: 2rem; --card-radius: 0; --card-bg: transparent; --card-border: 2px solid red; } /* Override button styling */ button { --btn-padding: 1rem 2rem; --btn-radius: 999px; } /* Override any behavior's gap */ x-grid { --gap: 2rem; } ``` ## Skip Auto-Injection Prevent WB from automatically applying behaviors to elements: ```html This won't get syntax highlighting Not enhanced by WB Not highlighted Not enhanced ``` ## Override Behavior Options Pass options via `data-*` attributes: ```html Show for 10 seconds ``` ## Override Injected CSS WB behaviors inject minimal CSS. Override with higher specificity: ```css /* Override injected styles */ x-card.custom { all: unset; /* Nuclear option - removes ALL styles */ display: block; } /* Or target specific properties */ button.my-button { background: var(--my-brand-color) !important; } ``` ## Disable Behaviors Programmatically ```javascript // Remove a specific behavior WB.remove(element, 'tooltip'); // Remove all behaviors from element WB.remove(element); // Check if behavior is applied const applied = WB.applied.get(element); console.log(applied); // [{ name: 'card', cleanup: fn }, ...] ``` ## Use Raw Elements Just don't use WB attributes/tags: ```html Title Content Title Content ``` ## Override Theme Variables ```css :root { /* Override any theme variable */ --primary: #ff6b6b; --bg-primary: #1a1a2e; --text-primary: #eee; --radius-md: 0; /* Square corners everywhere */ } ``` ## Custom Behavior Registration Add your own behaviors that override or extend built-ins: ```javascript // In your app's init import { WB } from '/src/core/wb-lazy.js'; // Register a custom card variant WB.register('card-fancy', (element, options) => { // Your custom logic element.classList.add('fancy-card'); // Return cleanup function return () => { element.classList.remove('fancy-card'); }; }); ``` ## Debug Mode Enable debug output to see what WB is doing: ```javascript WB.init({ debug: true, autoInject: true // See what gets auto-injected }); ``` ## Force Re-scan If dynamic content isn't getting behaviors: ```javascript // Scan specific container WB.scan(document.querySelector('#dynamic-content')); // Or manually inject WB.inject(myElement, 'card'); ```",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-08-26"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/guides/create-a-website",
@@ -3452,10 +3452,10 @@
       "title": "pce-candidates",
       "description": null,
       "headings": [],
-      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions that are functionally equivalent. ## Naming Conventions ### 1. WB Namespace (Recommended) ```html ``` ### 2. Noun-First Aliases (Also Supported) ```html ``` ### 3. Behavior Attribute (Traditional) ```html ``` All three are equivalent and produce the same result. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-behavior Attribute** | Standard attribute for behavior declaration | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | | ` ` | `control` | Form control wrapper | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-viewmodels/mycomponent.js`: ```javascript ex",
+      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions that are functionally equivalent. ## Naming Conventions ### 1. WB Namespace (Recommended) ```html ``` ### 2. Noun-First Aliases (Also Supported) ```html ``` The old third form, `x-behavior=\"cardprofile\"`, is deprecated (#1642). Both are equivalent and produce the same result. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-{name} Attributes** | One attribute per behavior (`x-cardprofile`); `x-behavior=\"…\"` is deprecated (#1642) | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | | ` ` | `control` | Form control wrapper | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** i",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/performance",
@@ -3715,7 +3715,7 @@
       "content": "# Comprehensive Test Schema Standard ## Overview Every behavior schema MUST define tests that guarantee **100% functional compliance** in ONE test run. This means: - All parameters work correctly - All buttons/elements are clickable and functional - All events fire properly - All accessibility attributes are present - All visual states render correctly - All interactions behave as expected --- ## Schema Structure ```json { \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"title\": \"Behavior Name\", \"description\": \"What this behavior does\", \"behavior\": \"behaviorname\", \"properties\": { \"propName\": { \"type\": \"string|boolean|number\", \"description\": \"What this prop does\", \"enum\": [\"value1\", \"value2\"], \"default\": \"value1\", \"permutations\": { \"type\": \"ALL_ENUM|BOOLEAN|BOUNDARY_NUMBER|EXPLICIT\", \"values\": [], \"assertions\": {} } } }, \"compliance\": {}, \"interactions\": {}, \"accessibility\": {}, \"events\": {}, \"test\": {} } ``` --- ## 1. PROPERTIES with PERMUTATIONS Every property MUST define permutations with specific assertions: ### Permutation Types | Type | Use Case | Example | |------|----------|---------| | `ALL_ENUM` | Test all enum values | `[\"default\", \"primary\", \"success\"]` | | `ALL_ENUM_PLUS_NULL` | Enum + undefined/null | Test missing attribute | | `BOOLEAN` | True/false props | `[true, false]` | | `BOUNDARY_NUMBER` | Min/max/edge values | `[0, 1, 50, 99, 100]` | | `EXPLICIT` | Specific test values | `[\"custom\", \"values\"]` | ### Assertion Structure ```json \"permutations\": { \"type\": \"ALL_ENUM\", \"assertions\": { \"default\": { \"selector\": \"element\", \"checks\": { \"hasClass\": \"x-behavior--default\", \"backgroundColor\": \"rgb(31, 41, 55)\" } }, \"primary\": { \"selector\": \"element\", \"checks\": { \"hasClass\": \"x-behavior--primary\", \"backgroundColor\": \"rgb(99, 102, 241)\" } } } } ``` --- ## 2. COMPLIANCE Section Defines structural requirements: ```json \"compliance\": { \"baseClass\": \"x-card\", \"parentClass\": \"x-card--variant\", \"requiredChildren\": { \".x-card__header\": { \"description\": \"Card header section\", \"required\": true, \"tagName\": \"HEADER\", \"minCount\": 1 }, \".x-card__btn--primary\": { \"description\": \"Primary action button\", \"required\": true, \"requiredWhen\": \"primary is set\" } }, \"optionalChildren\": { \".x-card__subtitle\": { \"description\": \"Optional subtitle\", \"required\": false } }, \"styles\": { \"border\": { \"required\": true, \"pattern\": \"1px solid\" }, \"borderRadius\": { \"required\": true, \"value\": \"8px\" } } } ``` --- ## 3. INTERACTIONS Section (NEW - Critical for Functional Testing) Defines ALL clickable/interactive elements and expected behavior: ```json \"interactions\": { \"elements\": { \".x-card__btn--primary\": { \"type\": \"button\", \"clickable\": true, \"click\": { \"action\": \"dispatch event\", \"event\": \"wb:card:action\", \"eventDetail\": { \"action\": \"primary\" } }, \"hover\": { \"style\": { \"backgroundColor\": \"var(--primary-dark)\" } }, \"focus\": { \"style\": { \"outline\": \"2px solid var(--primary)\" } } }, \".x-card__btn--secondary\": { \"type\": \"button\", \"clickable\": true, \"click\": { \"action\": \"dispatch event\", \"event\": \"wb:card:action\", \"eventDetail\": { \"action\": \"secondary\" } } }, \".x-card__expand-btn\": { \"type\": \"button\", \"clickable\": true, \"click\": { \"action\": \"toggle class\", \"targetSelector\": \"element\", \"class\": \"x-card--expanded\" } }, \".x-card__notif-close\": { \"type\": \"button\", \"clickable\": true, \"click\": { \"action\": \"remove element\", \"target\": \"element\" } } }, \"keyboard\": { \"Enter\": { \"target\": \"[tabindex]\", \"action\": \"trigger click\" }, \"Space\": { \"target\": \"[tabindex]\", \"action\": \"trigger click\" }, \"Escape\": { \"target\": \"element\", \"action\": \"close/minimize\" } }, \"drag\": { \"handle\": \".x-card__drag-handle\", \"bounds\": \"viewport\", \"events\": [\"dragstart\", \"drag\", \"dragend\"] } } ``` --- ## 4. ACCESSIBILITY Section ```json \"accessibility\": { \"element\": { \"role\": \"article|button|region\", \"tabindex\": \"0\", \"aria-label\": \"dynamic\" }, \"children\": { \".x-card__header button\": { \"aria-expanded\": \"true|false\", \"aria-controls\": \"panel-id\" }, \".x-card__close-btn\": { \"aria-label\": \"Close\" } } } ``` --- ## 5. EVENTS Section All custom events the behavior dispatches: ```json \"events\": { \"wb:card:click\": { \"trigger\": \"click on clickable card\", \"detail\": { \"active\": \"boolean\" }, \"bubbles\": true }, \"wb:card:expand\": { \"trigger\": \"expand button clicked\", \"detail\": { \"expanded\": \"boolean\" } }, \"wb:card:dismiss\": { \"trigger\": \"close button clicked\", \"detail\": {} } } ``` --- ## 6. TEST Section - Comprehensive Matrix ```json \"test\": { \"setup\": [ \" Content \" ], \"matrix\": { \"combinations\": [ {}, { \"title\": \"Test Title\" }, { \"title\": \"Test\", \"primary\": \"Save\" }, { \"title\": \"Test\", \"primary\": \"Save\", \"secondary\": \"Cancel\" }, { \"title\": \"Test\", \"primary\": \"Save\", \"primaryHref\": \"/save\" }, { \"variant\": \"info\", \"title\": \"Info Card\" } ] }, \"functional\": { \"buttons\": [ { \"name\": \"primary button click\", \"setup\": \" \", \"selector\": \".x-card__btn--primary\", \"action\": \"click\", \"expect\": { \"event\": \"wb:card:action\", \"eventDetail\": { \"action\": \"primary\" } } }, { \"name\": \"secondary button click",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-08-26"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/testing-runbook",
@@ -3737,7 +3737,7 @@
       "content": "# Tiered Test Structure (Playwright Gates) Your test suite is organized into strict tiers, enforced by Playwright and npm scripts: **Tier 1: Static Compliance** - Location: tests/compliance/ - Checks schema validity, terminology, CSS, file integrity, and coverage - Runs fast, no browser/server required - If any fail, all other tiers are blocked **Tier 2: Base Behavior Tests** - Location: tests/behaviors/ui/ - Tests core rendering and initialization of behaviors (e.g., cards, base elements) - Requires browser/server - Stops if Tier 1 fails **Tier 3: Decorated Behaviors** - Location: tests/behaviors/, tests/cards/, tests/behaviors/, tests/pages/, tests/semantics/ - Full behavior tests, permutations, interactions, events - Requires browser/server - Stops if Tier 1 or 2 fail **Tier 4: Functional Tests** - Location: tests/behaviors/functional-runner.spec.ts - Schema-driven browser tests for user interactions **Tier 5: Regression Tests** - Location: tests/regression/ - Tests for specific bug fixes **Integration & Schema Viewer Tiers** - Integration: tests/integration/ - Schema Viewer: tests/schema-viewer.spec.ts Each tier is enforced by npm scripts and gates, so compliance must pass before behaviors, and so on. See playwright.config.ts for exact gating logic. # WB-Starter Testing Strategy ## Core Principle **Testing proves wellbeing. NO GAPS ALLOWED.** Every bug found MUST have: 1. Entry in `data/bug-registry.json` 2. Regression test in `tests/regression/` 3. Permutation coverage in schemas 4. Documentation of root cause and fix --- ## Test Structure ``` tests/ ├── behaviors/ │ ├── permutation-compliance.spec.ts # Schema-driven permutation tests │ └── ui/ │ ├── audio.spec.ts # Behavior-specific tests │ ├── card.spec.ts │ └── ... ├── compliance/ │ ├── builder-mkEl-compliance.spec.ts # Builder function tests │ ├── test-coverage-compliance.spec.ts # Meta-test: ensures coverage │ ├── html-ids.spec.ts # Enforces IDs on all elements │ ├── no-scrollbars.spec.ts # Enforces CSS scrollbar rules │ └── ... └── regression/ └── regression-tests.spec.ts # Bug fix verification ``` --- ## Bug Tracking Process ### 1. Bug Found When a bug is discovered: ```bash # Add to bug registry data/bug-registry.json ``` Required fields: - `id`: BUG-YYYY-MM-DD-NNN - `title`: Brief description - `severity`: HIGH | MEDIUM | LOW - `behavior`: Affected file - `function`: Affected function - `rootCause`: Why it happened - `symptom`: What user saw - `fix`: Before/after code - `affectedComponents`: All behaviors impacted - `regressionTests`: Test files covering this - `testCases`: Specific test names ### 2. Fix Applied After fixing the bug: 1. Add regression test to `tests/regression/regression-tests.spec.ts` 2. Add permutations to affected schema(s) 3. Update bug registry with test references 4. Run all tests to verify ### 3. Verification The compliance tests will FAIL if: - Any bug has no regression tests - Any bug has no test cases documented - `untestedBugs` count > 0 --- ## Schema Test Section Every schema SHOULD have a `test` section: ```json { \"test\": { \"setup\": [ \" \" ], \"matrix\": { \"combinations\": [ { \"prop1\": \"value1\" }, { \"prop1\": \"value2\", \"prop2\": true } ] }, \"functional\": { \"critical\": [ { \"name\": \"REGRESSION: describe the bug fix\", \"bugId\": \"BUG-2024-12-19-001\", \"setup\": \" \", \"expect\": { ... } } ], \"rendering\": [...], \"buttons\": [...], \"keyboard\": [...] } } } ``` --- ## Permutation Types Schemas define permutations for each property: | Type | Description | Example | |------|-------------|---------| | `BOOLEAN` | Tests true/false | `{ \"type\": \"BOOLEAN\" }` | | `ALL_ENUM` | All enum values | `{ \"type\": \"ALL_ENUM\" }` | | `BOUNDARY_NUMBER` | Min/max/mid values | `{ \"values\": [0, 50, 100] }` | | `EXPLICIT` | Custom values | `{ \"values\": [\"a\", \"b\", \"c\"] }` | Each permutation can have assertions: ```json { \"permutations\": { \"type\": \"BOOLEAN\", \"assertions\": { \"true\": { \"selector\": \".component__panel\", \"checks\": { \"exists\": true } }, \"false\": { \"selector\": \".component__panel\", \"checks\": { \"exists\": false } } } } } ``` --- ## Running Tests ```bash # All tests npx playwright test # Specific test file npx playwright test tests/regression/regression-tests.spec.ts # Coverage compliance npx playwright test tests/compliance/test-coverage-compliance.spec.ts # With UI npx playwright test --ui ``` --- ## Coverage Requirements 1. **Bug Registry**: 100% test coverage (untestedBugs = 0) 2. **Critical Behaviors**: Must have dedicated test files 3. **Enum Properties**: Must have permutation coverage 4. **Boolean Properties**: Should have true/false tests 5. **Regression Tests**: Must exist for all bug IDs --- ## Example: Adding a Bug Fix Test Bug found: Audio src goes to wrong place ### 1. Add to bug-registry.json: ```json { \"id\": \"BUG-2024-12-19-001\", \"title\": \"Audio src attribute set on div instead of dataset\", \"severity\": \"HIGH\", \"behavior\": \"builder.js\", \"function\": \"mkEl()\", \"affectedComponents\": [\"audio\", \"video\", \"cardimage\"], \"regressionTests\": [\"tests/",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/themes",
@@ -4859,7 +4859,7 @@
       "content": "Content & Media ← Back to Index 📄 Content & Media Articles, markdown rendering, audio, tables is a card, and a plain card has no image attribute -- x-cardimage is the card with a picture. It rendered exactly like the title-only one.) --> 📄 Article Behavior Learn the fundamentals of building reusable behaviors on plain semantic HTML: one attribute on the element you already have, no build step. Grid, Flexbox and Container Queries simplify layouts that used to need JavaScript, and make responsive design the default rather than the fix. Code splitting, lazy loading, image optimization and caching: the techniques that measurably improve how fast a page feels. Explore the web platform changes that will shape the next generation of applications. This featured story carries editorial metadata and a longer introduction so its emphasis is obvious beside the standard articles. Toggles A guide to building scalable web applications with careful performance budgets and real-world examples from production systems. 📰 Articles List Behavior Type safety for JavaScript: generics, unions, interfaces and decorators. useState, useEffect, useContext and custom hooks for cleaner code. Normalization, indexing, relationships and query optimization. Versioning, pagination, error handling and documentation. Unit, integration, end-to-end and performance testing. Deployment pipelines, containers, CI/CD and infrastructure as code. Authentication, authorization, CSRF prevention and secure transport. WCAG, ARIA, keyboard navigation and semantic HTML. layout variants Break monoliths into services that scale and deploy independently, with service discovery, distributed tracing and circuit breakers. When GraphQL's exact-fit queries beat REST endpoints, and when they do not. Redux, Zustand, signals and context: matching the tool to the app. Client-side inference with TensorFlow.js, or remote models for the heavy lifting -- and how to decide between them. XSS, CSRF and injection defenses: CSP, secure headers, input validation. Core Web Vitals in the field and in the lab. Token buckets, sliding windows and fair resource allocation. Many unit tests, fewer integration tests, a handful of end-to-end tests. Toggles AWS, Azure and Google Cloud: services, pricing and when to use each. Images, containers, registries and compose. Pods, services, deployments and monitoring at scale. Event-driven functions that scale to zero. Terraform, CloudFormation and Pulumi. Metrics, logs and traces, and alerting that means something. 📝 Markdown to HTML This is example markdown to html content. This is example markdown to html content. This is example markdown to html content. 🎵 Audio This is example audio content. This is example audio content. This is example audio content. This is example audio content. Toggles This is example audio content. This is example audio content. This is example audio content. This is example audio content. 📊 Table Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Toggles Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away 📝 Notes This is example notes content. This is example notes content. This is example notes content. This is example notes content. 📦 Code Theme This is example code theme content. 🎬 Semantic Media Elements Enhanced media elements using standard HTML tags. Audio audio Standard Player Studio EQ Player — with 15-band graphic equalizer Video video Standard Video Background Video (Muted Loop) Image img Zoomable Image (Lightbox) Lazy Loaded with Aspect Ratio Figure figure Standard Figure A beautiful canyon view Overlay Caption Technology and Nature 🏗️ Semantic Structure Elements Enhanced structural and data elements using standard HTML tags. Table table Features: sortable columns (click header), copyable cells (click cell), searchable, striped rows. ID Name Role Status 1 Alice Smith Developer Active 2 Bob Jones Designer Active 3 Charlie Brown Manager Away Details details Detail Item 1 This is the content for item ",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/site/effects",
@@ -5631,6 +5631,7 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/pagination",
       "docs/behaviors/table",
+      "docs/behaviors/x-behavior",
       "docs/claude/README",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
@@ -6497,11 +6498,11 @@
     "340": [
       "docs/standards/V3-STANDARDS"
     ],
-    "343": [
-      "pages/home"
-    ],
     "344": [
       "pages/hero-variants"
+    ],
+    "345": [
+      "pages/home"
     ],
     "356": [
       "docs/architecture/WB-PREFIX-AUDIT"
@@ -6869,6 +6870,12 @@
     "1598": [
       "docs/behaviors/cardexpandable"
     ],
+    "1642": [
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/behaviors/list",
+      "docs/behaviors/x-behavior",
+      "docs/pce-candidates"
+    ],
     "2000": [
       "docs/behaviors/copybutton",
       "docs/behaviors/x-copybutton"
@@ -6916,6 +6923,7 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/table",
+      "docs/behaviors/x-behavior",
       "docs/card",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
@@ -7503,6 +7511,7 @@
       "docs/behaviors/range",
       "docs/behaviors/select",
       "docs/behaviors/table",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
       "docs/committing-fixes",
@@ -8080,6 +8089,7 @@
       "docs/behaviors/cluster",
       "docs/behaviors/fill",
       "docs/behaviors/tags",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-enhancements",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
@@ -8155,6 +8165,7 @@
       "docs/behaviors/toast",
       "docs/behaviors/tooltip",
       "docs/behaviors/typewriter",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-effects",
       "docs/behaviors/x-enhancements",
@@ -8488,6 +8499,7 @@
       "docs/behaviors/mdhtml",
       "docs/behaviors/searchfield",
       "docs/behaviors/time",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-enhancements",
       "docs/card",
@@ -8557,6 +8569,7 @@
       "docs/behaviors/reel",
       "docs/behaviors/ul",
       "docs/behaviors/video",
+      "docs/behaviors/x-behavior",
       "docs/claude/README",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/code-examples-standard",
@@ -8719,6 +8732,7 @@
       "docs/behaviors/toast",
       "docs/behaviors/tooltip",
       "docs/behaviors/truncate",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-toggle",
@@ -8874,7 +8888,6 @@
       "docs/behaviors/typewriter",
       "docs/behaviors/ul",
       "docs/behaviors/wobble",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-collapse",
       "docs/behaviors/x-copy",
       "docs/behaviors/x-copybutton",
@@ -9174,7 +9187,6 @@
       "docs/behaviors/label",
       "docs/behaviors/pagination",
       "docs/behaviors/time",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
@@ -9979,6 +9991,7 @@
       "docs/behaviors/label",
       "docs/behaviors/ol",
       "docs/behaviors/time",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER3-REFERENCE",
@@ -10046,7 +10059,6 @@
     ],
     "log": [
       "pages/ai-permutation-test",
-      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/chip",
@@ -12048,7 +12060,6 @@
       "docs/behaviors/table",
       "docs/behaviors/textarea",
       "docs/behaviors/toast",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-toggle",
@@ -12381,6 +12392,7 @@
       "docs/behaviors/timeline",
       "docs/behaviors/typewriter",
       "docs/behaviors/video",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-effects",
@@ -12394,6 +12406,7 @@
       "docs/home-page",
       "docs/linkedin-standards-article",
       "docs/npx-commands",
+      "docs/pce-candidates",
       "docs/schema",
       "docs/schema.migration",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -13250,6 +13263,7 @@
       "docs/behaviors/textarea",
       "docs/behaviors/timeline",
       "docs/behaviors/tooltip",
+      "docs/behaviors/x-behavior",
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/container-pattern",
@@ -13398,6 +13412,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/architecture/solidjscomparison",
+      "docs/behaviors/x-behavior",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
       "docs/home-page",
@@ -13655,6 +13670,7 @@
       "docs/behaviors/table",
       "docs/behaviors/themecontrol",
       "docs/behaviors/toast",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-effects",
       "docs/behaviors/x-enhancements",
@@ -13850,6 +13866,7 @@
       "docs/behaviors/label",
       "docs/behaviors/searchfield",
       "docs/behaviors/tooltip",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/claude/SCHEMAS-GUIDE",
@@ -13978,7 +13995,6 @@
       "docs/behaviors/label",
       "docs/behaviors/radio",
       "docs/behaviors/searchfield",
-      "docs/behaviors/x-behavior",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/create-a-website",
       "docs/inline-editing",
@@ -14494,7 +14510,6 @@
       "docs/behaviors/toast",
       "docs/behaviors/toggle",
       "docs/behaviors/truncate",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-toggle",
       "docs/card",
       "docs/claude/TIER1-LAWS",
@@ -15389,7 +15404,6 @@
       "docs/behaviors/table",
       "docs/behaviors/tabs",
       "docs/behaviors/textarea",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-toggle",
       "docs/claude/PAGE-GENERATION",
@@ -15402,6 +15416,7 @@
       "docs/guides/search-index",
       "docs/mcp",
       "docs/npx-commands",
+      "docs/pce-candidates",
       "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-standard",
@@ -15527,6 +15542,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/copybutton",
       "docs/behaviors/pre",
+      "docs/behaviors/x-behavior",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
@@ -15642,6 +15658,7 @@
       "docs/behaviors/tags",
       "docs/behaviors/toggle",
       "docs/behaviors/vimeo",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-resizable",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
@@ -16702,7 +16719,6 @@
       "docs/architecture/solidjscomparison",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/tabs",
-      "docs/behaviors/x-behavior",
       "docs/linkedin-standards-article",
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
@@ -16921,7 +16937,6 @@
     ],
     "events": [
       "pages/behaviors",
-      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/articles",
@@ -17172,6 +17187,7 @@
       "docs/behaviors/grid",
       "docs/behaviors/img",
       "docs/behaviors/label",
+      "docs/behaviors/list",
       "docs/behaviors/ol",
       "docs/behaviors/popover",
       "docs/behaviors/prompt",
@@ -17225,7 +17241,6 @@
       "docs/audio",
       "docs/behaviors/glass",
       "docs/behaviors/scrollalong",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
       "docs/pce-candidates",
@@ -17371,6 +17386,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/NOTES-V3-GUIDE",
       "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -17389,6 +17405,7 @@
       "docs/behaviors/skeleton",
       "docs/behaviors/table",
       "docs/behaviors/toast",
+      "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
       "docs/linkedin-framework-agnostic",
@@ -19317,7 +19334,6 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/table",
       "docs/behaviors/time",
-      "docs/behaviors/x-behavior",
       "docs/card",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -19526,6 +19542,7 @@
       "docs/MVVM-MIGRATION",
       "docs/behavior-cross-reference",
       "docs/behaviors/cardimage",
+      "docs/behaviors/x-behavior",
       "docs/card",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/inline-editing",
@@ -19761,6 +19778,7 @@
       "pages/home",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors-reference",
@@ -19895,7 +19913,6 @@
       "pages/features",
       "docs/behavior-cross-reference",
       "docs/behaviors/chip",
-      "docs/behaviors/x-behavior",
       "docs/inline-editing",
       "demos/site/feedback"
     ],
@@ -20107,7 +20124,6 @@
       "docs/behaviors/otp",
       "docs/behaviors/pre",
       "docs/behaviors/ratio",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copy",
       "docs/behaviors/x-copybutton",
       "docs/card",
@@ -20876,7 +20892,6 @@
       "docs/behaviors/snow",
       "docs/behaviors/tabs",
       "docs/behaviors/toast",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-collapse",
       "docs/behaviors/x-copy",
       "docs/behaviors/x-copybutton",
@@ -21290,6 +21305,7 @@
       "docs/behaviors/table",
       "docs/behaviors/time",
       "docs/behaviors/toast",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-effects",
@@ -23097,6 +23113,7 @@
       "docs/behaviors/cardminimizable",
       "docs/behaviors/shake",
       "docs/behaviors/toggle",
+      "docs/behaviors/x-behavior",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/schema-test-value"
@@ -23134,7 +23151,6 @@
       "docs/behaviors/steps",
       "docs/behaviors/toast",
       "docs/behaviors/toggle",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-toggle",
       "docs/claude/SCHEMAS-GUIDE",
@@ -23379,6 +23395,7 @@
     "ripple": [
       "pages/home",
       "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/X-USAGE-AUDIT",
@@ -24325,7 +24342,6 @@
       "docs/behaviors/radio",
       "docs/behaviors/range",
       "docs/behaviors/ul",
-      "docs/behaviors/x-behavior",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
@@ -24893,6 +24909,7 @@
       "docs/behaviors/flex",
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-framework-agnostic",
+      "docs/pce-candidates",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "assist": [
@@ -25042,7 +25059,6 @@
       "docs/behaviors/dl",
       "docs/behaviors/gallery",
       "docs/behaviors/glass",
-      "docs/behaviors/list",
       "docs/behaviors/notify",
       "docs/behaviors/range",
       "docs/behaviors/truncate",
@@ -25195,6 +25211,7 @@
       "docs/behaviors/scrollable",
       "docs/behaviors/search",
       "docs/behaviors/time",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-toggle",
       "docs/card",
@@ -25742,7 +25759,6 @@
       "docs/behaviors/scrollable",
       "docs/behaviors/scrollalong",
       "docs/behaviors/table",
-      "docs/behaviors/x-behavior",
       "docs/guides/create-a-website",
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -26286,7 +26302,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-standards-article",
-      "docs/pce-candidates",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -28138,6 +28153,7 @@
     ],
     "explicitly": [
       "docs/AI",
+      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/address",
@@ -28764,6 +28780,7 @@
     ],
     "runs": [
       "docs/ANNOUNCE_TEST_POLICY",
+      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
       "docs/audio",
@@ -28841,6 +28858,7 @@
       "docs/behaviors/toast",
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/youtube",
       "docs/code-examples-standard",
       "docs/escape-hatches",
@@ -28923,7 +28941,6 @@
     ],
     "explicit": [
       "docs/ANNOUNCE_TEST_POLICY",
-      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/auto-injection",
       "docs/behaviors/grid",
@@ -30281,7 +30298,6 @@
     ],
     "info": [
       "docs/INTELLISENSE-TOOLTIPS",
-      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/address",
       "docs/behaviors/alert",
       "docs/behaviors/aside",
@@ -30361,6 +30377,7 @@
       "docs/behaviors/span",
       "docs/behaviors/spinner",
       "docs/behaviors/toast",
+      "docs/behaviors/x-behavior",
       "docs/home-page",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -30995,6 +31012,7 @@
     ],
     "generic": [
       "docs/INTELLISENSE-TOOLTIPS",
+      "docs/WB_BEHAVIOR_SYSTEM",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/auto-injection",
       "docs/behaviors/cardfile",
@@ -31223,7 +31241,6 @@
       "docs/behaviors/tags",
       "docs/behaviors/time",
       "docs/behaviors/truncate",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-resizable",
       "docs/card",
       "docs/claude/PAGE-GENERATION",
@@ -31653,6 +31670,7 @@
     ],
     "06": [
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/behaviors/x-behavior",
       "docs/standards/V3-STANDARDS"
     ],
     "phased": [
@@ -32375,6 +32393,7 @@
       "docs/behaviors/data",
       "docs/behaviors/release",
       "docs/behaviors/time",
+      "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/code-examples-standard",
       "docs/schema-first-architecture",
@@ -32622,7 +32641,6 @@
       "docs/behaviors/switcher",
       "docs/behaviors/tags",
       "docs/behaviors/toast",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-darkmode",
       "docs/behaviors/x-effects",
@@ -32779,7 +32797,6 @@
       "docs/behaviors/mdhtml",
       "docs/behaviors/ol",
       "docs/behaviors/ul",
-      "docs/behaviors/x-behavior",
       "docs/code-examples-standard",
       "docs/container-pattern",
       "docs/home-page",
@@ -32984,6 +33001,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardimage",
       "docs/behaviors/img",
+      "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/escape-hatches",
       "docs/guides/search-index",
@@ -33064,6 +33082,7 @@
       "docs/behaviors/table",
       "docs/behaviors/tags",
       "docs/behaviors/timeline",
+      "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER1-LAWS",
@@ -33073,6 +33092,7 @@
       "docs/guides/create-a-website",
       "docs/home-page",
       "docs/linkedin-standards-article",
+      "docs/pce-candidates",
       "docs/performance",
       "docs/schema.migration",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -33678,7 +33698,6 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/snow",
       "docs/behaviors/tags",
-      "docs/behaviors/x-behavior",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
@@ -33972,7 +33991,6 @@
       "docs/behaviors/table",
       "docs/behaviors/textarea",
       "docs/behaviors/video",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-toggle",
       "docs/claude/TOOLING-INVENTORY",
@@ -34525,7 +34543,6 @@
     ],
     "declaration": [
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/pce-candidates",
       "docs/standards/V3-STANDARDS"
     ],
     "anatomy": [
@@ -34812,6 +34829,7 @@
       "docs/behaviors/dropdown",
       "docs/behaviors/move",
       "docs/behaviors/toast",
+      "docs/behaviors/x-behavior",
       "docs/claude/TIER1-LAWS",
       "docs/escape-hatches",
       "docs/semantic-audit",
@@ -34839,50 +34857,39 @@
       "docs/themes",
       "docs/wbservices"
     ],
-    "injection": [
+    "old": [
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/auto-injection",
-      "docs/behaviors-reference",
-      "docs/behaviors/fill",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/dialog",
+      "docs/behaviors/glass",
+      "docs/behaviors/range",
+      "docs/behaviors/x-behavior",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/code-examples-standard",
-      "docs/escape-hatches",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/claude/TOOLING-INVENTORY",
       "docs/pce-candidates",
-      "docs/performance",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
-      "docs/wbservices",
-      "demos/autoinject",
-      "demos/pre-debug",
-      "demos/site/content"
+      "docs/schema",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
-    "legacy": [
+    "deprecated": [
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/behaviors/accordion",
+      "docs/behaviors/list",
+      "docs/behaviors/select",
+      "docs/behaviors/x-behavior",
+      "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
-      "docs/schema.migration",
-      "demos/legacy-syntax-check"
+      "docs/linkedin-framework-agnostic",
+      "docs/pce-candidates",
+      "docs/standards/V3-STANDARDS"
     ],
-    "override": [
+    "warns": [
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/address",
-      "docs/behaviors/data",
-      "docs/behaviors/radio",
-      "docs/behaviors/time",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/code-examples-standard",
-      "docs/escape-hatches",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/themes",
-      "demos/site/interactive"
+      "docs/semantic-audit"
     ],
     "called": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -34912,6 +34919,7 @@
       "docs/behaviors/prompt",
       "docs/behaviors/snow",
       "docs/behaviors/video",
+      "docs/behaviors/x-behavior",
       "docs/mcp",
       "docs/testing-runbook"
     ],
@@ -34949,7 +34957,6 @@
       "docs/behaviors/steps",
       "docs/behaviors/table",
       "docs/behaviors/timeline",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-toggle",
       "docs/property-viewer"
     ],
@@ -34993,15 +35000,8 @@
     "hasattribute": [
       "docs/WB_BEHAVIOR_SYSTEM"
     ],
-    "ignore": [
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/auto-injection",
-      "docs/behaviors-reference",
-      "docs/behaviors/fill",
-      "docs/claude/README",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/V3-STANDARDS"
+    "hasattri": [
+      "docs/WB_BEHAVIOR_SYSTEM"
     ],
     "prefix": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35173,6 +35173,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/card",
       "docs/behaviors/print",
+      "docs/behaviors/x-behavior",
       "docs/guides/create-a-website",
       "docs/home-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -35786,6 +35787,25 @@
     "refactors": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
+    "injection": [
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/auto-injection",
+      "docs/behaviors-reference",
+      "docs/behaviors/fill",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/escape-hatches",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS",
+      "docs/wbservices",
+      "demos/autoinject",
+      "demos/pre-debug",
+      "demos/site/content"
+    ],
     "extract": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/behaviors/blockquote",
@@ -35988,6 +36008,7 @@
       "docs/behaviors/scrollalong",
       "docs/behaviors/searchfield",
       "docs/behaviors/share",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-collapse",
       "docs/behaviors/x-copybutton",
       "docs/card",
@@ -36079,6 +36100,7 @@
       "docs/behaviors/draggable",
       "docs/behaviors/navbar",
       "docs/behaviors/table",
+      "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -36733,6 +36755,7 @@
       "docs/behaviors/cardprofile",
       "docs/behaviors/dl",
       "docs/behaviors/time",
+      "docs/behaviors/x-behavior",
       "docs/claude/README",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER3-REFERENCE",
@@ -36775,6 +36798,15 @@
     "reuses": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/x-copybutton"
+    ],
+    "ignore": [
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/auto-injection",
+      "docs/behaviors-reference",
+      "docs/behaviors/fill",
+      "docs/claude/README",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/V3-STANDARDS"
     ],
     "path": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -36917,21 +36949,6 @@
     "customer": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/claude/TIER3-REFERENCE"
-    ],
-    "old": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/dialog",
-      "docs/behaviors/glass",
-      "docs/behaviors/range",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/schema",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "proves": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -37273,6 +37290,7 @@
       "docs/behaviors/label",
       "docs/behaviors/searchfield",
       "docs/behaviors/tooltip",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/claude/SCHEMAS-GUIDE",
@@ -37697,6 +37715,7 @@
       "docs/behaviors/label",
       "docs/behaviors/searchfield",
       "docs/behaviors/tooltip",
+      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/claude/SCHEMAS-GUIDE",
@@ -37812,7 +37831,6 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/card",
       "docs/behaviors/stagelight",
-      "docs/behaviors/x-behavior",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS"
     ],
@@ -38242,6 +38260,7 @@
       "docs/auto-injection",
       "docs/behaviors/avatar",
       "docs/behaviors/img",
+      "docs/behaviors/x-behavior",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/linkedin-update-article",
@@ -38358,6 +38377,15 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/countdown",
       "docs/behaviors/inputgroup"
+    ],
+    "legacy": [
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/x-behavior",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/schema.migration",
+      "demos/legacy-syntax-check"
     ],
     "handling": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -38648,6 +38676,7 @@
     "entire": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/code-examples-standard",
       "docs/linkedin-standards-article",
@@ -38770,6 +38799,21 @@
       "docs/schema",
       "demos/autoinject",
       "demos/multi-behavior-demo-generated"
+    ],
+    "override": [
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/address",
+      "docs/behaviors/data",
+      "docs/behaviors/radio",
+      "docs/behaviors/time",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/escape-hatches",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/themes",
+      "demos/site/interactive"
     ],
     "stacks": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -39520,7 +39564,6 @@
     "several": [
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/details",
-      "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/standards/RELEASE-PROCESS",
@@ -39550,7 +39593,6 @@
       "docs/behaviors/reel",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/switcher",
-      "docs/behaviors/x-behavior",
       "docs/inline-editing",
       "docs/styles",
       "docs/wbservices"
@@ -40357,14 +40399,6 @@
       "docs/semantic-standard",
       "demos/site/cards"
     ],
-    "deprecated": [
-      "docs/behaviors/accordion",
-      "docs/behaviors/select",
-      "docs/claude/TIER1-LAWS",
-      "docs/code-examples-standard",
-      "docs/linkedin-framework-agnostic",
-      "docs/standards/V3-STANDARDS"
-    ],
     "assistive": [
       "docs/behaviors/accordion",
       "docs/behaviors/cover",
@@ -40458,7 +40492,6 @@
       "docs/behaviors/truncate",
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
-      "docs/behaviors/x-behavior",
       "docs/code-examples-standard",
       "docs/npx-commands",
       "docs/wbservices"
@@ -42946,6 +42979,7 @@
       "docs/behaviors/truncate",
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
+      "docs/behaviors/x-behavior",
       "docs/standards/V3-STANDARDS"
     ],
     "absent": [
@@ -44854,7 +44888,6 @@
       "docs/behaviors/password",
       "docs/behaviors/radio",
       "docs/behaviors/range",
-      "docs/behaviors/x-behavior",
       "docs/code-examples-standard",
       "docs/performance",
       "docs/standards/V3-STANDARDS"
@@ -45949,10 +45982,8 @@
     "tilt": [
       "docs/behaviors/wobble"
     ],
-    "spaces": [
-      "docs/behaviors/x-behavior",
-      "docs/code-examples-standard",
-      "docs/search"
+    "deprecation": [
+      "docs/behaviors/x-behavior"
     ],
     "targetid": [
       "docs/behaviors/x-copybutton"
@@ -46886,6 +46917,10 @@
     "indentation": [
       "docs/code-examples-standard"
     ],
+    "spaces": [
+      "docs/code-examples-standard",
+      "docs/search"
+    ],
     "un": [
       "docs/code-examples-standard"
     ],
@@ -46945,9 +46980,6 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "cram": [
-      "docs/code-examples-standard"
-    ],
-    "ta": [
       "docs/code-examples-standard"
     ],
     "prerequisites": [
@@ -47850,8 +47882,7 @@
       "docs/schema.migration"
     ],
     "traditional": [
-      "docs/linkedin-framework-agnostic",
-      "docs/pce-candidates"
+      "docs/linkedin-framework-agnostic"
     ],
     "tightly": [
       "docs/linkedin-framework-agnostic"
@@ -48334,9 +48365,6 @@
       "docs/pce-candidates"
     ],
     "mycomponent": [
-      "docs/pce-candidates"
-    ],
-    "ex": [
       "docs/pce-candidates"
     ],
     "execution": [
@@ -48951,9 +48979,6 @@
     "updating": [
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "warns": [
-      "docs/semantic-audit"
     ],
     "thematic": [
       "docs/semantic-standard"

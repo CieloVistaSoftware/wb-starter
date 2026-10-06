@@ -36,7 +36,7 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
   test('searchable renders a .x-table__search input (none existed before)', async ({ page }) => {
     await setup(
       page,
-      '<table id="t1" x-behavior="table" searchable>' +
+      '<table id="t1" searchable>' +
         '<thead><tr><th>Name</th><th>Role</th></tr></thead>' +
         '<tbody><tr><td>Alice</td><td>Admin</td></tr><tr><td>Bob</td><td>User</td></tr></tbody>' +
         '</table>'
@@ -48,7 +48,7 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
   test('without searchable, no search input is created', async ({ page }) => {
     await setup(
       page,
-      '<table id="t2" x-behavior="table">' +
+      '<table id="t2">' +
         '<thead><tr><th>Name</th></tr></thead><tbody><tr><td>Alice</td></tr></tbody>' +
         '</table>'
     );
@@ -58,7 +58,7 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
   test('typing in the search input actually filters rows (effect-based, not presence-based)', async ({ page }) => {
     await setup(
       page,
-      '<table id="t3" x-behavior="table" searchable>' +
+      '<table id="t3" searchable>' +
         '<thead><tr><th>Name</th><th>Role</th></tr></thead>' +
         '<tbody>' +
         '<tr><td>Alice Chen</td><td>Admin</td></tr>' +
@@ -80,7 +80,7 @@ test.describe('<table searchable> creates and wires a real search input (#433)',
   test('the search input is inserted directly before the table, not inside its content model', async ({ page }) => {
     await setup(
       page,
-      '<table id="t4" x-behavior="table" searchable>' +
+      '<table id="t4" searchable>' +
         '<thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>'
     );
     const table = page.locator('#t4');

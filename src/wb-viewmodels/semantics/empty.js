@@ -2,7 +2,7 @@ import { readAttr } from '../../core/read-attr.js';
 /**
  * Empty State Behavior
  * Renders an empty state placeholder
- * Helper Attribute: [x-behavior="empty"]
+ * Helper Attribute: [x-empty]
  */
 export function empty(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.

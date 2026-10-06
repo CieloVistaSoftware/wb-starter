@@ -40,7 +40,7 @@ async function buildTable(page: Page): Promise<void> {
   // Deliberately NOT in date order in the DOM, so a sort that does nothing at
   // all cannot pass by accident.
   const html = `
-    <table id="date-sort" x-behavior="table" sortable>
+    <table id="date-sort" sortable>
       <thead><tr><th>Item</th><th>Updated</th></tr></thead>
       <tbody>
         <tr><td>middle</td><td>Apr 1, 2025</td></tr>
@@ -103,7 +103,7 @@ test('a column of prose is still sorted as text, not guessed at as dates', async
   await page.evaluate(() => {
     const c = document.createElement('div');
     c.innerHTML = `
-      <table id="prose-sort" x-behavior="table" sortable>
+      <table id="prose-sort" sortable>
         <thead><tr><th>Title</th></tr></thead>
         <tbody>
           <tr><td>March of the Penguins</td></tr>

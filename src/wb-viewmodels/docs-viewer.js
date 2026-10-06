@@ -4,7 +4,7 @@ import { readAttr } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  * Documentation navigation handler
  * 
- * Helper Attribute: [x-behavior="docsviewer"]
+ * Helper Attribute: [x-docsviewer]
  * -----------------------------------------------------------------------------
  */
 export function docsviewer(element) {

@@ -1,7 +1,7 @@
 /**
  * Textarea - Enhanced <textarea> element
  * Adds autosize, character count, max length indicator
- * Helper Attribute: [x-behavior="textarea"]
+ * Helper Attribute: [x-textarea]
  *
  * ⚠️ <textarea> is DEPRECATED — prefer a bare <textarea> directly (see
  * Helper Attribute usage above); this behavior already enhances one fully,

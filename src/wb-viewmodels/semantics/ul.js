@@ -3,7 +3,7 @@ import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * UL - Enhanced <ul> element (Unordered List)
  * Adds styling variants, custom markers, spacing
- * Helper Attribute: [x-behavior="ul"]
+ * Helper Attribute: [x-ul]
  */
 export function ul(element, options = {}) {
   if (element.tagName !== 'UL') {
