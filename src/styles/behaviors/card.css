@@ -1694,6 +1694,14 @@ article.x-card--link.x-card-link,
   overflow: visible;
 }
 
+/* #1598: collapsed content that already fits has nothing to reveal, so the
+   card offers no Show More. cardexpandable() sets x-card--nothing-to-expand
+   (and clears it when the content stops fitting). Only the footer holding the
+   expand button is hidden, never an author's own footer. */
+.x-card-expandable.x-card--nothing-to-expand > .x-card__footer:has(> .x-card__expand-btn) {
+  display: none;
+}
+
 /* Minimizable card: header row and title/subtitle. The <header> carries no
    class (card.css names card parts by tag), so these are scoped by the host's
    two classes to outrank `article > header` / `:is([x-card…]) > header`. */
