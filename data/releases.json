@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.296",
+      "date": "2026-10-05",
+      "summary": "On the live site the Error Log Viewer shows this browser&#39;s own log (localStorage), but Clear Log only asked a server that GitHub Pages does not have, so it said &quot;Failed to clear errors&quot; and every error stayed listed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1569\" target=\"_blank\" rel=\"noopener\">PR 1569</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Block the service worker so the Pages mocks apply</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",
+          "issues": [
+            1568
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Clear Log clears the browser&#39;s log on GitHub Pages</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",
+          "issues": [
+            1568
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html in a browser that has visited the site, click Clear Log and confirm. Before: an alert said &quot;Failed to clear errors&quot; and the list was unchanged. Now: the list is empty, there is no alert, and it stays empty on reload."
+    },
+    {
       "version": "1.0.295",
       "date": "2026-10-05",
       "summary": "After a deploy, visitors kept getting the old JavaScript for up to ten minutes, because the service worker answered from the browser&#39;s HTTP cache. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1574\" target=\"_blank\" rel=\"noopener\">PR 1574</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/989\" target=\"_blank\" rel=\"noopener\">#989</a>",
