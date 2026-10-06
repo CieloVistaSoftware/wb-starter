@@ -30,6 +30,7 @@ test('x-cardhero buttons follow the hero alignment (#1619)', async ({ page }) =>
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20_000 });
 
+  let measured = 0;
   for (const c of CASES) {
     const m = await page.evaluate(async ({ variant, xalign }) => {
       document.querySelectorAll('.cta-align-case').forEach((el) => el.remove());
@@ -63,5 +64,8 @@ test('x-cardhero buttons follow the hero alignment (#1619)', async ({ page }) =>
     } else {
       expect(Math.abs(m.rowRight - m.pairRight), `${where}: the pair ends at the row's end`).toBeLessThanOrEqual(1);
     }
+    measured++;
   }
+  // Unconditional: every alignment case was rendered and measured (#1092).
+  expect(measured, 'every xalign case was measured').toBe(CASES.length);
 });
