@@ -2,15 +2,15 @@
 
 ## 🅿️ PARKING LOT
 
-**Parked 2026-10-05, 10:15 PM CDT.** main = v1.0.306.
+**Parked 2026-10-05, 11:00 PM CDT.** main = v1.0.311.
 
-**Task:** real paths for pages (#1001, John: "I want regular routing for navigation pull out the pages thing"), which also settles #957 (an unknown path is a 404, not home).
+**Task:** real paths for pages (#1001, John: "I want regular routing for navigation pull out the pages thing"), which also settles #957 (an unknown path is a 404, not home). PR #1601.
 
-**Files touched:** `src/core/routes.js` (new), `src/core/site-engine.js`, `server.js`, `scripts/generate-404.mjs` (new), `404.html` (new, generated), `.github/workflows/stamp-version-on-main.yml`, `tests/compliance/repo-layout.spec.ts`, `tests/regression/pages-have-real-paths.spec.ts` (new).
+**Files touched:** `src/core/routes.js` (new), `src/core/site-engine.js`, `server.js`, `scripts/generate-404.mjs` (new), `404.html` (new, generated), `.github/workflows/stamp-version-on-main.yml`, `tests/helpers/page-path.ts` (new), `tests/regression/pages-have-real-paths.spec.ts` (new), and the specs that looked nav links up by `?page=`: `mobile/nav-scroll`, `views/feature-cards-clickable`, `pages/home-links`, `integration/repro-card-bug`, `behaviors/no-schema-not-found`, `regression/{navigation-latest-wins,non-nav-pages-reachable,issues-activity-survives-navigation,behaviors-live-selector,releases-page,scroll-survives-page-build}`, `compliance/repo-layout`.
 
-**Last action:** built and pushed as a DRAFT PR, not merged. Its own spec passed 9/9; a full local run was stopped at 8132/9109 for park with 12 failures. Expected fallout to fix (tests that click a link and expect `?page=` in the URL, or count on the old fallback): `views/feature-cards-clickable`, `pages/home-links`, `regression/navigation-latest-wins`, `regression/non-nav-pages-reachable`, `regression/issues-activity-survives-navigation`, `regression/behaviors-live-selector`, `regression/cardhorizontal-doc-demos`, `compliance/mocked-specs-block-the-service-worker` (the new spec mocks routes: add `serviceWorkers: 'block'`), `regression/pages-have-real-paths` (GitHub Pages simulation). Not this change: `error-log-empty` and `no-external-requests` (sandbox CDN), `repo-layout` (local config file).
+**Last action:** fixed every spec CI and the local run showed red (all pass locally; the iPhone project needs WebKit, which this sandbox lacks, so nav-scroll was checked on Pixel). Added a redirect `/behaviors/` → `/behaviors` (the shell's relative assets broke under a trailing slash). Merged main and pushed; the PR is still DRAFT, waiting on CI.
 
-**Next step:** fix those specs (or the code, where a test shows a real regression), let CI go green, merge. Then delete the 44 `?page=` content links in favour of paths (optional; they redirect).
+**Next step:** CI green → mark ready, merge (merge commit), fill in the signatures for #1001 and #957. Then, optionally, change the 44 `?page=` content links to paths (they still work; they redirect).
 
 **Open questions for John:** #827 wire up or delete the list modules (`<ul>/<ol>/<dl>` would change on every page); #969 the typed-card class refactor, do now or later.
 

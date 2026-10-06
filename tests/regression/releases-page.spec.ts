@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { pagePath } from '../helpers/page-path';
 import fs from 'fs';
 import { execFileSync } from 'child_process';
 import path from 'path';
@@ -78,7 +79,7 @@ test.describe('Releases page (#1182)', () => {
   test('the old What\'s New URL lands on Releases', async ({ page }) => {
     await page.goto('/?page=whats-new');
     await expect(page.locator('#releases-list')).toHaveAttribute('rendered', '1', { timeout: 15_000 });
-    expect(new URL(page.url()).searchParams.get('page')).toBe('releases');
+    expect(new URL(page.url()).pathname, 'and the address says so (#1001)').toBe(pagePath('releases'));
   });
 
   test('search narrows the list to matching items', async ({ page }) => {

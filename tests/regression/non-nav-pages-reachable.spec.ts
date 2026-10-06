@@ -14,6 +14,7 @@
 import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
+import { pageFromUrl } from '../../src/core/routes.js';
 
 const PAGES_DIR = path.join(process.cwd(), 'pages');
 
@@ -56,13 +57,14 @@ test.describe('#725 — every page is reachable by URL', () => {
     await page.waitForSelector('#behaviors-search', { timeout: 25000 });
 
     const hrefs = await page.evaluate(() =>
-      [...document.querySelectorAll('footer a[href^="?page="]')].map((a) => a.getAttribute('href') || ''),
+      [...document.querySelectorAll('footer a.footer__link')].map((a) => a.getAttribute('href') || ''),
     );
     expect(hrefs.length, 'expected footer page links').toBeGreaterThan(0);
 
     for (const href of hrefs) {
-      const id = new URLSearchParams(href.replace(/^\?/, '')).get('page');
-      await page.goto(`/${href}`);
+      // A footer link is the page's real path (#1001): /about, or /?page=docs.
+      const id = pageFromUrl(new URL(href, 'http://localhost/'), 'http://localhost/').page;
+      await page.goto(href);
       await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 25000 });
       await page.waitForTimeout(700);
       const landed = await page.evaluate(() => (window as any).WBSite?.currentPage);

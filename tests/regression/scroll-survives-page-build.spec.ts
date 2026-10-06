@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { pagePath } from '../helpers/page-path';
 
 /**
  * #1462: navigateTo() put the scroll position in place only AFTER it had
@@ -40,10 +41,10 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
   await page.goto('/?page=home');
   await page.waitForFunction(() => !!document.querySelector('#mainPage-home') && (window as any).WB?.__held, null, { timeout: 20000 });
 
-  await page.evaluate(() => {
+  await page.evaluate((href) => {
     (window as any).__holdScan = true;
-    (document.querySelector('.nav__item[href="?page=themes"]') as HTMLElement).click();
-  });
+    (document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement).click();
+  }, pagePath('themes'));
   // The page is on screen; its scan is still held.
   await page.waitForFunction(() => !!document.querySelector('#mainPage-themes'), null, { timeout: 20000 });
   expect(await page.evaluate(() => !!(window as any).__scanReleased), 'the scan must still be held').toBe(false);

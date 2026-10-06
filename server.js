@@ -634,6 +634,12 @@ if (!isProduction) {
 app.get(/^\/([a-z0-9][a-z0-9-]*)\/?$/i, (req, res, next) => {
   const name = req.params[0];
   if (FOLDER_PAGES.has(name) || !fs.existsSync(path.join(rootDir, 'pages', `${name}.html`))) return next();
+  // /behaviors/ would resolve the shell's relative assets (src/...) under
+  // /behaviors/, so it moves to /behaviors, keeping the query.
+  if (req.path.endsWith('/')) {
+    const query = req.originalUrl.slice(req.path.length);
+    return res.redirect(301, `/${name}${query}`);
+  }
   res.sendFile(path.join(rootDir, 'index.html'));
 });
 

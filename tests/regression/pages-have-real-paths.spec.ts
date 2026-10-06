@@ -13,6 +13,10 @@ import { build404, pagesBase } from '../../scripts/generate-404.mjs';
  */
 const ROOT = process.cwd();
 
+// The GitHub Pages test answers requests itself; a live service worker would
+// answer first (#1349).
+test.use({ serviceWorkers: 'block' });
+
 test('an address names its page, and a page has one address', () => {
   const site = 'https://example.github.io/wb-starter/';
   expect(pageFromUrl(`${site}behaviors`, site)).toEqual({ page: 'behaviors', legacy: false, path: 'behaviors' });
@@ -72,6 +76,13 @@ test('the nav links are paths, a click keeps the path, and Back returns', async 
   await expect.poll(() => new URL(page.url()).pathname).toBe('/');
 });
 
+test('/behaviors/ moves to /behaviors, so the shell\'s assets still resolve', async ({ page }) => {
+  await page.goto('/behaviors/?file=x');
+  await expect(page.locator('#mainPage-behaviors')).toBeAttached({ timeout: 20_000 });
+  const url = new URL(page.url());
+  expect(url.pathname + url.search).toBe('/behaviors?file=x');
+});
+
 test('a path naming no page shows "Page not found", not home (#957)', async ({ page }) => {
   await page.goto('/behaviorz');
   await expect(page.locator('#page-404')).toBeAttached({ timeout: 20_000 });
@@ -98,4 +109,5 @@ test('on GitHub Pages, /wb-starter/behaviors is served 404.html and shows Behavi
   await expect(page.locator('#mainPage-behaviors')).toBeAttached({ timeout: 20_000 });
   const href = await page.locator('#siteNav a', { hasText: /releases/i }).first().getAttribute('href');
   expect(href, 'nav links carry the site root').toBe('/wb-starter/releases');
+  await page.unrouteAll({ behavior: 'ignoreErrors' });
 });
