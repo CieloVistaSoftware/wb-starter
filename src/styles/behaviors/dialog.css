@@ -31,7 +31,7 @@
 /* Before it's opened, a <dialog title="…">…</dialog> IS its own
    trigger (dialog.js adds .x-dialog-trigger to the same element) -- it also
    carries the shared .x-dialog class above, whose `padding: 0` is correct
-   for the popped-open dialog box (body padding lives on .x-dialog__body)
+   for the popped-open dialog box (body padding lives on .x-dialog__main)
    but leaked onto this pre-click trigger state too, leaving its label text
    flush against the element edge. Source order breaks the tie in this
    rule's favor (same 0,1,0 specificity as .x-dialog, declared after it). */
@@ -77,7 +77,7 @@
   border-radius: 0;
 }
 
-.x-dialog--fullscreen .x-dialog__body {
+.x-dialog--fullscreen .x-dialog__main {
   height: calc(100vh - 8rem);
 }
 
@@ -133,7 +133,7 @@
   color: var(--text-primary);
 }
 
-.x-dialog__body {
+.x-dialog__main {
   padding: 1.5rem;
   color: var(--text-secondary);
   overflow-y: auto;

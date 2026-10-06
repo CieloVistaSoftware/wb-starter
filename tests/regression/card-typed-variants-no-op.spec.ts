@@ -44,7 +44,7 @@ async function inject(page: Page, html: string) {
   //
   // This used to wait for `.x-card`, which a8a7362e stopped injecting
   // ("specificity replaces class injection"). Measured: a cardstats host
-  // carries `x-card--stats x-stats` and a plain `<div x-card>` carries NO class
+  // carries `x-stats` (and, before #969, `x-card--stats`) and a plain `<div x-card>` carries NO class
   // at all. So all seven tests spent 5s waiting for a class that never arrives
   // and timed out in SETUP -- none of them ever reached the variant assertions
   // they exist to make. A harness that cannot start reports the same red as a

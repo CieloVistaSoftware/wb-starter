@@ -27,6 +27,7 @@
 import fs from 'fs';
 import path from 'path';
 import { sourceFiles } from './lib/source-files.mjs';
+import { SHELL_MARKER } from './generate-404.mjs';
 
 const ARGS = process.argv.slice(2);
 const flag = (n) => ARGS.includes(n);
@@ -71,6 +72,11 @@ for (const file of FILES) {
   try { text = fs.readFileSync(file, 'utf8'); } catch { continue; }
   filesRead++;
   if (!text.includes('wb-')) continue;
+  // #1001: 404.html and the <page>/index.html shells are generated copies of
+  // index.html, which is counted once already. Counting each copy again made
+  // PACKAGE (the project's own name, in the shell's <base> and meta tags)
+  // climb by ~90 the day the shells landed, with nothing new in source.
+  if (text.includes(SHELL_MARKER)) continue;
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
   const IS_CODE = /\.(js|mjs|cjs|ts|tsx)$/.test(file);
   // In prose, the generic `<wb-*>` is a tag too: it is how docs/claude/TIER1-LAWS.md

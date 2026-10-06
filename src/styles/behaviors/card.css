@@ -1187,7 +1187,7 @@ article[x-cardstats] > header,
 /* Link card -- cursor/position/padding moved here from cardlink()'s inline
    styles (card.js); padding updated to 1.25rem to match what the inline
    override actually rendered (not the old 1rem here) (Law 9 migration, #370).
-   Three-class compound `.x-card.x-card--link.x-card-link` (0,0,3,0), not
+   Three-class compound `.x-card[x-cardlink][x-cardlink]` (0,0,3,0), not
    a single class: cardlink() builds its own plain-<div> header (not a real
    <header>/<main>), so it always also matches card.css's
    `.x-card:not(:has(.x-card__header)):not(:has(.x-card__main))` fallback

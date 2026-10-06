@@ -56,18 +56,24 @@ test.describe('[x-cardexpandable] actually shows more/less content on click', ()
     const collapsedHeight = await content.evaluate(el => el.getBoundingClientRect().height);
     await expect(btn).toHaveText(/Show More/);
 
-    await btn.click();
-    // max-height transitions over 0.3s (card.js) -- wait past the transition.
-    await page.waitForTimeout(400);
+    // max-height transitions over 0.3s (card.js). Wait for the height to move,
+    // then for the transition to end -- signals, not a guessed 400ms (#1516).
+    const height = () => content.evaluate(el => el.getBoundingClientRect().height);
+    const settled = () => content.evaluate(async (el) => {
+      await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
+      return el.getBoundingClientRect().height;
+    });
 
-    const expandedHeight = await content.evaluate(el => el.getBoundingClientRect().height);
+    await btn.click();
+    await expect.poll(height, { message: 'Show More makes the content taller' }).toBeGreaterThan(collapsedHeight);
+    const expandedHeight = await settled();
     expect(expandedHeight).toBeGreaterThan(collapsedHeight);
     await expect(btn).toHaveText(/Show Less/);
 
     // Toggling back collapses it again -- the interaction is reversible.
     await btn.click();
-    await page.waitForTimeout(400);
-    const recollapsedHeight = await content.evaluate(el => el.getBoundingClientRect().height);
+    await expect.poll(height, { message: 'Show Less makes it shorter again' }).toBeLessThan(expandedHeight);
+    const recollapsedHeight = await settled();
     expect(recollapsedHeight).toBeLessThan(expandedHeight);
     await expect(btn).toHaveText(/Show More/);
   });

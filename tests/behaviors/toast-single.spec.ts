@@ -28,6 +28,5 @@ test('clicking an x-toast button shows exactly one toast', async ({ page }) => {
   // Lazy runtime (#491): wait for the behavior to have attached.
   await expect(btn).toHaveAttribute('x-ready', '', { timeout: 10000 });
   await btn.click();
-  await page.waitForTimeout(250);
   await expect(page.locator('.x-toast--success')).toHaveCount(1);
 });

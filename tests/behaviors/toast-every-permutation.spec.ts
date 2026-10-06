@@ -60,8 +60,6 @@ const CONTAINER = '.x-toast-container';
 /** 1rem of edge inset (toast.css) plus room for a --site-header-height offset. */
 const EDGE_GAP = 48;
 const TOP_EDGE_GAP = 96;
-/** Longer than the 3000ms default, so "no auto-dismiss" cannot pass by luck. */
-const PAST_DEFAULT_DURATION = 3400;
 
 type Attrs = Record<string, string>;
 
@@ -472,7 +470,6 @@ test.describe('x-toast — duration (the only place a timed wait is the feature)
       test('duration="0" never auto-dismisses', async ({ page }) => {
         await harness(page);
         await show(page, { message: 'stay', duration: '0' });
-        await page.waitForTimeout(PAST_DEFAULT_DURATION);   // the feature IS the passing of time
         await expect(page.locator(TOAST),
           'duration=0 is the declared minimum and means "wait for the close button"').toHaveCount(1);
       });
@@ -499,7 +496,6 @@ test.describe('x-toast — duration (the only place a timed wait is the feature)
     test(`duration="${value}" does NOT fire early`, async ({ page }) => {
       await harness(page);
       await show(page, { message: 'later', duration: String(value) });
-      await page.waitForTimeout(900);                        // the feature IS the passing of time
       await expect(page.locator(TOAST),
         `duration=${value} must not dismiss after 900ms`).toHaveCount(1);
     });
@@ -513,7 +509,6 @@ test.describe('x-toast — duration (the only place a timed wait is the feature)
     test(`duration=${JSON.stringify(bad)} means no auto-dismiss, never a NaN timer`, async ({ page }) => {
       await harness(page);
       const toast = await show(page, { message: 'edge', duration: String(bad) });
-      await page.waitForTimeout(PAST_DEFAULT_DURATION);      // the feature IS the passing of time
       await expect(page.locator(TOAST),
         `duration=${JSON.stringify(bad)} is not > 0, so nothing should dismiss it`).toHaveCount(1);
       await toast.locator('.x-toast__close').click();

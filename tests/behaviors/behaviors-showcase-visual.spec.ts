@@ -147,7 +147,6 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       expect(await trigger.count(), 'x-dropdown created no .x-dropdown__trigger').toBeGreaterThan(0);
       expect(await menu.count(), 'x-dropdown created no .x-dropdown__menu').toBeGreaterThan(0);
       await trigger.click();
-      await page.waitForTimeout(300);
       await expect(menu).toBeVisible();
     });
   });

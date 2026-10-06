@@ -81,13 +81,16 @@ test.describe('Accordion — disclosure behavior', () => {
 
   test('clicking the head expands, clicking again collapses', async ({ page }) => {
     await head(page).click();
-    await page.waitForTimeout(250);
+    // Polled, not slept (#1516): open means aria-expanded flipped and the body has height.
+    await expect.poll(async () => { const st = await state(page); return st.ariaExpanded === 'true' && st.bodyVisible; },
+      { message: 'accordion did not expand on click' }).toBe(true);
     const opened = await state(page);
     expect(opened.bodyVisible, 'accordion did not expand on click').toBe(true);
     expect(opened.ariaExpanded, 'aria-expanded not updated to true').toBe('true');
 
     await head(page).click();
-    await page.waitForTimeout(250);
+    await expect.poll(async () => { const st = await state(page); return st.ariaExpanded === 'false' && !st.bodyVisible; },
+      { message: 'accordion did not collapse on second click' }).toBe(true);
     const closed = await state(page);
     expect(closed.bodyVisible, 'accordion did not collapse on second click').toBe(false);
     expect(closed.ariaExpanded, 'aria-expanded not updated to false').toBe('false');
@@ -96,7 +99,8 @@ test.describe('Accordion — disclosure behavior', () => {
   test('keyboard: Enter on a focused head toggles it', async ({ page }) => {
     await head(page).focus();
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(250);
+    await expect.poll(async () => { const st = await state(page); return st.ariaExpanded === 'true' && st.bodyVisible; },
+      { message: 'Enter key did not expand the accordion' }).toBe(true);
     const s = await state(page);
     expect(s.bodyVisible, 'Enter key did not expand the accordion').toBe(true);
     expect(s.ariaExpanded, 'aria-expanded not updated on Enter').toBe('true');

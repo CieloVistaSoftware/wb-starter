@@ -246,7 +246,6 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   test('Notifications: renders expected text', async ({ page }) => {
     const stack = page.locator('[x-stack]');
     await safeScrollIntoView(stack);
-    await page.waitForTimeout(2000);
     for (const text of ['System Update', 'Complete', 'Attention', 'Failure']) {
       await expect(stack).toContainText(text, { timeout: 15000 });
     }

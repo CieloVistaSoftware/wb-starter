@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "_element.base.schema.json",
   "title": "Base Element Schema",
-  "description": "ALL elements inherit from this. Defines universal properties every element has.",
+  "description": "Universal properties every element has. Every element schema includes them (composition, #465).",
   "type": "object",
   "properties": {
     "id": {

@@ -949,7 +949,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // <dialog> tag on connect instead of lazily on click" question, which
 // stays a tracked, maintainer-decision-pending known violation in
 // tests/regression/semantic-element-fidelity.spec.ts.
-// x-fix-card (#365): a WBCard subclass (fix-card.js) -- same
+// x-fix-card (#365): fixCard() composes a card (fix-card.js) -- same
 // self-sufficient, unconditional-DOM-rebuild pattern as the rest of the
 // card family below (its schema's $view is empty anyway, but excluding it
 // here documents the same "never race the class" intent explicitly rather

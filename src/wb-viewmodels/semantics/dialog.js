@@ -5,7 +5,7 @@ import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
  * SEMANTIC STANDARD:
  * - Overlay: Creates <dialog> element (native HTML5 dialog)
  * - Header: <header>
- * - Body: <main>
+ * - Main: <main class="x-dialog__main"> (the same __main every card uses, #794)
  * - Footer: <footer>
  * 
  * The <dialog> element provides native accessibility features.
@@ -53,7 +53,7 @@ function addCloseButton(header, show) {
  * are read here under the camelCase spelling for the same reason.
  */
 function optionsFrom(element, options = {}) {
-  return {
+  const config = {
     title: options.title || readAttr(element, 'title') || readAttr(element, 'modalTitle')
       || readAttr(element, 'dialogTitle') || 'Dialog',
     content: options.content || readAttr(element, 'content') || readAttr(element, 'modalContent')
@@ -71,6 +71,29 @@ function optionsFrom(element, options = {}) {
     showClose: options.showClose ?? readFlag(element, 'showClose', true),
     ...options
   };
+  return withAnExit(config, element);
+}
+
+/**
+ * A dialog always has an exit (#794). John: "if showClose is false, then using
+ * the esc button would be mandatory." Escape, not the backdrop: Escape is the
+ * platform's documented way out of a modal and the one a keyboard user reaches
+ * for; a backdrop click is something a user finds by accident.
+ *
+ * So showClose=false with closeOnEscape=false is refused: Escape is forced back
+ * on, and the author is told, so the next dialog is not written the same way.
+ * dialog.schema.json states the same rule as an if/then.
+ */
+function withAnExit(config, element) {
+  if (config.showClose === false && config.closeOnEscape === false) {
+    console.warn(
+      '[x-dialog] showClose="false" with closeOnEscape="false" leaves no way out; '
+        + 'Escape stays on (#794).',
+      element,
+    );
+    return { ...config, closeOnEscape: true };
+  }
+  return config;
 }
 
 export function dialog(element, options = {}) {
@@ -117,7 +140,7 @@ export function dialog(element, options = {}) {
 
     // MAIN (<main>) - body content
     const main = document.createElement('main');
-    main.className = 'x-dialog__body';
+    main.className = 'x-dialog__main';
     main.innerHTML = contentHtml;
     dialogEl.appendChild(main);
 
@@ -255,7 +278,7 @@ export function dialog(element, options = {}) {
   //      got nothing, so half the samples on the Behaviors page opened as
   //      traps.
   //   2. TEXT FLUSH AGAINST THE EDGE. `.x-dialog` is `padding: 0` on purpose --
-  //      the padding lives on `.x-dialog__body` -- so raw children sat at 0px
+  //      the padding lives on `.x-dialog__main` -- so raw children sat at 0px
   //      from the frame, breaking DEMOS-AND-DOCS-STANDARDS.md 13 (>=1rem of
   //      breathing room). Adding the class without adding the structure the
   //      class assumes is what produced that.
@@ -305,7 +328,7 @@ export function dialog(element, options = {}) {
     const closeBtn = addCloseButton(header, config.showClose);
 
     const body = document.createElement('main');
-    body.className = 'x-dialog__body';
+    body.className = 'x-dialog__main';
     for (const node of authored) {
       if (node === heading) continue;
       body.appendChild(node);

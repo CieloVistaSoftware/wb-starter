@@ -48,14 +48,14 @@
     },
     "closeOnEscape": {
       "type": "boolean",
-      "description": "Close on Escape key",
+      "description": "Close on the Escape key. Cannot be turned off while showClose is false: then Escape is the dialog's exit, and stays on (#794).",
       "default": true,
       "visual": false,
       "visualReason": "Whether Escape closes the dialog. Only the key shows it (#773)."
     },
     "showClose": {
       "type": "boolean",
-      "description": "Show close button",
+      "description": "Show the header's close button (x). A dialog always keeps an exit: with showClose=\"false\", Escape must close it, so closeOnEscape=\"false\" is ignored and a warning is logged (#794).",
       "default": true,
       "visibleWhen": "open",
       "visualReason": "The close button is part of the dialog, which is on screen only once opened (#773)."
@@ -71,6 +71,23 @@
       "appliesClass": "x-dialog--{{value}}",
       "visibleWhen": "open",
       "visualReason": "Styles the dialog, which is on screen only once opened (#773)."
+    }
+  },
+  "if": {
+    "properties": {
+      "showClose": {
+        "const": false
+      }
+    },
+    "required": [
+      "showClose"
+    ]
+  },
+  "then": {
+    "properties": {
+      "closeOnEscape": {
+        "const": true
+      }
     }
   },
   "$view": [

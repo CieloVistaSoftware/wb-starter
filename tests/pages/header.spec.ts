@@ -21,7 +21,6 @@ test.describe('Header Behavior', () => {
     await page.evaluate(async () => {
       if (window.WB) await window.WB.scan(document.body);
     });
-    await page.waitForTimeout(200);
     
     const header = page.locator('#testHeader');
     // #448: a literal <header> host no longer carries a same-named
@@ -49,7 +48,6 @@ test.describe('Header Behavior', () => {
     await page.evaluate(async () => {
       if (window.WB) await window.WB.scan(document.body);
     });
-    await page.waitForTimeout(200);
     
     const badge = page.locator('#testHeader .x-header__right .x-tag-glass');
     await expect(badge).toHaveText('v1.0');
@@ -65,7 +63,6 @@ test.describe('Header Behavior', () => {
     await page.evaluate(async () => {
       if (window.WB) await window.WB.scan(document.body);
     });
-    await page.waitForTimeout(200);
     
     const header = page.locator('#testHeader');
     await expect(header).toHaveClass(/x-header--sticky/);
@@ -81,7 +78,6 @@ test.describe('Header Behavior', () => {
     await page.evaluate(async () => {
       if (window.WB) await window.WB.scan(document.body);
     });
-    await page.waitForTimeout(200);
     
     const subtitle = page.locator('#testHeader .x-header__subtitle');
     await expect(subtitle).toHaveText('Analytics');
@@ -97,7 +93,6 @@ test.describe('Header Behavior', () => {
     await page.evaluate(async () => {
       if (window.WB) await window.WB.scan(document.body);
     });
-    await page.waitForTimeout(200);
     
     const logo = page.locator('#testHeader .x-header__logo');
     await expect(logo).toHaveAttribute('href', '/home');
@@ -165,7 +160,6 @@ test.describe('Header Behavior', () => {
     await page.evaluate(async () => {
       if (window.WB) await window.WB.scan(document.body);
     });
-    await page.waitForTimeout(200);
     
     const btn = page.locator('#customBtn');
     await expect(btn).toBeVisible();

@@ -38,7 +38,6 @@ test.describe('[x-codetheme] on the Themes page swaps real highlight.js syntax t
     const themeLink = page.locator('link[data-highlight-theme]');
 
     await select.selectOption('github-dark');
-    await page.waitForTimeout(200);
 
     await expect(themeLink).toHaveAttribute('href', /github-dark\.min\.css/);
 
@@ -53,7 +52,6 @@ test.describe('[x-codetheme] on the Themes page swaps real highlight.js syntax t
     await select.selectOption('monokai');
     await page.waitForTimeout(200);
     await select.selectOption('default');
-    await page.waitForTimeout(200);
 
     await expect(themeLink).toHaveAttribute('href', /\/default\.min\.css/);
 

@@ -32,7 +32,7 @@ On another element, write `x-dialog`:
 | `content` | `string` | — | Dialog body content |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` |  |
 | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). |
-| `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape |
+| `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. |
 | `showClose` | `boolean` | `true` | Show the × button in the header |
 | `variant` | `default` · `centered` · `fullscreen` | `default` |  |
 
@@ -64,9 +64,36 @@ showed the close button anyway (#747). The old dashed spellings
 pages already written keep working — but no attribute name carries a dash, so
 the camelCase names above are the ones to write (#1125).
 
-Leaving an authored `<dialog>` with every exit turned off is a trap: Escape and
-the backdrop are not visible affordances, so with `showClose="false"` the only
-way out must be a button you put in the markup yourself.
+### A dialog always has an exit
+
+Hiding the close button is allowed; leaving no way out is not. With
+`showClose="false"`, Escape is the dialog's exit, so it cannot be turned off
+too (#794):
+
+```html
+<dialog showClose="false" closeOnEscape="false">  <!-- Escape still closes it -->
+```
+
+That combination is refused: Escape stays on, and the console says why.
+`closeOnBackdrop="false"` is fine with either, because Escape is the
+platform's own way out of a modal and the one a keyboard user reaches for. A
+backdrop click is something a user finds by accident. `dialog.schema.json`
+states the same rule as an `if`/`then`.
+
+### Layout
+
+Every dialog has the same three parts as a card, by tag:
+
+| Part | Element | Class |
+| --- | --- | --- |
+| Header (title, ×) | `<header>` | `x-dialog__header` |
+| Content | `<main>` | `x-dialog__main` |
+| Cancel / OK (a dialog built from a trigger) | `<footer>` | `x-dialog__footer` |
+
+The `<dialog>` frame has no padding; the parts carry it, so content sits at
+least 1rem from the frame (DEMOS-AND-DOCS-STANDARDS.md §13). An authored
+`<dialog>` gets the header and main built around its own markup: its first
+heading moves into the header, and the rest moves into `<main>`.
 
 ## Events
 
