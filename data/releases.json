@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.293",
+      "date": "2026-10-05",
+      "summary": "Session folders piled up in Downloads\\AI after their work merged (89 of them); one command now removes the merged, clean ones and keeps the rest with a reason. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1547\" target=\"_blank\" rel=\"noopener\">PR 1547</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines that start with what to do</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1534
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the merged-worktree cleaner</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1534
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>One command removes merged worktrees, junction first</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1534
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node scripts/clean-merged-worktrees.mjs</code> from the main checkout, then run it again with <code>--apply</code>. Before: 89 wb-NNNN folders sat in Downloads\\AI and nothing removed them; deleting one by hand could empty the real node_modules through its junction. Now: the first run lists what it would remove and why it keeps the rest, and --apply removes them junction-first (60 removed on 2026-10-05, node_modules intact)."
+    },
+    {
       "version": "1.0.292",
       "date": "2026-10-05",
       "summary": "Four regression specs still loaded /demos/sample.wav or (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1555\" target=\"_blank\" rel=\"noopener\">PR 1555</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/762\" target=\"_blank\" rel=\"noopener\">#762</a>",
