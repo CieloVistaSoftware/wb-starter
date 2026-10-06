@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.302",
+      "date": "2026-10-05",
+      "summary": "Code panels used to appear at less than half their width and snap out about a second later; they now appear at their final width, and a test keeps it that way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1580\" target=\"_blank\" rel=\"noopener\">PR 1580</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/985\" target=\"_blank\" rel=\"noopener\">#985</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No code panel widens after it first paints</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/985\" target=\"_blank\" rel=\"noopener\">#985</a>",
+          "issues": [
+            985
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/demos/site/layout.html in a fresh tab and watch the code panels under each demo as it loads. Before: each appeared at 40-52% of its width and snapped out ~1.3s later (366px to 933px). Now: each appears at its final width; measured from first paint, none moves by more than 2px."
+    },
+    {
       "version": "1.0.301",
       "date": "2026-10-05",
       "summary": "When the doc-viewer link check lost its connection to the test server, it failed looking like a dead link and left no clue why. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1570\" target=\"_blank\" rel=\"noopener\">PR 1570</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
