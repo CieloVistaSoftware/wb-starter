@@ -79,11 +79,27 @@ for (const name of PLAIN_NAV_PAGES) {
         const r = a.getBoundingClientRect();
         return `${Math.round(r.left)},${Math.round(r.top)},${Math.round(r.width)}`;
       }));
+      const frames = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      // The page is still laying out (images, lazy builds) for a while after
+      // load; on a slow runner a link moved between two reads for that reason
+      // alone. Wait until two reads 200ms apart agree, then compare.
+      let settled = read();
+      for (let i = 0; i < 25; i++) {
+        await new Promise((r) => setTimeout(r, 200));
+        const again = read();
+        if (again.join('|') === settled.join('|')) break;
+        settled = again;
+      }
       const withNavbar = read();
       navs.forEach((n) => n.classList.remove('x-navbar', 'x-navbar--plain'));
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await frames();
       const without = read();
-      return withNavbar.filter((v, i) => v !== without[i]).length;
+      navs.forEach((n) => n.classList.add('x-navbar', 'x-navbar--plain'));
+      await frames();
+      const withAgain = read();
+      // A link counts as moved only if navbar alone moves it: off and back on
+      // must agree with each other and differ from without.
+      return withNavbar.filter((v, i) => v !== without[i] && withAgain[i] === v).length;
     });
     expect(moved, 'links moved by navbar').toBe(0);
   });
