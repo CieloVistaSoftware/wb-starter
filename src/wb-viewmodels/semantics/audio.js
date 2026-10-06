@@ -725,7 +725,7 @@ function injectAudioStyles() {
       border-radius: 50%; cursor: grab;
       background: radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
                   radial-gradient(ellipse 80% 60% at 40% 30%, rgba(147,197,253,0.5) 0%, transparent 40%),
-                  linear-gradient(180deg, #f8f8ff 0%, #c8c8e0 30%, #8888b0 60%, #5858a0 100%);
+                  var(--x-audio-knob);
       border: 1px solid rgba(255,255,255,0.3);
       box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 12px rgba(99,102,241,0.3), inset 0 1px 2px rgba(255,255,255,0.8);
       transition: all 0.1s ease;
@@ -737,19 +737,19 @@ function injectAudioStyles() {
     .x-audio__eq-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
     .x-audio__eq-slider::-moz-range-thumb {
       width: 20px; height: 20px; border-radius: 50%; cursor: grab;
-      background: linear-gradient(180deg, #f8f8ff 0%, #8888b0 60%, #5858a0 100%);
+      background: var(--x-audio-knob-flat);
       border: 1px solid rgba(255,255,255,0.3);
       box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 12px rgba(99,102,241,0.3);
     }
     .x-audio__master-vol {
       -webkit-appearance: none; appearance: none;
-      background: linear-gradient(90deg, #1e293b 0%, #334155 100%);
+      background: var(--x-audio-volume-track);
       border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
     }
     .x-audio__master-vol::-webkit-slider-thumb {
       -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
       background: radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
-                  linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+                  var(--x-audio-volume-thumb);
       border: 2px solid rgba(59,130,246,0.5);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 15px rgba(59,130,246,0.4); cursor: pointer;
     }
@@ -759,12 +759,12 @@ function injectAudioStyles() {
     }
     .x-audio__master-vol::-moz-range-thumb {
       width: 18px; height: 18px; border-radius: 50%;
-      background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+      background: var(--x-audio-volume-thumb-flat);
       border: 2px solid rgba(59,130,246,0.5);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
     }
     [data-theme="light"] .x-audio {
-      background: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%) !important;
+      background: var(--x-audio-body-light) !important;
       box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
     }
     [data-theme="light"] .x-audio__eq-container { background: rgba(0,0,0,0.05) !important; }
