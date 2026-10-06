@@ -1,8 +1,9 @@
 import { test, expect } from '../fixtures/offline';
 import { spawn, type ChildProcess } from 'node:child_process';
-import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+// One static import (#1403), as in test-server-never-live-reloads.spec.ts.
+import { probeFreePort } from '../../scripts/lib/free-port.mjs';
 
 /**
  * #1333 -- the live-reload client connects to the server's own reload port.
@@ -16,12 +17,6 @@ import { fileURLToPath } from 'node:url';
  */
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
-function freePort(): Promise<number> {
-  return new Promise((resolve) => {
-    const s = net.createServer().listen(0, () => { const p = (s.address() as net.AddressInfo).port; s.close(() => resolve(p)); });
-  });
-}
-
 test.describe('#1333 live reload follows the server port', () => {
   test.describe.configure({ mode: 'serial' });
   test.setTimeout(90_000);
@@ -29,11 +24,25 @@ test.describe('#1333 live reload follows the server port', () => {
   let port = 0;
 
   test.beforeAll(async () => {
-    port = await freePort();
-    server = spawn(process.execPath, ['server.js'], {
-      cwd: ROOT, env: { ...process.env, PORT: String(port), WB_NO_OPEN: '1' }, stdio: 'ignore',
+    // #1566: on Windows CI this server once never answered, and with its
+    // output ignored the only evidence was "Received: 0" after a 30 s poll.
+    // Its output is now kept, so an early exit or a slow boot says why. The
+    // port comes from probeFreePort(), which also checks PORT + 1 (live reload),
+    // like every other server a test run starts (#1472).
+    port = probeFreePort();
+    const child = spawn(process.execPath, ['server.js'], {
+      cwd: ROOT, env: { ...process.env, PORT: String(port), WB_NO_OPEN: '1' }, stdio: ['ignore', 'pipe', 'pipe'],
     });
-    await expect.poll(async () => { try { return (await fetch(`http://localhost:${port}/`)).status; } catch { return 0; } }, { timeout: 30_000 }).toBe(200);
+    server = child;
+    let out = '';
+    const ready = new Promise<void>((resolve, reject) => {
+      const onData = (b: Buffer) => { out += b.toString(); if (out.includes('WB Starter running at')) resolve(); };
+      child.stdout!.on('data', onData);
+      child.stderr!.on('data', onData);
+      child.on('exit', (code) => reject(new Error(`server.js on port ${port} exited (${code}) before listening:\n${out}`)));
+      setTimeout(() => reject(new Error(`server.js on port ${port} did not start within 60s:\n${out}`)), 60_000);
+    });
+    await ready;
   });
 
   test.afterAll(async () => {

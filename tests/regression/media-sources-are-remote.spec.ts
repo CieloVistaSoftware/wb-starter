@@ -27,6 +27,7 @@
 import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, extname, dirname } from 'path';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 // ESM: no __dirname here (the repo is modules-only). Sibling regression specs
@@ -111,15 +112,16 @@ test.describe('Media sources are remote', () => {
   });
 
   /**
-   * NOT asserted here: that the binaries are gone from demos/.
-   *
-   * They are still committed, and removing them is a separate piece of work —
-   * a dozen existing tests (docs-live-media-assets-exist,
-   * sw-audio-range-request, project-integrity, hydration, and others) assert
-   * those exact files EXIST, so deleting them turns one rule into a dozen
-   * unrelated failures. Tracked on #762.
-   *
-   * The reference gate above is what enforces John's rule either way: the
-   * files can sit there unused, but nothing may point an example at them.
+   * #762: the binaries themselves are gone too. demos/ shipped four 9 MB mp3s,
+   * sample.wav and a 13-byte "movie" that nothing linked to. The two that tests
+   * still need live in tests/fixtures/media/, which is test scaffolding, not an
+   * example anyone copies. Read from git, so an untracked local file never
+   * fails the run.
    */
+  test('no audio or video file is committed outside test fixtures', () => {
+    const AV = /\.(mp3|mp4|wav|ogg|oga|webm|m4a|aac|flac|mov)$/i;
+    const tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8' }).split('\n');
+    const shipped = tracked.filter((f) => AV.test(f) && !/^(tests|archive)\//.test(f));
+    expect(shipped, 'audio/video committed to the repo; use a remote https URL instead:\n  ' + shipped.join('\n  ')).toEqual([]);
+  });
 });

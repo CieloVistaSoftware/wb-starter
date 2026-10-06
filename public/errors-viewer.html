@@ -500,22 +500,25 @@
     async function clearErrors() {
       if (!confirm('Are you sure you want to clear all errors?')) return;
 
-      try {
-        // Was posting straight to the generic /api/save with a hand-built
-        // empty log -- error-logger.js's OWN clear button already uses the
-        // dedicated /api/error-log/clear route; use the same one canonical
-        // path here instead of a second, parallel way to do the same thing.
-        const response = await fetch('/api/error-log/clear', { method: 'POST' });
+      // This browser's own log (readLocalLog) is cleared first, wherever the
+      // page is served. On GitHub Pages it is the ONLY log, and Clear used to
+      // leave it untouched and say "Failed to clear errors" (#1568).
+      try { localStorage.removeItem('wb:error-log'); } catch { /* storage unavailable */ }
 
-        if (response.ok) {
-          loadErrors();
-        } else {
-          alert('Failed to clear errors');
+      // Then the server's file, through the same route error-logger.js uses.
+      // Relative to this page, like loadErrors(): a root-absolute /api/...
+      // misses the /wb-starter/ base on Pages (#1000). A static host answers
+      // 404/405/501 -- there is no server log there, so that is not a failure.
+      try {
+        const response = await fetch(new URL('../api/error-log/clear', location.href), { method: 'POST' });
+        if (!response.ok && ![404, 405, 501].includes(response.status)) {
+          alert(`Failed to clear the server log (HTTP ${response.status})`);
         }
       } catch (err) {
         console.error(err);
-        alert('Error clearing logs');
+        alert('Error clearing the server log');
       }
+      loadErrors();
     }
 
     function escapeHtml(unsafe) {

@@ -157,7 +157,9 @@ change" check fails a PR without them, or whose See it line has no action, no
 John, 2026-10-05: "I want all the folders cleaned after all the merges are complete,
 don't leave artifacts on my computer" (#1534). A session that works in a worktree
 (`C:\Users\jwpmi\Downloads\AI\wb-NNNN`) removes it as soon as its PR merges, before
-it reports done:
+it reports done. `node scripts/clean-merged-worktrees.mjs --apply` does exactly this for every
+merged, clean worktree (dry run without `--apply`), and lists the rest with the reason
+it kept each; by hand, the steps are:
 
 1. **Unlink the `node_modules` junction first** (`cmd /c rmdir node_modules` inside the
    worktree). Never delete through it: it points at the real checkout's
@@ -174,7 +176,7 @@ When John says **"park"**:
 
 1. Update the 🅿️ PARKING LOT in `docs/_today/CURRENT-STATUS.md` (task, files touched, last action, next step, open questions).
 2. Merge the day's finished PRs into `main`.
-2a. Remove every worktree whose branch is merged (see **Worktrees** above).
+2a. Remove every worktree whose branch is merged: `node scripts/clean-merged-worktrees.mjs --apply` (see **Worktrees** above). Report what it kept and why.
 3. Trigger the **Nightly** test run: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST).
 
 Nightly runs the full suite on main against the known-failures register. A new failure files one `priority:2` issue linking the run. It does not release: the version number is counted from the last tag.

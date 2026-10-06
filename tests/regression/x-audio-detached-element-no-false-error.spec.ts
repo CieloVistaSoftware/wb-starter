@@ -36,7 +36,7 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
     // <div x-audio>: this was <x-audio>, and the tag-to-attribute migration made it
     // a bare <audio> -- which the harness (autoInject off) never enhances and
     // which, being its own media element, has no inner <audio> to find.
-    container.innerHTML = '<div x-audio src="/demos/sample.wav"></div>';
+    container.innerHTML = '<div x-audio src="/tests/fixtures/media/sample.wav"></div>';
     document.body.appendChild(container);
     await (window as any).WB.scan(container, { eager: true });
 
