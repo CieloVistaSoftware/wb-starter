@@ -13,6 +13,11 @@
  * a static <link rel="icon"> in both index.html and project-index.html,
  * and config/site.json's browserTabIcon now points at the same file so
  * the dynamic override stays consistent instead of fighting the static tag.
+ *
+ * #1621: the tab icon is now favicon.png, the wb logo generated from
+ * assets/icons/og-image.jpg by scripts/generate-icons.js -- the same source as
+ * the app icons and the link-share card. favicon.svg (the star) is still
+ * committed as a generic placeholder logo, but nothing links it as the icon.
  */
 import { test, expect } from '../fixtures/offline';
 import { wbIdle } from '../base';
@@ -32,6 +37,8 @@ for (const path of ['/']) {
     await expect(icon).toHaveCount(1);
     const href = await icon.getAttribute('href');
     expect(href).toBeTruthy();
+    // #1621: the wb logo, not the old star (favicon.svg).
+    expect(href).toMatch(/assets\/icons\/favicon\.png$/);
 
     const iconResponse = await page.request.get(new URL(href!, page.url()).href);
     expect(iconResponse.status()).toBe(200);
