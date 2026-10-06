@@ -14,6 +14,11 @@ A plain `<select>` gets the form styling, with `variant` for validation state, `
 
 No attribute needed on `<select>`. Don't add `x-select` to it (#746).
 
+`<select>` is for choosing a value; a menu of actions is
+[x-dropdown](dropdown.md). The `<div x-select options='…'>` form is deprecated:
+write a `<select>` with `<option>` children
+([the rule](../standards/V3-STANDARDS.md#choosing-a-value-or-an-action-select-or-x-dropdown), #682).
+
 `<select x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
 ## Attributes

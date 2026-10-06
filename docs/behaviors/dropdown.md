@@ -4,6 +4,10 @@ Click (or hover) to open a menu — from either a comma-separated `items` list o
 real child `<a>`/`<button>`/`<div>` elements. Implemented by `dropdown()` in
 [src/wb-viewmodels/dropdown.js](../../src/wb-viewmodels/dropdown.js).
 
+A dropdown is for actions, rich items, or a menu that stays open. To choose a
+value that a form submits, use a plain [`<select>`](select.md)
+([the rule](../standards/V3-STANDARDS.md#choosing-a-value-or-an-action-select-or-x-dropdown), #682).
+
 ## Overview
 
 | Property | Value |

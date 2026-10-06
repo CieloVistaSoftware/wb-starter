@@ -40,6 +40,22 @@ textarea {
   border-radius: var(--radius-md, 6px);
 }
 
+/* #682: a bare <select> is THE control for choosing a value, but it got no
+   class from any behavior and so none of the padding .x-input gives the inputs
+   beside it: alone in a demo grid it was stretched to 40px, anywhere else it
+   sat at its 19px intrinsic height. Same box as .x-input, at zero
+   specificity so the size variants (.x-select--sm, ...) and any author rule
+   still win. A listbox (multiple, or size > 1) keeps its own row height. */
+:where(select:not([multiple]):not([size]), select[size="1"]) {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  /* A <select> ignores line-height for its own box, so padding alone comes
+     out 5px short of .x-input: match the input's line + padding + border. */
+  box-sizing: border-box;
+  min-height: calc(1.5em + 1rem + 2px);
+}
+
 /* date/time/datetime-local/week/month's native calendar/clock picker icon
    defaults to a dark glyph baked into the browser's own UA rendering --
    invisible against this theme's dark input background (confirmed live,
