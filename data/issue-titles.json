@@ -1214,5 +1214,6 @@
   "1614": "App icons (PWA + apple-touch) are still the lightning bolt, not the wb logo",
   "1619": "x-cardhero: buttons sit left of center on centered heroes (CTA row ignores xalign)",
   "1621": "Browser-tab favicon is a blue star, not the wb logo",
-  "1623": "Releases page: places named as plain text, and no links to the commits that did the work"
+  "1623": "Releases page: places named as plain text, and no links to the commits that did the work",
+  "1627": "CLAUDE.md has no rule for idle time: sessions wait on CI instead of working open issues"
 }

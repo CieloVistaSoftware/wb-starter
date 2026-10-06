@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.331",
+      "date": "2026-10-06",
+      "summary": "Striped table rows had no contrast rule, and on the light and arctic themes the stripes were fainter than on any other theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1625\" target=\"_blank\" rel=\"noopener\">PR 1625</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Striped rows differ by at least 1.2:1 on every theme</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
+          "issues": [
+            680
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page, pick the table behavior with striped on, and switch to the Light theme. Before: alternate rows were barely distinguishable. Now: they are as distinct as on the other light themes, and the rule is written down in §33."
+    },
+    {
       "version": "1.0.330",
       "date": "2026-10-06",
       "summary": "The alignment spec&#39;s expects all sat inside its loop over the cases, which no-test-passes-by-skipping-its-assertions (#1092) rejects because an empty loop would pass silently; it now also asserts, outside the loop, that all six cases were measured. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1620\" target=\"_blank\" rel=\"noopener\">PR 1620</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
