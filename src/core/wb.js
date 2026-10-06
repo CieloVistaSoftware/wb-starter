@@ -136,7 +136,7 @@ function traceMediaLoads() {
  */
 
 import { behaviors } from '../wb-viewmodels/index.js';
-import { markReady, isReady } from './ready-signal.js';
+import { markReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
 import { isComponentLandmark, COMPONENT_HOST } from './component-landmark.js';
@@ -574,25 +574,9 @@ const WB = {
     }
   },
 
-  // pendingCount, pendingBehaviors, whenIdle() and settled(): installed from
-  // runtime-shared.js just after this object, the same for both runtimes (#883).
-
-
-  /**
-   * Has this element finished building? SETTLED, not necessarily successful —
-   * a behavior that threw is still finished, and `x-error` carries the failure.
-   *
-   * #1094 — John: "x-ready should only be an internal signal." The attribute was
-   * stamped on every element for every visitor while 0 CSS rules and 0 runtime
-   * code paths read it; only the test suite did. Readiness is tracked internally
-   * now and asked for through here, so the shipped DOM stays clean.
-   *
-   * @param {Element} element
-   * @returns {boolean}
-   */
-  isReady(element) {
-    return isReady(element);
-  },
+  // pendingCount, pendingBehaviors, whenIdle(), settled() and isReady():
+  // installed from runtime-shared.js just after this object, the same for both
+  // runtimes (#883, #1094).
 
   /**
    * Remove a specific behavior from an element
