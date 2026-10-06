@@ -1,80 +1,83 @@
 /**
  * TEMPORARY DIAGNOSTIC for #1439 -- not for merge.
  *
- * A WebKit screenshot of the home page never finishes on the Windows CI
- * runner. This spec times each step on three pages (a blank one, Behaviors,
- * Home) so the CI log says where WebKit stalls: no frames at all, a page that
- * keeps growing, running animations, the service worker, or the capture
- * itself. Every capture is capped at 20s so the run reports instead of hanging.
+ * Round 1 (this PR's first commit): on the Windows CI runner WebKit captures
+ * a blank page in 73ms and Behaviors in ~250ms, but every capture of Home --
+ * viewport or full page, animations allowed or disabled, service worker
+ * blocked or not -- times out at 20s. rAF fires, fonts are loaded and the
+ * height settles, so none of those is it. Home alone has infinite animations
+ * (3) and a media element (1).
+ *
+ * Round 2 (this file): list what Home has that the others don't, then remove
+ * one kind at a time on a fresh load and try a viewport capture after each.
  */
 import { test, type Page } from '../fixtures/offline';
 
-test.describe.configure({ mode: 'serial' });
-test.setTimeout(180_000);
+test.setTimeout(240_000);
 
-async function probe(page: Page, label: string) {
-  const info = await page.evaluate(async () => {
-    const rafFired = await new Promise<boolean>((r) => {
-      let done = false;
-      requestAnimationFrame(() => { done = true; r(true); });
-      setTimeout(() => { if (!done) r(false); }, 2000);
+async function inventory(page: Page) {
+  return page.evaluate(() => {
+    const describe = (el: Element) => {
+      const id = el.id ? `#${el.id}` : '';
+      const cls = typeof el.className === 'string' && el.className ? `.${el.className.trim().split(/\s+/).slice(0, 2).join('.')}` : '';
+      return `${el.tagName.toLowerCase()}${id}${cls}`;
+    };
+    const anims = document.getAnimations().map((a) => {
+      const t = (a.effect as KeyframeEffect | null)?.target as Element | null;
+      return `${(a as CSSAnimation).animationName || a.constructor.name} on ${t ? describe(t) : '?'} iter=${a.effect?.getTiming().iterations}`;
     });
-    const heights: number[] = [];
-    for (let i = 0; i < 8; i++) {
-      heights.push(document.documentElement.scrollHeight);
-      await new Promise((r) => setTimeout(r, 250));
+    const filters: string[] = [];
+    for (const el of Array.from(document.querySelectorAll('*'))) {
+      const cs = getComputedStyle(el);
+      const bf = cs.getPropertyValue('backdrop-filter') || cs.getPropertyValue('-webkit-backdrop-filter');
+      if ((bf && bf !== 'none') || (cs.filter && cs.filter !== 'none')) filters.push(`${describe(el)} filter=${cs.filter} backdrop=${bf}`);
     }
-    const anims = document.getAnimations();
     return {
-      rafFired,
-      fonts: document.fonts.status,
-      heights,
-      animations: anims.length,
-      infinite: anims.filter((a) => a.effect?.getTiming().iterations === Infinity).length,
-      swControlled: !!navigator.serviceWorker?.controller,
-      media: document.querySelectorAll('audio,video').length,
+      anims,
+      media: Array.from(document.querySelectorAll('audio,video')).map((m) => `${describe(m)} src=${(m as HTMLMediaElement).currentSrc || m.getAttribute('src')} preload=${m.getAttribute('preload')} ready=${(m as HTMLMediaElement).readyState}`),
+      iframes: Array.from(document.querySelectorAll('iframe')).map((f) => `${describe(f)} src=${f.getAttribute('src')}`),
+      canvas: document.querySelectorAll('canvas').length,
+      filters: filters.slice(0, 15),
+      filterCount: filters.length,
     };
   });
-  console.log(`[#1439] ${label} probe ${JSON.stringify(info)}`);
 }
 
-async function shot(page: Page, label: string, opts: Record<string, unknown>) {
+async function tryShot(page: Page, label: string) {
   const t0 = Date.now();
   try {
-    await page.screenshot({ timeout: 20_000, ...opts });
-    console.log(`[#1439] ${label} ${JSON.stringify(opts)} OK ${Date.now() - t0}ms`);
+    await page.screenshot({ timeout: 15_000 });
+    console.log(`[#1439] home minus ${label}: OK ${Date.now() - t0}ms`);
   } catch (e) {
-    console.log(`[#1439] ${label} ${JSON.stringify(opts)} FAIL ${Date.now() - t0}ms ${String(e).split('\n')[0]}`);
+    console.log(`[#1439] home minus ${label}: FAIL ${Date.now() - t0}ms`);
   }
 }
 
-test('diag: where the WebKit screenshot stalls', async ({ page, browserName }) => {
+const REMOVALS: Record<string, string> = {
+  'nothing': '',
+  'infinite animations': `document.getAnimations().filter(a => a.effect?.getTiming().iterations === Infinity).forEach(a => a.cancel());
+    const s = document.createElement('style'); s.textContent = '*,*::before,*::after{animation:none!important}'; document.head.append(s);`,
+  'media elements': `document.querySelectorAll('audio,video').forEach(m => { m.pause?.(); m.removeAttribute('src'); m.load?.(); m.remove(); });`,
+  'filters': `const s = document.createElement('style'); s.textContent = '*,*::before,*::after{filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}'; document.head.append(s);`,
+};
+// Combinations, in case it takes more than one.
+REMOVALS['animations + filters'] = REMOVALS['infinite animations'] + REMOVALS['filters'];
+REMOVALS['animations + media'] = REMOVALS['infinite animations'] + REMOVALS['media elements'];
+REMOVALS['media + filters'] = REMOVALS['media elements'] + REMOVALS['filters'];
+REMOVALS['all three'] = REMOVALS['infinite animations'] + REMOVALS['media elements'] + REMOVALS['filters'];
+
+test('diag round 2: what on Home stalls the WebKit capture', async ({ page, browserName }) => {
   test.skip(browserName !== 'webkit', 'WebKit only');
 
-  await page.setContent('<!doctype html><meta name="viewport" content="width=device-width"><p>blank</p>');
-  await probe(page, 'blank');
-  await shot(page, 'blank', {});
-  await shot(page, 'blank', { fullPage: true });
+  await page.goto('/pages/home.html', { waitUntil: 'domcontentloaded', timeout: 15000 });
+  await page.waitForTimeout(2500);
+  console.log(`[#1439] home inventory ${JSON.stringify(await inventory(page))}`);
 
-  for (const url of ['/pages/behaviors.html', '/pages/home.html']) {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1500);
-    await probe(page, url);
-    await shot(page, url, {});
-    await shot(page, url, { animations: 'disabled' });
-    await shot(page, url, { fullPage: true });
-    await shot(page, url, { fullPage: true, animations: 'disabled' });
-  }
-});
-
-test.describe('service worker blocked', () => {
-  test.use({ serviceWorkers: 'block' });
-  test('diag: home with the service worker blocked', async ({ page, browserName }) => {
-    test.skip(browserName !== 'webkit', 'WebKit only');
+  for (const [label, js] of Object.entries(REMOVALS)) {
     await page.goto('/pages/home.html', { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1500);
-    await probe(page, 'home(sw-blocked)');
-    await shot(page, 'home(sw-blocked)', {});
-    await shot(page, 'home(sw-blocked)', { fullPage: true, animations: 'disabled' });
-  });
+    await page.waitForTimeout(2500);
+    if (js) await page.evaluate(js);
+    await page.waitForTimeout(300);
+    await tryShot(page, label);
+  }
 });
