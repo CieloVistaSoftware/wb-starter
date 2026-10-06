@@ -6,6 +6,145 @@
   ],
   "releases": [
     {
+      "version": "1.0.342",
+      "date": "2026-10-06",
+      "summary": "Tests-must-assert flags any spec whose text calls page.locator/evaluate/click without navigating, and the new no-new-fixed-sleeps guard tripped it with its classifier fixture (sample test code in a string) and a doc comment; the fixture&#39;s page is now named p and the comment no longer spells the call. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1635\" target=\"_blank\" rel=\"noopener\">PR 1635</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The sleep guard reads as a no-page spec to tests-must-assert</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Classify every fixed sleep, guard the counts, and remove 81 of 426</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run tests/compliance/tests-must-assert.spec.ts. Before: &quot;tests/compliance/no-new-fixed-sleeps.spec.ts (4 test(s) against about:blank)&quot;. Now: 3/3, and the guard still passes 7/7."
+    },
+    {
+      "version": "1.0.341",
+      "date": "2026-10-06",
+      "summary": "Media-sources-are-remote enforces &quot;NO LOCAL IMAGES&quot; (#762/#1122) because a copy-paste example with a relative src 404s on a customer&#39;s page; the hero gallery&#39;s 120 JPGs are the site&#39;s own screenshots, not examples, so John approved exempting pages/hero-gallery.html. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1617\" target=\"_blank\" rel=\"noopener\">PR 1617</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Exempt the hero gallery from the no-local-images rule (approved)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "issues": [
+            1597
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Judge hotspots against the image, not a live re-render</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "issues": [
+            1597
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Hero module moves to src/lib; gallery writes doc-viewer links relative</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "issues": [
+            1597
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Hero gallery spec asserts unconditionally in every test</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "issues": [
+            1597
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Assert every xalign case was measured, unconditionally</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+          "issues": [
+            1619
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Re-render the hero gallery with centered buttons</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+          "issues": [
+            1597,
+            1619
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardhero buttons follow the hero&#39;s xalign</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+          "issues": [
+            1619
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Hero gallery -- the 120 playground heroes as JPGs with live button hotspots</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "issues": [
+            1597
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Hero-permutations module (not wired yet)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "issues": [
+            1597
+          ]
+        }
+      ],
+      "seeIt": "Run tests/regression/media-sources-are-remote.spec.ts. Before: &quot;120 local audio/video source(s)&quot; listing images/hero-gallery/hero-NNN.jpg. Now: 2/2, and every other page is still checked."
+    },
+    {
+      "version": "1.0.340",
+      "date": "2026-10-06",
+      "summary": "The schema descriptions developers see as IntelliSense tooltips still described the schema layer in inheritance terms (&quot;All card variants INHERIT from this&quot;, &quot;Every behavior inherits these properties&quot;, &quot;Abstract schemas inherited by other schemas&quot;), after John decided the layer is named for composition. Nothing checked schema text, only .md docs. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1636\" target=\"_blank\" rel=\"noopener\">PR 1636</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/465\" target=\"_blank\" rel=\"noopener\">#465</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Schema descriptions say composition, not inheritance</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/465\" target=\"_blank\" rel=\"noopener\">#465</a>",
+          "issues": [
+            465
+          ]
+        }
+      ],
+      "seeIt": "Hover a card variant&#39;s tag in VS Code or open src/wb-models/card.base.schema.json. Before: &quot;BASE SCHEMA - All card variants INHERIT from this.&quot; Now: &quot;Shared card properties, semantic requirements and compliance rules. Every card variant schema includes them&quot;. Run npx playwright test tests/compliance/no-legacy-component-inheritance-docs.spec.ts --project=compliance. Before: the new schema test listed 5 descriptions. Now: 3 passed."
+    },
+    {
+      "version": "1.0.339",
+      "date": "2026-10-06",
+      "summary": "A dialog could be opened with no way out: showClose=&quot;false&quot; plus closeOnEscape=&quot;false&quot; plus closeOnBackdrop=&quot;false&quot; left no close button, ignored Escape and ignored the backdrop. And the dialog&#39;s content part was named x-dialog__body while every card names the same part __main. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1638\" target=\"_blank\" rel=\"noopener\">PR 1638</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/794\" target=\"_blank\" rel=\"noopener\">#794</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A dialog always has an exit; its content part is x-dialog__main</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/794\" target=\"_blank\" rel=\"noopener\">#794</a>",
+          "issues": [
+            794
+          ]
+        }
+      ],
+      "seeIt": "Put &lt;dialog showClose=&quot;false&quot; closeOnEscape=&quot;false&quot; closeOnBackdrop=&quot;false&quot;&gt;&lt;h2&gt;Trap&lt;/h2&gt;&lt;/dialog&gt; on a page, open it and press Escape. Before: it stayed open with no close button and nothing closed it. Now: Escape closes it and the console warns &quot;leaves no way out; Escape stays on (#794)&quot;."
+    },
+    {
+      "version": "1.0.338",
+      "date": "2026-10-06",
+      "summary": "The &lt;x-fix-card&gt; tag was class WBFixCard extends WBCard, a variant subclassing a base component, which Tier 1 §2 forbids, and the only guard read .md files, so nothing caught it. The subclass also stacked a second header on a fix card every time it was moved to a new parent. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1637\" target=\"_blank\" rel=\"noopener\">PR 1637</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/789\" target=\"_blank\" rel=\"noopener\">#789</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>&lt;x-fix-card&gt; composes the fix-card behavior instead of subclassing WBCard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/789\" target=\"_blank\" rel=\"noopener\">#789</a>",
+          "issues": [
+            789
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test tests/compliance/no-component-inheritance-in-source.spec.ts --project=compliance. Before: it fails naming src/wb-viewmodels/fix-card.js:211 class WBFixCard extends WBCard. Now: it passes. In a page, move an &lt;x-fix-card&gt; with .data set to another parent. Before: it showed two headers. Now: one."
+    },
+    {
       "version": "1.0.337",
       "date": "2026-10-06",
       "summary": "Typed cards stamped their type as two extra classes (x-card--image x-card-image) on top of the x-cardimage attribute that already says it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1631\" target=\"_blank\" rel=\"noopener\">PR 1631</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
