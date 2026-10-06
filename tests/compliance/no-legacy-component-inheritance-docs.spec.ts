@@ -81,6 +81,39 @@ test.describe('docs must not teach legacy component inheritance', () => {
     ).toEqual([]);
   });
 
+  // #465: the schema layer was the last place still describing composition in
+  // inheritance terms ("All card variants INHERIT from this", "Every behavior
+  // inherits these properties"). Schema descriptions are the IntelliSense
+  // tooltips developers read, so they are held to the same rule as the docs.
+  // CSS inheritance ("an inherited max-width") is a different thing and passes.
+  test('no schema description describes schemas inheriting from each other', () => {
+    const TELL = /\bINHERIT|\binherits?\s+(?:from|these|this)\b|\binherited\s+(?:from|by)\b|\bIS-A\b|\bHAS-A\b/;
+    const files: string[] = [];
+    const walkJson = (dir: string) => {
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const abs = path.join(dir, e.name);
+        if (e.isDirectory()) walkJson(abs);
+        else if (e.name.endsWith('.json')) files.push(abs);
+      }
+    };
+    walkJson(path.join(ROOT, 'src/wb-models'));
+    expect(files.length, 'read the schemas').toBeGreaterThan(100);
+    const offenders: string[] = [];
+    const visit = (node: unknown, file: string) => {
+      if (Array.isArray(node)) { node.forEach((n) => visit(n, file)); return; }
+      if (!node || typeof node !== 'object') return;
+      for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+        if (k === 'description' && typeof v === 'string' && TELL.test(v)) {
+          offenders.push(`${path.relative(ROOT, file).replace(/\\/g, '/')}: ${v.slice(0, 100)}`);
+        } else visit(v, file);
+      }
+    };
+    for (const f of files) {
+      try { visit(JSON.parse(fs.readFileSync(f, 'utf8')), f); } catch { /* every-schema-parses owns parse errors */ }
+    }
+    expect(offenders, `schemas compose, they do not inherit:\n  ${offenders.join('\n  ')}`).toEqual([]);
+  });
+
   test('card composition has no obsolete base helper or gallery label', () => {
     const cardSource = fs.readFileSync(path.join(ROOT, 'src/wb-viewmodels/card.js'), 'utf8');
     const cardDemo = fs.readFileSync(path.join(ROOT, 'demos/site/cards.html'), 'utf8');
