@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.332",
+      "date": "2026-10-06",
+      "summary": "The iPhone (WebKit) test run took no review screenshots, because a capture of any page with an audio player that never loads hung until it timed out. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1629\" target=\"_blank\" rel=\"noopener\">PR 1629</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>WebKit review screenshots run again; media is unloaded first</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
+          "issues": [
+            1439
+          ]
+        }
+      ],
+      "seeIt": "Open the &quot;Playwright (mobile-validation-iphone)&quot; job on this PR and find the five &quot;screenshot:&quot; tests. Before: all five were skipped (&quot;WebKit screenshots stall on the CI runner&quot;). Now: all five run and pass, Home included."
+    },
+    {
       "version": "1.0.331",
       "date": "2026-10-06",
       "summary": "Striped table rows had no contrast rule, and on the light and arctic themes the stripes were fainter than on any other theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1625\" target=\"_blank\" rel=\"noopener\">PR 1625</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/680\" target=\"_blank\" rel=\"noopener\">#680</a>",
