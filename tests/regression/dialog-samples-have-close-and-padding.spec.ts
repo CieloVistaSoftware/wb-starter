@@ -13,7 +13,7 @@
  * dialog.js's <dialog> branch added two classes and stopped - "we just want to
  * style the existing one". So the authored samples opened as traps (Escape and
  * the backdrop are not visible affordances), and because `.x-dialog` is
- * deliberately `padding: 0` - the padding lives on `.x-dialog__body`, which did
+ * deliberately `padding: 0` - the padding lives on `.x-dialog__main`, which did
  * not exist - their text sat 0px from the frame, against the >=1rem minimum in
  * DEMOS-AND-DOCS-STANDARDS.md section 13. Adding a class without the structure
  * that class assumes produced both symptoms at once.
@@ -232,7 +232,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
             cs.display !== 'none' && cs.visibility !== 'hidden' && r.width > 0 && r.height > 0;
         }
 
-        const body = dlg.querySelector('.x-dialog__body') as HTMLElement | null;
+        const body = dlg.querySelector('.x-dialog__main') as HTMLElement | null;
         let padOk = false;
         let pad = 'none';
         if (body) {
@@ -353,7 +353,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
       const heading = dlg.querySelector(
         '.x-dialog__header h1, .x-dialog__header h2, .x-dialog__header h3'
       );
-      const body = dlg.querySelector('.x-dialog__body');
+      const body = dlg.querySelector('.x-dialog__main');
       return {
         headingInHeader: !!heading,
         headingText: heading ? (heading.textContent || '').trim() : null,

@@ -104,6 +104,10 @@ function buildCases(): Case[] {
         markup += attr(p, states[p]);
         expected[p] = resolves(states[p], props[p].default === true);
       }
+      // #794: a dialog always has an exit. showClose=false makes Escape the
+      // exit, so closeOnEscape=false is overridden in that one combination
+      // (dialog.schema.json's if/then; dialog.js withAnExit()).
+      if (expected.showClose === false) expected.closeOnEscape = true;
       markup += `><h2>Case ${id}</h2><p>body text</p></dialog>`;
       cases.push({ id, markup, states: { ...states }, expected });
       return;
@@ -392,7 +396,7 @@ test('#747 a trigger declared in camelCase is read as a trigger', async ({ page 
     'modalTitle was not read, so the dialog opened under the default title',
   ).toBe('Camel title');
   expect(
-    await page.locator('dialog.x-dialog[open] .x-dialog__body').innerText(),
+    await page.locator('dialog.x-dialog[open] .x-dialog__main').innerText(),
     'modalContent was not read, so the trigger label became the body',
   ).toContain('camel body');
 });
