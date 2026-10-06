@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.350",
+      "date": "2026-10-06",
+      "summary": "The Behaviors page&#39;s search box sat inside two nested .x-input__wrapper divs on most loads: the page runs in the site shell&#39;s wb.js and also imports wb-lazy.js, each runtime applies input() on its own, and the native-input path of input() had no guard against wrapping an input it had already wrapped. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1652\" target=\"_blank\" rel=\"noopener\">PR 1652</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1645\" target=\"_blank\" rel=\"noopener\">#1645</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A native input is wrapped once, however many passes reach it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1645\" target=\"_blank\" rel=\"noopener\">#1645</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14bc4a8d8f272a498813d9e4fa5d628273805dde\" target=\"_blank\" rel=\"noopener\"><code>14bc4a8</code></a>",
+          "issues": [
+            1645
+          ]
+        }
+      ],
+      "seeIt": "Open /behaviors and run document.querySelectorAll(&#39;.x-input__wrapper &gt; .x-input__wrapper&#39;).length in the console. Before: 1 on most loads (3 of 4). Now: 0 on every load.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6a6a8b59e8266e92b4e289c719342cde0794aa0a\" target=\"_blank\" rel=\"noopener\"><code>6a6a8b5</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.349",
       "date": "2026-10-06",
       "summary": "16 &quot;sleep, then check it IS true&quot; waits across behaviour, card, mobile, page, view and regression specs now wait on what they check (WB.settled, expect.poll on the URL, sort order, menu, height or nav, image load, two frames), 7 sleeps that prove nothing happened (a disabled control not navigating, a page not moving, a link not appearing) are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 3, setup 201, negative 59; the three left are mobile-validation, which also runs under WebKit. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1651\" target=\"_blank\" rel=\"noopener\">PR 1651</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
