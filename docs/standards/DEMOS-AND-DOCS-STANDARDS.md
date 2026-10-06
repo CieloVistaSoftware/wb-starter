@@ -583,6 +583,21 @@ first word of the info string, so `html static` would arrive as `html` and run.
   examples by `tests/compliance/no-redundant-x-attribute.spec.ts`, which reads every `nativeMap` entry
   (typed inputs included) through `tests/base.ts`.
 
+## 33. Striped rows: adjacent rows differ by at least 1.2:1, on every theme
+
+- John (#680): "what is our striped rule of contrast?" There was none, so #672's "not enough contrast
+  on striped rows" was tuned by eye. WCAG sets no minimum for a stripe (it is not text and not a control
+  boundary), so this is a house number, chosen from a measurement of all 50 themes on 2026-10-06.
+- **Adjacent rows differ by a contrast ratio of at least 1.2:1** (the WCAG luminance ratio of the two
+  row backgrounds). Measured then: the dark theme, as #672 left it, is 1.44:1; the weakest light themes
+  were 1.20:1, and `light` and `arctic` fell just short (1.197, 1.196) until they got their own stripe
+  colour.
+- **Both parities are painted explicitly.** Never leave one parity transparent: the stripe then depends
+  on whatever surface the table sits on, which is what made #672's stripe vanish.
+- **Text on both parities keeps at least 4.5:1** (WCAG AA for body text).
+- A theme meets the 1.2:1 floor by setting `--table-stripe-bg` (the odd rows; it defaults to
+  `--bg-tertiary`), never by moving `--bg-tertiary`, which other surfaces share.
+
 ## Enforcement & references
 
 | Rule | Test / reference |
@@ -598,6 +613,7 @@ first word of the info string, so `html static` would arrive as `html` and run.
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
 | 1, 16, 25 (x-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |
 | 28 (code panel full width) | `src/styles/behaviors/demo.css` (`.x-demo__code` rule) |
+| 33 (striped rows) | `tests/regression/striped-rows-hold-their-contrast.spec.ts` (#680) |
 | 29 (no placeholder assets) | `tests/compliance/docs-live-media-assets-exist.spec.ts`, `tests/compliance/x-audio-has-resolvable-src.spec.ts` |
 | 30 (broken media throws) | `src/wb-viewmodels/card.js` (`cardhero`/`cardhorizontal`/`cardoverlay`/`cardimage` probe pattern), `src/wb-viewmodels/semantics/audio.js` |
 | 31 (kebab-case attributes) | `tests/regression/cardhorizontal-attribute-casing-tolerance.spec.ts` (reference pattern for tolerant reading) |

@@ -92,8 +92,12 @@ table.x-table {
   background-color: var(--bg-primary);
 }
 
+/* #680: adjacent rows differ by at least 1.2:1 on every theme
+   (DEMOS-AND-DOCS-STANDARDS.md §33). --bg-tertiary meets it on 48 of 50
+   themes; a theme that falls short sets its own --table-stripe-bg rather
+   than moving --bg-tertiary, which other surfaces share. */
 .x-table--striped tbody tr:nth-of-type(odd) {
-  background-color: var(--bg-tertiary);
+  background-color: var(--table-stripe-bg, var(--bg-tertiary));
 }
 
 .x-table--hover tbody tr:hover {
