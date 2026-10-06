@@ -174,6 +174,11 @@ function changedPaths(before: Record<string, string>, after: Record<string, stri
 const RELEASE_TIMEOUT_MS = 120_000;
 
 test('a release bumps only the project\'s own version fields in package-lock.json', async () => {
+  // #1633: the test must outlast the budget it gives release.mjs. With the
+  // default 30s, a slow runner timed the test out while the release was still
+  // inside its 120s, and the script's own message never got to report. The
+  // extra minute covers the 5s lock wait and building the fixture project.
+  test.setTimeout(RELEASE_TIMEOUT_MS + 60_000);
   const { withMachine } = await import(pathToFileURL(join(ROOT, 'scripts/lib/hold-machine.mjs')).href);
   const heldLockDir = mkdtempSync(join(tmpdir(), 'wb-held-lock-'));
   const fixtureLockDir = mkdtempSync(join(tmpdir(), 'wb-fixture-lock-'));
