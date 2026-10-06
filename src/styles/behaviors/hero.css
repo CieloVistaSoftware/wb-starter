@@ -192,9 +192,18 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  justify-content: inherit;
+  justify-content: center;
   margin-top: 1.75rem;
 }
+/* #1619: the row follows the hero's alignment, like the pretitle above. It
+   was `justify-content: inherit`, but its parent (the content column) sets
+   none, so it inherited `normal` and packed the buttons at the start: on a
+   centered 1200px hero the pair sat ~140px left of the centered title.
+   `text-align` centres the text around it but never moves flex items. */
+[x-cardhero].x-card--xalign-left  .x-card__cta-group { justify-content: flex-start; }
+[x-cardhero].x-card--xalign-right .x-card__cta-group { justify-content: flex-end; }
+[x-cardhero].x-cardhero--split    .x-card__cta-group { justify-content: flex-start; }
+[x-cardhero].x-cardhero--split.x-card--xalign-right .x-card__cta-group { justify-content: flex-end; }
 [x-cardhero] .x-hero-cta{
   display: inline-flex;
   align-items: center;

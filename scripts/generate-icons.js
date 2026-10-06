@@ -54,22 +54,22 @@ async function generateIcons() {
     }
   }
 
-  // favicon.png -- rendered from the REAL favicon.svg (the project's actual
-  // blue star, linked by index.html's <link rel="icon">), not the app-icon
-  // source above. These used to be two independent sources that had drifted apart:
-  // favicon.svg was updated to a blue star at some point, but this script
-  // still generated favicon.png from its own hardcoded lightning-bolt
-  // constant, so the two files silently disagreed (live report: favicon.png
-  // was still a purple lightning bolt). Reading favicon.svg directly makes
-  // this the single source of truth going forward -- can't drift again.
+  // favicon.png -- the browser-tab icon (index.html and 404.html's
+  // <link rel="icon">, config/site.json's browserTabIcon). It comes from the
+  // same wb logo as the app icons (#1621). It used to be rendered from
+  // favicon.svg, a blue star, so the tab showed a different mark from
+  // everything else. favicon.svg is still committed: it is the generic
+  // placeholder logo in generate-site.mjs and the navbar schema example.
+  //
+  // The logo sits on a wide white margin. At 16-32 px that margin would
+  // leave a dot in the tab, so trim() crops to the logo tile before resizing.
   try {
-    const faviconSvgPath = path.join(OUTPUT_DIR, 'favicon.svg');
-    const faviconSvg = fs.readFileSync(faviconSvgPath, 'utf8');
-    await sharp(Buffer.from(faviconSvg))
-      .resize(32, 32)
+    const tile = await sharp(SOURCE_IMAGE).trim({ background: '#ffffff', threshold: 20 }).toBuffer();
+    await sharp(tile)
+      .resize(32, 32, { fit: 'contain', background: '#ffffff' })
       .png()
       .toFile(path.join(OUTPUT_DIR, 'favicon.png'));
-    console.log('  ✓ Generated favicon.png (from favicon.svg)');
+    console.log('  ✓ Generated favicon.png (from og-image.jpg, cropped to the logo)');
   } catch (error) {
     console.error('  ✗ Failed to generate favicon:', error.message);
   }

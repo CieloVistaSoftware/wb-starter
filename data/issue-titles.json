@@ -1212,5 +1212,7 @@
   "1600": "x-cardexpandable schema and doc name an event, methods and CSS variables the code doesn't have",
   "1613": "Nightly 2026-10-06: new test failures on main",
   "1614": "App icons (PWA + apple-touch) are still the lightning bolt, not the wb logo",
-  "1619": "x-cardhero: buttons sit left of center on centered heroes (CTA row ignores xalign)"
+  "1619": "x-cardhero: buttons sit left of center on centered heroes (CTA row ignores xalign)",
+  "1621": "Browser-tab favicon is a blue star, not the wb logo",
+  "1623": "Releases page: places named as plain text, and no links to the commits that did the work"
 }
