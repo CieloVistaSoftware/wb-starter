@@ -206,7 +206,7 @@ function injectStyles() {
     .x-stagelight--fixture span {
       margin-top: 0.5rem;
       font-size: 0.75rem;
-      color: var(--text-secondary, #888);
+      color: var(--text-secondary);
       font-family: monospace;
     }
   `;

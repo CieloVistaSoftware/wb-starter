@@ -194,9 +194,9 @@ if (!document.getElementById('x-showcase-styles')) {
       right: 0.5rem;
       padding: 0.25rem 0.5rem;
       font-size: 0.75rem;
-      background: var(--bg-tertiary, #374151);
-      color: var(--text-secondary, #9ca3af);
-      border: 1px solid var(--border-color, #4b5563);
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
       border-radius: 0.25rem;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -204,15 +204,15 @@ if (!document.getElementById('x-showcase-styles')) {
     }
     
     .code-copy-btn:hover {
-      background: var(--primary, #6366f1);
+      background: var(--primary);
       color: white;
-      border-color: var(--primary, #6366f1);
+      border-color: var(--primary);
     }
     
     .showcase-nav a.active {
-      background: var(--primary, #6366f1);
+      background: var(--primary);
       color: white;
-      border-color: var(--primary, #6366f1);
+      border-color: var(--primary);
     }
     
     x-mdhtml.collapsed {

@@ -79,6 +79,17 @@
   --overlay-dark-hsl: 0 0% 0%;    /* scrims, shadows */
   --overlay-light-hsl: 0 0% 100%; /* glass, sheen, hovers */
 
+  /* Tooltip variant="dark|light|primary" colours. tooltip.js used to carry these
+     as hex fallbacks inside its injected stylesheet -- colour literals outside
+     the theme system, invisible to the colour guard (#790). Same values, now
+     here, so a page or theme overrides them like any other token. */
+  --x-tooltip-dark-bg: hsl(215, 28%, 17%);      /* was #1f2937 */
+  --x-tooltip-dark-color: hsl(0, 0%, 100%);     /* was #ffffff */
+  --x-tooltip-light-bg: hsl(0, 0%, 100%);       /* was #ffffff */
+  --x-tooltip-light-color: hsl(215, 28%, 17%);  /* was #1f2937 */
+  --x-tooltip-light-border: 1px solid hsl(220, 13%, 91%); /* was #e5e7eb */
+  --x-tooltip-primary-color: var(--text-on-accent);       /* was #ffffff */
+
   /* x-glass (#1236): the colour mixed into an element that carries the scene
      behind it. The theme's text colour, so the tint reads on light and dark
      themes alike; glass.css mixes it at the element so a context (the hero)
