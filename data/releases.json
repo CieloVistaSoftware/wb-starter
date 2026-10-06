@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.358",
+      "date": "2026-10-06",
+      "summary": "The text between a card&#39;s tags is now its content everywhere. The schema builder stored it as `slot` (Web Components vocabulary) and aliased it to `body` (the document body&#39;s name); both are now `content`, and the _wbOriginalSlot stash is _wbOriginalContent, with templates written {{content}}. A `content=&quot;…&quot;` attribute is only a fallback, and every card example, doc, schema setup and showcase that wrote one now puts the text between the tags. `description` rendered as the subtitle on cardproduct and cardvideo, and cardlink put a `subtitle` into the description slot; now `subtitle` is always the line under the title and `description` is always .x-card__description. Drawers and popovers still read `description` as panel text; they are overlays, not cards, and are left for their own issue. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1658\" target=\"_blank\" rel=\"noopener\">PR 1658</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/968\" target=\"_blank\" rel=\"noopener\">#968</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One word, one placement: content between the tags, subtitle under the title, description as .x-card__description</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/968\" target=\"_blank\" rel=\"noopener\">#968</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e33bd7f19228a9960331c229cbc5caf6989d01a0\" target=\"_blank\" rel=\"noopener\"><code>e33bd7f</code></a>",
+          "issues": [
+            968
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;article x-cardproduct title=&quot;Lamp&quot; subtitle=&quot;Brass&quot; description=&quot;Hand-finished in Lisbon.&quot; price=&quot;$90&quot;&gt;&lt;/article&gt;. Before: &quot;Brass&quot; showed under the title and the description was dropped. Now: &quot;Brass&quot; is under the title and &quot;Hand-finished in Lisbon.&quot; is a separate .x-card__description line.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e42fa4885f44d4aeea5c98acb2d92678f0c53243\" target=\"_blank\" rel=\"noopener\"><code>e42fa48</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.357",
       "date": "2026-10-06",
       "summary": "Data/docs-manifest.json was generated before <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fstatus.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/status.md</a> had a commit, so its entry had no created date: the Docs page showed it without &quot;Created&quot;, and the manifest step no longer reproduced the committed file. Both manifests are regenerated, which also moves the modified dates of the docs this branch changed. docs-illustrations-never-render-live.spec.ts proved #1169 on <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fauto-injection.md\" target=\"_blank\" rel=\"noopener\">docs/auto-injection.md</a>&#39;s html fences, which #307 made authored x-demo blocks; it now reads <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/fixtures/doc-viewer-semantic-fences.md\" target=\"_blank\" rel=\"noopener\">tests/fixtures/doc-viewer-semantic-fences.md</a>, a fixture with one plain &lt;article&gt; fence and one with an x- attribute, so the doc viewer&#39;s fence-to-demo path is still tested. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1657\" target=\"_blank\" rel=\"noopener\">PR 1657</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1105\" target=\"_blank\" rel=\"noopener\">#1105</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/307\" target=\"_blank\" rel=\"noopener\">#307</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/940\" target=\"_blank\" rel=\"noopener\">#940</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1185\" target=\"_blank\" rel=\"noopener\">#1185</a>",
