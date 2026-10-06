@@ -105,49 +105,32 @@
     }
   ],
   "$methods": {
-    "expand": {
-      "description": "Expands the card",
+    "show": {
+      "description": "Expands the card. On `element.wbCardExpandable`; read the state from `element.wbCardExpandable.expanded`.",
       "params": []
     },
-    "collapse": {
-      "description": "Collapses the card",
+    "hide": {
+      "description": "Collapses the card. On `element.wbCardExpandable`.",
       "params": []
     },
     "toggle": {
-      "description": "Toggles expanded state",
+      "description": "Expands a collapsed card, collapses an expanded one. On `element.wbCardExpandable`.",
       "params": []
-    },
-    "isExpanded": {
-      "description": "Returns expanded state",
-      "params": [],
-      "returns": "boolean"
     }
   },
   "$cssAPI": {
-    "--x-card-expandable-padding": {
-      "default": "1rem",
-      "description": "Card padding"
-    },
-    "--x-card-expandable-radius": {
-      "default": "8px",
-      "description": "Border radius"
-    },
     "--x-card-expandable-max-height": {
       "default": "100px",
-      "description": "Collapsed max height"
+      "description": "Collapsed max height. Set from `max-height`; the content is uncapped when unset."
     },
-    "--x-card-expandable-transition": {
-      "default": "max-height 0.3s ease",
-      "description": "Expand transition"
-    },
-    "--x-card-expandable-btn-color": {
-      "default": "var(--primary, #6366f1)",
-      "description": "Button color"
+    "--x-card-expandable-lines": {
+      "default": "unset",
+      "description": "Lines shown when collapsed. Set from `lines`; takes priority over the max height."
     }
   },
   "events": {
-    "wb:expandable:toggle": {
-      "description": "Fired on expand/collapse",
+    "wb:cardexpandable:toggle": {
+      "description": "Fired on expand and collapse. Bubbles.",
       "detail": {
         "expanded": "boolean"
       }
