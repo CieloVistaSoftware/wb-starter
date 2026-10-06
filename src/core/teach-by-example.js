@@ -40,6 +40,7 @@
  * wb-lazy.js, and the same empty element has to teach in both. Written once so
  * the two cannot drift (#333, #1056).
  */
+import { loadSchemaIndex } from './schema-index.js';
 import { Events } from './events.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 
@@ -119,6 +120,14 @@ async function schemaFor(behaviorName) {
   try {
     schema = SchemaBuilder.getSchema(behaviorName) || null;
   } catch { /* fall through to the fetch */ }
+
+  // #1550: ask only for a schema the index lists. 51 registered behaviors
+  // (x-lazy, x-datepicker, ...) have none, and fetching each by name was a
+  // 404 and an ENOENT in the server log on every page that used one empty.
+  if (!schema) {
+    const listed = (await loadSchemaIndex())[behaviorName];
+    if (!listed) { schemaCache.set(behaviorName, null); return null; }
+  }
 
   if (!schema) {
     try {
