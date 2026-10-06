@@ -54,15 +54,30 @@ test('every validated page exists', () => {
 // ═══════════════════════════════════════════════════════════════
 for (const pg of PAGES) {
   test(`screenshot: ${pg.title}`, async ({ page, browserName }) => {
-    // A WebKit capture of Home never finishes on the Windows CI runner -- full
-    // page or viewport, the screenshot call hits its 30s timeout (three runs,
-    // #1432), while locally it takes a few seconds. These captures are images
-    // for visual review, not checks; the overflow, viewport-meta and JS-error
-    // checks below run on both devices. #1439 traces why WebKit stalls.
-    test.skip(browserName === 'webkit', 'WebKit screenshots stall on the CI runner (#1439)');
     const fullPage = true;
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await page.waitForTimeout(1500); // let animations/lazy-load settle
+
+    // #1439: on the Windows CI runner, a WebKit capture of any page holding an
+    // <audio> or <video> that never loads hangs until the screenshot timeout.
+    // Home's player is one: there WebKit leaves the (offline stand-in) MP3 at
+    // readyState 0, while Chromium reaches 4. Measured on the runner: Home
+    // timed out every time (viewport, full page, animations disabled, service
+    // worker blocked), and with only its media elements taken away it
+    // captured in about 1s. Removing its infinite animations or its filters
+    // changed nothing. Real Safari plays the file. These captures are images
+    // for visual review, and the media element is the browser's own hidden
+    // one, so the source is unloaded rather than the capture skipped.
+    if (browserName === 'webkit') {
+      await page.evaluate(() => {
+        for (const media of Array.from(document.querySelectorAll<HTMLMediaElement>('audio, video'))) {
+          media.pause();
+          media.removeAttribute('src');
+          media.querySelectorAll('source').forEach((source) => source.remove());
+          media.load();
+        }
+      });
+    }
 
     const screenshotPath = path.join(getScreenshotDir(), `${pg.name}.png`);
     // Chromium refuses a capture taller than 32767px, and the Behaviors page
