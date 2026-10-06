@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.354",
+      "date": "2026-10-06",
+      "summary": "Public/ (the doc, schema, error, fix, test and performance viewers and the two papers) and articles/ still carried 71 style= attributes, 17 of them in markup the pages build from script, and no-inline-styles.spec.ts did not read either folder. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1656\" target=\"_blank\" rel=\"noopener\">PR 1656</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Public/ and articles/ carry no inline styles; the gate scans them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7c27c0df6efb589fd2d3dc78b7d4a9b82b8fe5a0\" target=\"_blank\" rel=\"noopener\"><code>7c27c0d</code></a>",
+          "issues": [
+            779
+          ]
+        }
+      ],
+      "seeIt": "Open /public/errors-viewer.html and run document.querySelectorAll(&#39;[style]&#39;).length in the console. Before: the page and the error cards it builds carried style= attributes (12 in the file), and no-inline-styles.spec.ts did not read public/ or articles/. Now: 0, and the spec scans both folders and passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a337e33cc39b139ae59ddb852434d38272034cbe\" target=\"_blank\" rel=\"noopener\"><code>a337e33</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.353",
       "date": "2026-10-06",
       "summary": "Two behaviors-project tests failed on CI under load and passed 8 of 8 locally. &quot;tooltip appears on hover&quot; hovered the example before tooltip.js had attached its mouseenter listener, so no .x-tooltip appeared; &quot;issues — no uncaught errors&quot; waited for networkidle while the issues page paged through the live GitHub API via /api/issues, and the whole 30s budget ran out before any error check. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1650\" target=\"_blank\" rel=\"noopener\">PR 1650</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/918\" target=\"_blank\" rel=\"noopener\">#918</a>",
