@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.399",
+      "date": "2026-10-07",
+      "summary": "The &quot;no duplicate const/let declarations&quot; check counted 38 hits under a ceiling of 38, and every hit was legal code: a real duplicate in one scope is a SyntaxError, and the line-and-brace counter merged separate block scopes (an if/else each declaring figure). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1708\" target=\"_blank\" rel=\"noopener\">PR 1708</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Retire the line-based duplicate-declaration count</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/28dbea0e787275e3cd21729238417c032d64b1c1\" target=\"_blank\" rel=\"noopener\"><code>28dbea0</code></a>",
+          "issues": [
+            344
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Rewrite the schema checks that enforced retired rules</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/be036b32880148cfb4a2c7cdacab1123463045f6\" target=\"_blank\" rel=\"noopener\"><code>be036b3</code></a>",
+          "issues": [
+            344
+          ]
+        }
+      ],
+      "seeIt": "Run npx eslint on a file holding const a = 1; const a = 2; and on one returning an undeclared b. Before: the schema spec carried a ceiling of 38 legal &quot;duplicates&quot;. Now: the ceiling is gone, and ESLint reports &quot;Identifier &#39;a&#39; has already been declared&quot; and &quot;&#39;b&#39; is not defined&quot;, which lint-has-no-errors.spec.ts already fails on across the repository.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b937c5bd30a4ae63f1ec69327a4fdbb68c495c83\" target=\"_blank\" rel=\"noopener\"><code>b937c5b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.398",
       "date": "2026-10-07",
       "summary": "On the Behaviors page the code · copy example showed no copy control in the code; the only Copy in sight was the page&#39;s source-panel button, far below on the right. code.js chose inline-or-block copy handling from config.variant, which defaults to &quot;inline&quot;, so a multiline &lt;code copy&gt; -- already laid out as a block listing -- became &quot;click anywhere to copy&quot; with no button. It now reads the block decision the element already carries (x-code--block). The button it then builds was blown up to 54x52px by x-button&#39;s auto-injected rule, which out-ranks .x-code__copy on source order; code.css qualifies it as .x-code-wrapper .x-code__copy, the same fix pre.css has for .x-pre__copy, so it is the small corner control again. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1710\" target=\"_blank\" rel=\"noopener\">PR 1710</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1709\" target=\"_blank\" rel=\"noopener\">#1709</a>",
