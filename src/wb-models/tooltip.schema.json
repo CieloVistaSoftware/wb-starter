@@ -4,9 +4,9 @@
   "title": "Tooltip",
   "description": "Tooltip for displaying additional information on hover/focus",
   "schemaFor": "tooltip",
-  "baseClass": "x-tooltip-trigger",
+  "baseClass": "x-tooltip--trigger",
   "compliance": {
-    "baseClass": "x-tooltip-trigger",
+    "baseClass": "x-tooltip--trigger",
     "supportLevel": "stable",
     "accessibility": "high"
   },

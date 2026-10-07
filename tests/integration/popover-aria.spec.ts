@@ -31,7 +31,7 @@ test('popover announces itself to assistive tech via ARIA (#209)', async ({ page
   });
 
   const btn = page.locator('#aria-pop');
-  await expect(btn).toHaveClass(/x-popover-trigger/, { timeout: 15000 });
+  await expect(btn).toHaveClass(/x-popover--trigger/, { timeout: 15000 });
 
   // Static hint present before any interaction; not yet expanded.
   await expect(btn).toHaveAttribute('aria-haspopup', 'dialog');

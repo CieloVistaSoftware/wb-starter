@@ -201,7 +201,7 @@ test.describe('x-toast — the simple working case', () => {
       'dismissible defaults to true in the schema').toBe(1);
     expect(await toast.evaluate((el) => el.parentElement?.classList.contains('x-toast-container')),
       'the toast lives in the container, not in the trigger').toBe(true);
-    expect(await page.locator('#toast-trigger').evaluate((el) => el.classList.contains('x-toast-trigger')),
+    expect(await page.locator('#toast-trigger').evaluate((el) => el.classList.contains('x-toast--trigger')),
       'the host is the TRIGGER; .x-toast is the popup').toBe(true);
   });
 });

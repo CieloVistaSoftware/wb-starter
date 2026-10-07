@@ -160,9 +160,9 @@ test.describe('Behaviors page — key interactions', () => {
   test('tooltip appears on hover', async ({ page }) => {
     await loadBrowse(page);
     await show(page, 'x-tooltip');
-    // .x-tooltip-trigger is added in the same step as the mouseenter listener
+    // .x-tooltip--trigger is added in the same step as the mouseenter listener
     // (tooltip.js); hovering before it lands showed nothing on a loaded CI runner.
-    await page.locator('#behaviors-live-example [x-tooltip].x-tooltip-trigger').first().hover();
+    await page.locator('#behaviors-live-example [x-tooltip].x-tooltip--trigger').first().hover();
     // .x-tooltip is the base class the behavior's own injected stylesheet keys
     // on for position/background/opacity — see src/wb-viewmodels/tooltip.js:21.
     // #858 found it being written as the literal string "[x-tooltip]", brackets
@@ -175,9 +175,9 @@ test.describe('Behaviors page — key interactions', () => {
   test('modal opens from its trigger', async ({ page }) => {
     await loadBrowse(page);
     await show(page, 'x-modal');
-    // .x-modal-trigger is added in the same step as the click listener
+    // .x-modal--trigger is added in the same step as the click listener
     // (dialog.js trigger mode) -- clicking before it lands opened nothing, 1 run in 4.
-    await page.locator('#behaviors-live-example [x-modal].x-modal-trigger').first().click();
+    await page.locator('#behaviors-live-example [x-modal].x-modal--trigger').first().click();
 
     const dialog = page.locator('dialog.x-modal').first();
     await expect(dialog).toHaveAttribute('open', '');

@@ -21,7 +21,7 @@ import { test, expect } from '../fixtures/offline';
  * '[x-drawer]' -> 'drawerLayout' (an unrelated collapsible-sidebar behavior)
  * instead of 'drawer' (the actual trigger+overlay behavior every demo here
  * uses) -- confirmed live via computed classList showing BOTH
- * x-drawer-trigger AND x-drawerlayout classes (the array-based mapping
+ * x-drawer--trigger AND x-drawerlayout classes (the array-based mapping
  * table let both entries match and both behaviors ran on the same element).
  * Fixed by removing the stale '[x-drawer]': 'drawerLayout' entry so the tag
  * resolves only via the correct, already-shared tag-map.js mapping.
@@ -44,8 +44,8 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     const trigger = page.locator('[x-drawer]').first();
     await expect(trigger).toBeVisible();
     // The bug this guards: the trigger used to carry BOTH the correct
-    // x-drawer-trigger class AND drawerLayout's x-drawerlayout class.
-    await expect(trigger).toHaveClass(/x-drawer-trigger/);
+    // x-drawer--trigger class AND drawerLayout's x-drawerlayout class.
+    await expect(trigger).toHaveClass(/x-drawer--trigger/);
     await expect(trigger).not.toHaveClass(/x-drawerlayout/);
 
     await trigger.click();
@@ -59,9 +59,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
   });
 
   test('.x-dialog trigger opens a real dialog with its own title/content', async ({ page }) => {
-    // #448: a <dialog> acting as its own trigger carries .x-dialog-trigger,
+    // #448: a <dialog> acting as its own trigger carries .x-dialog--trigger,
     // not .x-dialog (that class is the popped-open dialog box).
-    const trigger = page.locator('.x-dialog-trigger').first();
+    const trigger = page.locator('.x-dialog--trigger').first();
     await expect(trigger).toBeVisible();
     await trigger.click();
     const dialog = page.locator('dialog[open]').first();
@@ -102,7 +102,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // and separately assert the Basic Dialog section specifically is
     // all-distinct (that's the section whose markup actually varies title).
     // The authored <dialog>s, not a class: the lazy runtime (#491) only builds
-    // a trigger as it nears the viewport, so counting .x-dialog-trigger up
+    // a trigger as it nears the viewport, so counting .x-dialog--trigger up
     // front would count only the ones already built. Each is scrolled to below.
     //
     // They are <button x-dialog> now. They were generated as bare <dialog>

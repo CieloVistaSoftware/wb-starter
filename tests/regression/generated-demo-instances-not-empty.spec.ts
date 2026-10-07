@@ -121,7 +121,7 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10_000 });
     await trigger.click();
 
-    const box = page.locator('.x-dialog:not(.x-dialog-trigger)');
+    const box = page.locator('.x-dialog:not(.x-dialog--trigger)');
     await expect(box).toHaveClass(/x-dialog--fullscreen/);
     const width = await box.evaluate((el) => el.getBoundingClientRect().width);
     const viewportWidth = await page.evaluate(() => window.innerWidth);

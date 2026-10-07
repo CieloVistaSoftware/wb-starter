@@ -70,7 +70,7 @@ export function dropdown(element, options = {}) {
     // trigger. With a real button built above, the class wrapped a padded
     // button around that button, widening the host to the menu's width, so
     // left:0 and right:0 -- bottom-start and bottom-end -- landed 2px apart.
-    element.classList.add('x-dropdown-trigger');
+    element.classList.add('x-dropdown--trigger');
   }
 
   // Create menu
@@ -257,7 +257,7 @@ export function dropdown(element, options = {}) {
     element.removeEventListener('keydown', keyHandler);
     menu.remove();
     if (trigger) trigger.remove();
-    element.classList.remove('x-dropdown', 'x-dropdown-trigger', 'open');
+    element.classList.remove('x-dropdown', 'x-dropdown--trigger', 'open');
   };
 }
 

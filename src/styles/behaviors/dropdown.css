@@ -23,7 +23,7 @@
    built -- the host's own text IS the trigger. Give it the same
    button-like affordance a real trigger button gets (background, border,
    padding, pointer cursor) instead of leaving it as plain unstyled text. */
-.x-dropdown-trigger {
+.x-dropdown--trigger {
   display: inline-block;
   /* 1rem all round, not 0.5rem 1rem: this host's own text is the content,
      so §13's 1rem minimum applies to it. It passed at 8px only while the

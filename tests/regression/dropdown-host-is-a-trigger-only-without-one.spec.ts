@@ -3,7 +3,7 @@ import { test, expect } from '../fixtures/offline';
 /**
  * #702 -- x-dropdown position start/end render 2px apart.
  *
- * dropdown() added `.x-dropdown-trigger` (button padding and border) to the
+ * dropdown() added `.x-dropdown--trigger` (button padding and border) to the
  * host even after it had built a real `<button class="x-dropdown__trigger">`
  * inside it. The host became a padded button around a button, grew to the
  * menu's width, and `left: 0` / `right: 0` -- bottom-start / bottom-end --
@@ -40,7 +40,7 @@ test.describe('x-dropdown host styling (#702)', () => {
         const h = dd.getBoundingClientRect();
         const m = menu.getBoundingClientRect();
         return {
-          hostClassed: dd.classList.contains('x-dropdown-trigger'),
+          hostClassed: dd.classList.contains('x-dropdown--trigger'),
           hostWidth: h.width,
           menuWidth: m.width,
           menuLeftFromHost: m.left - h.left,
@@ -49,7 +49,7 @@ test.describe('x-dropdown host styling (#702)', () => {
       return { start: await measure('dd702-start'), end: await measure('dd702-end') };
     });
 
-    expect(result.start.hostClassed, 'a host with a built trigger must not carry .x-dropdown-trigger').toBe(false);
+    expect(result.start.hostClassed, 'a host with a built trigger must not carry .x-dropdown--trigger').toBe(false);
     expect(result.end.hostClassed).toBe(false);
     // With the menu wider than the host, bottom-start hangs from the left edge
     // and bottom-end from the right, so their offsets differ by the overhang.
@@ -69,8 +69,8 @@ test.describe('x-dropdown host styling (#702)', () => {
       host.innerHTML = '<div id="dd702-bare" x-dropdown items="One,Two">Open me</div>';
       document.body.appendChild(host);
       await (window as any).WB.scan(host, { eager: true });
-      return document.getElementById('dd702-bare')!.classList.contains('x-dropdown-trigger');
+      return document.getElementById('dd702-bare')!.classList.contains('x-dropdown--trigger');
     });
-    expect(classed, 'the host whose own text is the trigger must keep .x-dropdown-trigger').toBe(true);
+    expect(classed, 'the host whose own text is the trigger must keep .x-dropdown--trigger').toBe(true);
   });
 });

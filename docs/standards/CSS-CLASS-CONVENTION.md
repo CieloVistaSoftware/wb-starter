@@ -83,8 +83,18 @@ The classes are renamed in batches, so the gate is a ratchet. Measured
 (floatinglabel, formrow, inputgroup and the label and wrapper built by radio),
 took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout
 hosts, and the toggle, handle and resize overlay drawerLayout builds), took it
-to 85. The count may only go down, and a renamed class is retired: no source,
-stylesheet, test, doc, page, demo or data file may use the old name again.
+to 85. Batch 3, the trigger family, took it to 66. The count may only go down,
+and a renamed class is retired: no source, stylesheet, test, doc, page, demo or
+data file may use the old name again.
+
+**"This element is the trigger" is a modifier.** The element carrying the
+behavior is the block, so the class that marks it as the trigger is
+`x-{behavior}--trigger` (`x-dialog--trigger`, `x-popover--trigger`,
+`x-toast--trigger`). A look variant of the trigger is one modifier with a
+kebab-case value: `x-confetti--trigger-button`. Where `.x-{behavior}` already
+names the panel the behavior builds (`.x-popover`, `.x-sheet`, `.x-toast`,
+`.x-tooltip`, `.x-dialog`), the trigger carries only the modifier, so no panel
+rule can match it.
 
 **A class is not an attribute.** `<aside x-drawer-layout>` is still how an
 author applies drawerLayout; only the class the behavior adds changed, to
