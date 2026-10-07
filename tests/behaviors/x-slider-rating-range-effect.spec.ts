@@ -33,8 +33,9 @@ async function setup(page: Page, html: string): Promise<void> {
     if ((window as any).WB?.scan) {
       await (window as any).WB.scan(document.getElementById('x-slider-rating-range-test-area'), { eager: true });
     }
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(500);
 }
 
 test.describe('<div x-slider> is currently a minimal stub (src/wb-viewmodels/slider.js)', () => {

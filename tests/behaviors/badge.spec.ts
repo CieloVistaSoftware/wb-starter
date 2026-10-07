@@ -47,10 +47,9 @@ async function setupBadges(page: Page, badgeHTML: string): Promise<void> {
     if ((window as any).WB?.scan) {
       await (window as any).WB.scan();
     }
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-
-  // Brief wait for CSS classes to apply
-  await page.waitForTimeout(300);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
