@@ -25,8 +25,7 @@ const REGISTER: Record<string, number> = {
   'src/styles/behaviors/card.css': 10,
   'src/styles/behaviors/demo.css': 7,
   'src/styles/normalize.css': 5,
-  'src/styles/pages/behaviors.css': 8,
-  'src/styles/pages/themes-showcase.css': 10,
+  'src/styles/pages/behaviors.css': 1,   // [data-behaviors-search-hidden] must beat whatever display a row's class sets, like [hidden]
   'src/styles/safari-fixes.css': 3,
   'src/styles/site.css': 28,
   'src/styles/transitions.css': 4,
