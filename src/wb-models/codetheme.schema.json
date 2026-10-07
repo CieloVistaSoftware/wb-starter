@@ -9,7 +9,23 @@
     "supportLevel": "stable",
     "accessibility": "high"
   },
-  "properties": {},
+  "properties": {
+    "showLabel": {
+      "type": "boolean",
+      "description": "Show the \"Code:\" label before the theme picker.",
+      "default": true
+    },
+    "showCategory": {
+      "type": "boolean",
+      "description": "Group the themes in the picker under their category headings (dark, light and so on). Set to false for one flat list.",
+      "default": true
+    },
+    "persist": {
+      "type": "boolean",
+      "description": "Remember the chosen code theme in localStorage and restore it on the next visit.",
+      "default": true
+    }
+  },
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

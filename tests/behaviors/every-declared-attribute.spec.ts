@@ -130,6 +130,10 @@ function loadBehaviors(): Behavior[] {
       // sibling BEHAVIOR token (x-effects declares x-animate, x-fadeout), not
       // an attribute of this one.
       if (prop.startsWith('$') || prop.startsWith('_') || prop.startsWith('x-')) continue;
+      // scope:"child" is read off a child (a tab panel, a table cell), never
+      // the host, so setting it on the host tests nothing.
+      // permutation-compliance.spec.ts skips these for the same reason (#879).
+      if (def?.scope === 'child') continue;
       const s = sampleFor(def);
       if (!s) continue;
       attrs.push({ name: kebab(prop), sample: s.value, bare: s.bare });

@@ -31,7 +31,11 @@
  *                  path for enum/boolean props. Missing all three means the
  *                  attribute is documented and inert. (#861)
  *   R4 DECLARED    every attribute the behavior reads is declared, so the docs
- *                  and the showcase can see it.
+ *                  and the showcase can see it. READS only: an attribute the
+ *                  code only sets or removes (`data-captions-missing`, the
+ *                  `for` a label is given) is output for CSS and tests, not an
+ *                  option an author passes in (#879). Writes still count as
+ *                  consumption for R3.
  *
  * A violation names the rule, so a failure says what to do rather than only
  * what is wrong.
@@ -65,6 +69,9 @@ export const conceptOf = (s) => s.toLowerCase().replace(/^data-/, '').replace(/[
  * can author against, and counting it as "read" is how a dead attribute passes.
  */
 const ATTR_CALL = /(?:get|has|remove|set)Attribute\(\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
+// #879: the subset of ATTR_CALL that takes a value IN. setAttribute and
+// removeAttribute put state out; they never read an author's option.
+const ATTR_READ_CALL = /(?:get|has)Attribute\(\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 const READ_FLAG = /readFlag\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 // #1526: readAttr / readNumber / hasAuthoredAttr are read-attr.js's other
 // readers. A behavior moved onto them from a raw getAttribute('brand-href')
@@ -86,8 +93,12 @@ function jsFiles(dir, out = []) {
   return out;
 }
 
-/** Every attribute literal read anywhere in the behavior layer, with sources. */
-function readIndex(root = VM) {
+/**
+ * Every attribute literal touched anywhere in the behavior layer, with sources.
+ * `readsOnly` drops setAttribute/removeAttribute: R3 asks whether a declared
+ * attribute is touched at all, R4 asks whether an attribute is taken IN.
+ */
+function readIndex(root = VM, { readsOnly = false } = {}) {
   const idx = new Map(); // attr -> Set(basename)
   for (const f of jsFiles(root)) {
     const src = fs.readFileSync(f, 'utf8');
@@ -96,7 +107,7 @@ function readIndex(root = VM) {
       if (!idx.has(attr)) idx.set(attr, new Set());
       idx.get(attr).add(base);
     };
-    for (const re of [ATTR_CALL, READ_FLAG, READ_ATTR]) {
+    for (const re of [readsOnly ? ATTR_READ_CALL : ATTR_CALL, READ_FLAG, READ_ATTR]) {
       re.lastIndex = 0;
       let m;
       while ((m = re.exec(src))) add(m[1]);
@@ -118,6 +129,7 @@ function readIndex(root = VM) {
 export function auditAll({ models = MODELS, vm = VM } = {}) {
   const reads = readIndex(vm);
   const readNames = new Set(reads.keys());
+  const takenIn = readIndex(vm, { readsOnly: true });
   const behaviors = [];
 
   // Which files claim which behavior. Computed over EVERY behavior schema,
@@ -253,17 +265,23 @@ export function auditAll({ models = MODELS, vm = VM } = {}) {
     'slot', 'key', 'index', 'default', 'off', 'once', 'from', 'top', 'bottom', 'center', 'side',
     'tag', 'theme', 'style', 'title', 'role', 'name', 'width', 'height', 'target', 'disabled',
     'checked', 'selected', 'placeholder', 'required', 'readonly', 'multiple', 'step', 'min', 'max',
+    // #879: platform attributes of the host element itself -- <img srcset>,
+    // <form method>, <ol start>. HTML defines them; no schema of ours should.
+    'srcset', 'method', 'start',
   ]);
   // `data-` is transparent (extractData strips it), so a code read of
   // `data-lazy` is satisfied by a declared `lazy`. Comparing the raw spelling
   // would report the same attribute as undeclared purely because the author
   // used the prefixed form.
   const isDeclared = (a) => declaredEverywhere.has(a) || (a.startsWith('data-') && declaredEverywhere.has(a.slice(5)));
-  const undeclared = [...readNames]
+  // The same transparency applies to what we do not own: `data-theme` is the
+  // page theme `theme` already names, `data-slot` is the platform's `slot`.
+  const isNative = (a) => NATIVE.has(a) || (a.startsWith('data-') && NATIVE.has(a.slice(5)));
+  const undeclared = [...takenIn.keys()]
     .filter((a) => !isDeclared(a))
-    .filter((a) => !NATIVE.has(a) && !a.startsWith('aria-') && !a.startsWith('x-') && a !== 'wb' && a !== 'behavior')
+    .filter((a) => !isNative(a) && !a.startsWith('aria-') && !a.startsWith('x-') && a !== 'wb' && a !== 'behavior')
     .sort()
-    .map((a) => ({ attr: a, readBy: [...reads.get(a)].sort() }));
+    .map((a) => ({ attr: a, readBy: [...takenIn.get(a)].sort() }));
 
   const duplicateDefinitions = [...claimedBy.entries()]
     .filter(([, files]) => files.length > 1)

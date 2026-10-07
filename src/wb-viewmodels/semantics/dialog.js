@@ -51,15 +51,16 @@ function addCloseButton(header, show) {
  * `modalTitle`/`modalContent`/`modalSize` are the legacy trigger names, kept
  * because docs/behaviors/modal.md and modal.schema.json still teach them; they
  * are read here under the camelCase spelling for the same reason.
+ *
+ * #879: `dialogTitle`/`dialogContent`/`dialogSize` were read as a third set of
+ * names. No schema declared them, no doc taught them and no markup in the repo
+ * used them, so they are no longer read.
  */
 function optionsFrom(element, options = {}) {
   const config = {
-    title: options.title || readAttr(element, 'title') || readAttr(element, 'modalTitle')
-      || readAttr(element, 'dialogTitle') || 'Dialog',
-    content: options.content || readAttr(element, 'content') || readAttr(element, 'modalContent')
-      || readAttr(element, 'dialogContent') || '',
-    size: options.size || readAttr(element, 'size') || readAttr(element, 'modalSize')
-      || readAttr(element, 'dialogSize') || 'md',
+    title: options.title || readAttr(element, 'title') || readAttr(element, 'modalTitle') || 'Dialog',
+    content: options.content || readAttr(element, 'content') || readAttr(element, 'modalContent') || '',
+    size: options.size || readAttr(element, 'size') || readAttr(element, 'modalSize') || 'md',
     // Schema declares variant: default/centered/fullscreen (appliesClass:
     // x-dialog--{{value}}), but this was never read anywhere -- every
     // variant produced an identical dialog (confirmed live: "Centered" and
