@@ -36,7 +36,9 @@ async function ready(page) {
   // #448: x-header no longer carries a same-named `.x-header` class --
   // select the tag directly.
   await page.waitForSelector('.x-header');
-  await page.waitForTimeout(400); // let await WB.scan()'s auto-inject pass settle
+  // The auto-inject pass has run once WB settles (#1516: not 400ms).
+  await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 }
 
 // The lazy runtime (#491) builds a host only once it nears the viewport, so

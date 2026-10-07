@@ -58,7 +58,8 @@ test.describe('button icon parity across authoring forms', () => {
           `<button id="native-${icon}" variant="primary" icon="${icon}" size="md">Label</button>`;
         document.body.appendChild(host);
         await (window as any).WB.scan(host, { eager: true });
-        await new Promise((r) => setTimeout(r, 400));
+        // Built once its work has called back (#1516: no fixed sleep).
+        await (window as any).WB.settled?.({ timeout: 10000 });
 
         const read = (id: string) => {
           const el = document.getElementById(id)!;

@@ -44,6 +44,7 @@ test('a permanently failing module is not retried forever', async ({ page }) => 
     // Ask for it repeatedly, the way a page does as elements scan in.
     for (let i = 0; i < 3; i++) {
       try { await wb.inject(document.body, 'does-not-exist-module'); } catch { /* expected */ }
+      // sleep-is-the-scenario: repeated requests inside one cooldown window; the spacing is the scenario
       await new Promise((r) => setTimeout(r, 100));
     }
   });
@@ -54,6 +55,7 @@ test('a permanently failing module is not retried forever', async ({ page }) => 
   await page.evaluate(async () => {
     const wb = (window as any).WB;
     for (let i = 0; i < 4; i++) {
+      // sleep-is-the-scenario: waits past each 5s cooldown window; the cooldown is what is under test
       await new Promise((r) => setTimeout(r, 5200));
       try { await wb.inject(document.body, 'does-not-exist-module'); } catch { /* expected */ }
     }

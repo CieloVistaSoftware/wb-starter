@@ -105,6 +105,8 @@ async function render(page: Page, body: string, script: string) {
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 20000 });
   // Let the per-element catch blocks (and their async error-log POSTs) settle.
+  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+  // sleep-proves-negative: the checks assert exactly ONE logged error; a duplicate POST that correctly never arrives fires no event
   await page.waitForTimeout(1500);
 }
 
@@ -180,6 +182,7 @@ test.describe('#513 one module-load failure = one logged error', () => {
 
     // Network recovers (server restart, transient blip, offline → online).
     h.setFailing(false);
+    // sleep-is-the-scenario: waits out FAILURE_COOLDOWN_MS; the cooldown is what is under test
     await page.waitForTimeout(FAILURE_COOLDOWN_MS + 1000);
     await page.evaluate(() => (window as any).__retry());
     // Polled until the retry's request goes out (#1516), not a 1000ms sleep.

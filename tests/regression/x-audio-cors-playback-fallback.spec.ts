@@ -44,7 +44,9 @@ test('the error handler retries without crossOrigin exactly once when show-eq ca
     // Simulate the real-world CORS failure: a server with no CORS support
     // fires a native 'error' event on a crossOrigin='anonymous' element.
     audioEl.dispatchEvent(new Event('error'));
-    await new Promise((r) => setTimeout(r, 300));
+    // Until the retry clears crossOrigin (5s cap), not 300ms (#1516).
+    const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+    await until(() => audioEl.crossOrigin === null);
 
     return {
       crossOriginBeforeRetry,

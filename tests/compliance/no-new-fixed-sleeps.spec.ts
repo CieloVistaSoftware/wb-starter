@@ -11,7 +11,9 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * the second took the positive ones to 43, the third to 26, the fourth to 3,
  * the fifth to 0 (and began on the setup ones); the sixth taught the scan
  * to see a sleep behind a local helper (`await sleep(200)`), which had hidden
- * about thirty.
+ * about thirty; by the tenth no setup sleep was left either: every sleep still
+ * in the suite is a reviewed negative proof, a poll interval, a timeout cap or
+ * a scenario whose elapsed time is the point.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -21,6 +23,10 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   negative   sleep, then a check that nothing happened
  *   poll       the interval of a loop that exits on a condition or a deadline --
  *              already a condition wait, so not counted
+ *   cap        a timeout racing real work (Promise.race, or a Promise that also
+ *              resolves on an event) -- it bounds a wait, it is not one
+ *   scenario   the elapsed time is what is under test: a page.route handler
+ *              simulating a slow server, or `// sleep-is-the-scenario: <reason>`
  *   marked     `// sleep-proves-negative: <reason>` -- a reviewed negative proof
  *
  * RATCHET, NOT A CLIFF. The counts below are today's, and they may only go
@@ -37,7 +43,7 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
 const CEILING = {
   positive: 0,
   redundant: 0,
-  setup: 82,
+  setup: 0,
   negative: 55,
 };
 
@@ -97,11 +103,15 @@ test.describe('no new fixed sleeps (#1516)', () => {
         for (let i = 0; i < 30 && !(await p.isVisible('#d')); i++) await sleep(50);
         await p.click('#e');
         await sleep(200);
+        await p.route('**/x', async (route) => { await new Promise((r) => setTimeout(r, 500)); await route.continue(); });
+        await p.evaluate(() => Promise.race([Promise.resolve(), new Promise((r) => setTimeout(r, 3000))]));
+        // sleep-is-the-scenario: waits out a cooldown window
+        await p.waitForTimeout(5000);
       });
       // await p.waitForTimeout(999) in a comment is not a sleep
       const s = 'p.waitForTimeout(999)';
     `;
     expect(sleepsIn('fixture.spec.ts', src).map((s) => s.class))
-      .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup', 'poll', 'setup', 'poll', 'setup']);
+      .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup', 'poll', 'setup', 'poll', 'setup', 'scenario', 'cap', 'scenario']);
   });
 });

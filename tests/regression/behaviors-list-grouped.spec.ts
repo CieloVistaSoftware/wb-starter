@@ -137,10 +137,14 @@ test.describe('behaviors list is grouped (#995)', () => {
       input.focus();
       const hidden: string[] = [];
       for (let i = 0; i < 8; i++) {
+        const was = document.querySelector(`${LIST} ${ROW}[aria-current="true"]`);
         input.dispatchEvent(
           new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true })
         );
-        await new Promise((r) => setTimeout(r, 150));
+        // Until the selection moves (2s cap), not 150ms (#1516).
+        for (const end = performance.now() + 2000; document.querySelector(`${LIST} ${ROW}[aria-current="true"]`) === was && performance.now() < end;) {
+          await new Promise((r) => requestAnimationFrame(r));
+        }
         const cur = document.querySelector(`${LIST} ${ROW}[aria-current="true"]`) as HTMLElement | null;
         if (cur && cur.offsetParent === null) hidden.push(cur.textContent?.trim() ?? '(row)');
       }

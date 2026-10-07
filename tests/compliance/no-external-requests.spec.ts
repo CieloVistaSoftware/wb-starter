@@ -29,7 +29,8 @@ async function scrollThrough(page: Page): Promise<void> {
     const step = Math.max(200, Math.floor(window.innerHeight * 0.8));
     for (let y = 0; y <= document.documentElement.scrollHeight; y += step) {
       window.scrollTo(0, y);
-      await new Promise((r) => setTimeout(r, 50));
+      // Two frames per step for the lazy observer to see it (#1516: not 50ms).
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     }
     window.scrollTo(0, 0);
   });
@@ -62,7 +63,8 @@ const ROUTES: RouteCase[] = [
           .first();
         if (!(await row.waitFor({ state: 'visible', timeout: 5000 }).then(() => true, () => false))) continue;
         await row.click();
-        await page.waitForTimeout(400);
+        // The example has rendered once the live panel is no longer busy (#1516: not 400ms).
+        await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
         await settle(page);
         opened++;
       }

@@ -67,6 +67,7 @@ test('an authored <img x-img> that already failed is acted on when x-img attache
 
     // Longer than baseDelayMs (500ms), well short of checkTimeoutMs (4000ms):
     // a `_retry=` src here can only mean the element was read on attach.
+    // sleep-is-the-scenario: past baseDelayMs, short of checkTimeoutMs; the timing window is the scenario
     await new Promise((r) => setTimeout(r, 2500));
     return {
       ...preconditions,

@@ -37,6 +37,7 @@ async function renderAndCollect(page: Page, markup: string, waitMs: number) {
 
     const mod: any = await import('/src/core/wb-lazy.js');
     await (mod.default || mod.WB).scan(host, { eager: true });
+    // sleep-is-the-scenario: waits out the image retry budget each caller passes; a retry that was going to fail has failed
     await new Promise((r) => setTimeout(r, wait));
 
     const img = host.querySelector('img');

@@ -33,7 +33,9 @@ test.describe('dialog chrome is not page chrome (#874)', () => {
       document.body.appendChild(btn);
       await (window as any).WB.scan(btn.parentElement, { eager: true });
       btn.click();
-      await new Promise((r) => setTimeout(r, 50));
+      // Until the dialog is open (#1516: not 50ms).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      await until(() => !!document.querySelector('dialog[open]'));
       // Let any auto-inject pass that would reach the chrome finish first.
       await (window as any).WB.settled?.({ timeout: 5000 });
       const dialog = document.querySelector('dialog[open]');

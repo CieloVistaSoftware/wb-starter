@@ -26,8 +26,8 @@ test('ai-permutation-test: find schema with gaps, run all tests live, verify res
     await select.selectOption(schema);
     // Wait for processing to complete
     await expect(page.locator('#missing-card')).toBeVisible({ timeout: 10000 });
-    // Small pause for computation
-    await page.waitForTimeout(500);
+    // The computation has finished once the summary states a count (#1516: not 500ms).
+    await expect(page.locator('#missing-summary')).toHaveText(/Missing:\s*\d+/, { timeout: 10000 });
 
     const summaryText = await page.locator('#missing-summary').textContent() || '';
     console.log(`Schema "${schema}" summary: ${summaryText}`);

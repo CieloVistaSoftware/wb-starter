@@ -133,7 +133,8 @@ for (const { width, height, label } of VIEWPORTS) {
           bare.textContent = 'site chrome footer';
           document.body.appendChild(bare);
           if ((window as any).WB?.scan) await (window as any).WB.scan(bare, { eager: true });
-          await new Promise((r) => setTimeout(r, 300));
+          // Built once its work has called back (#1516: no fixed sleep).
+          await (window as any).WB.settled?.({ timeout: 10000 });
           const cls = bare.className;
           bare.remove();
           return cls;

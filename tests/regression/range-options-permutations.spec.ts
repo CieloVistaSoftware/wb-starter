@@ -115,8 +115,9 @@ async function render(page: Page, markup: string[]): Promise<Observed[]> {
   await page.evaluate(async () => {
     const el = document.getElementById('range-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(el, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(300);
 
   return page.evaluate(() => {
     const out: Observed[] = [];

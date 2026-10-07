@@ -33,8 +33,9 @@ async function inject(page: Page, html: string) {
     container.innerHTML = h;
     document.body.appendChild(container);
     await (window as any).WB.scan(container, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
-  await page.waitForTimeout(300);
 }
 
 test.describe('.x-header + badge attribute: no collision with the generic [badge] semantic property', () => {

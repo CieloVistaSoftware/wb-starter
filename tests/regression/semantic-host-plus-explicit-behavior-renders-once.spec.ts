@@ -103,7 +103,8 @@ test.describe('the same guard holds on the lazy runtime (#923)', () => {
       // container below the fold never initializes -- nothing would render and
       // the test would pass for the wrong reason.
       await (window as any).WB.scan(c, { eager: true });
-      await new Promise((r) => setTimeout(r, 500));
+      // Built once its work has called back (#1516: no fixed sleep).
+      await (window as any).WB.settled?.({ timeout: 10000 });
       const host = c.firstElementChild as HTMLElement;
       const t = host.getAttribute('title') || '';
       return Array.from(host.querySelectorAll('*'))
