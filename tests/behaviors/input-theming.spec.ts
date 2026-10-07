@@ -62,6 +62,14 @@ test.describe('Input theming follows the active theme', () => {
     // The lazy upgrade has run once WB settles (#1516: not 1200ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
     await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    // The upgrade brings the input's stylesheet as a <link> on first use, and
+    // settled() does not wait for it to load: until it has, the field is the
+    // browser's native white (CI, #1516). A loaded <link> has a sheet.
+    await page.waitForFunction(
+      () => [...document.querySelectorAll('link[rel="stylesheet"]')].every((l) => !!(l as HTMLLinkElement).sheet),
+      null,
+      { timeout: 10000 },
+    );
   });
 
   for (const theme of DARK_THEMES) {
