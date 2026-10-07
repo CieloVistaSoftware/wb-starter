@@ -46,7 +46,8 @@
           "label": "Guard",
           "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
         }
-      ]
+      ],
+      "seeIt": "Run npx playwright test tests/behaviors/input-theming.spec.ts --repeat-each=3. Before: Windows CI read the inputs in the dark and ocean themes as native white rgb(255, 255, 255). Now: every run reads the themed colour, because the check waits for the input&#39;s stylesheet to load."
     },
     {
       "version": "1.0.383",
@@ -83,7 +84,7 @@
           ]
         }
       ],
-      "seeIt": "On a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt;, run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
+      "seeIt": "Open a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt;, then run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
       "links": [
         {
           "label": "Code",
