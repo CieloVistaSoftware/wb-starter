@@ -37,7 +37,7 @@ const root = process.cwd();
 const REGISTER: Record<string, number> = {
   'src/core/events.js': 2,   // console.error %c styling: console output, which no theme reaches
   'src/core/theme.js': 5,
-  'src/core/x-devconsole.js': 34,
+  'src/core/x-devconsole.js': 34,   // a standalone script injected on ANY page, themes.css or not: tokens would not resolve there
   'src/wb-viewmodels/colorpicker.js': 1,
   'src/wb-viewmodels/effects.js': 15,
   'src/wb-viewmodels/semantics/inline.js': 2,
