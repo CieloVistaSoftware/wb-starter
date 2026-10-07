@@ -44,7 +44,7 @@ async function pageArrived(page: import('@playwright/test').Page): Promise<void>
   await page.evaluate(() => {
     const w = window as any;
     w.__mvArrived = false;
-    (async () => {
+    void (async () => {
       try {
         await document.fonts.ready;
         if (typeof w.WB?.settled === 'function') await w.WB.settled({ timeout: 10000 }).catch(() => {});
