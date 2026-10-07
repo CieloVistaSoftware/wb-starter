@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '../fixtures/offline';
+import { freezeClock, pointerTo } from '../base';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -181,8 +182,8 @@ test.describe('x-tooltip — delay and hideDelay', () => {
     await page.clock.install();
     await harness(page);
     const t = await trigger(page, 'content="d" delay="800"');
-    await t.hover();
-    await page.clock.pauseAt(await page.evaluate(() => Date.now()));
+    await freezeClock(page);
+    await pointerTo(page, t);                  // the 800ms starts at the frozen instant
     await page.clock.runFor(500);              // well short of 800ms
     await expect(page.locator(TIP), 'shown too early -> delay ignored').toHaveCount(0);
     await page.clock.runFor(500);              // past it

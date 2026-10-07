@@ -614,6 +614,41 @@ export async function waitForWB(page: Page): Promise<void> {
  * too; failure is reported separately as `x-error`. Assert on the outcome you
  * actually care about after this resolves.
  */
+/**
+ * Stop the page's installed fake clock (page.clock.install()) with no timer of
+ * interest pending yet, so a delay the test then starts runs from a known zero.
+ *
+ * `pauseAt(await page.evaluate(() => Date.now()))` raced: the clock kept
+ * running between the read and the pause, and under CI load the target was
+ * already past -- "Cannot fast-forward to the past" (#1516). So it pauses a
+ * little ahead, and further ahead if the round trip outran that. Call it
+ * BEFORE the action whose timer is under test: the fast-forward then fires
+ * nothing that matters.
+ */
+export async function freezeClock(page: Page): Promise<void> {
+  for (let ahead = 100; ; ahead *= 4) {
+    const now = await page.evaluate(() => Date.now());
+    try {
+      await page.clock.pauseAt(now + ahead);
+      return;
+    } catch (e) {
+      if (!/to the past/.test(String(e)) || ahead > 5000) throw e;
+    }
+  }
+}
+
+/**
+ * Move the pointer onto (or off) an element with one raw input event. Unlike
+ * locator.hover() it waits for no animation frame, so it works while the
+ * page's clock is frozen, and the element's enter/leave timers start at the
+ * frozen instant.
+ */
+export async function pointerTo(page: Page, locator: Locator): Promise<void> {
+  const box = await locator.first().boundingBox();
+  if (!box) throw new Error('pointerTo: the element has no box to point at');
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+}
+
 export async function elementReady(locator: Locator, timeoutMs = 15000): Promise<void> {
   await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
   await locator.first().evaluate(

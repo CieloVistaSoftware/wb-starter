@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { freezeClock, pointerTo } from '../base';
 
 /**
  * The 11 attributes that were declared, documented, shown in the showcase --
@@ -94,8 +95,8 @@ test.describe('R3: attributes that were declared and inert', () => {
     // Long hide-delay: still on screen shortly after the pointer leaves.
     await host.locator('#tt').hover();
     await expect(page.locator('.x-tooltip--visible')).toHaveCount(1, { timeout: 5000 });
-    await host.locator('#away').hover();
-    await page.clock.pauseAt(await page.evaluate(() => Date.now()));
+    await freezeClock(page);
+    await pointerTo(page, host.locator('#away')); // the hide timer starts at the frozen instant
     await page.clock.runFor(300);
     expect(
       await page.locator('.x-tooltip--visible').count(),

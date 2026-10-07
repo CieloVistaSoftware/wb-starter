@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { freezeClock, pointerTo } from '../base';
 
 /**
  * #283: <article> hover text was only ever wired to the NATIVE browser
@@ -67,8 +68,9 @@ test.describe('.x-card tooltip -- themed hover text (#283)', () => {
     await expect(card).not.toHaveAttribute('x-tooltip', /.+/);
     await expect(card).toHaveAttribute('title', 'Just a heading, also a native title attribute');
 
-    await card.hover();
-    await page.clock.pauseAt(await page.evaluate(() => Date.now()));
+    await card.scrollIntoViewIfNeeded();
+    await freezeClock(page);
+    await pointerTo(page, card);
     await page.clock.runFor(300); // past tooltip.js's 200ms show delay
     // Only a tooltip for THIS card counts. The fixture's other cards do have
     // themed tooltips, and the pointer can cross one on its way here (#1302).
