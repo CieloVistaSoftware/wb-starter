@@ -6,6 +6,48 @@
   ],
   "releases": [
     {
+      "version": "1.0.369",
+      "date": "2026-10-06",
+      "summary": "The Behaviors panel&#39;s own theme control (#776) and #1018&#39;s ruling that it shows only in fullscreen -- where the site header&#39;s switcher is off screen -- had no test, so either half could be lost silently. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1672\" target=\"_blank\" rel=\"noopener\">PR 1672</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/776\" target=\"_blank\" rel=\"noopener\">#776</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The live panel&#39;s theme control is guarded: hidden in normal view, shown in fullscreen</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/776\" target=\"_blank\" rel=\"noopener\">#776</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7cf8b05a62978d56128e3333eda714a0fb01f6ca\" target=\"_blank\" rel=\"noopener\"><code>7cf8b05</code></a>",
+          "issues": [
+            776
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/behaviors-fullscreen-theme-control.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/behaviors-fullscreen-theme-control.spec.ts</a> --project=regression. Before: no test named the control. Now: it checks the control is x-themecontrol built from the real theme list, hidden in normal view and visible in fullscreen; switching .behaviors-live__theme to display:block makes it fail at toBeHidden.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/333c26079cce632c3d6fdd1e401568ad97d6b44a\" target=\"_blank\" rel=\"noopener\"><code>333c260</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.368",
+      "date": "2026-10-06",
+      "summary": "Demo-layout-standards.spec.ts measured §13 spacing and content-panel padding after a fixed 800ms sleep, so it could measure pages whose behaviors had not finished building -- the reason #1064 recorded 3 visible failures where a settled page showed 50. The three sleeps are now a wait on the runtime&#39;s own settled signal (wbIdle) on every page that loads WB. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1671\" target=\"_blank\" rel=\"noopener\">PR 1671</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1064\" target=\"_blank\" rel=\"noopener\">#1064</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The demo layout check measures settled pages, not after a fixed 800ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1064\" target=\"_blank\" rel=\"noopener\">#1064</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1d7143ad698c0cec736c24d14f1f17e5d371a408\" target=\"_blank\" rel=\"noopener\"><code>1d7143a</code></a>",
+          "issues": [
+            1064
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/demo-layout-standards.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/demo-layout-standards.spec.ts</a> --project=compliance. Before: three page.waitForTimeout(800) calls before each measurement. Now: none; 120 passed on settled pages (the 50 pages #1064 listed now meet the rule), and a probe page with a 2px-padded text panel still fails with &quot;has 2px padding on its tightest side &lt; 16px&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9bd70eff7e36feb6d047b01dcbcce45e026171c8\" target=\"_blank\" rel=\"noopener\"><code>9bd70ef</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.367",
       "date": "2026-10-06",
       "summary": "Converting dropdown-examples&#39; sleeps to until() left four `sleep` helpers and one `until` helper defined but unused, five new no-unused-vars lint warnings; they are removed, and the counts and the spec are unchanged. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1664\" target=\"_blank\" rel=\"noopener\">PR 1664</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
