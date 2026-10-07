@@ -15,7 +15,12 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * reviewed every remaining negative: each is now marked with its reason, made a
  * condition wait, or found to be a scenario. Every sleep still in the suite is
  * a marked negative proof, a poll interval, a timeout cap or a scenario whose
- * elapsed time is the point -- and no class may grow back.
+ * elapsed time is the point -- and no class may grow back. The twelfth made
+ * those reactive where a signal exists: page.clock drives the page's own
+ * timers (cooldowns, show/hide delays, retry windows), route handlers hold on
+ * a gate the test opens instead of a fixed delay, poll loops wait on frames or
+ * events, and a negative proof waits for the step that would have done the
+ * wrong thing. 74 sleeps became 33, and every class now has a ceiling.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -41,12 +46,18 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   - a retrying matcher: `await expect(locator).toHaveClass(/is-open/)`
  *   - `await expect.poll(read).toBe(true)`, where read() asks the browser for the state
  *   - `elementReady(locator)` / `buildInView(locator)` in tests/base.ts
+ *   - `page.clock.install()` then `runFor(ms)` for a delay the page's own timer sets
+ *   - a gate promise a `page.route` handler awaits, opened once the test is ready
  */
 const CEILING = {
   positive: 0,
   redundant: 0,
   setup: 0,
   negative: 0,
+  poll: 3,
+  cap: 5,
+  scenario: 4,
+  marked: 21,
 };
 
 test.describe('no new fixed sleeps (#1516)', () => {
@@ -56,7 +67,7 @@ test.describe('no new fixed sleeps (#1516)', () => {
   test('the scan reads the suite', () => {
     // An audit that reads nothing meets every ceiling.
     expect(specFiles(process.cwd()).length, 'spec files found').toBeGreaterThan(500);
-    expect(sleeps.length, 'sleeps found').toBeGreaterThan(50);
+    expect(sleeps.length, 'sleeps found').toBeGreaterThan(0);
   });
 
   for (const [cls, ceiling] of Object.entries(CEILING)) {

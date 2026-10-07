@@ -152,8 +152,12 @@ async function renderVariants(page: Page, u: (file: string) => string, extra = '
   // INSTANT abort fails the load before audio.js has attached its 'error'
   // listener, and that early failure is currently reported by nothing at all
   // -- a separate defect, traced while writing this spec, not what #1115 is.
+  // So the failure is held until the scan has settled and every listener is
+  // attached (#1516): a gate, not a 1500ms guess at how long that takes.
+  let openGate!: () => void;
+  const listenersAttached = new Promise<void>((r) => { openGate = r; });
   const slowThenUnreachable = async (route: import('@playwright/test').Route) => {
-    await new Promise((r) => setTimeout(r, 1500));
+    await listenersAttached;
     await route.abort('internetdisconnected').catch(() => {});
   };
   await page.route(`${REMOTE}/**`, slowThenUnreachable);
@@ -184,7 +188,9 @@ async function renderVariants(page: Page, u: (file: string) => string, extra = '
     container.innerHTML = markup;
     document.body.appendChild(container);
     await (window as any).WB.scan(container, { eager: true });
+    await (window as any).WB.settled?.({ timeout: 10000 });
   }, html);
+  openGate();
 
   return observed;
 }

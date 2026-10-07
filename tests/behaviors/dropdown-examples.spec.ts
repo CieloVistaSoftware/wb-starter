@@ -63,7 +63,6 @@ async function dropdownVariants(page: Page): Promise<string[]> {
 /** Render the nth x-dropdown row and report what its example actually built. */
 async function renderNth(page: Page, index: number) {
   return page.evaluate(async (i: number) => {
-    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
     // Wait for the state the next read needs, a frame at a time (#1516). If it
     // never comes, the read after it fails the test, as the old sleep would have.
     const until = async (ok: () => boolean, ms = 5000) => {
@@ -81,8 +80,11 @@ async function renderNth(page: Page, index: number) {
     const items = [...menu.querySelectorAll('.x-dropdown__item')] as HTMLElement[];
     const imgs = [...menu.querySelectorAll('img')] as HTMLImageElement[];
 
-    // Wait for the avatars rather than racing them.
-    for (let attempt = 0; attempt < 20 && imgs.some((im) => !im.complete); attempt++) await sleep(100);
+    // Wait for the avatars' own load/error events rather than racing them (#1516).
+    await Promise.all(imgs.filter((im) => !im.complete).map((im) => new Promise((r) => {
+      im.addEventListener('load', r, { once: true });
+      im.addEventListener('error', r, { once: true });
+    })));
 
     const trigger = (root.querySelector('.x-dropdown__trigger') || root) as HTMLElement;
     const variant = rows[i].getAttribute('data-variant') || '';
@@ -184,7 +186,6 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
       await openShowcase(page);
 
       const geo = await page.evaluate(async () => {
-        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
         const rows = [...document.querySelectorAll('.behaviors-search-results__row')]
           .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
         // bottom-* opens downward, toward the code panel — the failing direction.
@@ -202,7 +203,7 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         const closedHeight = Math.round(closedRect.height);
         const closedBottom = Math.round(closedRect.bottom);
         trigger.click();
-        for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
+        for (const end = performance.now() + 1500; getComputedStyle(menu).display === 'none' && performance.now() < end;) await new Promise((r) => requestAnimationFrame(r));
         // Wait for the stage's fit to have RUN, not a fixed 200ms: on a loaded
         // Windows runner that sleep ended before the rAF fit (4.0.6 CI). The fit
         // is done when the open menu ends inside the stage and two frames agree.
@@ -247,7 +248,6 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
     await openShowcase(page);
 
     const heights = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       // Wait for the state the next read needs, a frame at a time (#1516). If it
       // never comes, the read after it fails the test, as the old sleep would have.
       const until = async (ok: () => boolean, ms = 5000) => {
@@ -263,7 +263,7 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
       const root = stage.querySelector('.x-dropdown') as HTMLElement;
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
       (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();
-      for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
+      for (const end = performance.now() + 1500; getComputedStyle(menu).display === 'none' && performance.now() < end;) await new Promise((r) => requestAnimationFrame(r));
       // The stage has grown to fit the open menu once its height holds for two frames.
       let lastH = -1;
       let same = 0;

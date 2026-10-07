@@ -24,7 +24,8 @@ test.describe('Playground: 50 x-* behaviors example set', () => {
     let lastHeight = 0;
     for (let i = 0; i < 20; i++) {
       await page.mouse.wheel(0, 600);
-      await page.waitForTimeout(150);
+      // What the scroll brought into view has built (#1516: not 150ms).
+      await page.evaluate(async () => { await (window as any).WB?.settled?.({ timeout: 5000 }).catch(() => {}); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
       const height = await page.evaluate(() => document.documentElement.scrollHeight);
       if (height === lastHeight && i > 2) break;
       lastHeight = height;

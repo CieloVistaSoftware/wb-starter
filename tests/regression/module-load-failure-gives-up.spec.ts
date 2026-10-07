@@ -29,6 +29,9 @@ import { test, expect } from '../fixtures/offline';
 test.use({ serviceWorkers: 'block' });
 
 test('a permanently failing module is not retried forever', async ({ page }) => {
+  // The cooldown reads Date.now(); a fake clock lets the test step past each
+  // 5s window instantly instead of sleeping ~21s in real time (#1516).
+  await page.clock.install();
   await page.goto('/?page=demos');
   await page.waitForFunction(() => (window as any).WB, null, { timeout: 20000 });
 
@@ -43,23 +46,20 @@ test('a permanently failing module is not retried forever', async ({ page }) => 
     const wb = (window as any).WB;
     // Ask for it repeatedly, the way a page does as elements scan in.
     for (let i = 0; i < 3; i++) {
+      // Back to back, all inside one cooldown window: each awaits the shared failure.
       try { await wb.inject(document.body, 'does-not-exist-module'); } catch { /* expected */ }
-      // sleep-is-the-scenario: repeated requests inside one cooldown window; the spacing is the scenario
-      await new Promise((r) => setTimeout(r, 100));
     }
   });
 
   const early = attempts.length;
 
-  // Wait past several cooldown windows (5s each) and keep asking.
-  await page.evaluate(async () => {
-    const wb = (window as any).WB;
-    for (let i = 0; i < 4; i++) {
-      // sleep-is-the-scenario: waits past each 5s cooldown window; the cooldown is what is under test
-      await new Promise((r) => setTimeout(r, 5200));
-      try { await wb.inject(document.body, 'does-not-exist-module'); } catch { /* expected */ }
-    }
-  });
+  // Step past several cooldown windows (5s each) on the fake clock and keep asking.
+  for (let i = 0; i < 4; i++) {
+    await page.clock.fastForward(5200);
+    await page.evaluate(async () => {
+      try { await (window as any).WB.inject(document.body, 'does-not-exist-module'); } catch { /* expected */ }
+    });
+  }
 
   expect(
     attempts.length,

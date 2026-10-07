@@ -36,6 +36,9 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // (4s check + exponential 500/1000/2000/4000ms backoff ≈ 27.5s total)
     // and PERMANENTLY hides the element -- no observer ever retries it
     // later even once the user does scroll to it.
+    // The retry clock runs on the page's timers; a fake clock steps past the old
+    // give-up window instantly instead of sleeping 28s for real (#1516).
+    await page.clock.install();
     await page.goto('/tests/fixtures/cards-permutation-matrix.html');
 
     const section = page.locator('#cardimage-image-card');
@@ -62,8 +65,7 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // 4s check + exponential 500/1000/2000/4000ms backoff) without
     // scrolling. The fix gates the retry clock on real intersection, so
     // this must NOT have given up yet.
-    // sleep-is-the-scenario: the retry clock must not run while off-screen; 28s is longer than the old give-up window
-    await page.waitForTimeout(28000);
+    await page.clock.runFor(28000);
     await expect(firstCard.locator('.x-media-load-failed'), 'must not give up while still off-screen').toHaveCount(0);
 
     // Now scroll to it — a real user looking at this section, which the

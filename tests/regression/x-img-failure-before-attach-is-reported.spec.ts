@@ -65,10 +65,12 @@ test('an authored <img x-img> that already failed is acted on when x-img attache
     const mod: any = await import('/src/core/wb-lazy.js');
     await (mod.default || mod.WB).scan(host, { eager: true });
 
-    // Longer than baseDelayMs (500ms), well short of checkTimeoutMs (4000ms):
-    // a `_retry=` src here can only mean the element was read on attach.
-    // sleep-is-the-scenario: past baseDelayMs, short of checkTimeoutMs; the timing window is the scenario
-    await new Promise((r) => setTimeout(r, 2500));
+    // A `_retry=` src before checkTimeoutMs (4000ms) can only mean the element
+    // was read on attach. Watched every frame and stopped as soon as it shows
+    // (#1516); 3500ms is the end of that window, kept clear of the 4s clock.
+    for (const end = performance.now() + 3500; !image.src.includes('_retry=') && performance.now() < end;) {
+      await new Promise((r) => requestAnimationFrame(r));
+    }
     return {
       ...preconditions,
       behaviorAttached: image.classList.contains('x-img'),
