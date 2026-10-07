@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.394",
+      "date": "2026-10-07",
+      "summary": "The coloured left edge of a success, danger, warning, info or primary card was held with !important (5 in card.css) so hover could not repaint it, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/behaviors.css\" target=\"_blank\" rel=\"noopener\">pages/behaviors.css</a> kept an !important rule for a data-behaviors-search-hidden attribute that nothing sets any more. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1701\" target=\"_blank\" rel=\"noopener\">PR 1701</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Card accent and behaviors search-hidden without !important</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/bf0c2c2720ce2bb4502f2070ee8a5cdb08970118\" target=\"_blank\" rel=\"noopener\"><code>bf0c2c2</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;article x-card variant=&quot;success&quot; featured title=&quot;Zed&quot;&gt;Body&lt;/article&gt;, then hover it and add class x-card--active. Before: the green 4px left edge came from !important, and the gate&#39;s register allowed 23. Now: the same green 4px edge in every state comes from --x-card-accent, and the register allows 17.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ff61b8c1aa07c0490a51db39248b9e172bca0d25\" target=\"_blank\" rel=\"noopener\"><code>ff61b8c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.393",
       "date": "2026-10-07",
       "summary": "Every remaining &quot;sleep-proves-negative&quot; now waits for the point after which the unwanted thing would already have happened, then asserts. A click or keystroke on the Behaviors page waits for the render it started (aria-busy clears on the newest one). A log POST that must not happen waits for logError&#39;s own &quot;[ErrorLogger]&quot; line, which prints only after its POST is answered. The stale navigation waits for its own navigateTo() promise. A disabled x-button is checked with the Navigation API&#39;s navigate event, which fires synchronously on location.href. The wheel fallback, retry and clock timers run on page.clock. A request that must never go out is checked after networkBarrier(), a new helper in <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a>: one marker request that every earlier request precedes. The cosmic nebula is checked as &quot;nothing animates its ::before&quot; instead of watched for 1.5s. The marked ceiling drops to 0. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1700\" target=\"_blank\" rel=\"noopener\">PR 1700</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
