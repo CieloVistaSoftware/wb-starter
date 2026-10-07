@@ -122,7 +122,7 @@ test.describe('#1118 the Issues activity loader outlives its own page', () => {
     // The site nav's Releases link (config/site.json navigationMenu). There is
     // no "whats-new" entry in the nav any more, which is the second reason this
     // never ran: the link it waited for does not exist.
-    const link = page.locator(`.nav__item[href="${pagePath(NAV_TARGET)}"]`).first();
+    const link = page.locator(`#siteNav .x-sidebar__item[href="${pagePath(NAV_TARGET)}"]`).first();
     await expect(link, `no nav link to ${NAV_TARGET}`).toBeVisible({ timeout: 10_000 });
     await link.click();
 

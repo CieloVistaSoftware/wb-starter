@@ -72,7 +72,7 @@ test.describe('Interaction Performance', () => {
 
   test('Nav toggle should collapse in under 100ms', async ({ page }) => {
     await page.waitForFunction(() => Boolean((window as any).WBSite?.currentPage));
-    const ms = await timeInteraction(page, { trigger: '.nav__toggle', doneSelector: '.site__nav.site__nav--collapsed' });
+    const ms = await timeInteraction(page, { trigger: '.nav__toggle', doneSelector: '.site__nav.x-sidebar--collapsed' });
     logPerfResult({ category: 'interaction', name: 'Nav Toggle', value: ms, unit: 'ms', threshold: 100 });
     expect(ms, 'click to collapsed nav, measured in the page').toBeLessThan(100);
   });
