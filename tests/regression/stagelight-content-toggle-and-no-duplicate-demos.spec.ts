@@ -55,7 +55,9 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
     await page.waitForFunction(() => !!document.querySelector('.x-stagelight--spotlight'), null, {
       timeout: 30000,
     });
-    await page.waitForTimeout(1500);
+    // The spotlight's overlay is built once WB settles (#1516: not 1500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const result = await page.evaluate(async () => {
       const host = document.querySelector('.x-stagelight--spotlight') as HTMLElement & {
@@ -68,13 +70,15 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
       const onState = host.wbStageLight.isOn;
 
       host.wbStageLight.toggle();
-      await new Promise((r) => setTimeout(r, 80));
+      // One frame, not 80ms (#1516): toggle() sets the overlay's display itself.
+      await new Promise((r) => requestAnimationFrame(r));
       const offDisplay = overlay();
       const offState = host.wbStageLight.isOn;
       const textWhileOff = (host.textContent ?? '').trim();
 
       host.wbStageLight.toggle();
-      await new Promise((r) => setTimeout(r, 80));
+      // One frame, not 80ms (#1516): toggle() sets the overlay's display itself.
+      await new Promise((r) => requestAnimationFrame(r));
       const backOnDisplay = overlay();
 
       return {

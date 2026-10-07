@@ -32,15 +32,12 @@ async function renderWithWB(page, bodyHtml: string, initOptions = '{ autoInject:
     <script type="module">
       import WB from '/src/core/wb.js';
       window.__wbDone = false;
-      WB.init(${initOptions}).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+      WB.init(${initOptions}).then(() => WB.scan(document.body)).then(() => WB.settled({ timeout: 10000 }).catch(() => {})).then(() => { window.__wbDone = true; });
     </script>
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 });
-  // Settle time so async behavior-processing that completes after scan()'s
-  // own promise resolves (e.g. schema/behavior module loading) has landed
-  // before assertions run — matches the wait used in
-  // tests/compliance/autoinject-default-false.spec.ts for the same reason.
-  await page.waitForTimeout(800);
+  // __wbDone is set only after WB.settled(), which waits for each lazily observed
+  // element's first IntersectionObserver report (#1516: no fixed 800ms settle).
 }
 
 test.describe('Auto-Injection Compliance', () => {

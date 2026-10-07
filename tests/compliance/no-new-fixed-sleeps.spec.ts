@@ -37,8 +37,8 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
 const CEILING = {
   positive: 0,
   redundant: 0,
-  setup: 155,
-  negative: 58,
+  setup: 82,
+  negative: 55,
 };
 
 test.describe('no new fixed sleeps (#1516)', () => {

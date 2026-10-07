@@ -47,8 +47,9 @@ async function render(page: Page) {
   await page.evaluate(async () => {
     const el = document.getElementById('acc-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(el, { eager: true });
+    // Built once its work has called back (#1516: not 250ms).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(250);
 }
 
 /** Which panels are open, by index. */
@@ -78,7 +79,13 @@ async function clickHeader(page: Page, i: number) {
     return true;
   }, i);
   expect(clicked, `no clickable header at index ${i}`).toBe(true);
-  await page.waitForTimeout(250);
+  // The panel has opened or closed, animation included (#1516: not 250ms).
+  await page.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await Promise.all(document.getAnimations()
+      .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+      .map((a) => a.finished.catch(() => {})));
+  });
 }
 
 test.describe('x-accordion with <details> children', () => {

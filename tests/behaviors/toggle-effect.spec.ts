@@ -29,8 +29,9 @@ async function setup(page: Page, html: string): Promise<void> {
   // itself. x-demo-width-and-toggle.spec.ts uses the same fix.
   await page.evaluate(async () => {
     await (window as any).WB.scan(document.getElementById('toggle-effect-test-area'), { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(100);
 }
 
 test.describe('[x-toggle] behavior effects', () => {

@@ -11,17 +11,22 @@ test.describe('Side nav stays at the current scroll location', () => {
   test('nav is sticky and pinned while .site__body scrolls', async ({ page }) => {
     await page.goto(`${BASE}/?page=themes`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.site__nav', { timeout: 25000 });
-    await page.waitForTimeout(1500);
+    // The page is built once its content is in and WB settles (#1516: not
+    // 1500ms). WB can settle before the router has inserted the page, which
+    // left .site__body with nothing to scroll.
+    await page.waitForSelector('#mainPage-themes', { timeout: 25000 });
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const r = await page.evaluate(async () => {
       const nav = document.querySelector('.site__nav') as HTMLElement;
       const body = document.querySelector('.site__body') as HTMLElement;
       const navTop = () => Math.round(nav.getBoundingClientRect().top);
       body.scrollTop = 0;
-      await new Promise((r) => setTimeout(r, 60));
+      await new Promise((r) => requestAnimationFrame(r));
       const t0 = navTop();
       body.scrollTop = 800;
-      await new Promise((r) => setTimeout(r, 80));
+      await new Promise((r) => requestAnimationFrame(r));
       const t800 = navTop();
       return {
         position: getComputedStyle(nav).position,
