@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.375",
+      "date": "2026-10-06",
+      "summary": "The input-theming test could read the inputs before a theme switch had recoloured them, failing with native white in the dark theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1680\" target=\"_blank\" rel=\"noopener\">PR 1680</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Input theming polls until the input has changed colour ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/086107d3a72f916cace44e88face7098cbe5243f\" target=\"_blank\" rel=\"noopener\"><code>086107d</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Clear !important from five page stylesheets; delete orphaned components.css</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cb117ef2b1431fe05a0f7704c9d4795a7b54f89f\" target=\"_blank\" rel=\"noopener\"><code>cb117ef</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> --repeat-each=3. Before: CI failed &quot;input bg did not change with theme (stuck at rgb(255, 255, 255))&quot;. Now: 24 of 24 pass, each reading once the colour has changed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e7b9283b07f8aeb78a031467bb5e12167cd421bc\" target=\"_blank\" rel=\"noopener\"><code>e7b9283</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.374",
       "date": "2026-10-06",
       "summary": "Eleven behavior and card specs that slept 100-1000ms after WB.scan now wait for WB.settled (x-button-effect also for its colour transitions, which settle alone read mid-fade), four wb.js fixtures chain WB.settled before setting __wbDone so their fixed 800ms after it goes, and the scanner no longer counts a helper like audio-eq&#39;s waitForSettle(ms) -- which resolves on media events and only uses a timer as its cap -- as a sleep; the ceilings drop to setup 82 and negative 55. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1679\" target=\"_blank\" rel=\"noopener\">PR 1679</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
