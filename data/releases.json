@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.382",
+      "date": "2026-10-06",
+      "summary": "Sidebar() read items and active with getAttribute (plain spelling only), so &lt;nav x-sidebar data-items=&quot;...&quot;&gt; rendered an empty nav; and its observer watched only the data-* spellings and then re-read the plain one, so changing active, items or collapsed after load never moved the highlight. All three now go through read-attr.js, at mount and on a change to either spelling. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1683\" target=\"_blank\" rel=\"noopener\">#1683</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1689\" target=\"_blank\" rel=\"noopener\">#1689</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-sidebar reads data-items, and follows active/items/collapsed after load</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1683\" target=\"_blank\" rel=\"noopener\">#1683</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1689\" target=\"_blank\" rel=\"noopener\">#1689</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/13bdc52ded20be1be69bc8ace736daba0e8c9378\" target=\"_blank\" rel=\"noopener\"><code>13bdc52</code></a>",
+          "issues": [
+            1683,
+            1689
+          ]
+        }
+      ],
+      "seeIt": "On a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt;, run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/13bdc52ded20be1be69bc8ace736daba0e8c9378\" target=\"_blank\" rel=\"noopener\"><code>13bdc52</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.381",
       "date": "2026-10-06",
       "summary": "The themes and behaviors pages forced their phone layouts with !important where plain rules already won. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1687\" target=\"_blank\" rel=\"noopener\">PR 1687</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
