@@ -16,6 +16,7 @@
     "zoom": {
       "type": "boolean",
       "description": "Clicking the image opens it at full size. Bare attribute.",
+      "demoNote": "Click the image to see it open full size.",
       "default": false
     },
     "lightbox": {
