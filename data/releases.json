@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.388",
+      "date": "2026-10-07",
+      "summary": "Src/wb-viewmodels/demo-docmap.js mapped 18 behaviors to doc paths under /docs/components/, a folder that no longer exists, so every one was a 404. demo.js imported the map and never used it. It is removed, and a new check fails whenever code in src/ names a docs/*.md file that does not exist. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1685\" target=\"_blank\" rel=\"noopener\">#1685</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1693\" target=\"_blank\" rel=\"noopener\">#1693</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Remove demo-docmap.js -- 18 doc paths that all 404, imported and never read</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1685\" target=\"_blank\" rel=\"noopener\">#1685</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1693\" target=\"_blank\" rel=\"noopener\">#1693</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/10e5416bbbcecb27ceca5c945f2c47760dabd5fe\" target=\"_blank\" rel=\"noopener\"><code>10e5416</code></a>",
+          "issues": [
+            1685,
+            1693
+          ]
+        }
+      ],
+      "seeIt": "Search src/ for WB_DOC_MAP or demo-docmap. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-viewmodels/demo-docmap.js\" target=\"_blank\" rel=\"noopener\">src/wb-viewmodels/demo-docmap.js</a> listed 18 doc paths under /docs/components/, all 404, imported by demo.js and never read. Now: the file and its import are gone, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/src-doc-paths-exist.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/src-doc-paths-exist.spec.ts</a> fails on any docs/*.md path in src/ code that does not exist (it reported those 18 before this change).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/10e5416bbbcecb27ceca5c945f2c47760dabd5fe\" target=\"_blank\" rel=\"noopener\"><code>10e5416</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.387",
       "date": "2026-10-07",
       "summary": "On CI, r3-inert-attributes failed with &quot;clock.pauseAt: Cannot fast-forward to the past&quot;. The three tooltip specs I put on page.clock read the page&#39;s Date.now() and then paused at it, but the installed clock keeps running between the read and the pause, so under load the target was already behind. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a> gets freezeClock(), which pauses a little ahead and further ahead if the round trip outran it, and pointerTo(), one raw mouse move that needs no animation frame. Each spec now freezes first and then moves the pointer, so the show or hide delay starts at the frozen instant and runFor() steps exactly to each side of it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1688\" target=\"_blank\" rel=\"noopener\">PR 1688</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
