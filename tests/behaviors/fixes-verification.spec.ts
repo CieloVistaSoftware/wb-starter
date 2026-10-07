@@ -295,6 +295,7 @@ test.describe('Fix Verification Tests', () => {
     });
 
     // Wait a bit for scripts to run
+    // sleep-proves-negative: no SyntaxError may be thrown as scripts run; an error that never comes fires no event
     await page.waitForTimeout(1000);
 
     // Should be no syntax errors

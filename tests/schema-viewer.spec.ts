@@ -49,8 +49,7 @@ test.describe('Schema Viewer Rendering Tests', () => {
       // Select the schema
       await page.selectOption('#schemaSelector', { label: schemaName.charAt(0).toUpperCase() + schemaName.slice(1) });
 
-      // Wait for the preview to update
-      await page.waitForTimeout(2000); // Give time for async loading
+      // No sleep (#1516): the retrying matchers below wait for the preview to fill.
 
       // Check that preview panel has content
       const previewPanel = page.locator('#previewPanel');

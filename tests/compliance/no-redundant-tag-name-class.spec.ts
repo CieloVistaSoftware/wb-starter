@@ -20,7 +20,8 @@ for (const file of FILES) {
   test(`${file}: no <wb-*> element carries a class matching its own tag name`, async ({ page }) => {
     const urlPath = '/' + file.replace(/\\/g, '/');
     await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(800); // settle lazy/eager scan
+    // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 
     const violations = await page.evaluate(() => {
       const problems: string[] = [];

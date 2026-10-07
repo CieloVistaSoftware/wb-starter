@@ -47,7 +47,9 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
   test('no generated custom element on interactive.html has zero size', async ({ page }) => {
     await page.goto('/demos/site/interactive.html');
     await page.waitForSelector('[x-demo]', { timeout: 10_000 });
-    await page.waitForTimeout(1000); // let eager scan finish enhancing everything
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const invisible = await page.evaluate(() => {
       // Only check elements generated INSIDE a <div x-demo> grid -- those are

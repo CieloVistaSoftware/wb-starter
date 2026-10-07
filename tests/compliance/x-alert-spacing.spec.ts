@@ -26,7 +26,8 @@ test.describe('[x-alert] (x-alert) keeps >=1rem text-edge padding and inter-aler
     test(`${file}: [x-alert] padding and gaps`, async ({ page }) => {
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
-      await page.waitForTimeout(800);
+      // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
+      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 
       const result = await page.evaluate(({ minPad, minGap }) => {
         const alerts = Array.from(
