@@ -111,7 +111,7 @@ for (const token of ASSET_ROWS) {
         const el = document.querySelector('#behaviors-live-example > *');
         return !!el && el !== (window as any).__subpathPrevious && el.hasAttribute('x-ready');
       }, null, { timeout: 15_000 }).catch(() => {});
-      await settlePage(page, { timeout: 15_000 }).catch(() => {});
+      await settlePage(page, { timeout: 15_000, ifPresent: true }).catch(() => {});
 
       // Nothing rendered anywhere may point at the ORIGIN root.
       const rootAbsolute = await page.evaluate((prefix) => {

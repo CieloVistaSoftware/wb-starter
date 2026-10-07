@@ -155,7 +155,7 @@ test.describe('#1114 — no cardfile example contradicts its own filename', () =
       await page.evaluate((idx) => {
         (document.querySelectorAll('.behaviors-search-results__row')[idx] as HTMLElement)?.click();
       }, i);
-      await settlePage(page, { timeout: 5000 }).catch(() => undefined);
+      await settlePage(page, { timeout: 5000, ifPresent: true }).catch(() => undefined);
 
       const seen = await page.evaluate(() => {
         const card = document.querySelector('#behaviors-live-stage [x-cardfile]');

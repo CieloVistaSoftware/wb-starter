@@ -234,7 +234,7 @@ test.describe('Site Generation — Phase 4', () => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
         // Startup errors are thrown by the time WB settles (#1516: not 500ms).
-        await settlePage(page, { timeout: 15000 }).catch(() => {});
+        await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
 
         const critical = errors.filter(e =>
           !e.includes('favicon') &&

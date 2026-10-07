@@ -28,7 +28,7 @@ test.describe('[x-alert] (x-alert) keeps >=1rem text-edge padding and inter-aler
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
       // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-      await settlePage(page, { timeout: 15000 }).catch(() => {});
+      await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
 
       const result = await page.evaluate(({ minPad, minGap }) => {
         const alerts = Array.from(

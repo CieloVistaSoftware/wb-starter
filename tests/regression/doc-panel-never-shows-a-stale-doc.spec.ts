@@ -50,7 +50,7 @@ test('a slow doc never lands under a behavior picked after it (#1488)', async ({
 
   // Let the slow doc arrive, then give its (stale) render every chance to land.
   await expect.poll(() => released, { timeout: 10_000 }).toBe(true);
-  await settlePage(page, { timeout: 10_000 }).catch(() => {});
+  await settlePage(page, { timeout: 10_000, ifPresent: true }).catch(() => {});
 
   const body = page.locator('#behaviors-live-doc-body');
   await expect(body, 'the panel shows x-toast, not nothing').not.toHaveText('');

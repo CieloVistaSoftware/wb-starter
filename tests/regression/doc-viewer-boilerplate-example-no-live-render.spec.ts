@@ -30,7 +30,7 @@ test.describe('Full-document boilerplate examples are never auto-live-rendered',
     await page.goto('/public/doc-viewer.html?file=docs%2FV3-GUIDE.md', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content', { timeout: 15000 });
     // Everything that could 404 or throw has run once WB settles (#1516: not 2000ms).
-    await settlePage(page, { timeout: 15000 }).catch(() => {});
+    await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
 
     expect(failed404s, `unexpected 404/failed requests: ${failed404s.join(', ')}`).toEqual([]);
     expect(errors, `unexpected page errors: ${errors.join(', ')}`).toEqual([]);

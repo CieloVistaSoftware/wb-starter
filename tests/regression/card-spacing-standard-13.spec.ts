@@ -39,7 +39,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-    await settlePage(page, { timeout: 15000 }).catch(() => {});
+    await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
     expect(errors).toHaveLength(0);
   });
 

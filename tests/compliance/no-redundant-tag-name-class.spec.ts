@@ -22,7 +22,7 @@ for (const file of FILES) {
     const urlPath = '/' + file.replace(/\\/g, '/');
     await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
     // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-    await settlePage(page, { timeout: 15000 }).catch(() => {});
+    await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
 
     const violations = await page.evaluate(() => {
       const problems: string[] = [];

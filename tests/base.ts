@@ -837,10 +837,16 @@ export async function wbIdle(
  * changed URL or a second failure fails, with that evidence in the message.
  *
  * Waits for `WB.settled` to exist first: a page whose runtime has not loaded
- * yet has nothing to ask. `whenIdle` is the same call (injection-tracker.js).
+ * yet has nothing to ask. With `{ ifPresent: true }` a page that has no WB at
+ * all returns at once instead. `whenIdle` is the same call (injection-tracker.js).
  */
-export async function settlePage(page: Page, opts: { timeout?: number } = {}): Promise<void> {
+export async function settlePage(page: Page, opts: { timeout?: number; ifPresent?: boolean } = {}): Promise<void> {
   const timeout = opts.timeout ?? 15000;
+  // `ifPresent`: a page that never boots WB (demos/index.html, a plain doc) has
+  // nothing to settle. The specs that loop over every page used
+  // `WB?.settled?.()`, which skipped such a page at once; waiting 15s for a WB
+  // that never comes ate the whole test budget (#1702 CI, all-demos-smoke).
+  if (opts.ifPresent && !(await page.evaluate(() => typeof (window as any).WB?.settled === 'function'))) return;
   await page.waitForFunction(
     () => typeof (window as any).WB?.settled === 'function',
     undefined,

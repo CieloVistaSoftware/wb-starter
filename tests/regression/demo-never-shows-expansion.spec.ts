@@ -84,7 +84,7 @@ test.describe('the demo source panel never shows the expansion (#1003)', () => {
       await until(() => !!(host.querySelector('pre code')?.textContent || '').trim(), 10000);
       (window as any).__wb961Host = host;
     });
-    await settlePage(page, { timeout: 10000 }).catch(() => {});
+    await settlePage(page, { timeout: 10000, ifPresent: true }).catch(() => {});
 
     const result = await page.evaluate(() => {
       const host = (window as any).__wb961Host as HTMLElement;

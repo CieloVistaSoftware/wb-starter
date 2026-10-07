@@ -66,7 +66,7 @@ test.describe('#724 — the site boots exactly once', () => {
       (window as any).__wb961Warnings = warnings;
       (window as any).__wb961OrigWarn = origWarn;
     });
-    await settlePage(page, { timeout: 10000 }).catch(() => {});
+    await settlePage(page, { timeout: 10000, ifPresent: true }).catch(() => {});
 
     const result = await page.evaluate(async () => {
       const warnings = (window as any).__wb961Warnings as string[];

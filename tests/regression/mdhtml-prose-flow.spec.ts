@@ -33,7 +33,7 @@ async function gotoDoc(page) {
   }, { timeout: 15000 });
   // The async wb:mdhtml:loaded post-processing has run once WB settles (#1516: not 300ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 5000 }).catch(() => {});
-  await settlePage(page, { timeout: 15000 }).catch(() => {});
+  await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
 }
 
 test.describe('mdhtml: prose flows to container width (#471)', () => {

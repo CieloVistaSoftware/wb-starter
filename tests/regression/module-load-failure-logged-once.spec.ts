@@ -106,7 +106,7 @@ async function render(page: Page, body: string, script: string) {
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 20000 });
   // Let the per-element catch blocks (and their async error-log POSTs) settle.
-  await settlePage(page, { timeout: 15000 }).catch(() => {});
+  await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
   // sleep-proves-negative: the checks assert exactly ONE logged error; a duplicate POST that correctly never arrives fires no event
   await page.waitForTimeout(1500);
 }
