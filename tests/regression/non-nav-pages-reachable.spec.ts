@@ -113,9 +113,10 @@ test.describe('#725 — a page that does not exist says so', () => {
         return origFetch.call(this, input, ...rest);
       } as any;
 
+      // navigateTo() has decided -- refused, or fetched -- by the time its
+      // promise settles, and the spy records a fetch the moment it is called,
+      // so nothing more needs waiting for (#1516: not 600ms).
       await (window as any).WBSite.navigateTo('../../etc/passwd');
-      // sleep-proves-negative: a traversal path must NOT be fetched; a fetch that never happens fires no event
-      await new Promise((r) => setTimeout(r, 600));
       window.fetch = origFetch;
 
       return {

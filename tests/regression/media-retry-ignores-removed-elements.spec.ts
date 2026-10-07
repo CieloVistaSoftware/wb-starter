@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { networkBarrier } from '../base';
 
 /**
  * #997 CI: error-log-empty failed with eight "Image failed to load after 5
@@ -15,23 +16,37 @@ test.describe('media-load-retry', () => {
   });
 
   test('an image removed before it loads is not retried or reported as missing', async ({ page }) => {
-    const result = await page.evaluate(async () => {
+    // The retry module decides on the image's own error event, then on its
+    // baseDelayMs / checkTimeoutMs timers (#1516: not a 600ms window). The
+    // page's clock is driven from here so those timers fire on cue, and every
+    // request for the file is counted, so a retry that does go out is seen.
+    await page.clock.install();
+    const requests: string[] = [];
+    page.on('request', (r) => { if (r.url().includes('does-not-exist-media-retry-test.svg')) requests.push(r.url()); });
+    await page.evaluate(async () => {
       const { attachImageLoadRetry } = await import('/src/wb-viewmodels/media-load-retry.js');
       const img = document.createElement('img');
+      const errored = new Promise((r) => img.addEventListener('error', r, { once: true }));
       img.src = '/images/does-not-exist-media-retry-test.svg';
-      let failed = false;
-      img.addEventListener('wb:image:load-failed', () => { failed = true; });
+      (window as any).__retryProbe = { failed: false };
+      img.addEventListener('wb:image:load-failed', () => { (window as any).__retryProbe.failed = true; });
       document.getElementById('main')!.append(img);
       attachImageLoadRetry(img, { maxAttempts: 2, baseDelayMs: 10, checkTimeoutMs: 50 });
       img.remove();
-      // Longer than every retry plus check window above, so a retry that was
-      // going to give up has done so.
-      // sleep-proves-negative: a removed image must NOT report a failure; a report that correctly never comes fires no event
-      await new Promise((r) => setTimeout(r, 600));
-      return { failed, fallback: !!document.querySelector('.x-media-load-failed') };
+      // The first load has failed: the module has now had its chance to decide.
+      await errored;
     });
+    // Past every retry delay and check window above, then make sure any retry
+    // request has reached the listener.
+    await page.clock.runFor(1000);
+    await networkBarrier(page);
+    const result = await page.evaluate(() => ({
+      failed: (window as any).__retryProbe.failed,
+      fallback: !!document.querySelector('.x-media-load-failed'),
+    }));
     expect(result.failed, 'a removed image was retried until it reported a load failure').toBe(false);
     expect(result.fallback).toBe(false);
+    expect(requests.filter((u) => u.includes('_retry=')), 'a removed image was retried').toEqual([]);
   });
 
 });
