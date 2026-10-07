@@ -112,6 +112,13 @@ spine.forEach((c, i) => {
   // The commit that shows this version's whole change: its merge, else itself.
   let code = null;
   let notes = { summary: null, seeIt: null };
+  // The first See it line that can be followed, from whichever commit has it.
+  // Taking the first one found let a commit with a weak line hide the good one
+  // a sibling commit in the same version carried (1.0.384, #1516).
+  let followable = null;
+  const consider = (n) => {
+    if (!followable && n.seeIt && !seeItProblems(n.seeIt, n.summary).length) followable = n.seeIt;
+  };
   for (const p of pending) {
     if (STAMP.test(p.subject)) continue;
     const prTitle = p.subject.match(/^Merge (?:PR|pull request) #(\d+)[: ](?:from \S+\s*)?(.*)$/i);
@@ -119,6 +126,7 @@ spine.forEach((c, i) => {
     if (!code || p.subject.startsWith('Merge ')) code = p.sha;
     const own = releaseNotes(p.body);
     notes = { summary: notes.summary || own.summary, seeIt: notes.seeIt || own.seeIt };
+    consider(own);
     // The commits this one brought: the merge's own branch side, or itself.
     const brought = p.subject.startsWith('Merge ')
       ? commits('--no-merges', `${p.sha}^1..${p.sha}`)
@@ -129,6 +137,7 @@ spine.forEach((c, i) => {
       bodies.push(b.body);
       const theirs = releaseNotes(b.body);
       notes = { summary: notes.summary || theirs.summary, seeIt: notes.seeIt || theirs.seeIt };
+      consider(theirs);
       for (const l of linksFrom(b.body)) if (!links.some((k) => k.href === l.href)) links.push(l);
       // Each item links to its own commit, so every line of work is one click away.
       const item = itemFor(b.subject, b.body);
@@ -164,8 +173,7 @@ spine.forEach((c, i) => {
   // Every place a summary names is a link, whichever source the text came from.
   summary = linkify(summary);
   const version = versionOf(count);
-  const own = notes.seeIt && !seeItProblems(notes.seeIt, notes.summary).length ? notes.seeIt : null;
-  const steps = STEPS[version] || own;
+  const steps = STEPS[version] || followable;
   const entry = { version, date: releaseDate(last.date), summary, items };
   if (steps) entry.seeIt = stepsHtml(steps);
   // Where to see the work: the whole change, then the commits' own Links blocks.

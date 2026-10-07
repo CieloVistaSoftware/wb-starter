@@ -46,7 +46,8 @@
           "label": "Guard",
           "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
         }
-      ]
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: negative 55, unmarked files with a sleep 100. Now: positive, redundant, setup and negative all 0, unmarked files 0; the 74 sleeps left are 31 marked negative proofs, 16 scenarios, 22 poll intervals and 5 timeout caps."
     },
     {
       "version": "1.0.383",
@@ -83,7 +84,7 @@
           ]
         }
       ],
-      "seeIt": "On a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt;, run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
+      "seeIt": "Open a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt; and run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
       "links": [
         {
           "label": "Code",
