@@ -96,7 +96,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
       // WB.whenIdle() covers the lazy/eager scan; the loop waits for finite animations
       // and transitions to END. Infinite ones (spinners, rainbow) never finish, so
       // they are skipped, not awaited.
-      await settlePage(page);
+      await settlePage(page, { ifPresent: true });
       await page.evaluate(async () => {
         await document.fonts.ready;
         for (let round = 0; round < 5; round += 1) {
