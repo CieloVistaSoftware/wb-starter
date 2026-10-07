@@ -399,7 +399,7 @@
 /* #958: a plain <nav> (auto-injected, asking for no header) gets the site's
    link look -- colour and hover from the theme -- and NO layout: nothing here
    may move a link. Only bare links: one with a class of its own (the site
-   sidebar's .nav__item, say) is already styled by its stylesheet. The header rules above apply to [x-navbar] and to a
+   sidebar's .x-sidebar__item, say) is already styled by its stylesheet. The header rules above apply to [x-navbar] and to a
    <nav brand|items|logo|sticky|variant> (.x-navbar--site) only. */
 .x-navbar.x-navbar--plain a:not([class]) {
   color: var(--primary);

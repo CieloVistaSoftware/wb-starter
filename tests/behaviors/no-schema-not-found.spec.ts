@@ -39,7 +39,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     // navigate away and back — this is what tripped x-demo's disconnectedCallback (#174/#175)
     await page.evaluate((href) => {
-      const home = document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement;
+      const home = document.querySelector(`#siteNav .x-sidebar__item[href="${href}"]`) as HTMLElement;
       home?.click();
     }, pagePath('home'));
     // sleep-proves-negative: navigating away must NOT log a schema warning; a warning that never comes fires no event

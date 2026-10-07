@@ -128,7 +128,6 @@ export default class WBSite {
       if (route.page === null) this.currentPage = route.path;
 
       this.render();
-      this.initResizableNav();
       this.initStickyHeader();
       this.initStickyFooter();
       this.initWheelScrollFallback();
@@ -271,11 +270,18 @@ export default class WBSite {
       ${this.renderFooter()}
       ${this.config.headerSettings?.displayNotesButton !== false ? '<div x-notes id="siteNotes" x-eager position="right"></div>' : ''}
     `;
-    // The nav's configured width reaches site.css's var(--nav-width) through a
-    // generated rule -- it used to be a style="" attribute in renderNav()'s
-    // markup (#779).
+    // #829: the left nav is the library's own x-sidebar. Its items (from
+    // config/site.json), configured width and active page are attributes;
+    // x-sidebar renders the items and owns the active highlight, the collapse
+    // and the drag-resize this file used to hand-roll. Injected here rather
+    // than left to WB.init()'s scan, so the items are in as soon as the shell
+    // is, not after every behavior on the page has loaded.
     const navEl = app.querySelector('#siteNav');
-    if (navEl && this.navWidth) setRule(navEl, 'width', { '--nav-width': this.navWidth });
+    if (navEl && this.navItems) {
+      navEl.setAttribute('items', JSON.stringify(this.navItems));
+      navEl.setAttribute('width', this.navWidth);
+      WB.inject(navEl, 'sidebar');
+    }
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
       toggleBtn.onclick = () => this.toggleNav();
@@ -353,10 +359,13 @@ export default class WBSite {
     // Safety check for nav config
     if (!navigationMenu || !Array.isArray(navigationMenu)) {
       console.error('❌ Site configuration error: "navigationMenu" is missing or not an array.', navigationMenu);
-      return '<nav class="site__nav" id="siteNav"><div class="nav__items">No navigation items found</div></nav>';
+      return '<nav class="site__nav" id="siteNav"><p>No navigation items found</p></nav>';
     }
 
-    const items = navigationMenu.map(item => {
+    // Each menu entry becomes one x-sidebar item: {id, label, href, icon,
+    // target}. `id` is the page the link opens, so `active` (the current
+    // page) highlights it; an external link has none.
+    this.navItems = navigationMenu.map(item => {
       // Robust href handling
       let href = pageHref('home');
       let isExternal = false;
@@ -375,57 +384,23 @@ export default class WBSite {
       if (!target && isExternal && typeof href === 'string' && href.startsWith('http')) {
         target = '_blank';
       }
-      
-      return `
-      <a href="${href}"
-         class="nav__item"
-         ${target ? `target="${target}"` : ''}
-         x-ripple>
-        <span class="nav__icon">${item.menuItemEmoji || ''}</span>
-        <span class="nav__label">${item.menuItemText || item.menuItemId}</span>
-      </a>
-    `}).join('');
+
+      const url = new URL(href, window.location.href).href;
+      return {
+        id: isPageLink(url) ? pageFromUrl(url).page : null,
+        label: item.menuItemText || item.menuItemId,
+        href,
+        icon: item.menuItemEmoji || '',
+        target,
+      };
+    });
 
     // Applied by render() once the nav exists (#779: no style="" here).
     this.navWidth = navigationLayout && navigationLayout.navigationWidth ? navigationLayout.navigationWidth : 'fit-content';
 
     return `
-      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" id="siteNav">
-        <div class="nav__items" id="navItems">
-          ${items}
-        </div>
-        <div class="nav__resizer" id="navResizer"></div>
-      </nav>
+      <nav class="site__nav" id="siteNav" x-sidebar resizable aria-label="Site navigation"${this.navCollapsed ? ' collapsed' : ''}></nav>
     `;
-  }
-
-  initResizableNav() {
-    const nav = document.getElementById('siteNav');
-    const resizer = document.getElementById('navResizer');
-    if (!nav || !resizer) return;
-
-    let isResizing = false;
-
-    resizer.addEventListener('mousedown', (e) => {
-      isResizing = true;
-      // The col-resize cursor is site.css's body.resizing rule (#779).
-      document.body.classList.add('resizing');
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isResizing) return;
-      const newWidth = e.clientX;
-      if (newWidth > 60 && newWidth < 600) { // Min and max width
-        setRule(nav, 'width', { '--nav-width': `${newWidth}px` });
-      }
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (isResizing) {
-        isResizing = false;
-        document.body.classList.remove('resizing');
-      }
-    });
   }
 
   initStickyHeader() {
@@ -788,10 +763,8 @@ export default class WBSite {
   }
 
   updateActiveNav() {
-    document.querySelectorAll('.nav__item').forEach(item => {
-      const page = item.href && isPageLink(item.href) ? pageFromUrl(item.href).page : null;
-      item.classList.toggle('nav__item--active', page === this.currentPage);
-    });
+    // x-sidebar highlights the item whose id is the current page (#829).
+    document.getElementById('siteNav')?.setAttribute('active', this.currentPage);
   }
 
   toggleNav() {
@@ -812,9 +785,9 @@ export default class WBSite {
         nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     } else {
-      // Desktop: toggle collapsed (icon-only) mode
+      // Desktop: toggle collapsed (icon-only) mode -- x-sidebar's `collapsed`.
       this.navCollapsed = !this.navCollapsed;
-      nav?.classList.toggle('site__nav--collapsed', this.navCollapsed);
+      nav?.toggleAttribute('collapsed', this.navCollapsed);
       document.body.classList.toggle('nav-collapsed', this.navCollapsed);
     }
   }

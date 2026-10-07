@@ -30,7 +30,7 @@ async function clickNav(page: Page, id: string): Promise<number> {
   // task as the click: that is the moment the site remembers, and a page still
   // building can move between a separate read and the click.
   const leftAt = await page.evaluate(({ p, href }) => {
-    const link = document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement;
+    const link = document.querySelector(`#siteNav .x-sidebar__item[href="${href}"]`) as HTMLElement;
     if (!link) throw new Error('nav link not found: ' + p);
     const y = document.getElementById('siteBody')!.scrollTop;
     link.click();

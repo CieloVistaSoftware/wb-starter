@@ -224,19 +224,60 @@ export function navbar(element, options = {}) {
 }
 
 /**
- * Sidebar - Vertical navigation from `items` (or data-items)
- * Custom Tag: <div>
+ * Sidebar - Vertical navigation panel
+ * Custom Tag: <nav x-sidebar> (or any element)
+ *
+ * Attributes (plain or data-* spelling, followed after load):
+ * - items:       "Label:href,Label:href" -- or a JSON array of
+ *                {id, label, href, icon, target} for items with an icon (#829)
+ * - active:      the id (or label) of the highlighted item
+ * - collapsed:   icon-only; each item keeps its label as aria-label + tooltip
+ * - resizable:   a drag handle on the right edge (arrow keys when focused)
+ * - width:       starting width (px number or any CSS length)
+ * - resize-min / resize-max: drag bounds in px (default 60 / 600)
+ *
+ * The site's own left nav (site-engine.js) is this behavior (#829 step 4); it
+ * used to be a second, hand-rolled copy of items, active, collapse and resize.
  */
 export function sidebar(element, options = {}) {
+  /** One item, whichever spelling it came in. */
+  const toItem = (raw) => {
+    const label = String(raw.label ?? raw.id ?? '');
+    return {
+      id: raw.id == null || raw.id === '' ? label : String(raw.id),
+      label,
+      href: raw.href || '#',
+      icon: raw.icon,
+      target: raw.target || '',
+    };
+  };
+  const parseItems = (raw) => {
+    if (Array.isArray(raw)) return raw.map(toItem);
+    const text = String(raw || '').trim();
+    if (text.startsWith('[')) {
+      try {
+        const list = JSON.parse(text);
+        return Array.isArray(list) ? list.map(toItem) : [];
+      } catch (err) {
+        console.warn('[WB:sidebar] items is not valid JSON:', err.message);
+        return [];
+      }
+    }
+    return text.split(',').filter(Boolean).map((item) => {
+      const { label, value } = splitItem(item, '#');
+      return toItem({ label, href: value });
+    });
+  };
+
   // #1683: items/active/collapsed are read in every spelling read-attr.js
   // accepts (plain or data-*), here AND when they change -- the observer
   // used to watch only data-* and then re-read only the plain spelling, so
   // neither form moved the active item after load.
-  const readItems = () => readAttr(element, 'items').split(',').filter(Boolean);
-  let config = {
-    items: options.items ? String(options.items).split(',').filter(Boolean) : readItems(),
+  const config = {
+    items: parseItems(options.items ?? readAttr(element, 'items')),
     active: options.active || readAttr(element, 'active'),
     collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
+    resizable: options.resizable ?? readFlag(element, 'resizable'),
   };
 
   // #779: the panel, its collapsed width and the items (with their active
@@ -244,45 +285,158 @@ export function sidebar(element, options = {}) {
   // inline styles and onmouseenter/onmouseleave attribute handlers.
   element.classList.add('x-sidebar');
 
+  const list = document.createElement('div');
+  list.className = 'x-sidebar__items';
+  element.replaceChildren(list);
+
+  /** Highlight the active item in place: no rebuild, so focus and ripples stay. */
+  const applyActive = () => {
+    list.querySelectorAll('.x-sidebar__item').forEach((a, i) => {
+      const item = config.items[i];
+      const on = !!item && !!config.active && (item.id === config.active || item.label === config.active);
+      a.classList.toggle('x-sidebar__item--active', on);
+      if (on) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  };
+
   const render = () => {
     element.classList.toggle('x-sidebar--collapsed', !!config.collapsed);
+    // A rebuild must not drop the reader's place: put focus back on the same item.
+    const focused = [...list.children].indexOf(/** @type {Element} */ (document.activeElement));
 
-    element.innerHTML = config.items.map(item => {
-      const { label, value: href } = splitItem(item, '#');
-      const isActive= label === config.active;
-      const tooltipAttrs = config.collapsed ? `x-tooltip data-tooltip="${label}" data-tooltip-position="right"` : `title="${label}"`;
-      
-      return `
-        <a class="x-sidebar__item${isActive ? ' x-sidebar__item--active' : ''}" href="${href}" ${tooltipAttrs}>
-          ${label}
-        </a>
-      `;
-    }).join('');
+    list.replaceChildren(...config.items.map((item) => {
+      const a = document.createElement('a');
+      a.className = 'x-sidebar__item';
+      a.setAttribute('href', item.href);
+      if (item.target) a.setAttribute('target', item.target);
+      a.setAttribute('x-ripple', '');
+      if (item.icon !== undefined) {
+        const icon = document.createElement('span');
+        icon.className = 'x-sidebar__icon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.textContent = item.icon || '';
+        a.append(icon);
+      }
+      const label = document.createElement('span');
+      label.className = 'x-sidebar__label';
+      label.textContent = item.label;
+      a.append(label);
+      if (config.collapsed) {
+        // Icon-only: the label is hidden, so it becomes the link's name and tooltip.
+        a.setAttribute('aria-label', item.label);
+        a.setAttribute('x-tooltip', '');
+        a.setAttribute('content', item.label);
+        a.setAttribute('position', 'right');
+      }
+      return a;
+    }));
+    applyActive();
+    if (focused >= 0) /** @type {HTMLElement|undefined} */ (list.children[focused])?.focus();
 
-    // Initialize behaviors on new content (e.g. tooltips)
+    // Initialize behaviors on new content (ripples, tooltips)
     if (window.WB && window.WB.scan) {
-      window.WB.scan(element);
+      window.WB.scan(list);
     }
   };
 
+  // ── width and drag-resize ────────────────────────────────────────────────
+  // The width travels as --x-sidebar-width through a generated rule, never a
+  // style attribute (#779), so a stylesheet can still decide what to do with it.
+  const bound = (name, fallback) => {
+    const n = Number(readAttr(element, name, ''));
+    return Number.isFinite(n) && n > 0 ? n : fallback;
+  };
+  let width = null;
+  let handle = null;
+  const setWidth = (value) => {
+    if (value === '' || value == null) return;
+    if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(String(value))) {
+      const min = bound('resize-min', 60);
+      const max = bound('resize-max', 600);
+      width = Math.round(Math.min(max, Math.max(min, Number(value))));
+      setRule(element, 'width', { '--x-sidebar-width': `${width}px` });
+      handle?.setAttribute('aria-valuenow', String(width));
+      element.dispatchEvent(new CustomEvent('wb:sidebar:resize', { bubbles: true, detail: { width } }));
+    } else {
+      width = null;
+      setRule(element, 'width', { '--x-sidebar-width': String(value) });
+    }
+  };
+  setWidth(options.width ?? readAttr(element, 'width'));
+
+  if (config.resizable) {
+    element.classList.add('x-sidebar--resizable');
+    handle = document.createElement('div');
+    handle.className = 'x-sidebar__resizer';
+    handle.setAttribute('role', 'separator');
+    handle.setAttribute('aria-orientation', 'vertical');
+    handle.setAttribute('aria-label', 'Resize navigation');
+    handle.setAttribute('aria-valuemin', String(bound('resize-min', 60)));
+    handle.setAttribute('aria-valuemax', String(bound('resize-max', 600)));
+    handle.tabIndex = 0;
+    element.append(handle);
+
+    const current = () => width ?? Math.round(element.getBoundingClientRect().width);
+    handle.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      const left = element.getBoundingClientRect().left;
+      handle.setPointerCapture?.(e.pointerId);
+      // The col-resize cursor over the whole page while dragging (navigation.css).
+      document.body.classList.add('x-sidebar--resizing');
+      const move = (ev) => setWidth(ev.clientX - left);
+      const stop = () => {
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', stop);
+        handle.removeEventListener('pointercancel', stop);
+        document.body.classList.remove('x-sidebar--resizing');
+      };
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', stop);
+      handle.addEventListener('pointercancel', stop);
+    });
+    handle.addEventListener('keydown', (e) => {
+      const step = e.shiftKey ? 50 : 10;
+      const to = {
+        ArrowLeft: () => current() - step,
+        ArrowRight: () => current() + step,
+        Home: () => bound('resize-min', 60),
+        End: () => bound('resize-max', 600),
+      }[e.key];
+      if (!to) return;
+      e.preventDefault();
+      setWidth(to());
+    });
+  }
+
   render();
 
-  // Watch for attribute changes to handle dynamic collapsing
-  const observer = new MutationObserver(() => {
-    config.collapsed = readFlag(element, 'collapsed');
-    config.items = readItems();
+  // Watch for attribute changes: a new active item only moves the highlight;
+  // new items or a collapse rebuild the list.
+  const observer = new MutationObserver((mutations) => {
+    const changed = new Set(mutations.map((m) => String(m.attributeName).replace(/^data-/, '')));
+    if (changed.has('width')) setWidth(readAttr(element, 'width'));
     config.active = readAttr(element, 'active');
-    render();
+    if (changed.has('items') || changed.has('collapsed')) {
+      config.collapsed = readFlag(element, 'collapsed');
+      config.items = parseItems(readAttr(element, 'items'));
+      render();
+    } else {
+      applyActive();
+    }
   });
 
   observer.observe(element, {
     attributes: true,
-    attributeFilter: ['collapsed', 'items', 'active', 'data-collapsed', 'data-items', 'data-active'],
+    attributeFilter: ['collapsed', 'items', 'active', 'width', 'data-collapsed', 'data-items', 'data-active', 'data-width'],
   });
 
   return () => {
     observer.disconnect();
-    element.classList.remove('x-sidebar');
+    handle?.remove();
+    clearRulesIn(element);
+    element.classList.remove('x-sidebar', 'x-sidebar--collapsed', 'x-sidebar--resizable');
   };
 }
 

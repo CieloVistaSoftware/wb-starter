@@ -26,7 +26,7 @@ test('cardimage/cardvideo survive a fresh nav to Components without being wiped'
   // Two picks, each followed by the #279 race window.
   test.setTimeout(60_000);
   await page.goto('/?page=home', { waitUntil: 'networkidle' });
-  await page.click(`a.nav__item[href="${pagePath('behaviors')}"]`);
+  await page.click(`#siteNav a.x-sidebar__item[href="${pagePath('behaviors')}"]`);
 
   // The behaviors page is a searchable browser now (#910): nothing is on the
   // stage until a behavior is picked, so the fresh navigation above is

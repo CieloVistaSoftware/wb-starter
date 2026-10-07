@@ -44,7 +44,7 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
 
   await page.evaluate((href) => {
     (window as any).__holdScan = true;
-    (document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement).click();
+    (document.querySelector(`#siteNav .x-sidebar__item[href="${href}"]`) as HTMLElement).click();
   }, pagePath('themes'));
   // The page is on screen and its scan is parked at the gate.
   await page.waitForFunction(() => !!document.querySelector('#mainPage-themes') && typeof (window as any).__releaseScan === 'function', null, { timeout: 20000 });

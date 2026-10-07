@@ -80,11 +80,6 @@ li:last-child { margin-bottom: 0; }
   user-select: none;
 }
 
-/* The site nav's drag-to-resize (site-engine.js): was document.body.style.cursor (#779). */
-body.resizing {
-  cursor: col-resize;
-}
-
 .site {
   /* Fixed to the viewport + clip overflow so .site__body is the SINGLE scroll
      container (was min-height:100vh, which let the whole window scroll too — a
@@ -370,10 +365,15 @@ body > button[x-copy] {
 /* =============================================================================
    NAVIGATION
    ============================================================================= */
+/* The site nav is an x-sidebar (#829): <nav class="site__nav" x-sidebar>.
+   These rules are the site's look for it; x-sidebar's own defaults
+   (navigation.css) sit at zero specificity, so every rule here wins. */
 .site__nav {
-  width: var(--nav-width, fit-content);
+  width: var(--x-sidebar-width, fit-content);
   min-width: 60px;
-  padding-right: 0;
+  max-width: none;
+  padding: 0;
+  border-radius: 0;
   background: var(--bg-primary);
   border-right: 1px solid var(--border-color);
   /* Hidden is the unconditional default — see the min-width reveal rule
@@ -400,18 +400,18 @@ body > button[x-copy] {
   overflow-y: auto;
 }
 
-.site__nav--collapsed {
+.x-sidebar--collapsed:where(.site__nav) {
   width: 60px;
   min-width: 60px;
 }
 
-.site__nav--collapsed .nav__label {
+.x-sidebar--collapsed:where(.site__nav) .x-sidebar__label {
   opacity: 0;
   width: 0;
   display: none;
 }
 
-.site__nav--collapsed .nav__item {
+.x-sidebar--collapsed:where(.site__nav) .x-sidebar__item {
   padding-left: 0.5rem;
   padding-right: 2rem;
 }
@@ -436,7 +436,7 @@ body > button[x-copy] {
   color: var(--primary);
 }
 
-.nav__items {
+:where(.site__nav) .x-sidebar__items {
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
@@ -445,13 +445,14 @@ body > button[x-copy] {
   flex: 1;
 }
 
-.nav__item {
+:where(.site__nav) .x-sidebar__item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   text-decoration: none;
   color: var(--text-secondary);
+  opacity: 1;
   border-radius: 0;
   transition: all 0.2s;
   white-space: nowrap;
@@ -459,22 +460,23 @@ body > button[x-copy] {
   font-size: 0.85rem;
 }
 
-.nav__item:hover {
+:where(.site__nav) .x-sidebar__item:hover {
   background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
-.nav__item--active {
+:where(.site__nav) .x-sidebar__item--active {
   background: var(--primary);
   color: white;
+  font-weight: inherit;
 }
 
-.nav__item--active:hover {
+:where(.site__nav) .x-sidebar__item--active:hover {
   background: var(--primary-dark);
   color: white;
 }
 
-.nav__icon {
+:where(.site__nav) .x-sidebar__icon {
   display: none; /* Icons hidden for cleaner look */
   font-size: 1rem;
   flex-shrink: 0;
@@ -483,11 +485,11 @@ body > button[x-copy] {
 }
 
 /* Show icons when nav is collapsed */
-.site__nav--collapsed .nav__icon {
+.x-sidebar--collapsed:where(.site__nav) .x-sidebar__icon {
   display: block;
 }
 
-.nav__label {
+:where(.site__nav) .x-sidebar__label {
   transition: opacity 0.2s, width 0.2s;
 }
 
@@ -749,27 +751,27 @@ h5, h6 {
   }
   
   /* Hide desktop collapsed state on mobile */
-  .site__nav.site__nav--collapsed {
+  .site__nav.x-sidebar--collapsed {
     transform: translateX(-100%);
     width: 280px !important;
   }
   
-  .site__nav.site__nav--collapsed.site__nav--mobile-open {
+  .site__nav.x-sidebar--collapsed.site__nav--mobile-open {
     transform: translateX(0);
   }
   
   /* Hide nav resizer on mobile */
-  .nav__resizer {
+  :where(.site__nav) .x-sidebar__resizer {
     display: none;
   }
   
   /* Show icons on mobile for better UX */
-  .nav__icon {
+  :where(.site__nav) .x-sidebar__icon {
     display: block;
   }
   
   /* Larger touch targets */
-  .nav__item {
+  :where(.site__nav) .x-sidebar__item {
     padding: 0.75rem 1rem;
     font-size: 1rem;
   }
@@ -1112,45 +1114,13 @@ h5, h6 {
   background-color: var(--primary);
 }
 
-/* Resizable Nav — NOTE: do NOT re-declare .site__nav position here. The base
-   rule already sets position: relative (so the absolute .nav__resizer anchors),
-   and the mobile @media block flips it to position: fixed for the off-canvas
-   drawer. A duplicate position:relative here (after the media query) silently
-   overrode the mobile rule and caused horizontal overflow on phones (#165). */
-.nav__resizer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 12px;
-  height: 100%;
-  cursor: col-resize;
-  background: transparent;
-  z-index: 100;
-  transition: background 0.2s;
-}
-
-.nav__resizer::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 4px;
-  height: 40px;
-  background: var(--border-color);
-  border-radius: 2px;
-  opacity: 0.5;
-  transition: opacity 0.2s, background 0.2s;
-}
-
-.nav__resizer:hover::after {
-  opacity: 1;
-  background: var(--primary);
-}
-
-.nav__resizer:hover {
-  background: rgba(99, 102, 241, 0.1);
-}
+/* Resizable Nav — the drag handle is x-sidebar's .x-sidebar__resizer, styled
+   in navigation.css (#829). NOTE: do NOT re-declare .site__nav position here.
+   The base rule already sets a positioned box (so the absolute handle
+   anchors), and the mobile @media block flips it to position: fixed for the
+   off-canvas drawer. A duplicate position:relative here (after the media
+   query) silently overrode the mobile rule and caused horizontal overflow on
+   phones (#165). */
 
 /* Resizing handled by JS overlay now */
 
@@ -1783,7 +1753,7 @@ a.x-btn-glass {
   /* The drag-to-resize handle sits on the nav's right edge; when the drawer is
      off-screen it peeked through at x=0 as a stray strip. Hide it on phones —
      the drawer isn't resizable there anyway. (#165) */
-  .nav__resizer {
+  :where(.site__nav) .x-sidebar__resizer {
     display: none;
   }
 }
@@ -1998,21 +1968,21 @@ pre { max-width: 100%; overflow-x: auto; }
     border-bottom: 1px solid var(--border-color);
   }
   .site__nav.site__nav--mobile-open,
-  .site__nav.site__nav--collapsed.site__nav--mobile-open {
+  .site__nav.x-sidebar--collapsed.site__nav--mobile-open {
     display: block !important;
     transform: none !important;
   }
   /* Items stack VERTICALLY, full width. */
-  .site__nav .nav__items {
+  .site__nav .x-sidebar__items {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     padding: 0.5rem;
   }
-  .site__nav .nav__item { width: 100%; }
+  .site__nav .x-sidebar__item { width: 100%; }
   /* In-flow menu needs no drawer chrome. */
   .site__nav-backdrop { display: none; }
-  .nav__resizer { display: none; }
+  :where(.site__nav) .x-sidebar__resizer { display: none; }
 
   /* Footer was 3 stacked blocks (copyright, links, social icons) each
      carrying the desktop 1.5rem/2rem padding/gap meant for a single wide

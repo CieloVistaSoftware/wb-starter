@@ -29,7 +29,7 @@ test('a slow earlier navigation does not paint over a newer one (#1519)', async 
   await page.waitForFunction(() => !!document.querySelector('#mainPage-home'), null, { timeout: 20000 });
 
   const tap = (p: string) => page.evaluate((href) => {
-    (document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement).click();
+    (document.querySelector(`#siteNav .x-sidebar__item[href="${href}"]`) as HTMLElement).click();
   }, pagePath(p));
 
   await tap('about');
