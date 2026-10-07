@@ -598,7 +598,7 @@
           "file": "behaviors/dropdown.md",
           "title": "dropdown",
           "description": "Click (or hover) to open a menu — from either a comma-separated items list or real child <a>/<button>/<div> elements.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/error.md",
