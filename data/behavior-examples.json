@@ -238,9 +238,9 @@
       ]
     },
     "x-lightbox": {
-      "source": "<button variant=\"primary\" x-lightbox src=\"/images/placeholder.svg\">\n  x-lightbox · variant: primary · src: /images/placeholder.svg\n</button>",
+      "source": "<button variant=\"primary\" x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg\">\n  x-lightbox · variant: primary · src: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-lightbox src=\"/images/placeholder.svg\">\n  x-lightbox · variant: primary · src: /images/placeholder.svg\n</button>"
+        "<button variant=\"primary\" x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg\">\n  x-lightbox · variant: primary · src: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg\n</button>"
       ],
       "examples": [
         {
@@ -249,7 +249,7 @@
         },
         {
           "label": "forest",
-          "source": "<button variant=\"success\" size=\"sm\" x-lightbox src=\"/images/placeholder-forest.svg\">\n  Forest\n</button>"
+          "source": "<button variant=\"success\" size=\"sm\" x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg/1280px-Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg\">\n  Forest\n</button>"
         },
         {
           "label": "sunrise",
@@ -406,7 +406,7 @@
       ]
     },
     "x-gallery": {
-      "source": "<div x-gallery columns=\"4\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 1\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 2\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 3\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 4\">\r\n      </div>",
+      "source": "<div x-gallery columns=\"4\">\r\n        <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Snow-capped mountains above a lake\">\r\n        <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg\" alt=\"The tip of a fjord\">\r\n        <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg\" alt=\"Mountains reflected in Lake Alpine\">\r\n        <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg\" alt=\"Yosemite Valley from Glacier Point\">\r\n      </div>",
       "alternates": []
     },
     "x-youtube": {
@@ -1061,9 +1061,9 @@
       ]
     },
     "x-details": {
-      "source": "<details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"/images/placeholder.svg\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
+      "source": "<details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1280px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg\" alt=\"Trail to the Ice Lakes, San Juan National Forest\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
       "alternates": [
-        "<div x-details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"/images/placeholder.svg\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</div>"
+        "<div x-details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1280px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg\" alt=\"Trail to the Ice Lakes, San Juan National Forest\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</div>"
       ]
     },
     "x-code": {
@@ -1105,10 +1105,10 @@
       ]
     },
     "x-dropdown": {
-      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Button example of x-dropdown</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
+      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg\" alt=\"\" width=\"28\" height=\"28\"> Button example of x-dropdown</button>\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg/330px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Alan_turing_header.jpg/330px-Alan_turing_header.jpg\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/330px-Katherine_Johnson_1983.jpg\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
       "alternates": [
         "<div x-dropdown items=\"Profile,Settings,Billing,Team,Sign out\" label=\"Account\"></div>",
-        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>"
+        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png/330px-Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg/330px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Alan_turing_header.jpg/330px-Alan_turing_header.jpg\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>"
       ]
     },
     "x-card": {
@@ -1174,7 +1174,7 @@
       "alternates": []
     },
     "x-cardhorizontal": {
-      "source": "<article x-cardhorizontal\n  image=\"/images/placeholder.svg\"\n  imageAlt=\"Pine trail at dawn\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
+      "source": "<article x-cardhorizontal\n  image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1280px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg\"\n  imageAlt=\"Trail to the Ice Lakes, San Juan National Forest\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
       "alternates": []
     },
     "x-cardimage": {
@@ -1200,11 +1200,11 @@
       "alternates": []
     },
     "x-cardoverlay": {
-      "source": "<article x-cardoverlay\n  image=\"/images/placeholder.svg\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
+      "source": "<article x-cardoverlay\n  image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
       "alternates": []
     },
     "x-cardportfolio": {
-      "source": "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"/images/placeholder.svg\"></article>",
+      "source": "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Babbages_Analytical_Engine%2C_1834-1871._%289660574685%29.jpg/1280px-Babbages_Analytical_Engine%2C_1834-1871._%289660574685%29.jpg\"></article>",
       "alternates": []
     },
     "x-cardpricing": {
@@ -1212,11 +1212,11 @@
       "alternates": []
     },
     "x-cardproduct": {
-      "source": "<article x-cardproduct\n  image=\"/images/placeholder.svg\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  originalPrice=\"$189\"></article>",
+      "source": "<article x-cardproduct\n  image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  originalPrice=\"$189\"></article>",
       "alternates": []
     },
     "x-cardprofile": {
-      "source": "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"/images/placeholder.svg\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
+      "source": "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg/330px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
       "alternates": []
     },
     "x-cardstats": {
@@ -1224,11 +1224,11 @@
       "alternates": []
     },
     "x-cardtestimonial": {
-      "source": "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"/images/placeholder.svg\"\n  rating=\"5\"></article>",
+      "source": "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/330px-Katherine_Johnson_1983.jpg\"\n  rating=\"5\"></article>",
       "alternates": []
     },
     "x-cardvideo": {
-      "source": "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"/images/placeholder.svg\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+      "source": "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/500px-Big_buck_bunny_poster_big.jpg\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
       "alternates": []
     },
     "x-fix-card": {
@@ -1272,7 +1272,7 @@
       "alternates": []
     },
     "x-avatar": {
-      "source": "<div x-avatar src=\"/images/placeholder.svg\" alt=\"Ada Lovelace\" name=\"Ada Lovelace\" size=\"lg\"></div>",
+      "source": "<div x-avatar src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png/330px-Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png\" alt=\"Ada Lovelace\" name=\"Ada Lovelace\" size=\"lg\"></div>",
       "alternates": []
     },
     "x-spinner": {
@@ -1768,11 +1768,11 @@
       "alternates": []
     },
     "x-masonry": {
-      "source": "<div x-masonry columns=\"3\" gap=\"0.75rem\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n</div>",
+      "source": "<div x-masonry columns=\"3\" gap=\"0.75rem\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg/1280px-Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg\" alt=\"\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Lavender_field_on_Hvar.JPG/1280px-Lavender_field_on_Hvar.JPG\" alt=\"\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg/1280px-Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg\" alt=\"\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Utah_Dunes_Landscape_-_West_Desert_District.jpg/1280px-Utah_Dunes_Landscape_-_West_Desert_District.jpg\" alt=\"\">\n</div>",
       "alternates": []
     },
     "x-ratio": {
-      "source": "<div x-ratio ratio=\"16:9\">\n  <img src=\"/images/placeholder.svg\" alt=\"Coastline from the air\">\n</div>",
+      "source": "<div x-ratio ratio=\"16:9\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg/1280px-Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg\" alt=\"Coastline from the air\">\n</div>",
       "alternates": []
     },
     "x-status": {
@@ -1838,62 +1838,62 @@
       ]
     },
     "x-video": {
-      "source": "<video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></video>",
+      "source": "<video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/500px-Big_buck_bunny_poster_big.jpg\" controls></video>",
       "alternates": [
-        "<div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></div>"
+        "<div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/500px-Big_buck_bunny_poster_big.jpg\" controls></div>"
       ],
       "examples": [
         {
           "label": "in a card",
-          "source": "<article title=\"Trailer\" subtitle=\"Big Buck Bunny\">\n  <video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></video>\n</article>",
+          "source": "<article title=\"Trailer\" subtitle=\"Big Buck Bunny\">\n  <video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/500px-Big_buck_bunny_poster_big.jpg\" controls></video>\n</article>",
           "form": "semantic"
         },
         {
           "label": "in a card",
-          "source": "<article title=\"Trailer\" subtitle=\"Big Buck Bunny\">\n  <div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></div>\n</article>",
+          "source": "<article title=\"Trailer\" subtitle=\"Big Buck Bunny\">\n  <div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/500px-Big_buck_bunny_poster_big.jpg\" controls></div>\n</article>",
           "form": "attribute"
         }
       ]
     },
     "x-img": {
-      "source": "<img src=\"/images/placeholder.svg\" alt=\"Prime lens on a wooden desk\">",
+      "source": "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Canon_New_F-1_and_Lenses.jpg/1280px-Canon_New_F-1_and_Lenses.jpg\" alt=\"A film camera and three prime lenses\">",
       "alternates": [],
       "examples": [
         {
           "label": "width only: height follows the photo",
-          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" alt=\"Dachshund puppy, 240 pixels wide\">"
+          "source": "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" width=\"240\" alt=\"Dachshund puppy, 240 pixels wide\">"
         },
         {
           "label": "width + height: cropped to 3:2",
-          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"160\" alt=\"Dachshund puppy, cropped to 240 by 160\">"
+          "source": "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" width=\"240\" height=\"160\" alt=\"Dachshund puppy, cropped to 240 by 160\">"
         },
         {
           "label": "wide banner from width + height",
-          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"480\" height=\"120\" alt=\"Dachshund puppy, cropped to a 4:1 banner\">"
+          "source": "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" width=\"480\" height=\"120\" alt=\"Dachshund puppy, cropped to a 4:1 banner\">"
         },
         {
           "label": "aspect-ratio instead of height",
-          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"200\" aspectRatio=\"3/4\" alt=\"Dachshund puppy, cropped to portrait\">"
+          "source": "<img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" width=\"200\" aspectRatio=\"3/4\" alt=\"Dachshund puppy, cropped to portrait\">"
         }
       ]
     },
     "x-figure": {
-      "source": "<figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
+      "source": "<figure>\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
       "alternates": [
-        "<div x-figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
+        "<div x-figure>\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
       ],
       "examples": [
         {
           "label": "figure width in pixels",
-          "source": "<figure width=\"320\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>The whole figure is 320 pixels wide.</figcaption>\n</figure>"
+          "source": "<figure width=\"320\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>The whole figure is 320 pixels wide.</figcaption>\n</figure>"
         },
         {
           "label": "figure width as a CSS length",
-          "source": "<figure width=\"50%\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>Half the width of its container.</figcaption>\n</figure>"
+          "source": "<figure width=\"50%\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>Half the width of its container.</figcaption>\n</figure>"
         },
         {
           "label": "square image inside a figure",
-          "source": "<figure width=\"240\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped square\">\n  <figcaption>The img's width + height set the shape.</figcaption>\n</figure>"
+          "source": "<figure width=\"240\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped square\">\n  <figcaption>The img's width + height set the shape.</figcaption>\n</figure>"
         }
       ]
     },
@@ -2121,7 +2121,7 @@
         },
         {
           "label": "toggling an image",
-          "source": "<button variant=\"success\" x-toggle target=\"#x-ex-toggle-d\">Toggle photo</button>\n<img id=\"x-ex-toggle-d\" src=\"/images/placeholder-forest.svg\" alt=\"Forest\" width=\"200\">"
+          "source": "<button variant=\"success\" x-toggle target=\"#x-ex-toggle-d\">Toggle photo</button>\n<img id=\"x-ex-toggle-d\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg/1280px-Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg\" alt=\"Forest\" width=\"200\">"
         },
         {
           "label": "error trigger",
@@ -2410,7 +2410,7 @@
       "examples": [
         {
           "label": "over an image card",
-          "source": "<div x-glass amount=\"some\">\n  <img src=\"/images/placeholder-forest.svg\" alt=\"Forest\" width=\"320\">\n  <p>Frosted caption over a forest.</p>\n</div>"
+          "source": "<div x-glass amount=\"some\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg/1280px-Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg\" alt=\"Forest\" width=\"320\">\n  <p>Frosted caption over a forest.</p>\n</div>"
         },
         {
           "label": "on a panel",
@@ -2460,10 +2460,10 @@
       ]
     },
     "x-frame": {
-      "source": "<div x-frame ratio=\"16:9\">\n  <img src=\"/images/placeholder.svg\" alt=\"Landscape held at 16:9\">\n</div>",
+      "source": "<div x-frame ratio=\"16:9\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg\" alt=\"Landscape held at 16:9\">\n</div>",
       "alternates": [
-        "<div x-frame ratio=\"1:1\">\n  <img src=\"/images/placeholder.svg\" alt=\"Cropped to a square\">\n</div>",
-        "<div x-frame ratio=\"4:3\">\n  <img src=\"/images/placeholder.svg\" alt=\"Held at 4:3\">\n</div>"
+        "<div x-frame ratio=\"1:1\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg\" alt=\"Cropped to a square\">\n</div>",
+        "<div x-frame ratio=\"4:3\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg\" alt=\"Held at 4:3\">\n</div>"
       ],
       "examples": [
         {

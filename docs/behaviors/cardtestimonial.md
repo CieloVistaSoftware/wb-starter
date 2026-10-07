@@ -9,7 +9,7 @@
   quote="We deleted the build step and shipped faster the same week."
   author="Katherine Johnson"
   role="Platform lead"
-  avatar="/images/placeholder.svg"
+  avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/330px-Katherine_Johnson_1983.jpg"
   rating="5"></article>
 </div>
 

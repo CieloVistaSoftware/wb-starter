@@ -238,7 +238,7 @@
           "file": "properties.md",
           "title": "Properties",
           "description": "Behavior property reference",
-          "modified": "2026-10-01"
+          "modified": "2026-10-06"
         },
         {
           "file": "card.md",
@@ -304,7 +304,7 @@
           "file": "behaviors/blockquote.md",
           "title": "<blockquote> Element",
           "description": "The <blockquote> element represents an extended quotation from another source.",
-          "modified": "2026-09-03"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/bounce.md",

@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Image source URL",
       "required": true,
-      "default": "/images/placeholder.svg"
+      "default": ""
     },
     "alt": {
       "type": "string",

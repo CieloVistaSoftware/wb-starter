@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T23:32:26.472Z",
+  "generatedAt": "2026-10-07T02:22:48.807Z",
   "count": 160,
   "schemas": [
     {
@@ -1288,7 +1288,7 @@
         "avatar": {
           "type": "string",
           "description": "Avatar image URL",
-          "default": "/images/avatar.svg"
+          "default": ""
         },
         "bio": {
           "type": "string",
@@ -1339,7 +1339,7 @@
         },
         {
           "name": "John Doe",
-          "avatar": "/images/avatar.svg"
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg"
         },
         {
           "name": "John Doe",
@@ -1347,7 +1347,7 @@
         },
         {
           "name": "John Doe",
-          "cover": "/images/placeholder.svg"
+          "cover": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg"
         },
         {
           "name": "John Doe",
@@ -1364,9 +1364,9 @@
         {
           "name": "Full",
           "role": "CEO",
-          "avatar": "/images/avatar.svg",
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/A_headshot_of_a_young_man_with_combed_back_hair_-_DPLA_-_8fdffabe9cf50ff6c9e74d9912e0c175_%28page_2%29.jpg/330px-A_headshot_of_a_young_man_with_combed_back_hair_-_DPLA_-_8fdffabe9cf50ff6c9e74d9912e0c175_%28page_2%29.jpg",
           "bio": "Leader.",
-          "cover": "/images/placeholder.svg",
+          "cover": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Lavender_field_on_Hvar.JPG/1280px-Lavender_field_on_Hvar.JPG",
           "size": "lg",
           "align": "center"
         }
@@ -3689,38 +3689,38 @@
       },
       "matrix": [
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "subtitle": "Subtitle"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "cta": "Click Me"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "subtitle": "Sub",
           "cta": "Go",
           "variant": "cosmic"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "xalign": "left"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "overlay": false
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "fullHeight": true
         }
@@ -3979,7 +3979,7 @@
           "variant": "cosmic",
           "title": "Build stunning UIs",
           "pretitle": "100 Components",
-          "background": "/images/dachshund-puppy-image-960x540.jpg"
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg"
         },
         {
           "_section": "stats",
@@ -4091,21 +4091,21 @@
       },
       "matrix": [
         {
-          "image": "/images/placeholder.svg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg",
           "title": "Title"
         },
         {
-          "image": "/images/placeholder.svg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "image": "/images/placeholder.svg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg",
           "title": "Title",
           "imagePosition": "right"
         },
         {
-          "image": "/images/placeholder.svg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg",
           "title": "Title",
           "variant": "elevated"
         }
@@ -4161,7 +4161,7 @@
           "type": "string",
           "description": "Image source URL",
           "required": true,
-          "default": "/images/placeholder.svg"
+          "default": ""
         },
         "alt": {
           "type": "string",
@@ -5301,31 +5301,31 @@
       },
       "matrix": [
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Title"
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Title",
           "position": "top"
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Title",
           "position": "center"
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Title",
           "gradient": false
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Title",
           "xalign": "center"
         }
@@ -5923,7 +5923,7 @@
           "originalPrice": "$49"
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Product",
           "price": "$29"
         },
@@ -8037,7 +8037,7 @@
         {
           "quote": "Great!",
           "author": "John",
-          "avatar": "/images/avatar.svg"
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg"
         },
         {
           "quote": "Great!",
@@ -8053,7 +8053,7 @@
           "quote": "Excellent service!",
           "author": "Jane",
           "role": "CTO at Acme",
-          "avatar": "/images/avatar.svg",
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/A_headshot_of_a_women_with_a_lace_collar_-_DPLA_-_c61b69b2b947310702dcc6bf0f7b374c_%28page_1%29.jpg/330px-A_headshot_of_a_women_with_a_lace_collar_-_DPLA_-_c61b69b2b947310702dcc6bf0f7b374c_%28page_1%29.jpg",
           "rating": 5
         },
         {
