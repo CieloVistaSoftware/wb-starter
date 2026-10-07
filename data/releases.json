@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.377",
+      "date": "2026-10-06",
+      "summary": "The last 70 setup sleeps are resolved -- about 45 now wait for WB.settled, the live panel, a frame, an animation or a named condition (a dialog open, a selection moved, crossOrigin cleared, the error log written), and the rest are marked with their reason; the classifier gains `cap` (a timeout racing real work, which bounds a wait rather than being one) and `scenario` (elapsed time is what is under test: a page.route handler simulating a slow server, or `// sleep-is-the-scenario: &lt;reason&gt;` for a cooldown, a retry budget, a held scan); the setup ceiling drops to 0. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1684\" target=\"_blank\" rel=\"noopener\">PR 1684</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No setup sleep is left; time-as-scenario and timeout caps are classified, not counted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1bb94389b9bfa81f5c11da117b872d898d6e9f17\" target=\"_blank\" rel=\"noopener\"><code>1bb9438</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: setup 82. Now: setup 0, with every remaining sleep a reviewed negative, a poll interval, a timeout cap or a scenario.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/230899cabf33945361e3561e480eed9db47a925b\" target=\"_blank\" rel=\"noopener\"><code>230899c</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1679\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1679</a>"
+        },
+        {
+          "label": "Classifier",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.376",
       "date": "2026-10-06",
       "summary": "The input-theming test read input colours a fixed 150ms after switching theme, which on a slow runner was before the theme had landed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1668\" target=\"_blank\" rel=\"noopener\">PR 1668</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
