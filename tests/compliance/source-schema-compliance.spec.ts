@@ -32,10 +32,27 @@ const NON_FUNCTIONAL_SCHEMAS = ['button', 'css-oop', 'behaviors', 'home-page'];
 // fixCard() in fix-card.js and drawerLayout() in layouts.js -- just under a
 // camelCase export name the hyphenated schema.behavior string can never
 // literally match without this map).
+/**
+ * Behavior name -> exported function name. #344: this was a hand copy of the
+ * runtime's table and drifted (copybutton -> copyButton and searchfield ->
+ * searchField were reported "missing" while index.js resolved them fine), so
+ * it now READS src/wb-viewmodels/index.js's exportAliases. Only names that
+ * table does not carry are listed here.
+ */
+function runtimeExportAliases(): Record<string, string> {
+  const src = readFile(path.join(PATHS.behaviorsJs, 'index.js'));
+  const block = src.match(/const exportAliases = \{([\s\S]*?)\n\};/);
+  const out: Record<string, string> = {};
+  if (!block) return out;
+  const code = block[1].replace(/\/\/.*$/gm, '');
+  for (const m of code.matchAll(/['"]?([\w-]+)['"]?\s*:\s*['"](\w+)['"]/g)) out[m[1]] = m[2];
+  return out;
+}
+
 const FUNCTION_NAME_MAP: Record<string, string> = {
-  'switch': 'switchInput',
+  ...runtimeExportAliases(),
+  // fix-card.js registers its default export as fixCard.
   'fix-card': 'fixCard',
-  'drawer-layout': 'drawerLayout',
   // semantics/dialog.js: `export { dialog as modal }` -- x-modal IS dialog().
   'modal': 'dialog',
 };
@@ -102,7 +119,7 @@ test.describe('Source-Schema: Duplicate Variable Detection', () => {
       issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
     }
     // Track progress - these should be fixed over time
-    expect(issues.length, `${issues.length} duplicate declarations`).toBeLessThan(40);
+    expect(issues.length, `${issues.length} duplicate declarations`).toBeLessThanOrEqual(38) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
   
   test('no redeclared parameters in functions', () => {
@@ -159,7 +176,7 @@ test.describe('Source-Schema: Function Existence', () => {
       issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
     }
     // Track progress - not all schemas have corresponding functions yet
-    expect(issues.length, `${issues.length} missing functions`).toBeLessThan(20);
+    expect(issues.length, `${issues.length} missing functions`).toBeLessThanOrEqual(0) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
 });
 
@@ -184,7 +201,7 @@ test.describe('Source-Schema: Base Class Assignment', () => {
       if (!classAdded) issues.push(`${schema.behavior}: should add class "${baseClass}"`);
     }
     
-    expect(issues.length, 'Too many missing base classes').toBeLessThan(70);
+    expect(issues.length, 'Too many missing base classes').toBeLessThanOrEqual(35) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
 });
 
@@ -211,7 +228,7 @@ test.describe('Source-Schema: Required Children', () => {
       }
     }
     
-    expect(issues.length, 'Too many missing required children').toBeLessThan(30);
+    expect(issues.length, 'Too many missing required children').toBeLessThanOrEqual(0) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
 });
 
