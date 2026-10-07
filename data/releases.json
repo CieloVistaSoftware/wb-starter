@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.401",
+      "date": "2026-10-07",
+      "summary": "On CI for #1706, &quot;panel must appear after a real form submit&quot; failed: the submitted panel stayed hidden. The test filled the form the moment its inputs existed, but the example switch&#39;s render() then scans the preview eagerly and upgrades its controls, and a value typed before that scan has finished can be lost, leaving a required field empty so native validation blocks the submit without a word. #1706 widens that window -- an upgrade now waits for a stylesheet that is still loading instead of taking it as loaded -- which is likely why it surfaced there. The test now waits, via waitForFunction, for WB.settled() before filling, the same wait openPlaygroundInputs() makes, and blocks service workers like the other specs that hold page state (#1349). Not reproduced locally: the old spec passed 4/4 here; the new one passed 6/6. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1706\" target=\"_blank\" rel=\"noopener\">PR 1706</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Playground-endpoint-panel-reset fills the form only once its scan has settled</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8cbb2d49cdbd5b88ba872995313eb60c14bf4e98\" target=\"_blank\" rel=\"noopener\"><code>8cbb2d4</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>WB.settled() waits for behavior CSS that is still loading</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e7be26fa355124bd5b424fec8369f340ecc16b11\" target=\"_blank\" rel=\"noopener\"><code>e7be26f</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/playground-endpoint-panel-reset.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/playground-endpoint-panel-reset.spec.ts</a></code>. Before: CI on #1706 failed with #pg-endpoint hidden after the submit. Now: it fills only after the preview has settled, and passes 2/2.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4c3b0fe679acbc261b7f1eb7e6d37fcae34818f1\" target=\"_blank\" rel=\"noopener\"><code>4c3b0fe</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "PR",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1706\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1706</a>"
+        },
+        {
+          "label": "Related (idle signal)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/962</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.400",
       "date": "2026-10-07",
       "summary": "The first tagged release since 1.0.132. It gathers every change that went live as 1.0.133 to 1.0.399: remote photos in every example (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a>), behavior docs that say what each attribute accepts (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>), the !important cleanup (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>) and the test-timing fixes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>), among others. The npm publish waits on <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1517\" target=\"_blank\" rel=\"noopener\">#1517</a>.",
