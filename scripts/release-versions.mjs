@@ -36,7 +36,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc, issueLinks, itemFor, linkify, linksFrom, releaseNotes, seeItProblems } from './lib/release-item.mjs';
 import { issueTitles } from './lib/issue-titles.mjs';
-import { ANCHOR, STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
+import { ANCHOR, STAMP_SUBJECT as STAMP, countBase, isReleaseMerge } from './lib/push-count.mjs';
 import { releaseDate } from './lib/release-date.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -89,7 +89,9 @@ function commits(...args) {
   });
 }
 
-const spine = commits('--first-parent', '--reverse', `${tag}..HEAD`);
+// The merge that landed the release commit is the release's own push, and the
+// release already has its entry (push-count.mjs, isReleaseMerge).
+const spine = commits('--first-parent', '--reverse', `${tag}..HEAD`).filter((c) => !isReleaseMerge(ROOT, tag, c.sha));
 const entries = [];
 let pending = [];
 

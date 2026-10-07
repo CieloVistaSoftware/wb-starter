@@ -47,9 +47,9 @@
       "tag": "x-cardprofile",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardprofile", "attrs": { "name": "Alice Chen", "role": "UX Designer", "avatar": "/images/avatar.svg" } },
-        { "tag": "x-cardprofile", "attrs": { "name": "Bob Martinez", "role": "Lead Engineer", "avatar": "/images/avatar.svg", "bio": "Building scalable systems." } },
-        { "tag": "x-cardprofile", "attrs": { "name": "Clara Novak", "role": "Product Manager", "avatar": "/images/avatar.svg", "align": "left" } }
+        { "tag": "x-cardprofile", "attrs": { "name": "Alice Chen", "role": "UX Designer", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/A_headshot_of_a_woman_with_curly_bangs_-_DPLA_-_0936a395cf47547d5c6b0325cee484f5.jpg/330px-A_headshot_of_a_woman_with_curly_bangs_-_DPLA_-_0936a395cf47547d5c6b0325cee484f5.jpg" } },
+        { "tag": "x-cardprofile", "attrs": { "name": "Bob Martinez", "role": "Lead Engineer", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg", "bio": "Building scalable systems." } },
+        { "tag": "x-cardprofile", "attrs": { "name": "Clara Novak", "role": "Product Manager", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/A_headshot_of_a_woman_with_a_high_chignon_-_DPLA_-_b55eef9ae85258f9b52cf39f5b6a759b_%28page_1%29.jpg/330px-A_headshot_of_a_woman_with_a_high_chignon_-_DPLA_-_b55eef9ae85258f9b52cf39f5b6a759b_%28page_1%29.jpg", "align": "left" } }
       ]
     },
     {
@@ -127,7 +127,7 @@
       "tag": "x-cardhero",
       "columns": 1,
       "demos": [
-        { "tag": "x-cardhero", "attrs": { "background": "/images/placeholder.svg", "title": "Welcome to WB-Starter", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
+        { "tag": "x-cardhero", "attrs": { "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg", "title": "Welcome to WB-Starter", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
       ]
     },
     {
@@ -135,8 +135,8 @@
       "tag": "x-cardhorizontal",
       "columns": 2,
       "demos": [
-        { "tag": "x-cardhorizontal", "attrs": { "image": "/images/placeholder.svg", "title": "Horizontal Layout", "subtitle": "Image on the left, content on the right." } },
-        { "tag": "x-cardhorizontal", "attrs": { "image": "/images/placeholder.svg", "title": "Right Image", "subtitle": "Image position flipped.", "image-position": "right" } }
+        { "tag": "x-cardhorizontal", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1280px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg", "title": "Horizontal Layout", "subtitle": "Image on the left, content on the right." } },
+        { "tag": "x-cardhorizontal", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg", "title": "Right Image", "subtitle": "Image position flipped.", "image-position": "right" } }
       ]
     },
     {
@@ -175,9 +175,9 @@
       "tag": "x-cardoverlay",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardoverlay", "attrs": { "image": "/images/placeholder.svg", "title": "Bottom Text", "subtitle": "Default position" } },
-        { "tag": "x-cardoverlay", "attrs": { "image": "/images/placeholder.svg", "title": "Centered", "subtitle": "Position center", "position": "center" } },
-        { "tag": "x-cardoverlay", "attrs": { "image": "/images/placeholder.svg", "title": "Top Aligned", "subtitle": "Position top", "position": "top" } }
+        { "tag": "x-cardoverlay", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg", "title": "Bottom Text", "subtitle": "Default position" } },
+        { "tag": "x-cardoverlay", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg/1280px-Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg", "title": "Centered", "subtitle": "Position center", "position": "center" } },
+        { "tag": "x-cardoverlay", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg", "title": "Top Aligned", "subtitle": "Position top", "position": "top" } }
       ]
     },
     {
@@ -185,9 +185,9 @@
       "tag": "x-cardportfolio",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardportfolio", "attrs": { "name": "John Peters", "title": "Lead Software Engineer", "company": "Cielo Vista Software", "location": "Rochester, MN", "avatar": "/images/avatar.svg", "bio": "30+ years building enterprise solutions.", "skills": "JavaScript,TypeScript,.NET,PowerShell", "email": "john@example.com", "website": "https://example.com", "cta": "View Full Profile" } },
-        { "tag": "x-cardportfolio", "attrs": { "name": "Maya Rodriguez", "title": "AI Research Engineer", "company": "Anthropic Labs", "location": "San Francisco, CA", "avatar": "/images/avatar.svg", "bio": "Building safe AI systems with Claude and Python.", "skills": "Python,Claude API,PyTorch,LangChain,FastAPI", "github": "https://github.com/mayarodriguez", "stats": "[{\"label\":\"Papers\",\"value\":\"12\"},{\"label\":\"Repos\",\"value\":\"34\"},{\"label\":\"Models\",\"value\":\"200+\"}]", "cta": "View Research" } },
-        { "tag": "x-cardportfolio", "attrs": { "name": "David Kowalski", "title": "Senior .NET Architect", "company": "Contoso Solutions", "location": "Chicago, IL", "avatar": "/images/avatar.svg", "bio": "Cloud-native apps with C# and Azure.", "skills": "C#,ASP.NET Core,Azure,Blazor,SQL Server", "github": "https://github.com/dkowalski", "stats": "[{\"label\":\"Packages\",\"value\":\"18\"},{\"label\":\"Deploys\",\"value\":\"500+\"},{\"label\":\"Team\",\"value\":\"35\"}]", "cta": "Connect" } }
+        { "tag": "x-cardportfolio", "attrs": { "name": "John Peters", "title": "Lead Software Engineer", "company": "Cielo Vista Software", "location": "Rochester, MN", "bio": "30+ years building enterprise solutions.", "skills": "JavaScript,TypeScript,.NET,PowerShell", "email": "john@example.com", "website": "https://example.com", "cta": "View Full Profile" } },
+        { "tag": "x-cardportfolio", "attrs": { "name": "Maya Rodriguez", "title": "AI Research Engineer", "company": "Anthropic Labs", "location": "San Francisco, CA", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/A_headshot_of_a_young_woman_with_a_high_chignon_-_DPLA_-_b0f251d9543e3778d5abf3e0d680f610.jpg/330px-A_headshot_of_a_young_woman_with_a_high_chignon_-_DPLA_-_b0f251d9543e3778d5abf3e0d680f610.jpg", "bio": "Building safe AI systems with Claude and Python.", "skills": "Python,Claude API,PyTorch,LangChain,FastAPI", "github": "https://github.com/mayarodriguez", "stats": "[{\"label\":\"Papers\",\"value\":\"12\"},{\"label\":\"Repos\",\"value\":\"34\"},{\"label\":\"Models\",\"value\":\"200+\"}]", "cta": "View Research" } },
+        { "tag": "x-cardportfolio", "attrs": { "name": "David Kowalski", "title": "Senior .NET Architect", "company": "Contoso Solutions", "location": "Chicago, IL", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/A_headshot_of_a_young_man_with_combed_back_hair_-_DPLA_-_8fdffabe9cf50ff6c9e74d9912e0c175_%28page_2%29.jpg/330px-A_headshot_of_a_young_man_with_combed_back_hair_-_DPLA_-_8fdffabe9cf50ff6c9e74d9912e0c175_%28page_2%29.jpg", "bio": "Cloud-native apps with C# and Azure.", "skills": "C#,ASP.NET Core,Azure,Blazor,SQL Server", "github": "https://github.com/dkowalski", "stats": "[{\"label\":\"Packages\",\"value\":\"18\"},{\"label\":\"Deploys\",\"value\":\"500+\"},{\"label\":\"Team\",\"value\":\"35\"}]", "cta": "Connect" } }
       ]
     },
     {
@@ -195,9 +195,9 @@
       "tag": "x-cardproduct",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardproduct", "attrs": { "image": "/images/placeholder.svg", "title": "Wireless Headphones", "price": "$79", "original-price": "$129", "badge": "Sale", "rating": "4.5", "reviews": "234" } },
-        { "tag": "x-cardproduct", "attrs": { "image": "/images/placeholder.svg", "title": "Mechanical Keyboard", "price": "$149", "rating": "4.8", "reviews": "89", "cta": "Buy Now" } },
-        { "tag": "x-cardproduct", "attrs": { "image": "/images/placeholder.svg", "title": "USB-C Hub", "price": "$39", "description": "7-in-1 adapter", "featured": true } }
+        { "tag": "x-cardproduct", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg", "title": "Wireless Headphones", "price": "$79", "original-price": "$129", "badge": "Sale", "rating": "4.5", "reviews": "234" } },
+        { "tag": "x-cardproduct", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/IBM_Model_M_Spanish_Keyboard.jpg/1280px-IBM_Model_M_Spanish_Keyboard.jpg", "title": "Mechanical Keyboard", "price": "$149", "rating": "4.8", "reviews": "89", "cta": "Buy Now" } },
+        { "tag": "x-cardproduct", "attrs": { "image": "https://upload.wikimedia.org/wikipedia/commons/4/46/USB_hub.jpg", "title": "USB-C Hub", "price": "$39", "description": "7-in-1 adapter", "featured": true } }
       ]
     },
     {
@@ -205,9 +205,9 @@
       "tag": "x-cardtestimonial",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "This framework changed how we build UIs.", "author": "Sarah Kim", "role": "CTO, TechCorp", "avatar": "/images/avatar.svg", "rating": "5" } },
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "Clean, fast, and easy to use. Highly recommend.", "author": "Marcus Lee", "role": "Frontend Lead", "avatar": "/images/avatar.svg", "rating": "4" } },
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "The best component library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "/images/avatar.svg", "rating": "5" } }
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "This framework changed how we build UIs.", "author": "Sarah Kim", "role": "CTO, TechCorp", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/A_headshot_of_a_women_with_a_lace_collar_-_DPLA_-_c61b69b2b947310702dcc6bf0f7b374c_%28page_1%29.jpg/330px-A_headshot_of_a_women_with_a_lace_collar_-_DPLA_-_c61b69b2b947310702dcc6bf0f7b374c_%28page_1%29.jpg", "rating": "5" } },
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "Clean, fast, and easy to use. Highly recommend.", "author": "Marcus Lee", "role": "Frontend Lead", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg", "rating": "4" } },
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "The best component library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Woman_at_Lover%27s_Bridge_Tanjung_Sepat_%28cropped%29.jpg/330px-Woman_at_Lover%27s_Bridge_Tanjung_Sepat_%28cropped%29.jpg", "rating": "5" } }
       ]
     },
     {
@@ -215,7 +215,7 @@
       "tag": "x-cardvideo",
       "columns": 2,
       "demos": [
-        { "tag": "x-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Sample Video", "description": "Big Buck Bunny clip", "poster": "/images/placeholder.svg" } },
+        { "tag": "x-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Sample Video", "description": "Big Buck Bunny clip", "poster": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/500px-Big_buck_bunny_poster_big.jpg" } },
         { "tag": "x-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Looping Muted", "muted": true, "loop": true, "aspect": "4/3" } }
       ]
     }

@@ -1,4 +1,5 @@
 import { readAttr } from '../../core/read-attr.js';
+import { moveKeepingFocus } from '../../core/keep-focus.js';
 /**
  * Radio - Enhanced <input type="radio"> element
  * Adds visual enhancements, labels, radio groups
@@ -54,8 +55,10 @@ export function radio(element, options = {}) {
     wrapper = document.createElement('label');
     wrapper.className = 'x-radio-wrapper';
     
-    element.parentNode.insertBefore(wrapper, element);
-    wrapper.appendChild(element);
+    moveKeepingFocus(element, () => {   // #961
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+    });
 
     const labelText = document.createElement('span');
     labelText.className = 'x-radio-label';

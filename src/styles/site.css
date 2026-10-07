@@ -753,7 +753,7 @@ h5, h6 {
   /* Hide desktop collapsed state on mobile */
   .site__nav.x-sidebar--collapsed {
     transform: translateX(-100%);
-    width: 280px !important;
+    width: 280px;
   }
   
   .site__nav.x-sidebar--collapsed.site__nav--mobile-open {
@@ -1738,16 +1738,16 @@ a.x-btn-glass {
   .site__nav {
     position: fixed;
     top: 56px;
-    bottom: 0 !important;
+    bottom: 0;
     left: 0;
-    width: min(82vw, 300px) !important;
+    width: min(82vw, 300px);
     max-height: none;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 99;
   }
   .site__nav.site__nav--mobile-open {
-    transform: translateX(0) !important;
+    transform: translateX(0);
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
   }
   /* The drag-to-resize handle sits on the nav's right edge; when the drawer is
@@ -1953,24 +1953,24 @@ pre { max-width: 100%; overflow-x: auto; }
      NOT a horizontal bar and NOT an off-canvas side drawer. Hidden by default,
      the ☰ toggle reveals it in place (display-toggle — no max-height fight). */
   .site__nav {
-    position: static !important;
+    position: static;
     transform: none;
     flex: 0 0 auto;
-    width: 100% !important;
+    width: 100%;
     height: auto;
     max-height: none;
     top: auto;
-    bottom: auto;
     overflow: visible;
     display: none;   /* collapsed by default on phones */
-    box-shadow: none !important;
+    box-shadow: none;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
   }
   .site__nav.site__nav--mobile-open,
   .site__nav.x-sidebar--collapsed.site__nav--mobile-open {
-    display: block !important;
-    transform: none !important;
+    display: block;
+    transform: none;
+    box-shadow: none;
   }
   /* Items stack VERTICALLY, full width. */
   .site__nav .x-sidebar__items {
@@ -2033,7 +2033,10 @@ pre { max-width: 100%; overflow-x: auto; }
 /* Unconditional (no media query) and last in the file — the toggled-open
    state must win at every breakpoint regardless of which max-width block
    above matched, without depending on each of them separately remembering
-   to restore display alongside their own transform/position rules. */
+   to restore display alongside their own transform/position rules. It wins
+   without !important (#1014): two classes outrank every `.site__nav { display:
+   none }`, and nothing after it sets display. The phone block's
+   `--collapsed.--mobile-open` (three classes) keeps display: block. */
 .site__nav.site__nav--mobile-open {
-  display: flex !important;
+  display: flex;
 }

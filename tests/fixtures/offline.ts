@@ -52,8 +52,14 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
 import { localFor } from '../../scripts/sample-media-catalog.mjs';
+import { installProtocolErrorRecorder, protocolErrorsSince, describeProtocolErrors } from '../helpers/protocol-errors';
 
 export * from '@playwright/test';
+
+// #961: keep the browser's own reason for a failed evaluate. Playwright reports
+// every one of them as "Execution context was destroyed" (see
+// tests/helpers/protocol-errors.ts); a failing test now carries the real one.
+installProtocolErrorRecorder();
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OFFLINE_DIR = join(HERE, 'offline');
@@ -314,7 +320,16 @@ export const test = base.extend<OfflineFixtures>({
     const add = (line: string) => { if (network.length < MAX) network.push(line); };
     context.on('response', (r) => add(`${r.status()} ${r.request().method()} ${r.url()}`));
     context.on('requestfailed', (r) => add(`FAILED (${r.failure()?.errorText || 'unknown'}) ${r.method()} ${r.url()}`));
+    const since = Date.now();
     await use(context);
+    if (testInfo.status !== testInfo.expectedStatus) {
+      // #961: what the browser actually answered, under Playwright's rewrite.
+      const errors = protocolErrorsSince(since);
+      await testInfo.attach('protocol-errors', {
+        body: describeProtocolErrors(errors, since) + '\n',
+        contentType: 'text/plain',
+      });
+    }
     if (testInfo.status !== testInfo.expectedStatus && network.length) {
       const file = testInfo.outputPath('network.txt');
       mkdirSync(dirname(file), { recursive: true });

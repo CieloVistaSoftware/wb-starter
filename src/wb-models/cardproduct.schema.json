@@ -311,11 +311,11 @@
       "<div x-cardproduct variant=\"compact\">variant=compact</div>",
       "<div x-cardproduct variant=\"horizontal\">variant=horizontal</div>",
       "<div x-cardproduct featured>with featured</div>",
-      "<div x-cardproduct image=\"/images/dachshund-puppy-image-960x540.jpg\">image=\"/images/dachshund-puppy-image-960x540.jpg\"</div>",
+      "<div x-cardproduct image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\">image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\"</div>",
       "<div x-cardproduct title=\"Sample title\">title=\"Sample title\"</div>",
       "<div x-cardproduct description=\"Sample description\">description=\"Sample description\"</div>",
       "<div x-cardproduct title=\"Widget\" price=\"$29\"></div>",
-      "<div x-cardproduct image=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></div>"
+      "<div x-cardproduct image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" title=\"Widget\" price=\"$19\" badge=\"Sale\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -329,7 +329,7 @@
           "originalPrice": "$49"
         },
         {
-          "image": "/images/dachshund-puppy-image-960x540.jpg",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Product",
           "price": "$29"
         },

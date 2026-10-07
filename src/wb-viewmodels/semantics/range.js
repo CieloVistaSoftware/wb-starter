@@ -24,6 +24,7 @@
  * false.
  */
 import { readFlag, readAttr } from '../../core/read-attr.js';
+import { moveKeepingFocus } from '../../core/keep-focus.js';
 
 /**
  * Read this behavior's four options off a host element.
@@ -82,8 +83,10 @@ export function range(element, options = {}) {
     // written onto each element's style attribute).
     wrapper.className = 'x-range-wrapper';
 
-    element.parentNode.insertBefore(wrapper, element);
-    wrapper.appendChild(element);
+    moveKeepingFocus(element, () => {   // #961
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+    });
 
     // Value display
     if (config.showValue) {

@@ -20,7 +20,7 @@ merged.
 <article
   x-cardtestimonial
   quote="This product changed my life. Highly recommended!"
-  author="Jane Smith"
+  author="James Smith"
   role="CEO, TechCorp">
 </article>
 </div>
@@ -54,7 +54,7 @@ The `<cite>` element identifies the source of a quotation:
   quote="This product changed my life. The support team is incredible and the features are exactly what I needed."
   author="Jane Smith"
   role="CEO, TechCorp"
-  avatar="/images/placeholder.svg"
+  avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg"
   rating="5">
 </article>
 </div>
