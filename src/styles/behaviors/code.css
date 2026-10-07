@@ -130,7 +130,7 @@ pre > .x-code {
   padding: 0.1rem 0.3rem;
   border-radius: var(--radius-sm, 3px);
   cursor: pointer;
-  font-size: 0.6rem;
+  font-size: max(0.6rem, 12px); /* the 12px readability floor, as .x-pre__copy */
   line-height: 1;
   transition: background-color 0.2s ease;
 }

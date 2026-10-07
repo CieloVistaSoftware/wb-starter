@@ -261,8 +261,25 @@ test.describe('Behaviors selector — interaction', () => {
       const scroller = (document.getElementById('siteBody') || document.scrollingElement)!;
       const rows = () => [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
 
+      // Wait for what each step needs, not a clock (#1516): until `done()`
+      // holds and the list and page have stopped scrolling for two frames.
+      const frame = () => new Promise((r) => requestAnimationFrame(r));
+      const settle = async (done: () => boolean) => {
+        const deadline = performance.now() + 10000;
+        let last = '';
+        let still = 0;
+        while (performance.now() < deadline) {
+          await frame();
+          const pos = `${scroller.scrollTop}|${list.scrollTop}`;
+          still = done() && pos === last ? still + 1 : 0;
+          last = pos;
+          if (still >= 2) return;
+        }
+      };
+
       rows()[0].click();
-      await new Promise((r) => setTimeout(r, 1200));
+      await settle(() => !document.getElementById('behaviors-live')?.hasAttribute('aria-busy')
+        && !!list.querySelector('[aria-current="true"]'));
       const pageBefore = Math.round(scroller.scrollTop);
       const listBefore = Math.round(list.scrollTop);
 
@@ -279,7 +296,7 @@ test.describe('Behaviors selector — interaction', () => {
       for (let i = 0; i < steps; i++) {
         const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
         cur.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }));
-        await new Promise((r) => setTimeout(r, 250));
+        await settle(() => list.querySelector('[aria-current="true"]') !== cur);
         const now = list.querySelector('[aria-current="true"]') as HTMLElement;
         walked.push(now.dataset.label + '·' + (now.dataset.variant || ''));
         // The real requirement: the selection never leaves the visible list.
@@ -329,7 +346,8 @@ test.describe('Behaviors selector — interaction', () => {
       // #950: opening it must WORK, even though nothing opens it automatically.
       const summary = panel.querySelector('summary') as HTMLElement | null;
       if (summary) summary.click(); else panel.open = true;
-      await new Promise((r) => setTimeout(r, 200));
+      // <summary> toggles open on the click itself; one frame, not 200ms (#1516).
+      await new Promise((r) => requestAnimationFrame(r));
       return {
         visible: !panel.hidden,
         opensOnClick: panel.open,
@@ -363,12 +381,11 @@ test.describe('Behaviors selector — interaction', () => {
       const count = () => document.querySelectorAll('.behaviors-search-results__row').length;
       const before = count();
       input.value = 'ripple';
+      // No sleeps (#1516): the page filters synchronously on 'input'.
       input.dispatchEvent(new Event('input', { bubbles: true }));
-      await new Promise((res) => setTimeout(res, 500));
       const filtered = count();
       input.value = '';
       input.dispatchEvent(new Event('input', { bubbles: true }));
-      await new Promise((res) => setTimeout(res, 500));
       return { before, filtered, restored: count() };
     });
 
