@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.374",
+      "date": "2026-10-06",
+      "summary": "Eleven behavior and card specs that slept 100-1000ms after WB.scan now wait for WB.settled (x-button-effect also for its colour transitions, which settle alone read mid-fade), four wb.js fixtures chain WB.settled before setting __wbDone so their fixed 800ms after it goes, and the scanner no longer counts a helper like audio-eq&#39;s waitForSettle(ms) -- which resolves on media events and only uses a timer as its cap -- as a sleep; the ceilings drop to setup 82 and negative 55. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1679\" target=\"_blank\" rel=\"noopener\">PR 1679</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Eager scans and lazy fixtures wait for WB.settled; event-timeout helpers are not sleeps</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/86ea2860422c77422f02ca73bbe7f61526e71c4a\" target=\"_blank\" rel=\"noopener\"><code>86ea286</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: setup 99, negative 58 (ceiling). Now: setup 82, negative 55, and every edited spec passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/74d9ddcf01575e0d1774f12f54b356525d05cb09\" target=\"_blank\" rel=\"noopener\"><code>74d9ddc</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1676\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1676</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.373",
       "date": "2026-10-06",
       "summary": "Audio&#39;s light theme and the dev console still used !important where nothing needed it, and the gate counted a vendored library&#39;s grammar strings. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1675\" target=\"_blank\" rel=\"noopener\">PR 1675</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
