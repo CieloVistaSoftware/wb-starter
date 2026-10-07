@@ -1,5 +1,6 @@
 import { readAttr, hasAuthoredAttr, authoredAttr } from '../../core/read-attr.js';
 import { logError } from '../../core/error-logger.js';
+import { moveKeepingFocus } from '../../core/keep-focus.js';
 
 /**
  * #793 -- John: "This should be a runtime error. No Icon". An iconPosition
@@ -306,8 +307,11 @@ export function input(element, options = {}) {
   // --native scopes the field padding/outline and clear-button chrome that
   // only this path ever applied.
   wrapper.className = 'x-input__wrapper x-input__wrapper--native';
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
+  // #961: the wrap must not take focus from a reader already typing here.
+  moveKeepingFocus(element, () => {
+    element.parentNode.insertBefore(wrapper, element);
+    wrapper.appendChild(element);
+  });
   element.classList.add('x-input__field');
   
   // #671: border/borderRadius/background/color were set inline here too, with

@@ -10,6 +10,7 @@
  */
 import { setRule, clearRules } from '../../core/dynamic-style.js';
 import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
+import { moveKeepingFocus } from '../../core/keep-focus.js';
 
 let _textareaHostDeprecationWarned = false;
 
@@ -206,10 +207,12 @@ export function textarea(element, options = {}) {
     const counterWrapper = document.createElement('div');
     counterWrapper.className = 'x-textarea-wrapper';
     
-    if (element.parentNode) {
-      element.parentNode.insertBefore(counterWrapper, element);
-    }
-    counterWrapper.appendChild(element);
+    moveKeepingFocus(element, () => {   // #961
+      if (element.parentNode) {
+        element.parentNode.insertBefore(counterWrapper, element);
+      }
+      counterWrapper.appendChild(element);
+    });
 
     counter = document.createElement('div');
     // Styled by .x-textarea__counter (and --over) in input.css (#779).
