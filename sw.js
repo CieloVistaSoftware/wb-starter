@@ -38,6 +38,11 @@ const STATIC_ASSETS = [
 // that exercise this worker on localhost (503s, range requests) still run it.
 const DEVELOPMENT_ORIGIN = ['localhost', '127.0.0.1', '[::1]'].includes(self.location.hostname);
 
+// #1713: statuses a host sends while it is briefly unable to answer (GitHub
+// Pages during a deploy). One retry after this pause, then the cached copy.
+const TRANSIENT_5XX = new Set([502, 503, 504]);
+const TRANSIENT_5XX_RETRY_MS = 300;
+
 self.addEventListener('install', event => {
   if (DEVELOPMENT_ORIGIN) { event.waitUntil(self.skipWaiting()); return; }
   event.waitUntil(
@@ -91,8 +96,38 @@ self.addEventListener('fetch', event => {
   // unchanged file costs a 304, a deployed one arrives on the next load.
   // Cross-origin requests (CDNs) keep the browser default.
   const sameOrigin = new URL(event.request.url).origin === self.location.origin;
+  const fromNetwork = () => (sameOrigin ? fetch(event.request, { cache: 'no-cache' }) : fetch(event.request));
+
+  // #1713: a 5xx is a RESOLVED response, so the .catch() fallback below never
+  // saw it. On 2026-10-07 GitHub Pages answered src/core/tag-map.js with a 503
+  // while a deploy was going out; the worker handed that straight to the page,
+  // which broke the whole module graph, even though it held a good copy of the
+  // file and the same URL answered 200 seconds later. For a same-origin GET
+  // answered 502/503/504 (the host's "not right now" statuses, unlike a 500
+  // from a real bug), ask once more after a short pause; if the host still
+  // answers 5xx, serve the cached copy of that exact URL. With no cached copy
+  // the server's own response is returned unchanged, so a real outage stays
+  // visible as a 5xx. Neither the 5xx nor anything served from the cache is
+  // written back to the cache (the store below only sees ok responses).
+  const networkFirst = sameOrigin
+    ? fromNetwork().then(response => {
+      if (!TRANSIENT_5XX.has(response.status)) return response;
+      return new Promise(resolve => setTimeout(resolve, TRANSIENT_5XX_RETRY_MS))
+        .then(fromNetwork)
+        .catch(() => response)
+        .then(retry => {
+          if (!TRANSIENT_5XX.has(retry.status)) return retry;
+          return caches.match(event.request)
+            .catch(() => undefined)
+            .then(cached => cached ? { cached } : retry);
+        });
+    })
+    : fromNetwork();
+
   event.respondWith(
-    (sameOrigin ? fetch(event.request, { cache: 'no-cache' }) : fetch(event.request)).then(response => {
+    networkFirst.then(result => {
+      if (result && result.cached) return result.cached;
+      const response = result;
       if (response.ok && response.status !== 206 && !DEVELOPMENT_ORIGIN) {
         const clone = response.clone();
         caches.open(CACHE_VERSION)
