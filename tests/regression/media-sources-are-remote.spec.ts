@@ -126,14 +126,8 @@ test.describe('Media sources are remote', () => {
    * data/ is exempt above because it was taken to be generated; these files
    * are curated, so they are read here.
    */
-  test('no JSON value or curated catalogue names a retired local image', () => {
-    // The three local images #1187 retired: the generic placeholder, the
-    // generic avatar and the dachshund photo. The scene placeholders
-    // (placeholder-mountain.svg and friends) are still in docs/behaviors/
-    // cardhorizontal.md, whose demo is held to the code-panel width rule
-    // (DEMOS-AND-DOCS-STANDARDS §6) that a full Wikimedia URL cannot meet.
-    // That conflict is John's call; it is recorded on #1187.
-    const LOCAL_IMAGE_VALUE = /(?:=|:)\s*\\?["'](\/?images\/(?:placeholder|avatar|dachshund-puppy-image-960x540)\.(?:svg|jpg))/g;
+  test('no JSON value or curated catalogue names a local image', () => {
+    const LOCAL_IMAGE_VALUE = /(?:=|:)\s*\\?["'](\/?images\/[^"'\\]+\.(?:svg|png|jpe?g|gif|webp|avif))/g;
     const CURATED = ['data/behavior-examples.json', 'data/propertyconfig.json', 'data/pages'];
     const files = [
       ...SCAN_DIRS.flatMap((dir) => walk(join(ROOT, dir))),

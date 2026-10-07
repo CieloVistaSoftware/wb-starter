@@ -120,9 +120,15 @@ async function assertCodePanelStandards(demo: Locator, label: string): Promise<v
       overflowX: getComputedStyle(el).overflowX,
       scrollWidth: el.scrollWidth,
       clientWidth: el.clientWidth,
+      atCap: el.getBoundingClientRect().width >= window.innerWidth * 0.5 - 2,
     }));
     expect(metrics.whiteSpace, `${label}: code panel [${p}] must never wrap`).toBe('pre');
     expect(metrics.overflowX, `${label}: code panel [${p}] must scroll horizontally instead of wrapping`).toBe('auto');
+    // The one scroll that is correct: code wider than 50vw sits AT the cap
+    // and scrolls the rest (owner requirement 2026-08-07, "all x-demo code
+    // must show all the code up to 50% vw"; doc-viewer-code-panel-not-narrow
+    // applies the same rule). A remote image URL is such a line (#1187).
+    if (metrics.atCap) continue;
     expect(
       metrics.scrollWidth,
       `${label}: code panel [${p}] is ${metrics.scrollWidth}px of content in a ${metrics.clientWidth}px box -- narrower than its own content`

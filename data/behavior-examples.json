@@ -245,7 +245,7 @@
       "examples": [
         {
           "label": "city",
-          "source": "<button variant=\"secondary\" x-lightbox src=\"/images/placeholder-city.svg\">\n  Open the city photo\n</button>"
+          "source": "<button variant=\"secondary\" x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg\">\n  Open the city photo\n</button>"
         },
         {
           "label": "forest",
@@ -253,15 +253,15 @@
         },
         {
           "label": "sunrise",
-          "source": "<button variant=\"warning\" size=\"lg\" x-lightbox src=\"/images/placeholder-sunrise.svg\">\n  See the sunrise\n</button>"
+          "source": "<button variant=\"warning\" size=\"lg\" x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg/1280px-Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg\">\n  See the sunset\n</button>"
         },
         {
           "label": "on a thumbnail",
-          "source": "<img x-lightbox src=\"/images/placeholder-mountain.svg\" alt=\"Mountain ridge — click to enlarge\" width=\"160\">"
+          "source": "<img x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Snow-capped peaks above a lake — click to enlarge\" width=\"160\">"
         },
         {
           "label": "office",
-          "source": "<button variant=\"error\" x-lightbox src=\"/images/placeholder-office.svg\">\n  Office photo\n</button>"
+          "source": "<button variant=\"error\" x-lightbox src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg\">\n  Office building at night\n</button>"
         }
       ]
     },
@@ -950,7 +950,7 @@
         },
         {
           "label": "an image only",
-          "source": "<img id=\"x-ex-fs-img\" src=\"/images/placeholder-mountain.svg\" alt=\"Mountain ridge\">\n<button variant=\"secondary\" x-fullscreen target=\"#x-ex-fs-img\">View image fullscreen</button>"
+          "source": "<img id=\"x-ex-fs-img\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Snow-capped peaks above a lake\">\n<button variant=\"secondary\" x-fullscreen target=\"#x-ex-fs-img\">View image fullscreen</button>"
         },
         {
           "label": "error colour",
@@ -1178,7 +1178,7 @@
       "alternates": []
     },
     "x-cardimage": {
-      "source": "<article x-cardimage\n  src=\"/images/placeholder-portrait.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+      "source": "<article x-cardimage\n  src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg/1280px-Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
       "alternates": []
     },
     "x-cardlink": {
@@ -1363,7 +1363,7 @@
         },
         {
           "label": "rich content",
-          "source": "<div x-accordion>\n  <details summary=\"Screenshot\" open><img src=\"/images/placeholder-office.svg\" alt=\"Office\" width=\"240\"></details>\n  <details summary=\"Notes\"><p>Taken on the second floor.</p></details>\n</div>"
+          "source": "<div x-accordion>\n  <details summary=\"Screenshot\" open><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg\" alt=\"The Price Building, Quebec City, at night\" width=\"240\"></details>\n  <details summary=\"Notes\"><p>Taken on the second floor.</p></details>\n</div>"
         }
       ]
     },
@@ -2043,7 +2043,7 @@
         },
         {
           "label": "with an image",
-          "source": "<div x-collapse heading=\"Floor plan\" expanded>\n  <img src=\"/images/placeholder-office.svg\" alt=\"Floor plan\" width=\"240\">\n</div>"
+          "source": "<div x-collapse heading=\"The building\" expanded>\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg\" alt=\"The Price Building, Quebec City, at night\" width=\"240\">\n</div>"
         },
         {
           "label": "list inside",
@@ -2319,7 +2319,7 @@
       "examples": [
         {
           "label": "holding an image",
-          "source": "<div x-resizable handles=\"se\">\n  <img src=\"/images/placeholder-waves.svg\" alt=\"Waves\" width=\"240\">\n</div>"
+          "source": "<div x-resizable handles=\"se\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg/1280px-Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg\" alt=\"A coastline from the air\" width=\"240\">\n</div>"
         },
         {
           "label": "holding a list",
@@ -2353,7 +2353,7 @@
         },
         {
           "label": "ad slot",
-          "source": "<aside x-scrollalong offset=\"0\">\n  <img src=\"/images/placeholder-product.svg\" alt=\"Product\" width=\"160\">\n</aside>"
+          "source": "<aside x-scrollalong offset=\"0\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg\" alt=\"Studio headphones\" width=\"160\">\n</aside>"
         },
         {
           "label": "progress note",
@@ -2402,7 +2402,7 @@
       ]
     },
     "x-glass": {
-      "source": "<section x-cardhero\n  background=\"images/placeholder-waves.svg\"\n  height=\"280px\"\n  pretitle=\"x-glass\"\n  title=\"Infinite Possibility.\"\n  cta=\"Try the Playground\"\n  ctaSecondary=\"Read the Guide\"></section>",
+      "source": "<section x-cardhero\n  background=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg\"\n  height=\"280px\"\n  pretitle=\"x-glass\"\n  title=\"Infinite Possibility.\"\n  cta=\"Try the Playground\"\n  ctaSecondary=\"Read the Guide\"></section>",
       "alternates": [
         "<button x-glass amount=\"some\">amount=some</button>",
         "<button x-glass amount=\"least\">amount=least</button>"
