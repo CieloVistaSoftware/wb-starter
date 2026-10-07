@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.405",
+      "date": "2026-10-07",
+      "summary": "Ten classes the form behaviors add had no stylesheet rule, so an input group&#39;s &quot;$&quot; and &quot;USD&quot; fell onto separate lines, an inline form row stacked like a plain one, a colour picker was the browser&#39;s grey box in a dark theme, and a loading autocomplete looked idle. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1717\" target=\"_blank\" rel=\"noopener\">#1717</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Form-control classes get the rules they were missing; gate the rest</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1717\" target=\"_blank\" rel=\"noopener\">#1717</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/40a14af957c7008f579fe02340e01b0f064e5cde\" target=\"_blank\" rel=\"noopener\"><code>40a14af</code></a>",
+          "issues": [
+            1095,
+            1717
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;div x-inputgroup&gt;&lt;span data-prepend&gt;$&lt;/span&gt;&lt;input&gt;&lt;span data-append&gt;USD&lt;/span&gt;&lt;/div&gt;, then switch to the light theme. Before: &quot;$&quot;, the field and &quot;USD&quot; sat on three separate lines with no frame. Now: they form one joined control whose addon fill follows the theme, and an x-formrow with data-inline puts its label beside the field.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/40a14af957c7008f579fe02340e01b0f064e5cde\" target=\"_blank\" rel=\"noopener\"><code>40a14af</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.404",
       "date": "2026-10-07",
       "summary": "On the live site, GitHub Pages answered <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a> with a 503 during a deploy, and the service worker handed it straight to the page, breaking the whole module graph even though it held a good cached copy. A same-origin GET answered 502/503/504 is now retried once after 300 ms; if the host still answers 5xx the worker serves its cached copy of that URL, and with no cached copy the real 5xx still reaches the page. Nothing non-ok is ever cached. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1713\" target=\"_blank\" rel=\"noopener\">#1713</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1714\" target=\"_blank\" rel=\"noopener\">#1714</a>",
