@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { networkBarrier } from '../base';
 
 /**
  * pages/issues.html renders GitHub issue bodies through mdhtml() and never
@@ -83,8 +84,10 @@ test('pages/issues.html never fetches the fake illustrative path embedded in iss
   // code, not promoted into a live element.
   await expect(expander).toContainText('x-mdhtml', { timeout: 10000 });
   await expect(expander.locator('[x-mdhtml]')).toHaveCount(0);
-  // sleep-proves-negative: the illustrative path must NEVER be fetched; a fetch that never happens fires no event
-  await page.waitForTimeout(1000);
+  // The page's own scan of the rendered body has run once WB settles, and any
+  // request it made has reached the listener once the barrier has (#1516).
+  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+  await networkBarrier(page);
 
   expect(fetched, 'the fake illustrative /docs/guide.md path embedded in #527\'s own body must never actually be fetched').toEqual([]);
 });

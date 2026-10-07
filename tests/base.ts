@@ -581,39 +581,23 @@ export async function waitForWB(page: Page): Promise<void> {
 }
 
 /**
- * Wait for ONE element to finish being built (#970).
+ * Every request the page has issued so far has reached the test (#1516).
  *
- * Both runtimes stamp `x-ready` on an element the moment it has no injections
- * left in flight, so this waits for the thing you are about to assert on rather
- * than for a clock.
- *
- *     const card = page.locator('#card-gallery article').first();
- *     await elementReady(card);
- *     await expect(card.locator('header h3')).toHaveText('Welcome');
- *
- * WHY PER-ELEMENT, measured rather than assumed:
- *
- * Two loads of demos/site/cards.html build the DOM in a DIFFERENT ORDER but
- * reach a byte-for-byte IDENTICAL end state — 1,435 elements, same signature.
- * So the instability behind #961 was never wrong rendering. It was tests
- * sampling mid-construction and landing at different points, because a
- * `waitForTimeout(4000)` guesses when building is done and guesses wrong
- * whenever the machine is busy.
- *
- * A page-wide wait cannot fix it here: that page takes longer to finish than
- * the 30s test timeout, which is how awaiting `WB.ready` killed 31 tests in
- * beforeEach. Waiting for one element is both correct and cheap.
- *
- * For a below-the-fold element on the lazy runtime, scroll first — nothing is
- * injected until it intersects, so `x-ready` will never arrive on its own:
- *
- *     await safeScrollIntoView(card);
- *     await elementReady(card);
- *
- * NOTE: `x-ready` means SETTLED, not SUCCEEDED. A behavior that threw stamps it
- * too; failure is reported separately as `x-error`. Assert on the outcome you
- * actually care about after this resolves.
+ * A check that a request was NEVER made has no event to wait for. What it can
+ * wait for is the point after which that request would already have been seen:
+ * send one marker request now and wait for it. The browser reports a page's
+ * requests in the order it issues them, so once the marker has arrived, any
+ * request issued before it -- a <link> that became real, a late log POST --
+ * has arrived too. Call it once the step that would have made the request has
+ * run (WB.settled, the response that triggers it, ...).
  */
+export async function networkBarrier(page: Page): Promise<void> {
+  const marker = `/index.html?network-barrier=${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const seen = page.waitForRequest((r) => r.url().includes(marker), { timeout: 10000 });
+  await page.evaluate((u) => { void fetch(u, { cache: 'no-store' }).then((r) => r.text()).catch(() => {}); }, marker);
+  await seen;
+}
+
 /**
  * Stop the page's installed fake clock (page.clock.install()) with no timer of
  * interest pending yet, so a delay the test then starts runs from a known zero.
@@ -649,6 +633,40 @@ export async function pointerTo(page: Page, locator: Locator): Promise<void> {
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
 }
 
+/**
+ * Wait for ONE element to finish being built (#970).
+ *
+ * Both runtimes stamp `x-ready` on an element the moment it has no injections
+ * left in flight, so this waits for the thing you are about to assert on rather
+ * than for a clock.
+ *
+ *     const card = page.locator('#card-gallery article').first();
+ *     await elementReady(card);
+ *     await expect(card.locator('header h3')).toHaveText('Welcome');
+ *
+ * WHY PER-ELEMENT, measured rather than assumed:
+ *
+ * Two loads of demos/site/cards.html build the DOM in a DIFFERENT ORDER but
+ * reach a byte-for-byte IDENTICAL end state — 1,435 elements, same signature.
+ * So the instability behind #961 was never wrong rendering. It was tests
+ * sampling mid-construction and landing at different points, because a
+ * `waitForTimeout(4000)` guesses when building is done and guesses wrong
+ * whenever the machine is busy.
+ *
+ * A page-wide wait cannot fix it here: that page takes longer to finish than
+ * the 30s test timeout, which is how awaiting `WB.ready` killed 31 tests in
+ * beforeEach. Waiting for one element is both correct and cheap.
+ *
+ * For a below-the-fold element on the lazy runtime, scroll first — nothing is
+ * injected until it intersects, so `x-ready` will never arrive on its own:
+ *
+ *     await safeScrollIntoView(card);
+ *     await elementReady(card);
+ *
+ * NOTE: `x-ready` means SETTLED, not SUCCEEDED. A behavior that threw stamps it
+ * too; failure is reported separately as `x-error`. Assert on the outcome you
+ * actually care about after this resolves.
+ */
 export async function elementReady(locator: Locator, timeoutMs = 15000): Promise<void> {
   await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
   await locator.first().evaluate(

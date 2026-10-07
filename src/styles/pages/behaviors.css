@@ -68,13 +68,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* A demo or heading hidden by the search filter -- toggled via JS, not a
-   static rule, but declared here so the behavior is co-located with the
-   rest of this feature's styling. */
-[data-behaviors-search-hidden] {
-  display: none !important;
-}
-
 /* #642: John, "the search box says there are 69 items ... but
    there is no content. I want an element that has 69 rows of information
    for the end user." -- a real, immediately-visible results list, right

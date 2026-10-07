@@ -6,6 +6,103 @@
   ],
   "releases": [
     {
+      "version": "1.0.395",
+      "date": "2026-10-07",
+      "summary": "The site nav drawer&#39;s phone and tablet rules in site.css carried 10 !important that only existed to outrank each other, so no one rule could be removed alone without moving the shell&#39;s layout. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1703\" target=\"_blank\" rel=\"noopener\">PR 1703</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site nav drawer without !important</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8cfb7293c6f6d9416f7b41ffa224ec565c2b738a\" target=\"_blank\" rel=\"noopener\"><code>8cfb729</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open / at 360px wide and tap the hamburger, then at 700px and at 1280px. Before: the menu opened the same way, held by 10 !important in site.css, and the gate&#39;s register allowed 17. Now: it opens the same way with none, and the register allows 7.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c971fad5d62af01de859bf5f6fa05d21774df127\" target=\"_blank\" rel=\"noopener\"><code>c971fad</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.394",
+      "date": "2026-10-07",
+      "summary": "The coloured left edge of a success, danger, warning, info or primary card was held with !important (5 in card.css) so hover could not repaint it, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/behaviors.css\" target=\"_blank\" rel=\"noopener\">pages/behaviors.css</a> kept an !important rule for a data-behaviors-search-hidden attribute that nothing sets any more. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1701\" target=\"_blank\" rel=\"noopener\">PR 1701</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Card accent and behaviors search-hidden without !important</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/bf0c2c2720ce2bb4502f2070ee8a5cdb08970118\" target=\"_blank\" rel=\"noopener\"><code>bf0c2c2</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;article x-card variant=&quot;success&quot; featured title=&quot;Zed&quot;&gt;Body&lt;/article&gt;, then hover it and add class x-card--active. Before: the green 4px left edge came from !important, and the gate&#39;s register allowed 23. Now: the same green 4px edge in every state comes from --x-card-accent, and the register allows 17.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ff61b8c1aa07c0490a51db39248b9e172bca0d25\" target=\"_blank\" rel=\"noopener\"><code>ff61b8c</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.393",
+      "date": "2026-10-07",
+      "summary": "Every remaining &quot;sleep-proves-negative&quot; now waits for the point after which the unwanted thing would already have happened, then asserts. A click or keystroke on the Behaviors page waits for the render it started (aria-busy clears on the newest one). A log POST that must not happen waits for logError&#39;s own &quot;[ErrorLogger]&quot; line, which prints only after its POST is answered. The stale navigation waits for its own navigateTo() promise. A disabled x-button is checked with the Navigation API&#39;s navigate event, which fires synchronously on location.href. The wheel fallback, retry and clock timers run on page.clock. A request that must never go out is checked after networkBarrier(), a new helper in <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a>: one marker request that every earlier request precedes. The cosmic nebula is checked as &quot;nothing animates its ::before&quot; instead of watched for 1.5s. The marked ceiling drops to 0. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1700\" target=\"_blank\" rel=\"noopener\">PR 1700</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The last 21 negative proofs wait for the step that would have done the wrong thing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/56536545d591336dd6e1b99fb4650ab011b20ac0\" target=\"_blank\" rel=\"noopener\"><code>5653654</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: 33 sleeps, 21 of them marked negative proofs. Now: 12 sleeps (4 scenarios, 3 polls, 5 caps) and marked 0, and no-new-fixed-sleeps holds it there.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/75da035c84079eb9d2a9b0a8ad71627e3bef664d\" target=\"_blank\" rel=\"noopener\"><code>75da035</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.392",
+      "date": "2026-10-07",
+      "summary": "Data/component-index.json listed 74 components with doc paths under docs/components/, a folder that no longer exists, and no code in src/, pages/, public/, scripts/ or tests/ reads it. Unused files are removed (John, 2026-10-07). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1698\" target=\"_blank\" rel=\"noopener\">#1698</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1699\" target=\"_blank\" rel=\"noopener\">#1699</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Remove <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/component-index.json\" target=\"_blank\" rel=\"noopener\">data/component-index.json</a> -- 74 dead doc paths, read by nothing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1698\" target=\"_blank\" rel=\"noopener\">#1698</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1699\" target=\"_blank\" rel=\"noopener\">#1699</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/808dc82e8d10220927e6b757aeb8ba11ebe32b98\" target=\"_blank\" rel=\"noopener\"><code>808dc82</code></a>",
+          "issues": [
+            1698,
+            1699
+          ]
+        }
+      ],
+      "seeIt": "Run <code>grep -rn &quot;component-index.json&quot; src pages public scripts tests</code>. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/component-index.json\" target=\"_blank\" rel=\"noopener\">data/component-index.json</a> existed with 74 dead docPath entries and the grep found only two spec comments. Now: the file is gone, the grep still finds only those comments, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/x-demo-events-fire.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/x-demo-events-fire.spec.ts</a> and live-examples-render.spec.ts pass (13/13).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/808dc82e8d10220927e6b757aeb8ba11ebe32b98\" target=\"_blank\" rel=\"noopener\"><code>808dc82</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.391",
       "date": "2026-10-07",
       "summary": "Site.css carried 28 !important declarations, 18 of which won nothing, and the 10 that matter had no recorded reason. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1697\" target=\"_blank\" rel=\"noopener\">PR 1697</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",

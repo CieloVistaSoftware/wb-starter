@@ -22,10 +22,7 @@ const root = process.cwd();
 
 /** !important declarations still in src/ on 2026-10-07, by file. Shrink only. */
 const REGISTER: Record<string, number> = {
-  'src/styles/behaviors/card.css': 5,   // the variant accent border must survive the hover rule's border-color on every card type
   'src/styles/normalize.css': 5,   // prefers-reduced-motion and [hidden]: both must beat every component's own value, by design
-  'src/styles/pages/behaviors.css': 1,   // [data-behaviors-search-hidden] must beat whatever display a row's class sets, like [hidden]
-  'src/styles/site.css': 10,   // the mobile off-canvas nav (#165) and its desktop counterpart: removing any one alone changes the shell's layout at 375-1280px (measured, #1014)
   'src/styles/transitions.css': 2,   // prefers-reduced-motion: no transition or animation, whatever the component sets
 };
 

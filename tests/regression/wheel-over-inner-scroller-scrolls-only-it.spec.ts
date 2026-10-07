@@ -51,12 +51,17 @@ test.describe('wheel over an inner scroller (#1037)', () => {
   });
 
   test('the page stays put while the inner box can still scroll', async ({ page }) => {
+    // site-engine's wheel fallback decides on a 16ms setTimeout whether to push
+    // the page; the page's clock is driven from here so it fires on cue (#1516).
+    await page.clock.install();
     const pageBefore = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
     const box = (await page.locator('#inner-1037').boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.wheel(0, 120);
-    // sleep-proves-negative: the page must NOT move while the inner box can scroll; a scroll that correctly never happens fires no event
-    await page.waitForTimeout(300); // past the fallback's 16ms check
+    // The wheel has scrolled the box; then step past the fallback's 16ms.
+    await expect.poll(() => page.evaluate(() => document.getElementById('inner-1037')!.scrollTop), { timeout: 5000 }).toBeGreaterThan(0);
+    await page.clock.runFor(100);
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
     const after = await page.evaluate(() => ({
       inner: document.getElementById('inner-1037')!.scrollTop,

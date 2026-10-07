@@ -42,8 +42,11 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
       const home = document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement;
       home?.click();
     }, pagePath('home'));
-    // sleep-proves-negative: navigating away must NOT log a schema warning; a warning that never comes fires no event
-    await page.waitForTimeout(800);
+    // The navigation away has finished once Home is in #main and WB has
+    // settled on it (#1516: not 800ms): x-demo's disconnectedCallback ran when
+    // the old page left, and anything it threw has been thrown.
+    await page.waitForSelector('#mainPage-home', { timeout: 20000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     await page.goto('/?page=behaviors');
     await wbIdle(page);
 
