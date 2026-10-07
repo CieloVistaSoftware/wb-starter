@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.370",
+      "date": "2026-10-06",
+      "summary": "Schema-validation and source-schema-compliance passed only because every threshold sat far above its count (14 missing compliance sections under a limit of 55, 38 duplicate declarations under 40, 35 missing base classes under 70), so the debt could grow unseen. Two findings were real: search.schema.json&#39;s five examples all used x-searchfield, a different behavior, and the &quot;missing functions&quot; copybutton and searchfield came from the test&#39;s own stale copy of the runtime&#39;s export-alias table. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1670\" target=\"_blank\" rel=\"noopener\">PR 1670</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The camelCase-vs-dashed check prints what each spelling built when they differ</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6c87690a159fab9361e7ea7426b20346be51ac43\" target=\"_blank\" rel=\"noopener\"><code>6c87690</code></a>",
+          "issues": [
+            344
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Completeness checks are pinned at today&#39;s counts; two real defects fixed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6a2be1c06cac78487ed1edf8c1f36be6c794ec11\" target=\"_blank\" rel=\"noopener\"><code>6a2be1c</code></a>",
+          "issues": [
+            344
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/schema-validation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/schema-validation.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/source-schema-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/source-schema-compliance.spec.ts</a> --project=compliance. Before: 5 setup/behavior mismatches and 2 missing functions, passing under limits of 35 and 20. Now: both are 0, and every check asserts &quot;at most today&#39;s count&quot; (14, 12, 38, 35, the rest 0), so any new debt fails.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e1bf14950c1115b6f8a68b01b275b876839acd75\" target=\"_blank\" rel=\"noopener\"><code>e1bf149</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.369",
       "date": "2026-10-06",
       "summary": "The Behaviors panel&#39;s own theme control (#776) and #1018&#39;s ruling that it shows only in fullscreen -- where the site header&#39;s switcher is off screen -- had no test, so either half could be lost silently. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1672\" target=\"_blank\" rel=\"noopener\">PR 1672</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/776\" target=\"_blank\" rel=\"noopener\">#776</a>",
