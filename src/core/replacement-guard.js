@@ -75,25 +75,30 @@ export function isReplacedByExplicitBehavior(element, candidate, prefix = 'x') {
   // #967 -- John: "<input x-behavior=\"input\"> ... this should never happen."
   //
   // The loop below only inspects attribute NAMES beginning with `x-`, so
-  // `x-behavior="textarea"` reaches it as the attribute named `behavior` and
-  // never as the behavior named `textarea`. The commonest spelling of this
-  // defect is therefore unguarded.
+  // `x-behavior="textarea"` reaches it as the attribute named `behavior` (a
+  // DIRECTIVE, skipped) and never as the behavior named `textarea`. Read the
+  // value here so that spelling is guarded too, by the same rules.
   //
-  // THE CHECK IS WRITTEN AND DELIBERATELY NOT ENABLED. Turning it on reports
-  // through logError(), and there are already 60 such usages in demos, pages,
-  // src and tests (17 `<pre x-behavior="pre">`, 19 `<textarea>`, 8 `<table>`,
-  // 7 `<code>`, 6 `<button>`, ...). Measured: enabling it flooded every page
-  // carrying one and broke 74 tests -- `all-demos-smoke`,
-  // `every-page-loads-without-errors`, `dark-mode`, `doc-viewer-code-panel` and
-  // others all assert "no JS errors on this page", and a new error is still an
-  // error however correct it is.
-  //
-  // Order matters: clean the 60 usages FIRST, then enable this, so it only ever
-  // fires on a mistake someone just made. Enabling it now would mean 60 known
-  // problems shouting on every page load, which is how a real signal gets
-  // muted. Note `<span x-behavior="chip">` and `<button x-behavior="tooltip">`
-  // are NOT redundant and must stay silent -- span maps to nothing, and tooltip
-  // is a different behavior. #967 carries the cleanup.
+  // This runs only on the auto-inject path -- wb.js and wb-lazy.js ask it
+  // before adding a tag's native behavior -- so it reports only on a page
+  // where the tag really does inject the behavior (John chose this, option 2
+  // on #967). With auto-inject off, <pre x-behavior="pre"> is the only way a
+  // <pre> gets its behavior, and nothing here is consulted. The framework's
+  // own generated markup no longer writes x-behavior at all (#1642), so this
+  // fires only on markup an author wrote.
+  const named = (element.getAttribute(`${prefixAttr}behavior`) || '').split(/\s+/).filter(Boolean);
+  for (const name of named) {
+    if (name === candidate || name === family) {
+      // Exactly the behavior the tag already is: <pre x-behavior="pre">,
+      // <article x-behavior="card">. Same message as <article x-card> (#935),
+      // quoting what the author actually wrote.
+      reportRedundant(element, name, `${prefixAttr}behavior="${named.join(' ')}"`);
+      return true;
+    }
+    // <article x-behavior="cardimage"> picks a variant of the family: not
+    // redundant, but it replaces the auto-injected card, like x-cardimage.
+    if (name.startsWith(family)) return true;
+  }
 
   for (const attr of element.attributes) {
     if (!attr.name.startsWith(prefixAttr)) continue;
