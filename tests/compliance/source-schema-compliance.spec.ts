@@ -65,63 +65,15 @@ function getAllJsSource(): string {
 
 test.describe('Source-Schema: Duplicate Variable Detection', () => {
   
-  test('no duplicate const/let declarations in JS files', () => {
-    const issues: string[] = [];
-    
-    for (const jsFile of getJsFiles(PATHS.behaviorsJs)) {
-      const filePath = path.join(PATHS.behaviorsJs, jsFile);
-      const content = readFile(filePath);
-      const lines = content.split('\n');
-      
-      const functionScopes: Map<string, Map<string, number>> = new Map();
-      let currentFunction = 'global';
-      let braceDepth = 0;
-      
-      for (let lineNum = 0; lineNum < lines.length; lineNum++) {
-        const line = lines[lineNum];
-        const trimmed = line.trim();
-        
-        if (trimmed.startsWith('//') || trimmed.startsWith('*')) continue;
-        
-        const funcMatch = trimmed.match(/^(?:export\s+)?(?:async\s+)?function\s+(\w+)/);
-        if (funcMatch) {
-          currentFunction = funcMatch[1];
-          braceDepth = 0;
-        }
-        
-        braceDepth += (line.match(/{/g) || []).length;
-        braceDepth -= (line.match(/}/g) || []).length;
-        
-        if (braceDepth <= 0 && currentFunction !== 'global') {
-          currentFunction = 'global';
-        }
-        
-        const declMatch = trimmed.match(/^(?:const|let)\s+(\w+)/);
-        if (declMatch) {
-          const varName = declMatch[1];
-          const scopeKey = `${jsFile}:${currentFunction}`;
-          
-          if (!functionScopes.has(scopeKey)) functionScopes.set(scopeKey, new Map());
-          
-          const scope = functionScopes.get(scopeKey)!;
-          if (scope.has(varName)) {
-            const firstLine = scope.get(varName)!;
-            issues.push(`${jsFile}:${lineNum + 1} - DUPLICATE: "${varName}" in ${currentFunction}() (first at line ${firstLine + 1})`);
-          } else {
-            scope.set(varName, lineNum);
-          }
-        }
-      }
-    }
-    
-    if (issues.length > 0) {
-      console.warn(`Duplicate variable declarations: ${issues.length}`);
-      issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
-    }
-    // Track progress - these should be fixed over time
-    expect(issues.length, `${issues.length} duplicate declarations`).toBeLessThanOrEqual(38) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
-  });
-  
+  // #344: "no duplicate const/let declarations in JS files" is retired. A real
+  // duplicate in one scope is a SyntaxError, so loaded code cannot hold one;
+  // the line-and-brace counter merged separate block scopes, and all 38 of
+  // its hits on 2026-10-07 were legal (an if/else each declaring `figure`).
+  // The bug it once surfaced, reading a name that was never declared
+  // (cardminimizable's `footer`), is ESLint's no-undef, and
+  // tests/compliance/lint-has-no-errors.spec.ts lints the whole repository
+  // at zero errors, parse errors included.
+
   test('no redeclared parameters in functions', () => {
     const issues: string[] = [];
     

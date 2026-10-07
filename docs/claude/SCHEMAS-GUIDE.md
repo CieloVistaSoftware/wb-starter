@@ -276,10 +276,10 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 
 ### Thresholds
 
-Every check above is exact: zero violations (#344). Two counted ceilings
-are left, both in `tests/compliance/source-schema-compliance.spec.ts`:
-duplicate `const`/`let` declarations and schema events no function
-dispatches. Each is pinned at its count; lower it as you fix, never raise it.
+Every check above is exact: zero violations (#344). One counted ceiling is
+left, in `tests/compliance/source-schema-compliance.spec.ts`: schema events
+no function dispatches. It is pinned at its count; lower it as you fix, never
+raise it.
 
 ---
 
