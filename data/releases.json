@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.381",
+      "date": "2026-10-06",
+      "summary": "The themes and behaviors pages forced their phone layouts with !important where plain rules already won. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1687\" target=\"_blank\" rel=\"noopener\">PR 1687</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Clear !important from the themes and behaviors page phone overrides</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2626ea416ccf9f5e725995a6efb969d7bab3e717\" target=\"_blank\" rel=\"noopener\"><code>2626ea4</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=themes at phone width (375px). Before: the one-column layout came from !important rules. Now: it looks identical from plain rules, and src/ holds 63 !important across 8 files (was 80 across 9).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0c4a38ca1ea8b3f555b217b80970924d40751c94\" target=\"_blank\" rel=\"noopener\"><code>0c4a38c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.380",
       "date": "2026-10-06",
       "summary": "The suite sometimes failed because the test tool lost its connection to a page that had not changed at all, which made unrelated pull requests go red. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1677\" target=\"_blank\" rel=\"noopener\">PR 1677</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a>",
