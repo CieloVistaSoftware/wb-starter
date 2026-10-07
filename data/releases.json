@@ -83,7 +83,7 @@
           ]
         }
       ],
-      "seeIt": "On a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt;, run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
+      "seeIt": "Open the browser console on a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt; and run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;). Before: Home stays highlighted. Now: Docs is.",
       "links": [
         {
           "label": "Code",
