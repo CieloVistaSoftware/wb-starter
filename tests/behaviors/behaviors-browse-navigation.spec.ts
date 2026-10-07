@@ -28,6 +28,66 @@ async function liveSettled(page: Page) {
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 }
 
+/**
+ * #961: evidence for "a click must not move the list". CI read scrollTop 0
+ * after the click once (PR #1704, job 113045199970) and it has not reproduced
+ * locally (about 80 runs at 1x-6x CPU throttling, with late module loads and a late
+ * details.js upgrade forced). Its trace shows the list's data had all arrived
+ * before the rows did (so no late data render), and Playwright found the row
+ * "not stable" -- still moving -- before it clicked. The next failure has to
+ * say what moved the list: every write to its scrollTop, every scrollTo/scrollIntoView/focus
+ * that can scroll it and every re-render (with the caller), and every scroll
+ * event (with the list's box and the page's view). Evidence
+ * only: it changes nothing the page does, and the assertion is unchanged.
+ */
+async function recordListScroll(page: Page) {
+  await page.evaluate(() => {
+    const list = document.getElementById('behaviors-search-results')!;
+    const log: string[] = [];
+    (window as any).__listScrollLog = log;
+    const t = () => Math.round(performance.now());
+    const caller = () => (new Error().stack || '').split('\n').slice(3, 6).map((l) => l.trim()).join(' < ');
+    const top = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop')!;
+    Object.defineProperty(list, 'scrollTop', {
+      configurable: true,
+      get() { return top.get!.call(this); },
+      set(v) { log.push(`${t()} scrollTop ${top.get!.call(this)} -> ${v} by ${caller()}`); top.set!.call(this, v); },
+    });
+    const html = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML')!;
+    Object.defineProperty(list, 'innerHTML', {
+      configurable: true,
+      get() { return html.get!.call(this); },
+      set(v) { log.push(`${t()} list re-rendered by ${caller()}`); html.set!.call(this, v); },
+    });
+    for (const name of ['scrollTo', 'scroll', 'scrollBy']) {
+      const own = (Element.prototype as any)[name];
+      (list as any)[name] = function (...args: unknown[]) { log.push(`${t()} list.${name}(${JSON.stringify(args)}) by ${caller()}`); return own.apply(this, args); };
+    }
+    // A row brought into view (scrollIntoView, or focus() without preventScroll)
+    // scrolls the list too.
+    const intoView = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = function (this: Element, ...args: any[]) {
+      if (list.contains(this)) log.push(`${t()} scrollIntoView on ${(this as HTMLElement).dataset?.label || this.tagName} by ${caller()}`);
+      return intoView.apply(this, args as any);
+    };
+    const focus = HTMLElement.prototype.focus;
+    HTMLElement.prototype.focus = function (this: HTMLElement, options?: FocusOptions) {
+      if (list.contains(this)) log.push(`${t()} focus(${JSON.stringify(options || {})}) on ${this.dataset?.label || this.tagName} by ${caller()}`);
+      return focus.call(this, options);
+    };
+    list.addEventListener('scroll', () => {
+      const cs = getComputedStyle(list);
+      const view = (document.querySelector('.behaviors-browse') as HTMLElement | null)?.dataset.view;
+      log.push(`${t()} scroll -> ${list.scrollTop} (scrollHeight ${list.scrollHeight}, clientHeight ${list.clientHeight}, display ${cs.display}, overflow-y ${cs.overflowY}, hidden ${list.hidden}, view ${view})`);
+    });
+  });
+}
+
+async function listScrollLog(page: Page): Promise<string> {
+  const log: string[] = await page.evaluate(() => (window as any).__listScrollLog || []);
+  return log.length ? log.join('\n') : '(nothing wrote to or scrolled the list)';
+}
+
 async function loadBrowse(page: Page, query = 'x-tooltip') {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 20000 });
@@ -500,6 +560,7 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
 
   test('clicking a row still leaves the list scroll where the reader put it', async ({ page }) => {
     await loadBrowse(page, 'x-');
+    await recordListScroll(page);
     await page.evaluate(() => { document.getElementById('behaviors-search-results')!.scrollTop = 500; });
     // One frame, so the scroll event has fired before the click.
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(null))));
@@ -517,7 +578,7 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     await page.locator('.behaviors-search-results__row').nth(visible).click();
     await liveSettled(page);
     const after = await page.evaluate(() => document.getElementById('behaviors-search-results')!.scrollTop);
-    expect(Math.round(after), 'a click must not move the list').toBe(500);
+    expect(Math.round(after), `a click must not move the list. What touched it:\n${await listScrollLog(page)}`).toBe(500);
   });
 });
 
