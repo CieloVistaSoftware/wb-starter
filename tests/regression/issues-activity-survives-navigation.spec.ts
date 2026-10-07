@@ -128,9 +128,12 @@ test.describe('#1118 the Issues activity loader outlives its own page', () => {
 
     await expect(page.locator('#activity-closed')).toHaveCount(0, { timeout: 10_000 });
 
+    const activity = page.waitForResponse((r) => ACTIVITY(new URL(r.url())), { timeout: 10_000 });
     release();
-    // sleep-proves-negative: the released fetch must NOT write into the departed page; a write that never happens fires no event
-    await page.waitForTimeout(800);
+    // The released body has arrived; loadActivity() parses it and writes in
+    // the tasks that follow, so two frames later any write has run (#1516).
+    await (await activity).finished();
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
     const nullWrites = errors.filter((e) =>
       /Cannot set properties of null|Cannot read properties of null|of null \(setting/i.test(e));

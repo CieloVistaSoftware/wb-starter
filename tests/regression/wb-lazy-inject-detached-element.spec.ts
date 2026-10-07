@@ -46,23 +46,32 @@ test('WB.inject() does not crash when its element is removed mid-import', async 
 
   // Delay the 'search' behavior module's fetch so there's a real window
   // where the target element can be removed while the import is pending.
+  // Hold the module fetch on a gate the test opens itself, so the element is
+  // removed while the import is certainly pending -- no 500ms guess (#1516).
+  let openGate!: () => void;
+  const gate = new Promise<void>((r) => { openGate = r; });
   await page.route('**/wb-viewmodels/search.js', async (route) => {
-    await new Promise((r) => setTimeout(r, 500));
+    await gate;
     await route.continue();
   });
 
   await page.goto(BASE + '/demos/site/forms.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB?.inject, { timeout: 20000 });
 
-  const result = await page.evaluate(async () => {
+  const fetchStarted = page.waitForRequest('**/wb-viewmodels/search.js', { timeout: 10000 });
+  await page.evaluate(() => {
     const el = document.createElement('div');
     document.body.appendChild(el);
-
-    const injectPromise = (window as any).WB.inject(el, 'search');
-    // Remove the element while the delayed module fetch is still pending.
+    (window as any).__probe = el;
+    (window as any).__inject = (window as any).WB.inject(el, 'search');
+    // Remove the element while the module fetch is held on the gate.
     el.remove();
-
-    const cleanup = await injectPromise;
+  });
+  await fetchStarted;
+  openGate();
+  const result = await page.evaluate(async () => {
+    const el = (window as any).__probe as HTMLElement;
+    const cleanup = await (window as any).__inject;
     return { cleanup, stillConnected: el.isConnected, errAttr: el.getAttribute('x-error') };
   });
 

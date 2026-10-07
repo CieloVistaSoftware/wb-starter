@@ -120,7 +120,7 @@ test('the card hero\'s "Read the Guide" is x-glass and looks exactly as before',
     // stylesheet to land rather than reading before it has.
     const t0 = performance.now();
     while (getComputedStyle(btn).backdropFilter !== 'blur(8px)' && performance.now() - t0 < 10_000) {
-      await new Promise((r) => setTimeout(r, 50));
+      await new Promise((r) => requestAnimationFrame(r));
     }
     // .x-hero-cta transitions its background (0.2s), so the fill fades in when
     // glass.css lands. Read the resting value, not a frame of the fade.

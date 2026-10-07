@@ -166,6 +166,8 @@ test.describe('#513 one module-load failure = one logged error', () => {
   test('a cached failure is NOT permanent — the module can succeed after the cooldown', async ({ page }) => {
     test.setTimeout(60000);
     const h = await installHarness(page);
+    // The cooldown reads Date.now(); a fake clock steps past it instantly (#1516).
+    await page.clock.install();
 
     await render(
       page,
@@ -182,8 +184,7 @@ test.describe('#513 one module-load failure = one logged error', () => {
 
     // Network recovers (server restart, transient blip, offline → online).
     h.setFailing(false);
-    // sleep-is-the-scenario: waits out FAILURE_COOLDOWN_MS; the cooldown is what is under test
-    await page.waitForTimeout(FAILURE_COOLDOWN_MS + 1000);
+    await page.clock.fastForward(FAILURE_COOLDOWN_MS + 1000);
     await page.evaluate(() => (window as any).__retry());
     // Polled until the retry's request goes out (#1516), not a 1000ms sleep.
     await expect.poll(

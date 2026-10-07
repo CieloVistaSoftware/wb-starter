@@ -100,7 +100,6 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
       const rows = groups.flatMap((g) => [...g.querySelectorAll('.behaviors-search-results__row')]);
       const out: any[] = [];
 
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
       // TWO SHAPES OF SAMPLE, and the difference is the whole reason this test
       // reported nonsense:
@@ -153,7 +152,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
           // reports hasClose=false — measured, 10 of 11, with the markup
           // present and correct a moment later.
           if (now && now !== previous && now.hasAttribute('x-ready')) { ready = true; break; }
-          await sleep(50);
+          await new Promise((r) => requestAnimationFrame(r));
         }
 
         const notes: string[] = [];
@@ -183,7 +182,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
             continue;
           }
           trigger.click();
-          for (let i = 0; i < 24 && !anyOpenDialog(); i++) await sleep(50);
+          for (const end = performance.now() + 1200; !anyOpenDialog() && performance.now() < end;) await new Promise((r) => requestAnimationFrame(r));
           dlg = anyOpenDialog();
           if (!dlg) {
             out.push({ label, rendered: false, notes: notes.concat('the trigger opened no dialog anywhere on the page') });
@@ -209,7 +208,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
             notes.push('no trigger button rendered in the stage');
           } else {
             trigger.click();
-            for (let i = 0; i < 20 && !dlg.open; i++) await sleep(50);
+            for (const end = performance.now() + 1000; !dlg.open && performance.now() < end;) await new Promise((r) => requestAnimationFrame(r));
             if (!dlg.open) notes.push('the trigger did not open the dialog');
           }
           // showModal() as the fallback, not the primary: going through the

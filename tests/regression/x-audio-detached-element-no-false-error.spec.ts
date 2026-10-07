@@ -42,10 +42,10 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
 
     const host = container.querySelector('[x-audio]')!;
     const waitForAudioEl = async () => {
-      for (let i = 0; i < 40; i++) {
+      for (const end = performance.now() + 2000; performance.now() < end;) {
         const el = host.querySelector('audio');
         if (el) return el;
-        await new Promise((r) => setTimeout(r, 50));
+        await new Promise((r) => requestAnimationFrame(r));
       }
       return null;
     };

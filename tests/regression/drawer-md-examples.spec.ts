@@ -138,7 +138,7 @@ test.describe('drawer.md: "JavaScript API" snippet -- programmatic drawer() call
       const deadline = performance.now() + 5000;
       let panel: Element | null = null;
       while (!(panel = document.querySelector('.x-drawer__panel--open')) && performance.now() < deadline) {
-        await new Promise((r) => setTimeout(r, 25));
+        await new Promise((r) => requestAnimationFrame(r));
       }
       return {
         panelFound: !!panel,

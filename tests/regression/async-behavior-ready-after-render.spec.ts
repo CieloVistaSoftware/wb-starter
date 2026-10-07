@@ -22,17 +22,23 @@ import { test, expect } from '../fixtures/offline';
 
 // #1349: "marked.js is held back here" only happens if the hold is reachable.
 // sw.js answers the page's GETs itself and Playwright cannot route a service
-// worker's requests, so the 1500ms delay below was skipped whenever the worker
+// worker's requests, so the hold below was skipped whenever the worker
 // had claimed the page — and then the render was no longer reliably slower than
 // the stamp, which is the one thing this spec needs to be true.
 test.use({ serviceWorkers: 'block' });
 
 test('x-ready and WB.whenIdle() wait for an async behavior to finish rendering', async ({ page }) => {
   await page.goto('/');
+  // marked.js is held until its request has reached the test (#1516). The
+  // behavior has started by then, so a stamp that does not wait for the render
+  // has already landed -- by construction rather than inside a 1500ms guess.
+  let openGate!: () => void;
+  const gate = new Promise<void>((r) => { openGate = r; });
   await page.route(/marked(\.min)?\.js/, async (route) => {
-    await new Promise((r) => setTimeout(r, 1500));
+    await gate;
     await route.fallback();
   });
+  const markedRequested = page.waitForRequest(/marked(\.min)?\.js/, { timeout: 20_000 });
   await page.setContent('<div id="md" x-mdhtml gfm="false">| a | b |\n|---|---|\n| 1 | 2 |</div>');
   await page.addScriptTag({
     type: 'module',
@@ -53,6 +59,10 @@ test('x-ready and WB.whenIdle() wait for an async behavior to finish rendering',
       document.body.dataset.atIdle = md.classList.contains('x-mdhtml--loading') ? 'loading' : 'rendered';
     `,
   });
+  await markedRequested;
+  // Two frames for anything the behavior does without marked to land too.
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  openGate();
   // Read at the instant each signal fired, not by a retrying assertion that
   // would simply wait the render out and pass either way.
   await expect(page.locator('body')).toHaveAttribute('data-at-idle', /./, { timeout: 25_000 });

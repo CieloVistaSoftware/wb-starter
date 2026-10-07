@@ -344,8 +344,8 @@ test.describe('No inline styles anywhere (#779)', () => {
           }
           // Poll for the behavior to land: behaviors lazy-load their module, so
           // a fixed wait measures before it has run (#781's 26 false positives).
-          for (let t = 0; t < 40; t++) {
-            await new Promise((r) => setTimeout(r, 25));
+          for (const end = performance.now() + 1000; performance.now() < end;) {
+            await new Promise((r) => requestAnimationFrame(r));
             if (host.className || host.children.length !== 1 || host.querySelector('[style]')) break;
           }
 

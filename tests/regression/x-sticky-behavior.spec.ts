@@ -109,6 +109,19 @@ async function scrollPastAndSettle(page, locator, extra = 400) {
   // used to be, stopped short of it, and no further scroll event ever came, so
   // `wb:sticky:stuck` never fired (full-gate run, 2026-10-07).
   await locator.evaluate((el, by) => window.scrollBy(0, el.getBoundingClientRect().top + by), extra);
+  // Content that finishes building above it after that scroll can push it back
+  // below the line before the scroll event is handled, and no later scroll
+  // comes (#1516, CI). So keep it scrolled past, checked every frame, until the
+  // behaviour announces it stuck; the armed deadline still bounds the wait.
+  await locator.evaluate(async (el, by) => {
+    let announced = false;
+    window['__wbStuck'].then(() => { announced = true; }, () => { announced = true; });
+    while (!announced) {
+      const top = el.getBoundingClientRect().top;
+      if (top > -by / 2) window.scrollBy(0, top + by);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+  }, extra);
   await stuck();
 }
 

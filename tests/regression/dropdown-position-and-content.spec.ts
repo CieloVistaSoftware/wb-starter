@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { elementReady } from '../base';
 
 /**
  * demos/site/overlays.html: "not one single dropdown is working" -- three
@@ -37,6 +38,9 @@ test.describe('demos/site/overlays.html: dropdowns actually work', () => {
     for (let i = 0; i < count; i++) {
       const dd = dropdowns.nth(i);
       await dd.scrollIntoViewIfNeeded();
+      // Built and wired before it is used (#1516, CI): a click that lands while
+      // the lazy runtime is still injecting finds the menu but no handler.
+      await elementReady(dd);
       const isHover = (await dd.getAttribute('trigger')) === 'hover';
       if (isHover) {
         await dd.hover();
@@ -67,6 +71,7 @@ test.describe('demos/site/overlays.html: dropdowns actually work', () => {
       const dd = positioned.nth(i);
       const pos = await dd.getAttribute('position');
       await dd.scrollIntoViewIfNeeded();
+      await elementReady(dd);
       await dd.click();
       const menu = dd.locator('.x-dropdown__menu');
       await expect(menu).toBeVisible();

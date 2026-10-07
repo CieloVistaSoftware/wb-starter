@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '../fixtures/offline';
+import { freezeClock, pointerTo } from '../base';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -176,12 +177,16 @@ test.describe('x-tooltip — delay and hideDelay', () => {
   });
 
   test('delay="800" does NOT show before its time', async ({ page }) => {
+    // The show delay runs on the page's timers; a fake clock steps to each side
+    // of it exactly instead of guessing with a sleep (#1516).
+    await page.clock.install();
     await harness(page);
     const t = await trigger(page, 'content="d" delay="800"');
-    await t.hover();
-    // sleep-is-the-scenario: the show delay is the feature; the tooltip must not appear before it
-    await page.waitForTimeout(300);            // the feature IS the passing of time
+    await freezeClock(page);
+    await pointerTo(page, t);                  // the 800ms starts at the frozen instant
+    await page.clock.runFor(500);              // well short of 800ms
     await expect(page.locator(TIP), 'shown too early -> delay ignored').toHaveCount(0);
+    await page.clock.runFor(500);              // past it
     await expect(page.locator(TIP).first()).toBeVisible({ timeout: 3000 });
   });
 
