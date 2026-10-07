@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.364",
+      "date": "2026-10-06",
+      "summary": "Error-logger.js&#39;s on-page error panel (#x-error-display) wrote 24 hex colours into the CSS it injects -- text, the red accent, header strip, rules, button and meta-line colours -- where no theme could reach them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1663\" target=\"_blank\" rel=\"noopener\">PR 1663</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The register says why x-devconsole.js keeps its colours</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ef062100f637447f0645bfffe6ae0cca67c74b8a\" target=\"_blank\" rel=\"noopener\"><code>ef06210</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The on-page error panel&#39;s colours are theme tokens; error-logger.js leaves the register</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/647abc0a5c51b805b3c14c08fdfb3b829938a7d8\" target=\"_blank\" rel=\"noopener\"><code>647abc0</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The error toasts&#39; edge and accent colours are theme tokens</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1ec975aecc75adbf99a94a154256d963ddfd795a\" target=\"_blank\" rel=\"noopener\"><code>1ec975a</code></a>",
+          "issues": [
+            790
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-hardcoded-colors-in-js.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-hardcoded-colors-in-js.spec.ts</a> --project=compliance. Before: the register allowed error-logger.js 24. Now: the entry is gone (the file holds 0) and the spec passes. The panel looks the same.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/97d3636b872bb32cea9000a46124eb4475cd1ed4\" target=\"_blank\" rel=\"noopener\"><code>97d3636</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.363",
       "date": "2026-10-06",
       "summary": "On the Behaviors page, img &quot;lazy&quot;, cardimage &quot;loading&quot; and figure &quot;zoom&quot; rendered an example identical to the plain one -- the box is always in view, so a lazy image loads at once, and zoom waits for a click -- and nothing told the reader how to see the effect. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1666\" target=\"_blank\" rel=\"noopener\">PR 1666</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/750\" target=\"_blank\" rel=\"noopener\">#750</a>",
