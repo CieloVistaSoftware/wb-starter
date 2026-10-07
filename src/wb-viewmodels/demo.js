@@ -1,6 +1,5 @@
 import { hasAuthoredAttr } from '../core/read-attr.js';
 import { setRule } from '../core/dynamic-style.js';
-import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
 import { getNativeBehavior } from '../core/tag-map.js';
