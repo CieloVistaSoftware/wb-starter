@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.409",
+      "date": "2026-10-07",
+      "summary": "The schema build no longer wipes a form control or void element and hangs label/field/counter elements inside it, so a &lt;textarea x-textarea&gt; keeps the text written in it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1722\" target=\"_blank\" rel=\"noopener\">#1722</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1720\" target=\"_blank\" rel=\"noopener\">#1720</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Never build $view inside a textarea, input or other childless host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1722\" target=\"_blank\" rel=\"noopener\">#1722</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1720\" target=\"_blank\" rel=\"noopener\">#1720</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5d5fa24d15d928ce536784797ac1ee186240becc\" target=\"_blank\" rel=\"noopener\"><code>5d5fa24</code></a>",
+          "issues": [
+            1722,
+            1720
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, scan <code>&lt;textarea x-textarea&gt;hi&lt;/textarea&gt;</code> and read its value. Before: &quot;&quot; with a label and a second textarea inside it. Now: &quot;hi&quot; and no children.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5d5fa24d15d928ce536784797ac1ee186240becc\" target=\"_blank\" rel=\"noopener\"><code>5d5fa24</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.408",
       "date": "2026-10-07",
       "summary": "Eight state classes behaviors toggle had no stylesheet rule, so the state never showed: a stats card that failed to build looked healthy, a box being resized gave no sign of it, &quot;Copied!&quot; looked like any text, and a lazy image popped in. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1718\" target=\"_blank\" rel=\"noopener\">#1718</a>",
