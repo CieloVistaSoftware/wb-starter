@@ -816,7 +816,8 @@ test.describe('Component Compliance', () => {
                   // no-op that reads as if the query were async.
                   const stepBtn = el.locator(step.selector).first();
                   await stepBtn.click();
-                  await page.waitForTimeout(100);
+                  // Two frames for the click's effect to apply before the next step (#1516: not 100ms).
+                  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
                 }
               }
 
@@ -858,7 +859,8 @@ test.describe('Component Compliance', () => {
                 }, btnTest.expect.event);
 
                 await btn.first().click();
-                await page.waitForTimeout(100);
+                // Until the event fires (2s cap), not 100ms (#1516); the check below reports it if it never does.
+                await page.waitForFunction(() => (window as any).__testEventFired === true, null, { timeout: 2000, polling: 'raf' }).catch(() => {});
 
                 const eventFired = await page.evaluate(() => (window as any).__testEventFired);
                 if (!eventFired) {
@@ -885,9 +887,13 @@ test.describe('Component Compliance', () => {
             
             await target.focus();
             await page.keyboard.press(kbTest.key);
-            await page.waitForTimeout(100);
-            
+
             if (kbTest.expect.class) {
+              // Until the class lands (2s cap), not 100ms (#1516); the check below reports it if it never does.
+              await el.evaluate(async (node, cls) => {
+                const end = performance.now() + 2000;
+                while (!node.classList.contains(cls) && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+              }, kbTest.expect.class);
               const hasClass = await el.evaluate((el, cls) => el.classList.contains(cls), kbTest.expect.class);
               if (!hasClass) {
                 allErrors.push(`[KEYBOARD] ${kbTest.name}: After ${kbTest.key}, should have class "${kbTest.expect.class}"`);
@@ -1029,7 +1035,8 @@ test.describe('Interactive Elements', () => {
             }, intDef.click.event);
             
             await el.first().click();
-            await page.waitForTimeout(100);
+            // Until the event fires (2s cap), not 100ms (#1516); the check below reports it if it never does.
+            await page.waitForFunction(() => (window as any).__testEventFired === true, null, { timeout: 2000, polling: 'raf' }).catch(() => {});
             
             const eventFired = await page.evaluate(() => (window as any).__testEventFired);
             if (!eventFired) {

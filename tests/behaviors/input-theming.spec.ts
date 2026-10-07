@@ -29,7 +29,13 @@ async function setTheme(page: Page, theme: string) {
     document.documentElement.setAttribute('data-theme', t);
     document.body.setAttribute('data-theme', t);
   }, theme);
-  await page.waitForTimeout(150);
+  // The theme has painted and any finite transition finished (#1516: not 150ms).
+  await page.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await Promise.all(document.getAnimations()
+      .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+      .map((a) => a.finished.catch(() => {})));
+  });
 }
 
 async function inputStyles(page: Page) {
@@ -53,7 +59,9 @@ test.describe('Input theming follows the active theme', () => {
     // input into view so it actually upgrades before styles are read.
     await page.waitForSelector('input', { state: 'attached', timeout: 25000 });
     await page.locator('input').first().scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1200);
+    // The lazy upgrade has run once WB settles (#1516: not 1200ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
   });
 
   for (const theme of DARK_THEMES) {
