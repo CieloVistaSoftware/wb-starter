@@ -26,6 +26,12 @@
  *              the state the next step needs.
  *   marked     carries `// sleep-proves-negative: <reason>` on its line or the
  *              line above: a reviewed, deliberate negative proof.
+ *   poll       the interval of a polling loop: the sleep sits in a loop that
+ *              breaks (or returns) when a condition holds, or that runs
+ *              against a deadline (`while (Date.now() < deadline)`). That IS
+ *              waiting on the condition -- the sleep only paces the checks --
+ *              so it is not a guess. expect.poll says it more plainly, but
+ *              this is not the defect.
  *
  * Sleeps found:
  *   - `<x>.waitForTimeout(<n>)`                      Playwright's own sleep
@@ -71,6 +77,37 @@ function sleepOf(node) {
     }
   }
   return null;
+}
+
+/** True when an if-guarded break/return sits in `body` (not in a nested function). */
+function exitsOnCondition(body) {
+  let found = false;
+  const visit = (n) => {
+    if (found || ts.isFunctionLike(n)) return;
+    if ((ts.isBreakStatement(n) || ts.isReturnStatement(n))) {
+      for (let p = n.parent; p && p !== body; p = p.parent) if (ts.isIfStatement(p)) { found = true; return; }
+    }
+    ts.forEachChild(n, visit);
+  };
+  visit(body);
+  return found;
+}
+
+/** True when `node` paces a polling loop: see `poll` above. */
+function inPollLoop(node) {
+  for (let p = node.parent; p; p = p.parent) {
+    if (ts.isFunctionLike(p)) {
+      // A sleep helper's own body (const sleep = ...) is not the loop; keep
+      // climbing only through the Promise executor of the sleep itself.
+      if (p.parent && ts.isNewExpression(p.parent)) continue;
+      return false;
+    }
+    if (ts.isWhileStatement(p) || ts.isDoStatement(p) || ts.isForStatement(p)) {
+      const cond = ts.isForStatement(p) ? (p.condition ? p.condition.getText() : '') : p.expression.getText();
+      return /\b(Date|performance)\.now\(\)|deadline|until/i.test(cond) || exitsOnCondition(p.statement);
+    }
+  }
+  return false;
 }
 
 /** Playwright's web-first matchers: each retries until it passes or times out. */
@@ -159,6 +196,8 @@ export function sleepsIn(file, text) {
       if (markLine) {
         cls = 'marked';
         reason = markLine.slice(markLine.indexOf(MARKER) + MARKER.length).trim();
+      } else if (inPollLoop(node)) {
+        cls = 'poll';
       } else {
         // Up to the next sleep in the same block: the first assertion decides.
         let next = null;

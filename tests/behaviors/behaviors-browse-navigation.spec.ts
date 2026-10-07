@@ -136,7 +136,8 @@ test.describe('#699 — the token column never wraps and never crosses the varia
       const tokens = [...document.querySelectorAll('.behaviors-search-results__token')] as HTMLElement[];
       // Force the overflow condition a zoomed-in browser produces.
       tokens.forEach((e) => { e.style.fontSize = '2.4rem'; });
-      await new Promise((r) => setTimeout(r, 150));
+      // Layout is read synchronously below; one frame, not 150ms (#1516).
+      await new Promise((r) => requestAnimationFrame(r));
       const t = tokens[0];
       const v = t.parentElement!.querySelector('.behaviors-search-results__variant') as HTMLElement;
       const lh = parseFloat(getComputedStyle(t).lineHeight) || 16;
@@ -277,7 +278,8 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
   test('a fullscreen round trip leaves the stage exactly where it was', async ({ page }) => {
     await loadBrowse(page, 'table');
     await page.locator('.behaviors-search-results__row').first().click();
-    await page.waitForTimeout(400);
+    // The example has rendered once the live panel is no longer busy (#1516: not 400ms).
+    await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
 
     const trip = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

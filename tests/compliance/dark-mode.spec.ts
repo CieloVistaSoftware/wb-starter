@@ -122,7 +122,8 @@ test.describe('Dark Mode Compliance', () => {
       
       // Wait for navigation to settle (some pages redirect)
       await page.waitForLoadState('domcontentloaded').catch(() => {});
-      await page.waitForTimeout(500);
+      // The page has settled once WB has, where it boots WB (#1516: not 500ms).
+      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
       
       // Set dark theme attribute (may fail if page navigated away)
       try {
@@ -132,7 +133,7 @@ test.describe('Dark Mode Compliance', () => {
       } catch (e) {
         // Page navigated — re-wait and retry
         await page.waitForLoadState('domcontentloaded').catch(() => {});
-        await page.waitForTimeout(300);
+        await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
         await page.evaluate(() => {
           document.documentElement.setAttribute('data-theme', 'dark');
         }).catch(() => {});
@@ -238,7 +239,9 @@ test.describe('Dark Mode Compliance', () => {
   
   test('theme variables are defined in dark mode', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(500);
+    // Boot is over once WB settles (#1516: not 500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     
     // Ensure dark mode
     await page.evaluate(() => {
@@ -264,7 +267,9 @@ test.describe('Dark Mode Compliance', () => {
   
   test('dark mode has dark background colors', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(500);
+    // Boot is over once WB settles (#1516: not 500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     
     // Set dark mode
     await page.evaluate(() => {

@@ -284,8 +284,8 @@ test.describe('Cross-Browser Support Infrastructure', () => {
         callCount++;
       }, { immediate: true, debounce: 0 });
       
-      // Wait for initial callback
-      await new Promise(r => setTimeout(r, 50));
+      // The initial callback fires on the observer's first frame (#1516: not 50ms).
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       const countBefore = callCount;
       
       // Cleanup
@@ -293,7 +293,8 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       
       // Trigger resize
       div.style.width = '500px';
-      await new Promise(r => setTimeout(r, 50));
+      // A live observer would report within two frames (#1516: not 50ms).
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       
       const countAfter = callCount;
       div.remove();
@@ -368,8 +369,9 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       pre.textContent = 'test code';
       document.body.appendChild(pre);
       
-      // Wait for potential WB processing
-      await new Promise(r => setTimeout(r, 100));
+      // Any injection has run once WB settles (#1516: not 100ms).
+      await new Promise((r) => requestAnimationFrame(r));
+      await (window as any).WB?.settled?.({ timeout: 10000 });
       
       // Check if behavior was applied
       const hasWbReady = pre.classList.contains('x-ready');
@@ -394,8 +396,8 @@ test.describe('Cross-Browser Support Infrastructure', () => {
         await window.WB.scan(document.body);
       }
       
-      // Wait for potential processing
-      await new Promise(r => setTimeout(r, 100));
+      // Any injection has run once WB settles (#1516: not 100ms).
+      await (window as any).WB?.settled?.({ timeout: 10000 });
       
       const hasWbReady = btn.classList.contains('x-ready');
       btn.remove();

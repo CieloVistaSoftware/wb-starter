@@ -28,6 +28,22 @@ function getScreenshotDir(): string {
   return dir;
 }
 
+/**
+ * The page has finished arriving: loaded, fonts in, WB (where the fragment
+ * boots it) settled, and two frames painted. Replaces fixed 500-1500ms
+ * sleeps (#1516). A settle that overruns is not this file's failure -- the
+ * checks below still measure the page as it stands, as the sleeps did.
+ */
+async function pageArrived(page: import('@playwright/test').Page): Promise<void> {
+  await page.waitForLoadState('load');
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    const wb = (window as any).WB;
+    if (typeof wb?.settled === 'function') await wb.settled({ timeout: 10000 }).catch(() => {});
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  });
+}
+
 // ═══════════════════════════════════════════════════════════════
 // KEY PAGES TO VALIDATE
 // ═══════════════════════════════════════════════════════════════
@@ -56,7 +72,7 @@ for (const pg of PAGES) {
   test(`screenshot: ${pg.title}`, async ({ page, browserName }) => {
     const fullPage = true;
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1500); // let animations/lazy-load settle
+    await pageArrived(page);
 
     // #1439: on the Windows CI runner, a WebKit capture of any page holding an
     // <audio> or <video> that never loads hangs until the screenshot timeout.
@@ -105,7 +121,7 @@ for (const pg of PAGES) {
 for (const pg of PAGES) {
   test(`no horizontal overflow: ${pg.title}`, async ({ page }) => {
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(500);
+    await pageArrived(page);
 
     const overflow = await page.evaluate(() => {
       return document.documentElement.scrollWidth > document.documentElement.clientWidth;
@@ -139,7 +155,7 @@ for (const pg of PAGES) {
 for (const pg of PAGES) {
   test(`tap targets: ${pg.title}`, async ({ page }) => {
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(500);
+    await pageArrived(page);
 
     const tooSmall = await page.evaluate(() => {
       const MIN_SIZE = 44;
@@ -181,7 +197,7 @@ for (const pg of PAGES) {
 for (const pg of PAGES) {
   test(`text readability: ${pg.title}`, async ({ page }) => {
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(500);
+    await pageArrived(page);
 
     const tinyText = await page.evaluate(() => {
       const MIN_FONT = 12;
