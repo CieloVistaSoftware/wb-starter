@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * x-glass (#1236): an element carries the background scene.
@@ -105,15 +106,19 @@ test('amount sets how much tint is mixed in: most < some < least, at most 30%', 
 
 test('the card hero\'s "Read the Guide" is x-glass and looks exactly as before', async ({ page }) => {
   await openSite(page);
-  const got = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const hero = document.createElement('section');
     hero.setAttribute('x-cardhero', '');
     hero.setAttribute('title', 'Infinite Possibility.');
     hero.setAttribute('cta', 'Try the Playground');
     hero.setAttribute('cta-secondary', 'Read the Guide');
     document.body.appendChild(hero);
+    (window as any).__glassHero = hero;
     await (window as any).WB.scan();
-    if ((window as any).WB.whenIdle) await (window as any).WB.whenIdle({ timeout: 10_000 });
+  });
+  await settlePage(page, { timeout: 10_000 });
+  const got = await page.evaluate(async () => {
+    const hero = (window as any).__glassHero as HTMLElement;
     const btn = hero.querySelector('.x-hero-cta--secondary') as HTMLElement;
     // x-glass is set on the button when the hero builds it, then picked up by
     // auto-injection, which loads glass.css on first use. Wait for the

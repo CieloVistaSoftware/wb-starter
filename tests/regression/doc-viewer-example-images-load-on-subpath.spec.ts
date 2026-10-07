@@ -20,6 +20,7 @@
 import { test, expect } from '../fixtures/offline';
 import { readdirSync, readFileSync } from 'node:fs';
 import { mountUnderSubPath } from '../helpers/sub-path';
+import { settlePage } from '../base';
 
 // ANY example image, not only a local one (#1122).
 //
@@ -69,9 +70,8 @@ for (const doc of DOCS) {
           (el as HTMLElement).scrollIntoView({ block: 'center' });
           await new Promise((r) => requestAnimationFrame(r));
         }
-        const wb = (window as unknown as { WB?: { whenIdle?: (o: object) => Promise<void> } }).WB;
-        if (wb?.whenIdle) await wb.whenIdle({ timeout: 15000 });
       });
+      await settlePage(page, { timeout: 15000 });
       await expect.poll(() => page.$$eval('#content img', (imgs) =>
         imgs.every((i) => (i as HTMLImageElement).complete)), { timeout: 15_000 }).toBe(true);
 

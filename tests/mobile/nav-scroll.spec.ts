@@ -15,6 +15,7 @@ import { test, expect, Page } from '../fixtures/offline';
 import fs from 'node:fs';
 import { pagePath } from '../helpers/page-path';
 
+import { settlePage } from '../base';
 // #1432: read from the site's own menu. A hard-coded list kept 'components',
 // which 4.0.0 removed, so 14 tests failed on "nav link not found" and the
 // pages added since (releases, issues, ...) were never checked.
@@ -43,8 +44,8 @@ async function clickNav(page: Page, id: string): Promise<number> {
   );
   // The page has rendered to full height once WB settles, and the scroll has
   // landed two frames later (#1516: not 1000ms).
+  await settlePage(page, { timeout: 15000 });
   await page.evaluate(async () => {
-    await (window as any).WB?.settled?.({ timeout: 15000 });
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   });
   return leftAt;
@@ -85,7 +86,7 @@ test.describe('Nav link scroll behavior', () => {
     await page.goto('/?page=home');
     await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 15000 });
     // Boot is over once WB settles (#1516: not 400ms).
-    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
   });
 
   for (const id of LINKS) {

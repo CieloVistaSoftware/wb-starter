@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import { globSync } from 'glob';
 
+import { settlePage } from '../base';
 /**
  * #447: <div x-demo> carried a class="[x-demo]" that just repeated its own tag
  * name -- no CSS anywhere selected the bare class (every real rule targets
@@ -21,7 +22,7 @@ for (const file of FILES) {
     const urlPath = '/' + file.replace(/\\/g, '/');
     await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
     // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+    await settlePage(page, { timeout: 15000 }).catch(() => {});
 
     const violations = await page.evaluate(() => {
       const problems: string[] = [];

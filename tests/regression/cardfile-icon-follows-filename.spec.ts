@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * REGRESSION (#1117 / #1114): x-cardfile's icon comes from the FILENAME.
@@ -66,14 +67,16 @@ const FALLS_BACK: string[] = [
 async function renderCardfile(page: Page, attrs: string) {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 15000 });
-  return page.evaluate(async (a) => {
+  await page.evaluate(async (a) => {
     const host = document.getElementById('cf-host') || document.createElement('div');
     host.id = 'cf-host';
     host.innerHTML = `<article id="cf" x-cardfile ${a}></article>`;
     if (!host.isConnected) document.body.appendChild(host);
     const WB = (window as any).WB;
     await WB.scan(host, { eager: true });
-    if (WB.whenIdle) await WB.whenIdle({ timeout: 10000 });
+  }, attrs);
+  await settlePage(page, { timeout: 10000 });
+  return page.evaluate(() => {
     const card = document.getElementById('cf')!;
     // The icon is the first child span card.js builds.
     const iconEl = card.querySelector('span');
@@ -81,7 +84,7 @@ async function renderCardfile(page: Page, attrs: string) {
       icon: (iconEl?.textContent || '').trim(),
       filename: (card.querySelector('.x-card__filename')?.textContent || '').trim(),
     };
-  }, attrs);
+  });
 }
 
 test.describe('#1117 — the cardfile icon is derived from the filename', () => {
@@ -152,10 +155,7 @@ test.describe('#1114 — no cardfile example contradicts its own filename', () =
       await page.evaluate((idx) => {
         (document.querySelectorAll('.behaviors-search-results__row')[idx] as HTMLElement)?.click();
       }, i);
-      await page.evaluate(async () => {
-        const WB = (window as any).WB;
-        if (WB?.whenIdle) await WB.whenIdle({ timeout: 5000 }).catch(() => undefined);
-      });
+      await settlePage(page, { timeout: 5000 }).catch(() => undefined);
 
       const seen = await page.evaluate(() => {
         const card = document.querySelector('#behaviors-live-stage [x-cardfile]');

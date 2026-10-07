@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #1340 -- a duplicate-id report reaches the log even if the page goes away,
  * and says where each copy lives.
@@ -31,7 +32,7 @@ test('the duplicate-id report is sent keepalive and names each copy\'s location'
   });
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30_000 });
-  await page.evaluate(() => (window as any).WB?.whenIdle?.({ timeout: 20_000 }));
+  await settlePage(page, { timeout: 20_000 });
 
   await page.evaluate(async () => {
     const mod: any = await import('/src/core/duplicate-ids.js');

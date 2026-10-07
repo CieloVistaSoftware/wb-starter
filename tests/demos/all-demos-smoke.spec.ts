@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { watchBrokenRequests } from '../helpers/broken-requests';
 
+import { settlePage } from '../base';
 /**
  * All-demos smoke test.
  *
@@ -70,10 +71,10 @@ for (const file of demoFiles()) {
     // WB.init() and the lazy IntersectionObserver have activated behaviors once WB
     // settles (#1516: not 1500ms). Not every demo boots WB, so this is best-effort.
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 5000 }).catch(() => {});
-    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+    await settlePage(page, { timeout: 15000 }).catch(() => {});
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     // What the scroll lazily built has settled (#1516: not 800ms).
-    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+    await settlePage(page, { timeout: 15000 }).catch(() => {});
 
     const bodyText = (await page.locator('body').innerText().catch(() => '')).trim();
 

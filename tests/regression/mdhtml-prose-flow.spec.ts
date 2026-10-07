@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #471: prose in rendered markdown must flow to the container width — never
  * hard-wrap at the SOURCE file's own line breaks ("all text must flow until
@@ -32,7 +33,7 @@ async function gotoDoc(page) {
   }, { timeout: 15000 });
   // The async wb:mdhtml:loaded post-processing has run once WB settles (#1516: not 300ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 5000 }).catch(() => {});
-  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+  await settlePage(page, { timeout: 15000 }).catch(() => {});
 }
 
 test.describe('mdhtml: prose flows to container width (#471)', () => {

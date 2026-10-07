@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { readJson, safeScrollIntoView, wbIdle } from '../base';
+import { readJson, safeScrollIntoView, wbIdle, settlePage } from '../base';
 import * as path from 'path';
 
 /**
@@ -234,7 +234,7 @@ test.describe('Site Generation — Phase 4', () => {
         await page.goto(`${SITE_DIR}/${pg.filename}`);
         await page.waitForFunction(() => (window as any).WB, null, { timeout: 10000 }).catch(() => {});
         // Startup errors are thrown by the time WB settles (#1516: not 500ms).
-        await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+        await settlePage(page, { timeout: 15000 }).catch(() => {});
 
         const critical = errors.filter(e =>
           !e.includes('favicon') &&

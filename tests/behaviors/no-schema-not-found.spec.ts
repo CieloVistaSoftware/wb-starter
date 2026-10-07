@@ -9,7 +9,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 import { pagePath } from '../helpers/page-path';
-import { wbIdle } from '../base';
+import { wbIdle, settlePage } from '../base';
 
 test.describe('#174 — no spurious "Schema not found" warnings', () => {
   test('behaviors page emits zero Schema-not-found warnings', async ({ page }) => {
@@ -23,7 +23,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     expect(
       schemaWarnings,

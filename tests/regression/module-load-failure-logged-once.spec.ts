@@ -23,6 +23,7 @@
  */
 import { test, expect, Page } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #1349: the error-log route is a POST, which sw.js passes through, so the
  * COUNTING half worked. The module route is a GET, which it does not: sw.js
@@ -105,7 +106,7 @@ async function render(page: Page, body: string, script: string) {
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 20000 });
   // Let the per-element catch blocks (and their async error-log POSTs) settle.
-  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+  await settlePage(page, { timeout: 15000 }).catch(() => {});
   // sleep-proves-negative: the checks assert exactly ONE logged error; a duplicate POST that correctly never arrives fires no event
   await page.waitForTimeout(1500);
 }

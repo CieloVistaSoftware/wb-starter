@@ -1,5 +1,6 @@
 import { test, expect, Page } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * button.css has NO bare `.x-btn { ... }` base rule -- every rule in that file
  * for the `.x-btn` family is a COMPOUND selector, `.x-btn.x-btn--{variant}`,
@@ -221,7 +222,7 @@ test.describe('Bare .x-btn (no modifier) renders with real visible styling', () 
     await page.goto('/demos/landing-page-showcase.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
     // The demo is styled once WB settles (#1516: not 500ms).
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const style = await hasVisibleBoxStyle(page, 'button.x-btn');
     expect(style.hasBg || style.hasBorder, `"Hover + click me" demo button must be visibly styled, got ${JSON.stringify(style)}`).toBe(true);

@@ -1,6 +1,7 @@
 import { test, expect, type Page, type Locator } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { settlePage } from '../base';
 
 /**
  * x-toast — EVERY permutation the schema declares (#1109).
@@ -116,10 +117,10 @@ async function trigger(
       host.appendChild(el);
       const WB = (window as any).WB;
       await WB.scan(host, { eager: true });
-      if (WB.whenIdle) await WB.whenIdle({ timeout: 10000 });
     },
     { attrs, id, reset }
   );
+  await settlePage(page, { timeout: 10000 });
   return page.locator(`#${id}`);
 }
 

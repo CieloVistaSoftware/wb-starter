@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #1488: showDoc() awaited the doc fetch, then wrote into `liveDocBody` -- the
  * shared variable, which a newer selection had already pointed at ITS panel.
@@ -49,7 +50,7 @@ test('a slow doc never lands under a behavior picked after it (#1488)', async ({
 
   // Let the slow doc arrive, then give its (stale) render every chance to land.
   await expect.poll(() => released, { timeout: 10_000 }).toBe(true);
-  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 10_000 })).catch(() => {});
+  await settlePage(page, { timeout: 10_000 }).catch(() => {});
 
   const body = page.locator('#behaviors-live-doc-body');
   await expect(body, 'the panel shows x-toast, not nothing').not.toHaveText('');

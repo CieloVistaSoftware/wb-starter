@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * REGRESSION: demos/playground.html's "Endpoint sees" panel (#pg-endpoint)
@@ -24,7 +25,13 @@ test('Endpoint sees panel does not persist after switching to a non-form example
   // is silently blocked by native constraint validation before the 'submit'
   // event ever fires, so those need filling in first.
   await page.selectOption('#pg-examples', 'form');
-  // No sleep (#1516): fill() below waits for the form's input to appear.
+  // #961: wait for the preview's eager scan to finish before typing. The input
+  // behavior wraps each <input> (moves it into .x-input__wrapper); a fill()
+  // that focused the field just before the move typed into nothing, the
+  // required field stayed empty, the browser blocked the submit and the panel
+  // never appeared (reproduced 2 in 40: `invalid fullName value=""`, the
+  // field filled AFTER the wrap kept its value).
+  await settlePage(page);
   await page.fill('#pg-preview form input[name="fullName"]', 'Test User');
   await page.fill('#pg-preview form input[name="email"]', 'test@example.com');
   await page.click('#pg-preview form button[type="submit"]');

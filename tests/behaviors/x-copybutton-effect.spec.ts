@@ -16,6 +16,7 @@
  * synchronously before any interaction is dispatched.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function setup(page: Page, html: string, id = 'x-copybutton-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -28,9 +29,9 @@ async function setup(page: Page, html: string, id = 'x-copybutton-effect-area'):
   }, { h: html, containerId: id });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('x-copybutton -- renders a positioned overlay button, host element unchanged', () => {
