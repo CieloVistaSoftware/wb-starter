@@ -6,6 +6,29 @@
   ],
   "releases": [
     {
+      "version": "1.0.385",
+      "date": "2026-10-07",
+      "summary": "John called the V3 guide&#39;s Quick start card &quot;too stubby&quot; (#468) and asked that every card in the card doc follow the layout standards, test-first (#469). Measured on 2026-10-07 both are already met, but nothing held these pages to the standards. Every live card on <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md\" target=\"_blank\" rel=\"noopener\">docs/V3-GUIDE.md</a>, <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fcard.md\" target=\"_blank\" rel=\"noopener\">docs/card.md</a> and <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fcard.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/card.md</a> is now checked on desktop and phone: at least 260px when its column allows (section 7) and at least 1rem of padding (section 13). Also gives releases 1.0.382 and 1.0.384 See it lines that start with what to do and link the files they name, which had turned main&#39;s regression job red. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/468\" target=\"_blank\" rel=\"noopener\">#468</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1691\" target=\"_blank\" rel=\"noopener\">#1691</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The guide&#39;s and the card docs&#39; cards are held to the layout standards</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/468\" target=\"_blank\" rel=\"noopener\">#468</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1691\" target=\"_blank\" rel=\"noopener\">#1691</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dd4b4a91f8f76f67fddb7c5f814f4cff17cf2e98\" target=\"_blank\" rel=\"noopener\"><code>dd4b4a9</code></a>",
+          "issues": [
+            468,
+            469,
+            1691
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/doc-cards-follow-layout-standards.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/doc-cards-follow-layout-standards.spec.ts</a> --project=regression</code>. Before: nothing checked these cards, so a card forced to 120px wide with 4px padding went unreported. Now: that card fails as &quot;is 120px wide with 358px available&quot;, and all 6 real cases pass (the Quick start card is a 400px md card).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dd4b4a91f8f76f67fddb7c5f814f4cff17cf2e98\" target=\"_blank\" rel=\"noopener\"><code>dd4b4a9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.384",
       "date": "2026-10-07",
       "summary": "On Windows CI, input-theming read rgb(255,255,255) in the dark and ocean themes. The input upgrade brings its stylesheet as a &lt;link&gt; on first use, and WB.settled() resolves before that link has loaded, so the field was still the browser&#39;s native white. The 1200ms this replaced had covered the load by chance. The beforeEach now waits until every stylesheet link has a sheet, the same signal demo-layout-standards uses. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1686\" target=\"_blank\" rel=\"noopener\">PR 1686</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
@@ -25,6 +48,7 @@
           ]
         }
       ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> --project=behaviors</code>. Before: on the Windows runner the dark and ocean cases read the inputs as native white rgb(255, 255, 255), because the input stylesheet link had not loaded when WB.settled() resolved. Now: the test waits until every stylesheet link has its sheet, and all 8 cases pass.",
       "links": [
         {
           "label": "Code",
@@ -46,8 +70,7 @@
           "label": "Guard",
           "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
         }
-      ],
-      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> --project=behaviors</code>. Before: on the Windows runner the dark and ocean cases read the inputs as native white rgb(255, 255, 255), because the input stylesheet link had not loaded when WB.settled() resolved. Now: the test waits until every stylesheet link has its sheet, and all 8 cases pass."
+      ]
     },
     {
       "version": "1.0.383",
