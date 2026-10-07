@@ -41,14 +41,11 @@ const UNSTYLED: Record<string, string> = {
   'x-avatar': 'feedback.js',
   'x-behavior': 'behavior.js',
   'x-behaviors-showcase': 'behaviors-showcase.js',
-  'x-card--expanded': 'card.js',
-  'x-cardstats--error': 'card.js',
   'x-chip': 'feedback.js',
   'x-collapse': 'collapse.js',
   'x-confetti': 'effects.js',
   'x-confirm--trigger': 'overlay.js',
   'x-control': 'x-control.js',
-  'x-copy--copied': 'copy.js',
   'x-countup': 'effects.js',
   'x-darkmode': 'darkmode.js',
   'x-demo': 'demo.js',
@@ -65,8 +62,6 @@ const UNSTYLED: Record<string, string> = {
   'x-gallery__item': 'semantics/gallery.js',
   'x-globe': 'globe.js',
   'x-help': 'help.js',
-  'x-lazy--loaded': 'helpers.js',
-  'x-lazy--loading': 'helpers.js',
   'x-lightbox': 'overlay.js',
   'x-masked': 'masked.js',
   'x-modal': 'semantics/dialog.js',
@@ -77,23 +72,20 @@ const UNSTYLED: Record<string, string> = {
   'x-popover--trigger': 'overlay.js',
   'x-pre__line-number--placed': 'semantics/pre.js',
   'x-prompt--trigger': 'overlay.js',
-  'x-rating--half': 'semantics/rating.js',
   'x-relativetime': 'helpers.js',
-  'x-resizable--resizing': 'resizable.js',
   'x-sheet--trigger': 'overlay.js',
   'x-slider': 'slider.js',
   'x-snow': 'effects.js',
   'x-sparkle': 'effects.js',
   'x-status': 'status.js',
-  'x-textarea--has-counter': 'semantics/textarea.js',
   'x-themecontrol': 'themecontrol.js',
   'x-toast--trigger': 'feedback.js',
   'x-tooltip--trigger': 'tooltip.js',
   'x-validator': 'validator.js',
 };
 
-/** Only ever lowered. 64 when this gate was written; 54 after batch 1. */
-const CEILING = 54;
+/** Only ever lowered. 64 when this gate was written; 54 after batch 1; 46 after batch 2. */
+const CEILING = 46;
 
 test('every class a behavior adds has a stylesheet rule, or is on the shrinking list (#1095)', () => {
   const root = process.cwd();
