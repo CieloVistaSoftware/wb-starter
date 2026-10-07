@@ -69,7 +69,8 @@ test.describe('Behaviors page: no data-* behaviour config (#910)', () => {
       const found = await page.locator(row).first().waitFor({ state: 'attached', timeout: 8000 })
         .then(() => true).catch(() => false);
       if (found) await page.locator(row).first().click();
-      await page.waitForTimeout(200);
+      // The example has rendered once the live panel is no longer busy (#1516: not 200ms).
+      await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
     }
 
     // Scoped to what #910 is actually about: an element that CARRIES a behaviour,

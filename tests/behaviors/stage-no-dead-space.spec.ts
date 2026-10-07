@@ -44,7 +44,8 @@ async function pick(page: Page, token: string, variant?: string) {
     return true;
   }, { t: token, v: variant });
   expect(ok, `no row for ${token}${variant ? ' / ' + variant : ''}`).toBe(true);
-  await page.waitForTimeout(700);
+  // The example has rendered once the live panel is no longer busy (#1516: not 700ms).
+  await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
 }
 
 /** Height of the stage, and of what is actually rendered inside it. */

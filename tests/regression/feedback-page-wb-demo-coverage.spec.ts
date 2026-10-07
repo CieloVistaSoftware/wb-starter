@@ -20,7 +20,9 @@ import { safeScrollIntoView } from '../base';
 async function ready(page) {
   await page.goto('/demos/site/feedback.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  await page.waitForTimeout(1200); // x-demo blocks still need render/highlight time after app-ready
+  // x-demo blocks render and highlight after app-ready; built once WB settles (#1516: not 1200ms).
+  await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 }
 
 // Every example <section id="…"> on the page, in document order.

@@ -99,11 +99,10 @@ test.describe('docs/behaviors-reference.md: live <div x-demo> examples', () => {
     const viewportHeight = page.viewportSize()?.height || 800;
     const stepSize = Math.max(1, Math.floor(viewportHeight * 0.85));
     for (let y = 0; y <= scrollHeight; y += stepSize) {
-      await page.evaluate((yy) => window.scrollTo(0, yy), y);
-      await page.waitForTimeout(150);
+      // Two frames per step for the lazy observer to see it (#1516: not 150ms).
+      await page.evaluate(async (yy) => { window.scrollTo(0, yy); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); }, y);
     }
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(150);
+    await page.evaluate(async () => { window.scrollTo(0, document.body.scrollHeight); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
     await page.evaluate(() => window.scrollTo(0, 0));
 
     // §1/§16: every <div x-demo> shows both a live grid and its source panel.

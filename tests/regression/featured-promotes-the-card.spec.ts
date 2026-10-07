@@ -68,7 +68,8 @@ test.describe('featured', () => {
         `<article id="custom" featured="Deal of the week" ${body}>The north gate is open.</article>`;
       document.body.appendChild(host);
       await (window as any).WB.scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 500));
+      // Built once its work has called back (#1516: no fixed sleep).
+      await (window as any).WB.settled?.({ timeout: 10000 });
 
       const read = (id: string) => {
         const el = document.getElementById(id)!;

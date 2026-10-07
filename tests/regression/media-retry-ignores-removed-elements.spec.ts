@@ -26,6 +26,7 @@ test.describe('media-load-retry', () => {
       img.remove();
       // Longer than every retry plus check window above, so a retry that was
       // going to give up has done so.
+      // sleep-proves-negative: a removed image must NOT report a failure; a report that correctly never comes fires no event
       await new Promise((r) => setTimeout(r, 600));
       return { failed, fallback: !!document.querySelector('.x-media-load-failed') };
     });

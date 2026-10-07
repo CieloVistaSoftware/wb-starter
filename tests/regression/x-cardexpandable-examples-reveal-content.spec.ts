@@ -71,11 +71,12 @@ test.describe('x-cardexpandable examples reveal content when expanded (#1598)', 
           const btn = card.querySelector('.x-card__expand-btn') as HTMLElement;
           // The "expanded" variant starts open: collapse it first so every
           // example is measured from the collapsed state.
-          if (btn && btn.getAttribute('aria-expanded') === 'true') { btn.click(); await new Promise((r) => setTimeout(r, 400)); }
+          // Each toggle waits for the card's own transition, not 400ms (#1516).
+          if (btn && btn.getAttribute('aria-expanded') === 'true') { btn.click(); await frame(); await Promise.all(card.getAnimations({ subtree: true }).map((a) => a.finished.catch(() => {}))); }
           const scroll = content.scrollHeight, client = content.clientHeight;
           const toggleShown = !!btn && btn.offsetParent !== null;
           const collapsed = content.getBoundingClientRect().height;
-          if (btn) { btn.click(); await new Promise((r) => setTimeout(r, 400)); }
+          if (btn) { btn.click(); await frame(); await Promise.all(card.getAnimations({ subtree: true }).map((a) => a.finished.catch(() => {}))); }
           const expanded = content.getBoundingClientRect().height;
           out.push({ label: ex.label, width, scroll, client, toggleShown, grew: expanded > collapsed + 1, collapsed, expanded });
           host.remove();

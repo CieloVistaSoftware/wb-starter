@@ -35,6 +35,7 @@ test('x-clock normalizes its variant, never throws, and its teardown stops the t
     const cleanup = clock(el, { variant: 'digital' });
     try { cleanup(); } catch (e: any) { teardownError = e.message; }
     el.textContent = 'frozen';
+    // sleep-proves-negative: after teardown the clock must NOT tick again; a tick that never comes fires no event
     await new Promise((res) => setTimeout(res, 1300));
     return { ws: cls('ws'), led: cls('led'), junk: cls('junk'), text, teardownError, afterTeardown: el.textContent, removed: el.classList.contains('x-clock') };
   });

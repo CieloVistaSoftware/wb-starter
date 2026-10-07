@@ -78,7 +78,10 @@ test.describe('the demo source panel never shows the expansion (#1003)', () => {
       if (window.WB && typeof window.WB.scan === 'function') {
         try { await window.WB.scan(host, { eager: true }); } catch { /* keep going */ }
       }
-      await new Promise((r) => setTimeout(r, 2500));
+      // Until the source panel has text, then settled (#1516: not 2500ms).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      await until(() => !!(host.querySelector('pre code')?.textContent || '').trim(), 10000);
+      await (window as any).WB?.settled?.({ timeout: 10000 }).catch(() => {});
 
       const code = host.querySelector('pre code');
       const text = code ? (code.textContent || '') : null;

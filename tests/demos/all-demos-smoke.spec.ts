@@ -67,8 +67,10 @@ for (const file of demoFiles()) {
     const badRequests = watchBrokenRequests(page, origin);
 
     await page.goto(`/demos/${file}`, { waitUntil: 'domcontentloaded' });
-    // Give WB.init() + the lazy-load IntersectionObserver time to activate behaviors.
-    await page.waitForTimeout(1500);
+    // WB.init() and the lazy IntersectionObserver have activated behaviors once WB
+    // settles (#1516: not 1500ms). Not every demo boots WB, so this is best-effort.
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 5000 }).catch(() => {});
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(800);
 

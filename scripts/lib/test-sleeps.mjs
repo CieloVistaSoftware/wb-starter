@@ -26,6 +26,13 @@
  *              the state the next step needs.
  *   marked     carries `// sleep-proves-negative: <reason>` on its line or the
  *              line above: a reviewed, deliberate negative proof.
+ *   cap        not a wait at all but a timeout: a setTimeout racing real work in
+ *              Promise.race, or one inside a Promise that also resolves on
+ *              something else (an event, a load). It only bounds the wait.
+ *   scenario   the elapsed time IS what the test is about: a sleep inside a
+ *              page.route handler (a simulated slow server), or one marked
+ *              `// sleep-is-the-scenario: <reason>` (a cooldown window, a held
+ *              scan). Nothing to wait on instead.
  *   poll       the interval of a polling loop: the sleep sits in a loop that
  *              breaks (or returns) when a condition holds, runs against a
  *              deadline (`while (Date.now() < deadline)`), or whose condition
@@ -52,6 +59,7 @@ import path from 'node:path';
 import ts from 'typescript';
 
 export const MARKER = 'sleep-proves-negative:';
+export const SCENARIO_MARKER = 'sleep-is-the-scenario:';
 
 /** The matcher names that assert something did NOT happen (or is empty / off). */
 const NEGATIVE_MATCHERS = new Set([
@@ -187,6 +195,43 @@ function inPollLoop(node) {
   return false;
 }
 
+/** The Promise executor (arrow/function passed to `new Promise`) enclosing `node`, if any. */
+function executorOf(node) {
+  for (let p = node.parent; p; p = p.parent) {
+    if ((ts.isArrowFunction(p) || ts.isFunctionExpression(p)) && p.parent && ts.isNewExpression(p.parent)
+      && ts.isIdentifier(p.parent.expression) && p.parent.expression.text === 'Promise') return p;
+    if (ts.isFunctionLike(p)) return null;
+  }
+  return null;
+}
+
+/** True when the sleep only bounds a wait: see `cap` above. */
+function isCap(node) {
+  const exec = executorOf(node);
+  if (!exec) return false;
+  // Other statements in the executor (listeners, an early resolve) -> a timeout.
+  if (ts.isBlock(exec.body) && exec.body.statements.length > 1) return true;
+  // new Promise(...) passed straight to Promise.race([...]).
+  for (let p = exec.parent; p; p = p.parent) {
+    if (ts.isCallExpression(p) && ts.isPropertyAccessExpression(p.expression)
+      && ts.isIdentifier(p.expression.expression) && p.expression.expression.text === 'Promise'
+      && p.expression.name.text === 'race') return true;
+    if (ts.isFunctionLike(p) || ts.isBlock(p)) return false;
+  }
+  return false;
+}
+
+/** True when the sleep runs inside a function whose first parameter is `route` (a page.route handler). */
+function inRouteHandler(node) {
+  for (let p = node.parent; p; p = p.parent) {
+    if (ts.isFunctionLike(p) && !(p.parent && ts.isNewExpression(p.parent))) {
+      const first = p.parameters && p.parameters[0];
+      return !!(first && ts.isIdentifier(first.name) && first.name.text === 'route');
+    }
+  }
+  return false;
+}
+
 /** Playwright's web-first matchers: each retries until it passes or times out. */
 const RETRYING = new Set([
   'toBeAttached', 'toBeChecked', 'toBeDisabled', 'toBeEditable', 'toBeEmpty', 'toBeEnabled',
@@ -269,9 +314,18 @@ export function sleepsIn(file, text) {
       const here = lines[line] || '';
       const above = lines[line - 1] || '';
       const markLine = here.includes(MARKER) ? here : above.includes(MARKER) ? above : null;
+      const scenarioLine = here.includes(SCENARIO_MARKER) ? here : above.includes(SCENARIO_MARKER) ? above : null;
       let cls;
       let reason;
-      if (markLine) {
+      if (scenarioLine) {
+        cls = 'scenario';
+        reason = scenarioLine.slice(scenarioLine.indexOf(SCENARIO_MARKER) + SCENARIO_MARKER.length).trim();
+      } else if (s.kind === 'setTimeout' && isCap(node)) {
+        cls = 'cap';
+      } else if (inRouteHandler(node)) {
+        cls = 'scenario';
+        reason = 'simulated latency in a page.route handler';
+      } else if (markLine) {
         cls = 'marked';
         reason = markLine.slice(markLine.indexOf(MARKER) + MARKER.length).trim();
       } else if (inPollLoop(node)) {

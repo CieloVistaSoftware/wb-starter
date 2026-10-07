@@ -27,6 +27,7 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
       WB.scan = async (el: Element, ...rest: unknown[]) => {
         const result = await scan(el, ...rest);
         if (el && (el as Element).id === 'main' && (window as any).__holdScan) {
+          // sleep-is-the-scenario: holds the page scan open so a reader can scroll mid-build; the hold is the scenario
           await new Promise((ok) => setTimeout(ok, 3000));
           (window as any).__scanReleased = true;
         }

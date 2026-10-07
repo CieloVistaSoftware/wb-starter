@@ -62,7 +62,8 @@ test.describe('Switch — real toggle', () => {
       const inp = sw.querySelector('input') as HTMLInputElement;
       const before = inp.checked;
       sw.click();
-      await new Promise((r) => setTimeout(r, 120));
+      // Two frames, not 120ms (#1516): the input toggles on the click.
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       const after = inp.checked;
       return { before, after, aria: sw.getAttribute('aria-checked') };
     });

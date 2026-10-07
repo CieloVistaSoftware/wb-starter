@@ -38,7 +38,8 @@ test.describe('Overlay card fills its host', () => {
       const host = document.getElementById('pg-preview')!;
       host.innerHTML = markup;
       await (window as any).WB.scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 400));
+      // Built once its work has called back (#1516: no fixed sleep).
+      await (window as any).WB.settled?.({ timeout: 10000 });
 
       const card = host.querySelector('[x-cardoverlay]') as HTMLElement | null;
       if (!card) return null;
@@ -78,7 +79,8 @@ test.describe('Overlay card fills its host', () => {
       const host = document.getElementById('pg-preview')!;
       host.innerHTML = markup;
       await (window as any).WB.scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 400));
+      // Built once its work has called back (#1516: no fixed sleep).
+      await (window as any).WB.settled?.({ timeout: 10000 });
       const el = document.documentElement;
       return el.scrollWidth - el.clientWidth;
     }, OVERLAY);

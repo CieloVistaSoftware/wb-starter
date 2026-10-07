@@ -16,7 +16,9 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2500);
+    // The page is built once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
   });
 
   test('.x-pre and .x-pre-wrapper have no style attribute at all', async ({ page }) => {

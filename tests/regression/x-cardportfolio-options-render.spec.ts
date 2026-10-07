@@ -62,7 +62,8 @@ test.describe('x-cardportfolio option rows on the behaviors page', () => {
       const key = await row.evaluate((r: HTMLElement) =>
         `${r.dataset.prop || 'variant'}=${r.dataset.variant || 'default'}`);
       await row.click();
-      await page.waitForTimeout(1500);
+      // The example has rendered once the live panel is no longer busy (#1516: not 1500ms).
+      await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
 
       shots[key] = await page.locator('#behaviors-live-example').evaluate((root): Shot => {
         const box = (n: Element | null): Box | null => {

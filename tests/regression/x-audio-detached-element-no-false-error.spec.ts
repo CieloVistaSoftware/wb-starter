@@ -58,13 +58,17 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
     // underlying behavior function has no such guard).
     const mod = await import('/src/wb-viewmodels/semantics/audio.js');
     mod.audio(host, {});
-    await new Promise((r) => setTimeout(r, 100));
+    // Until audio() has replaced the element (2s cap), not 100ms (#1516).
+    for (const end = performance.now() + 2000; host.querySelector('audio') === oldAudioEl && performance.now() < end;) {
+      await new Promise((r) => requestAnimationFrame(r));
+    }
 
     const newAudioEl = host.querySelector('audio');
     const replaced = newAudioEl !== oldAudioEl;
 
     // Simulate the old, now-detached element's in-flight fetch failing late.
     oldAudioEl.dispatchEvent(new Event('error'));
+    // sleep-proves-negative: the late error of the detached element must NOT be reported; a report that never comes fires no event
     await new Promise((r) => setTimeout(r, 300));
 
     return { replaced, oldStillAttached: document.contains(oldAudioEl) };

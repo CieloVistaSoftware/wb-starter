@@ -38,7 +38,9 @@ test.describe('Mobile nav backdrop click-through (#171)', () => {
   test('a real tap on a content link is not swallowed by the backdrop', async ({ page }) => {
     await page.goto('/?page=docs');
     await page.waitForSelector('a.docs-card', { timeout: 20000 });
-    await page.waitForTimeout(800);
+    // The page is built once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     // Docs cards open the doc-viewer in the same tab since #1184 (this test
     // still waited for a new tab, so it failed on every run -- #1432). A real
     // pointer tap must navigate there, not be eaten by the backdrop.
