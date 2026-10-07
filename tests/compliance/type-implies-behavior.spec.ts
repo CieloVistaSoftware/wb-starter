@@ -72,11 +72,12 @@ async function renderWithWB(page, coreModule: string, html: string) {
       import WB from '${coreModule}';
       window.__wb = WB;
       window.__wbDone = false;
-      WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+      WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => WB.settled({ timeout: 10000 }).catch(() => {})).then(() => { window.__wbDone = true; });
     </script>
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 }).catch(() => {});
-  await page.waitForTimeout(800);
+  // __wbDone is set only after WB.settled(), which waits for each lazily observed
+  // element's first IntersectionObserver report (#1516: no fixed 800ms settle).
 }
 
 test.describe('Type-implies-behavior rule — static registry checks', () => {
