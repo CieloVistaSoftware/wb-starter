@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.361",
+      "date": "2026-10-06",
+      "summary": "&lt;pre x-behavior=&quot;pre&quot;&gt; (and &lt;input x-behavior=&quot;input&quot;&gt;, &lt;article x-behavior=&quot;card&quot;&gt;) says the same thing twice -- the tag already is the behavior -- but the replacement guard only read attribute NAMES, so this spelling reached it as the directive &quot;behavior&quot; and was never reported, unlike &lt;article x-card&gt; (#935). The lazy runtime also skipped x-behavior elements before asking the guard at all. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1662\" target=\"_blank\" rel=\"noopener\">PR 1662</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-behavior that restates the tag is reported, on auto-inject pages only</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d72ff5ad0e2dce77f5bd6506cb0f4f3f86d3c10\" target=\"_blank\" rel=\"noopener\"><code>0d72ff5</code></a>",
+          "issues": [
+            967
+          ]
+        }
+      ],
+      "seeIt": "On a page with auto-inject on, add &lt;pre x-behavior=&quot;pre&quot;&gt;&lt;code&gt;x&lt;/code&gt;&lt;/pre&gt; and open the Error Log. Before: nothing. Now: &quot;&lt;pre x-behavior=&quot;pre&quot;&gt; says the same thing twice ... Drop it and keep &lt;pre&gt;&quot;; with auto-inject off it stays silent. Test: npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/x-behavior-restating-the-tag-is-reported.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/x-behavior-restating-the-tag-is-reported.spec.ts</a> -- before 2 failed (both runtimes), now 10 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/665d3435773aa7aa6268906b00bbe8d02ea68e4a\" target=\"_blank\" rel=\"noopener\"><code>665d343</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.360",
       "date": "2026-10-06",
       "summary": "Every attribute table in docs/behaviors printed the JS type `string` as an attribute&#39;s values: 347 rows in 95 docs. Every attribute value is a string, so the cell said nothing. Each row now names its values (`bottom` · `overlay`, `click` · `hover`) or its shape: text, URL, CSS length, CSS selector, CSS duration, milliseconds, comma-separated list, JSON array of {label, href}, theme colour name or CSS colour. The values were read from each behavior&#39;s code where the doc did not already list them. The default-on switches say &quot;on unless `false`&quot; (controls, playsinline, lightbox, showLineNumbers), and `scrollable` says &quot;`true` to turn on&quot;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/generate-behavior-docs.mjs\" target=\"_blank\" rel=\"noopener\">scripts/generate-behavior-docs.mjs</a> writes `text` instead of `string` for a new doc&#39;s plain string attribute, and a compliance spec fails on any Values cell that is just `string`. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1660\" target=\"_blank\" rel=\"noopener\">PR 1660</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>",
