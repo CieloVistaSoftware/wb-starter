@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.360",
+      "date": "2026-10-06",
+      "summary": "Every attribute table in docs/behaviors printed the JS type `string` as an attribute&#39;s values: 347 rows in 95 docs. Every attribute value is a string, so the cell said nothing. Each row now names its values (`bottom` · `overlay`, `click` · `hover`) or its shape: text, URL, CSS length, CSS selector, CSS duration, milliseconds, comma-separated list, JSON array of {label, href}, theme colour name or CSS colour. The values were read from each behavior&#39;s code where the doc did not already list them. The default-on switches say &quot;on unless `false`&quot; (controls, playsinline, lightbox, showLineNumbers), and `scrollable` says &quot;`true` to turn on&quot;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/generate-behavior-docs.mjs\" target=\"_blank\" rel=\"noopener\">scripts/generate-behavior-docs.mjs</a> writes `text` instead of `string` for a new doc&#39;s plain string attribute, and a compliance spec fails on any Values cell that is just `string`. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1660\" target=\"_blank\" rel=\"noopener\">PR 1660</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The Values column says what an attribute accepts, never `string`</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/87cdf64558ae737c05e1a46b27911e3d643d5e18\" target=\"_blank\" rel=\"noopener\"><code>87cdf64</code></a>",
+          "issues": [
+            749
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Ffigure.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/figure.md</a>. Before: captionPosition, lightbox, caption and width all said <code>string</code>. Now: captionPosition lists <code>bottom</code> · <code>overlay</code>, lightbox says &quot;on unless <code>false</code>&quot;, caption says text, and width says CSS length.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/264d99f79603343b1b0371cc1a5d7a728baec1a9\" target=\"_blank\" rel=\"noopener\"><code>264d99f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.359",
       "date": "2026-10-06",
       "summary": "The behavior docs were rewritten, but 36 properties across ten layout schemas (center, container, cover, frame, grid, icon, reel, sidebarlayout, stat, switcher) still described themselves as &quot;Read by grid().&quot; and the like. A schema property&#39;s description is what VS Code shows on hover, so the most-read documentation named the function that reads an attribute instead of saying what it does. Each now says what it changes, what values it takes and its default where that matters, written from layouts.js and stat.js. A compliance spec fails on any schema property described as &quot;Read by x()&quot;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> is regenerated, which also picks up the camelCase property names from #1125 that the committed index had missed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1659\" target=\"_blank\" rel=\"noopener\">PR 1659</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1094\" target=\"_blank\" rel=\"noopener\">#1094</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>",
