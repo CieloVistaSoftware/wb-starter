@@ -31,19 +31,31 @@ function getScreenshotDir(): string {
 /**
  * The page has finished arriving: fonts in, WB (where the fragment boots it)
  * settled, and two frames painted. Replaces fixed 500-1500ms sleeps (#1516).
- * A settle that overruns is not this file's failure -- the checks below still
- * measure the page as it stands, as the sleeps did.
  *
- * Not the `load` event: WebKit holds it open while Home's offline-stand-in
- * MP3 sits at readyState 0 (#1439), so every Home test timed out at 30s.
+ * Bounded from Playwright's side, not the page's: on WebKit, Home's
+ * offline-stand-in MP3 sits at readyState 0 (#1439), and something in this
+ * wait never resolved there -- first the `load` event, then the in-page wait
+ * itself -- timing every iPhone Home check out at 30s. So the wait runs
+ * detached in the page and the test waits at most 10s for it to report done.
+ * An arrival that overruns is not this file's failure: the checks below still
+ * measure the page as it stands, as the sleeps did.
  */
 async function pageArrived(page: import('@playwright/test').Page): Promise<void> {
-  await page.evaluate(async () => {
-    await document.fonts.ready;
-    const wb = (window as any).WB;
-    if (typeof wb?.settled === 'function') await wb.settled({ timeout: 10000 }).catch(() => {});
-    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  await page.evaluate(() => {
+    const w = window as any;
+    w.__mvArrived = false;
+    (async () => {
+      try {
+        await document.fonts.ready;
+        if (typeof w.WB?.settled === 'function') await w.WB.settled({ timeout: 10000 }).catch(() => {});
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      } finally {
+        w.__mvArrived = true;
+      }
+    })();
   });
+  await page.waitForFunction(() => (window as any).__mvArrived === true, null, { timeout: 10000, polling: 100 })
+    .catch(() => {});
 }
 
 // ═══════════════════════════════════════════════════════════════
