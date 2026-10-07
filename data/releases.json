@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.397",
+      "date": "2026-10-07",
+      "summary": "Typing into a form field while its behavior was still upgrading it lost the text: input.js (and every behavior that wraps a form control) moved the focused element into its wrapper, which blurs it, so keystrokes went to &lt;body&gt;. On the playground this left Full Name empty, the required check blocked the submit, and the &quot;Endpoint sees&quot; panel never appeared (2 of 40 runs under CPU load). Separately, Playwright reports every protocol error from an evaluate as &quot;Execution context was destroyed&quot;, throwing away the browser&#39;s real reason; failing tests and the project reporter now keep it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1705\" target=\"_blank\" rel=\"noopener\">#1705</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>: wrapping a focused field keeps focus; failures keep the browser&#39;s own error</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1705\" target=\"_blank\" rel=\"noopener\">#1705</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3e31e77b0f686bb92a5255e41d895c674450a35a\" target=\"_blank\" rel=\"noopener\"><code>3e31e77</code></a>",
+          "issues": [
+            961,
+            1705
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/wrapping-a-focused-field-keeps-focus.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/wrapping-a-focused-field-keeps-focus.spec.ts</a> --project=regression</code>. Before: 5 of 5 fail (focus lands on &lt;body&gt;, &quot;Test User&quot; becomes &quot; User&quot;). Now: 5 of 5 pass, and a failing test carries a protocol-errors attachment naming what the browser answered (for example &quot;Runtime.callFunctionOn: Promise was collected&quot;).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3e31e77b0f686bb92a5255e41d895c674450a35a\" target=\"_blank\" rel=\"noopener\"><code>3e31e77</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.396",
       "date": "2026-10-07",
       "summary": "Variants-render-differently.spec.ts went red on three rows once the examples used remote photos. x-img&#39;s zoomable=true matched &quot;width only&quot;: its only visible effect is the zoom-in cursor, which the fingerprint did not read; the old local images merely happened to differ in shape. cursor is now one of the properties it compares. x-cardimage&#39;s aspect=&quot;auto&quot; shows the photo&#39;s own shape, so a 3:2 harbour photo made it identical to aspect=&quot;3/2&quot;, live as well as offline. The example is now the Ada Lovelace daguerreotype, a portrait that none of the aspect options produce, captioned accurately. Offline, every Commons thumbnail was stood in for at 16:9; <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/sample-media-catalog.mjs\" target=\"_blank\" rel=\"noopener\">scripts/sample-media-catalog.mjs</a> now has COMMONS_SHAPES, so this photo is stood in for at its real 957x1239. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1674\" target=\"_blank\" rel=\"noopener\">PR 1674</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a>",
