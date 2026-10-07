@@ -64,6 +64,12 @@ async function dropdownVariants(page: Page): Promise<string[]> {
 async function renderNth(page: Page, index: number) {
   return page.evaluate(async (i: number) => {
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    // Wait for the state the next read needs, a frame at a time (#1516). If it
+    // never comes, the read after it fails the test, as the old sleep would have.
+    const until = async (ok: () => boolean, ms = 5000) => {
+      const end = performance.now() + ms;
+      while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+    };
     const rows = [...document.querySelectorAll('.behaviors-search-results__row')]
       .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
     rows[i].click();
@@ -90,17 +96,17 @@ async function renderNth(page: Page, index: number) {
     let closedDisplay: string;
     if (variant === 'hover') {
       root.dispatchEvent(new MouseEvent('mouseenter', { bubbles: false }));
-      await sleep(200);
+      await until(() => getComputedStyle(menu).display !== 'none');
       openedDisplay = getComputedStyle(menu).display;
       root.dispatchEvent(new MouseEvent('mouseleave', { bubbles: false }));
-      await sleep(400);
+      await until(() => getComputedStyle(menu).display === 'none', 3000); // past the 150ms grace
       closedDisplay = getComputedStyle(menu).display;
     } else {
       trigger.click();
-      await sleep(200);
+      await until(() => getComputedStyle(menu).display !== 'none');
       openedDisplay = getComputedStyle(menu).display;
       trigger.click();
-      await sleep(200);
+      await until(() => getComputedStyle(menu).display === 'none');
       closedDisplay = getComputedStyle(menu).display;
     }
 
@@ -179,6 +185,12 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
 
       const geo = await page.evaluate(async () => {
         const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        // Wait for the state the next read needs, a frame at a time (#1516). If it
+        // never comes, the read after it fails the test, as the old sleep would have.
+        const until = async (ok: () => boolean, ms = 5000) => {
+          const end = performance.now() + ms;
+          while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+        };
         const rows = [...document.querySelectorAll('.behaviors-search-results__row')]
           .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
         // bottom-* opens downward, toward the code panel — the failing direction.
@@ -242,6 +254,12 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
 
     const heights = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state the next read needs, a frame at a time (#1516). If it
+      // never comes, the read after it fails the test, as the old sleep would have.
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const stage = document.getElementById('behaviors-live-stage')!;
       const rows = [...document.querySelectorAll('.behaviors-search-results__row')]
         .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
@@ -252,7 +270,15 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
       (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();
       for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
-      await sleep(200);
+      // The stage has grown to fit the open menu once its height holds for two frames.
+      let lastH = -1;
+      let same = 0;
+      await until(() => {
+        const h = stage.getBoundingClientRect().height;
+        same = h === lastH ? same + 1 : 0;
+        lastH = h;
+        return same >= 2;
+      });
       const opened = Math.round(stage.getBoundingClientRect().height);
 
       rows[1].click();          // a different example
@@ -273,6 +299,12 @@ test.describe('#704 — a hover dropdown closes again', () => {
     await openShowcase(page);
     const state = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state the next read needs, a frame at a time (#1516). If it
+      // never comes, the read after it fails the test, as the old sleep would have.
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const row = [...document.querySelectorAll('.behaviors-search-results__row')]
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'hover') as HTMLElement;
@@ -282,11 +314,11 @@ test.describe('#704 — a hover dropdown closes again', () => {
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
 
       root.dispatchEvent(new MouseEvent('mouseenter'));
-      await sleep(250);
+      await until(() => getComputedStyle(menu).display !== 'none');
       const opened = getComputedStyle(menu).display;
 
       root.dispatchEvent(new MouseEvent('mouseleave'));
-      await sleep(600);   // 150ms grace + slack
+      await until(() => getComputedStyle(menu).display === 'none', 3000); // past the 150ms grace
       const closed = getComputedStyle(menu).display;
       return { opened, closed };
     });
@@ -304,6 +336,12 @@ test.describe('#705 — selecting leaves the example alone and gets logged', () 
 
     const result = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state the next read needs, a frame at a time (#1516). If it
+      // never comes, the read after it fails the test, as the old sleep would have.
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const row = [...document.querySelectorAll('.behaviors-search-results__row')]
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'click') as HTMLElement;
@@ -314,12 +352,13 @@ test.describe('#705 — selecting leaves the example alone and gets logged', () 
       const root = document.querySelector('#behaviors-live-stage .x-dropdown') as HTMLElement;
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
       (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();
-      await sleep(300);
+      await until(() => getComputedStyle(menu).display !== 'none');
 
       const item = menu.querySelector('.x-dropdown__item') as HTMLElement;
       const itemTag = item.tagName;
       item.click();
-      await sleep(400);
+      await until(() => [...document.querySelectorAll('.behaviors-live__events-type')]
+        .some((e) => e.textContent === 'wb:dropdown:select'));
 
       return {
         itemTag,
@@ -345,6 +384,12 @@ test.describe('#707 — the menu is sized to what it shows', () => {
 
     const geo = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state the next read needs, a frame at a time (#1516). If it
+      // never comes, the read after it fails the test, as the old sleep would have.
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const row = [...document.querySelectorAll('.behaviors-search-results__row')]
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'click') as HTMLElement;
@@ -354,7 +399,8 @@ test.describe('#707 — the menu is sized to what it shows', () => {
       const root = stage.querySelector('.x-dropdown') as HTMLElement;
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
       (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();
-      await sleep(350);
+      await until(() => getComputedStyle(menu).display !== 'none');
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
       // Count the LINE BOXES the text actually occupies -- an item's height is
       // no use here, a 28px avatar makes every row look like two lines.
@@ -394,6 +440,12 @@ test.describe('#708 — the select event says WHICH option', () => {
 
     const picks = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state the next read needs, a frame at a time (#1516). If it
+      // never comes, the read after it fails the test, as the old sleep would have.
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const row = [...document.querySelectorAll('.behaviors-search-results__row')]
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'click') as HTMLElement;
@@ -405,14 +457,14 @@ test.describe('#708 — the select event says WHICH option', () => {
         const root = document.querySelector('#behaviors-live-stage .x-dropdown') as HTMLElement;
         const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
         (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();
-        await sleep(250);
+        await until(() => getComputedStyle(menu).display !== 'none');
 
         let detail: any = null;
         root.addEventListener('wb:dropdown:select', (e: any) => { detail = e.detail; }, { once: true });
         const items = [...menu.querySelectorAll('.x-dropdown__item')] as HTMLElement[];
         const expectedText = (items[index].textContent || '').trim();
         items[index].click();
-        await sleep(250);
+        await until(() => detail !== null);
         seen.push({ index, expectedText, detail });
       }
       return seen;

@@ -9,7 +9,9 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * fails under load"). On 2026-10-06, 202 of 798 spec files held 426 sleeps;
  * the first pass (#1516) took that to 345 and the positive ones from 88 to 68;
  * the second took the positive ones to 43, the third to 26, the fourth to 3,
- * the fifth to 0 (and began on the setup ones).
+ * the fifth to 0 (and began on the setup ones); the sixth taught the scan
+ * to see a sleep behind a local helper (`await sleep(200)`), which had hidden
+ * about thirty.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -35,7 +37,7 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
 const CEILING = {
   positive: 0,
   redundant: 0,
-  setup: 166,
+  setup: 155,
   negative: 58,
 };
 
@@ -91,11 +93,15 @@ test.describe('no new fixed sleeps (#1516)', () => {
           }
         });
         for (let i = 0; i < 3; i++) { await p.click('#c'); await p.waitForTimeout(100); }
+        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        for (let i = 0; i < 30 && !(await p.isVisible('#d')); i++) await sleep(50);
+        await p.click('#e');
+        await sleep(200);
       });
       // await p.waitForTimeout(999) in a comment is not a sleep
       const s = 'p.waitForTimeout(999)';
     `;
     expect(sleepsIn('fixture.spec.ts', src).map((s) => s.class))
-      .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup', 'poll', 'setup']);
+      .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup', 'poll', 'setup', 'poll', 'setup']);
   });
 });

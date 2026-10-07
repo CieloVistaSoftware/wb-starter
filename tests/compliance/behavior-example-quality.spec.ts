@@ -37,12 +37,16 @@ test('no behavior example is a placeholder', async ({ page }) => {
   const stubs = [];
   for (let start = 0; start < targets.length; start += 20) {
     const results = await page.evaluate(async (items) => {
-      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const rows = [...document.querySelectorAll('.behaviors-search-results__row')];
       const out = [];
       for (const { token, index } of items) {
         rows[index].click();
-        await sleep(160);
+        await until(() => !document.getElementById('behaviors-live')?.hasAttribute('aria-busy'));
         const code = document.getElementById('behaviors-live-code');
         out.push({ token, code: (code?.textContent || '').replace(/^Copy[\d]*/, '').trim() });
       }

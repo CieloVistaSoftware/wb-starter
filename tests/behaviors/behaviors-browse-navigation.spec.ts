@@ -212,12 +212,18 @@ test.describe('#711 — the example is centred in the stage', () => {
       await loadBrowse(page, 'x-');
 
       const geo = await page.evaluate(async ([tok, want]) => {
-        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        // Wait for the state each step needs, a frame at a time (#1516).
+        const until = async (ok: () => boolean, ms = 5000) => {
+          const end = performance.now() + ms;
+          while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+        };
         const rows = [...document.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
         const row = rows.find((r) => r.getAttribute('data-browse-token') === tok
           && (!want || r.getAttribute('data-variant') === want)) || rows[0];
         row.click();
-        await sleep(500);
+        await until(() => !document.getElementById('behaviors-live')?.hasAttribute('aria-busy')
+          && !!document.getElementById('behaviors-live-stage')?.firstElementChild);
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
         const stage = document.getElementById('behaviors-live-stage')!;
         const el = stage.firstElementChild as HTMLElement;
         const sb = stage.getBoundingClientRect(), eb = el.getBoundingClientRect();
@@ -282,7 +288,11 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
 
     const trip = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const stage = document.getElementById('behaviors-live-stage')!;
       // #744: the fullscreen target is the workspace, so that is the element
       // whose fullscreen sizing is applied and must be removed again. Since
@@ -311,7 +321,7 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
         return Promise.resolve();
       };
       btn.click();
-      await sleep(200);
+      await until(() => wrapper.classList.contains('x-fullscreen-target'));
       Element.prototype.requestFullscreen = original;
 
       const cs = getComputedStyle(wrapper);
@@ -321,7 +331,8 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       };
       fsEl = null;                                              // leave fullscreen → exit path
       document.dispatchEvent(new Event('fullscreenchange'));
-      await sleep(300);
+      await until(() => !wrapper.classList.contains('x-fullscreen-target'));
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       delete (document as any).fullscreenElement;               // back to the real getter
       const after = wrapper.getBoundingClientRect();
       const stageAfter = stage.getBoundingClientRect();
@@ -361,10 +372,25 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     await loadBrowse(page, 'x-');
 
     const walk = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const list = document.getElementById('behaviors-search-results')!;
       const rows = [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
       const press = (key: string) => list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+      const scrollStill = async () => {
+        let last = -1;
+        let same = 0;
+        await until(() => { const t = list.scrollTop; same = t === last ? same + 1 : 0; last = t; return same >= 2; });
+      };
+      const pressAndSettle = async (key: string) => {
+        const before = list.querySelector('[aria-current="true"]');
+        press(key);
+        await until(() => list.querySelector('[aria-current="true"]') !== before);
+        await scrollStill();
+      };
       const state = () => {
         const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
         const rb = cur.getBoundingClientRect(), lb = list.getBoundingClientRect();
@@ -375,7 +401,7 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
       };
       rows[0].focus();
       const out = [];
-      for (let i = 0; i < 8; i++) { press('ArrowDown'); await sleep(120); out.push(state()); }
+      for (let i = 0; i < 8; i++) { await pressAndSettle('ArrowDown'); out.push(state()); }
       return { out, padding: list.style.paddingBottom };
     });
 
@@ -390,10 +416,25 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     await loadBrowse(page, 'x-');
 
     const result = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const list = document.getElementById('behaviors-search-results')!;
       const rows = [...list.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
       const press = (key: string) => list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+      const scrollStill = async () => {
+        let last = -1;
+        let same = 0;
+        await until(() => { const t = list.scrollTop; same = t === last ? same + 1 : 0; last = t; return same >= 2; });
+      };
+      const pressAndSettle = async (key: string) => {
+        const before = list.querySelector('[aria-current="true"]');
+        press(key);
+        await until(() => list.querySelector('[aria-current="true"]') !== before);
+        await scrollStill();
+      };
       const state = () => {
         const cur = list.querySelector('[aria-current="true"]') as HTMLElement;
         const rb = cur.getBoundingClientRect(), lb = list.getBoundingClientRect();
@@ -410,8 +451,7 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
       const scrolls = [];
       let prev = null;
       for (let i = 0; i < 40 && scrolls.length < 4; i++) {
-        press('ArrowDown');
-        await sleep(80);
+        await pressAndSettle('ArrowDown');
         const s = state();
         // How far the selection moved down the content for this one press:
         // one row pitch inside a group, more when it crosses into the next
@@ -420,8 +460,7 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
         prev = s;
         if (s.scrollTop > 0) scrolls.push({ ...s, moved });
       }
-      press('End');
-      await sleep(400);
+      await pressAndSettle('End');
       // PITCH, not height: rows sit 5px apart, so one row of scroll is
       // offsetHeight + gap. Measuring height alone made the assertion fail at
       // 55px for a 50px row -- the behavior was right, the tolerance was wrong.
@@ -453,7 +492,18 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     await page.evaluate(() => { document.getElementById('behaviors-search-results')!.scrollTop = 500; });
     // One frame, so the scroll event has fired before the click.
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(null))));
-    await page.locator('.behaviors-search-results__row').nth(12).click();
+    // A row already fully on screen: clicking one that is not makes Playwright
+    // scroll it into view first, which moves the list for a reason that is
+    // not the page's (it failed that way once locally).
+    const visible = await page.evaluate(() => {
+      const list = document.getElementById('behaviors-search-results')!.getBoundingClientRect();
+      return [...document.querySelectorAll('.behaviors-search-results__row')].findIndex((r) => {
+        const b = r.getBoundingClientRect();
+        return b.height > 0 && b.top >= list.top + 4 && b.bottom <= list.bottom - 4;
+      });
+    });
+    expect(visible, 'a row is fully visible in the scrolled list').toBeGreaterThanOrEqual(0);
+    await page.locator('.behaviors-search-results__row').nth(visible).click();
     // sleep-proves-negative: a click must not move the list, and a move that never happens has no event to wait for
     await page.waitForTimeout(300);
     const after = await page.evaluate(() => document.getElementById('behaviors-search-results')!.scrollTop);
