@@ -1726,6 +1726,31 @@ article[x-cardlink][x-cardlink],
   display: none;
 }
 
+/* #1095: the open state. cardexpandable() toggles x-card--expanded and used to
+   write the open height into a generated rule as well; the height is the
+   state's, so it lives here and the behavior only generates the author's
+   collapsed max-height (via --x-card-expandable-max-height). This sets
+   max-height itself and outranks .x-card__expandable-content, so open always
+   wins while the class is on. A `lines=` card opens through --unclamped and
+   was never height-capped when open, so it is left out. */
+[x-cardexpandable].x-card--expanded > .x-card__expandable-content:not(.x-card__expandable-content--unclamped) {
+  max-height: 1000px;
+}
+
+/* #1095: cardstats() could not build (it catches the error, sets the message
+   on x-error and adds this class). It used to render exactly like a healthy
+   card. Same accent as variant="danger", plus the message itself. */
+[x-cardstats].x-cardstats--error {
+  border-left: 4px solid var(--danger-color);
+}
+
+[x-cardstats].x-cardstats--error::after {
+  content: attr(x-error);
+  padding: 1rem;
+  color: var(--danger-color);
+  font-size: 0.875rem;
+}
+
 /* Minimizable card: header row and title/subtitle. The <header> carries no
    class (card.css names card parts by tag), so these are scoped by the host's
    attribute, twice, to outrank `article > header` / `:is([x-card…]) > header`

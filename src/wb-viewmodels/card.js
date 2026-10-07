@@ -2460,7 +2460,9 @@ export function cardexpandable(element, options = {}) {
   };
   // The collapsed/expanded height travels the same way: a generated rule
   // setting the --x-card-expandable-max-height card.css consumes (#779).
-  const applyMaxHeight = (el, value) => setRule(el, 'max-height', { '--x-card-expandable-max-height': value });
+  // Only the collapsed height is generated: the open height belongs to the
+  // x-card--expanded state, so card.css sets it (#1095) and the slot clears.
+  const applyMaxHeight = (el, value) => setRule(el, 'max-height', value ? { '--x-card-expandable-max-height': value } : null);
 
   // Content
   const contentWrap = cardBody(null, 'x-card__expandable-content');
@@ -2472,7 +2474,7 @@ export function cardexpandable(element, options = {}) {
   if (config.lines) {
     applyLineClamp(contentWrap, config.expanded ? null : config.lines);
   } else {
-    applyMaxHeight(contentWrap, config.expanded ? '1000px' : config.maxHeight);
+    applyMaxHeight(contentWrap, config.expanded ? null : config.maxHeight);
   }
   contentWrap.innerHTML = base.config.content || rawContent || CARD_CONTENT_PLACEHOLDER;
   // Generate ID for aria-controls
@@ -2508,7 +2510,7 @@ export function cardexpandable(element, options = {}) {
     if (config.lines) {
       applyLineClamp(contentWrap, isExpanded ? null : config.lines);
     } else {
-      applyMaxHeight(contentWrap, isExpanded ? '1000px' : config.maxHeight);
+      applyMaxHeight(contentWrap, isExpanded ? null : config.maxHeight);
     }
     icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
     text.textContent = isExpanded ? 'Show Less' : 'Show More';

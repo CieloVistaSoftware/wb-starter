@@ -398,6 +398,14 @@ input[type="radio"] {
   width: 100%;
 }
 
+/* #1095: a textarea with a counter under it. The counter is right-aligned in
+   the wrapper, so the field must not grow past the wrapper -- a horizontal
+   resize drag, or a wider author width, used to leave the counter stranded
+   at the old edge. */
+.x-textarea.x-textarea--has-counter {
+  max-inline-size: 100%;
+}
+
 .x-textarea__counter {
   font-size: 0.75rem;
   color: var(--text-secondary);
