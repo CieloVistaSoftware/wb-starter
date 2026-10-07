@@ -185,12 +185,6 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
 
       const geo = await page.evaluate(async () => {
         const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-        // Wait for the state the next read needs, a frame at a time (#1516). If it
-        // never comes, the read after it fails the test, as the old sleep would have.
-        const until = async (ok: () => boolean, ms = 5000) => {
-          const end = performance.now() + ms;
-          while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
-        };
         const rows = [...document.querySelectorAll('.behaviors-search-results__row')]
           .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
         // bottom-* opens downward, toward the code panel — the failing direction.
@@ -298,7 +292,6 @@ test.describe('#704 — a hover dropdown closes again', () => {
   test('trigger="hover" opens on pointer entry and closes on leave', async ({ page }) => {
     await openShowcase(page);
     const state = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       // Wait for the state the next read needs, a frame at a time (#1516). If it
       // never comes, the read after it fails the test, as the old sleep would have.
       const until = async (ok: () => boolean, ms = 5000) => {
@@ -335,7 +328,6 @@ test.describe('#705 — selecting leaves the example alone and gets logged', () 
     await openShowcase(page);
 
     const result = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       // Wait for the state the next read needs, a frame at a time (#1516). If it
       // never comes, the read after it fails the test, as the old sleep would have.
       const until = async (ok: () => boolean, ms = 5000) => {
@@ -383,7 +375,6 @@ test.describe('#707 — the menu is sized to what it shows', () => {
     await openShowcase(page);
 
     const geo = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       // Wait for the state the next read needs, a frame at a time (#1516). If it
       // never comes, the read after it fails the test, as the old sleep would have.
       const until = async (ok: () => boolean, ms = 5000) => {
@@ -439,7 +430,6 @@ test.describe('#708 — the select event says WHICH option', () => {
     await openShowcase(page);
 
     const picks = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       // Wait for the state the next read needs, a frame at a time (#1516). If it
       // never comes, the read after it fails the test, as the old sleep would have.
       const until = async (ok: () => boolean, ms = 5000) => {
