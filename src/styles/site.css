@@ -64,7 +64,7 @@ li:last-child { margin-bottom: 0; }
 @media (max-width: 640px) {
   .demo-page,
   body > .page {
-    padding: 0 var(--space-md, 1rem) !important;
+    padding: 0 var(--space-md, 1rem);
   }
 }
 
@@ -738,7 +738,7 @@ h5, h6 {
     bottom: 0;
     z-index: 99;
     transform: translateX(-100%);
-    width: 280px !important;
+    width: 280px;
     transition: transform 0.3s ease;
   }
   
@@ -765,7 +765,7 @@ h5, h6 {
   
   /* Show icons on mobile for better UX */
   .nav__icon {
-    display: block !important;
+    display: block;
   }
   
   /* Larger touch targets */
@@ -876,7 +876,7 @@ h5, h6 {
   
   .site__nav {
     top: 56px;
-    width: 100% !important;
+    width: 100%;
     max-width: 100%;
   }
   
@@ -1766,13 +1766,13 @@ a.x-btn-glass {
    ============================================================================= */
 @media (max-width: 768px) {
   .site__nav {
-    position: fixed !important;
+    position: fixed;
     top: 56px;
     bottom: 0 !important;
-    left: 0 !important;
+    left: 0;
     width: min(82vw, 300px) !important;
-    max-height: none !important;
-    transform: translateX(-100%) !important;
+    max-height: none;
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
     z-index: 99;
   }
@@ -1784,7 +1784,7 @@ a.x-btn-glass {
      off-screen it peeked through at x=0 as a stray strip. Hide it on phones —
      the drawer isn't resizable there anyway. (#165) */
   .nav__resizer {
-    display: none !important;
+    display: none;
   }
 }
 
@@ -1956,9 +1956,9 @@ pre { max-width: 100%; overflow-x: auto; }
      its content (base sets a fixed 64px height as a flex item). */
   .site__header {
     flex-wrap: wrap;
-    height: auto !important;
+    height: auto;
     min-height: 60px;
-    flex: 0 0 auto !important;
+    flex: 0 0 auto;
     row-gap: 0.5rem;
     padding: 0.5rem 0.75rem;
   }
@@ -1984,11 +1984,11 @@ pre { max-width: 100%; overflow-x: auto; }
      the ☰ toggle reveals it in place (display-toggle — no max-height fight). */
   .site__nav {
     position: static !important;
-    transform: none !important;
-    flex: 0 0 auto !important;
+    transform: none;
+    flex: 0 0 auto;
     width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
+    height: auto;
+    max-height: none;
     top: auto;
     bottom: auto;
     overflow: visible;
@@ -2009,10 +2009,10 @@ pre { max-width: 100%; overflow-x: auto; }
     gap: 0.25rem;
     padding: 0.5rem;
   }
-  .site__nav .nav__item { width: 100% !important; }
+  .site__nav .nav__item { width: 100%; }
   /* In-flow menu needs no drawer chrome. */
-  .site__nav-backdrop { display: none !important; }
-  .nav__resizer { display: none !important; }
+  .site__nav-backdrop { display: none; }
+  .nav__resizer { display: none; }
 
   /* Footer was 3 stacked blocks (copyright, links, social icons) each
      carrying the desktop 1.5rem/2rem padding/gap meant for a single wide
