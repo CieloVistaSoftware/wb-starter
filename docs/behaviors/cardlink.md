@@ -16,11 +16,11 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `href` | `string` | `https://example.com` | Link destination URL |
-| `title` | `string` | — | Card title |
-| `description` | `string` | — | Card description text |
-| `icon` | `string` | — | Icon (emoji or icon name) |
-| `badge` | `string` | — | Badge text |
+| `href` | URL | `https://example.com` | Link destination URL |
+| `title` | text | — | Card title |
+| `description` | text | — | Card description text |
+| `icon` | emoji or icon name | — | Icon (emoji or icon name) |
+| `badge` | text | — | Badge text |
 | `target` | `_self` · `_blank` | `_self` | Link target |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` · `glass` | `default` | Visual style variant |
 

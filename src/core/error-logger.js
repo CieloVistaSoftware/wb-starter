@@ -30,51 +30,51 @@ const ERROR_DISPLAY_CSS = `
   max-height: 300px;
   overflow-y: auto;
   background: rgba(20, 20, 20, 0.95);
-  color: #fff;
+  color: var(--x-error-display-text);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  border: 1px solid #ef4444;
+  border: 1px solid var(--x-error-display-accent);
   z-index: 99999;
 }
 #x-error-display[hidden] { display: none; }
 #x-error-display .x-error-display__bar {
-  padding: 10px 12px; background: #1a1a1a; border-bottom: 1px solid #333;
+  padding: 10px 12px; background: var(--x-error-display-head-bg); border-bottom: 1px solid var(--x-error-display-rule);
   display: flex; justify-content: space-between; align-items: center;
   border-radius: 8px 8px 0 0; position: sticky; top: 0;
 }
-#x-error-display .x-error-display__heading { font-weight: bold; color: #ef4444; }
+#x-error-display .x-error-display__heading { font-weight: bold; color: var(--x-error-display-accent); }
 #x-error-display .x-error-display__btn {
-  border: none; color: #fff; padding: 4px 10px; border-radius: 4px;
+  border: none; color: var(--x-error-display-text); padding: 4px 10px; border-radius: 4px;
   cursor: pointer; font-size: 0.6875rem; margin-right: 4px;
 }
-#x-error-display .x-error-display__btn--copy { background: #3b82f6; }
-#x-error-display .x-error-display__btn--clear { background: #333; }
-#x-error-display .x-error-display__btn--close { background: #ef4444; margin-right: 0; }
-#x-error-display .x-error-display__btn--ok { background: #22c55e; }
-#x-error-display .x-error-display__btn--blocked { background: #ef4444; }
+#x-error-display .x-error-display__btn--copy { background: var(--x-error-display-link); }
+#x-error-display .x-error-display__btn--clear { background: var(--x-error-display-rule); }
+#x-error-display .x-error-display__btn--close { background: var(--x-error-display-accent); margin-right: 0; }
+#x-error-display .x-error-display__btn--ok { background: var(--x-error-display-ok); }
+#x-error-display .x-error-display__btn--blocked { background: var(--x-error-display-accent); }
 #x-error-display .x-error-display__list { padding: 8px; }
 #x-error-display .x-error-display__item {
   padding: 8px 10px; margin-bottom: 6px; background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid #ef4444; border-radius: 0 4px 4px 0; word-break: break-word;
+  border-left: 3px solid var(--x-error-display-accent); border-radius: 0 4px 4px 0; word-break: break-word;
 }
 #x-error-display .x-error-display__item-head { display: flex; justify-content: space-between; margin-bottom: 4px; }
-#x-error-display .x-error-display__item-title { color: #ef4444; }
-#x-error-display .x-error-display__source { color: #888; font-weight: normal; }
-#x-error-display .x-error-display__time { color: #666; font-size: 0.625rem; }
-#x-error-display .x-error-display__message { color: #fff; }
+#x-error-display .x-error-display__item-title { color: var(--x-error-display-accent); }
+#x-error-display .x-error-display__source { color: var(--x-error-display-muted); font-weight: normal; }
+#x-error-display .x-error-display__time { color: var(--x-error-display-dim); font-size: 0.625rem; }
+#x-error-display .x-error-display__message { color: var(--x-error-display-text); }
 #x-error-display .x-error-display__meta { font-size: 0.6875rem; }
-#x-error-display .x-error-display__meta--file { color: #888; }
-#x-error-display .x-error-display__meta--to { color: #3b82f6; }
-#x-error-display .x-error-display__meta--response { color: #f59e0b; }
-#x-error-display .x-error-display__meta--src { color: #a78bfa; }
+#x-error-display .x-error-display__meta--file { color: var(--x-error-display-muted); }
+#x-error-display .x-error-display__meta--to { color: var(--x-error-display-link); }
+#x-error-display .x-error-display__meta--response { color: var(--x-error-display-response); }
+#x-error-display .x-error-display__meta--src { color: var(--x-error-display-src); }
 #x-error-display .x-error-display__stack {
-  color: #666; font-size: 0.625rem; margin-top: 4px; max-height: 60px; overflow: auto;
+  color: var(--x-error-display-dim); font-size: 0.625rem; margin-top: 4px; max-height: 60px; overflow: auto;
 }
 #x-error-display .x-error-display__fallback {
   width: 100%; height: 8rem; margin-top: 6px; font: 0.6875rem/1.4 monospace;
-  background: #111827; color: #e5e7eb; border: 1px solid #ef4444; border-radius: 4px; padding: 6px;
+  background: var(--x-error-display-code-bg); color: var(--x-error-display-code-text); border: 1px solid var(--x-error-display-accent); border-radius: 4px; padding: 6px;
 }
 .x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; }
 `;

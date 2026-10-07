@@ -16,10 +16,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `direction` | `string` | `row` | Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`. |
-| `wrap` | `string` | `wrap` | Whether items wrap onto more lines: `wrap` (default) or `nowrap`. Maps to CSS `flex-wrap`. |
-| `justify` | `string` | `flex-start` | Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`. |
-| `align` | `string` | `stretch` | Alignment across the cross axis — `stretch` (default), `center`, `flex-start`, and the rest of CSS `align-items`. |
-| `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
+| `direction` | `row` · `column` · `row-reverse` · `column-reverse` | `row` | Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`. |
+| `wrap` | `wrap` · `nowrap` · `wrap-reverse` | `wrap` | Whether items wrap onto more lines: `wrap` (default) or `nowrap`. Maps to CSS `flex-wrap`. |
+| `justify` | `flex-start` · `center` · `flex-end` · `space-between` · `space-around` · `space-evenly` | `flex-start` | Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`. |
+| `align` | `flex-start` · `center` · `flex-end` · `stretch` · `baseline` | `stretch` | Alignment across the cross axis — `stretch` (default), `center`, `flex-start`, and the rest of CSS `align-items`. |
+| `gap` | CSS length | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
 
 <sub>Schema: [`flex.schema.json`](../../src/wb-models/flex.schema.json)</sub>

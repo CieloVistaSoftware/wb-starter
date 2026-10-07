@@ -86,9 +86,12 @@ export function attributesTable(schema) {
   const props = schema?.properties || {};
   const rows = Object.entries(props).map(([name, def]) => {
     if (!def || typeof def !== 'object') return null;
+    // #749: the Values cell says what a reader may write. An enum lists its
+    // values; a string says `text`, never the JS type name. Edit the doc to
+    // say the real shape (CSS length, URL, CSS selector, JSON array of …).
     const values = Array.isArray(def.enum) && def.enum.length
       ? def.enum.map((v) => `\`${v}\``).join(' · ')
-      : `\`${def.type || 'string'}\``;
+      : (!def.type || def.type === 'string' ? 'text' : `\`${def.type}\``);
     const dflt = def.default === undefined || def.default === '' || isPlaceholderDefault(def.default)
       ? '—' : `\`${String(def.default)}\``;
     return `| \`${attrName(name)}\` | ${values} | ${dflt} | ${(def.description || '').replace(/\|/g, '\\|')} |`;

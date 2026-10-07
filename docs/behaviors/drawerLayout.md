@@ -19,8 +19,8 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `position` | `left` · `right` | `left` |  |
-| `width` | `string` | `250px` | Expanded width |
-| `minWidth` | `string` | `48px` | Collapsed width |
+| `width` | CSS length | `250px` | Expanded width |
+| `minWidth` | CSS length | `48px` | Collapsed width |
 | `collapsed` | `boolean` | `false` | Initial collapsed state |
 
 ## Events

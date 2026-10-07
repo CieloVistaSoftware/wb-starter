@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.359">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.364">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -2561,12 +2561,20 @@
       const p = m[1].split(',').map((n) => parseFloat(n));
       return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
     }
-    /** The schema's own description of this option -- what to expect to see. */
+    /**
+     * The schema's own description of this option -- what to expect to see.
+     *
+     * #750: some options cannot show anything in this small box -- a lazy
+     * image is always in view so it loads at once, a lightbox waits for a
+     * click. Their schema carries `demoNote`, which says how to see the effect,
+     * and it follows the description here so every render path shows it.
+     */
     function optionDescription(attr, prop) {
       if (!prop) return '';
       const sc = schemaByName.get(extensionMap[attr]);
       const def = sc && sc.properties && sc.properties[prop];
-      return (def && def.description) ? def.description : '';
+      if (!def) return '';
+      return [def.description, def.demoNote].filter(Boolean).join(' ');
     }
 
     // #994 — articleFor / shows / occludingChild / describeCover live in

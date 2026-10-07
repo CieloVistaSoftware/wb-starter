@@ -17,9 +17,9 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Notification type/severity |
-| `title` | `string` | — | Notification title |
-| `message` | `string` | — | Notification message |
-| `icon` | `string` | — | Custom icon (overrides variant-based icon) |
+| `title` | text | — | Notification title |
+| `message` | text | — | Notification message |
+| `icon` | emoji or icon name | — | Custom icon (overrides variant-based icon) |
 | `dismissible` | `boolean` | `true` | Show dismiss button |
 | `elevated` | `boolean` | `false` | Add shadow elevation |
 

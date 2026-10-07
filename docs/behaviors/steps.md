@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `string` | — | Comma-separated step labels, e.g. `Details,Payment,Confirm`. Whitespace around each is trimmed. |
-| `current` | `string` | `1` | Which step is active, counting from **1**, not 0. Defaults to `1`. |
+| `items` | comma-separated list | — | Comma-separated step labels, e.g. `Details,Payment,Confirm`. Whitespace around each is trimmed. |
+| `current` | number, from 1 | `1` | Which step is active, counting from **1**, not 0. Defaults to `1`. |
 
 <sub>Schema: [`steps.schema.json`](../../src/wb-models/steps.schema.json)</sub>

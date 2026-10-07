@@ -40,10 +40,10 @@ No attribute needed on `<code>`. Don't add `x-code` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `language` | `string` | — | Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text. |
-| `variant` | `string` | — | Visual treatment of the code span or block — controls the surface it is drawn on. |
-| `scrollable` | `string` | — | When `"true"`, scroll horizontally rather than wrapping long lines. |
-| `size` | `string` | — | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
+| `language` | language name, e.g. `html`, `js` | — | Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text. |
+| `variant` | `inline` · `block` | — | Visual treatment of the code span or block — controls the surface it is drawn on. |
+| `scrollable` | `true` to turn on | — | When `"true"`, scroll horizontally rather than wrapping long lines. |
+| `size` | `xs` · `sm` · `md` · `lg` | — | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
 | `showCopy` | `boolean` | `false` | Show a copy-to-clipboard button. |
 | `data-show-copy` | `boolean` | `false` | The `data-` spelling of `showCopy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `showCopy`. |
 | `data-copy` | `boolean` | `false` | The `data-` spelling of `copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `copy`. |

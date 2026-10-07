@@ -103,6 +103,31 @@
   --x-audio-volume-thumb-flat: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
   --x-audio-body-light: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%);
 
+  /* events.js's error toasts (the dev-facing popup for an uncaught error):
+     the edge colour of each level and the two accent texts. Literals in the
+     CSS events.js injects until #790; same values, now tokens. */
+  --x-event-toast-error-edge: #b91c1c;
+  --x-event-toast-warn-edge: #b45309;
+  --x-event-toast-info-edge: #1d4ed8;
+  --x-event-toast-success-edge: #15803d;
+  --x-event-toast-name: #fca5a5;     /* the error's type name, above its message */
+  --x-event-stack-frame: #a5f3fc;    /* stack-trace lines */
+
+  /* error-logger.js's on-page error panel (#x-error-display), a developer
+     tool: same values as the literals its injected CSS carried until #790. */
+  --x-error-display-text: #fff;        /* panel text and button labels */
+  --x-error-display-accent: #ef4444;      /* headings, the close button, the item edge */
+  --x-error-display-head-bg: #1a1a1a;     /* header strip */
+  --x-error-display-rule: #333;        /* rules and the Clear button */
+  --x-error-display-link: #3b82f6;        /* Copy button, the to= target */
+  --x-error-display-ok: #22c55e;          /* the copied/OK state */
+  --x-error-display-muted: #888;       /* source and file lines */
+  --x-error-display-dim: #666;         /* timestamps and stack */
+  --x-error-display-response: #f59e0b;    /* the response line */
+  --x-error-display-src: #a78bfa;         /* the src line */
+  --x-error-display-code-bg: #111827;     /* the copy buffer */
+  --x-error-display-code-text: #e5e7eb;   /* the copy buffer text */
+
   /* x-glass (#1236): the colour mixed into an element that carries the scene
      behind it. The theme's text colour, so the tint reads on light and dark
      themes alike; glass.css mixes it at the element so a context (the hero)

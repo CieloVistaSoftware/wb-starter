@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `string` | — | Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed. |
-| `separator` | `string` | `/` | Character drawn between items. Defaults to `/`. |
+| `items` | comma-separated list | — | Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed. |
+| `separator` | text | `/` | Character drawn between items. Defaults to `/`. |
 
 <sub>Schema: [`breadcrumb.schema.json`](../../src/wb-models/breadcrumb.schema.json)</sub>

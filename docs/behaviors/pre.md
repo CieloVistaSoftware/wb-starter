@@ -18,12 +18,12 @@ No attribute needed on `<pre>`. Don't add `x-pre` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `language` | `string` | — | Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text. |
-| `scrollable` | `string` | — | When `"true"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing. |
-| `showLineNumbers` | `string` | — | Line numbers in a gutter beside the code. On unless set to `"false"`. |
-| `maxHeight` | `string` | — | A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page. |
+| `language` | language name, e.g. `html`, `js` | — | Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text. |
+| `scrollable` | `true` to turn on | — | When `"true"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing. |
+| `showLineNumbers` | on unless `false` | — | Line numbers in a gutter beside the code. On unless set to `"false"`. |
+| `maxHeight` | CSS length | — | A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page. |
 | `wrap` | `boolean` | `false` | Wrap long lines instead of overflowing. Off unless set; `wrap="false"` is honoured as off. |
-| `size` | `string` | — | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
+| `size` | `xs` · `sm` · `md` · `lg` | — | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
 | `showCopy` | `boolean` | `false` | Show a copy-to-clipboard button in the corner of the block. |
 | `data-show-copy` | `boolean` | `false` | The `data-` spelling of `showCopy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `showCopy`. |
 | `data-copy` | `boolean` | `false` | The `data-` spelling of `copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `copy`. |

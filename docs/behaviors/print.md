@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | CSS selector for the region to print. Empty prints the whole page. |
-| `label` | `string` | `🖨️ Print` | Button label. Defaults to `🖨️ Print`. |
+| `target` | CSS selector | — | CSS selector for the region to print. Empty prints the whole page. |
+| `label` | text | `🖨️ Print` | Button label. Defaults to `🖨️ Print`. |
 
 <sub>Schema: [`print.schema.json`](../../src/wb-models/print.schema.json)</sub>

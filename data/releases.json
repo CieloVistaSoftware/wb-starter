@@ -6,6 +6,125 @@
   ],
   "releases": [
     {
+      "version": "1.0.364",
+      "date": "2026-10-06",
+      "summary": "Error-logger.js&#39;s on-page error panel (#x-error-display) wrote 24 hex colours into the CSS it injects -- text, the red accent, header strip, rules, button and meta-line colours -- where no theme could reach them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1663\" target=\"_blank\" rel=\"noopener\">PR 1663</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The register says why x-devconsole.js keeps its colours</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ef062100f637447f0645bfffe6ae0cca67c74b8a\" target=\"_blank\" rel=\"noopener\"><code>ef06210</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The on-page error panel&#39;s colours are theme tokens; error-logger.js leaves the register</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/647abc0a5c51b805b3c14c08fdfb3b829938a7d8\" target=\"_blank\" rel=\"noopener\"><code>647abc0</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The error toasts&#39; edge and accent colours are theme tokens</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1ec975aecc75adbf99a94a154256d963ddfd795a\" target=\"_blank\" rel=\"noopener\"><code>1ec975a</code></a>",
+          "issues": [
+            790
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-hardcoded-colors-in-js.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-hardcoded-colors-in-js.spec.ts</a> --project=compliance. Before: the register allowed error-logger.js 24. Now: the entry is gone (the file holds 0) and the spec passes. The panel looks the same.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/97d3636b872bb32cea9000a46124eb4475cd1ed4\" target=\"_blank\" rel=\"noopener\"><code>97d3636</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.363",
+      "date": "2026-10-06",
+      "summary": "On the Behaviors page, img &quot;lazy&quot;, cardimage &quot;loading&quot; and figure &quot;zoom&quot; rendered an example identical to the plain one -- the box is always in view, so a lazy image loads at once, and zoom waits for a click -- and nothing told the reader how to see the effect. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1666\" target=\"_blank\" rel=\"noopener\">PR 1666</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/750\" target=\"_blank\" rel=\"noopener\">#750</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Options the example box cannot show say how to see them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/750\" target=\"_blank\" rel=\"noopener\">#750</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d419744df26bb7322f661fb79a4b31b177eafa91\" target=\"_blank\" rel=\"noopener\"><code>d419744</code></a>",
+          "issues": [
+            750
+          ]
+        }
+      ],
+      "seeIt": "Open /behaviors, pick img · lazy. Before: the note under the example only restated the attribute (&quot;Sets loading=lazy ...&quot;). Now: it adds &quot;Nothing changes in this box: it is already in view, so the image loads at once. To see the wait, open your browser&#39;s Network panel on a long page and scroll down to the image.&quot; figure · zoom now ends &quot;Click the image to see it open full size.&quot;",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/66d344898588e701241a008db02fb4e80be6318a\" target=\"_blank\" rel=\"noopener\"><code>66d3448</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.362",
+      "date": "2026-10-06",
+      "summary": "The Demos page could ignore a search typed before its script loaded, and the test for it read the result before the filter ran, so it failed on a busy machine and passed on an idle one. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1665\" target=\"_blank\" rel=\"noopener\">PR 1665</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Demos search: apply a query typed before the script attaches; test polls</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49e119b4f86a96f7ee5ed93ae2f85f4524a28b79\" target=\"_blank\" rel=\"noopener\"><code>49e119b</code></a>",
+          "issues": [
+            961
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a>, type &quot;card behaviors&quot; into the search box while the page is still loading. Before: every section stayed showing until the search index arrived (never, if it failed). Now: only the matching sections show as soon as the page&#39;s script runs.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5e2a56b10ce73bdaf1a004d621cff1d4f942aa15\" target=\"_blank\" rel=\"noopener\"><code>5e2a56b</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.361",
+      "date": "2026-10-06",
+      "summary": "&lt;pre x-behavior=&quot;pre&quot;&gt; (and &lt;input x-behavior=&quot;input&quot;&gt;, &lt;article x-behavior=&quot;card&quot;&gt;) says the same thing twice -- the tag already is the behavior -- but the replacement guard only read attribute NAMES, so this spelling reached it as the directive &quot;behavior&quot; and was never reported, unlike &lt;article x-card&gt; (#935). The lazy runtime also skipped x-behavior elements before asking the guard at all. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1662\" target=\"_blank\" rel=\"noopener\">PR 1662</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-behavior that restates the tag is reported, on auto-inject pages only</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d72ff5ad0e2dce77f5bd6506cb0f4f3f86d3c10\" target=\"_blank\" rel=\"noopener\"><code>0d72ff5</code></a>",
+          "issues": [
+            967
+          ]
+        }
+      ],
+      "seeIt": "On a page with auto-inject on, add &lt;pre x-behavior=&quot;pre&quot;&gt;&lt;code&gt;x&lt;/code&gt;&lt;/pre&gt; and open the Error Log. Before: nothing. Now: &quot;&lt;pre x-behavior=&quot;pre&quot;&gt; says the same thing twice ... Drop it and keep &lt;pre&gt;&quot;; with auto-inject off it stays silent. Test: npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/x-behavior-restating-the-tag-is-reported.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/x-behavior-restating-the-tag-is-reported.spec.ts</a> -- before 2 failed (both runtimes), now 10 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/665d3435773aa7aa6268906b00bbe8d02ea68e4a\" target=\"_blank\" rel=\"noopener\"><code>665d343</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.360",
+      "date": "2026-10-06",
+      "summary": "Every attribute table in docs/behaviors printed the JS type `string` as an attribute&#39;s values: 347 rows in 95 docs. Every attribute value is a string, so the cell said nothing. Each row now names its values (`bottom` · `overlay`, `click` · `hover`) or its shape: text, URL, CSS length, CSS selector, CSS duration, milliseconds, comma-separated list, JSON array of {label, href}, theme colour name or CSS colour. The values were read from each behavior&#39;s code where the doc did not already list them. The default-on switches say &quot;on unless `false`&quot; (controls, playsinline, lightbox, showLineNumbers), and `scrollable` says &quot;`true` to turn on&quot;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/generate-behavior-docs.mjs\" target=\"_blank\" rel=\"noopener\">scripts/generate-behavior-docs.mjs</a> writes `text` instead of `string` for a new doc&#39;s plain string attribute, and a compliance spec fails on any Values cell that is just `string`. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1660\" target=\"_blank\" rel=\"noopener\">PR 1660</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The Values column says what an attribute accepts, never `string`</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/87cdf64558ae737c05e1a46b27911e3d643d5e18\" target=\"_blank\" rel=\"noopener\"><code>87cdf64</code></a>",
+          "issues": [
+            749
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Ffigure.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/figure.md</a>. Before: captionPosition, lightbox, caption and width all said <code>string</code>. Now: captionPosition lists <code>bottom</code> · <code>overlay</code>, lightbox says &quot;on unless <code>false</code>&quot;, caption says text, and width says CSS length.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/264d99f79603343b1b0371cc1a5d7a728baec1a9\" target=\"_blank\" rel=\"noopener\"><code>264d99f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.359",
       "date": "2026-10-06",
       "summary": "The behavior docs were rewritten, but 36 properties across ten layout schemas (center, container, cover, frame, grid, icon, reel, sidebarlayout, stat, switcher) still described themselves as &quot;Read by grid().&quot; and the like. A schema property&#39;s description is what VS Code shows on hover, so the most-read documentation named the function that reads an attribute instead of saying what it does. Each now says what it changes, what values it takes and its default where that matters, written from layouts.js and stat.js. A compliance spec fails on any schema property described as &quot;Read by x()&quot;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> is regenerated, which also picks up the camelCase property names from #1125 that the committed index had missed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1659\" target=\"_blank\" rel=\"noopener\">PR 1659</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1094\" target=\"_blank\" rel=\"noopener\">#1094</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>",

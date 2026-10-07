@@ -16,13 +16,13 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | — | Background image URL |
-| `title` | `string` | — | Overlay title |
-| `subtitle` | `string` | — | Overlay subtitle |
+| `image` | URL | — | Background image URL |
+| `title` | text | — | Overlay title |
+| `subtitle` | text | — | Overlay subtitle |
 | `position` | `top` · `center` · `bottom` | `bottom` | Content position |
 | `xalign` | `left` · `center` · `right` | `left` | Horizontal text alignment (x-axis) |
 | `gradient` | `boolean` | `true` | Show gradient overlay for text readability |
-| `height` | `string` | `300px` | Card height (CSS value) |
+| `height` | CSS length | `300px` | Card height (CSS value) |
 | `variant` | `default` · `dark` · `light` · `blur` | `default` | Visual style variant |
 
 ## Methods

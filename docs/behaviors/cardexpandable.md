@@ -54,10 +54,10 @@ The fix:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title |
-| `content` | `string` | — | Expandable content |
+| `title` | text | — | Card title |
+| `content` | text or HTML | — | Expandable content |
 | `expanded` | `boolean` | `false` | Initial expanded state |
-| `maxHeight` | `string` | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. |
+| `maxHeight` | CSS length | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. |
 | `lines` | `number` | `null` | Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set. |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 

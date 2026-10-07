@@ -17,32 +17,32 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `name` | `string` | — | Full name |
-| `title` | `string` | — | Job title / role |
-| `company` | `string` | — | Current company name |
-| `location` | `string` | — | Location (city, country) |
-| `cover` | `string` | — | Cover/banner image URL |
-| `avatar` | `string` | — | Profile photo URL |
-| `bio` | `string` | — | Short biography / summary |
-| `tagline` | `string` | — | Professional tagline or motto |
+| `name` | text | — | Full name |
+| `title` | text | — | Job title / role |
+| `company` | text | — | Current company name |
+| `location` | text | — | Location (city, country) |
+| `cover` | URL | — | Cover/banner image URL |
+| `avatar` | URL | — | Profile photo URL |
+| `bio` | text | — | Short biography / summary |
+| `tagline` | text | — | Professional tagline or motto |
 | `availability` | `available` · `busy` · `not-available` · `open-to-opportunities` | `available` | Current availability status |
-| `email` | `string` | — | Email address |
-| `phone` | `string` | — | Phone number |
-| `website` | `string` | — | Personal website URL |
-| `linkedin` | `string` | — | LinkedIn profile URL |
-| `twitter` | `string` | — | Twitter/X profile URL |
-| `github` | `string` | — | GitHub profile URL |
-| `dribbble` | `string` | — | Dribbble profile URL |
-| `skills` | `string` | — | Comma-separated list of skills |
-| `skillLevels` | `string` | — | JSON array of {name, level (0-100)} for skill bars |
-| `experience` | `string` | — | JSON array of {company, role, period, description} |
-| `education` | `string` | — | JSON array of {school, degree, year} |
-| `projects` | `string` | — | JSON array of {name, description, url, image} |
-| `certifications` | `string` | — | Comma-separated list of certifications |
-| `languages` | `string` | — | Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)') |
-| `stats` | `string` | — | JSON array of {label, value} for stats display |
-| `cta` | `string` | — | Call-to-action button text |
-| `ctaHref` | `string` | `#` | Call-to-action button link |
+| `email` | email address | — | Email address |
+| `phone` | phone number | — | Phone number |
+| `website` | URL | — | Personal website URL |
+| `linkedin` | URL | — | LinkedIn profile URL |
+| `twitter` | URL | — | Twitter/X profile URL |
+| `github` | URL | — | GitHub profile URL |
+| `dribbble` | URL | — | Dribbble profile URL |
+| `skills` | comma-separated list | — | Comma-separated list of skills |
+| `skillLevels` | JSON array of {name, level} | — | JSON array of {name, level (0-100)} for skill bars |
+| `experience` | JSON array of {company, role, period, description} | — | JSON array of {company, role, period, description} |
+| `education` | JSON array of {school, degree, year} | — | JSON array of {school, degree, year} |
+| `projects` | JSON array of {name, description, url, image} | — | JSON array of {name, description, url, image} |
+| `certifications` | comma-separated list | — | Comma-separated list of certifications |
+| `languages` | comma-separated list | — | Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)') |
+| `stats` | JSON array of {label, value} | — | JSON array of {label, value} for stats display |
+| `cta` | text | — | Call-to-action button text |
+| `ctaHref` | URL | `#` | Call-to-action button link |
 | `variant` | `default` · `compact` · `horizontal` · `full` | `default` |  |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` |  |
 

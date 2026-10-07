@@ -24,7 +24,7 @@ On another element, write `x-progress`:
 | --- | --- | --- | --- |
 | `value` | `number` | `0` | Current progress value (0-100) |
 | `max` | `number` | `100` | Maximum value |
-| `label` | `string` | — | Progress label text |
+| `label` | text | — | Progress label text |
 | `showValue` | `boolean` | `false` | Show percentage value |
 | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `primary` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | Bar height size |

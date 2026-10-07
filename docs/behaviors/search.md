@@ -12,15 +12,15 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `placeholder` | `string` | `Search...` | Placeholder text |
-| `value` | `string` | — | Search value |
-| `name` | `string` | — | Form field name |
+| `placeholder` | text | `Search...` | Placeholder text |
+| `value` | text | — | Search value |
+| `name` | text | — | Form field name |
 | `debounce` | `number` | `300` | Debounce delay in milliseconds |
 | `instant` | `boolean` | `false` | Search on every keystroke (no debounce) |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `size` | `sm` · `md` · `lg` | `md` | Search input size |
 | `variant` | `default` · `glass` · `minimal` | `default` | Visual variant |
-| `icon` | `string` | `🔍` | Search icon (emoji or icon name) |
+| `icon` | emoji or icon name | `🔍` | Search icon (emoji or icon name) |
 | `clearable` | `boolean` | `true` | Show clear button when has value |
 | `loading` | `boolean` | `false` | Show loading state |
 

@@ -14,8 +14,8 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `heading` | `string` | `Toggle` | Text displayed on the clickable trigger button |
+| `heading` | text | `Toggle` | Text displayed on the clickable trigger button |
 | `expanded` | `boolean` | `false` | Whether the content is initially visible |
-| `target` | `string` | — | CSS selector of a remote element to toggle instead of wrapping content |
+| `target` | CSS selector | — | CSS selector of a remote element to toggle instead of wrapping content |
 
 <sub>Schema: [`collapse.schema.json`](../../src/wb-models/collapse.schema.json)</sub>

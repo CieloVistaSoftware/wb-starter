@@ -23,13 +23,13 @@ attributes, so any hand-written inner content is discarded in favor of `label`.
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `label` | string | `""` | Chip text |
-| `icon` | string | `""` | Leading icon/emoji shown before the label |
+| `label` | text | `""` | Chip text |
+| `icon` | emoji or icon name | `""` | Leading icon/emoji shown before the label |
 | `dismissible` | boolean | `false` | Adds a × button that removes the chip. Bare `dismissible` or `data-dismissible` both work |
 | `disabled` | boolean | `false` | Disabled/faded state; also suppresses the dismiss button even if `dismissible` is set. Bare `disabled` or `data-disabled` both work |
 | `outlined` | boolean | `false` | Transparent background with a colored border instead of a filled background. Bare `outlined` or `data-outlined` both work |
-| `variant` | string | `"default"` | `default`, `primary`, `success`, `warning`, `error`, `info` |
-| `size` | string | `"md"` | `sm`, `md`, `lg` |
+| `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `"default"` | `default`, `primary`, `success`, `warning`, `error`, `info` |
+| `size` | `sm` · `md` · `lg` | `"md"` | `sm`, `md`, `lg` |
 
 ## Usage
 

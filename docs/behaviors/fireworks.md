@@ -13,12 +13,12 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | `30` | Particles per burst |
-| `label` | `string` | `Fireworks!` | Trigger button label |
+| `label` | text | `Fireworks!` | Trigger button label |
 | `showButton` | `boolean` | `true` | Show trigger button |
 | `repeat` | `boolean` | `false` | Loop animation |
-| `delay` | `string` | `0s` | Start delay |
-| `duration` | `string` | `1.5s` | Animation duration |
-| `colors` | `string` | `["#ff0","#f00","#0ff","#f0f"]` | Particle colors as JSON array |
+| `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay |
+| `duration` | CSS duration, e.g. `3s` | `1.5s` | Animation duration |
+| `colors` | JSON array of CSS colours | `["#ff0","#f00","#0ff","#f0f"]` | Particle colors as JSON array |
 
 ## Events
 

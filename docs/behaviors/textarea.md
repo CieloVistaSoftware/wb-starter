@@ -19,10 +19,10 @@ No attribute needed on `<textarea>`. Don't add `x-textarea` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Field label |
-| `placeholder` | `string` | — | Placeholder text |
-| `value` | `string` | — | Text value |
-| `name` | `string` | — | Form field name |
+| `label` | text | — | Field label |
+| `placeholder` | text | — | Placeholder text |
+| `value` | text | — | Text value |
+| `name` | text | — | Form field name |
 | `rows` | `number` | `3` | Visible rows |
 | `maxLength` | `number` | `0` | Max character limit |
 | `showCount` | `boolean` | `false` | Show character count |

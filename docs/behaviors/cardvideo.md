@@ -16,10 +16,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm` | Video source URL |
-| `poster` | `string` | `#` | Poster image URL |
-| `title` | `string` | — | Video title |
-| `description` | `string` | — | Video description |
+| `src` | URL | `https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm` | Video source URL |
+| `poster` | URL | `#` | Poster image URL |
+| `title` | text | — | Video title |
+| `description` | text | — | Video description |
 | `autoplay` | `boolean` | `false` | Auto-play video (requires muted) |
 | `muted` | `boolean` | `false` | Mute video |
 | `loop` | `boolean` | `false` | Loop video playback |

@@ -12,8 +12,8 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `message` | `string` | `Notification` | Text of the notification. Defaults to `Notification`. |
-| `duration` | `string` | `3000` | How long the notification stays up, in milliseconds. Defaults to `3000`. |
+| `message` | text | `Notification` | Text of the notification. Defaults to `Notification`. |
+| `duration` | milliseconds | `3000` | How long the notification stays up, in milliseconds. Defaults to `3000`. |
 
 ## Events
 
