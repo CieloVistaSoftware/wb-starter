@@ -112,10 +112,10 @@ test.describe('[x-demo]: per-card doc links (#388)', () => {
       'a card whose tag DOES resolve must still get its link'
     ).toHaveCount(1, { timeout: 10000 });
 
-    // Give the no-doc element the same settling time as the real one, then
-    // confirm it never added a (necessarily broken) link of its own.
-    // sleep-proves-negative: the plain <div> must NOT add a link of its own; a link that correctly never appears fires no event
-    await page.waitForTimeout(500);
+    // demo.js attaches every card's link -- x-behaviors, then native elements,
+    // then the shared Docs line -- in ONE synchronous pass after the docs index
+    // loads. The real card's link above is in, so the plain <div>'s turn has
+    // already been and gone (#1516: no settling sleep needed).
     expect(await badgeFiles(page, 'nodoc'), 'only the card doc; the plain <div> gets none').toEqual([
       'docs/behaviors/card.md',
     ]);

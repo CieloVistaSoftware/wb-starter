@@ -117,10 +117,19 @@ test.describe('x-button href navigates from any host', () => {
     await mount(page, `<div id="b" x-button href="${DEST}" variant="link" disabled>Docs</div>`);
 
     const before = page.url();
+    // button.js navigates with `location.href = href` inside its click
+    // handler, and the Navigation API's navigate event fires synchronously on
+    // that assignment (#1516). So by the time the click has been dispatched,
+    // the page has either started a navigation or never will.
+    await page.evaluate(() => {
+      const nav = (window as any).navigation;
+      if (!nav) throw new Error('this check needs the Navigation API (Chromium)');
+      (window as any).__navigations = 0;
+      nav.addEventListener('navigate', () => { (window as any).__navigations += 1; });
+    });
     await page.locator('#b').click({ force: true });
-    // sleep-proves-negative: a disabled control must NOT navigate; staying put fires no event
-    await page.waitForTimeout(500);
 
+    expect(await page.evaluate(() => (window as any).__navigations), 'a disabled control started a navigation').toBe(0);
     expect(page.url(), 'a disabled control navigated anyway').toBe(before);
   });
 });
