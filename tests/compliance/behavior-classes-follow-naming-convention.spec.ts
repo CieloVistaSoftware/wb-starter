@@ -34,9 +34,10 @@ const root = process.cwd();
 
 /**
  * Classes applied by behaviors that do not follow the convention. Shrink only.
- * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96.
+ * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96,
+ * batch 2 (the layout compounds) to 85.
  */
-const NON_CONFORMING_MAX = 96;
+const NON_CONFORMING_MAX = 85;
 
 /**
  * Old name -> the name that replaced it. Each old name is gone for good.
@@ -56,7 +57,43 @@ const RETIRED: Record<string, string> = {
   'x-input-group__append': 'x-inputgroup__append',
   'x-radio-wrapper': 'x-radio__wrapper',
   'x-radio-label': 'x-radio__label',
+  // Batch 2, 2026-10-07: the layout compounds (layouts.js). A handle, toggle
+  // or resize overlay that drawerLayout builds is a PART of drawerlayout, not a
+  // modifier of the separate `drawer` behavior that `x-drawer-*` implied.
+  'x-sidebar-layout': 'x-sidebarlayout',
+  'x-sidebar-layout__main': 'x-sidebarlayout__main',
+  'x-sidebar-layout__side': 'x-sidebarlayout__side',
+  'x-drawer-layout': 'x-drawerlayout',
+  'x-drawer-layout--vertical': 'x-drawerlayout--vertical',
+  'x-drawer-handle': 'x-drawerlayout__handle',
+  'x-drawer-toggle': 'x-drawerlayout__toggle',
+  'x-drawer-resize-overlay': 'x-drawerlayout__resize-overlay',
 };
+
+/**
+ * Retired CLASS names that are still live ATTRIBUTE names: `<aside
+ * x-drawer-layout>` is how an author applies drawerLayout, and stays so. For
+ * these the bare name is only a hit where it is used as a class: a selector
+ * (`.x-drawer-layout`) or a line about classes (className, classList,
+ * toHaveClass, baseClass, appliesClass, checkClasses, class=). Any suffixed
+ * form (`x-drawer-layout--vertical`) is a class wherever it appears.
+ */
+const ALSO_ATTRIBUTES = new Set(['x-sidebar-layout', 'x-drawer-layout']);
+const CLASS_CONTEXT = /class(?:Name|List|es)?\b|toHaveClass|baseClass|appliesClass|checkClasses/;
+
+/** Is this match a use of the retired CLASS, rather than of a same-named attribute? */
+function isClassUse(token: string, line: string, at: number): boolean {
+  if (!ALSO_ATTRIBUTES.has(token)) return true;
+  const before = line[at - 1] ?? '';
+  const after = line[at + token.length] ?? '';
+  if (before === '.') return true;
+  if (before === '<' || before === '[' || after === '=' || after === ']') return false;
+  // Inside a start tag, `<aside id="a" x-drawer-layout>`, it is markup.
+  if (/<[a-z][\w-]*(?:\s+[^<>]*)?\s$/i.test(line.slice(0, at))) return false;
+  // Only the words next to it: one long line (a search-index entry, a table
+  // row) can say "class" about something else entirely.
+  return CLASS_CONTEXT.test(line.slice(Math.max(0, at - 40), at + token.length + 20));
+}
 
 /**
  * Where a retired name must not appear. History is left alone on purpose:
@@ -94,7 +131,7 @@ function behaviorModules(): Array<{ file: string; src: string }> {
 /** `x-form-row` as a whole class or the stem of a longer one, never inside another word. */
 function retiredPattern(): RegExp {
   const alts = Object.keys(RETIRED).sort((a, b) => b.length - a.length).map((n) => n.replace(/[-_]/g, '\\$&'));
-  return new RegExp(`(?<![\\w-])(?:${alts.join('|')})(?![a-z0-9])`, 'g');
+  return new RegExp(`(?<![\\w-])(?:${alts.join('|')})(?![a-z0-9])[\\w-]*`, 'g');
 }
 
 test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)', () => {
@@ -122,6 +159,18 @@ test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)'
     expect(sorted.wrongShape, 'single-dash compounds the rule has no slot for').toEqual(['x-floating-label__label', 'x-radio-label']);
     expect('x-card__contact-link').toMatch(CONVENTION);
     expect('x-card-image').not.toMatch(CONVENTION);
+  });
+
+  test('a retired class that is also a live attribute is only a hit where it is used as a class', () => {
+    const at = (token: string, line: string) => isClassUse(token, line, line.indexOf(token));
+    expect(at('x-drawer-layout', '<aside x-drawer-layout position="left">'), 'an attribute on markup').toBe(false);
+    expect(at('x-drawer-layout', "  'x-drawer-layout': 'drawerLayout',"), 'a tag-map key').toBe(false);
+    expect(at('x-drawer-layout', '**A class is not an attribute.** `<aside id="n" x-drawer-layout>`'), 'an attribute in a start tag beside the word class').toBe(false);
+    expect(at('x-drawer-layout', '[x-drawer].x-drawer-layout {'), 'a class selector').toBe(true);
+    expect(at('x-drawer-layout', "element.classList.add('x-drawer-layout');"), 'a classList call').toBe(true);
+    expect(at('x-sidebar-layout', '| Attribute | `x-sidebarlayout` or `x-sidebar-layout` | | Applies to | a container | ' + 'x'.repeat(60) + ' class'), 'class said about something else').toBe(false);
+    expect(at('x-drawer-layout', '    // the wrong x-drawer-layout class.'), 'a comment about the class').toBe(true);
+    expect(at('x-drawer-layout--vertical', 'see x-drawer-layout--vertical'), 'a suffixed form is always a class').toBe(true);
   });
 
   test('every replacement name itself follows the convention', () => {
@@ -156,6 +205,7 @@ test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)'
         const lines = readFileSync(file, 'utf8').split('\n');
         lines.forEach((line, i) => {
           for (const m of line.matchAll(pattern)) {
+            if (!isClassUse(m[0], line, m.index!)) continue;
             const old = Object.keys(RETIRED).filter((n) => m[0].startsWith(n)).sort((a, b) => b.length - a.length)[0];
             hits.push(`${relative(root, file).replace(/\\/g, '/')}:${i + 1}  ${m[0]}  -> use ${RETIRED[old] ?? '(renamed)'}${m[0].slice(old.length)}`);
           }

@@ -6,7 +6,7 @@ import path from 'node:path';
  * #1467: the Behaviors page taught markup that does not work. Its
  * x-drawer-layout examples said position="start"/"end" where the behavior
  * knows only left/right/top/bottom -- the collapse toggle got an unstyled
- * x-drawer-toggle--start class and sat on top of the first link, its arrow was
+ * x-drawerlayout__toggle--start class and sat on top of the first link, its arrow was
  * blank, resizing did nothing. Hero "centered", span "muted" and notes "end"
  * were the same mistake.
  *

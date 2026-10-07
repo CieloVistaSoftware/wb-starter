@@ -16,6 +16,16 @@
 
 ---
 
+**Updated 2026-10-07, evening.** Class naming convention, batch 2 (#1096).
+
+**Files touched:** `src/wb-viewmodels/layouts.js`, `src/styles/behaviors/layout.css`, `src/wb-models/drawerLayout.schema.json`, `src/core/mvvm/schema-builder.js` (comment), `src/wb-viewmodels/overlay.js` (comment), `docs/behaviors/sidebarlayout.md`, `docs/standards/CSS-CLASS-CONVENTION.md`, `tests/compliance/behavior-classes-follow-naming-convention.spec.ts`, five specs that selected the old classes, `data/schema-index.json`, `data/behavior-component-index.json`, `data/search.json`.
+
+**Last action:** the layout compounds' classes are named for their behavior: `x-sidebarlayout` (`__side`, `__main`), `x-drawerlayout` (`--vertical`), and the parts drawerLayout builds, `x-drawerlayout__toggle`, `__handle`, `__resize-overlay`. The `x-drawer-layout` and `x-sidebar-layout` attributes are unchanged. Ratchet now 85 of 700.
+
+**Next step:** batch 3, the `-trigger` classes (overlay.js, effects.js, dialog, dropdown, feedback, tooltip).
+
+---
+
 **Updated 2026-10-07.** Class naming convention, batch 1 (#1096).
 
 **Files touched:** `src/wb-viewmodels/floatinglabel.js`, `src/wb-viewmodels/formrow.js`, `src/wb-viewmodels/inputgroup.js`, `src/wb-viewmodels/semantics/radio.js`, `src/wb-viewmodels/semantics/input.js`, `src/styles/behaviors/floatinglabel.css`, `src/styles/behaviors/input.css`, `docs/behaviors/floatinglabel.md`, `docs/behaviors/formrow.md`, `docs/behaviors/inputgroup.md`, `docs/standards/CSS-CLASS-CONVENTION.md`, `scripts/lib/behavior-classes.mjs`, `tests/compliance/behavior-classes-follow-naming-convention.spec.ts`.

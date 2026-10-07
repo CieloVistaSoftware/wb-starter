@@ -369,9 +369,9 @@
     "x-drawer": {
       "js": "src/wb-viewmodels/layouts.js",
       "variants": [
-        "x-drawer-handle",
-        "x-drawer-layout",
-        "x-drawer-toggle"
+        "x-drawerlayout__handle",
+        "x-drawerlayout",
+        "x-drawerlayout__toggle"
       ],
       "schema": "src/wb-models/drawer.schema.json"
     },
@@ -612,7 +612,7 @@
     "x-sidebar": {
       "js": "src/wb-viewmodels/layouts.js",
       "variants": [
-        "x-sidebar-layout"
+        "x-sidebarlayout"
       ]
     },
     "x-skeleton": {

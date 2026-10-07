@@ -27,15 +27,15 @@
 [x-drawer]{
   visibility: hidden;
 }
-/* .x-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
+/* .x-drawerlayout: enhanced by drawerLayout() (layouts.js) as a page-shell
    panel. .x-drawer-trigger: enhanced by drawer() (overlay.js) as a
    self-triggering button (drawer-behavior root cause -- without this, every
    <div x-drawer title="…" content="…">Label</div> trigger stayed
    invisible even after drawer()'s click handler was correctly attached,
    because this base rule hides every <div x-drawer> that isn't a
-   .x-drawer-layout). Same specificity as the rule above by design -- this
+   .x-drawerlayout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-[x-drawer].x-drawer-layout, [x-drawer].x-drawer-trigger{
+[x-drawer].x-drawerlayout, [x-drawer].x-drawer-trigger{
   visibility: visible;
 }
 
@@ -171,18 +171,18 @@
   align-items: center;
 }
 
-.x-sidebar-layout {
+.x-sidebarlayout {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
-.x-sidebar-layout > .x-sidebar-layout__side {
+.x-sidebarlayout > .x-sidebarlayout__side {
   flex-basis: var(--x-sidebar-width, 18.75rem);
   flex-grow: 1;
 }
 
-.x-sidebar-layout > .x-sidebar-layout__main {
+.x-sidebarlayout > .x-sidebarlayout__main {
   flex-basis: 0;
   flex-grow: 999;
   min-width: var(--x-sidebar-content-min, 50%);
@@ -299,25 +299,25 @@
   height: var(--x-icon-size, 1em);
 }
 
-/* x-drawer-layout: the page-shell panel. Its size is a generated rule. */
-.x-drawer-layout {
+/* x-drawerlayout: the page-shell panel. Its size is a generated rule. */
+.x-drawerlayout {
   position: relative;
   display: flex;
   flex-direction: column;
   transition: width 0.3s ease, min-width 0.3s ease, flex-basis 0.3s ease;
 }
-.x-drawer-layout.x-drawer-layout--vertical {
+.x-drawerlayout.x-drawerlayout--vertical {
   width: 100%;
   transition: height 0.3s ease, min-height 0.3s ease, flex-basis 0.3s ease;
 }
-.x-drawer-layout.collapsed {
+.x-drawerlayout.collapsed {
   overflow: hidden;
   border: none;
 }
 
 /* Scoped under the host: themes.css's `[data-theme] button` (0,1,1) would
    otherwise beat a single class and put its own padding/background back. */
-.x-drawer-layout .x-drawer-toggle {
+.x-drawerlayout .x-drawerlayout__toggle {
   position: absolute;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -331,38 +331,38 @@
   padding: 0;
   outline: none;
 }
-.x-drawer-layout .x-drawer-toggle--left {
+.x-drawerlayout .x-drawerlayout__toggle--left {
   top: 50%; transform: translateY(-50%); right: calc(-1 * var(--x-drawer-min-width, 1.5rem));
   width: var(--x-drawer-min-width, 1.5rem); height: 3rem;
   border-left: none; border-radius: 0 0.25rem 0.25rem 0;
 }
-.x-drawer-layout .x-drawer-toggle--right {
+.x-drawerlayout .x-drawerlayout__toggle--right {
   top: 50%; transform: translateY(-50%); left: 0;
   width: var(--x-drawer-min-width, 1.5rem); height: 3rem;
   border-right: none; border-radius: 0.25rem 0 0 0.25rem;
 }
-.x-drawer-layout .x-drawer-toggle--top {
+.x-drawerlayout .x-drawerlayout__toggle--top {
   left: 50%; transform: translateX(-50%); bottom: 0;
   height: var(--x-drawer-min-height, 1.5rem); width: 3rem;
   border-top: none; border-radius: 0 0 0.25rem 0.25rem;
 }
-.x-drawer-layout .x-drawer-toggle--bottom {
+.x-drawerlayout .x-drawerlayout__toggle--bottom {
   left: 50%; transform: translateX(-50%); top: 0;
   height: var(--x-drawer-min-height, 1.5rem); width: 3rem;
   border-bottom: none; border-radius: 0.25rem 0.25rem 0 0;
 }
 
-.x-drawer-handle {
+.x-drawerlayout__handle {
   position: absolute;
   z-index: 20;
   background: transparent;
 }
-.x-drawer-handle--left   { right: 0; top: 0; bottom: 0; width: 0.5rem; cursor: col-resize; }
-.x-drawer-handle--right  { left: 0; top: 0; bottom: 0; width: 0.5rem; cursor: col-resize; }
-.x-drawer-handle--top    { bottom: 0; left: 0; right: 0; height: 0.5rem; cursor: row-resize; }
-.x-drawer-handle--bottom { top: 0; left: 0; right: 0; height: 0.5rem; cursor: row-resize; }
+.x-drawerlayout__handle--left   { right: 0; top: 0; bottom: 0; width: 0.5rem; cursor: col-resize; }
+.x-drawerlayout__handle--right  { left: 0; top: 0; bottom: 0; width: 0.5rem; cursor: col-resize; }
+.x-drawerlayout__handle--top    { bottom: 0; left: 0; right: 0; height: 0.5rem; cursor: row-resize; }
+.x-drawerlayout__handle--bottom { top: 0; left: 0; right: 0; height: 0.5rem; cursor: row-resize; }
 
-.x-drawer-resize-overlay {
+.x-drawerlayout__resize-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -371,5 +371,5 @@
   z-index: 9999;
   user-select: none;
 }
-.x-drawer-resize-overlay--row { cursor: row-resize; }
-.x-drawer-resize-overlay--col { cursor: col-resize; }
+.x-drawerlayout__resize-overlay--row { cursor: row-resize; }
+.x-drawerlayout__resize-overlay--col { cursor: col-resize; }
