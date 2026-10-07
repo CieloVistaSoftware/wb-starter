@@ -314,6 +314,10 @@
       font-size: 0.875rem;
       color: var(--text-muted);
     }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    #progress-fill { width: 0%; }
+    #all-category { display:none; }
   </style>
 </head>
 <body id="scopedashboard-body-8">
@@ -334,7 +338,7 @@
     <div id="scopedashboard-div-18" class="phase-progress">
       <h3 id="scopedashboard-h3-19">📊 Phase 1 Progress</h3>
       <div id="scopedashboard-div-20" class="progress-bar">
-        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        <div class="progress-fill" id="progress-fill"></div>
       </div>
       <p id="scopedashboard-p-21" class="progress-text"><span id="progress-complete">0</span> of 21 components complete (<span id="progress-percent">0</span>%)</p>
     </div>
@@ -379,7 +383,7 @@
     </div>
     
     <!-- All Components -->
-    <div class="category" id="all-category" style="display:none;">
+    <div class="category" id="all-category">
       <div id="scopedashboard-div-40" class="category-header">
         <span id="scopedashboard-span-41" class="category-icon">📦</span>
         <span id="scopedashboard-span-42" class="category-title">All Schemas</span>

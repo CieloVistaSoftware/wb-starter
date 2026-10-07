@@ -48,6 +48,11 @@
     .kicker { font-size: 1.05rem; }
     footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border);
       padding-top: 1.25rem; margin-top: 3rem; }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .flex-13883 { flex: 13883; }
+    .flex-48370 { flex: 48370; }
+    .mb-0 { margin-bottom:0; }
   </style>
 </head>
 <body>
@@ -75,8 +80,8 @@
       <h2>Lines of code changed</h2>
       <div class="churn__sub">Additions vs. deletions across 386 files</div>
       <div class="bar">
-        <div class="bar__add" style="flex: 13883"></div>
-        <div class="bar__del" style="flex: 48370"></div>
+        <div class="bar__add flex-13883"></div>
+        <div class="bar__del flex-48370"></div>
       </div>
       <div class="bar__legend">
         <span class="add">+13,883 added</span>
@@ -95,7 +100,7 @@
         <li><strong>Every fix names its test.</strong> A change isn't "done" until a failing-first test proves the bug existed and now passes &mdash; the record of scrutiny, not just the fix.</li>
         <li><strong>Deployment is separate from writing.</strong> Code committed is not code shipped; changes are built, verified, and only then deployed to customers.</li>
       </ul>
-      <p style="margin-bottom:0;">The takeaway for you: this velocity is real, and it is <strong>governed</strong>. You get the speed of AI with the discipline of engineering review layered on top.</p>
+      <p class="mb-0">The takeaway for you: this velocity is real, and it is <strong>governed</strong>. You get the speed of AI with the discipline of engineering review layered on top.</p>
     </section>
 
     <footer>
