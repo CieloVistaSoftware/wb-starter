@@ -28,6 +28,12 @@ test('filter, open a doc, Back to Docs: same filter, same scroll, same tab', asy
   await page.locator('#docs-search').fill('behavior');
   const cards = page.locator('.docs-card');
   await expect.poll(() => cards.count()).toBeGreaterThan(12);
+  // #961: the behavior sections above the list build asynchronously. Clicked
+  // before they finish, the layout above the card differs between leaving and
+  // coming back, so the page rightly puts the card back where it was on screen
+  // while the raw scroll lands off by the difference (48px in a full-gate run).
+  // The same layout on both sides is what makes both measurements below exact.
+  await expect(page.locator('#behaviors-sections')).toHaveAttribute('data-built', '1', { timeout: 20_000 });
   const target = cards.nth(10);
   await target.scrollIntoViewIfNeeded();
   const href = await target.getAttribute('href');

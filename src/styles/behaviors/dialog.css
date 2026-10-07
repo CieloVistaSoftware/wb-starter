@@ -68,10 +68,13 @@
   margin: auto;
 }
 
-.x-dialog--fullscreen {
-  width: 100vw !important;
+/* #1014: (0,2,0) beats the size classes below (.x-dialog--sm/md/lg/xl/full,
+   0,1,0) on specificity, so a fullscreen dialog with a size still fills the
+   screen -- no !important needed. */
+.x-dialog.x-dialog--fullscreen {
+  width: 100vw;
   height: 100vh;
-  max-width: 100vw !important;
+  max-width: 100vw;
   max-height: 100vh;
   margin: 0;
   border-radius: 0;

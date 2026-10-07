@@ -115,19 +115,19 @@
   .services-grid,
   .services-card,
   .services-cta-section {
-    padding: 1rem !important;
-    margin: 0 !important;
-    border-radius: 8px !important;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 8px;
     box-sizing: border-box;
   }
   .services-hero-banner h1 {
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
   }
   .services-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .services-card h3 {
-    font-size: 1rem !important;
+    font-size: 1rem;
   }
 }

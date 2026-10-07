@@ -103,8 +103,12 @@ async function scrollPastAndSettle(page, locator, extra = 400) {
   await safeScrollIntoView(locator);
   await elementReady(locator);
   const stuck = await armEvent(page, locator, 'wb:sticky:stuck', '__wbStuck');
-  const absTop = await locator.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
-  await page.evaluate((y) => window.scrollTo(0, y), absTop + extra);
+  // Measure and scroll in ONE synchronous step (#961). Read in one round trip
+  // and scrolled in the next, the position was stale whenever a lazy demo
+  // above finished building in between: the page scrolled to where the element
+  // used to be, stopped short of it, and no further scroll event ever came, so
+  // `wb:sticky:stuck` never fired (full-gate run, 2026-10-07).
+  await locator.evaluate((el, by) => window.scrollBy(0, el.getBoundingClientRect().top + by), extra);
   await stuck();
 }
 
