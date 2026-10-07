@@ -19,6 +19,18 @@
   background-color: var(--bg-tertiary, #e5e7eb);
   min-height: 3.125rem;
 }
+/* #1095: waiting for the image (dimmed), then faded in once it has loaded,
+   instead of the two classes doing nothing and the image popping in. */
+.x-lazy.x-lazy--loading {
+  opacity: 0.6;
+}
+.x-lazy.x-lazy--loaded {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .x-lazy.x-lazy--loaded { transition: none; }
+}
 
 /* ── hotkey ───────────────────────────────────────────────────────────── */
 .x-hotkey__badge {
