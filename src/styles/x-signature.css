@@ -420,11 +420,11 @@
 
 /* Tooltip glass style */
 .x-tooltip-glass {
-  background: var(--x-glass-bg) !important;
-  backdrop-filter: var(--x-glass-blur) !important;
-  -webkit-backdrop-filter: var(--x-glass-blur) !important;
-  border: 1px solid var(--x-glass-border) !important;
-  border-radius: 8px !important;
+  background: var(--x-glass-bg);
+  backdrop-filter: var(--x-glass-blur);
+  -webkit-backdrop-filter: var(--x-glass-blur);
+  border: 1px solid var(--x-glass-border);
+  border-radius: 8px;
 }
 
 /* Modal glass overlay */

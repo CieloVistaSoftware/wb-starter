@@ -278,12 +278,11 @@
    item on purpose but must NOT shrink to its content width -- it's meant to
    fill the page. The :has() rule above is MORE specific than a single class
    here (its argument is a class + :only-child, two selectors, vs. one) so
-   source order alone can't win this -- !important is the deliberate,
-   intended override for this specific opt-out, not a specificity workaround
-   for something accidental. */
-[x-demo].x-demo--full-width{
-  width: 100% !important;
-  max-width: 100% !important;
+   source order alone can't win this. The selector is doubled (0,4,0) so it
+   outranks that (0,3,0) :has() on specificity, without !important (#1014). */
+[x-demo][x-demo].x-demo--full-width.x-demo--full-width{
+  width: 100%;
+  max-width: 100%;
 }
 
 /* #390: a full-width demo's grid must also STRETCH its item to fill that
@@ -297,9 +296,9 @@
    content's intrinsic width, creating the 11.44x height:width problem --
    confirmed live: cardhero in full-width single-item demo collapsed to 33px
    wide with 487px height = 14.7x aspect ratio). */
-[x-demo].x-demo--full-width .x-demo__grid{
-  width: 100% !important;
-  max-width: 100% !important;
+[x-demo].x-demo--full-width.x-demo--full-width .x-demo__grid{
+  width: 100%;
+  max-width: 100%;
   justify-items: stretch;
 }
 
@@ -335,9 +334,9 @@
     max-width: 100%;
   }
 
-  [x-demo].x-demo--full-width .x-demo__grid{
-    width: 100% !important;
-    max-width: 100% !important;
+  [x-demo].x-demo--full-width.x-demo--full-width .x-demo__grid{
+    width: 100%;
+    max-width: 100%;
   }
 
   .x-demo__code {
@@ -409,10 +408,11 @@
    .x-demo__links line above. Sits ABOVE the element's own top-right
    corner, never inside the header content flow, never the same shape
    or position as a card's own .x-card__badge (card.js STYLE_BADGE), which
-   sits inset within the header instead. position:absolute is !important
-   because `.x-card--glass > *` (card.css) sets position:relative on every
-   direct child of a glass-variant card, which would otherwise outrank this
-   single-class rule and break the corner placement. Every x-card* element
+   sits inset within the header instead. position:absolute has its own
+   doubled-class rule (below) because `.x-card--glass > *` (card.css) sets
+   position:relative on every direct child of a glass-variant card, which
+   would otherwise tie this single-class rule and win by load order (#1014:
+   specificity, not !important). Every x-card* element
    is `position: relative` (card.css `.x-card`), so this anchors correctly
    regardless of card type.
 
@@ -445,7 +445,6 @@
    itself, never past it, so the overflow:hidden clipping bug above still
    can't happen here. */
 .x-demo__card-doc-link {
-  position: absolute !important;
   top: 0;
   right: 0;
   z-index: 5;
@@ -463,6 +462,9 @@
   text-decoration: none;
   opacity: 0.75;
   transition: opacity 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.x-demo__card-doc-link.x-demo__card-doc-link {
+  position: absolute;
 }
 
 .x-demo__card-doc-link:hover,
