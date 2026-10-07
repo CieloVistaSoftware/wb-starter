@@ -420,7 +420,7 @@
       "css": "src/styles/behaviors/footer.css",
       "schema": "src/wb-models/footer.schema.json"
     },
-    "x-form-row": {
+    "x-formrow": {
       "js": "src/wb-viewmodels/enhancements.js"
     },
     "x-gallery": {
@@ -459,7 +459,7 @@
     "x-input": {
       "js": "src/wb-viewmodels/semantics/input.js",
       "variants": [
-        "x-input-group"
+        "x-inputgroup"
       ],
       "css": "src/styles/behaviors/input.css",
       "schema": "src/wb-models/input.schema.json"
@@ -560,8 +560,8 @@
     "x-radio": {
       "js": "src/wb-viewmodels/semantics/radio.js",
       "variants": [
-        "x-radio-label",
-        "x-radio-wrapper"
+        "x-radio__label",
+        "x-radio__wrapper"
       ]
     },
     "x-range": {

@@ -178,7 +178,7 @@ input.x-radio.x-radio--sm { width: 0.9em; height: 0.9em; }
 input.x-radio.x-radio--lg { width: 1.5em; height: 1.5em; }
 
 /* The <label> radio.js wraps a radio in when it is given label text. */
-.x-radio-wrapper {
+.x-radio__wrapper {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;

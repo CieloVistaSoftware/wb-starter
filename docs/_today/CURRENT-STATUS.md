@@ -16,6 +16,16 @@
 
 ---
 
+**Updated 2026-10-07.** Class naming convention, batch 1 (#1096).
+
+**Files touched:** `src/wb-viewmodels/floatinglabel.js`, `src/wb-viewmodels/formrow.js`, `src/wb-viewmodels/inputgroup.js`, `src/wb-viewmodels/semantics/radio.js`, `src/wb-viewmodels/semantics/input.js`, `src/styles/behaviors/floatinglabel.css`, `src/styles/behaviors/input.css`, `docs/behaviors/floatinglabel.md`, `docs/behaviors/formrow.md`, `docs/behaviors/inputgroup.md`, `docs/standards/CSS-CLASS-CONVENTION.md`, `scripts/lib/behavior-classes.mjs`, `tests/compliance/behavior-classes-follow-naming-convention.spec.ts`.
+
+**Last action:** the form-control family's classes now start with their behavior's name (`x-floatinglabel`, `x-formrow`, `x-inputgroup`, `x-radio__wrapper`, `x-radio__label`). A compliance ratchet holds the classes that break the rule at 96 of 700 (was 107) and forbids the old names anywhere.
+
+**Next step:** batch 2, the layout compounds in `layouts.js` (`sidebarlayout`, `drawerlayout` and the drawer handle and toggle).
+
+---
+
 **Updated 2026-10-02.** Build process changed (John's decision).
 
 - Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.

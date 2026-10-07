@@ -3,7 +3,7 @@
 Styles a form field wrapper as a row, optionally laid out inline. See
 [src/wb-viewmodels/formrow.js](../../src/wb-viewmodels/formrow.js).
 
-- **Root CSS class:** `x-form-row`
+- **Root CSS class:** `x-formrow`
 - **Schema:** [formrow.schema.json](../../src/wb-models/formrow.schema.json)
 
 ## Usage
@@ -29,14 +29,14 @@ control out on one line instead of stacked:
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `data-inline` | boolean (presence) | `false` | Applies `x-form-row--inline` for a horizontal label/control layout. |
+| `data-inline` | boolean (presence) | `false` | Applies `x-formrow--inline` for a horizontal label/control layout. |
 
 ## CSS Classes
 
 | Class | Applies to | When |
 |---|---|---|
-| `x-form-row` | the host element | always |
-| `x-form-row--inline` | the host element | `data-inline` present |
+| `x-formrow` | the host element | always |
+| `x-formrow--inline` | the host element | `data-inline` present |
 
 ## Events
 

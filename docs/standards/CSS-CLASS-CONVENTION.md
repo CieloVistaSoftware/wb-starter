@@ -69,6 +69,22 @@ distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can.
 Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is
 not a behavior name; 72 use the wrong shape. See #1096.
 
+### The gate
+
+`tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every
+class a behavior module applies (`classList.add`, `classList.toggle`, and
+`className =`) and checks its base against the registered names: the values in
+`src/core/tag-map.js` plus the keys of `behaviorModules` in
+`src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it
+reported real behaviors like `clipboard` and `lazy` as concepts.
+
+The classes are renamed in batches, so the gate is a ratchet. Measured
+2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family
+(floatinglabel, formrow, inputgroup and the label and wrapper built by radio),
+took it to 96. The count may only go down, and a renamed class is retired: no
+source, stylesheet, test, doc, page, demo or data file may use the old name
+again.
+
 ---
 
 ## Why inline styles are not an alternative
