@@ -30,7 +30,7 @@ There are three ways UI gets enhanced, all by the same runtime:
 | **Behavior attribute** — `<button x-toast toast-variant="success">` | Any element gains a behavior via an `x-*` attribute |
 | **Plain form control** — `<input type="text">` | Native controls are enhanced too, with no attribute at all |
 
-There are no custom tags. The `<wb-*>` component tags were removed; every one
+There are no custom tags. The old component tags were removed; every one
 became either the semantic element that already maps to it or a host carrying
 the `x-*` attribute (`src/core/tag-map.js`, `elementMap` is empty on purpose).
 
@@ -423,15 +423,15 @@ WB.render({
 }, document.body);
 ```
 
-That builds `<div x-card data-title="Generated"><p>Built from JSON.</p></div>`,
-and the card behavior turns it into a card titled "Generated". The fields:
+That builds a `<div x-card>` holding the paragraph, and the card behavior turns
+it into a card titled "Generated". The fields:
 
 | Field | Meaning |
 |---|---|
 | `t` | tag name (default `div`); `t: 'article'` builds a card with no `b` at all |
 | `b` | behavior name → an `x-<b>` attribute |
 | `behaviors` | more behavior names, each its own `x-<name>` |
-| `d` | attributes, written as `data-*` (behaviors read those too) |
+| `d` | the behavior's attributes, e.g. `{ title: 'Generated' }` |
 | `id`, `classes` | the element's id and class |
 | `content` / `html` | text content, or HTML |
 | `children` | nested definitions |
