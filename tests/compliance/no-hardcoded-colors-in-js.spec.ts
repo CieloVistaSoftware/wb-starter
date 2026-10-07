@@ -35,7 +35,6 @@ const root = process.cwd();
  * not styles (the colour picker's default, the black/white contrast result).
  */
 const REGISTER: Record<string, number> = {
-  'src/core/error-logger.js': 24,
   'src/core/events.js': 2,   // console.error %c styling: console output, which no theme reaches
   'src/core/theme.js': 5,
   'src/core/x-devconsole.js': 34,
