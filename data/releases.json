@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.398",
+      "date": "2026-10-07",
+      "summary": "On the Behaviors page the code · copy example showed no copy control in the code; the only Copy in sight was the page&#39;s source-panel button, far below on the right. code.js chose inline-or-block copy handling from config.variant, which defaults to &quot;inline&quot;, so a multiline &lt;code copy&gt; -- already laid out as a block listing -- became &quot;click anywhere to copy&quot; with no button. It now reads the block decision the element already carries (x-code--block). The button it then builds was blown up to 54x52px by x-button&#39;s auto-injected rule, which out-ranks .x-code__copy on source order; code.css qualifies it as .x-code-wrapper .x-code__copy, the same fix pre.css has for .x-pre__copy, so it is the small corner control again. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1710\" target=\"_blank\" rel=\"noopener\">PR 1710</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1709\" target=\"_blank\" rel=\"noopener\">#1709</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A block &lt;code copy&gt; gets its copy button in the corner of the code</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1709\" target=\"_blank\" rel=\"noopener\">#1709</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/288bd36cbde98b30fb7b4da57a6a09077ee8b0dc\" target=\"_blank\" rel=\"noopener\"><code>288bd36</code></a>",
+          "issues": [
+            1709
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors, expand code and pick &quot;copy&quot;. Before: no copy control in the JavaScript block, only the source panel&#39;s Copy at the bottom right. Now: a small 📋 button in the block&#39;s top-right corner, level with the JAVASCRIPT badge and clear of the first line of code; clicking it copies the listing.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1a8f2d211a579edbbd44ed1398c401be3bd23cbf\" target=\"_blank\" rel=\"noopener\"><code>1a8f2d2</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1709\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1709</a>"
+        },
+        {
+          "label": "Test",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/code-copy-block-has-a-button.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/code-copy-block-has-a-button.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.397",
       "date": "2026-10-07",
       "summary": "Typing into a form field while its behavior was still upgrading it lost the text: input.js (and every behavior that wraps a form control) moved the focused element into its wrapper, which blurs it, so keystrokes went to &lt;body&gt;. On the playground this left Full Name empty, the required check blocked the submit, and the &quot;Endpoint sees&quot; panel never appeared (2 of 40 runs under CPU load). Separately, Playwright reports every protocol error from an evaluate as &quot;Execution context was destroyed&quot;, throwing away the browser&#39;s real reason; failing tests and the project reporter now keep it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1705\" target=\"_blank\" rel=\"noopener\">#1705</a>",
