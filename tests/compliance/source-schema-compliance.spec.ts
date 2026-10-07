@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {
   ROOT, PATHS, readFile, fileExists, getJsFiles, getSchemaFiles, loadSchema,
-  extractFunction, createsElement, addsClass, setsStyle
+  extractFunction, createsElement
 } from '../base';
 
 // Schemas that don't have JS functions -- these document/describe the
@@ -180,30 +180,11 @@ test.describe('Source-Schema: Function Existence', () => {
   });
 });
 
-test.describe('Source-Schema: Base Class Assignment', () => {
-  
-  test('functions add baseClass from schema', () => {
-    const allJs = getAllJsSource();
-    const issues: string[] = [];
-    
-    for (const file of getSchemaFiles()) {
-      const schema = loadSchema(file);
-      if (!schema?.behavior || !schema.compliance?.baseClass) continue;
-      
-      const funcBody = extractFunction(allJs, schema.behavior);
-      if (!funcBody) continue;
-      
-      const baseClass = schema.compliance.baseClass;
-      const classAdded = addsClass(funcBody, baseClass) ||
-                        funcBody.includes(`'${baseClass}'`) ||
-                        funcBody.includes(`"${baseClass}"`);
-      
-      if (!classAdded) issues.push(`${schema.behavior}: should add class "${baseClass}"`);
-    }
-    
-    expect(issues.length, 'Too many missing base classes').toBeLessThanOrEqual(35) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
-  });
-});
+// #344: "functions add baseClass from schema" is retired. It asserted the rule
+// #913 removed (no mandatory host class; behaviors inject classes where a
+// stylesheet needs one), so it could only count behaviors for doing the right
+// thing. The reasoning is at tests/behaviors/permutation-compliance.spec.ts,
+// CHECK 1. compliance.baseClass stays in the schemas as a class-name source.
 
 test.describe('Source-Schema: Required Children', () => {
   
