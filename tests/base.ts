@@ -797,8 +797,25 @@ export async function wbIdle(
   page.on('load', onLoad);
   page.on('request', onReq);
   page.on('crash', onCrash);
+  const urlBefore = page.url();
+  const settle = () => page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
   try {
-    await page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
+    try {
+      await settle();
+    } catch (err) {
+      // #961, measured: CI run 37568992926 (landing-page-showcase.html) lost
+      // the evaluate with "Execution context was destroyed" while the page did
+      // NOTHING -- no navigation, load, navigation request or crash recorded,
+      // same URL. Four instances, none a page defect: the harness lost its
+      // handle on a document that is still there. In exactly that case, ask
+      // the same document again, once. Any recorded event, a changed URL or a
+      // second failure still fails, with the evidence.
+      const harnessOnly = /Execution context was destroyed/.test((err as Error).message)
+        && seen.length === 0 && page.url() === urlBefore;
+      if (!harnessOnly) throw err;
+      seen.push(`+${Date.now() - t0}ms context lost with nothing recorded; asked the same document again`);
+      await settle();
+    }
   } catch (err) {
     throw new Error(`${(err as Error).message}\n\nWhat the page did while settling (#961):\n${seen.join('\n') || '(no navigation, load, navigation request or crash recorded)'}\nurl now: ${page.url()}`);
   } finally {
