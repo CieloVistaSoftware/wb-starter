@@ -12,12 +12,12 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `heading` | `string` | `Input` | Dialog heading. Only used when `promptTitle` is absent. |
-| `message` | `string` | — | Body text. Only used when `promptMessage` is absent. |
-| `placeholder` | `string` | — | Placeholder shown in the empty input. |
-| `defaultValue` | `string` | — | Value the input starts with, already selected so typing replaces it. |
-| `promptTitle` | `string` | — | Dialog heading. Read BEFORE `heading`; defaults to `Input`. |
-| `promptMessage` | `string` | — | Body text above the field. Read BEFORE `message`. |
+| `heading` | text | `Input` | Dialog heading. Only used when `promptTitle` is absent. |
+| `message` | text | — | Body text. Only used when `promptMessage` is absent. |
+| `placeholder` | text | — | Placeholder shown in the empty input. |
+| `defaultValue` | text | — | Value the input starts with, already selected so typing replaces it. |
+| `promptTitle` | text | — | Dialog heading. Read BEFORE `heading`; defaults to `Input`. |
+| `promptMessage` | text | — | Body text above the field. Read BEFORE `message`. |
 
 ## Events
 

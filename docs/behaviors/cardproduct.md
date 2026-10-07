@@ -17,15 +17,15 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | — | Product image URL |
-| `title` | `string` | — | Product name |
-| `description` | `string` | — | Product description |
-| `price` | `string` | — | Current price |
-| `originalPrice` | `string` | — | Original price (shows discount) |
-| `badge` | `string` | — | Badge text (Sale, New, etc.) |
+| `image` | URL | — | Product image URL |
+| `title` | text | — | Product name |
+| `description` | text | — | Product description |
+| `price` | text | — | Current price |
+| `originalPrice` | text | — | Original price (shows discount) |
+| `badge` | text | — | Badge text (Sale, New, etc.) |
 | `rating` | `number` | `0` | Product rating (0-5) |
 | `reviews` | `number` | `0` | Number of reviews |
-| `cta` | `string` | `Add to Cart` | CTA button text |
+| `cta` | text | `Add to Cart` | CTA button text |
 | `featured` | `boolean` | `false` | Highlight as featured |
 | `variant` | `default` · `compact` · `horizontal` · `minimal` | `default` | Visual style variant |
 

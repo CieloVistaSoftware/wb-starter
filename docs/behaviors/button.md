@@ -24,7 +24,7 @@ On another element, write `x-button`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Button text |
+| `label` | text | — | Button text |
 | `icon` | `star` · `check` · `close` · `warning` · `info` · `error` · `heart` · `search` · `edit` · `trash` · `plus` · `minus` · `home` · `settings` · `download` · `upload` · `arrow_right` · `arrow_left` · `copy` · `save` | `star` | Icon name from built-in library, or any emoji/text |
 | `iconPosition` | `start` · `end` | `start` | Icon position relative to label |
 | `variant` | `primary` · `secondary` · `success` · `warning` · `error` · `ghost` · `outline` · `link` | `primary` | Visual style variant |
@@ -33,7 +33,7 @@ On another element, write `x-button`:
 | `loading` | `boolean` | `false` | Loading state with spinner |
 | `fullWidth` | `boolean` | `false` | Full width button |
 | `iconOnly` | `boolean` | `false` | Icon-only button (square) |
-| `href` | `string` | `#` | Destination URL. Turns the control into a real link — required for variant="link" to mean anything. |
+| `href` | URL | `#` | Destination URL. Turns the control into a real link — required for variant="link" to mean anything. |
 | `target` | `_self` · `_blank` | `_self` | Where to open href |
 
 ## Events

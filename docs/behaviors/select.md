@@ -25,11 +25,11 @@ write a `<select>` with `<option>` children
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Select label |
-| `placeholder` | `string` | `Select...` | Placeholder text |
-| `options` | `string` | — | Options as JSON [{value, label}] |
-| `value` | `string` | — | Selected value |
-| `name` | `string` | — | Form field name |
+| `label` | text | — | Select label |
+| `placeholder` | text | `Select...` | Placeholder text |
+| `options` | JSON array of {value, label} | — | Options as JSON [{value, label}] |
+| `value` | text | — | Selected value |
+| `name` | text | — | Form field name |
 | `searchable` | `boolean` | `false` | Enable search |
 | `clearable` | `boolean` | `false` | Enable clear button |
 | `multiple` | `boolean` | `false` | Allow multiple selection |

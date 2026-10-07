@@ -23,14 +23,14 @@ screens without a media query.
 |-----------|------|---------|--------------|
 | `columns` | number | `3` | Target column count. Columns auto-collapse on narrow viewports — this sets the minimum item width used for that collapse (2→280px, 3→250px, 4→200px, 5→180px, 6→150px), not a hard column count. |
 | `rows` | number | *(auto)* | Explicit row track count (`grid-template-rows: repeat(N, auto)`). Omit to let rows grow automatically as content is added. |
-| `gap` | string | `1rem` | Any CSS gap value. |
-| `minWidth` | string | *(computed from `columns`)* | Overrides the auto-computed minimum item width used for column collapse. |
-| `align` | string | *(none)* | `align-items` — vertical alignment of each cell's content. |
-| `justify` | string | *(none)* | `justify-items` — horizontal alignment of each cell's content. |
+| `gap` | CSS length | `1rem` | Any CSS gap value. |
+| `minWidth` | CSS length | *(computed from `columns`)* | Overrides the auto-computed minimum item width used for column collapse. |
+| `align` | `start` · `center` · `end` · `stretch` | *(none)* | `align-items` — vertical alignment of each cell's content. |
+| `justify` | `start` · `center` · `end` · `stretch` | *(none)* | `justify-items` — horizontal alignment of each cell's content. |
 | `center` | boolean | `false` | Shorthand for `align="center" justify="center"` plus centered text — the common case of "center everything in every cell." |
-| `background` | string | *(none)* | A theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour. Never a `var(--…)` token: name the colour, not its implementation. |
+| `background` | theme colour name or CSS colour | *(none)* | A theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour. Never a `var(--…)` token: name the colour, not its implementation. |
 | `altRows` | boolean | `false` | Zebra-stripes even-position children using `var(--bg-secondary)`. |
-| `headers` | string | *(none)* | Comma-separated column labels, rendered as a header row prepended before the grid's own content. |
+| `headers` | comma-separated list | *(none)* | Comma-separated column labels, rendered as a header row prepended before the grid's own content. |
 
 ## Column Count
 

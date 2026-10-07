@@ -16,12 +16,12 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `/images/placeholder.svg` | Image source URL |
-| `alt` | `string` | — | Image alt text (accessibility) |
-| `title` | `string` | — | Card title |
-| `subtitle` | `string` | — | Card subtitle |
-| `caption` | `string` | — | Image caption (displayed below image) |
-| `href` | `string` | `#` | Link URL (makes card clickable) |
+| `src` | URL | `/images/placeholder.svg` | Image source URL |
+| `alt` | text | — | Image alt text (accessibility) |
+| `title` | text | — | Card title |
+| `subtitle` | text | — | Card subtitle |
+| `caption` | text | — | Image caption (displayed below image) |
+| `href` | URL | `#` | Link URL (makes card clickable) |
 | `aspect` | `16/9` · `4/3` · `1/1` · `3/2` · `21/9` · `auto` | `16/9` | Image aspect ratio |
 | `position` | `top` · `bottom` · `left` · `right` | `top` | Image position relative to content |
 | `fit` | `cover` · `contain` · `fill` · `none` | `cover` | Image object-fit mode |

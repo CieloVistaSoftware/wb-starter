@@ -28,8 +28,8 @@ On another element, write `x-dialog`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Dialog title |
-| `content` | `string` | — | Dialog body content |
+| `title` | text | — | Dialog title |
+| `content` | text or HTML | — | Dialog body content |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` |  |
 | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). |
 | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. |

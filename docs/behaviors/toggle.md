@@ -13,6 +13,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | Selector of target element |
+| `target` | CSS selector | — | Selector of target element |
 
 <sub>Schema: [`toggle.schema.json`](../../src/wb-models/toggle.schema.json)</sub>

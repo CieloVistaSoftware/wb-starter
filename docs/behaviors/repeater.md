@@ -16,6 +16,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `count` | `string` | `0` | How many copies of the template content to render. |
+| `count` | number | `0` | How many copies of the template content to render. |
 
 <sub>Schema: [`repeater.schema.json`](../../src/wb-models/repeater.schema.json)</sub>

@@ -21,9 +21,9 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `layout` | string | `"grid"` | `grid`, `list`, or `masonry` — sets `.x-articles--{layout}` on the inner list wrapper |
+| `layout` | `grid` · `list` · `masonry` | `"grid"` | `grid`, `list`, or `masonry` — sets `.x-articles--{layout}` on the inner list wrapper |
 | `columns` | number | `"3"` | Column count for `grid`/`masonry` layouts, applied as the `--x-articles-columns` CSS custom property |
-| `title` | string | `""` | Optional heading rendered above the list in a `.x-articles__header` |
+| `title` | text | `""` | Optional heading rendered above the list in a `.x-articles__header` |
 | `pagination` | boolean | `false` | Renders a static Previous/Page 1/Next control strip below the list — **no actual paging logic**, the buttons don't do anything and Previous is always `disabled` |
 
 ## Usage

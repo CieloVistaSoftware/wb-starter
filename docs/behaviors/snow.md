@@ -13,11 +13,11 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | `30` | Number of snowflakes |
-| `label` | `string` | `Let it Snow!` | Trigger button label |
+| `label` | text | `Let it Snow!` | Trigger button label |
 | `showButton` | `boolean` | `true` | Show trigger button |
 | `repeat` | `boolean` | `true` | Loop animation |
-| `delay` | `string` | `0s` | Start delay |
-| `duration` | `string` | `8s` | Fall duration |
+| `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay |
+| `duration` | CSS duration, e.g. `3s` | `8s` | Fall duration |
 
 ## Events
 

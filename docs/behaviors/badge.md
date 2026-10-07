@@ -14,7 +14,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Badge text content |
+| `label` | text | — | Badge text content |
 | `variant` | `default` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `glass` · `gradient` | `default` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` | `md` | Badge size |
 | `pill` | `boolean` | `false` | Pill shape with full border radius |
@@ -22,7 +22,7 @@
 | `outline` | `boolean` | `false` | Outline style (transparent background) |
 | `removable` | `boolean` | `false` | Show remove/close button |
 | `glow` | `boolean` | `false` | Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges) |
-| `icon` | `string` | — | Leading icon/emoji shown before the label |
+| `icon` | emoji or icon name | — | Leading icon/emoji shown before the label |
 
 ## Methods
 

@@ -12,10 +12,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `total` | `string` | `0` | Total number of items. With `perPage` this derives the page count. |
-| `perPage` | `string` | `10` | Items per page. Defaults to `10`. |
-| `pages` | `string` | `0` | Explicit page count. Overrides the count derived from `total`/`perPage`. |
-| `current` | `string` | `1` | Active page, counting from **1**. Defaults to `1`. |
+| `total` | number | `0` | Total number of items. With `perPage` this derives the page count. |
+| `perPage` | number | `10` | Items per page. Defaults to `10`. |
+| `pages` | number | `0` | Explicit page count. Overrides the count derived from `total`/`perPage`. |
+| `current` | number, from 1 | `1` | Active page, counting from **1**. Defaults to `1`. |
 
 ## Rendered markup
 

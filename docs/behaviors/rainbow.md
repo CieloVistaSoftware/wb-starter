@@ -12,6 +12,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `duration` | `string` | `3s` | How long one full colour cycle takes, as a CSS duration (e.g. `3s`). Longer is slower. |
+| `duration` | CSS duration, e.g. `3s` | `3s` | How long one full colour cycle takes, as a CSS duration (e.g. `3s`). Longer is slower. |
 
 <sub>Schema: [`rainbow.schema.json`](../../src/wb-models/rainbow.schema.json)</sub>

@@ -24,11 +24,11 @@ value that a form submits, use a plain [`<select>`](select.md)
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `items` | string | `""` | Comma-separated list of menu item labels (e.g. `"Profile,Settings,Logout"`). Ignored if the host already has real `<a>`/`<button>`/`<div>` children |
-| `label` | string | `""` | Trigger button text. If set (or the host has real child items), a dedicated `<button class="x-dropdown__trigger">` is built; otherwise the host's own text content is the clickable trigger |
-| `position` | string | `"bottom-start"` | `bottom-start`, `bottom-end`, `top-start`, `top-end` — sets which corner the menu opens from |
+| `items` | comma-separated list | `""` | Comma-separated list of menu item labels (e.g. `"Profile,Settings,Logout"`). Ignored if the host already has real `<a>`/`<button>`/`<div>` children |
+| `label` | text | `""` | Trigger button text. If set (or the host has real child items), a dedicated `<button class="x-dropdown__trigger">` is built; otherwise the host's own text content is the clickable trigger |
+| `position` | `bottom-start` · `bottom-end` · `top-start` · `top-end` | `"bottom-start"` | `bottom-start`, `bottom-end`, `top-start`, `top-end` — sets which corner the menu opens from |
 | `closeOnSelect` | boolean | `true` (unless the value is literally `"false"`) | Whether choosing a menu item closes the dropdown |
-| `trigger` | string | `"click"` | `click` or `hover`. In hover mode there's a 150ms close delay so the pointer can travel from the trigger into the menu |
+| `trigger` | `click` · `hover` | `"click"` | `click` or `hover`. In hover mode there's a 150ms close delay so the pointer can travel from the trigger into the menu |
 
 ## Usage
 

@@ -16,14 +16,14 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `name` | `string` | `John Doe` | Person's name |
-| `role` | `string` | `Designer` | Job title or role |
-| `avatar` | `string` | `/images/avatar.svg` | Avatar image URL |
-| `bio` | `string` | — | Short biography |
-| `cover` | `string` | — | Cover/banner image URL |
+| `name` | text | `John Doe` | Person's name |
+| `role` | text | `Designer` | Job title or role |
+| `avatar` | URL | `/images/avatar.svg` | Avatar image URL |
+| `bio` | text | — | Short biography |
+| `cover` | URL | — | Cover/banner image URL |
 | `size` | `sm` · `md` · `lg` | `md` | Avatar size |
 | `align` | `left` · `center` | `center` | Content alignment |
-| `hoverText` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hoverText` | text | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 

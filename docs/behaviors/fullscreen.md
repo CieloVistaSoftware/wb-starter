@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | CSS selector for the element to expand. Empty means the document element. |
-| `label` | `string` | `⛶ Fullscreen` | Button label when not fullscreen. Defaults to `⛶ Fullscreen`. |
+| `target` | CSS selector | — | CSS selector for the element to expand. Empty means the document element. |
+| `label` | text | `⛶ Fullscreen` | Button label when not fullscreen. Defaults to `⛶ Fullscreen`. |
 
 <sub>Schema: [`fullscreen.schema.json`](../../src/wb-models/fullscreen.schema.json)</sub>

@@ -16,7 +16,7 @@ No attribute needed on `<audio>`. Don't add `x-audio` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3` | Audio source URL |
+| `src` | URL | `https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3` | Audio source URL |
 | `volume` | `number` | `0.8` | Initial volume (0-1) |
 | `loop` | `boolean` | `false` | Loop playback |
 | `autoplay` | `boolean` | `false` | Auto-play (requires muted) |

@@ -18,8 +18,8 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `gap` | `string` | `1rem` | Space between clustered items, as a CSS length. Defaults to `1rem`. |
-| `justify` | `string` | `flex-start` | How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`. |
-| `align` | `string` | `center` | How items line up across the row — CSS `align-items`. Defaults to `center`, which is what keeps mixed-height chips and buttons on a shared centre line. |
+| `gap` | CSS length | `1rem` | Space between clustered items, as a CSS length. Defaults to `1rem`. |
+| `justify` | `flex-start` · `center` · `flex-end` · `space-between` · `space-around` · `space-evenly` | `flex-start` | How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`. |
+| `align` | `flex-start` · `center` · `flex-end` · `stretch` · `baseline` | `center` | How items line up across the row — CSS `align-items`. Defaults to `center`, which is what keeps mixed-height chips and buttons on a shared centre line. |
 
 <sub>Schema: [`cluster.schema.json`](../../src/wb-models/cluster.schema.json)</sub>

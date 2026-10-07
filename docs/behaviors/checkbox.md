@@ -31,12 +31,12 @@ already has.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Label text |
+| `label` | text | — | Label text |
 | `checked` | `boolean` | `false` | Checked state |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `indeterminate` | `boolean` | `false` | Indeterminate state |
-| `name` | `string` | — | Form field name |
-| `value` | `string` | — | Form field value |
+| `name` | text | — | Form field name |
+| `value` | text | — | Form field value |
 | `required` | `boolean` | `false` | Required field |
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `primary` · `success` | `default` |  |

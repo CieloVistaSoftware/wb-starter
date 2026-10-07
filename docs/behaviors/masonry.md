@@ -17,7 +17,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `columns` | `string` | `3` | Number of masonry columns. Defaults to `3`. |
-| `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
+| `columns` | number | `3` | Number of masonry columns. Defaults to `3`. |
+| `gap` | CSS length | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
 
 <sub>Schema: [`masonry.schema.json`](../../src/wb-models/masonry.schema.json)</sub>

@@ -39,10 +39,10 @@ No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `captionPosition` | `string` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
+| `captionPosition` | `bottom` · `overlay` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
 | `zoom` | `boolean` | `false` | Clicking the image opens it at full size. Bare attribute. |
-| `lightbox` | `string` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
-| `caption` | `string` | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |
-| `width` | `string` | — | Width of the whole figure, image and caption together. A bare number is pixels (`width="320"`); any CSS length works (`20rem`, `50%`). Capped at the container's width. |
+| `lightbox` | on unless `false` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
+| `caption` | text | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |
+| `width` | CSS length | — | Width of the whole figure, image and caption together. A bare number is pixels (`width="320"`); any CSS length works (`20rem`, `50%`). Capped at the container's width. |
 
 <sub>Schema: [`figure.schema.json`](../../src/wb-models/figure.schema.json)</sub>
