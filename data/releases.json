@@ -47,7 +47,7 @@
           "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
         }
       ],
-      "seeIt": "Run npx playwright test tests/behaviors/input-theming.spec.ts --repeat-each=3. Before: Windows CI read the inputs in the dark and ocean themes as native white rgb(255, 255, 255). Now: every run reads the themed colour, because the check waits for the input&#39;s stylesheet to load."
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> --repeat-each=3. Before: Windows CI read the inputs in the dark and ocean themes as native white rgb(255, 255, 255). Now: every run reads the themed colour, because the check waits for the input&#39;s stylesheet to load."
     },
     {
       "version": "1.0.383",
