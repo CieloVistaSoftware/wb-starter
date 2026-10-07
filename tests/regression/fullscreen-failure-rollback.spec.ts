@@ -42,7 +42,11 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
     await openExample(page);
 
     const result = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
       // The element the button actually fullscreens, read from the button
       // itself. This used to name #behaviors-live-stage directly; #720 moved
@@ -67,7 +71,9 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       };
 
       btn.onclick!(new MouseEvent('click'));
-      await sleep(400);
+      // The refusal has been handled once it is logged; then nothing may have changed.
+      await until(() => errors.some((e) => e.includes('[WB:fullscreen]')));
+      await new Promise((r) => requestAnimationFrame(r));
 
       Element.prototype.requestFullscreen = origRequest;
       console.error = origError;
@@ -95,7 +101,11 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
     await openExample(page);
 
     const result = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
       // The element the button actually fullscreens, read from the button
       // itself. This used to name #behaviors-live-stage directly; #720 moved
@@ -121,7 +131,7 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       };
 
       btn.onclick!(new MouseEvent('click'));
-      await sleep(400);
+      await until(() => target!.classList.contains('x-fullscreen-target') && btn.textContent!.includes('Exit'));
       Element.prototype.requestFullscreen = origRequest;
 
       // requestFullscreen is mocked, so the browser's own :fullscreen rules
@@ -148,7 +158,8 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       // fullscreen, is not an exit (#738).
       current = null;
       document.dispatchEvent(new Event('fullscreenchange'));
-      await sleep(300);
+      await until(() => !target!.classList.contains('x-fullscreen-target'));
+      await new Promise((r) => requestAnimationFrame(r));
 
       return {
         labelBefore,

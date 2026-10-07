@@ -37,7 +37,7 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
 const CEILING = {
   positive: 0,
   redundant: 0,
-  setup: 126,
+  setup: 99,
   negative: 58,
 };
 

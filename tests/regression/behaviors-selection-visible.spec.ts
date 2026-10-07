@@ -205,17 +205,21 @@ test.describe('browse surface fits its scroller (#992)', () => {
       const rows = (Array.from(l.querySelectorAll(ROW)) as HTMLElement[]).filter(
         (r) => r.offsetParent !== null
       );
+      // Wait for the state each step needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      const rendered = () => !document.getElementById('behaviors-live')?.hasAttribute('aria-busy');
       rows[0].click();
-      await new Promise((r) => setTimeout(r, 700));
+      await until(rendered);
 
       // Scroll the panel as a reader would, then change selection.
       live.scrollTop = 200;
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise((r) => requestAnimationFrame(r));
 
       const seen: number[] = [];
       for (let i = 1; i < 5 && i < rows.length; i++) {
         rows[i].click();
-        await new Promise((r) => setTimeout(r, 700));
+        await until(rendered);
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
         const head = live.querySelector('.behaviors-live__head');
         seen.push(
           head

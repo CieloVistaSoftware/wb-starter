@@ -37,7 +37,11 @@ test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
       const rows = [...document.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
       for (const i of [3, 6, 1]) {
         rows[i]?.click();
-        await new Promise((r) => setTimeout(r, 120));
+        // Until that example has rendered (#1516: not 120ms).
+        const end = performance.now() + 5000;
+        while (document.getElementById('behaviors-live')?.hasAttribute('aria-busy') && performance.now() < end) {
+          await new Promise((r) => requestAnimationFrame(r));
+        }
       }
     });
 
