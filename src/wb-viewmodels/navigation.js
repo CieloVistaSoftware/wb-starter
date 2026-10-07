@@ -224,16 +224,19 @@ export function navbar(element, options = {}) {
 }
 
 /**
- * Sidebar - Vertical navigation from data-items
+ * Sidebar - Vertical navigation from `items` (or data-items)
  * Custom Tag: <div>
  */
 export function sidebar(element, options = {}) {
-  // Initial config
+  // #1683: items/active/collapsed are read in every spelling read-attr.js
+  // accepts (plain or data-*), here AND when they change -- the observer
+  // used to watch only data-* and then re-read only the plain spelling, so
+  // neither form moved the active item after load.
+  const readItems = () => readAttr(element, 'items').split(',').filter(Boolean);
   let config = {
-    items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
-    active: options.active || element.getAttribute('active') || '',
+    items: options.items ? String(options.items).split(',').filter(Boolean) : readItems(),
+    active: options.active || readAttr(element, 'active'),
     collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
-    ...options
   };
 
   // #779: the panel, its collapsed width and the items (with their active
@@ -265,26 +268,17 @@ export function sidebar(element, options = {}) {
   render();
 
   // Watch for attribute changes to handle dynamic collapsing
-  const observer = new MutationObserver((mutations) => {
-    let shouldRender = false;
-    for (const mutation of mutations) {
-      if (mutation.attributeName === 'data-collapsed') {
-        config.collapsed = readFlag(element, 'collapsed');
-        shouldRender = true;
-      } else if (mutation.attributeName === 'data-items') {
-        config.items = (element.getAttribute('items') || '').split(',').filter(Boolean);
-        shouldRender = true;
-      } else if (mutation.attributeName === 'data-active') {
-        config.active = element.getAttribute('active') || '';
-        shouldRender = true;
-      }
-    }
-    if (shouldRender) {
-      render();
-    }
+  const observer = new MutationObserver(() => {
+    config.collapsed = readFlag(element, 'collapsed');
+    config.items = readItems();
+    config.active = readAttr(element, 'active');
+    render();
   });
-  
-  observer.observe(element, { attributes: true, attributeFilter: ['data-collapsed', 'data-items', 'data-active'] });
+
+  observer.observe(element, {
+    attributes: true,
+    attributeFilter: ['collapsed', 'items', 'active', 'data-collapsed', 'data-items', 'data-active'],
+  });
 
   return () => {
     observer.disconnect();
