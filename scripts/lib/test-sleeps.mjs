@@ -72,6 +72,12 @@ function helperTimeout(fn) {
     body = ret;
   }
   if (!body || !ts.isNewExpression(body) || !ts.isIdentifier(body.expression) || body.expression.text !== 'Promise') return null;
+  // The executor must do nothing but the setTimeout: one that also listens
+  // for events and resolves on them (waitForSettle(ms) in audio-eq-effect) is
+  // a condition wait with a timeout, not a sleep.
+  const exec = body.arguments && body.arguments[0];
+  if (!exec || !(ts.isArrowFunction(exec) || ts.isFunctionExpression(exec))) return null;
+  if (ts.isBlock(exec.body) && exec.body.statements.length !== 1) return null;
   let found = null;
   const visit = (n) => {
     if (found) return;

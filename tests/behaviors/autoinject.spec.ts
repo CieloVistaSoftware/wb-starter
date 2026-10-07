@@ -16,7 +16,8 @@ test.describe('Auto-Inject Demo', () => {
       () => (window as any).WB?.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
       { timeout: 20000 }
     );
-    await page.waitForTimeout(1000); 
+    // Boot is over once WB settles (#1516: not 1000ms).
+    await page.evaluate(() => (window as any).WB.settled?.({ timeout: 15000 }));
   });
 
   test('Page status indicates initialization', async ({ page }) => {

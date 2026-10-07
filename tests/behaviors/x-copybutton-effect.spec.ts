@@ -28,8 +28,9 @@ async function setup(page: Page, html: string, id = 'x-copybutton-effect-area'):
   }, { h: html, containerId: id });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(400);
 }
 
 test.describe('x-copybutton -- renders a positioned overlay button, host element unchanged', () => {
