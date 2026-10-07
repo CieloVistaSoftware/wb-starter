@@ -205,6 +205,8 @@
     .error-secondary { color: var(--text-secondary); }
     .error-url { color: var(--primary); }
     .error-agent { font-size: 0.8rem; color: var(--text-muted); }
+    /* Copy's fallback textarea (#1678): selectable, never seen. */
+    .copy-scratch { position: fixed; top: 0; left: 0; opacity: 0; }
   </style>
   <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
   <script type="module" src="../src/core/central-time.js"></script>
@@ -218,6 +220,7 @@
     </div>
     <div class="actions" id="header-actions">
       <button onclick="loadErrors()">🔄 Refresh</button>
+      <button onclick="copyErrors()" id="copy-errors" title="Copy every error shown, one per line">📋 Copy</button>
       <button onclick="clearErrors()" class="primary">🗑️ Clear Log</button>
     </div>
   </header>
@@ -357,12 +360,14 @@
       document.getElementById('unique-sources').textContent = sources.size;
 
       if (errors.length === 0) {
+        shownErrors = [];
         container.innerHTML = '<div class="empty-state">No errors found. Great job! 🎉</div>';
         return;
       }
 
       // Sort by timestamp desc
       errors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      shownErrors = errors;
 
       container.innerHTML = errors.map((error, index) => `
         <div class="error-card">
@@ -503,6 +508,61 @@
           </div>
         </div>
       `).join('');
+    }
+
+    // ── copy (#1678) ───────────────────────────────────────────────────────
+    // On GitHub Pages the log lives only in this browser's localStorage
+    // (#1000), so Copy is the one way to hand it to someone else. One line per
+    // error, in the order on screen, carrying what finding the fault needs:
+    //   [ERROR] x-audio: audio failed to load ×2 — module.js:12:5 — /index.html?page=home — 10/5/2026 5:01 PM CT
+    /** The errors renderErrors() last put on screen, in screen order. */
+    let shownErrors = [];
+
+    function copyLine(error) {
+      const level = String(error.level || 'error').toUpperCase();
+      const source = error.source || error.to || error.module || 'unattributed';
+      const repeats = error.count > 1 ? ` ×${error.count}` : '';
+      const where = error.module
+        ? ` — ${error.module}:${error.line || '?'}:${error.column || '?'}${error.function ? ` in ${error.function}()` : ''}`
+        : '';
+      const page = error.url ? ` — ${error.url}` : '';
+      const when = error.timestamp ? ` — ${WBTime.dateTime(error.timestamp)}` : '';
+      const message = String(error.message || '').replace(/\s+/g, ' ').trim();
+      return `[${level}] ${source}: ${message}${repeats}${where}${page}${when}`;
+    }
+
+    async function writeClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        // No async clipboard (http, or permission refused): fall back to a
+        // selected textarea, which every browser still copies from.
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.className = 'copy-scratch';
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        ta.remove();
+        return ok;
+      }
+    }
+
+    let copyResetTimer = 0;
+    function flashCopy(text) {
+      const btn = document.getElementById('copy-errors');
+      btn.textContent = text;
+      clearTimeout(copyResetTimer);
+      copyResetTimer = setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+    }
+
+    async function copyErrors() {
+      if (!shownErrors.length) { flashCopy('Nothing to copy'); return; }
+      const ok = await writeClipboard(shownErrors.map(copyLine).join('\n'));
+      flashCopy(ok ? `Copied ${shownErrors.length}` : 'Copy failed');
     }
 
     function toggleDetails(index) {

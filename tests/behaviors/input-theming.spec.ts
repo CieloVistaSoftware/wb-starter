@@ -77,6 +77,21 @@ test.describe('Input theming follows the active theme', () => {
     // The lazy upgrade has run once WB settles (#1516: not 1200ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
     await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    // #1682 CI: the inputs inputStyles() measures upgrade only once they come
+    // near the viewport, and the demos above them keep rendering after the
+    // scroll -- measured locally, the first one moved from 16471px to 23233px
+    // down the page -- so one scroll can leave them un-upgraded and native
+    // white whatever the theme. Bring each into view until it has upgraded.
+    await expect(async () => {
+      const pending = await page.evaluate(() => {
+        const fields = [...document.querySelectorAll<HTMLElement>('input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"])')]
+          .filter((el) => el.offsetParent !== null)
+          .slice(0, 4);
+        fields.find((el) => !el.hasAttribute('x-ready'))?.scrollIntoView({ block: 'center' });
+        return fields.filter((el) => !el.hasAttribute('x-ready')).length;
+      });
+      expect(pending, 'measured inputs not yet upgraded').toBe(0);
+    }).toPass({ timeout: 20000 });
   });
 
   for (const theme of DARK_THEMES) {
