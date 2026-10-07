@@ -4,7 +4,7 @@ Turns a field's placeholder into a label that floats above the field once it
 has focus or a value. See
 [src/wb-viewmodels/floatinglabel.js](../../src/wb-viewmodels/floatinglabel.js).
 
-- **Root CSS class:** `x-floating-label`
+- **Root CSS class:** `x-floatinglabel`
 - **Schema:** [floatinglabel.schema.json](../../src/wb-models/floatinglabel.schema.json)
 
 ## Usage
@@ -47,10 +47,10 @@ always shows a value, so its label is always risen.
 
 | Class | Applies to | When |
 |---|---|---|
-| `x-floating-label` | wrapper `<div>` | always |
-| `x-floating-label__label` | the generated `<label>` | always |
-| `x-floating-label--active` | wrapper `<div>` | the field has a value or is focused |
-| `x-floating-label--input` / `--textarea` / `--select` | wrapper `<div>` | always — which kind of field it holds |
+| `x-floatinglabel` | wrapper `<div>` | always |
+| `x-floatinglabel__label` | the generated `<label>` | always |
+| `x-floatinglabel--active` | wrapper `<div>` | the field has a value or is focused |
+| `x-floatinglabel--input` / `--textarea` / `--select` | wrapper `<div>` | always — which kind of field it holds |
 
 ## Events
 

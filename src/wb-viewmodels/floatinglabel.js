@@ -51,8 +51,8 @@ export function floatinglabel(element, options = {}) {
     element.parentNode.insertBefore(wrapper, element);
     wrapper.appendChild(element);
   }
-  wrapper.classList.add('x-floating-label');
-  wrapper.classList.add(`x-floating-label--${field.tagName.toLowerCase()}`);
+  wrapper.classList.add('x-floatinglabel');
+  wrapper.classList.add(`x-floatinglabel--${field.tagName.toLowerCase()}`);
 
   // for= needs an id to point at. Reuse the author's when there is one — this
   // page makes duplicate ids a hard runtime error (#724/#730), so a generated
@@ -62,7 +62,7 @@ export function floatinglabel(element, options = {}) {
     // element.id made the element its own collision match, so the loop never
     // ended and the renderer hung (#786).
     let candidate;
-    do { candidate = `x-floating-label-${++uid}`; } while (document.getElementById(candidate));
+    do { candidate = `x-floatinglabel-${++uid}`; } while (document.getElementById(candidate));
     field.id = candidate;
   }
 
@@ -79,7 +79,7 @@ export function floatinglabel(element, options = {}) {
   const text = element.getAttribute('label') || options.label || (authored && authored.textContent.trim()) || placeholder || '';
 
   const label = authored || document.createElement('label');
-  label.classList.add('x-floating-label__label');
+  label.classList.add('x-floatinglabel__label');
   label.textContent = text;
   label.htmlFor = field.id;
   if (!authored) wrapper.appendChild(label);
@@ -111,7 +111,7 @@ export function floatinglabel(element, options = {}) {
     // room to rest inside the box.
     const filled = field.tagName === 'SELECT' || Boolean(field.value);
     wrapper.classList.toggle(
-      'x-floating-label--active',
+      'x-floatinglabel--active',
       filled || document.activeElement === field,
     );
   };
@@ -135,8 +135,8 @@ export function floatinglabel(element, options = {}) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();
     } else {
-      wrapper.classList.remove('x-floating-label', 'x-floating-label--active', `x-floating-label--${field.tagName.toLowerCase()}`);
-      label.classList.remove('x-floating-label__label');
+      wrapper.classList.remove('x-floatinglabel', 'x-floatinglabel--active', `x-floatinglabel--${field.tagName.toLowerCase()}`);
+      label.classList.remove('x-floatinglabel__label');
     }
   };
 }
