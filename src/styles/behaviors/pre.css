@@ -86,7 +86,8 @@
  * default) regardless of what was set here, until qualified like this. */
 .x-pre-wrapper .x-pre__copy {
   padding: 0.1rem 0.25rem;
-  font-size: 0.5rem;
+  /* Never under 12px: the mobile readability floor (tests/mobile/mobile-validation.spec.ts) */
+  font-size: max(0.5rem, 12px);
   z-index: 10;
   opacity: 0.6;
 }
@@ -109,7 +110,7 @@
   color: var(--text-tertiary, #9ca3af);
   padding: 0.15rem 0.35rem;
   border-radius: var(--radius-sm, 4px);
-  font-size: 0.55rem;
+  font-size: max(0.55rem, 12px); /* the 12px readability floor, as .x-pre__copy */
   font-weight: 600;
   text-transform: uppercase;
   font-family: system-ui, -apple-system, sans-serif;

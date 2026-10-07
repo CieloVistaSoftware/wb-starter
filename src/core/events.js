@@ -140,7 +140,7 @@ function getErrorContainer() {
         font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
         font-size: 0.6875rem;
         line-height: 1.6;
-        color: #a5f3fc;
+        color: var(--x-event-stack-frame);
         /* Standard: >=1rem padding so stack-trace text never sits flush
            against this panel's edge (was 0.5rem inline, below the 1rem
            minimum). */
@@ -185,10 +185,10 @@ function getErrorContainer() {
         pointer-events: auto;
         max-width: 100%;
       }
-      #x-events-container .x-error-toast--error { background: rgba(220, 38, 38, 0.97); border-left-color: #b91c1c; }
-      #x-events-container .x-error-toast--warn { background: rgba(217, 119, 6, 0.97); border-left-color: #b45309; }
-      #x-events-container .x-error-toast--info { background: rgba(37, 99, 235, 0.97); border-left-color: #1d4ed8; }
-      #x-events-container .x-error-toast--success { background: rgba(22, 163, 74, 0.97); border-left-color: #15803d; }
+      #x-events-container .x-error-toast--error { background: rgba(220, 38, 38, 0.97); border-left-color: var(--x-event-toast-error-edge); }
+      #x-events-container .x-error-toast--warn { background: rgba(217, 119, 6, 0.97); border-left-color: var(--x-event-toast-warn-edge); }
+      #x-events-container .x-error-toast--info { background: rgba(37, 99, 235, 0.97); border-left-color: var(--x-event-toast-info-edge); }
+      #x-events-container .x-error-toast--success { background: rgba(22, 163, 74, 0.97); border-left-color: var(--x-event-toast-success-edge); }
       #x-events-container .x-error-toast__head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
       #x-events-container .x-error-toast__icon { font-size: 1.2rem; }
       #x-events-container .x-error-toast__label { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.5px; }
@@ -203,7 +203,7 @@ function getErrorContainer() {
         background: none; border: none; color: white; cursor: pointer;
         opacity: 0.7; font-size: 1.2rem; padding: 0;
       }
-      #x-events-container .x-error-toast__name { font-size: 0.6875rem; color: #fca5a5; margin-bottom: 0.25rem; font-family: monospace; }
+      #x-events-container .x-error-toast__name { font-size: 0.6875rem; color: var(--x-event-toast-name); margin-bottom: 0.25rem; font-family: monospace; }
       #x-events-container .x-error-toast__message { font-size: 0.8125rem; font-weight: 500; margin-bottom: 0.5rem; word-break: break-word; }
       #x-events-container .x-error-toast__file { font-size: 0.6875rem; opacity: 0.8; margin-bottom: 0.5rem; }
       #x-events-container .x-error-toast__hint { font-size: 0.625rem; opacity: 0.6; margin-top: 0.5rem; font-style: italic; }

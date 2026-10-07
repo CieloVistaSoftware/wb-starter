@@ -175,12 +175,14 @@ test('every multi-word option builds the same in camelCase as dashed, on every h
     };
     const gaps: number[] = [];
     const unstable: number[] = [];
+    const detail: Record<number, { dashed: string; camel: string }> = {};
     for (let i = 0; i < n; i++) {
       const k = norm(document.getElementById(`k${i}`)!);
       if (k !== norm(document.getElementById(`r${i}`)!)) { unstable.push(i); continue; }
-      if (k !== norm(document.getElementById(`c${i}`)!)) gaps.push(i);
+      const c = norm(document.getElementById(`c${i}`)!);
+      if (k !== c) { gaps.push(i); detail[i] = { dashed: k, camel: c }; }
     }
-    return { gaps, unstable };
+    return { gaps, unstable, detail };
   }, all.length);
 
   const name = (i: number) => `${all[i].behavior}.${all[i].prop}${all[i].host === 'div' ? '' : ` on <${all[i].host}>`}`;
@@ -188,6 +190,11 @@ test('every multi-word option builds the same in camelCase as dashed, on every h
   // coverage this test does NOT have is visible.
   if (differing.unstable.length) console.log(`#1526: not comparable (non-deterministic build): ${differing.unstable.map(name).join(', ')}`);
   expect(differing.unstable.length, 'most options must be comparable, or this test proves nothing').toBeLessThan(all.length / 4);
+  // #1670: a gap that shows only on CI cannot be diagnosed from its name
+  // alone, so print what each spelling actually built.
+  for (const i of differing.gaps) {
+    console.log(`#1526 gap ${name(i)}:\n  dashed: ${differing.detail[i].dashed}\n  camel:  ${differing.detail[i].camel}`);
+  }
   const report = differing.gaps.map(name);
   expect(report, 'these options build differently when written camelCase -- the behavior reads only the dashed spelling').toEqual([]);
 });

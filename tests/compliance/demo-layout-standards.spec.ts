@@ -2,6 +2,7 @@ import { test, expect, type Page } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { globSync } from 'glob';
 import { traceNavigations } from '../helpers/navigation-trace';
+import { wbIdle } from '../base';
 
 // #1311: a failure here prints every main-frame navigation the page made.
 traceNavigations(test);
@@ -51,6 +52,15 @@ const MIN_TEXT_EDGE_PX = 16; // 1rem — matches DEMOS-AND-DOCS-STANDARDS.md §1
  * padding read mid-transition reports the STARTING value, a failure that
  * appears only under load.
  */
+/**
+ * #1064: wait for the runtime to say every injection has finished, instead of
+ * a fixed 800ms. A page that does not load WB has nothing to wait for.
+ */
+async function settled(page: Page): Promise<void> {
+  const hasRuntime = await page.evaluate(() => typeof (window as any).WB?.settled === 'function');
+  if (hasRuntime) await wbIdle(page);
+}
+
 async function readThrough(page: Page): Promise<void> {
   await page.evaluate(async () => {
     const frame = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
@@ -164,7 +174,7 @@ test.describe('Demo layout standards (§13) — live spacing', () => {
       const count = await demos.count();
       if (count === 0) test.skip(true, 'no <div x-demo> blocks on this page');
 
-      await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+      await settled(page);
       await readThrough(page);
 
       const violations = await page.evaluate((minGap) => {
@@ -227,7 +237,7 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
       const demos = page.locator('[x-demo]');
       if ((await demos.count()) === 0) test.skip(true, 'no <div x-demo> blocks on this page');
 
-      await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+      await settled(page);
       await readThrough(page);
 
       const violations = await page.evaluate(() => {
@@ -325,7 +335,7 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
     test(`${file}: content-panel elements keep >=1rem text padding`, async ({ page }) => {
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
-      await page.waitForTimeout(800);
+      await settled(page);
       await readThrough(page);
 
       const violations = await page.evaluate(({ minPad, minW, minH }) => {
