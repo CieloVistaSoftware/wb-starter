@@ -6,6 +6,76 @@
   ],
   "releases": [
     {
+      "version": "1.0.365",
+      "date": "2026-10-06",
+      "summary": "PageArrived() starts its in-page wait without awaiting it on purpose (the test waits for its done flag, capped at 10s), and @typescript-eslint/no-floating-promises failed the compliance lint check on it; it is now `void (async () =&gt; ...)()`, the rule&#39;s own way of saying the promise is intentionally not awaited. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1661\" target=\"_blank\" rel=\"noopener\">PR 1661</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The detached arrival wait is marked void for the lint rule</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2ec974343533fecb8b1687aa967152fd120ccb38\" target=\"_blank\" rel=\"noopener\"><code>2ec9743</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Mobile checks bound their arrival wait from Playwright&#39;s side</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/66c29bdedd80301d2e796275fc3a054e919c150e\" target=\"_blank\" rel=\"noopener\"><code>66c29bd</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Code-panel labels meet the 12px floor; mobile checks stop waiting on WebKit&#39;s load event</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e53b03df08b6ae2c7d304f3d36456db35065de75\" target=\"_blank\" rel=\"noopener\"><code>e53b03d</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>No positive sleep left; poll loops are not guesses; 14 setup sleeps wait on their state</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7709c8a874e5a7a0b014bfaf0a6f5cb20ca2aa8e\" target=\"_blank\" rel=\"noopener\"><code>7709c8a</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx eslint .</code>. Before: 1 error, in <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/mobile/mobile-validation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/mobile/mobile-validation.spec.ts</a>. Now: 0 errors.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5fca4f2e78916be8b011dc5d7c637d160c016c9f\" target=\"_blank\" rel=\"noopener\"><code>5fca4f2</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "PR",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1661\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1661</a>"
+        },
+        {
+          "label": "Related (WebKit media)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1439</a>"
+        },
+        {
+          "label": "See it",
+          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1651\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1651</a>"
+        },
+        {
+          "label": "Classifier",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.364",
       "date": "2026-10-06",
       "summary": "Error-logger.js&#39;s on-page error panel (#x-error-display) wrote 24 hex colours into the CSS it injects -- text, the red accent, header strip, rules, button and meta-line colours -- where no theme could reach them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1663\" target=\"_blank\" rel=\"noopener\">PR 1663</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
