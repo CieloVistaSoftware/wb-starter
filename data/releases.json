@@ -46,7 +46,8 @@
           "label": "Guard",
           "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
         }
-      ]
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> --project=behaviors</code>. Before: on the Windows runner the dark and ocean cases read the inputs as native white rgb(255, 255, 255), because the input stylesheet link had not loaded when WB.settled() resolved. Now: the test waits until every stylesheet link has its sheet, and all 8 cases pass."
     },
     {
       "version": "1.0.383",
@@ -83,7 +84,7 @@
           ]
         }
       ],
-      "seeIt": "On a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt;, run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;) in the console. Before: Home stays highlighted. Now: Docs is.",
+      "seeIt": "Open the browser console on a page with &lt;nav x-sidebar items=&quot;Home,Docs&quot; active=&quot;Home&quot;&gt; and run el.setAttribute(&#39;active&#39;, &#39;Docs&#39;). Before: Home stays highlighted. Now: Docs is.",
       "links": [
         {
           "label": "Code",
