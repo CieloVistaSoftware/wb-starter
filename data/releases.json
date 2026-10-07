@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.386",
+      "date": "2026-10-07",
+      "summary": "The See it line added for release 1.0.384 named a test file as plain text, where the Releases page links every file it names. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1692\" target=\"_blank\" rel=\"noopener\">PR 1692</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Link the file 1.0.384&#39;s See it line names ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8a96ecdae4329ce0d5c88cd2036915de7a36c10c\" target=\"_blank\" rel=\"noopener\"><code>8a96ecd</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>1.0.382 and 1.0.384 say how to see them ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3dfd8253155468a504fdac12dc1c73875f15e2e0\" target=\"_blank\" rel=\"noopener\"><code>3dfd825</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Win the demo full-width and doc-link overrides by specificity, not !important</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/bac35f04c1ca8230f85bf2635420c7c39fe08390\" target=\"_blank\" rel=\"noopener\"><code>bac35f0</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">?page=releases</a> and find 1.0.384. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> was plain text. Now: it links to the file on GitHub.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/daa6a69aa75d21adfb6b8f48be5cf589cdd1a2e7\" target=\"_blank\" rel=\"noopener\"><code>daa6a69</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.385",
       "date": "2026-10-07",
       "summary": "John called the V3 guide&#39;s Quick start card &quot;too stubby&quot; (#468) and asked that every card in the card doc follow the layout standards, test-first (#469). Measured on 2026-10-07 both are already met, but nothing held these pages to the standards. Every live card on <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md\" target=\"_blank\" rel=\"noopener\">docs/V3-GUIDE.md</a>, <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fcard.md\" target=\"_blank\" rel=\"noopener\">docs/card.md</a> and <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fcard.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/card.md</a> is now checked on desktop and phone: at least 260px when its column allows (section 7) and at least 1rem of padding (section 13). Also gives releases 1.0.382 and 1.0.384 See it lines that start with what to do and link the files they name, which had turned main&#39;s regression job red. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/468\" target=\"_blank\" rel=\"noopener\">#468</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1691\" target=\"_blank\" rel=\"noopener\">#1691</a>",
