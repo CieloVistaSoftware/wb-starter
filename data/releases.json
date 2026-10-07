@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.378",
+      "date": "2026-10-06",
+      "summary": "On GitHub Pages the error log lives only in the visitor&#39;s browser, so the list on the live Error Log Viewer could not be handed to anyone. Copy puts every error on screen on the clipboard, one line each: level, source, message, repeat count, file:line:col, page and time. Also makes <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> measure inputs only after they have upgraded (it read never-upgraded, native-white inputs on the Windows runner). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1678\" target=\"_blank\" rel=\"noopener\">#1678</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1682\" target=\"_blank\" rel=\"noopener\">#1682</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Error Log Viewer gets a Copy button</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1678\" target=\"_blank\" rel=\"noopener\">#1678</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1682\" target=\"_blank\" rel=\"noopener\">#1682</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/789a5c506111565cef147f5d12b37e3a3d6bdc9c\" target=\"_blank\" rel=\"noopener\"><code>789a5c5</code></a>",
+          "issues": [
+            1678,
+            1682
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html</a> in a browser that has visited the site and click Copy (between Refresh and Clear Log), then paste. Before: no way to get the list out. Now: one line per error, newest first, and the button says &quot;Copied N&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/789a5c506111565cef147f5d12b37e3a3d6bdc9c\" target=\"_blank\" rel=\"noopener\"><code>789a5c5</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.377",
       "date": "2026-10-06",
       "summary": "The last 70 setup sleeps are resolved -- about 45 now wait for WB.settled, the live panel, a frame, an animation or a named condition (a dialog open, a selection moved, crossOrigin cleared, the error log written), and the rest are marked with their reason; the classifier gains `cap` (a timeout racing real work, which bounds a wait rather than being one) and `scenario` (elapsed time is what is under test: a page.route handler simulating a slow server, or `// sleep-is-the-scenario: &lt;reason&gt;` for a cooldown, a retry budget, a held scan); the setup ceiling drops to 0. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1684\" target=\"_blank\" rel=\"noopener\">PR 1684</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
