@@ -36,7 +36,7 @@ const root = process.cwd();
  */
 const REGISTER: Record<string, number> = {
   'src/core/error-logger.js': 24,
-  'src/core/events.js': 8,
+  'src/core/events.js': 2,   // console.error %c styling: console output, which no theme reaches
   'src/core/theme.js': 5,
   'src/core/x-devconsole.js': 34,
   'src/wb-viewmodels/colorpicker.js': 1,

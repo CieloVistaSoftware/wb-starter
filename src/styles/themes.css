@@ -103,6 +103,16 @@
   --x-audio-volume-thumb-flat: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
   --x-audio-body-light: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%);
 
+  /* events.js's error toasts (the dev-facing popup for an uncaught error):
+     the edge colour of each level and the two accent texts. Literals in the
+     CSS events.js injects until #790; same values, now tokens. */
+  --x-event-toast-error-edge: #b91c1c;
+  --x-event-toast-warn-edge: #b45309;
+  --x-event-toast-info-edge: #1d4ed8;
+  --x-event-toast-success-edge: #15803d;
+  --x-event-toast-name: #fca5a5;     /* the error's type name, above its message */
+  --x-event-stack-frame: #a5f3fc;    /* stack-trace lines */
+
   /* x-glass (#1236): the colour mixed into an element that carries the scene
      behind it. The theme's text colour, so the tint reads on light and dark
      themes alike; glass.css mixes it at the element so a context (the hero)
