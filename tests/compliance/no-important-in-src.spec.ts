@@ -24,11 +24,10 @@ const root = process.cwd();
 const REGISTER: Record<string, number> = {
   'src/styles/behaviors/card.css': 10,
   'src/styles/behaviors/demo.css': 7,
-  'src/styles/normalize.css': 5,
+  'src/styles/normalize.css': 5,   // prefers-reduced-motion and [hidden]: both must beat every component's own value, by design
   'src/styles/pages/behaviors.css': 1,   // [data-behaviors-search-hidden] must beat whatever display a row's class sets, like [hidden]
-  'src/styles/safari-fixes.css': 3,
   'src/styles/site.css': 28,
-  'src/styles/transitions.css': 4,
+  'src/styles/transitions.css': 2,   // prefers-reduced-motion: no transition or animation, whatever the component sets
   'src/styles/x-signature.css': 5,
 };
 
