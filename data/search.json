@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 304,
-    "totalWords": 5969
+    "totalWords": 5973
   },
   "documents": [
     {
@@ -315,7 +315,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.365\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.365\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.366\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.366\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -784,7 +784,7 @@
       "title": "V3-GUIDE",
       "description": null,
       "headings": [],
-      "content": "# wb-starter v3 — Complete Guide wb-starter is a **zero-build, light-DOM behavior framework**. You write plain HTML, include one script, and elements upgrade themselves into rich behaviors. No bundler, no JSX, no Shadow DOM — the browser does the work. This guide covers **how to use it** and **how it works internally**. ## Contents 1. [Mental model](#1-mental-model) 2. [Quick start](#2-quick-start) 3. [Using behaviors (semantic elements)](#3-using-behaviors-semantic-elements) 4. [Using behaviors (x-prefixed attributes)](#4-using-behaviors-x-prefixed-attributes) 5. [Auto-enhanced plain elements](#5-auto-enhanced-plain-elements) 6. [Theming](#6-theming) 7. [How it works internally](#7-how-it-works-internally) 8. [Render from JSON](#8-render-from-json) 9. [Writing your own behavior (recipe)](#9-writing-your-own-behavior-recipe) --- ## 1. Mental model There are three ways UI gets enhanced, all by the same runtime: | You write | What happens | |---|---| | **Custom tag** — ` ` | The tag is mapped to a *behavior* that builds the card | | **Behavior attribute** — ` ` | Any element gains a behavior via an `x-*` attribute | | **Plain element** — ` ` (with `autoInject`) | Native elements are auto-enhanced | A **behavior** is just a function that receives an element and decorates it. A **schema** (optional) describes a behavior's structure declaratively. The **runtime** (`WB`) scans the DOM, maps tags/attributes to behaviors, and injects them lazily as they scroll into view. Key principles: - **No build step.** Ship HTML + JS; browsers are fast. - **Light DOM only.** No Shadow DOM — styles and scripts compose normally. - **Plain attributes.** v3 reads `title`, `variant`, `size` directly (not `data-*`). Many behaviors still accept `data-*` for back-compat, but **plain is canonical**. --- ## 2. Quick start A standalone page needs the theme + base styles and one module script: Keep content readable and focused by giving each card one clear job. WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse. Save The full page this comes from — everything outside ` ` is boilerplate ` ` can't represent (a ` `/` `/module script aren't renderable fragments), so it's shown separately below rather than folded into the live example above: ```html-static Keep content readable and focused by giving each card one clear job. WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse. Start with semantic HTML, then compose focused behaviors. Save ``` `WB.init(options)`: - `scan` (default `true`) — process existing elements on load. - `observe` (default `true`) — watch for elements added later (MutationObserver). - `autoInject` (default `false`) — also enhance plain native elements (` `, ` `, ` `, …). - `preload: ['ripple','tooltip']` — eagerly load critical behaviors. - `theme: 'dark'` — set the starting theme. (Inside the full SPA the runtime is wired by `src/main.js` + `src/core/site-engine.js`, so pages loaded via `?page=…` don't need their own init.) --- ## 3. Using behaviors (semantic elements) A semantic element maps to its behavior, and any other element takes the `x-*` attribute. Pass **plain attributes**; children stay as content. **Card** — ` `: Card body. **Spinner** — ` `: **Progress bar** — ` `: **Badge** — ` `: New **Tabs** — ` `: … … **Accordion** — ` `: A zero-build behavior library. Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …). Each behavior's exact attributes live in its schema at `src/wb-models/ .schema.json`. --- ## 4. Using behaviors (x-prefixed attributes) Attach a behavior to **any** element with an `x- ` attribute. These don't need a custom tag: Notify Slide Bounce The full attribute → behavior map is in `src/core/wb-lazy.js` (`customElementMappings`). Every behavior name resolves to a module via `src/wb-viewmodels/index.js`. --- ## 5. Auto-enhanced plain elements With `autoInject: true`, native elements are upgraded without any attribute — e.g. ` `, ` `, ` `, ` `, ` `, ` `, and ` ` (→ card). The map lives in `wb-lazy.js` (`autoInjectMappings`) / `src/core/tag-map.js` (`nativeMap`). Auto-inject is **off by default** so it never surprises an existing page; opt in per page. --- ## 6. Theming Themes are pure CSS variables in `src/styles/themes.css`, selected by the `data-theme` attribute on ` `: ```html ``` Switch at runtime with the `Theme` API (`src/core/theme.js`) or drop in a ` ` for a ready-made selector. **Never hardcode colors** — only `themes.css` holds literals; everything else references `var(--…)` tokens. --- ## 7. How it works internally ### The runtime — `WB` (`src/core/wb-lazy.js`) A single object exposes: ```js WB.init(options) // boot: scan + observe + preload WB.inject(el, name, opts) // apply a behavior now (async; loads it on demand) WB.lazyInject(el, name) // apply when the element scrolls into view WB.scan(root = document.body) // find & schedule behaviors under root WB.observe(root)",
+      "content": "# wb-starter v3 — Complete Guide wb-starter is a **zero-build, light-DOM behavior framework**. You write plain HTML, include one script, and elements upgrade themselves into rich behaviors. No bundler, no JSX, no Shadow DOM — the browser does the work. This guide covers **how to use it** and **how it works internally**. ## Contents 1. [Mental model](#1-mental-model) 2. [Quick start](#2-quick-start) 3. [Using behaviors (semantic elements)](#3-using-behaviors-semantic-elements) 4. [Using behaviors (x-prefixed attributes)](#4-using-behaviors-x-prefixed-attributes) 5. [Auto-enhanced plain elements](#5-auto-enhanced-plain-elements) 6. [Theming](#6-theming) 7. [How it works internally](#7-how-it-works-internally) 8. [Render from JSON](#8-render-from-json) 9. [Writing your own behavior (recipe)](#9-writing-your-own-behavior-recipe) --- ## 1. Mental model There are three ways UI gets enhanced, all by the same runtime: | You write | What happens | |---|---| | **Semantic element** — ` ` | A native element is mapped to its *behavior* (` ` → card, ` ` → navbar, ` `, ` `, …) | | **Behavior attribute** — ` ` | Any element gains a behavior via an `x-*` attribute | | **Plain form control** — ` ` | Native controls are enhanced too, with no attribute at all | There are no custom tags. The old component tags were removed; every one became either the semantic element that already maps to it or a host carrying the `x-*` attribute (`src/core/tag-map.js`, `elementMap` is empty on purpose). A **behavior** is just a function that receives an element and decorates it. A **schema** (optional) describes a behavior's attributes and, for some behaviors, its structure. The **runtime** (`WB`) scans the DOM, maps elements/attributes to behaviors, and applies them. Key principles: - **No build step.** Ship HTML + JS; browsers are fast. - **Light DOM only.** No Shadow DOM — styles and scripts compose normally. - **Plain attributes.** v3 reads `title`, `variant`, `size` directly (not `data-*`). Many behaviors still accept `data-*` for back-compat, but **plain is canonical**. --- ## 2. Quick start A standalone page needs the theme + base styles and one module script: Keep content readable and focused by giving each card one clear job. WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse. Save The full page this comes from — everything outside ` ` is boilerplate ` ` can't represent (a ` `/` `/module script aren't renderable fragments), so it's shown separately below rather than folded into the live example above: ```html-static Keep content readable and focused by giving each card one clear job. WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse. Start with semantic HTML, then compose focused behaviors. Save ``` The toast's colour comes from `toast-variant` (or `variant`), not `type`: on a ` `, `type` is the button's own attribute. `WB.init(options)`: - `scan` (default `true`) — process existing elements on load. - `observe` (default `true`) — watch for elements added later (MutationObserver). - `autoInject` (default **`true`**) — enhance semantic and native elements (` `, ` `, ` `, ` `, …) with no attribute. Pass `false` to opt a page out. - `preload: ['ripple','tooltip']` — eagerly load critical behaviors. - `theme: 'dark'` — set the starting theme. - `debug: true` — verbose logging. - `onSettled: () => …` — called once the first build has finished. To wait for building to finish, use the readiness API both runtimes share instead of guessing with a timeout: `await WB.settled()` (every unit of work has called back; also fires a `wb:settled` event), `await WB.whenIdle({ timeout })` (nothing in flight for a quiet period; rejects on timeout), or `WB.isReady(element)` for one element. \"Ready\" means *settled*, not *succeeded*: a behavior that failed is finished too, and is marked `x-error`. (Inside the full SPA the runtime is wired by `src/main.js` + `src/core/site-engine.js`, so pages loaded via `?page=…` don't need their own init.) --- ## 3. Using behaviors (semantic elements) A semantic element maps to its behavior, and any other element takes the `x-*` attribute. Pass **plain attributes**; children stay as content. **Card** — ` `: Card body. **Spinner** — ` `: **Progress bar** — ` `: **Badge** — ` `: New **Tabs** — ` `: … … **Accordion** — ` `: A zero-build behavior library. Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …). Each behavior's exact attributes live in its schema at `src/wb-models/ .schema.json`. --- ## 4. Using behaviors (x-prefixed attributes) Attach a behavior to **any** element with an `x- ` attribute. These don't need a custom tag: Notify Slide Bounce **Every registered behavior is reachable as `x- `** (#1642). Names live in `src/wb-viewmodels/index.js`, which maps each one to its module file; the extra aliases (`x-progress`, `x-details`, …) are in `src/core/tag-map.js` (`extensionMap`). The old generic f",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-06"
@@ -6524,11 +6524,11 @@
       "docs/audits/X-USAGE-AUDIT"
     ],
     "365": [
-      "pages/home",
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/fix-card"
     ],
     "366": [
+      "pages/home",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/X-USAGE-AUDIT"
     ],
@@ -6874,6 +6874,7 @@
       "docs/behaviors/cardexpandable"
     ],
     "1642": [
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/list",
       "docs/behaviors/x-behavior",
@@ -7422,7 +7423,6 @@
     "builds": [
       "pages/about",
       "docs/MVVM-MIGRATION-PLAN",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -7841,6 +7841,7 @@
       "pages/issues",
       "docs/AI",
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -8503,6 +8504,7 @@
       "docs/BRANCH_PROTECTION",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -9301,7 +9303,6 @@
       "pages/themes",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/codetheme",
@@ -9330,7 +9331,6 @@
       "pages/hero-variants",
       "pages/themes",
       "docs/MVVM-MIGRATION-PLAN",
-      "docs/V3-GUIDE",
       "docs/behaviors/confetti",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
@@ -9570,7 +9570,6 @@
     ],
     "find": [
       "pages/ai-permutation-test",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors-reference",
       "docs/committing-fixes",
@@ -11603,6 +11602,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -12324,6 +12324,7 @@
       "pages/ai-permutation-test",
       "pages/home",
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/proposed-custom-elements",
@@ -12766,6 +12767,7 @@
     ],
     "once": [
       "pages/ai-permutation-test",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -12825,6 +12827,7 @@
       "pages/features",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
@@ -13942,7 +13945,6 @@
     "inject": [
       "pages/ai-permutation-test",
       "pages/home",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -14344,7 +14346,6 @@
     "root": [
       "pages/ai-permutation-test",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -14392,7 +14393,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -15357,6 +15357,7 @@
     "failed": [
       "pages/ai-permutation-test",
       "pages/behaviors",
+      "docs/V3-GUIDE",
       "docs/architecture/solidjscomparison",
       "docs/behaviors/pre",
       "docs/behaviors/x-copybutton",
@@ -15371,6 +15372,7 @@
       "docs/AI",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/auto-injection",
       "docs/behavior-cross-reference",
@@ -15423,7 +15425,6 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -15712,6 +15713,7 @@
       "pages/behaviors",
       "pages/home",
       "pages/issues",
+      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -15756,7 +15758,6 @@
       "pages/behaviors",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/proposed-custom-elements",
@@ -16042,7 +16043,6 @@
     ],
     "holds": [
       "pages/behaviors",
-      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/articles",
       "docs/behaviors/copybutton",
@@ -16077,7 +16077,6 @@
     "never": [
       "pages/behaviors",
       "docs/MVVM-MIGRATION-PLAN",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -16601,7 +16600,6 @@
     ],
     "made": [
       "pages/behaviors",
-      "docs/V3-GUIDE",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/claude/TIER3-REFERENCE",
       "docs/pricecard",
@@ -17158,6 +17156,7 @@
       "pages/behaviors",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/autocomplete",
@@ -17343,7 +17342,6 @@
     ],
     "lives": [
       "pages/behaviors",
-      "docs/V3-GUIDE",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/guides/create-a-website",
@@ -17457,7 +17455,6 @@
     ],
     "demand": [
       "pages/behaviors",
-      "docs/V3-GUIDE",
       "docs/behaviors/cardexpandable",
       "docs/pce-candidates",
       "docs/styles"
@@ -17533,7 +17530,6 @@
     ],
     "scroll": [
       "pages/behaviors",
-      "docs/V3-GUIDE",
       "docs/behaviors/code",
       "docs/behaviors/notes",
       "docs/behaviors/reel",
@@ -17655,7 +17651,6 @@
     ],
     "selector": [
       "pages/behaviors",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -18218,6 +18213,7 @@
       "pages/demos",
       "pages/features",
       "docs/IMPROVEMENTS",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -18280,6 +18276,7 @@
     "controls": [
       "pages/demos",
       "docs/IMPROVEMENTS",
+      "docs/V3-GUIDE",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/auto-injection",
@@ -19189,7 +19186,6 @@
     "switch": [
       "pages/features",
       "pages/themes",
-      "docs/V3-GUIDE",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -19220,7 +19216,6 @@
       "docs/AI",
       "docs/IMPROVEMENTS",
       "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/audio",
@@ -19963,6 +19958,7 @@
     "toast": [
       "pages/features",
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/behaviors/alert",
       "docs/behaviors/notify",
@@ -20057,6 +20053,7 @@
     "navbar": [
       "pages/features",
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/auto-injection",
       "docs/behaviors-reference",
       "docs/behaviors/navbar",
@@ -20173,6 +20170,7 @@
     ],
     "empty": [
       "pages/features",
+      "docs/V3-GUIDE",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/avatar",
       "docs/behaviors/card",
@@ -20940,6 +20938,7 @@
       "pages/hero-gallery",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -22357,7 +22356,6 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/cardhorizontal",
@@ -22447,6 +22445,7 @@
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -22708,7 +22707,6 @@
     ],
     "under": [
       "pages/home",
-      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -22856,7 +22854,6 @@
     "single": [
       "pages/home",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
@@ -22944,6 +22941,7 @@
       "pages/home",
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -24298,7 +24296,6 @@
     ],
     "injects": [
       "pages/issues",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/auto-injection",
@@ -24383,7 +24380,6 @@
     ],
     "nativemap": [
       "pages/issues",
-      "docs/V3-GUIDE",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -24752,7 +24748,6 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/card",
       "docs/behaviors/container",
@@ -25253,7 +25248,6 @@
     ],
     "object": [
       "pages/privacy",
-      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -27112,7 +27106,6 @@
     ],
     "off": [
       "docs/AI",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
@@ -27378,7 +27371,6 @@
     ],
     "tokens": [
       "docs/AI",
-      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/release",
@@ -27522,6 +27514,7 @@
     ],
     "means": [
       "docs/AI",
+      "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audio",
       "docs/behaviors-reference",
@@ -27891,6 +27884,7 @@
     ],
     "guessing": [
       "docs/AI",
+      "docs/V3-GUIDE",
       "docs/claude/TIER1-LAWS",
       "docs/linkedin-standards-article",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
@@ -28858,6 +28852,7 @@
     "building": [
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/V3-GUIDE",
       "docs/behaviors/accordion",
       "docs/behaviors/x-copybutton",
       "docs/claude/TOOLING-INVENTORY",
@@ -29413,7 +29408,6 @@
     "apply": [
       "docs/BRANCH_PROTECTION",
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/auto-injection",
@@ -29715,6 +29709,7 @@
     ],
     "period": [
       "docs/BRANCH_PROTECTION",
+      "docs/V3-GUIDE",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardpricing",
       "docs/behaviors/time",
@@ -30200,7 +30195,6 @@
     "variables": [
       "docs/IMPROVEMENTS",
       "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/container",
@@ -31163,6 +31157,7 @@
     ],
     "generic": [
       "docs/INTELLISENSE-TOOLTIPS",
+      "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/auto-injection",
@@ -31789,6 +31784,7 @@
     ],
     "removed": [
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/proposed-custom-elements",
@@ -31815,6 +31811,7 @@
     "component": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -32100,7 +32097,6 @@
     ],
     "references": [
       "docs/MVVM-MIGRATION-PLAN",
-      "docs/V3-GUIDE",
       "docs/claude/PAGE-GENERATION",
       "docs/schema.migration",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -32773,8 +32769,7 @@
       "docs/standards/V3-STANDARDS"
     ],
     "declaratively": [
-      "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE"
+      "docs/MVVM-MIGRATION"
     ],
     "bem": [
       "docs/MVVM-MIGRATION",
@@ -32961,6 +32956,7 @@
     ],
     "host": [
       "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -33043,7 +33039,6 @@
     ],
     "lazy": [
       "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
@@ -33120,7 +33115,6 @@
     "per": [
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -34053,11 +34047,6 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS"
     ],
-    "gains": [
-      "docs/V3-GUIDE",
-      "docs/behaviors/globe",
-      "docs/behaviors/searchfield"
-    ],
     "native": [
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -34095,6 +34084,128 @@
       "demos/playground",
       "demos/site/cards"
     ],
+    "gains": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/globe",
+      "docs/behaviors/searchfield"
+    ],
+    "control": [
+      "docs/V3-GUIDE",
+      "docs/audio",
+      "docs/behavior-cross-reference",
+      "docs/behaviors/articles",
+      "docs/behaviors/bounce",
+      "docs/behaviors/button",
+      "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/control",
+      "docs/behaviors/dl",
+      "docs/behaviors/formrow",
+      "docs/behaviors/glow",
+      "docs/behaviors/inputgroup",
+      "docs/behaviors/label",
+      "docs/behaviors/ol",
+      "docs/behaviors/pagination",
+      "docs/behaviors/status",
+      "docs/behaviors/table",
+      "docs/behaviors/themecontrol",
+      "docs/behaviors/truncate",
+      "docs/behaviors/ul",
+      "docs/behaviors/x-copybutton",
+      "docs/behaviors/x-enhancements",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/committing-fixes",
+      "docs/compliance/iso-42001-alignment",
+      "docs/pce-candidates",
+      "docs/properties",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "demos/frameworks",
+      "demos/site/forms",
+      "demos/site/interactive"
+    ],
+    "old": [
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/dialog",
+      "docs/behaviors/glass",
+      "docs/behaviors/range",
+      "docs/behaviors/status",
+      "docs/behaviors/x-behavior",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/pce-candidates",
+      "docs/schema",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
+    "became": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/sticky",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "either": [
+      "docs/V3-GUIDE",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/accordion",
+      "docs/behaviors/center",
+      "docs/behaviors/dialog",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/fieldset",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/notes",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/pce-candidates",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
+      "demos/landing-page-showcase",
+      "demos/site/cards"
+    ],
+    "maps": [
+      "docs/V3-GUIDE",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audio",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/fill",
+      "docs/behaviors/flex",
+      "docs/behaviors/status",
+      "docs/behaviors/truncate",
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/search-index",
+      "docs/home-page",
+      "docs/pricecard",
+      "docs/properties",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "carrying": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/accordion",
+      "docs/behaviors/glass",
+      "docs/behaviors/move",
+      "docs/behaviors/pagination"
+    ],
+    "elementmap": [
+      "docs/V3-GUIDE",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/searchfield",
+      "docs/standards/V3-STANDARDS"
+    ],
     "receives": [
       "docs/V3-GUIDE",
       "docs/behaviors/input",
@@ -34122,29 +34233,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/V3-STANDARDS",
       "docs/wbservices"
-    ],
-    "maps": [
-      "docs/V3-GUIDE",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/solidjscomparison",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audio",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/fill",
-      "docs/behaviors/flex",
-      "docs/behaviors/status",
-      "docs/behaviors/truncate",
-      "docs/claude/TIER1-LAWS",
-      "docs/guides/search-index",
-      "docs/home-page",
-      "docs/pricecard",
-      "docs/properties",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS"
-    ],
-    "lazily": [
-      "docs/V3-GUIDE"
     ],
     "ship": [
       "docs/V3-GUIDE",
@@ -34266,6 +34354,22 @@
       "docs/V3-GUIDE",
       "docs/audits/INLINE-STYLES-AUDIT"
     ],
+    "colour": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/alert",
+      "docs/behaviors/badge",
+      "docs/behaviors/button",
+      "docs/behaviors/cardstats",
+      "docs/behaviors/glass",
+      "docs/behaviors/glow",
+      "docs/behaviors/grid",
+      "docs/behaviors/mark",
+      "docs/behaviors/navbar",
+      "docs/behaviors/progress",
+      "docs/behaviors/rainbow",
+      "docs/behaviors/stack",
+      "docs/behaviors/stat"
+    ],
     "observe": [
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -34312,6 +34416,192 @@
       "docs/behaviors/ol",
       "docs/behaviors/tabs",
       "docs/guides/create-a-website"
+    ],
+    "debug": [
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/escape-hatches",
+      "docs/npx-commands",
+      "docs/styles",
+      "docs/testing-runbook",
+      "docs/wbservices",
+      "demos/mdhtml-pre-debug",
+      "demos/pre-debug"
+    ],
+    "verbose": [
+      "docs/V3-GUIDE"
+    ],
+    "logging": [
+      "docs/V3-GUIDE",
+      "docs/architecture/standards/ERROR-MESSAGE"
+    ],
+    "onsettled": [
+      "docs/V3-GUIDE"
+    ],
+    "called": [
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/auto-injection",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/searchfield",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "finished": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/tada"
+    ],
+    "wait": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/code",
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/search-index",
+      "docs/mcp",
+      "docs/npx-commands"
+    ],
+    "finish": [
+      "docs/V3-GUIDE",
+      "docs/audio"
+    ],
+    "readiness": [
+      "docs/V3-GUIDE",
+      "docs/claude/TIER3-REFERENCE"
+    ],
+    "runtimes": [
+      "docs/V3-GUIDE"
+    ],
+    "share": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/accordion",
+      "docs/behaviors/share",
+      "docs/behaviors/x-copybutton",
+      "docs/behaviors/youtube",
+      "docs/card",
+      "docs/property-viewer",
+      "docs/wbservices"
+    ],
+    "instead": [
+      "docs/V3-GUIDE",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/solidjscomparison",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/auto-injection",
+      "docs/behaviors/accordion",
+      "docs/behaviors/address",
+      "docs/behaviors/autocomplete",
+      "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
+      "docs/behaviors/cardhorizontal",
+      "docs/behaviors/center",
+      "docs/behaviors/chip",
+      "docs/behaviors/collapse",
+      "docs/behaviors/colorpicker",
+      "docs/behaviors/countdown",
+      "docs/behaviors/darkmode",
+      "docs/behaviors/fieldset",
+      "docs/behaviors/form",
+      "docs/behaviors/formrow",
+      "docs/behaviors/grid",
+      "docs/behaviors/icon",
+      "docs/behaviors/label",
+      "docs/behaviors/pre",
+      "docs/behaviors/release",
+      "docs/behaviors/ripple",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/searchfield",
+      "docs/behaviors/share",
+      "docs/behaviors/x-behavior",
+      "docs/behaviors/x-collapse",
+      "docs/behaviors/x-copybutton",
+      "docs/card",
+      "docs/claude/TIER1-LAWS",
+      "docs/linkedin-update-article",
+      "docs/performance",
+      "docs/pricecard",
+      "docs/property-viewer",
+      "docs/schema-first-audit-report",
+      "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/styles",
+      "docs/testing-strategy",
+      "docs/wbservices",
+      "demos/frameworks",
+      "demos/standalone"
+    ],
+    "timeout": [
+      "docs/V3-GUIDE",
+      "docs/npx-commands"
+    ],
+    "await": [
+      "docs/V3-GUIDE",
+      "docs/committing-fixes",
+      "docs/guides/search-index"
+    ],
+    "settled": [
+      "docs/V3-GUIDE"
+    ],
+    "unit": [
+      "docs/V3-GUIDE",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/articles",
+      "docs/behaviors/cardexpandable",
+      "docs/linkedin-standards-article",
+      "demos/site/content"
+    ],
+    "fires": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/accordion",
+      "docs/behaviors/cardproduct",
+      "docs/behaviors/chip",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/confetti",
+      "docs/behaviors/confirm",
+      "docs/behaviors/copy",
+      "docs/behaviors/countdown",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/move",
+      "docs/behaviors/pagination",
+      "docs/behaviors/prompt",
+      "docs/behaviors/search",
+      "docs/behaviors/searchfield",
+      "docs/behaviors/sticky",
+      "docs/behaviors/toast",
+      "docs/guides/search-index"
+    ],
+    "whenidle": [
+      "docs/V3-GUIDE"
+    ],
+    "flight": [
+      "docs/V3-GUIDE",
+      "docs/behaviors/autocomplete",
+      "docs/claude/TOOLING-INVENTORY"
+    ],
+    "quiet": [
+      "docs/V3-GUIDE"
+    ],
+    "rejects": [
+      "docs/V3-GUIDE",
+      "docs/container-pattern"
+    ],
+    "isready": [
+      "docs/V3-GUIDE"
+    ],
+    "succeeded": [
+      "docs/V3-GUIDE"
+    ],
+    "marked": [
+      "docs/V3-GUIDE",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/behavior-cross-reference",
+      "docs/behaviors/inputgroup",
+      "docs/behaviors/x-copybutton",
+      "docs/container-pattern"
     ],
     "spa": [
       "docs/V3-GUIDE",
@@ -34386,166 +34676,81 @@
       "docs/behaviors/drawer",
       "docs/behaviors/slidein"
     ],
-    "customelementmappings": [
+    "registered": [
       "docs/V3-GUIDE",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/pce-candidates",
-      "docs/pricecard"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/audio",
+      "docs/behaviors/accordion",
+      "docs/behaviors/globe",
+      "docs/behaviors/pulse",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER1-LAWS",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/wbservices",
+      "demos/charity-food",
+      "demos/site/interactive"
     ],
-    "resolves": [
+    "reachable": [
       "docs/V3-GUIDE",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+      "docs/audio",
+      "docs/behaviors/card",
+      "docs/behaviors/scrollable"
     ],
-    "upgraded": [
+    "names": [
       "docs/V3-GUIDE",
-      "docs/behaviors/fix-card",
-      "demos/playground"
-    ],
-    "autoinjectmappings": [
-      "docs/V3-GUIDE",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
-    ],
-    "surprises": [
-      "docs/V3-GUIDE"
-    ],
-    "pure": [
-      "docs/V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/linkedin-framework-agnostic",
-      "docs/semantic-standard",
-      "docs/wbservices",
-      "demos/autoinject"
-    ],
-    "selected": [
-      "docs/V3-GUIDE",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/file",
-      "docs/behaviors/prompt",
-      "docs/behaviors/range",
-      "docs/behaviors/select",
-      "docs/property-viewer",
-      "docs/schema-first-audit-report",
-      "docs/search"
-    ],
-    "hardcode": [
-      "docs/V3-GUIDE",
-      "docs/styles"
-    ],
-    "literals": [
-      "docs/V3-GUIDE"
-    ],
-    "else": [
-      "docs/V3-GUIDE",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/audio",
-      "docs/behaviors/control",
-      "docs/behaviors/masked",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/time",
-      "docs/guides/create-a-website",
-      "docs/semantic-audit",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS"
-    ],
-    "var": [
-      "docs/V3-GUIDE",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/address",
-      "docs/behaviors/aside",
-      "docs/behaviors/blockquote",
-      "docs/behaviors/data",
-      "docs/behaviors/glass",
-      "docs/behaviors/glow",
-      "docs/behaviors/grid",
-      "docs/behaviors/release",
-      "docs/behaviors/time",
-      "docs/container-pattern",
+      "docs/behaviors/card",
+      "docs/behaviors/clock",
+      "docs/behaviors/container",
+      "docs/behaviors/dialog",
+      "docs/behaviors/draggable",
+      "docs/behaviors/navbar",
+      "docs/behaviors/table",
+      "docs/behaviors/x-behavior",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/escape-hatches",
-      "docs/inline-editing",
-      "docs/linkedin-standards-article",
-      "docs/search",
+      "docs/home-page",
+      "docs/pricecard",
+      "docs/schema.migration",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
-      "docs/test-schema-standard",
-      "docs/themes"
+      "docs/testing-strategy"
     ],
-    "exposes": [
+    "extra": [
       "docs/V3-GUIDE",
-      "docs/behaviors/searchfield"
+      "docs/behaviors/articles",
+      "docs/behaviors/cover",
+      "docs/behaviors/popover",
+      "docs/behaviors/x-copybutton",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "demos/autoinject"
     ],
-    "boot": [
-      "docs/V3-GUIDE"
-    ],
-    "el": [
+    "aliases": [
       "docs/V3-GUIDE",
-      "docs/behaviors/time",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/inline-editing"
+      "docs/behaviors/accordion",
+      "docs/pce-candidates",
+      "docs/standards/V3-STANDARDS",
+      "docs/styles"
     ],
-    "opts": [
+    "extensionmap": [
       "docs/V3-GUIDE",
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors/audio",
-      "docs/behaviors/button",
-      "docs/behaviors/code",
-      "docs/behaviors/details",
-      "docs/behaviors/dialog",
-      "docs/behaviors/figure",
-      "docs/behaviors/footer",
-      "docs/behaviors/form",
-      "docs/behaviors/header",
-      "docs/behaviors/img",
-      "docs/behaviors/input",
-      "docs/behaviors/mark",
-      "docs/behaviors/pre",
-      "docs/behaviors/progress",
-      "docs/behaviors/select",
-      "docs/behaviors/table",
-      "docs/behaviors/textarea",
-      "docs/behaviors/video",
-      "docs/escape-hatches",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/standards/V3-STANDARDS"
-    ],
-    "async": [
-      "docs/V3-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes",
-      "docs/testing-runbook"
-    ],
-    "loads": [
-      "docs/V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/behaviors/frame",
-      "docs/behaviors/img",
-      "docs/behaviors/ratio",
-      "docs/behaviors/spinner",
-      "docs/wbservices"
-    ],
-    "lazyinject": [
-      "docs/V3-GUIDE",
-      "docs/performance"
-    ],
-    "scrolls": [
-      "docs/V3-GUIDE",
-      "docs/behaviors/pre",
-      "docs/behaviors/reel",
-      "docs/behaviors/scrollable",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/sticky",
-      "docs/properties",
-      "docs/property-viewer"
-    ],
-    "schedule": [
-      "docs/V3-GUIDE",
-      "demos/charity-food"
     ],
     "functional": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -34582,6 +34787,17 @@
       "demos/autoinject",
       "demos/frameworks",
       "demos/landing-page-showcase"
+    ],
+    "pure": [
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/linkedin-framework-agnostic",
+      "docs/semantic-standard",
+      "docs/wbservices",
+      "demos/autoinject"
     ],
     "capabilities": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -34935,25 +35151,6 @@
       "demos/landing-page-showcase",
       "demos/layout-test"
     ],
-    "old": [
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/dialog",
-      "docs/behaviors/glass",
-      "docs/behaviors/range",
-      "docs/behaviors/status",
-      "docs/behaviors/x-behavior",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/pce-candidates",
-      "docs/schema",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
-    ],
     "deprecated": [
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/accordion",
@@ -34970,22 +35167,14 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/semantic-audit"
     ],
-    "called": [
+    "loads": [
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/auto-injection",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/searchfield",
-      "docs/standards/V3-STANDARDS"
-    ],
-    "debug": [
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/escape-hatches",
-      "docs/npx-commands",
-      "docs/styles",
-      "docs/testing-runbook",
-      "docs/wbservices",
-      "demos/mdhtml-pre-debug",
-      "demos/pre-debug"
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/behaviors/frame",
+      "docs/behaviors/img",
+      "docs/behaviors/ratio",
+      "docs/behaviors/spinner",
+      "docs/wbservices"
     ],
     "starts": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -35980,6 +36169,9 @@
     "statement": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
+    "autoinjectmappings": [
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
+    ],
     "scattered": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
@@ -36045,18 +36237,6 @@
       "docs/pricecard",
       "demos/schema-first-architecture"
     ],
-    "elementmap": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/searchfield",
-      "docs/standards/V3-STANDARDS"
-    ],
-    "extensionmap": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/standards/V3-STANDARDS"
-    ],
     "extensionregistry": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
@@ -36070,60 +36250,6 @@
     ],
     "simplified": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
-    ],
-    "instead": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/solidjscomparison",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/auto-injection",
-      "docs/behaviors/accordion",
-      "docs/behaviors/address",
-      "docs/behaviors/autocomplete",
-      "docs/behaviors/card",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/cardhero",
-      "docs/behaviors/cardhorizontal",
-      "docs/behaviors/center",
-      "docs/behaviors/chip",
-      "docs/behaviors/collapse",
-      "docs/behaviors/colorpicker",
-      "docs/behaviors/countdown",
-      "docs/behaviors/darkmode",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/form",
-      "docs/behaviors/formrow",
-      "docs/behaviors/grid",
-      "docs/behaviors/icon",
-      "docs/behaviors/label",
-      "docs/behaviors/pre",
-      "docs/behaviors/release",
-      "docs/behaviors/ripple",
-      "docs/behaviors/scrollable",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/searchfield",
-      "docs/behaviors/share",
-      "docs/behaviors/x-behavior",
-      "docs/behaviors/x-collapse",
-      "docs/behaviors/x-copybutton",
-      "docs/card",
-      "docs/claude/TIER1-LAWS",
-      "docs/linkedin-update-article",
-      "docs/performance",
-      "docs/pricecard",
-      "docs/property-viewer",
-      "docs/schema-first-audit-report",
-      "docs/semantic-audit",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/styles",
-      "docs/testing-strategy",
-      "docs/wbservices",
-      "demos/frameworks",
-      "demos/standalone"
     ],
     "arrays": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -36182,37 +36308,6 @@
     ],
     "attrname": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
-    ],
-    "names": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/card",
-      "docs/behaviors/clock",
-      "docs/behaviors/container",
-      "docs/behaviors/dialog",
-      "docs/behaviors/draggable",
-      "docs/behaviors/navbar",
-      "docs/behaviors/table",
-      "docs/behaviors/x-behavior",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/escape-hatches",
-      "docs/home-page",
-      "docs/pricecard",
-      "docs/schema.migration",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/REPO-LAYOUT",
-      "docs/standards/V3-STANDARDS",
-      "docs/styles",
-      "docs/testing-strategy"
     ],
     "filenames": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -36797,6 +36892,11 @@
       "docs/architecture/solidjscomparison",
       "docs/claude/SCHEMAS-GUIDE"
     ],
+    "customelementmappings": [
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/pce-candidates",
+      "docs/pricecard"
+    ],
     "insert": [
       "docs/architecture/proposals/proposed-custom-elements"
     ],
@@ -36953,21 +37053,6 @@
       "docs/testing-strategy",
       "docs/themes"
     ],
-    "registered": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/audio",
-      "docs/behaviors/accordion",
-      "docs/behaviors/globe",
-      "docs/behaviors/pulse",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/wbservices",
-      "demos/charity-food",
-      "demos/site/interactive"
-    ],
     "decisions": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/claude/TIER3-REFERENCE",
@@ -37098,24 +37183,6 @@
     ],
     "forward": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
-    ],
-    "either": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/accordion",
-      "docs/behaviors/center",
-      "docs/behaviors/dialog",
-      "docs/behaviors/dropdown",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/floatinglabel",
-      "docs/behaviors/notes",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/pce-candidates",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/V3-STANDARDS",
-      "demos/landing-page-showcase",
-      "demos/site/cards"
     ],
     "withdrawn": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -37713,6 +37780,27 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/scrollalong"
     ],
+    "var": [
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/behaviors/address",
+      "docs/behaviors/aside",
+      "docs/behaviors/blockquote",
+      "docs/behaviors/data",
+      "docs/behaviors/glass",
+      "docs/behaviors/glow",
+      "docs/behaviors/grid",
+      "docs/behaviors/release",
+      "docs/behaviors/time",
+      "docs/container-pattern",
+      "docs/escape-hatches",
+      "docs/inline-editing",
+      "docs/linkedin-standards-article",
+      "docs/search",
+      "docs/standards/V3-STANDARDS",
+      "docs/styles",
+      "docs/test-schema-standard",
+      "docs/themes"
+    ],
     "26px": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
     ],
@@ -37878,6 +37966,20 @@
       "docs/pce-candidates",
       "demos/frameworks"
     ],
+    "else": [
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/audio",
+      "docs/behaviors/control",
+      "docs/behaviors/masked",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/time",
+      "docs/guides/create-a-website",
+      "docs/semantic-audit",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS"
+    ],
     "recalled": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
     ],
@@ -37887,13 +37989,6 @@
     "wanted": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "marked": [
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behavior-cross-reference",
-      "docs/behaviors/inputgroup",
-      "docs/behaviors/x-copybutton",
-      "docs/container-pattern"
     ],
     "presented": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -38003,13 +38098,6 @@
       "docs/behaviors/scrollable",
       "docs/behaviors/x-draggable",
       "demos/site/cards"
-    ],
-    "unit": [
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors/articles",
-      "docs/behaviors/cardexpandable",
-      "docs/linkedin-standards-article",
-      "demos/site/content"
     ],
     "curve": [
       "docs/architecture/solidjscomparison"
@@ -38155,6 +38243,29 @@
     "unstick": [
       "docs/architecture/solidjscomparison",
       "docs/behaviors/sticky"
+    ],
+    "opts": [
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/audio",
+      "docs/behaviors/button",
+      "docs/behaviors/code",
+      "docs/behaviors/details",
+      "docs/behaviors/dialog",
+      "docs/behaviors/figure",
+      "docs/behaviors/footer",
+      "docs/behaviors/form",
+      "docs/behaviors/header",
+      "docs/behaviors/img",
+      "docs/behaviors/input",
+      "docs/behaviors/mark",
+      "docs/behaviors/pre",
+      "docs/behaviors/progress",
+      "docs/behaviors/select",
+      "docs/behaviors/table",
+      "docs/behaviors/textarea",
+      "docs/behaviors/video",
+      "docs/escape-hatches",
+      "docs/standards/V3-STANDARDS"
     ],
     "observes": [
       "docs/architecture/solidjscomparison",
@@ -38632,9 +38743,6 @@
       "docs/architecture/standards/ERROR-MESSAGE"
     ],
     "errormessage": [
-      "docs/architecture/standards/ERROR-MESSAGE"
-    ],
-    "logging": [
       "docs/architecture/standards/ERROR-MESSAGE"
     ],
     "captured": [
@@ -39115,9 +39223,6 @@
       "docs/behaviors/youtube",
       "docs/mcp"
     ],
-    "finish": [
-      "docs/audio"
-    ],
     "showdisplay": [
       "docs/audio",
       "docs/behaviors/audio"
@@ -39262,43 +39367,6 @@
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-strategy"
     ],
-    "control": [
-      "docs/audio",
-      "docs/behavior-cross-reference",
-      "docs/behaviors/articles",
-      "docs/behaviors/bounce",
-      "docs/behaviors/button",
-      "docs/behaviors/card",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/control",
-      "docs/behaviors/dl",
-      "docs/behaviors/formrow",
-      "docs/behaviors/glow",
-      "docs/behaviors/inputgroup",
-      "docs/behaviors/label",
-      "docs/behaviors/ol",
-      "docs/behaviors/pagination",
-      "docs/behaviors/status",
-      "docs/behaviors/table",
-      "docs/behaviors/themecontrol",
-      "docs/behaviors/truncate",
-      "docs/behaviors/ul",
-      "docs/behaviors/x-copybutton",
-      "docs/behaviors/x-enhancements",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes",
-      "docs/compliance/iso-42001-alignment",
-      "docs/pce-candidates",
-      "docs/properties",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "demos/frameworks",
-      "demos/site/forms",
-      "demos/site/interactive"
-    ],
     "instance": [
       "docs/audio",
       "docs/behaviors/codetheme",
@@ -39318,11 +39386,6 @@
     "stream": [
       "docs/audio",
       "docs/mcp"
-    ],
-    "reachable": [
-      "docs/audio",
-      "docs/behaviors/card",
-      "docs/behaviors/scrollable"
     ],
     "cause": [
       "docs/audio",
@@ -40561,12 +40624,6 @@
       "docs/behaviors/relativetime",
       "docs/compliance/iso-42001-alignment"
     ],
-    "aliases": [
-      "docs/behaviors/accordion",
-      "docs/pce-candidates",
-      "docs/standards/V3-STANDARDS",
-      "docs/styles"
-    ],
     "carries": [
       "docs/behaviors/accordion",
       "docs/behaviors/autocomplete",
@@ -40593,12 +40650,6 @@
     ],
     "knowing": [
       "docs/behaviors/accordion"
-    ],
-    "carrying": [
-      "docs/behaviors/accordion",
-      "docs/behaviors/glass",
-      "docs/behaviors/move",
-      "docs/behaviors/pagination"
     ],
     "faq": [
       "docs/behaviors/accordion"
@@ -40654,15 +40705,6 @@
       "docs/behaviors/timeline",
       "docs/behaviors/ul",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
-    ],
-    "share": [
-      "docs/behaviors/accordion",
-      "docs/behaviors/share",
-      "docs/behaviors/x-copybutton",
-      "docs/behaviors/youtube",
-      "docs/card",
-      "docs/property-viewer",
-      "docs/wbservices"
     ],
     "reveals": [
       "docs/behaviors/accordion",
@@ -40731,25 +40773,6 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "demos/autoinject"
-    ],
-    "fires": [
-      "docs/behaviors/accordion",
-      "docs/behaviors/cardproduct",
-      "docs/behaviors/chip",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/confetti",
-      "docs/behaviors/confirm",
-      "docs/behaviors/copy",
-      "docs/behaviors/countdown",
-      "docs/behaviors/dropdown",
-      "docs/behaviors/move",
-      "docs/behaviors/pagination",
-      "docs/behaviors/prompt",
-      "docs/behaviors/search",
-      "docs/behaviors/searchfield",
-      "docs/behaviors/sticky",
-      "docs/behaviors/toast",
-      "docs/guides/search-index"
     ],
     "finishes": [
       "docs/behaviors/accordion"
@@ -40904,21 +40927,6 @@
       "docs/card",
       "demos/index"
     ],
-    "colour": [
-      "docs/behaviors/alert",
-      "docs/behaviors/badge",
-      "docs/behaviors/button",
-      "docs/behaviors/cardstats",
-      "docs/behaviors/glass",
-      "docs/behaviors/glow",
-      "docs/behaviors/grid",
-      "docs/behaviors/mark",
-      "docs/behaviors/navbar",
-      "docs/behaviors/progress",
-      "docs/behaviors/rainbow",
-      "docs/behaviors/stack",
-      "docs/behaviors/stat"
-    ],
     "belongs": [
       "docs/behaviors/alert",
       "docs/standards/RELEASE-PROCESS",
@@ -40959,14 +40967,6 @@
       "docs/behaviors/articles",
       "docs/behaviors/dl",
       "docs/semantic-standard"
-    ],
-    "extra": [
-      "docs/behaviors/articles",
-      "docs/behaviors/cover",
-      "docs/behaviors/popover",
-      "docs/behaviors/x-copybutton",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/autoinject"
     ],
     "limit": [
       "docs/behaviors/articles",
@@ -41469,10 +41469,6 @@
       "docs/behaviors/x-enhancements",
       "docs/guides/search-index",
       "docs/performance"
-    ],
-    "flight": [
-      "docs/behaviors/autocomplete",
-      "docs/claude/TOOLING-INVENTORY"
     ],
     "bubbles": [
       "docs/behaviors/autocomplete",
@@ -43134,13 +43130,6 @@
       "docs/behaviors/code",
       "docs/escape-hatches"
     ],
-    "wait": [
-      "docs/behaviors/code",
-      "docs/claude/TIER1-LAWS",
-      "docs/guides/search-index",
-      "docs/mcp",
-      "docs/npx-commands"
-    ],
     "timer": [
       "docs/behaviors/code"
     ],
@@ -43231,6 +43220,16 @@
     ],
     "persist": [
       "docs/behaviors/codetheme"
+    ],
+    "selected": [
+      "docs/behaviors/codetheme",
+      "docs/behaviors/file",
+      "docs/behaviors/prompt",
+      "docs/behaviors/range",
+      "docs/behaviors/select",
+      "docs/property-viewer",
+      "docs/schema-first-audit-report",
+      "docs/search"
     ],
     "persisting": [
       "docs/behaviors/codetheme"
@@ -44357,6 +44356,10 @@
     "assigned": [
       "docs/behaviors/fix-card"
     ],
+    "upgraded": [
+      "docs/behaviors/fix-card",
+      "demos/playground"
+    ],
     "blinks": [
       "docs/behaviors/flash"
     ],
@@ -45253,6 +45256,15 @@
       "docs/behaviors/popover",
       "docs/claude/TIER1-LAWS"
     ],
+    "scrolls": [
+      "docs/behaviors/pre",
+      "docs/behaviors/reel",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/sticky",
+      "docs/properties",
+      "docs/property-viewer"
+    ],
     "reflowing": [
       "docs/behaviors/pre"
     ],
@@ -45702,6 +45714,9 @@
     "debouncing": [
       "docs/behaviors/searchfield"
     ],
+    "exposes": [
+      "docs/behaviors/searchfield"
+    ],
     "wbsearch": [
       "docs/behaviors/searchfield"
     ],
@@ -45978,10 +45993,6 @@
     "zindex": [
       "docs/behaviors/sticky"
     ],
-    "became": [
-      "docs/behaviors/sticky",
-      "docs/standards/V3-STANDARDS"
-    ],
     "unsticky": [
       "docs/behaviors/sticky"
     ],
@@ -46086,9 +46097,6 @@
     "flourish": [
       "docs/behaviors/tada"
     ],
-    "finished": [
-      "docs/behaviors/tada"
-    ],
     "interactively": [
       "docs/behaviors/tags"
     ],
@@ -46174,6 +46182,11 @@
     ],
     "updaterelativetimes": [
       "docs/behaviors/time"
+    ],
+    "el": [
+      "docs/behaviors/time",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/inline-editing"
     ],
     "rtf": [
       "docs/behaviors/time"
@@ -46777,6 +46790,12 @@
       "docs/mcp",
       "demos/schema-first-architecture"
     ],
+    "async": [
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/committing-fixes",
+      "docs/testing-runbook"
+    ],
     "mcp": [
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -47020,9 +47039,6 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
-    ],
-    "readiness": [
-      "docs/claude/TIER3-REFERENCE"
     ],
     "revisiting": [
       "docs/claude/TIER3-REFERENCE"
@@ -47368,10 +47384,6 @@
       "docs/committing-fixes",
       "docs/mcp"
     ],
-    "await": [
-      "docs/committing-fixes",
-      "docs/guides/search-index"
-    ],
     "goto": [
       "docs/committing-fixes"
     ],
@@ -47607,9 +47619,6 @@
       "docs/compliance/iso-42001-alignment"
     ],
     "dropzone": [
-      "docs/container-pattern"
-    ],
-    "rejects": [
       "docs/container-pattern"
     ],
     "maxchildren": [
@@ -48642,9 +48651,6 @@
     "repeating": [
       "docs/npx-commands"
     ],
-    "timeout": [
-      "docs/npx-commands"
-    ],
     "helpful": [
       "docs/npx-commands"
     ],
@@ -48807,6 +48813,9 @@
       "docs/performance"
     ],
     "optimizations": [
+      "docs/performance"
+    ],
+    "lazyinject": [
       "docs/performance"
     ],
     "lazyobserver": [
@@ -49961,6 +49970,9 @@
     "arriving": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
+    "resolves": [
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
     "wear": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/site/learn-more"
@@ -50214,6 +50226,9 @@
     "typography": [
       "docs/styles",
       "docs/themes"
+    ],
+    "hardcode": [
+      "docs/styles"
     ],
     "wreck": [
       "docs/styles"
@@ -50650,6 +50665,9 @@
       "demos/charity-food"
     ],
     "thursday": [
+      "demos/charity-food"
+    ],
+    "schedule": [
       "demos/charity-food"
     ],
     "hot": [

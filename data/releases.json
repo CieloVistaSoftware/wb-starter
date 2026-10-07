@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.366",
+      "date": "2026-10-06",
+      "summary": "The V3 guide, which 130 hero-gallery buttons open, described the framework as it was months ago: auto-inject off, custom tags, one runtime, and toast examples whose &quot;success&quot; colour never applied. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1667\" target=\"_blank\" rel=\"noopener\">#1667</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1669\" target=\"_blank\" rel=\"noopener\">#1669</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>V3 guide matches the code -- autoInject on, two runtimes, toast-variant, render(), the recipe</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1667\" target=\"_blank\" rel=\"noopener\">#1667</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1669\" target=\"_blank\" rel=\"noopener\">#1669</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0bfbc416a80c03845d00165ff57a284bed0513f9\" target=\"_blank\" rel=\"noopener\"><code>0bfbc41</code></a>",
+          "issues": [
+            1667,
+            1669
+          ]
+        }
+      ],
+      "seeIt": "Open the doc viewer on <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md\" target=\"_blank\" rel=\"noopener\">docs/V3-GUIDE.md</a> and click Save in the Quick start. Before: a blue info toast. Now: a green success toast, autoInject on by default, and a table of the two runtimes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0bfbc416a80c03845d00165ff57a284bed0513f9\" target=\"_blank\" rel=\"noopener\"><code>0bfbc41</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.365",
       "date": "2026-10-06",
       "summary": "PageArrived() starts its in-page wait without awaiting it on purpose (the test waits for its done flag, capped at 10s), and @typescript-eslint/no-floating-promises failed the compliance lint check on it; it is now `void (async () =&gt; ...)()`, the rule&#39;s own way of saying the promise is intentionally not awaited. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1661\" target=\"_blank\" rel=\"noopener\">PR 1661</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
