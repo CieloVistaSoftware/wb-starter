@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.392",
+      "date": "2026-10-07",
+      "summary": "Data/component-index.json listed 74 components with doc paths under docs/components/, a folder that no longer exists, and no code in src/, pages/, public/, scripts/ or tests/ reads it. Unused files are removed (John, 2026-10-07). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1698\" target=\"_blank\" rel=\"noopener\">#1698</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1699\" target=\"_blank\" rel=\"noopener\">#1699</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Remove <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/component-index.json\" target=\"_blank\" rel=\"noopener\">data/component-index.json</a> -- 74 dead doc paths, read by nothing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1698\" target=\"_blank\" rel=\"noopener\">#1698</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1699\" target=\"_blank\" rel=\"noopener\">#1699</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/808dc82e8d10220927e6b757aeb8ba11ebe32b98\" target=\"_blank\" rel=\"noopener\"><code>808dc82</code></a>",
+          "issues": [
+            1698,
+            1699
+          ]
+        }
+      ],
+      "seeIt": "Run <code>grep -rn &quot;component-index.json&quot; src pages public scripts tests</code>. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/component-index.json\" target=\"_blank\" rel=\"noopener\">data/component-index.json</a> existed with 74 dead docPath entries and the grep found only two spec comments. Now: the file is gone, the grep still finds only those comments, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/x-demo-events-fire.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/x-demo-events-fire.spec.ts</a> and live-examples-render.spec.ts pass (13/13).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/808dc82e8d10220927e6b757aeb8ba11ebe32b98\" target=\"_blank\" rel=\"noopener\"><code>808dc82</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.391",
       "date": "2026-10-07",
       "summary": "Site.css carried 28 !important declarations, 18 of which won nothing, and the 10 that matter had no recorded reason. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1697\" target=\"_blank\" rel=\"noopener\">PR 1697</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
