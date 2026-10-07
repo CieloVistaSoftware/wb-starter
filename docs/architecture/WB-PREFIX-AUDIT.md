@@ -149,7 +149,9 @@ Real pages a reader can load. Small, visible, verifiable in the browser.
 ### Phase 4 — Scaffolding (274 hits, 16 files)
 
 `templates/presets/*`. Every project created from this template inherits the dead
-vocabulary. Overlaps with #771 (create-wb-starter ships the framework's maintenance
+vocabulary. **Resolved by deletion (#779, 2026-10-07):** nothing loaded these
+files -- create-wb-starter scaffolds from `packages/create-wb-starter/template`
+since #813 -- so they were removed rather than cleaned. Overlaps with #771 (create-wb-starter ships the framework's maintenance
 surface).
 
 **Gate:** scaffold a fresh project, load it, audit it — `--dir` supports exactly this.

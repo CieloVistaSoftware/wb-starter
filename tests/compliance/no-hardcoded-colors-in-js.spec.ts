@@ -36,11 +36,11 @@ const root = process.cwd();
  */
 const REGISTER: Record<string, number> = {
   'src/core/events.js': 2,   // console.error %c styling: console output, which no theme reaches
-  'src/core/theme.js': 5,
-  'src/core/x-devconsole.js': 34,   // a standalone script injected on ANY page, themes.css or not: tokens would not resolve there
-  'src/wb-viewmodels/colorpicker.js': 1,
-  'src/wb-viewmodels/effects.js': 15,
-  'src/wb-viewmodels/semantics/inline.js': 2,
+  'src/core/theme.js': 5,   // fallbacks when a token is unset (cs.getPropertyValue(...) || '#...'): used only where themes.css is absent
+  'src/core/x-devconsole.js': 31,   // a standalone script injected on ANY page, themes.css or not: tokens would not resolve there
+  'src/wb-viewmodels/colorpicker.js': 1,   // the default value of an <input type=color>, which accepts only #rrggbb
+  'src/wb-viewmodels/effects.js': 15,   // confetti/fireworks palettes drawn on a <canvas>, where var(--x) means nothing; overridable by the colors attribute
+  'src/wb-viewmodels/semantics/inline.js': 2,   // the computed black/white contrast result for a user-chosen colour: a value, not a theme choice
 };
 
 /** Comments are not code: blank them out, keeping offsets and line numbers. */

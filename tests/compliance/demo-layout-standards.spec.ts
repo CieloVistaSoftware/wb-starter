@@ -57,8 +57,20 @@ const MIN_TEXT_EDGE_PX = 16; // 1rem — matches DEMOS-AND-DOCS-STANDARDS.md §1
  * a fixed 800ms. A page that does not load WB has nothing to wait for.
  */
 async function settled(page: Page): Promise<void> {
-  const hasRuntime = await page.evaluate(() => typeof (window as any).WB?.settled === 'function');
-  if (hasRuntime) await wbIdle(page);
+  // A page can navigate once while it boots (the #1108 service-worker release
+  // reloads a page it found controlled); the wait then dies with "Execution
+  // context was destroyed" (#1681 CI, landing-page-showcase.html). Wait for
+  // the page that replaced it and settle that one. Any other error throws.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const hasRuntime = await page.evaluate(() => typeof (window as any).WB?.settled === 'function');
+      if (hasRuntime) await wbIdle(page);
+      return;
+    } catch (err) {
+      if (attempt > 0 || !/Execution context was destroyed/.test(String(err))) throw err;
+      await page.waitForLoadState('load');
+    }
+  }
 }
 
 async function readThrough(page: Page): Promise<void> {

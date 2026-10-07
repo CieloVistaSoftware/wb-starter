@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * <pre x-behavior="pre"> says the same thing twice (#967).
@@ -58,6 +59,12 @@ for (const rt of RUNTIMES) {
     test.beforeEach(async ({ page }) => {
       await page.goto(rt.url);
       await page.waitForFunction(() => (window as any).WB?.scan, { timeout: 20000 });
+      // #961: on the site shell, wait for it to finish booting first. Its boot
+      // calls WB.init({ autoInject: <site config> }) once config/site.json
+      // arrives; landing after mount()'s setConfig('autoInject', false), it
+      // switched auto-inject back on mid-scan and the "auto-inject off is
+      // silent" case reported (CI, 2026-10-07). wbIdle() waits for that boot.
+      await wbIdle(page);
     });
 
     test('<pre x-behavior="pre"> on an auto-inject page is reported, naming what was written', async ({ page }) => {

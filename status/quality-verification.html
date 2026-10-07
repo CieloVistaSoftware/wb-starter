@@ -42,6 +42,9 @@
     section.why li strong { color: var(--accent-2); }
     footer { color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border);
       padding-top: 1.25rem; margin-top: 3rem; }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .mb-0 { margin-bottom:0; }
   </style>
 </head>
 <body>
@@ -79,7 +82,7 @@
         <li><strong>The guardrails grow.</strong> Every issue found becomes a permanent test, so the same class of problem can't return silently.</li>
         <li><strong>Deploy &ne; commit.</strong> Code committed is verified and built before it reaches you &mdash; and re-checked live after it's deployed.</li>
       </ul>
-      <p style="margin-bottom:0;">You get AI velocity with an engineering safety net underneath it.</p>
+      <p class="mb-0">You get AI velocity with an engineering safety net underneath it.</p>
     </section>
 
     <footer>

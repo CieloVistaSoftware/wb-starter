@@ -54,7 +54,7 @@
   overflow-x: auto;
   font-size: 1rem;
 }
-.pt-hidden { display: none !important; }
+.pt-hidden { display: none; }
 
 /* ── Panels (cards) ── */
 .pt-panel {
@@ -244,7 +244,7 @@
 /* ── Missing table specific ── */
 .pt-table--missing tbody tr.pt-missing-row { cursor: pointer; }
 .pt-table--missing tbody tr.pt-missing-row:hover { background: rgba(248, 113, 113, 0.06); }
-.pt-missing-row--expanded { background: rgba(99, 102, 241, 0.08) !important; }
+.pt-missing-row--expanded { background: rgba(99, 102, 241, 0.08); }
 
 .pt-detail-row { display: none; }
 .pt-detail-row--open { display: table-row; }
@@ -390,8 +390,8 @@
 }
 .pt-stat-label { color: #64748b; }
 .pt-stat-val { font-weight: 700; font-size: 1.1rem; color: #e2e8f0; font-variant-numeric: tabular-nums; }
-.pt-green { color: #4ade80 !important; }
-.pt-red { color: #f87171 !important; }
+.pt-green { color: #4ade80; }
+.pt-red { color: #f87171; }
 
 .pt-coverage-bar {
   position: relative;
@@ -452,8 +452,8 @@
 .pt-btn--save:hover { background: linear-gradient(135deg, #b45309, #d97706); }
 .pt-btn--save:disabled { opacity: 0.5; cursor: wait; }
 .pt-btn--saved {
-  background: linear-gradient(135deg, #059669, #10b981) !important;
-  border-color: #34d399 !important;
+  background: linear-gradient(135deg, #059669, #10b981);
+  border-color: #34d399;
 }
 
 /* Progress bar */
