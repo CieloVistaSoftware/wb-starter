@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.410",
+      "date": "2026-10-07",
+      "summary": "The modal timing test sometimes failed on CI because it clicked while the runner was still doing its first, blocking font lookup. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1721\" target=\"_blank\" rel=\"noopener\">#1721</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Time the modal on the settled page, not during the first font lookup</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1721\" target=\"_blank\" rel=\"noopener\">#1721</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3c04c2a5b8c1fad576e979a33229bc7428a846c3\" target=\"_blank\" rel=\"noopener\"><code>3c04c2a</code></a>",
+          "issues": [
+            961,
+            1721
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/performance/interaction.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/performance/interaction.spec.ts</a> --project=performance</code> on a fresh Windows runner (the CI performance job). Before: the job&#39;s first page clicked at 232.7ms (508ms and 675ms in the two failures). Now: the same cold page clicks at 15ms because the test waits for the page to settle first.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3c04c2a5b8c1fad576e979a33229bc7428a846c3\" target=\"_blank\" rel=\"noopener\"><code>3c04c2a</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.409",
       "date": "2026-10-07",
       "summary": "The schema build no longer wipes a form control or void element and hangs label/field/counter elements inside it, so a &lt;textarea x-textarea&gt; keeps the text written in it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1722\" target=\"_blank\" rel=\"noopener\">#1722</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1720\" target=\"_blank\" rel=\"noopener\">#1720</a>",
