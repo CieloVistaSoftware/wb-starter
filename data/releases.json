@@ -6,6 +6,95 @@
   ],
   "releases": [
     {
+      "version": "1.0.372",
+      "date": "2026-10-06",
+      "summary": "Permutation-compliance&#39;s event checks wait for the event (2s cap, still reported if it never fires) and its keyboard check for the class; fullscreen-failure-rollback waits for the refusal to be logged, for the fullscreen class and Exit label, and for the class to clear; duplicate-ids waits for the second boot&#39;s &quot;called twice&quot; refusal and WB.settled; ten more specs wait for the theme to paint, the lazy upgrade, the saved note, the accordion animation, the live panel, the theme link swap and the page&#39;s content; cardproduct drops two pauses that waited for nothing; a plain fieldset&#39;s no-collapse check is marked as a negative proof; the setup ceiling drops to 99. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1676\" target=\"_blank\" rel=\"noopener\">PR 1676</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Permutation, fullscreen-rollback, single-boot and ten more specs wait on state, not a clock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/223e10b20226a3c8331e9729b79c4873ad16514f\" target=\"_blank\" rel=\"noopener\"><code>223e10b</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: setup 126, marked 13. Now: setup 99, marked 14, and every edited spec passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/93cd0acddb1a36ca3208256232a85429d6ff9704\" target=\"_blank\" rel=\"noopener\"><code>93cd0ac</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1673\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1673</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.371",
+      "date": "2026-10-06",
+      "summary": "The live-spacing check measured <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/frameworks.html\" target=\"_blank\" rel=\"noopener\">demos/frameworks.html</a> with demo.css still loading (an [x-demo] read padding-top 0) on CI, twice now (#1624, #1673): the quiet-resource-timeline wait can end while a behavior&#39;s on-first-use &lt;link&gt; is pending, so readThrough() now also waits (10s cap) until every stylesheet link has a sheet before it measures. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1673\" target=\"_blank\" rel=\"noopener\">PR 1673</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Demo-layout-standards waits for every stylesheet before measuring spacing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/354fe4eddbb3cf8ef5c309c7497e3dba5c86d206\" target=\"_blank\" rel=\"noopener\"><code>354fe4e</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>29 setup sleeps in ten specs wait on the state the next step needs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/085dd72f39f8b7bb449de9d8616433a056a8e46c\" target=\"_blank\" rel=\"noopener\"><code>085dd72</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/demo-layout-standards.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/demo-layout-standards.spec.ts</a></code>. Before: <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/frameworks.html\" target=\"_blank\" rel=\"noopener\">demos/frameworks.html</a> could fail with &quot;[x-demo][0]: own padding-top 0px &lt; 15px&quot;. Now: spacing is measured only after the demo stylesheet has loaded.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/71489dd4b8ac760b7acf765ca61f2f00f362c38a\" target=\"_blank\" rel=\"noopener\"><code>71489dd</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "PR",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1673\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1673</a>"
+        },
+        {
+          "label": "Earlier failure",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1624\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1624</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1664\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1664</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.370",
       "date": "2026-10-06",
       "summary": "Schema-validation and source-schema-compliance passed only because every threshold sat far above its count (14 missing compliance sections under a limit of 55, 38 duplicate declarations under 40, 35 missing base classes under 70), so the debt could grow unseen. Two findings were real: search.schema.json&#39;s five examples all used x-searchfield, a different behavior, and the &quot;missing functions&quot; copybutton and searchfield came from the test&#39;s own stale copy of the runtime&#39;s export-alias table. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1670\" target=\"_blank\" rel=\"noopener\">PR 1670</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
