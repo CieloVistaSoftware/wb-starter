@@ -53,7 +53,13 @@ test.describe('#293 — .site__nav CSS default must stay hidden, not the visible
     expect(minWidthBlockMatch, 'expected a @media (min-width: ...) block restoring .site__nav to display:flex for large screens').not.toBeNull();
   });
 
-  test('the mobile-open toggle state always wins regardless of breakpoint (unconditional, !important)', () => {
-    expect(css).toMatch(/\.site__nav\.site__nav--mobile-open\s*\{\s*display:\s*flex\s*!important;\s*\}/);
+  // #1014: it wins without !important. Two classes (0,2,0) outrank every
+  // single-class `.site__nav { display: none }`, and it comes after every
+  // @media block, so no same-specificity rule inside one can follow it.
+  test('the mobile-open toggle state always wins regardless of breakpoint (unconditional, last)', () => {
+    const rule = /\.site__nav\.site__nav--mobile-open\s*\{\s*display:\s*flex;\s*\}/g;
+    const matches = [...css.matchAll(rule)];
+    expect(matches, 'expected one unconditional `.site__nav.site__nav--mobile-open { display: flex; }`').toHaveLength(1);
+    expect(matches[0].index!, 'it must come after the last @media block in site.css').toBeGreaterThan(css.lastIndexOf('@media'));
   });
 });
