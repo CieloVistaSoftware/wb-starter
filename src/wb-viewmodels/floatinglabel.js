@@ -14,6 +14,8 @@
  * nothing for Chrome's autofill to key on.
  */
 
+import { moveKeepingFocus } from '../core/keep-focus.js';
+
 /**
  * What a given input type is FOR, in autocomplete's vocabulary.
  *
@@ -48,8 +50,10 @@ export function floatinglabel(element, options = {}) {
   let wrapper = element;
   if (isField) {
     wrapper = document.createElement('div');
-    element.parentNode.insertBefore(wrapper, element);
-    wrapper.appendChild(element);
+    moveKeepingFocus(element, () => {   // #961
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+    });
   }
   wrapper.classList.add('x-floating-label');
   wrapper.classList.add(`x-floating-label--${field.tagName.toLowerCase()}`);
