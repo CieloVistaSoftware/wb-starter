@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.390",
+      "date": "2026-10-07",
+      "summary": "A danger card written as &lt;article variant=&quot;danger&quot;&gt; or &lt;div x-card variant=&quot;danger&quot;&gt; showed no red accent stripe, while the other four variants did. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1696\" target=\"_blank\" rel=\"noopener\">PR 1696</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1695\" target=\"_blank\" rel=\"noopener\">#1695</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>&lt;article variant=&quot;danger&quot;&gt; and &lt;div x-card variant=&quot;danger&quot;&gt; get their accent stripe</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1695\" target=\"_blank\" rel=\"noopener\">#1695</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b3c707fdede41d5d9d2a77dbccc40ae21e5d459f\" target=\"_blank\" rel=\"noopener\"><code>b3c707f</code></a>",
+          "issues": [
+            1695
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;article variant=&quot;danger&quot; title=&quot;T&quot;&gt;Body&lt;/article&gt;. Before: a plain 1px border. Now: a 4px red stripe on the left, like the success, warning, info and primary cards.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0ab7d4b78802d4f012f8a02bf698a5a48f59f7fe\" target=\"_blank\" rel=\"noopener\"><code>0ab7d4b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.389",
       "date": "2026-10-07",
       "summary": "Removing !important from the card title tint left the draggable card&#39;s title untinted, because the drag title&#39;s own colour rule outranked it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1694\" target=\"_blank\" rel=\"noopener\">PR 1694</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
