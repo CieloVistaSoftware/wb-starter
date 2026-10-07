@@ -1,4 +1,5 @@
 {
+  "1.0.384": "Run `npx playwright test tests/behaviors/input-theming.spec.ts --project=behaviors`. Before: on the Windows runner the dark and ocean cases read the inputs as native white rgb(255, 255, 255), because the input stylesheet link had not loaded when WB.settled() resolved. Now: the test waits until every stylesheet link has its sheet, and all 8 cases pass.",
   "1.0.382": "Open the browser console on a page with <nav x-sidebar items=\"Home,Docs\" active=\"Home\"> and run el.setAttribute('active', 'Docs'). Before: Home stays highlighted. Now: Docs is.",
   "1.0.318": "Open Behaviors, search \"expan\", pick \"four lines visible\" and click Show More. Before: the same two lines stayed, only the label changed. Now: the card grows to show the rest of the changelog, and a card whose text already fits shows no Show More button.",
   "4.0.6": "Open ?page=behaviors, pick sticky and scroll its demo. Before: the sticky footer sat in a short panel with nothing to scroll, so it looked the same with or without sticky. Now: the demo scrolls and you can see the option stick. The known-failures register also shrank from 214 to 69 entries.",
