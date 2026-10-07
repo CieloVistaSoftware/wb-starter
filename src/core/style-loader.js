@@ -25,6 +25,7 @@ import { BEHAVIOR_CSS_MAP } from '../styles/behavior-css-manifest.js';
 import { BEHAVIOR_ALIASES } from './attribute-aliases.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 import { behaviors } from '../wb-viewmodels/index.js';
+import { runtimeTracker } from './injection-tracker.js';
 
 const BEHAVIORS_BASE = new URL('../styles/behaviors', import.meta.url).href;
 
@@ -48,6 +49,45 @@ const BEHAVIORS_BASE = new URL('../styles/behaviors', import.meta.url).href;
  * @type {Map<string, {promise: Promise<void>, settled: boolean, link: HTMLLinkElement|null}>}
  */
 const loaded = new Map();
+
+/**
+ * Call `done` once `link` can no longer change: it loaded, it failed, or it
+ * was removed before either (the browser then cancels it and fires neither
+ * event -- #961/#1075). Each outcome is written on the link as
+ * data-x-css-state, so a later load of the same file can tell a FINISHED
+ * <link> from one still on its way.
+ *
+ * Removal is a notification, not a poll (Law 18), scoped to the one parent so
+ * it costs nothing on a large page.
+ * @param {HTMLLinkElement} link
+ * @param {() => void} done
+ */
+function settleOn(link, done) {
+  let removalObserver = null;
+  const finish = (state) => () => {
+    if (state) link.dataset.xCssState = state;
+    if (removalObserver) removalObserver.disconnect();
+    done();
+  };
+  link.addEventListener('load', finish('loaded'), { once: true });
+  link.addEventListener('error', finish('failed'), { once: true });
+  return () => {
+    if (typeof MutationObserver === 'undefined' || !link.parentNode) return;
+    removalObserver = new MutationObserver(() => {
+      if (!link.isConnected) finish(null)();
+    });
+    removalObserver.observe(link.parentNode, { childList: true });
+  };
+}
+
+/**
+ * Has this behavior <link> finished -- loaded or failed? One this module wrote
+ * says so in data-x-css-state; any other is finished once it has a sheet.
+ * @param {HTMLLinkElement} link
+ */
+function isFinished(link) {
+  return !!link.dataset.xCssState || !!link.sheet;
+}
 
 function loadCssFile(fileName) {
   const cached = loaded.get(fileName);
@@ -83,9 +123,21 @@ function loadCssFile(fileName) {
     // never once matched and only the Map above was preventing duplicate
     // <link>s. With the Map now able to discard a dead entry, this check is
     // what stops a re-load from stacking a second <link>, so it has to work.
+    //
+    // But an existing <link> is not necessarily a LOADED one. One still on its
+    // way (put there by preloadCssForHtml(), or by an earlier entry this Map
+    // has since discarded) used to count as done at once, so the behavior ran,
+    // stamped x-ready and released WB.settled() before its stylesheet had
+    // arrived -- input-theming read a native-white field in a dark theme on CI
+    // (#1516). Wait for it the same way as for a link written here.
     const existing = document.querySelector(`link[data-x-behavior-css="${fileName}"]`);
     if (existing) {
-      done();
+      if (isFinished(existing)) {
+        done();
+        return;
+      }
+      entry.link = existing;
+      settleOn(existing, done)();
       return;
     }
     const link = document.createElement('link');
@@ -96,30 +148,9 @@ function loadCssFile(fileName) {
     // A CSS load failure shouldn't block the behavior itself from running —
     // an unstyled element is recoverable, a behavior that silently never
     // applies is a worse regression (this is exactly the schema-race bug's
-    // failure mode, just for CSS instead of DOM).
-    link.addEventListener('load', done, { once: true });
-    link.addEventListener('error', done, { once: true });
-
-    // Third terminal state: the <link> is REMOVED before it loads. The browser
-    // cancels the request and fires neither event, so without this the promise
-    // is simply abandoned — and every injection awaiting it is abandoned too
-    // (#961/#1075). Nothing dies silently: removal settles the load exactly
-    // like a failure does, since an unstyled element is recoverable and a
-    // behavior that never runs is not.
-    //
-    // Notification, not a poll (Law 18), and scoped to the one parent rather
-    // than the document subtree so it costs nothing on a large page.
-    let removalObserver = null;
-    const watchForRemoval = () => {
-      if (typeof MutationObserver === 'undefined' || !link.parentNode) return;
-      removalObserver = new MutationObserver(() => {
-        if (!link.isConnected) { removalObserver.disconnect(); done(); }
-      });
-      removalObserver.observe(link.parentNode, { childList: true });
-    };
-    const stopWatching = () => { if (removalObserver) removalObserver.disconnect(); };
-    link.addEventListener('load', stopWatching, { once: true });
-    link.addEventListener('error', stopWatching, { once: true });
+    // failure mode, just for CSS instead of DOM). So load, error and removal
+    // before either all settle it (settleOn above); nothing dies silently.
+    const watchForRemoval = settleOn(link, done);
 
     // Cascade order matters: these files used to load via @import at the
     // very top of site.css, which resolves before ANY of site.css's own
@@ -140,6 +171,22 @@ function loadCssFile(fileName) {
     }
     watchForRemoval();
   });
+
+  // Counted by the runtime's idle signal until it settles (#1516). An
+  // injection already awaits its own behavior's CSS, but nothing else did:
+  // a preload, or an ensureBehaviorCss() no one awaits (fix-card.js), could
+  // still be loading after WB.settled() had resolved.
+  //
+  // Recorded against its <link>, not anonymously: the tracker stops counting
+  // work whose element has left the document. A document reopen
+  // (page.setContent()) removes every <link> silently AND drops the
+  // readystatechange listener below with the rest of the document's
+  // listeners, so a load it cut off never settles -- counted anonymously it
+  // held WB.settled() forever (async-behavior-ready-after-render).
+  if (!entry.settled) {
+    const record = runtimeTracker.start(`css ${fileName}`, entry.link);
+    entry.promise.then(() => runtimeTracker.end(record));
+  }
 
   loaded.set(fileName, entry);
   return entry.promise;

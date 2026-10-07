@@ -51,10 +51,14 @@ test('single-item demo self-corrects width after its lazily-loaded control rende
   // demo.js commits the measured width once, when it settles (#985).
   await expect(demo).toHaveClass(/x-demo--measured/, { timeout: 20000 });
 
-  // Let everything -- including any legitimate delayed re-measure -- settle,
-  // still under throttling, before removing it and reading the final state.
-  // sleep-proves-negative: a late re-measure must NOT shrink the control; there is no event for a resize that correctly never happens
-  await page.waitForTimeout(1000);
+  // Everything that could still change the card's size has finished, still
+  // under throttling (#1516: not 1000ms). demo.js commits its width once and
+  // never re-measures; what lands late is the card itself -- its behavior's
+  // header and avatar (WB.settled) and its cover image (decoded).
+  await demo.evaluate(async (el) => {
+    await (window as any).WB?.settled?.({ timeout: 15000 });
+    await Promise.all(Array.from(el.querySelectorAll('img'), (img) => img.decode().catch(() => {})));
+  });
   await client.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   // One more settle pass at normal speed so a resize triggered right at the
   // throttle boundary has a frame to actually paint before we measure: two

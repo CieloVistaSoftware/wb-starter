@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 304,
-    "totalWords": 5974
+    "totalWords": 5976
   },
   "documents": [
     {
@@ -315,7 +315,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.391\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.391\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.403\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.403\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-07"
@@ -1262,7 +1262,7 @@
       "content": "# ` ` Element The ` ` element represents an extended quotation from another source. In WB-Starter, it's used for testimonials and quoted content. ## Semantic Meaning - Extended quotation from external source - Should include citation when source is known - Typically indented or visually distinct from regular content ## WB Behaviors Using ` ` ### Card Testimonial (`cardtestimonial`) `x-cardtestimonial` builds its own ` `/` `/` ` from the `quote`/`author`/`role` attributes — hand-authored children are replaced, not merged. ## Companion Element: ` ` The ` ` element identifies the source of a quotation: Design is not just what it looks like. Design is how it works. Steve Jobs **Note:** ` ` should contain the *title of a work* or *name of a person*, not the quotation itself. ## Accessibility Considerations | Attribute | Purpose | |-----------|---------| | `cite` attribute | URL of quotation source | | Proper nesting | Ensure quote text is in ` ` tags | | Visual distinction | Make quotes clearly different from regular text | ## Example: Full Testimonial Structure ## CSS Styling ```css blockquote.x-card__quote { /* Quotation marks */ quotes: \"\"\" \"\"\" \"'\" \"'\"; font-style: italic; position: relative; padding-left: 2rem; } blockquote.x-card__quote::before { content: open-quote; font-size: 3rem; position: absolute; left: 0; top: -0.5rem; color: var(--primary); opacity: 0.3; } cite.x-card__author { font-style: normal; font-weight: 600; } ``` ## Best Practices 1. **Always cite sources** - Use ` ` for attribution 2. **Use `cite` attribute** - Include URL when available 3. **Keep quotes focused** - Extract the most relevant portion 4. **Provide context** - Include author's role/credentials 5. **Visual quotes** - Use CSS quotation marks for clarity",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-03"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/bounce",
@@ -1380,7 +1380,7 @@
       "title": "cardimage",
       "description": null,
       "headings": [],
-      "content": "# Image Card `x-cardimage` renders a card led by an image from `src`, with a title, subtitle and caption under it. `aspect` fixes the image ratio, and `href` makes the whole card a link. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `/images/placeholder.svg` | Image source URL | | `alt` | text | — | Image alt text (accessibility) | | `title` | text | — | Card title | | `subtitle` | text | — | Card subtitle | | `caption` | text | — | Image caption (displayed below image) | | `href` | URL | `#` | Link URL (makes card clickable) | | `aspect` | `16/9` · `4/3` · `1/1` · `3/2` · `21/9` · `auto` | `16/9` | Image aspect ratio | | `position` | `top` · `bottom` · `left` · `right` | `top` | Image position relative to content | | `fit` | `cover` · `contain` · `fill` · `none` | `cover` | Image object-fit mode | | `loading` | `lazy` · `eager` | `lazy` | Image loading strategy | | `variant` | `default` · `elevated` · `bordered` · `minimal` | `default` | Visual style variant | ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles visibility - `setImage()` — Changes the image source - `preload()` — Preloads the image Schema: [`cardimage.schema.json`](../../src/wb-models/cardimage.schema.json)",
+      "content": "# Image Card `x-cardimage` renders a card led by an image from `src`, with a title, subtitle and caption under it. `aspect` fixes the image ratio, and `href` makes the whole card a link. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | — | Image source URL. Required. | | `alt` | text | — | Image alt text (accessibility) | | `title` | text | — | Card title | | `subtitle` | text | — | Card subtitle | | `caption` | text | — | Image caption (displayed below image) | | `href` | URL | `#` | Link URL (makes card clickable) | | `aspect` | `16/9` · `4/3` · `1/1` · `3/2` · `21/9` · `auto` | `16/9` | Image aspect ratio | | `position` | `top` · `bottom` · `left` · `right` | `top` | Image position relative to content | | `fit` | `cover` · `contain` · `fill` · `none` | `cover` | Image object-fit mode | | `loading` | `lazy` · `eager` | `lazy` | Image loading strategy | | `variant` | `default` · `elevated` · `bordered` · `minimal` | `default` | Visual style variant | ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles visibility - `setImage()` — Changes the image source - `preload()` — Preloads the image Schema: [`cardimage.schema.json`](../../src/wb-models/cardimage.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-06"
@@ -1468,7 +1468,7 @@
       "title": "cardprofile",
       "description": null,
       "headings": [],
-      "content": "# Card Profile `x-cardprofile` renders a short profile card: an avatar, the person's `name` and `role`, and an optional `bio` and cover image. Use `x-cardportfolio` when you need skills, experience and links as well. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `name` | text | `John Doe` | Person's name | | `role` | text | `Designer` | Job title or role | | `avatar` | URL | `/images/avatar.svg` | Avatar image URL | | `bio` | text | — | Short biography | | `cover` | URL | — | Cover/banner image URL | | `size` | `sm` · `md` · `lg` | `md` | Avatar size | | `align` | `left` · `center` | `center` | Content alignment | | `hoverText` | text | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). | ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `update()` — Updates profile properties ## Accessibility - **$inherits** — card.base.schema.json#accessibility - **avatar** — {\"alt\":\"Profile photo of {name}\"} Schema: [`cardprofile.schema.json`](../../src/wb-models/cardprofile.schema.json)",
+      "content": "# Card Profile `x-cardprofile` renders a short profile card: an avatar, the person's `name` and `role`, and an optional `bio` and cover image. Use `x-cardportfolio` when you need skills, experience and links as well. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `name` | text | `John Doe` | Person's name | | `role` | text | `Designer` | Job title or role | | `avatar` | URL | — | Avatar image URL | | `bio` | text | — | Short biography | | `cover` | URL | — | Cover/banner image URL | | `size` | `sm` · `md` · `lg` | `md` | Avatar size | | `align` | `left` · `center` | `center` | Content alignment | | `hoverText` | text | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). | ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `update()` — Updates profile properties ## Accessibility - **$inherits** — card.base.schema.json#accessibility - **avatar** — {\"alt\":\"Profile photo of {name}\"} Schema: [`cardprofile.schema.json`](../../src/wb-models/cardprofile.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-06"
@@ -1955,10 +1955,10 @@
       "title": "floatinglabel",
       "description": null,
       "headings": [],
-      "content": "# x-floatinglabel Behavior Turns a field's placeholder into a label that floats above the field once it has focus or a value. See [src/wb-viewmodels/floatinglabel.js](../../src/wb-viewmodels/floatinglabel.js). - **Root CSS class:** `x-floating-label` - **Schema:** [floatinglabel.schema.json](../../src/wb-models/floatinglabel.schema.json) ## Usage The label text comes from the field's `placeholder`, or from a `label` attribute if there's no placeholder — either way, the placeholder is cleared once the label is built: Or put it on a container that already holds the field and its own ` ` — the container becomes the wrapper and that label is the one that floats: Project name Works on ` `, ` ` and ` `. At rest the label sits inside the field like a placeholder; focused or filled, it rises onto the top border and shrinks (styles: `src/styles/behaviors/floatinglabel.css`). A ` ` always shows a value, so its label is always risen. ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `placeholder` | text | — | Used as the label text if present (checked first). | | `label` | text | — | Fallback label text when there's no `placeholder`. | ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-floating-label` | wrapper ` ` | always | | `x-floating-label__label` | the generated ` ` | always | | `x-floating-label--active` | wrapper ` ` | the field has a value or is focused | | `x-floating-label--input` / `--textarea` / `--select` | wrapper ` ` | always — which kind of field it holds | ## Events None — the behavior listens to the field's native `focus`/`blur`/`input` events; it doesn't dispatch any of its own. - [Schema](../../src/wb-models/floatinglabel.schema.json) - [Source](../../src/wb-viewmodels/floatinglabel.js)",
+      "content": "# x-floatinglabel Behavior Turns a field's placeholder into a label that floats above the field once it has focus or a value. See [src/wb-viewmodels/floatinglabel.js](../../src/wb-viewmodels/floatinglabel.js). - **Root CSS class:** `x-floatinglabel` - **Schema:** [floatinglabel.schema.json](../../src/wb-models/floatinglabel.schema.json) ## Usage The label text comes from the field's `placeholder`, or from a `label` attribute if there's no placeholder — either way, the placeholder is cleared once the label is built: Or put it on a container that already holds the field and its own ` ` — the container becomes the wrapper and that label is the one that floats: Project name Works on ` `, ` ` and ` `. At rest the label sits inside the field like a placeholder; focused or filled, it rises onto the top border and shrinks (styles: `src/styles/behaviors/floatinglabel.css`). A ` ` always shows a value, so its label is always risen. ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `placeholder` | text | — | Used as the label text if present (checked first). | | `label` | text | — | Fallback label text when there's no `placeholder`. | ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-floatinglabel` | wrapper ` ` | always | | `x-floatinglabel__label` | the generated ` ` | always | | `x-floatinglabel--active` | wrapper ` ` | the field has a value or is focused | | `x-floatinglabel--input` / `--textarea` / `--select` | wrapper ` ` | always — which kind of field it holds | ## Events None — the behavior listens to the field's native `focus`/`blur`/`input` events; it doesn't dispatch any of its own. - [Schema](../../src/wb-models/floatinglabel.schema.json) - [Source](../../src/wb-viewmodels/floatinglabel.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/behaviors/footer",
@@ -1988,10 +1988,10 @@
       "title": "formrow",
       "description": null,
       "headings": [],
-      "content": "# x-formrow Behavior Styles a form field wrapper as a row, optionally laid out inline. See [src/wb-viewmodels/formrow.js](../../src/wb-viewmodels/formrow.js). - **Root CSS class:** `x-form-row` - **Schema:** [formrow.schema.json](../../src/wb-models/formrow.schema.json) ## Usage Name Add `data-inline` (plain `data-*` attribute, not `x-*`) to lay the label and control out on one line instead of stacked: Email ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `data-inline` | boolean (presence) | `false` | Applies `x-form-row--inline` for a horizontal label/control layout. | ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-form-row` | the host element | always | | `x-form-row--inline` | the host element | `data-inline` present | ## Events None. - [Schema](../../src/wb-models/formrow.schema.json) - [Source](../../src/wb-viewmodels/formrow.js)",
+      "content": "# x-formrow Behavior Styles a form field wrapper as a row, optionally laid out inline. See [src/wb-viewmodels/formrow.js](../../src/wb-viewmodels/formrow.js). - **Root CSS class:** `x-formrow` - **Schema:** [formrow.schema.json](../../src/wb-models/formrow.schema.json) ## Usage Name Add `data-inline` (plain `data-*` attribute, not `x-*`) to lay the label and control out on one line instead of stacked: Email ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `data-inline` | boolean (presence) | `false` | Applies `x-formrow--inline` for a horizontal label/control layout. | ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-formrow` | the host element | always | | `x-formrow--inline` | the host element | `data-inline` present | ## Events None. - [Schema](../../src/wb-models/formrow.schema.json) - [Source](../../src/wb-viewmodels/formrow.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/behaviors/frame",
@@ -2163,10 +2163,10 @@
       "title": "inputgroup",
       "description": null,
       "headings": [],
-      "content": "# x-inputgroup Behavior Groups an input with prepended/appended addons (currency symbols, units, buttons) into one visually joined control. See [src/wb-viewmodels/inputgroup.js](../../src/wb-viewmodels/inputgroup.js). - **Root CSS class:** `x-input-group` - **Schema:** [inputgroup.schema.json](../../src/wb-models/inputgroup.schema.json) ## Usage Addons are marked with `data-prepend` / `data-append` on the child elements themselves — the behavior finds them inside the host and classes them: $ USD A group only needs one side: @ ## Properties None on the host element — `data-prepend`/`data-append` are markers on descendant elements, not configuration attributes. ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-input-group` | the host element | always | | `x-input-group__prepend` | the `[data-prepend]` child, if present | always (when present) | | `x-input-group__append` | the `[data-append]` child, if present | always (when present) | ## Events None. - [Schema](../../src/wb-models/inputgroup.schema.json) - [Source](../../src/wb-viewmodels/inputgroup.js)",
+      "content": "# x-inputgroup Behavior Groups an input with prepended/appended addons (currency symbols, units, buttons) into one visually joined control. See [src/wb-viewmodels/inputgroup.js](../../src/wb-viewmodels/inputgroup.js). - **Root CSS class:** `x-inputgroup` - **Schema:** [inputgroup.schema.json](../../src/wb-models/inputgroup.schema.json) ## Usage Addons are marked with `data-prepend` / `data-append` on the child elements themselves — the behavior finds them inside the host and classes them: $ USD A group only needs one side: @ ## Properties None on the host element — `data-prepend`/`data-append` are markers on descendant elements, not configuration attributes. ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-inputgroup` | the host element | always | | `x-inputgroup__prepend` | the `[data-prepend]` child, if present | always (when present) | | `x-inputgroup__append` | the `[data-append]` child, if present | always (when present) | ## Events None. - [Schema](../../src/wb-models/inputgroup.schema.json) - [Source](../../src/wb-viewmodels/inputgroup.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/behaviors/jello",
@@ -3177,7 +3177,7 @@
       "content": "# SCHEMAS — Claude's Guide to Getting It Right **Read this when:** Creating, editing, or testing any `.schema.json` file, or when tests reference schemas. --- ## Why Schemas Matter Schemas are the **single source of truth** for every behavior in WB-Starter. They define what a behavior accepts (properties), what it renders ($view), what it can do ($methods), and how it's styled ($cssAPI). Everything flows from the schema — docs, IDE intellisense, tests, validation, and the builder UI. **When the schema is wrong, everything downstream is wrong.** A missing `behavior` field means the behavior can't be registered. A missing `default` on a property means the engine can't determine baseline state. A wrong `baseClass` means CSS doesn't apply. --- ## Where Schemas Live ``` src/wb-models/ ← All schema files live here src/wb-models/{name}.schema.json ← One file per behavior src/wb-models/schema.schema.json ← THE META-SCHEMA (defines all schemas) src/wb-models/_base/ ← Base/shared schema fragments src/wb-models/semantic/ ← Semantic HTML wrapper schemas src/wb-models/pages/ ← Page-level schemas ``` --- ## The 3 Schema Tiers Every `.schema.json` file has a `schemaType` field that controls which rules apply. If `schemaType` is absent, it defaults to `\"behavior\"`. | Tier | `schemaType` | Required Fields | Property Rules | Validated By | Examples | |------|-------------|-----------------|---------------|-------------|----------| | **Behavior** | `\"behavior\"` (default) | title, description, properties, $view, $methods, behavior/schemaFor | type + default mandatory on every property | `schema-validation.spec.ts` (full suite) | alert, badge, card variants, button, dialog | | **Base** | `\"base\"` | title, description, properties | type + default mandatory on every property | `schema-validation.spec.ts` (tier checks + property checks) | _base/html-element, _base/sectioning, semantic/*, card.base | | **Definition** | `\"definition\"` | title, description | none — properties section optional | `schema-validation.spec.ts` (tier checks only) | schema.schema.json | | **Page** | `\"page\"` | title, description, pageRules, $layout | type + default on data properties | `page-fragment-compliance.spec.ts` + page permutation tests | home-page.schema.json | **Behavior** — Real behaviors users interact with. Full rules apply. This is the vast majority of schemas. **Base** — Abstract schemas inherited by other schemas, never instantiated directly. They define shared properties that flow down to behaviors. `$view`, `$methods`, and `behavior`/`schemaFor` are not required because base schemas aren't registered as behaviors. **Definition** — Pure reference documents defining rules or contracts. Not behaviors, not inherited. They document structural expectations (inheritance rules, the meta-schema itself). **Page** — Page-level schemas defining layout rows, page rules, and content placement. Not behaviors. They require `pageRules` (showcase, fragment, noInlineStyles) and `$layout` (row-based system with columns, ratios, headings, and gap). The old `page.schema.json` with `requiredZones` (.page__hero, .page__section) is RETIRED — page structure is now defined per-page via `$layout` rows with headings. **When creating a NEW schema, ask:** \"Will this be instantiated as a behavior?\" If yes → behavior. If it exists to be inherited from → base. If it's a reference doc → definition. If it defines a page layout with rows and sections → page. --- ## The Meta-Schema: `schema.schema.json` The file `schema.schema.json` defines the structure that every `*.schema.json` file must follow. It is the self-referential root of the system — a schema that validates schemas. It enforces (for behavior-tier schemas): - **Required top-level fields:** `title`, `description`, `properties`, `$view`, `$methods` - **Must have either `behavior` or `schemaFor`** (identifies the behavior) - **Every property must have `type` + `default`** — no exceptions - **`baseClass` pattern:** must start with `wb-` followed by lowercase kebab-case - **`behavior` pattern:** lowercase kebab-case only - **`$view` items** must have `name` + `tag` - **`$methods` items** must have `description` - **`$cssAPI` items** must have `default` + `description` - **`test.matrix.combinations`** must be an array of objects - **Type-safety:** string properties default to string, boolean to boolean, number to number When Claude creates or edits any `.schema.json` file, validate it mentally against these rules for its tier. If the meta-schema would reject it, the file is wrong. --- ## Other Meta-Schema Files Beyond `schema.schema.json`, several other schemas define and validate specific subsystems: | File | What It Validates | Validated By | |------|-------------------|-------------| | `src/wb-models/schema.schema.json` | **ALL** `.schema.json` files (the root enforcer) | `schema-validation.spec.ts` (tier-aware, 16+ checks) | | `src/wb-models/behavior.schema.json` | Behavior definitions, types, categories, interactions",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/claude/TIER1-LAWS",
@@ -3480,7 +3480,7 @@
       "content": "# WB-Starter - Property System Documentation > **Version:** 1.0.0 > **Updated:** December 20, 2024 > **Config File:** `data/propertyconfig.json` ## Overview The WB Behaviors Property System provides a unified configuration for all behavior properties in the Page Builder. This document describes each property, its UI control type, default values, and available options. --- ## Table of Contents 1. [UI Control Types](#ui-control-types) 2. [Property Categories](#property-categories) 3. [Properties Reference](#properties-reference) - [Content Properties](#content-properties) - [Media Properties](#media-properties) - [Link Properties](#link-properties) - [Appearance Properties](#appearance-properties) - [Layout Properties](#layout-properties) - [Style Properties](#style-properties) - [Behavior Properties](#behavior-properties) - [Button Properties](#button-properties) - [File Properties](#file-properties) - [Pricing Properties](#pricing-properties) - [Data Properties](#data-properties) - [Contact Properties](#contact-properties) - [Feedback Properties](#feedback-properties) - [Display Properties](#display-properties) - [Embed Properties](#embed-properties) - [Effects Properties](#effects-properties) 4. [Behavior Defaults](#behavior-defaults) --- ## UI Control Types | Type | Behavior | Description | |------|-----------|-------------| | `text` | ` ` | Single-line text input | | `number` | ` ` | Numeric input with arrows | | `range` | ` ` | Slider control | | `url` | ` ` | URL input with validation | | `email` | ` ` | Email input with validation | | `tel` | ` ` | Phone number input | | `color` | ` ` | Color picker | | `date` | ` ` | Date picker | | `time` | ` ` | Time picker | | `datetime` | ` ` | Date & time picker | | `checkbox` | Toggle Switch | Boolean toggle (On/Off) | | `boolean` | Toggle Switch | Boolean toggle (On/Off) | | `select` | ` ` | Dropdown menu | | `textarea` | ` ` | Multi-line text | | `file` | File picker | File upload with preview | | `image` | File picker | Image upload with preview | | `audio` | File picker | Audio file upload | | `video` | File picker | Video file upload | | `icon` | Icon picker | Emoji/icon selector | | `json` | ` ` | JSON editor (monospace) | | `cssValue` | ` ` | CSS value (px, rem, %) | | `canvasEditable` | None | Edited directly on canvas | --- ## Property Categories | Category | Icon | Description | |----------|------|-------------| | Content | 📝 | Text content edited on canvas | | Media | 🖼️ | Images, audio, video files | | Link | 🔗 | URLs and navigation | | Appearance | 🎨 | Visual style variants | | Layout | 📐 | Positioning and sizing | | Style | ✨ | Visual effects | | Behavior | ⚙️ | Interactive settings | | Buttons | 🔘 | Button labels and actions | | File | 📁 | File-related properties | | Pricing | 💰 | Pricing behavior fields | | Data | 📊 | Data sources and formats | | Contact | 📇 | Contact information | | Feedback | 📈 | Ratings and statistics | | Display | 👁️ | Display options | | Embed | 🔌 | Embedded content | | Effects | 🎆 | Animation effects | --- ## Recent Updates (v1.1.0) ### 1. Enhanced Boolean Controls - All boolean properties (checkboxes) are now rendered as modern **Toggle Switches**. - Labels clearly indicate \"On\" or \"Off\" state. - Improved visual feedback for active states. ### 2. Property Visibility - The property panel now displays **all available properties** for a behavior, not just those with set values. - Default values are merged with current values to provide a complete view of configuration options. ### 3. Smart Placeholders - Input fields now use **placeholders** to show default values. - If a property value matches the default, the input field appears empty (showing the placeholder) to reduce visual clutter. - This makes it easier to see which properties have been customized. ### 4. User-Centric Interface - Removed technical \"Type Badges\" (e.g., \"string\", \"boolean\") to make the UI cleaner for non-developers. - Property labels are automatically formatted to Title Case (e.g., \"showBadge\" -> \"Show Badge\"). ### 5. Two-Way Synchronization - **Canvas to Panel:** Editing text on the canvas updates the corresponding property panel input in real-time. - **Panel to Canvas:** Changing a property in the panel immediately updates the behavior on the canvas. - **Scroll Sync:** Clicking a behavior element on the canvas automatically scrolls the property panel to the relevant control. ### 6. Improved Inline Editing - **Tab Navigation:** Pressing `Tab` while editing text on the canvas automatically saves changes and moves focus to the next editable element. - **Smart Key Detection:** The system intelligently maps DOM elements to their property keys (e.g., `h3` -> `title`) for seamless editing. --- ## Properties Reference ### Content Properties > **Note:** These are edited directly on the canvas by double-clicking. They don't appear in the property panel. | Property | Default | Description | |----------|---------|-------------| | `title` | \"Title\" |",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-01"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/property-viewer",
@@ -3611,10 +3611,10 @@
       "title": "CSS-CLASS-CONVENTION",
       "description": null,
       "headings": [],
-      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** An inline style beats every selector, so a page needing a different look has no route but `!important` — which is banned. The practical result is that it cannot be changed at all. - **Unthemeable.** Themes work by redefining custom properties that *stylesheets* consume. A value written into `element.style` never sees them. This repo has paid for it twice already: **#1003** removed `style.cssText` from the fullscreen trigger because *\"it also won against the page, so #1004 could not size this button\"*; **#520** traced crowded card buttons to `style.cssText` in `cardpricing()` silently overriding the class's own padding. Measured 2026-09-08: **1,004 inline style writes** across the behaviors. See #1095. **The one legitimate inline write is a custom property**, because only the value varies and the rule still lives in CSS: ```js element.style.setProperty('--x-frame-ratio', config.ratio); ``` --- ## Every class must have a rule A class with no rule is dead weight — and when it is a `--modifier`, it is worse than that: the state becomes **invisible**. `x-card--expanded` styling nothing means an expanded card looks identical to a collapsed one. The behavior believes it is communicating; the reader sees nothing. Measured 2026-09-08: **130 classes are applied and styled by nothing.** --- ## How to find the classes for an element 1. **Derive them.** ` ` auto-injects `card`, so the classes are `x-card`, `x-card__*`, `x-card--*`. 2. **Read the doc.** Each behavior doc carries a `## Classes` table listing every class it applies and whether a stylesheet defines it — generated from a real render (`data/default-gui-census.json`), so it cannot drift from the code. 3. **Decline it entirely** with `x-ignore`, if the behavior is not wanted: ` `.",
+      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** An inline style beats every selector, so a page needing a different look has no route but `!important` — which is banned. The practical result is that it cannot be changed at all. - **Unthemeable.** Themes work by redefining custom properties that *stylesheets* consume. A value written into `element.style` never sees them. This repo has paid for it twice already: **#1003** removed `style.cssText` from the fullscreen trigger because *\"it also won against the page, so #1004 could not size this button\"*; **#520** traced crowded card buttons to `style.cssText` in `cardpricing()` silently overriding the class's own padding. Measured 2026-09-08: **1,004 inline style writes** across the behaviors. See #1095. **The one legitimate inline write is a custom property**, because only the value varies and the rule still lives in CSS: ```js element.style.setProperty('--x-frame-ratio', config.ratio); ``` --- ## Every class must have a rule A class with no rule is dead weight — and when it is a `--modifier`, it is worse than that: the state becomes **invisible**. `x-card--expanded` styling nothing means an expanded card looks identical to a collapsed one. The behavior believes it is communicating; the reader sees nothing. Measured 2026-09-08: **130 classes are applied and styled by nothing.** --- ## How to find the classes for an element 1. **Derive them.** ` ` auto-injects `card`, so the classes are `x-card`, `x-card__*`, `x-card--*`. 2. **Read the doc.** Each behavior doc carries a `## Classes` table listing every class it applies and whether a stylesheet defines it — generated from a real render (`data/default-gui-census.json`), so it cannot drift from the code. 3. **Decline it entirely** with `x-ignore`, if the behavior is not wanted: ` `.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-09"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -5628,6 +5628,7 @@
       "docs/escape-hatches",
       "docs/guides/search-index",
       "docs/schema-test-value",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
@@ -6175,7 +6176,8 @@
       "demos/schema-first-architecture"
     ],
     "96": [
-      "pages/hero-gallery"
+      "pages/hero-gallery",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "97": [
       "pages/hero-gallery",
@@ -6241,7 +6243,8 @@
       "pages/hero-gallery"
     ],
     "107": [
-      "pages/hero-gallery"
+      "pages/hero-gallery",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "108": [
       "pages/hero-gallery",
@@ -6301,7 +6304,8 @@
       "demos/charity-food"
     ],
     "124": [
-      "docs/WB_BEHAVIOR_SYSTEM"
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "125": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -6544,11 +6548,11 @@
     "385": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "391": [
-      "pages/home"
-    ],
     "400": [
       "docs/behaviors/address"
+    ],
+    "403": [
+      "pages/home"
     ],
     "404": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -6635,7 +6639,8 @@
     "700": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/data"
+      "docs/behaviors/data",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "706": [
       "docs/behaviors/dialog",
@@ -7315,6 +7320,7 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT",
@@ -8550,6 +8556,7 @@
       "docs/schema.migration",
       "docs/search",
       "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
@@ -9622,6 +9629,7 @@
       "docs/schema.migration",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -10497,6 +10505,7 @@
       "docs/committing-fixes",
       "docs/guides/create-a-website",
       "docs/linkedin-update-article",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-runbook"
@@ -10969,6 +10978,7 @@
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -11869,6 +11879,7 @@
       "docs/linkedin-standards-article",
       "docs/properties",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
@@ -12998,6 +13009,7 @@
       "docs/behaviors/textarea",
       "docs/claude/README",
       "docs/schema",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-strategy",
@@ -13934,6 +13946,7 @@
       "docs/schema.migration",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT",
@@ -15351,6 +15364,7 @@
       "docs/mcp",
       "docs/npx-commands",
       "docs/performance",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -15631,6 +15645,7 @@
       "docs/home-page",
       "docs/schema-test-value",
       "docs/schema",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
@@ -16167,6 +16182,7 @@
       "docs/home-page",
       "docs/mcp",
       "docs/search",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles",
       "demos/autoinject",
@@ -16449,6 +16465,7 @@
       "docs/mcp",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/scrollalong-test",
       "demos/site/cards"
@@ -16714,6 +16731,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/pce-candidates",
       "docs/properties",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "demos/site/cards",
       "demos/site/interactive"
@@ -18266,6 +18284,7 @@
       "docs/linkedin-update-article",
       "docs/pce-candidates",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "demos/autoinject",
@@ -18953,6 +18972,7 @@
       "docs/performance",
       "docs/property-viewer",
       "docs/schema-first-audit-report",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/styles",
@@ -20517,6 +20537,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/radio",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject"
     ],
     "range": [
@@ -20632,6 +20653,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/inline-editing",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "demos/autoinject",
       "demos/landing-page-showcase",
@@ -20649,12 +20671,14 @@
     "inputgroup": [
       "pages/features",
       "docs/behaviors-reference",
-      "docs/behaviors/inputgroup"
+      "docs/behaviors/inputgroup",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "formrow": [
       "pages/features",
       "docs/behaviors-reference",
-      "docs/behaviors/formrow"
+      "docs/behaviors/formrow",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "stepper": [
       "pages/features",
@@ -20686,7 +20710,8 @@
     ],
     "floatinglabel": [
       "pages/features",
-      "docs/behaviors/floatinglabel"
+      "docs/behaviors/floatinglabel",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "validator": [
       "pages/features",
@@ -21241,8 +21266,6 @@
       "pages/hero-gallery",
       "docs/AI",
       "docs/behaviors/articles",
-      "docs/behaviors/cardimage",
-      "docs/behaviors/cardprofile",
       "docs/behaviors/gallery",
       "docs/behaviors/img",
       "docs/container-pattern",
@@ -21648,7 +21671,6 @@
     "floating": [
       "pages/hero-variants",
       "docs/architecture/standards/ERROR-MESSAGE",
-      "docs/behaviors/floatinglabel",
       "docs/behaviors/x-copybutton",
       "docs/inline-editing"
     ],
@@ -22587,6 +22609,7 @@
       "docs/schema-test-value",
       "docs/schema.migration",
       "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -22849,6 +22872,7 @@
       "docs/pce-candidates",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/testing-runbook",
       "demos/autoinject",
       "demos/landing-page-showcase"
@@ -23226,6 +23250,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/schema-test-value",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/cards"
     ],
     "quietly": [
@@ -23957,6 +23982,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
       "docs/inline-editing",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/landing-page-showcase"
     ],
     "link": [
@@ -24137,6 +24163,7 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/button",
+      "docs/behaviors/cardimage",
       "docs/behaviors/checkbox",
       "docs/behaviors/input",
       "docs/behaviors/label",
@@ -29295,6 +29322,7 @@
       "docs/npx-commands",
       "docs/schema.migration",
       "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/REPO-LAYOUT"
     ],
@@ -32700,6 +32728,7 @@
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
       "docs/search",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "docs/wbservices"
@@ -33058,6 +33087,7 @@
       "docs/pce-candidates",
       "docs/performance",
       "docs/pricecard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/frameworks",
       "demos/site/content"
     ],
@@ -33077,6 +33107,7 @@
     "family": [
       "docs/MVVM-MIGRATION",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "etc": [
@@ -33358,6 +33389,7 @@
       "docs/behaviors/searchfield",
       "docs/container-pattern",
       "docs/properties",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/interactive"
     ],
     "items": [
@@ -33449,7 +33481,8 @@
       "docs/behaviors/pre",
       "docs/behaviors/share",
       "docs/behaviors/x-copy",
-      "docs/behaviors/x-copybutton"
+      "docs/behaviors/x-copybutton",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "history": [
       "docs/NOTES-V3-GUIDE",
@@ -34147,6 +34180,7 @@
       "docs/pce-candidates",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "became": [
@@ -34870,7 +34904,8 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/escape-hatches",
       "docs/inline-editing",
-      "docs/property-viewer"
+      "docs/property-viewer",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "5rem": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -35347,6 +35382,7 @@
     ],
     "broke": [
       "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles"
     ],
     "six": [
@@ -35794,6 +35830,7 @@
       "docs/behaviors/move",
       "docs/behaviors/x-darkmode",
       "docs/claude/TIER1-LAWS",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/themes",
       "demos/frameworks"
     ],
@@ -35916,6 +35953,7 @@
       "docs/committing-fixes",
       "docs/index",
       "docs/pce-candidates",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "docs/styles"
@@ -36876,8 +36914,6 @@
     ],
     "svg": [
       "docs/architecture/proposals/proposed-custom-elements",
-      "docs/behaviors/cardimage",
-      "docs/behaviors/cardprofile",
       "docs/behaviors/glass",
       "docs/behaviors/icon",
       "demos/autoinject"
@@ -37203,7 +37239,8 @@
       "docs/behaviors/ul",
       "docs/performance",
       "docs/property-viewer",
-      "docs/semantic-standard"
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "unaffected": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -37459,6 +37496,7 @@
       "docs/npx-commands",
       "docs/schema",
       "docs/search",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT",
@@ -37910,6 +37948,7 @@
       "docs/home-page",
       "docs/npx-commands",
       "docs/search",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT",
@@ -38641,7 +38680,8 @@
       "docs/behaviors/x-collapse"
     ],
     "renamed": [
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD"
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "destination": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -38659,7 +38699,6 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/X-USAGE-AUDIT",
-      "docs/behaviors/cardimage",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/globe",
       "docs/behaviors/img",
@@ -39436,6 +39475,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/cardvideo",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/test-schema-standard"
     ],
@@ -42211,6 +42251,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "traced": [
@@ -46690,6 +46731,7 @@
     "retired": [
       "docs/claude/SCHEMAS-GUIDE",
       "docs/schema",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "demos/playground"
     ],
@@ -46926,6 +46968,7 @@
     ],
     "batch": [
       "docs/claude/TIER1-LAWS",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
     "guess": [
@@ -47176,7 +47219,8 @@
     ],
     "ratchet": [
       "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes"
+      "docs/committing-fixes",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "agreeing": [
       "docs/claude/TOOLING-INVENTORY"
@@ -48153,6 +48197,7 @@
     "classname": [
       "docs/inline-editing",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/frameworks"
     ],
     "12px": [
@@ -49217,7 +49262,8 @@
       "docs/schema-first-audit-report"
     ],
     "concepts": [
-      "docs/schema-first-audit-report"
+      "docs/schema-first-audit-report",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "systematically": [
       "docs/schema-first-audit-report"
@@ -49260,7 +49306,8 @@
     ],
     "took": [
       "docs/schema-test-value",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "assignments": [
       "docs/schema-test-value"
@@ -49680,6 +49727,12 @@
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "conform": [
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "behaviormodules": [
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "batches": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "unfindable": [

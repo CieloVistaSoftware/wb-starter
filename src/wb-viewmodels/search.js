@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { moveKeepingFocus } from '../core/keep-focus.js';
 /**
  * Search Component
  * Complete search input with icon, clear button, and debounced events
@@ -51,8 +52,10 @@ export function search(element, options = {}) {
   // Create wrapper
   const wrapper = document.createElement('div');
   wrapper.className = 'x-search__wrapper';
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
+  moveKeepingFocus(element, () => {   // #961
+    element.parentNode.insertBefore(wrapper, element);
+    wrapper.appendChild(element);
+  });
 
   // Create icon
   const icon = document.createElement('span');

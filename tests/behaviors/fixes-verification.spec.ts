@@ -285,18 +285,20 @@ test.describe('Fix Verification Tests', () => {
   test('Demo files load without error (031)', async ({ page }) => {
     // demos/card.html doesn't exist; demos/site/cards.html is the current
     // card-family demo page.
-    const response = await page.goto('/demos/site/cards.html');
-    expect(response.status()).toBe(200);
-
-    // Check for console errors
+    // Listening from before navigation: a SyntaxError is thrown while a module
+    // is parsed, which the old listener (attached after goto) could miss.
     const errors = [];
     page.on('console', msg => {
       if (msg.type() === 'error') errors.push(msg.text());
     });
+    page.on('pageerror', (e) => errors.push(String(e.message)));
+    const response = await page.goto('/demos/site/cards.html');
+    expect(response.status()).toBe(200);
 
-    // Wait a bit for scripts to run
-    // sleep-proves-negative: no SyntaxError may be thrown as scripts run; an error that never comes fires no event
-    await page.waitForTimeout(1000);
+    // Every module the page asked for has loaded once WB settles (#1516: not
+    // a 1000ms guess): a module that failed to parse has thrown by then.
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 20000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     // Should be no syntax errors
     const syntaxErrors = errors.filter(e => e.includes('SyntaxError'));

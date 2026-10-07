@@ -274,8 +274,15 @@ export function code(element, options = {}) {
 
   // Add copy functionality
   if (config.showCopy) {
-    // Inline variant: Click to copy
-    if (config.variant === 'inline' && !isInsidePre) {
+    // Inline or block is the decision already made above and recorded as
+    // x-code--block, not config.variant: variant defaults to "inline", so a
+    // multiline <code copy> -- a block listing, laid out as one -- took this
+    // inline branch, became "click anywhere to copy" and never got its button.
+    // The Behaviors page's code · copy example showed no copy control in the
+    // code at all; the only Copy in sight was the page's own source-panel one.
+    const isBlockListing = element.classList.contains('x-code--block');
+    // Inline code: click to copy
+    if (!isBlockListing && !isInsidePre) {
       element.classList.add('x-code--copyable');
       element.title = 'Click to copy';
       
@@ -295,7 +302,8 @@ export function code(element, options = {}) {
         }
       });
     }
-    // Block variant: Add copy button (only if not inside PRE, as PRE handles its own copy button)
+    // Block listing: a copy button in its top-right corner (not inside a PRE,
+    // which builds its own)
     else if (!isInsidePre) {
       wrapper = document.createElement('div');
       wrapper.className = 'x-code-wrapper';

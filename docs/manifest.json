@@ -238,7 +238,7 @@
           "file": "properties.md",
           "title": "Properties",
           "description": "Behavior property reference",
-          "modified": "2026-10-01"
+          "modified": "2026-10-06"
         },
         {
           "file": "card.md",
@@ -304,7 +304,7 @@
           "file": "behaviors/blockquote.md",
           "title": "<blockquote> Element",
           "description": "The <blockquote> element represents an extended quotation from another source.",
-          "modified": "2026-09-03"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/bounce.md",
@@ -670,7 +670,7 @@
           "file": "behaviors/floatinglabel.md",
           "title": "x-floatinglabel Behavior",
           "description": "Turns a field's placeholder into a label that floats above the field once it has focus or a value.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/footer.md",
@@ -688,7 +688,7 @@
           "file": "behaviors/formrow.md",
           "title": "x-formrow Behavior",
           "description": "Styles a form field wrapper as a row, optionally laid out inline.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/frame.md",
@@ -772,7 +772,7 @@
           "file": "behaviors/inputgroup.md",
           "title": "x-inputgroup Behavior",
           "description": "Groups an input with prepended/appended addons (currency symbols, units, buttons) into one visually joined control.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/jello.md",
@@ -1390,7 +1390,7 @@
           "file": "standards/CSS-CLASS-CONVENTION.md",
           "title": "CSS class convention — you can name the class without reading the code",
           "description": "Convention over configuration.",
-          "modified": "2026-09-09"
+          "modified": "2026-10-07"
         },
         {
           "file": "standards/ERROR-LOG-RETENTION.md",
@@ -1534,7 +1534,7 @@
           "file": "claude/SCHEMAS-GUIDE.md",
           "title": "Schemas Guide",
           "description": "Claude guide for working with schemas",
-          "modified": "2026-10-02"
+          "modified": "2026-10-07"
         },
         {
           "file": "claude/TIER3-REFERENCE.md",

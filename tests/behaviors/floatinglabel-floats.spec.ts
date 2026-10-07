@@ -3,7 +3,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
  * x-floatinglabel must actually FLOAT. floatinglabel.js toggled its --active
- * class correctly, but no stylesheet existed for .x-floating-label at all, so
+ * class correctly, but no stylesheet existed for .x-floatinglabel at all, so
  * the label sat under the field as plain text in every state -- a class
  * nothing read. These tests measure where the label is drawn, not which class
  * is set: resting inside the field, risen onto its top border while focused
@@ -17,7 +17,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
 async function labelPosition(page: Page, fieldSel: string) {
   return page.evaluate((sel) => {
     const field = document.querySelector(sel) as HTMLElement;
-    const label = field.parentElement!.querySelector('.x-floating-label__label') as HTMLElement;
+    const label = field.parentElement!.querySelector('.x-floatinglabel__label') as HTMLElement;
     const f = field.getBoundingClientRect();
     const l = label.getBoundingClientRect();
     return {
@@ -44,7 +44,7 @@ for (const form of FORMS) {
     test.beforeEach(async ({ page }) => {
       await setupBehaviorTest(page);
       await setupTestContainer(page, form.html);
-      await expect(page.locator(`${form.field} ~ .x-floating-label__label`)).toBeAttached();
+      await expect(page.locator(`${form.field} ~ .x-floatinglabel__label`)).toBeAttached();
     });
 
     test('the label rests inside the empty field, rises when focused, and returns on blur', async ({ page }) => {

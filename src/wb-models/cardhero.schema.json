@@ -287,44 +287,44 @@
       "<div x-cardhero overlay>with overlay</div>",
       "<div x-cardhero title=\"Test Title\">With title attribute</div>",
       "<div x-cardhero pretitle='100 Components' title='Build <span class=\"x-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></div>",
-      "<div x-cardhero background=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Welcome\"></div>",
-      "<div x-cardhero background=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></div>"
+      "<div x-cardhero background=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" title=\"Welcome\"></div>",
+      "<div x-cardhero background=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></div>"
     ],
     "matrix": {
       "combinations": [
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "subtitle": "Subtitle"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "cta": "Click Me"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "subtitle": "Sub",
           "cta": "Go",
           "variant": "cosmic"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "xalign": "left"
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "overlay": false
         },
         {
-          "background": "/images/dachshund-puppy-image-960x540.jpg",
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg",
           "title": "Welcome",
           "fullHeight": true
         }

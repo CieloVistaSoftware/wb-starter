@@ -19,7 +19,7 @@
     "avatar": {
       "type": "string",
       "description": "Avatar image URL",
-      "default": "/images/avatar.svg"
+      "default": ""
     },
     "bio": {
       "type": "string",
@@ -164,7 +164,7 @@
       "<div x-cardprofile align=\"center\">align=center</div>",
       "<div x-cardprofile name=\"John Doe\">name=\"John Doe\"</div>",
       "<div x-cardprofile role=\"Designer\">role=\"Designer\"</div>",
-      "<div x-cardprofile name=\"Jane\" role=\"Designer\" avatar=\"/images/avatar.svg\"></div>"
+      "<div x-cardprofile name=\"Jane\" role=\"Designer\" avatar=\"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/A_headshot_of_a_woman_with_a_high_chignon_-_DPLA_-_b55eef9ae85258f9b52cf39f5b6a759b_%28page_1%29.jpg/330px-A_headshot_of_a_woman_with_a_high_chignon_-_DPLA_-_b55eef9ae85258f9b52cf39f5b6a759b_%28page_1%29.jpg\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -177,7 +177,7 @@
         },
         {
           "name": "John Doe",
-          "avatar": "/images/avatar.svg"
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg"
         },
         {
           "name": "John Doe",
@@ -185,7 +185,7 @@
         },
         {
           "name": "John Doe",
-          "cover": "/images/placeholder.svg"
+          "cover": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tarfala_valley_panorama.jpg/1280px-Tarfala_valley_panorama.jpg"
         },
         {
           "name": "John Doe",
@@ -202,9 +202,9 @@
         {
           "name": "Full",
           "role": "CEO",
-          "avatar": "/images/avatar.svg",
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/A_headshot_of_a_young_man_with_combed_back_hair_-_DPLA_-_8fdffabe9cf50ff6c9e74d9912e0c175_%28page_2%29.jpg/330px-A_headshot_of_a_young_man_with_combed_back_hair_-_DPLA_-_8fdffabe9cf50ff6c9e74d9912e0c175_%28page_2%29.jpg",
           "bio": "Leader.",
-          "cover": "/images/placeholder.svg",
+          "cover": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Lavender_field_on_Hvar.JPG/1280px-Lavender_field_on_Hvar.JPG",
           "size": "lg",
           "align": "center"
         }
@@ -233,7 +233,7 @@
     "defaults": {
       "name": "John Doe",
       "role": "Designer",
-      "avatar": "/images/avatar.svg",
+      "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg",
       "bio": "",
       "cover": "",
       "size": "md",

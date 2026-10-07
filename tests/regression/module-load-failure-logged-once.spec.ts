@@ -22,6 +22,7 @@
  * error-log-empty compliance test asserts that file stays empty).
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { networkBarrier } from '../base';
 
 /**
  * #1349: the error-log route is a POST, which sw.js passes through, so the
@@ -88,6 +89,16 @@ async function installHarness(page: Page): Promise<Harness> {
  */
 async function render(page: Page, body: string, script: string) {
   await page.goto('/tests/fixtures/blank.html');
+  // logError() prints "[ErrorLogger] ..." only after its POST is answered, and
+  // every per-element catch block starts its logError() in the same tick, so a
+  // duplicate POST from the burst has been issued by the time the first line
+  // prints; the barrier then makes sure it has reached the route (#1516: not
+  // 1500ms). Each test here expects the failure logged, so this also fails
+  // loudly if nothing is.
+  const firstLogged = page.waitForEvent('console', {
+    predicate: (m) => m.text().includes('[ErrorLogger]') && m.text().includes('semantics/button.js'),
+    timeout: 20000,
+  });
   await page.setContent(`
     ${body}
     <script type="module">
@@ -106,8 +117,8 @@ async function render(page: Page, body: string, script: string) {
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 20000 });
   // Let the per-element catch blocks (and their async error-log POSTs) settle.
   await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
-  // sleep-proves-negative: the checks assert exactly ONE logged error; a duplicate POST that correctly never arrives fires no event
-  await page.waitForTimeout(1500);
+  await firstLogged;
+  await networkBarrier(page);
 }
 
 test.describe('#513 one module-load failure = one logged error', () => {

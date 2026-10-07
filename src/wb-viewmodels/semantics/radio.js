@@ -1,4 +1,5 @@
 import { readAttr } from '../../core/read-attr.js';
+import { moveKeepingFocus } from '../../core/keep-focus.js';
 /**
  * Radio - Enhanced <input type="radio"> element
  * Adds visual enhancements, labels, radio groups
@@ -17,7 +18,7 @@ export function radio(element, options = {}) {
   // radio inside it and enhance that, reading the host's options -- the same
   // approach range.js takes for <div x-range>.
   if (element.tagName !== 'INPUT') {
-    let input = element.querySelector(':scope > input[type="radio"], :scope > .x-radio-wrapper > input[type="radio"]');
+    let input = element.querySelector(':scope > input[type="radio"], :scope > .x-radio__wrapper > input[type="radio"]');
     if (!input) {
       input = document.createElement('input');
       input.type = 'radio';
@@ -52,17 +53,19 @@ export function radio(element, options = {}) {
   let wrapper = null;
   if (config.label && element.parentElement?.tagName !== 'LABEL') {
     wrapper = document.createElement('label');
-    wrapper.className = 'x-radio-wrapper';
+    wrapper.className = 'x-radio__wrapper';
     
-    element.parentNode.insertBefore(wrapper, element);
-    wrapper.appendChild(element);
+    moveKeepingFocus(element, () => {   // #961
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+    });
 
     const labelText = document.createElement('span');
-    labelText.className = 'x-radio-label';
+    labelText.className = 'x-radio__label';
     labelText.textContent = config.label;
     wrapper.appendChild(labelText);
   } else if (element.parentElement?.tagName === 'LABEL') {
-    element.parentElement.classList.add('x-radio-wrapper');
+    element.parentElement.classList.add('x-radio__wrapper');
   }
 
   // Apply size variant

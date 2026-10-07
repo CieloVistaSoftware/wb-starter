@@ -41,6 +41,7 @@
  */
 
 import { test, expect, type Page } from '../fixtures/offline';
+import { networkBarrier } from '../base';
 
 /**
  * #1349: "every media URL here is intercepted with page.route and ABORTED" is
@@ -220,9 +221,11 @@ test.describe('#1115 third-party media outage', () => {
       return VARIANTS.filter((v) => !marked.includes(v.host) && names(o.pageErrors, v.failing(remoteUrl)).length === 0)
         .map((v) => v.name);
     }, { timeout: 45000, intervals: [500] }).toEqual([]);
-    // Give any trailing async throw (setTimeout 0) and log post time to land.
-    // sleep-proves-negative: no trailing async throw may land after the outage; a throw that never comes fires no event
-    await page.waitForTimeout(1000);
+    // A trailing async throw (setTimeout 0) lands in a task queued before the
+    // next frame, and a log post it makes has reached the route once the
+    // barrier has (#1516: not 1000ms).
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+    await networkBarrier(page);
 
     const marked = await unreachableHosts(page);
     const events: string[] = await page.evaluate(() => (window as any).__unreachable);

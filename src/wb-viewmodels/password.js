@@ -1,4 +1,5 @@
 import { readFlag } from '../core/read-attr.js';
+import { moveKeepingFocus } from '../core/keep-focus.js';
 // Standalone password behavior extracted from enhancements.js
 export function password(element, options = {}) {
   const config = {
@@ -23,8 +24,10 @@ export function password(element, options = {}) {
   // #779: wrapper, field, toggle and strength meter are .x-password* rules
   // in password.css -- they were cssText blocks here.
   wrapper.className = 'x-password';
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
+  moveKeepingFocus(element, () => {   // #961
+    element.parentNode.insertBefore(wrapper, element);
+    wrapper.appendChild(element);
+  });
   element.classList.add('x-password__input');
   if (config.toggle) {
     const toggleBtn = document.createElement('button');

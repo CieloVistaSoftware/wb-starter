@@ -20,7 +20,13 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * timers (cooldowns, show/hide delays, retry windows), route handlers hold on
  * a gate the test opens instead of a fixed delay, poll loops wait on frames or
  * events, and a negative proof waits for the step that would have done the
- * wrong thing. 74 sleeps became 33, and every class now has a ceiling.
+ * wrong thing. 74 sleeps became 33, and every class now has a ceiling. The thirteenth
+ * converted the last 21 marked negative proofs: each now waits for the step
+ * that would have done the wrong thing -- the render the click started, the
+ * console line logError() prints after its POST, the released navigation's
+ * own promise, a marker request that every earlier request precedes
+ * (networkBarrier), the page's clock past its timer -- and then asserts. 33
+ * became 12, and none is a negative proof.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -38,9 +44,11 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *
  * RATCHET, NOT A CLIFF. The counts below are today's, and they may only go
  * down: lower a ceiling in the commit that removes sleeps; never raise one to
- * go green. A sleep that genuinely has to wait (proving something does NOT
- * happen, where there is no event to wait for) carries the marker with its
- * reason, on its own line or the line above, and is not counted.
+ * go green. Proving something does NOT happen is no excuse either: wait for
+ * the step that would have done it -- the event or response that triggers it,
+ * the render a click started, the page's clock past its timer -- then assert,
+ * and use networkBarrier() when what must not happen is a request. The marker
+ * still classifies a reviewed sleep, but marked is held at 0 like the rest.
  *
  * Fix patterns, all already in the suite:
  *   - a retrying matcher: `await expect(locator).toHaveClass(/is-open/)`
@@ -48,6 +56,7 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   - `elementReady(locator)` / `buildInView(locator)` in tests/base.ts
  *   - `page.clock.install()` then `runFor(ms)` for a delay the page's own timer sets
  *   - a gate promise a `page.route` handler awaits, opened once the test is ready
+ *   - `networkBarrier(page)` in tests/base.ts before asserting a request never went out
  */
 const CEILING = {
   positive: 0,
@@ -57,7 +66,7 @@ const CEILING = {
   poll: 3,
   cap: 5,
   scenario: 4,
-  marked: 21,
+  marked: 0,
 };
 
 test.describe('no new fixed sleeps (#1516)', () => {
@@ -75,8 +84,9 @@ test.describe('no new fixed sleeps (#1516)', () => {
       const now = count(cls);
       const where = sleeps.filter((s) => s.class === cls).slice(-10).map((s) => `${s.file}:${s.line}`).join('\n  ');
       expect(now, `${cls} sleeps rose to ${now}, above the ${ceiling} ceiling. Wait on the condition instead `
-        + `(run node scripts/audit-test-sleeps.mjs --class ${cls} --list). If it is a negative proof, mark it `
-        + `"// ${MARKER} <reason>". Do not raise the ceiling to go green.\n  ${where}`).toBeLessThanOrEqual(ceiling);
+        + `(run node scripts/audit-test-sleeps.mjs --class ${cls} --list). A negative proof waits for the step `
+        + `that would have done it, then asserts (networkBarrier() for a request); "// ${MARKER}" is held at 0 too. `
+        + `Do not raise the ceiling to go green.\n  ${where}`).toBeLessThanOrEqual(ceiling);
     });
   }
 

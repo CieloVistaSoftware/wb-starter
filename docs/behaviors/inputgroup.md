@@ -4,7 +4,7 @@ Groups an input with prepended/appended addons (currency symbols, units,
 buttons) into one visually joined control. See
 [src/wb-viewmodels/inputgroup.js](../../src/wb-viewmodels/inputgroup.js).
 
-- **Root CSS class:** `x-input-group`
+- **Root CSS class:** `x-inputgroup`
 - **Schema:** [inputgroup.schema.json](../../src/wb-models/inputgroup.schema.json)
 
 ## Usage
@@ -38,9 +38,9 @@ descendant elements, not configuration attributes.
 
 | Class | Applies to | When |
 |---|---|---|
-| `x-input-group` | the host element | always |
-| `x-input-group__prepend` | the `[data-prepend]` child, if present | always (when present) |
-| `x-input-group__append` | the `[data-append]` child, if present | always (when present) |
+| `x-inputgroup` | the host element | always |
+| `x-inputgroup__prepend` | the `[data-prepend]` child, if present | always (when present) |
+| `x-inputgroup__append` | the `[data-append]` child, if present | always (when present) |
 
 ## Events
 

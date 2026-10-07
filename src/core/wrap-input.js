@@ -1,3 +1,5 @@
+import { moveKeepingFocus } from './keep-focus.js';
+
 /**
  * wrap-input.js — wrap a behavior's host in a container with a real input (#883)
  *
@@ -15,8 +17,10 @@ export function wrapInput(element, block) {
   const isInput = element.tagName === 'INPUT';
   const wrapper = document.createElement('div');
   wrapper.className = block;
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
+  moveKeepingFocus(element, () => {   // #961: a reader typing here keeps the caret
+    element.parentNode.insertBefore(wrapper, element);
+    wrapper.appendChild(element);
+  });
 
   const input = isInput ? /** @type {HTMLInputElement} */ (element) : document.createElement('input');
   if (!isInput) {
