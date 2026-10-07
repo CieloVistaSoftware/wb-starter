@@ -263,9 +263,9 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 ### Behavior-Specific Checks
 
 6. **`schemaFor` field present** — every behavior schema identifies itself
-7. **`compliance` section exists** — progress tracked (goal: all schemas)
+7. **Base classes agree** — where a schema declares both `baseClass` and `compliance.baseClass`, they name the same class. A `compliance` section is optional: the base class derives to `x-<name>`, and #913 retired the base-class rule (#344)
 8. **`baseClass` in compliance** — if compliance exists, baseClass must too
-9. **`test` section exists** — progress tracked (goal: all schemas)
+9. **Every behavior has an example** — in its own `test.setup` or in `data/behavior-examples.json` under `x-<name>` (#344)
 10. **`test.setup` validity** — setup HTML must contain the behavior's `x-*` attribute (or its auto-injected semantic element)
 11. **Setup references correct behavior** — `alert.schema.json` setup must use `<div x-alert>` or `x-alert`
 12. **Property `type` and `default` fields** — every property needs both (behavior + base tiers)
@@ -274,18 +274,12 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 15. **Events consistency** — events referenced in interactions must be defined in `events` section
 16. **Functional test completeness** — button tests need `name`, `setup`, `selector`, `expect`
 
-### Progress Thresholds
+### Thresholds
 
-These tighten over time as schemas improve:
-
-| Check | Threshold | Goal |
-|-------|-----------|------|
-| Schemas missing compliance | < 55 | 0 |
-| Schemas missing test section | < 30 | 0 |
-| Setup/behavior mismatches | < 35 | 0 |
-| Undefined events | < 20 | 0 |
-| Missing click actions | < 10 | 0 |
-| Incomplete functional tests | < 15 | 0 |
+Every check above is exact: zero violations (#344). One counted ceiling is
+left, in `tests/compliance/source-schema-compliance.spec.ts`: schema events
+no function dispatches. It is pinned at its count; lower it as you fix, never
+raise it.
 
 ---
 

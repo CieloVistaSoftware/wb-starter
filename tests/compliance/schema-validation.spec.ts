@@ -158,21 +158,25 @@ test.describe('Schema Validation: Required Sections', () => {
     expect(missing, `Schemas missing "schemaFor" field: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('component schemas have "compliance" section', () => {
+  // #344: a "compliance" section is no longer required. The base class
+  // derives to x-<name> when a schema declares none, and #913 retired the
+  // base-class rule (tests/behaviors/permutation-compliance.spec.ts). What can
+  // still go wrong is a schema naming two different classes for one host.
+  test('baseClass and compliance.baseClass agree where both are declared', () => {
     const schemas = getComponentSchemas();
-    const missing: string[] = [];
-    
+    const disagree: string[] = [];
+
     for (const [file, schema] of schemas) {
-      if (!schema.compliance) missing.push(file);
+      const own = (schema as any).baseClass;
+      const declared = schema.compliance?.baseClass;
+      if (own && declared && own !== declared) {
+        disagree.push(`${file}: baseClass "${own}" vs compliance.baseClass "${declared}"`);
+      }
     }
-    
-    if (missing.length > 0) {
-      console.warn(`Schemas missing "compliance" section: ${missing.length}`);
-      missing.slice(0, 5).forEach(f => console.warn(`  - ${f}`));
-    }
-    expect(missing.length, `${missing.length} schemas missing compliance`).toBeLessThanOrEqual(14) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
+
+    expect(disagree, `Schemas naming two base classes:\n${disagree.join('\n')}`).toEqual([]);
   });
-  
+
   test('compliance section has "baseClass"', () => {
     const schemas = getComponentSchemas();
     const missing: string[] = [];
@@ -184,21 +188,24 @@ test.describe('Schema Validation: Required Sections', () => {
     expect(missing, `Schemas with compliance but missing baseClass: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('component schemas have "test" section', () => {
+  // #344: since 4.0.0 a behavior's examples live in data/behavior-examples.json
+  // (scripts/build-behavior-examples.mjs, keyed by x-<name>); a schema's own
+  // test.setup is the other place one can come from. Each behavior needs one.
+  test('every component schema has an example (test.setup or data/behavior-examples.json)', () => {
+    const examplesFile = path.join(process.cwd(), 'data', 'behavior-examples.json');
+    const examples = JSON.parse(fs.readFileSync(examplesFile, 'utf-8')).examples || {};
     const schemas = getComponentSchemas();
     const missing: string[] = [];
-    
+
     for (const [file, schema] of schemas) {
-      if (!schema.test) missing.push(file);
+      if (schema.test?.setup?.length) continue;
+      if (examples[`x-${schema.schemaFor}`]) continue;
+      missing.push(`${file} (x-${schema.schemaFor})`);
     }
-    
-    if (missing.length > 0) {
-      console.warn(`Schemas missing "test" section: ${missing.length}`);
-      missing.slice(0, 5).forEach(f => console.warn(`  - ${f}`));
-    }
-    expect(missing.length, `${missing.length} schemas missing test section`).toBeLessThanOrEqual(12) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
+
+    expect(missing, `Behaviors with no example anywhere:\n${missing.join('\n')}`).toEqual([]);
   });
-  
+
   test('test section has "setup" examples', () => {
     const schemas = getComponentSchemas();
     const missing: string[] = [];
