@@ -33,15 +33,33 @@ function topCpu(): Map<string, number> {
 test('modal click at job start: wall vs thread time (diagnostic, #961)', async ({ page }) => {
   const cpu0 = topCpu();
   const t0 = Date.now();
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 6; i++) {
+    // Sample 0 is the job's first page: the cold one. It is measured the way
+    // the fixed interaction.spec.ts measures (on the settled page), with the
+    // trace running from before the page load, so the blocked work shows up
+    // wherever it lands. Samples 1+ are the old boot-time measurement, warm.
+    const settled = i === 0;
     const cdp = await page.context().newCDPSession(page);
+    if (settled) await cdp.send('Tracing.start', { categories: 'devtools.timeline,disabled-by-default-devtools.timeline,fonts,disabled-by-default-fonts', transferMode: 'ReturnAsStream' });
     const g0 = Date.now();
     await page.goto('/?page=behaviors');
     const gotoMs = Date.now() - g0;
     const w0 = Date.now();
     await page.waitForFunction(() => Boolean((window as any).WB));
     const wbWaitMs = Date.now() - w0;
-    await cdp.send('Tracing.start', { categories: 'devtools.timeline,disabled-by-default-devtools.timeline', transferMode: 'ReturnAsStream' });
+    if (settled) {
+      await page.waitForFunction(() => 'WBSite' in window, undefined, { timeout: 30000 });
+      await page.waitForFunction(() => {
+        const list = document.getElementById('behaviors-search-results');
+        return Boolean(list && list.getAttribute('aria-busy') !== 'true' && list.querySelector('.behaviors-search-results__row[aria-current="true"]'));
+      }, undefined, { timeout: 30000 });
+      await page.evaluate(async () => {
+        await (window as any).WB.settled();
+        await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+      });
+    }
+    const settleMs = Date.now() - w0 - wbWaitMs;
+    if (!settled) await cdp.send('Tracing.start', { categories: 'devtools.timeline,disabled-by-default-devtools.timeline', transferMode: 'ReturnAsStream' });
     const r = await page.evaluate(async () => {
       const W = window as any;
       const cal0 = performance.now();
@@ -79,9 +97,18 @@ test('modal click at job start: wall vs thread time (diagnostic, #961)', async (
         a.dur += (e.dur || 0) / 1000; a.tdur += (e.tdur || 0) / 1000;
       }
     }
+    // Where the renderer main thread WAITED (wall time far above thread time):
+    // the longest such events anywhere in the trace, and every font event.
+    const main = click ? ev.filter((e) => e.pid === click.pid && e.tid === click.tid && e.ph === 'X') : [];
+    const waited = main.filter((e) => (e.dur || 0) - (e.tdur || 0) > 20000)
+      .sort((a, b) => (b.dur - (b.tdur || 0)) - (a.dur - (a.tdur || 0))).slice(0, 8)
+      .map((e) => `${e.name} wall ${Math.round(e.dur / 1000)} thread ${Math.round((e.tdur || 0) / 1000)} at ${Math.round((e.ts - click.ts) / 1000)}ms-from-click`);
+    const fonts = ev.filter((e) => /font/i.test(e.name) && (e.dur || 0) > 5000)
+      .sort((a, b) => b.dur - a.dur).slice(0, 8)
+      .map((e) => `${e.name}[pid ${e.pid}${e.pid === click?.pid ? ' renderer' : ''}] ${Math.round(e.dur / 1000)}ms`);
     const round = (o: any) => Object.fromEntries(Object.entries(o).map(([k, v]: any) => [k, { dur: Math.round(v.dur * 10) / 10, tdur: Math.round(v.tdur * 10) / 10 }]));
     console.log('MODAL-DIAG ' + JSON.stringify({
-      i, atMs: Date.now() - t0, gotoMs, wbWaitMs, ...r,
+      i, mode: settled ? 'settled' : 'boot', atMs: Date.now() - t0, gotoMs, wbWaitMs, settleMs, ...r, waited, fonts,
       clickDur: click ? Math.round(click.dur / 100) / 10 : null, clickThread: click ? Math.round((click.tdur || 0) / 100) / 10 : null,
       inside: round(inside),
     }));
