@@ -133,6 +133,9 @@ const VISUAL_PROPS = [
   // The colour of a checked radio's dot, a checkbox's tick and a range's
   // fill: all a radio's variants change (#1154).
   'accent-color',
+  // The pointer over an element is what zoomable= and clickable options
+  // change: the zoom-in cursor is the whole of x-img's zoomable (#1187).
+  'cursor',
 ];
 
 /**

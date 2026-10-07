@@ -116,21 +116,21 @@
         "audio": { "ui": "audio", "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" },
         "video": { "ui": "video", "default": "" },
         "cardvideo": { "ui": "video", "default": "https://www.w3schools.com/html/mov_bbb.mp4" },
-        "image": { "ui": "image", "default": "/images/placeholder.svg" },
-        "avatar": { "ui": "image", "default": "/images/avatar.svg" }
+        "image": { "ui": "image", "default": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg" },
+        "avatar": { "ui": "image", "default": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg" }
       }
     },
     "image": {
       "label": "Image",
       "ui": "image",
-      "default": "/images/placeholder.svg",
+      "default": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg",
       "description": "Image file or URL",
       "category": "media"
     },
     "avatar": {
       "label": "Avatar",
       "ui": "image",
-      "default": "/images/avatar.svg",
+      "default": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg",
       "description": "Avatar/profile image",
       "category": "media"
     },
@@ -1203,7 +1203,7 @@
       "controls": true
     },
     "avatar": {
-      "src": "/images/avatar.svg",
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg",
       "name": "",
       "size": "md",
       "status": ""
@@ -1280,7 +1280,7 @@
     "cardoverlay": {
       "title": "Overlay Card",
       "subtitle": "Beautiful overlay effect",
-      "image": "/images/placeholder.svg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg",
       "position": "bottom",
       "gradient": true,
       "height": "300px"
@@ -1291,7 +1291,7 @@
       "bio": "Passionate about creating great software.",
       "company": "Acme Inc",
       "location": "San Francisco, CA",
-      "avatar": "/images/avatar.svg",
+      "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg",
       "email": "john@example.com",
       "phone": "+1 555-1234",
       "website": ""
@@ -1308,7 +1308,7 @@
     "cardproduct": {
       "title": "Product Name",
       "description": "Product description here.",
-      "image": "/images/placeholder.svg",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg",
       "price": "$99.99",
       "originalPrice": "",
       "badge": "",
@@ -1320,7 +1320,7 @@
       "name": "John Doe",
       "role": "Designer",
       "bio": "Creating beautiful experiences.",
-      "avatar": "/images/avatar.svg",
+      "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Outdoors-man-portrait_%28cropped%29.jpg/330px-Outdoors-man-portrait_%28cropped%29.jpg",
       "cover": "",
       "size": "md",
       "align": "center"
@@ -1337,7 +1337,7 @@
       "quote": "This product changed my life. Highly recommended!",
       "author": "Jane Smith",
       "role": "CEO, TechCorp",
-      "avatar": "/images/avatar.svg",
+      "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/A_headshot_of_a_woman_with_curly_bangs_-_DPLA_-_0936a395cf47547d5c6b0325cee484f5.jpg/330px-A_headshot_of_a_woman_with_curly_bangs_-_DPLA_-_0936a395cf47547d5c6b0325cee484f5.jpg",
       "rating": "5"
     },
     "cardvideo": {
@@ -1403,8 +1403,8 @@
       "columns": "3"
     },
     "image": {
-      "src": "/images/placeholder.svg",
-      "alt": "Image"
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg",
+      "alt": "Snow-capped mountains above a lake"
     },
     "input": {
       "placeholder": "Enter text..."

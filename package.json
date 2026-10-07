@@ -1,6 +1,6 @@
 {
   "name": "wb-starter",
-  "version": "1.0.132",
+  "version": "1.0.400",
   "type": "module",
   "description": "Modern website starter kit powered by WB Behaviors",
   "main": "index.html",

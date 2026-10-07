@@ -125,7 +125,34 @@ interface FailureEntry {
   stack?: string;
   /** The failing source line, when Playwright resolved one. */
   snippet?: string;
+  /**
+   * #961: every error the test raised, in full, when there was more than one
+   * (a failing assertion plus a fixture teardown error, say). `error` keeps the
+   * first, shortened for reading.
+   */
+  errors?: string[];
+  /**
+   * #961: where the evidence for this failure is -- trace, screenshot,
+   * error-context, network log, and the browser's own protocol errors. Small
+   * text attachments are inlined, so an intermittent failure arrives with what
+   * it saw instead of "Execution context was destroyed" and nothing else.
+   */
+  attachments?: { name: string; contentType: string; path?: string; body?: string }[];
   retry: number;
+}
+
+const MAX_INLINE_ATTACHMENT = 4000;
+
+/** #961: the attachments of a failed result, small text ones inlined. */
+function failureAttachments(result: TestResult): FailureEntry['attachments'] {
+  const list = (result.attachments || []).map((a) => {
+    const textual = /^text\/|json/.test(a.contentType || '');
+    const body = a.body && textual && a.body.length <= MAX_INLINE_ATTACHMENT
+      ? stripAnsi(a.body.toString('utf8'))
+      : undefined;
+    return { name: a.name, contentType: a.contentType, ...(a.path ? { path: a.path } : {}), ...(body ? { body } : {}) };
+  });
+  return list.length ? list : undefined;
 }
 
 // Strip ANSI color codes from error messages
@@ -365,6 +392,10 @@ class WBTestReporter implements Reporter {
           // #963: capture the frames the message intentionally strips.
           stack: extractStack(result.error),
           snippet: result.error?.snippet ? stripAnsi(result.error.snippet).slice(0, 600) : undefined,
+          errors: (result.errors || []).length > 1
+            ? result.errors.map((e) => stripAnsi(e.message || String(e.value ?? e)))
+            : undefined,
+          attachments: failureAttachments(result),
           retry: result.retry
         };
         this.failures.push(failureEntry);
@@ -472,6 +503,11 @@ class WBTestReporter implements Reporter {
       // file used to mean knowing only WHAT broke, never WHERE.
       failure.snippet ? `   Source:\n${failure.snippet.split('\n').map((l) => '     ' + l).join('\n')}` : '',
       failure.stack ? `   Stack:\n${failure.stack.split('\n').map((l) => '     ' + l).join('\n')}` : '',
+      // #961: every error and every piece of evidence, not just the first line.
+      failure.errors ? `   All errors:\n${failure.errors.map((e, i) => `     [${i + 1}] ${e.split('\n').join('\n         ')}`).join('\n')}` : '',
+      failure.attachments ? `   Evidence:\n${failure.attachments.map((a) => a.body
+        ? `     ${a.name}:\n${a.body.trimEnd().split('\n').map((l) => '       ' + l).join('\n')}`
+        : `     ${a.name}: ${a.path || '(inline, ' + a.contentType + ')'}`).join('\n')}` : '',
       failure.retry > 0 ? `   Retry: ${failure.retry}` : '',
       '\n'
     ].filter(Boolean).join('\n');

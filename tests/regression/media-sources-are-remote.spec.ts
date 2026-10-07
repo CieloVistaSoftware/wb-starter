@@ -113,8 +113,37 @@ test.describe('Media sources are remote', () => {
       `${offenders.length} local audio/video source(s). These are examples a ` +
       `customer copies: a relative path resolves against THEIR page, not ours, ` +
       `so it works here and 404s everywhere else. Use an absolute https URL.\n  ` +
-      offenders.slice(0, 40).join('\n  '),
+      offenders.slice(0, 400).join('\n  '),
     ).toEqual([]);
+  });
+
+  /**
+   * #1187: the test above reads markup attributes, so JSON never reached it:
+   * cardimage.schema.json's `"default": "/images/placeholder.svg"`, the card
+   * page model's `"image": …`, and every hand-kept catalogue under data/
+   * (behavior-examples.json, propertyconfig.json, pages/) that the builder and
+   * the behaviors page render from. 107 references survived in 35 files.
+   * data/ is exempt above because it was taken to be generated; these files
+   * are curated, so they are read here.
+   */
+  test('no JSON value or curated catalogue names a local image', () => {
+    const LOCAL_IMAGE_VALUE = /(?:=|:)\s*\\?["'](\/?images\/[^"'\\]+\.(?:svg|png|jpe?g|gif|webp|avif))/g;
+    const CURATED = ['data/behavior-examples.json', 'data/propertyconfig.json', 'data/pages'];
+    const files = [
+      ...SCAN_DIRS.flatMap((dir) => walk(join(ROOT, dir))),
+      ...CURATED.flatMap((p) => (statSync(join(ROOT, p)).isDirectory() ? walk(join(ROOT, p)) : [join(ROOT, p)])),
+    ];
+    const offenders: string[] = [];
+    for (const file of new Set(files)) {
+      readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
+        // Prose about the old path (comments, history) is not an example.
+        if (/^\s*(\*|\/\/|<!--)/.test(line)) return;
+        for (const m of line.matchAll(LOCAL_IMAGE_VALUE)) offenders.push(`${relative(ROOT, file)}:${i + 1}  ${m[1]}`);
+      });
+    }
+    expect(files.length, 'the sources were read, so this can fail').toBeGreaterThan(200);
+    expect(offenders, 'a local image in an example, default or catalogue; use a remote https URL of the subject:\n  '
+      + offenders.slice(0, 400).join('\n  ')).toEqual([]);
   });
 
   /**

@@ -67,12 +67,24 @@ async function openUnderSubPath(page: Page, baseURL: string) {
 // already been raised from 90s once). On a slow CI runner it ran out of time
 // with nothing wrong. Now each row is its own test with its own budget, and
 // the 300ms sleep after each click is a wait for the picked example to apply.
+// #1187: the catalogue's media is remote now (DEMOS-AND-DOCS-STANDARDS §29), so
+// it normally has NO root-absolute asset rows and the per-row test below runs
+// for none. That is the fix, not a broken derivation: a remote URL cannot 404
+// under /wb-starter/. What would still be vacuous is a catalogue the regex
+// could not read at all, so the guard now counts media of either kind.
+const MEDIA = /\.(?:svg|png|jpe?g|gif|webp|avif|mp4|webm|mp3)\b/;
+const MEDIA_ROWS = Object.values(
+  JSON.parse(readFileSync(new URL('../../data/behavior-examples.json', import.meta.url), 'utf8')).examples as Record<string, unknown>,
+).filter((entry) => MEDIA.test(JSON.stringify(entry))).length;
+
 test('the catalogue still has asset-bearing rows, and the page lists them (#1047, #1482)', async ({ page, baseURL }) => {
   expect(
-    ASSET_ROWS.length,
-    'No catalogue entry was found to reference an asset. The DERIVATION is broken, ' +
+    MEDIA_ROWS,
+    'No catalogue entry was found to reference any media. The DERIVATION is broken, ' +
     'which would silently reduce these tests to checking nothing.',
   ).toBeGreaterThan(5);
+  // Every media source is remote, so nothing here can 404 under the sub-path.
+  if (ASSET_ROWS.length === 0) return;
   const { mount } = await openUnderSubPath(page, baseURL!);
   try {
     const listed: string[] = await page.evaluate(() =>

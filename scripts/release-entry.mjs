@@ -30,7 +30,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { nextVersion } from './lib/next-version.mjs';
-import { itemFor } from './lib/release-item.mjs';
+import { itemFor, linkify } from './lib/release-item.mjs';
+import { STAMP_SUBJECT, releaseCommit } from './lib/push-count.mjs';
 
 const NUL = String.fromCharCode(0);
 const US = String.fromCharCode(31);
@@ -51,23 +52,42 @@ const next = nextVersion(pkg.version, process.argv);
 
 // Newest tag REACHABLE FROM HEAD, so a branch without the latest release still
 // lists exactly what it would ship. %x00 separates records: a body has newlines.
+// A release commit whose tag release.yml has not made yet is a release too.
 const lastTag = git('git describe --tags --abbrev=0 --match=v*');
-const range = lastTag ? `${lastTag}..HEAD` : 'HEAD';
-const commits = git(`git log ${range} --no-merges --pretty=format:%H%x1f%s%x00`)
+const lastRelease = releaseCommit(ROOT);
+const since = (lastRelease && lastRelease.base) || lastTag;
+const range = since ? `${since}..HEAD` : 'HEAD';
+const commits = git(`git log ${range} --no-merges --pretty=format:%H%x1f%s%x1f%b%x00`)
   .split(NUL).map((r) => r.trim()).filter(Boolean)
-  .map((r) => { const [sha, subject] = r.split(US); return { sha, subject: (subject || '').trim() }; })
+  .map((r) => { const [sha, subject, body] = r.split(US); return { sha, subject: (subject || '').trim(), body: (body || '').trim() }; })
   // The release commits themselves are bookkeeping, not changes. So is a
   // "CI on <sha>" follow-up: it repairs a commit in this same batch, which is
   // already listed, and would otherwise appear as a second, vaguer entry.
   .filter((c) => !/^release: /.test(c.subject))
+  // The stamp workflow's "chore(version): stamp" commits are bookkeeping for
+  // the push they stamp; 85 of the 279 items after 1.0.132 were stamps.
+  .filter((c) => !STAMP_SUBJECT.test(c.subject))
+  // One item per change: a commit re-applied after a rebase or a revert of a
+  // revert carries the same subject, and listing it twice says nothing new.
+  .filter((c, i, all) => all.findIndex((o) => o.subject === c.subject) === i)
   .filter((c) => !/^[a-z]+(\([^)]*\))?!?:\s*CI on [0-9a-f]{7,}\b/.test(c.subject));
 
 const data = JSON.parse(fs.readFileSync(DATA, 'utf8'));
-const items = commits.map((c) => itemFor(c.subject));
+// Each item links its commit, and the entry links the commit it was cut from,
+// as every version release-versions.mjs writes does.
+const commitLink = (sha) =>
+  `<a href="https://github.com/CieloVistaSoftware/wb-starter/commit/${sha}" target="_blank" rel="noopener"><code>${sha.slice(0, 7)}</code></a>`;
+const items = commits.map((c) => {
+  const item = itemFor(c.subject, c.body);
+  item.html = `${linkify(item.html)} ${commitLink(c.sha)}`;
+  return item;
+});
 if (data.unreleased && Array.isArray(data.unreleased.items)) items.push(...data.unreleased.items);
 
-if (!items.length) {
-  console.error(`\n❌ Nothing to release — ${lastTag || 'HEAD'} already contains every commit.\n`);
+// Right after a release, HEAD holds only its merge and stamp, so there is
+// nothing yet: --check reports the empty batch, a real run refuses to write it.
+if (!items.length && !CHECK_ONLY) {
+  console.error(`\n❌ Nothing to release — ${since || 'HEAD'} already contains every commit.\n`);
   process.exit(1);
 }
 
@@ -75,17 +95,19 @@ if (!items.length) {
 // the items still come from the commits, so the two cannot drift.
 const summary = (data.unreleased && data.unreleased.summary) || '';
 const entry = { version: next, date: new Date().toISOString().slice(0, 10), summary, items };
+if (data.unreleased && data.unreleased.seeIt) entry.seeIt = data.unreleased.seeIt;
+const head = git('git rev-parse HEAD');
+if (head) entry.links = [{ label: 'Code', html: commitLink(head) }];
 
+// No process.exit after printing: it ends the process before a pipe has taken
+// the output, and a batch this size is past 64 KB, so --check was cut mid-JSON.
 if (CHECK_ONLY) {
   console.log(JSON.stringify(entry, null, 2));
-  process.exit(0);
-}
-if (data.releases.some((r) => r.version === next)) {
+} else if (data.releases.some((r) => r.version === next)) {
   console.log(`[release-entry] ${next} is already in data/releases.json — leaving it alone.`);
-  process.exit(0);
+} else {
+  data.releases.unshift(entry);
+  delete data.unreleased;
+  fs.writeFileSync(DATA, JSON.stringify(data, null, 2) + '\n');
+  console.log(`[release-entry] wrote ${items.length} item(s) for ${next} (${range})`);
 }
-
-data.releases.unshift(entry);
-delete data.unreleased;
-fs.writeFileSync(DATA, JSON.stringify(data, null, 2) + '\n');
-console.log(`[release-entry] wrote ${items.length} item(s) for ${next} (${range})`);

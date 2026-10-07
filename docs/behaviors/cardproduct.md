@@ -6,7 +6,7 @@
 
 <div x-demo>
 <article x-cardproduct
-  image="/images/placeholder.svg"
+  image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg"
   title="Field headphones"
   description="Closed-back, 32Ω, folds flat."
   price="$149"
