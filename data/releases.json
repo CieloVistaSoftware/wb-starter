@@ -6,6 +6,52 @@
   ],
   "releases": [
     {
+      "version": "1.0.396",
+      "date": "2026-10-07",
+      "summary": "Variants-render-differently.spec.ts went red on three rows once the examples used remote photos. x-img&#39;s zoomable=true matched &quot;width only&quot;: its only visible effect is the zoom-in cursor, which the fingerprint did not read; the old local images merely happened to differ in shape. cursor is now one of the properties it compares. x-cardimage&#39;s aspect=&quot;auto&quot; shows the photo&#39;s own shape, so a 3:2 harbour photo made it identical to aspect=&quot;3/2&quot;, live as well as offline. The example is now the Ada Lovelace daguerreotype, a portrait that none of the aspect options produce, captioned accurately. Offline, every Commons thumbnail was stood in for at 16:9; <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/sample-media-catalog.mjs\" target=\"_blank\" rel=\"noopener\">scripts/sample-media-catalog.mjs</a> now has COMMONS_SHAPES, so this photo is stood in for at its real 957x1239. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1674\" target=\"_blank\" rel=\"noopener\">PR 1674</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate the schema index after merging main</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/22c81c7c1bc6df9c949cb8b8e1e0c71f2e59f4ad\" target=\"_blank\" rel=\"noopener\"><code>22c81c7</code></a>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The variant sweep reads the cursor, and x-cardimage&#39;s example is a portrait so aspect=&quot;auto&quot; shows its own shape</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/219ce5374c80aba3ced1c4eb1d5081618c63ea1d\" target=\"_blank\" rel=\"noopener\"><code>219ce53</code></a>",
+          "issues": [
+            1187
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The sub-path asset spec counts media of any kind when it checks its derivation</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2d4d1231c76a3f55caa0d53708fd7d8ae5b8c68d\" target=\"_blank\" rel=\"noopener\"><code>2d4d123</code></a>",
+          "issues": [
+            1187
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The last scene placeholders are remote photos, and a code panel at its 50vw cap may scroll</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e614b05f28baf5d345726b7a6b4e5363ed3bc34e\" target=\"_blank\" rel=\"noopener\"><code>e614b05</code></a>",
+          "issues": [
+            1187
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Examples, defaults and catalogues use remote photos of their subjects, not <a href=\"https://cielovistasoftware.github.io/wb-starter/images/placeholder.svg\" target=\"_blank\" rel=\"noopener\">images/placeholder.svg</a></strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1187\" target=\"_blank\" rel=\"noopener\">#1187</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4e8a205f0c706dc681598c3a00face4216b63bc5\" target=\"_blank\" rel=\"noopener\"><code>4e8a205</code></a>",
+          "issues": [
+            1187
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, pick x-cardimage and its aspect=auto row. Before: it showed the same 3:2 frame as aspect=3/2. Now: the card shows the portrait at its own tall shape.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2a94348149b843189fb7bae3682a4c185ecbc134\" target=\"_blank\" rel=\"noopener\"><code>2a94348</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.395",
       "date": "2026-10-07",
       "summary": "The site nav drawer&#39;s phone and tablet rules in site.css carried 10 !important that only existed to outrank each other, so no one rule could be removed alone without moving the shell&#39;s layout. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1703\" target=\"_blank\" rel=\"noopener\">PR 1703</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
