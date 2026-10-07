@@ -243,6 +243,15 @@ input[type="radio"] {
    around it rather than a fixed pixel value, so it tracks the select's own
    size variant.
    ───────────────────────────────────────────────────────────────────────── */
+/* #1095: select.js adds .x-select--searchable to the host when `searchable`
+   is set. The filter box stacks over the field; the field keeps its own
+   width rather than stretching to the box's. */
+.x-select--searchable {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 /* `searchable` filter box built by select.js above the real <select>. */
 .x-select__search {
   display: block;
@@ -377,6 +386,13 @@ input[type="radio"] {
   min-height: 3rem;
 }
 
+/* #1095: autosize's resting state. textarea.js measures the height into a
+   generated rule and switches to overflow:auto there only once the text is
+   taller than max-rows, so the default lives here, where a theme can reach it. */
+.x-textarea--autosize {
+  overflow-y: hidden;
+}
+
 .x-textarea-wrapper {
   position: relative;
   width: 100%;
@@ -413,4 +429,86 @@ input[type="radio"] {
   justify-content: space-between;
   font-size: 0.75rem;
   color: var(--text-secondary, #9ca3af);
+}
+
+/* =============================================================================
+   #1095 -- inputgroup(): one control joined to its addons
+   inputgroup.js classes the host and its [data-prepend]/[data-append]
+   children. Nothing styled them, so the addons rendered as loose text on
+   their own lines. The control between them (an input, or the wrapper the
+   input behavior puts round it) takes the remaining width, and the corners
+   where it meets an addon are squared so the three read as one field.
+============================================================================= */
+.x-inputgroup {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.x-inputgroup > :not(.x-inputgroup__prepend, .x-inputgroup__append) {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.x-inputgroup__prepend,
+.x-inputgroup__append {
+  display: flex;
+  align-items: center;
+  padding-inline: 0.75rem;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+.x-inputgroup__prepend {
+  border-inline-end-width: 0;
+  border-start-start-radius: var(--radius-md, 6px);
+  border-end-start-radius: var(--radius-md, 6px);
+}
+
+.x-inputgroup__append {
+  border-inline-start-width: 0;
+  border-start-end-radius: var(--radius-md, 6px);
+  border-end-end-radius: var(--radius-md, 6px);
+}
+
+/* The control's own corners against an addon: the control itself, or the
+   field inside the input behavior's wrapper. Position, not :has(), so the
+   page's style invalidation stays cheap: a control with a sibling before it
+   meets the prepend, one with a sibling after it meets the append. */
+.x-inputgroup > :not(.x-inputgroup__prepend, .x-inputgroup__append):not(:first-child),
+.x-inputgroup > :not(.x-inputgroup__prepend, .x-inputgroup__append):not(:first-child) :is(input, select, textarea) {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.x-inputgroup > :not(.x-inputgroup__prepend, .x-inputgroup__append):not(:last-child),
+.x-inputgroup > :not(.x-inputgroup__prepend, .x-inputgroup__append):not(:last-child) :is(input, select, textarea) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+/* =============================================================================
+   #1095 -- colorpicker(): a themed swatch
+   A native <input type="color"> is left out of the native-control rule above
+   (it draws its own swatch), so it rendered as the browser's light-grey
+   default box in every theme. The swatch keeps its native colour well; the
+   frame around it comes from the theme.
+============================================================================= */
+.x-colorpicker {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.x-colorpicker__input {
+  inline-size: 3rem;
+  block-size: 2.5rem;
+  padding: 0.25rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 6px);
 }

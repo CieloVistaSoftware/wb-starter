@@ -109,6 +109,11 @@ export const BEHAVIOR_CSS_MAP = {
   checkbox: ['input.css', 'checkbox.css'],
   radio: ['input.css'],
   range: ['input.css'],
+  // #1095: these three added classes no stylesheet defined, and were missing
+  // from this map, so even a rule would never have loaded.
+  inputgroup: ['input.css'],
+  colorpicker: ['input.css'],
+  formrow: ['form.css'],
 
   label: ['label.css'],
   // #773: the status variants (x-status--primary, --success...; x-span until

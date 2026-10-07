@@ -190,9 +190,11 @@ export function textarea(element, options = {}) {
       const lineHeight = parseFloat(getComputedStyle(element).lineHeight) || 24;
       const maxHeight = config.maxRows * lineHeight;
       const newHeight = Math.min(element.scrollHeight, maxHeight);
+      // overflow:hidden is the resting state, .x-textarea--autosize in
+      // input.css (#1095); only the over-max-rows exception is generated.
       setRule(element, 'autosize', {
         height: newHeight + 'px',
-        overflowY: element.scrollHeight > maxHeight ? 'auto' : 'hidden',
+        overflowY: element.scrollHeight > maxHeight ? 'auto' : null,
       });
     };
     element.addEventListener('input', resize);

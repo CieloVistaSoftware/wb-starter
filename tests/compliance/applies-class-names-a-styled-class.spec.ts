@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
+import { styledClasses } from '../helpers/styled-classes';
 
 /**
  * #1429: a schema property's appliesClass says "this option puts class X on
@@ -15,13 +16,6 @@ import path from 'node:path';
  * one exemption is the property's default: rendering the default needs no
  * modifier class, and the builder deliberately adds none for "default".
  */
-function cssFiles(dir: string, out: string[] = []): string[] {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) cssFiles(p, out); else if (e.name.endsWith('.css')) out.push(p);
-  }
-  return out;
-}
 
 /**
  * Known, filed exceptions -- each names its issue and goes when that closes.
@@ -29,33 +23,10 @@ function cssFiles(dir: string, out: string[] = []): string[] {
  */
 const FILED: Record<string, string> = {};
 
-function jsFiles(dir: string, out: string[] = []): string[] {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) jsFiles(p, out); else if (e.name.endsWith('.js')) out.push(p);
-  }
-  return out;
-}
-
 test('every appliesClass names a class a stylesheet styles (#1429)', () => {
   const root = process.cwd();
-  const css = cssFiles(path.join(root, 'src', 'styles'))
-    .map((f) => fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, ''))
-    .join('\n');
-  const styled = new Set([...css.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].map((m) => m[1]));
-  // Some behaviors inject their own stylesheet (button.js BUTTON_CSS, ...).
-  // An injected stylesheet styles a class as surely as a file does, so CSS
-  // selectors inside behavior JS count -- but only in rule position, a class
-  // followed on the same line by `{` with no quote or `;` between, so a
-  // querySelector('.x-foo') string is not mistaken for styling.
-  for (const file of jsFiles(path.join(root, 'src', 'wb-viewmodels'))) {
-    const src = fs.readFileSync(file, 'utf8');
-    // Lookahead, not a consuming match: `.x-a--top, .x-a--bottom {` styles both,
-    // and a selector list may break across lines before its `{` (tooltip.js).
-    // Newlines are safe to cross: a JS identifier cannot contain `-`, so `.x-…`
-    // outside quotes only occurs in CSS text.
-    for (const m of src.matchAll(/\.(x-[\w-]+)(?=[^{};'"]*\{)/g)) styled.add(m[1]);
-  }
+  // Stylesheet rules plus the CSS behaviors inject themselves; see the helper.
+  const styled = styledClasses(root);
 
   const modelsDir = path.join(root, 'src', 'wb-models');
   let checked = 0;
