@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.395",
+      "date": "2026-10-07",
+      "summary": "The site nav drawer&#39;s phone and tablet rules in site.css carried 10 !important that only existed to outrank each other, so no one rule could be removed alone without moving the shell&#39;s layout. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1703\" target=\"_blank\" rel=\"noopener\">PR 1703</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site nav drawer without !important</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8cfb7293c6f6d9416f7b41ffa224ec565c2b738a\" target=\"_blank\" rel=\"noopener\"><code>8cfb729</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open / at 360px wide and tap the hamburger, then at 700px and at 1280px. Before: the menu opened the same way, held by 10 !important in site.css, and the gate&#39;s register allowed 17. Now: it opens the same way with none, and the register allows 7.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c971fad5d62af01de859bf5f6fa05d21774df127\" target=\"_blank\" rel=\"noopener\"><code>c971fad</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.394",
       "date": "2026-10-07",
       "summary": "The coloured left edge of a success, danger, warning, info or primary card was held with !important (5 in card.css) so hover could not repaint it, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/behaviors.css\" target=\"_blank\" rel=\"noopener\">pages/behaviors.css</a> kept an !important rule for a data-behaviors-search-hidden attribute that nothing sets any more. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1701\" target=\"_blank\" rel=\"noopener\">PR 1701</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
