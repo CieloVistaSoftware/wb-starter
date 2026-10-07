@@ -6,6 +6,75 @@
   ],
   "releases": [
     {
+      "version": "1.0.387",
+      "date": "2026-10-07",
+      "summary": "On CI, r3-inert-attributes failed with &quot;clock.pauseAt: Cannot fast-forward to the past&quot;. The three tooltip specs I put on page.clock read the page&#39;s Date.now() and then paused at it, but the installed clock keeps running between the read and the pause, so under load the target was already behind. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a> gets freezeClock(), which pauses a little ahead and further ahead if the round trip outran it, and pointerTo(), one raw mouse move that needs no animation frame. Each spec now freezes first and then moves the pointer, so the show or hide delay starts at the frozen instant and runFor() steps exactly to each side of it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1688\" target=\"_blank\" rel=\"noopener\">PR 1688</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Freeze the page clock before the pointer moves, not after</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a4c51f87797fe561d2c7d8adc93cdd8a8d0b50f2\" target=\"_blank\" rel=\"noopener\"><code>a4c51f8</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Dropdown-position waits for each dropdown to be built before clicking it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a14e45af18ce5c2001e0f331f5d5f3e8bcd6c236\" target=\"_blank\" rel=\"noopener\"><code>a14e45a</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A release takes the first See it line that can be followed, not the first one found</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/77f47f053a3bcb590c6941b810f7496cf912be64\" target=\"_blank\" rel=\"noopener\"><code>77f47f0</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>X-sticky keeps the element scrolled past until the behaviour announces it stuck</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3e807eab3fc5daf3aea1444441d9c7e36da819db\" target=\"_blank\" rel=\"noopener\"><code>3e807ea</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The remaining sleeps are made reactive -- page clock, route gates, frame waits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7fb1840d190828f4c50856454b2594f64ca4e878\" target=\"_blank\" rel=\"noopener\"><code>7fb1840</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/r3-inert-attributes-now-work.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/r3-inert-attributes-now-work.spec.ts</a></code>. Before: CI on #1688 failed &quot;Cannot fast-forward to the past&quot; at the pause. Now: 14/14 pass, and tooltip-every-permutation 39/39 and card-tooltip-themed 3/3 with them.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e23f327c954da15120a24144d0dfbfa3d637c2ef\" target=\"_blank\" rel=\"noopener\"><code>e23f327</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "PR",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1688\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1688</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Related (release lines)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1533</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.386",
       "date": "2026-10-07",
       "summary": "The See it line added for release 1.0.384 named a test file as plain text, where the Releases page links every file it names. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1692\" target=\"_blank\" rel=\"noopener\">PR 1692</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
