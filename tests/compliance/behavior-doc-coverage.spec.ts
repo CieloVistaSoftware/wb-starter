@@ -30,6 +30,11 @@ test.use({ serviceWorkers: 'block' });
 async function openShowcase(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30000 });
+  // #961: wait for the list's LAST render. It is rebuilt when the schema index
+  // and examples land; on CI that landed just after the first click, every row
+  // captured below was replaced, and the next 19 clicks did nothing ("the doc
+  // panel never filled").
+  await page.waitForSelector('#behaviors-search-results[aria-busy="false"]', { state: 'attached', timeout: 30000 });
   await page.fill('#behaviors-search', 'x-');
   await page.waitForFunction(
     () => document.querySelectorAll('.behaviors-search-results__row').length > 50,
@@ -46,17 +51,14 @@ async function openShowcase(page: Page) {
   });
 }
 
-/**
- * Click each row and wait for its OWN doc panel to fill, at most `waitMs`.
- * Returns the panel's text per row, or null for a panel that never filled.
- * Chunked so one long evaluate cannot outlive its own timeout.
- */
-async function clickAndRead(page: Page, rows: { token: string; index: number }[], waitMs: number) {
-  const results: { token: string; docText: string | null }[] = [];
-  const perChunk = Math.max(1, Math.floor(200_000 / waitMs));
-  for (let start = 0; start < rows.length; start += perChunk) {
-    const chunk = rows.slice(start, start + perChunk);
-    results.push(...await page.evaluate(async ({ items, waitMs }) => {
+/** Click each row and report what its OWN doc panel says once filled. */
+async function readDocPanels(page: Page, rows: { token: string; index: number }[]) {
+  const missing: string[] = [];
+  const documented: string[] = [];
+  // Chunked so one long evaluate cannot outlive its own timeout.
+  for (let start = 0; start < rows.length; start += 20) {
+    const chunk = rows.slice(start, start + 20);
+    const results = await page.evaluate(async (items: { token: string; index: number }[]) => {
       const all = [...document.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
       const out: { token: string; docText: string | null }[] = [];
       for (const { token, index } of items) {
@@ -64,7 +66,7 @@ async function clickAndRead(page: Page, rows: { token: string; index: number }[]
         all[index].click();
         // Settled = the panel was replaced by a new node AND that node has text.
         const docText = await new Promise<string | null>((resolve) => {
-          const deadline = performance.now() + waitMs;
+          const deadline = performance.now() + 10_000;
           const check = () => {
             const body = document.getElementById('behaviors-live-doc-body');
             const text = (body?.textContent || '').trim();
@@ -77,42 +79,20 @@ async function clickAndRead(page: Page, rows: { token: string; index: number }[]
         out.push({ token, docText });
       }
       return out;
-    }, { items: chunk, waitMs }));
+    }, chunk);
+
+    for (const r of results) {
+      if (r.docText === null) { missing.push(`${r.token} → the doc panel never filled`); continue; }
+      const m = NO_DOC.exec(r.docText);
+      if (m) missing.push(`${r.token} → docs/behaviors/${m[1]}.md`);
+      else documented.push(r.token);
+    }
   }
-  return results;
-}
-
-/** Click each row and report what its OWN doc panel says once filled. */
-async function readDocPanels(page: Page, rows: { token: string; index: number }[]) {
-  const missing: string[] = [];
-  const documented: string[] = [];
-  const first = await clickAndRead(page, rows, 10_000);
-
-  // #961: a panel that misses the 10s window is read once more, alone, with a
-  // minute to fill. On CI (66341b69) the page's requests to the dev server were
-  // all held for ~190s together: rows 2-20 each spent their 10s and reported
-  // "never filled", then every one of their docs arrived at once when the next
-  // chunk began. A missing doc still fails: its panel says "No doc yet", and a
-  // panel that never fills in a minute is still reported as never filled.
-  const late = first.filter((r) => r.docText === null);
-  const retried = late.length
-    ? new Map((await clickAndRead(page, late.map((r) => rows.find((x) => x.token === r.token)!), 60_000))
-      .map((r) => [r.token, r.docText]))
-    : new Map<string, string | null>();
-
-  for (const r of first) {
-    const docText = r.docText ?? retried.get(r.token) ?? null;
-    if (docText === null) { missing.push(`${r.token} → the doc panel never filled`); continue; }
-    const m = NO_DOC.exec(docText);
-    if (m) missing.push(`${r.token} → docs/behaviors/${m[1]}.md`);
-    else documented.push(r.token);
-  }
-  if (late.length) console.log(`[#961] ${late.length} panel(s) missed 10s and were re-read: ${late.map((r) => r.token).join(', ')}`);
   return { missing, documented };
 }
 
 test('every behavior on the showcase has a doc', async ({ page }) => {
-  test.setTimeout(600_000);
+  test.setTimeout(300_000);
   const rows = await openShowcase(page);
   expect(rows.length, 'expected the behaviour list to be populated').toBeGreaterThan(50);
 
