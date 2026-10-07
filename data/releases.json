@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.376",
+      "date": "2026-10-06",
+      "summary": "The input-theming test read input colours a fixed 150ms after switching theme, which on a slow runner was before the theme had landed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1668\" target=\"_blank\" rel=\"noopener\">PR 1668</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Input theming waits for the theme to land, not a fixed 150ms ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/07b7706ee98288be59d59d93026ef4d4d82175f8\" target=\"_blank\" rel=\"noopener\"><code>07b7706</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Re-scroll to the content.html codetheme demo until it is built ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/42aa6206c26b9585af60771cbcd3aa8149897948\" target=\"_blank\" rel=\"noopener\"><code>42aa620</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every authored markup folder is scanned for inline styles; dead presets removed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5392ba1adbf7d0a7afce5e1da2be28cd1a84e891\" target=\"_blank\" rel=\"noopener\"><code>5392ba1</code></a>",
+          "issues": [
+            779
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> --repeat-each=3. Before: CI failed &quot;input background rgb(255, 255, 255) is light/native-white in dark theme dark&quot;. Now: 24 of 24 pass, each waiting until the colours have changed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4ee9fc2a248fce508090dce36bd9b0ad00d57df2\" target=\"_blank\" rel=\"noopener\"><code>4ee9fc2</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.375",
       "date": "2026-10-06",
       "summary": "The input-theming test could read the inputs before a theme switch had recoloured them, failing with native white in the dark theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1680\" target=\"_blank\" rel=\"noopener\">PR 1680</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
