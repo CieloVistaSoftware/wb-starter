@@ -138,6 +138,17 @@ export const audioTitle = (file) => (AUDIO.find((a) => a.file === file) || {}).t
  * Map one remote sample-media URL to a catalogue path (relative to MEDIA_DIR),
  * or null when the URL is not sample media this catalogue replaces.
  */
+/**
+ * Real width:height of Commons photos whose shape an example shows, by file
+ * name. Every other Commons thumbnail is assumed 16:9 (see localFor below).
+ * Read from the Commons API (imageinfo size), not guessed.
+ */
+export const COMMONS_SHAPES = {
+  // x-cardimage's example: portrait, so aspect="auto" shows a shape none of
+  // the aspect options give.
+  'Ada_Lovelace_daguerreotype_by_Antoine_Claudet_1843_-_cropped.png': [957, 1239],
+};
+
 export function localFor(rawUrl) {
   if (/\$\{/.test(rawUrl)) return null; // a template literal: rewrite by hand
   let u;
@@ -215,7 +226,12 @@ export function localFor(rawUrl) {
     // are 16:9 too, so offline and live now agree.
     const last = parts[parts.length - 1] || '';
     const w = Number((/^(\d+)px-/.exec(last) || [])[1]) || 1280;
-    return photoFor(u.pathname, w, Math.round((w * 9) / 16));
+    // A photo whose real shape an example depends on is stood in for at that
+    // shape: x-cardimage's aspect="auto" shows the photo's own ratio, and a
+    // 16:9 stand-in made it look exactly like the default 16/9 (#1187).
+    const known = Object.entries(COMMONS_SHAPES).find(([name]) => u.pathname.includes(name));
+    const h = known ? Math.round((w * known[1][1]) / known[1][0]) : Math.round((w * 9) / 16);
+    return photoFor(u.pathname, w, h);
   }
   if (host === 'cdn.pixabay.com' && /\.mp4$/.test(u.pathname)) return 'video/background-loop.webm';
   if (host === 'interactive-examples.mdn.mozilla.net' && /\.mp4$/.test(u.pathname)) return 'video/sample-clip.webm';
