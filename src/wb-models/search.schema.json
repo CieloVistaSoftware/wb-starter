@@ -262,11 +262,11 @@
   },
   "test": {
     "setup": [
-      "<div x-searchfield>Basic search</div>",
-      "<div x-searchfield placeholder='Search docs...'>Custom placeholder</div>",
-      "<div x-searchfield size='lg'>Large search</div>",
-      "<div x-searchfield variant='glass'>Glass variant</div>",
-      "<div x-searchfield instant>Instant search</div>"
+      "<input x-search>",
+      "<input x-search placeholder='Search docs...'>",
+      "<input x-search size='lg'>",
+      "<input x-search variant='glass'>",
+      "<input x-search instant>"
     ],
     "functional": {
       "interactions": [
