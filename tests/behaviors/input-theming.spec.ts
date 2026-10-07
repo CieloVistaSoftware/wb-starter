@@ -6,7 +6,6 @@
  * across a matrix of dark and light themes, not merely that an <input> exists.
  */
 import { test, expect, Page } from '../fixtures/offline';
-import { wbIdle } from '../base';
 
 const BASE = process.env.WB_BASE || '';
 // Was `/?page=behaviors` with `waitForSelector('#inputs input')`. `#inputs` was a
@@ -30,14 +29,21 @@ async function setTheme(page: Page, theme: string) {
     document.documentElement.setAttribute('data-theme', t);
     document.body.setAttribute('data-theme', t);
   }, theme);
+  // The theme has painted and any finite transition finished (#1516: not 150ms).
+  await page.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await Promise.all(document.getAnimations()
+      .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+      .map((a) => a.finished.catch(() => {})));
+  });
 }
 
 /**
- * Wait until the first visible input's background is on the expected side
- * (dark or light), then return the styles. A fixed 150ms was a guess at how
- * long the theme takes to land: on the Windows runner it once read the old
- * native white in "dark" and "ocean" (#1668 CI). If it never lands, the poll
- * times out and the assertions below report the colours actually seen.
+ * The first visible input's styles, once its background is on the expected
+ * side (dark or light). Waiting for the switch's animations was not enough:
+ * on the Windows runner the dark reading still came back native white
+ * (#1680/#1668 CI). If it never gets there, the poll gives up and the
+ * assertions below report the colours actually seen.
  */
 async function settledInputStyles(page: Page, dark: boolean) {
   await expect.poll(async () => {
@@ -68,7 +74,9 @@ test.describe('Input theming follows the active theme', () => {
     // input into view so it actually upgrades before styles are read.
     await page.waitForSelector('input', { state: 'attached', timeout: 25000 });
     await page.locator('input').first().scrollIntoViewIfNeeded();
-    await wbIdle(page);
+    // The lazy upgrade has run once WB settles (#1516: not 1200ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
   });
 
   for (const theme of DARK_THEMES) {

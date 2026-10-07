@@ -170,7 +170,7 @@ test.describe('Schema Validation: Required Sections', () => {
       console.warn(`Schemas missing "compliance" section: ${missing.length}`);
       missing.slice(0, 5).forEach(f => console.warn(`  - ${f}`));
     }
-    expect(missing.length, `${missing.length} schemas missing compliance`).toBeLessThan(55);
+    expect(missing.length, `${missing.length} schemas missing compliance`).toBeLessThanOrEqual(14) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
   
   test('compliance section has "baseClass"', () => {
@@ -196,7 +196,7 @@ test.describe('Schema Validation: Required Sections', () => {
       console.warn(`Schemas missing "test" section: ${missing.length}`);
       missing.slice(0, 5).forEach(f => console.warn(`  - ${f}`));
     }
-    expect(missing.length, `${missing.length} schemas missing test section`).toBeLessThan(30);
+    expect(missing.length, `${missing.length} schemas missing test section`).toBeLessThanOrEqual(12) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
   
   test('test section has "setup" examples', () => {
@@ -310,7 +310,7 @@ test.describe('Schema Validation: Interactions', () => {
       }
     }
     
-    expect(issues.length, `Too many missing click actions`).toBeLessThan(10);
+    expect(issues.length, `Too many missing click actions`).toBeLessThanOrEqual(0) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
 });
 
@@ -337,7 +337,7 @@ test.describe('Schema Validation: Events', () => {
       console.warn(`Undefined events: ${issues.length}`);
       issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
     }
-    expect(issues.length, `${issues.length} undefined events`).toBeLessThan(20);
+    expect(issues.length, `${issues.length} undefined events`).toBeLessThanOrEqual(0) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
 });
 
@@ -430,7 +430,7 @@ test.describe('Schema Validation: Test Section Completeness', () => {
       console.warn(`Setup/behavior mismatches: ${issues.length}`);
       issues.slice(0, 5).forEach(i => console.warn(`  - ${i}`));
     }
-    expect(issues.length, `${issues.length} setup/behavior mismatches`).toBeLessThan(35);
+    expect(issues.length, `${issues.length} setup/behavior mismatches`).toBeLessThanOrEqual(0) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
   
   test('functional tests have required fields', () => {
@@ -455,7 +455,7 @@ test.describe('Schema Validation: Test Section Completeness', () => {
       }
     }
     
-    expect(issues.length, `Too many incomplete functional tests`).toBeLessThan(15);
+    expect(issues.length, `Too many incomplete functional tests`).toBeLessThanOrEqual(0) /* #344: pinned at the 2026-10-07 count; lower it as you fix, never raise it */;
   });
 });
 

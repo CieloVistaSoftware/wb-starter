@@ -30,17 +30,12 @@ async function renderWithWB(page, coreModule: string, initOptions: string) {
       import WB from '${coreModule}';
       window.__wb = WB;
       window.__wbDone = false;
-      WB.init(${initOptions}).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+      WB.init(${initOptions}).then(() => WB.scan(document.body)).then(() => WB.settled({ timeout: 10000 }).catch(() => {})).then(() => { window.__wbDone = true; });
     </script>
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 }).catch(() => {});
-  // wb-lazy.js's scan() resolves once an element is QUEUED for its
-  // IntersectionObserver, not once it's actually enhanced -- checking the
-  // class immediately after __wbDone vacuously passed the "should NOT be
-  // enhanced" assertions (the class simply hadn't arrived YET, not "never
-  // will"). Settle time here matches the wait used elsewhere in this suite
-  // after scan() calls against wb-lazy.js fixtures.
-  await page.waitForTimeout(800);
+  // __wbDone is set only after WB.settled(), which waits for each lazily observed
+  // element's first IntersectionObserver report (#1516: no fixed 800ms settle).
 }
 
 // "Was it enhanced?" used to be `toHaveClass(/x-card/)`. Cards stopped

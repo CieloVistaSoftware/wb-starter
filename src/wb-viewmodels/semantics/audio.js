@@ -763,11 +763,12 @@ function injectAudioStyles() {
       border: 2px solid rgba(59,130,246,0.5);
       box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
     }
+    /* #1014: [data-theme] plus the class already outranks .x-audio in audio.css. */
     [data-theme="light"] .x-audio {
-      background: var(--x-audio-body-light) !important;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+      background: var(--x-audio-body-light);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
-    [data-theme="light"] .x-audio__eq-container { background: rgba(0,0,0,0.05) !important; }
+    [data-theme="light"] .x-audio__eq-container { background: rgba(0,0,0,0.05); }
   `;
   document.head.appendChild(style);
 }

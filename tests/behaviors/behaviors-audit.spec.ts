@@ -22,12 +22,20 @@ function lum(rgb: string): number {
 async function loadDark(page: Page) {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#mainPage-behaviors', { timeout: 25000 });
-  await page.waitForTimeout(2500);
+  // The page is built once WB settles (#1516: not 2500ms).
+  await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
   await page.evaluate(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
     document.body.setAttribute('data-theme', 'dark');
   });
-  await page.waitForTimeout(200);
+  // The theme has painted and any finite colour transition finished (#1516: not 200ms).
+  await page.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await Promise.all(document.getAnimations()
+      .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+      .map((a) => a.finished.catch(() => {})));
+  });
 }
 
 test.describe('Behaviors page — STRICT audit (dark theme)', () => {
@@ -86,7 +94,8 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
       const before = read();
       const target = (sw.querySelector('input, [role=switch], .x-switch__track, label, button') as HTMLElement) || (sw as HTMLElement);
       target.click();
-      await new Promise((r) => setTimeout(r, 150));
+      // Two frames, not 150ms (#1516): the toggle's state is set on the click.
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
       return { before, after: read() };
     });
     expect(result, 'no [x-switch] on page').not.toBe('NO_SWITCH');

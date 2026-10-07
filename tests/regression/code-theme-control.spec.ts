@@ -18,7 +18,9 @@ test.describe('[x-codetheme] on the Themes page swaps real highlight.js syntax t
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=themes', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('[x-codetheme]', { timeout: 20000 });
-    await page.waitForTimeout(500);
+    // The control is built once WB settles (#1516: not 500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
   });
 
   test('the dropdown lists all 49 themes grouped into the 4 documented categories', async ({ page }) => {
@@ -50,7 +52,8 @@ test.describe('[x-codetheme] on the Themes page swaps real highlight.js syntax t
     const themeLink = page.locator('link[data-highlight-theme]');
 
     await select.selectOption('monokai');
-    await page.waitForTimeout(200);
+    // monokai has applied before switching back (#1516: not 200ms).
+    await expect(themeLink).toHaveAttribute('href', /monokai/);
     await select.selectOption('default');
 
     await expect(themeLink).toHaveAttribute('href', /\/default\.min\.css/);

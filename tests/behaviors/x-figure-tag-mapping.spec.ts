@@ -34,8 +34,9 @@ async function setup(page: Page, html: string): Promise<void> {
     // (WB.init({ autoInject: true })).
     (window as any).WB.config.set('autoInject', true);
     await (window as any).WB.scan(document.body, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
-  await page.waitForTimeout(400);
 }
 
 test.describe('<figure> auto-inject mapping (was completely unmapped)', () => {

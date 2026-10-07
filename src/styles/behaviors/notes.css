@@ -15,11 +15,11 @@
 
 /* Start hidden - only show when x-notes--open class is added */
 [x-notes] .x-notes__drawer{
-  display: none !important;
+  display: none;
 }
 
 [x-notes].x-notes--open .x-notes__drawer{
-  display: flex !important;
+  display: flex;
 }
 
 /* Backdrop */

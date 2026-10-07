@@ -73,7 +73,8 @@ test.describe('behaviors list is grouped (#995)', () => {
       const d = Array.from(l.querySelectorAll('details')).find((g) => !(g as HTMLDetailsElement).open) as HTMLDetailsElement;
       const own = d.querySelectorAll(ROW).length;
       (d.querySelector('summary') as HTMLElement).click();
-      await new Promise((r) => setTimeout(r, 400));
+      // <summary> toggles open on the click; one frame, not 400ms (#1516).
+      await new Promise((r) => requestAnimationFrame(r));
       return { before, after: visible(), own, opened: d.open };
     }, { LIST, ROW });
 
@@ -110,7 +111,8 @@ test.describe('behaviors list is grouped (#995)', () => {
       const input = document.getElementById('behaviors-search') as HTMLInputElement;
       input.value = 'tooltip';
       input.dispatchEvent(new Event('input', { bubbles: true }));
-      await new Promise((r) => setTimeout(r, 700));
+      // The page filters synchronously on 'input'; one frame, not 700ms (#1516).
+      await new Promise((r) => requestAnimationFrame(r));
       const l = document.querySelector(LIST)!;
       const groups = Array.from(l.querySelectorAll('details')) as HTMLDetailsElement[];
       const rows = Array.from(l.querySelectorAll(ROW)) as HTMLElement[];

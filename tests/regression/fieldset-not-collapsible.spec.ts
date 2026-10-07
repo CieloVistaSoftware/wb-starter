@@ -106,12 +106,15 @@ test.describe('fieldset is not collapsible (#999)', () => {
         '<label><input type="checkbox"> One</label>' +
         '<label><input type="checkbox"> Two</label></fieldset>';
       document.body.appendChild(host);
-      await new Promise((r) => setTimeout(r, 900));
+      // Auto-injection has run once WB settles (#1516: not 900ms).
+      await new Promise((r) => requestAnimationFrame(r));
+      await (window as any).WB?.settled?.({ timeout: 10000 });
       const fs = host.querySelector('fieldset')!;
       const legend = fs.querySelector('legend')! as HTMLElement;
       const rows = Array.from(fs.children).filter((c) => c.tagName !== 'LEGEND');
       const visibleBefore = rows.every((r) => r.getBoundingClientRect().height > 0);
       legend.click();
+      // sleep-proves-negative: a plain fieldset must NOT collapse on a legend click; a collapse that correctly never happens fires no event
       await new Promise((r) => setTimeout(r, 400));
       const visibleAfter = rows.every((r) => r.getBoundingClientRect().height > 0);
       const classes = fs.className;

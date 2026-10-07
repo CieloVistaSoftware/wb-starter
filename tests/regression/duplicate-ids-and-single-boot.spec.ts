@@ -46,7 +46,11 @@ test.describe('#724 — the site boots exactly once', () => {
     await loadSite(page);
 
     const result = await page.evaluate(async () => {
-      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      // Wait for the state the next read needs, a frame at a time (#1516).
+      const until = async (ok: () => boolean, ms = 10000) => {
+        const end = performance.now() + ms;
+        while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+      };
       const warnings: string[] = [];
       const origWarn = console.warn;
       console.warn = (...a: any[]) => { warnings.push(a.join(' ')); origWarn(...a); };
@@ -55,7 +59,10 @@ test.describe('#724 — the site boots exactly once', () => {
       // why the boot flag has to live on window: a module-level `let` would be
       // false in both instances and guard nothing.
       await import('/src/main.js?v=second-instance-probe');
-      await sleep(2500);
+      // The second boot has been refused once it says so (not 2500ms); then
+      // any work the first instance still had in flight is allowed to finish.
+      await until(() => warnings.some((w) => w.includes('called twice')));
+      await (window as any).WB?.settled?.({ timeout: 10000 }).catch(() => {});
       console.warn = origWarn;
 
       const mod: any = await import('/src/core/duplicate-ids.js');

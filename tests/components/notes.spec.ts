@@ -15,7 +15,8 @@ test.describe('Notes Behavior', () => {
     // helper used to wait on it anyway, so EVERY test in this file failed
     // identically on a 10s timeout at this line, regardless of what it was
     // actually testing -- pre-existing, unrelated to today's notes.js work.
-    await page.waitForTimeout(100);
+    // Boot is over once WB settles (#1516: not 100ms).
+    await page.evaluate(() => (window as any).WB.settled?.({ timeout: 15000 }));
     
     // Clear localStorage to prevent state interference
     await page.evaluate(() => localStorage.clear());
@@ -322,7 +323,8 @@ test.describe('Notes Behavior', () => {
       // First save
       await page.fill('#test-container .x-notes__textarea', content);
       await page.click('#test-container .x-notes__wide-btn[data-action="save"]');
-      await page.waitForTimeout(100);
+      // The first save has landed once storage holds it (#1516: not 100ms).
+      await expect.poll(() => page.evaluate((c) => JSON.stringify(localStorage).includes(c), content)).toBe(true);
       
       // Second save with same content
       await page.click('#test-container .x-notes__wide-btn[data-action="save"]');
