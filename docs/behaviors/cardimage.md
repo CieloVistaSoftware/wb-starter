@@ -16,7 +16,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | URL | `/images/placeholder.svg` | Image source URL |
+| `src` | URL | — | Image source URL. Required. |
 | `alt` | text | — | Image alt text (accessibility) |
 | `title` | text | — | Card title |
 | `subtitle` | text | — | Card subtitle |

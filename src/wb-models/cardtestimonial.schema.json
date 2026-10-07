@@ -289,7 +289,7 @@
         {
           "quote": "Great!",
           "author": "John",
-          "avatar": "/images/avatar.svg"
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg"
         },
         {
           "quote": "Great!",
@@ -305,7 +305,7 @@
           "quote": "Excellent service!",
           "author": "Jane",
           "role": "CTO at Acme",
-          "avatar": "/images/avatar.svg",
+          "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/A_headshot_of_a_women_with_a_lace_collar_-_DPLA_-_c61b69b2b947310702dcc6bf0f7b374c_%28page_1%29.jpg/330px-A_headshot_of_a_women_with_a_lace_collar_-_DPLA_-_c61b69b2b947310702dcc6bf0f7b374c_%28page_1%29.jpg",
           "rating": 5
         },
         {

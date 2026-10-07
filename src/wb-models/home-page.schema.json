@@ -533,7 +533,7 @@
           "variant": "cosmic",
           "title": "Build stunning UIs",
           "pretitle": "100 Components",
-          "background": "/images/dachshund-puppy-image-960x540.jpg"
+          "background": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg"
         },
         {
           "_section": "stats",

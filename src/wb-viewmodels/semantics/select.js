@@ -1,5 +1,6 @@
 import { logError } from '../../core/error-logger.js';
 import { readFlag } from '../../core/read-attr.js';
+import { moveKeepingFocus } from '../../core/keep-focus.js';
 /**
  * Select - Enhanced <select> element
  * CSS targets `select` tag directly — no classes, no inline styles.
@@ -57,10 +58,12 @@ export function select(element, options = {}) {
   if (clearable && !element.parentElement?.classList.contains('x-select-clearable')) {
     const wrapper = document.createElement('div');
     wrapper.className = 'x-select-clearable';
-    if (element.parentNode) {
-      element.parentNode.insertBefore(wrapper, element);
-    }
-    wrapper.appendChild(element);
+    moveKeepingFocus(element, () => {   // #961
+      if (element.parentNode) {
+        element.parentNode.insertBefore(wrapper, element);
+      }
+      wrapper.appendChild(element);
+    });
 
     // #757 -- John: "way too large". This was a <button>, so the button
     // behavior styled it as a full button (x-button--md is padding:1rem) and

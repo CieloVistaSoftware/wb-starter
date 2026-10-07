@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { moveKeepingFocus } from '../core/keep-focus.js';
 // Standalone stepper behavior extracted from enhancements.js
 //
 // Supports two markup forms:
@@ -52,7 +53,7 @@ export function stepper(element, options = {}) {
     wrapper.className = 'x-stepper';
     element.parentNode.insertBefore(wrapper, element);
     wrapper.appendChild(decBtn);
-    wrapper.appendChild(element);
+    moveKeepingFocus(element, () => wrapper.appendChild(element));   // #961
     wrapper.appendChild(incBtn);
     element.classList.add('x-stepper__input');
     element.value = config.value;
