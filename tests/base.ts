@@ -781,7 +781,32 @@ export async function wbIdle(
   ).catch((err: Error) => {
     throw new Error(`wbIdle: the site shell never finished booting (window.WBSite was not published within ${timeout}ms) -- ${err.message}`);
   });
-  await page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
+  // #961: on some CI runs this evaluate dies with "Execution context was
+  // destroyed" although nothing visibly navigated -- #1442 (x-ignore) and
+  // schema-dependent-hosts-self-build (2026-10-07, forms.html, 735ms after
+  // goto); neither reproduces locally. Record what the page does while it
+  // settles, so a recurrence names its cause instead of leaving a guess.
+  // Evidence only: no retry, the failure still fails.
+  const t0 = Date.now();
+  const seen: string[] = [];
+  const onNav = (f: any) => { if (f === page.mainFrame()) seen.push(`+${Date.now() - t0}ms navigated ${f.url()}`); };
+  const onLoad = () => seen.push(`+${Date.now() - t0}ms load`);
+  const onReq = (r: any) => { if (r.isNavigationRequest()) seen.push(`+${Date.now() - t0}ms navigation request ${r.method()} ${r.url()} (${r.resourceType()})`); };
+  const onCrash = () => seen.push(`+${Date.now() - t0}ms renderer crashed`);
+  page.on('framenavigated', onNav);
+  page.on('load', onLoad);
+  page.on('request', onReq);
+  page.on('crash', onCrash);
+  try {
+    await page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
+  } catch (err) {
+    throw new Error(`${(err as Error).message}\n\nWhat the page did while settling (#961):\n${seen.join('\n') || '(no navigation, load, navigation request or crash recorded)'}\nurl now: ${page.url()}`);
+  } finally {
+    page.off('framenavigated', onNav);
+    page.off('load', onLoad);
+    page.off('request', onReq);
+    page.off('crash', onCrash);
+  }
 }
 
 // #962 NOTE — `WB.ready` is still NOT adopted in this file's shared helpers.
