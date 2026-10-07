@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.408",
+      "date": "2026-10-07",
+      "summary": "Eight state classes behaviors toggle had no stylesheet rule, so the state never showed: a stats card that failed to build looked healthy, a box being resized gave no sign of it, &quot;Copied!&quot; looked like any text, and a lazy image popped in. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1718\" target=\"_blank\" rel=\"noopener\">#1718</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>State classes get visible rules (batch 2)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1718\" target=\"_blank\" rel=\"noopener\">#1718</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/df50165dcca7ac65c00e4b8fbbad21f15a54b4db\" target=\"_blank\" rel=\"noopener\"><code>df50165</code></a>",
+          "issues": [
+            1095,
+            1718
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;div x-resizable&gt;Resize me&lt;/div&gt; and drag its bottom-right corner. Before: nothing marked the box while it was being dragged. Now: a dashed outline in the theme&#39;s primary colour shows for as long as you drag.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/df50165dcca7ac65c00e4b8fbbad21f15a54b4db\" target=\"_blank\" rel=\"noopener\"><code>df50165</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.407",
       "date": "2026-10-07",
       "summary": "The site&#39;s left navigation was a hand-written copy of the library&#39;s x-sidebar (its own items, active highlight, collapse and drag-resize), so the library carried two sidebars and the site used neither one&#39;s schema or options. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/829\" target=\"_blank\" rel=\"noopener\">#829</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1715\" target=\"_blank\" rel=\"noopener\">#1715</a>",
