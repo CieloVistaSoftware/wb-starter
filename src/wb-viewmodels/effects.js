@@ -253,10 +253,10 @@ export function confetti(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-confetti-trigger');
+  element.classList.add('x-confetti--trigger');
   // #448: no classList.add('x-confetti') -- it just duplicated
   // <div x-confetti>'s own tag name; no CSS selector depends on the bare class
-  // (only .x-confetti-trigger/-piece, unaffected).
+  // (only .x-confetti--trigger/-piece, unaffected).
   // #448 removed this class outright; restored WITH the tag-name guard.
   // permutation-compliance requires compliance.baseClass to cover the host
   // (classList.contains(cls) || tagName === cls), and on an attribute host
@@ -270,9 +270,9 @@ export function confetti(element, options = {}) {
   }
 
   // The button chrome and its hover lift live in effects.css under
-  // .x-confetti-trigger--button (#779) -- a stylesheet rule a theme can reach,
+  // .x-confetti--trigger-button (#779) -- a stylesheet rule a theme can reach,
   // and a :hover the browser tracks, instead of cssText plus two handlers.
-  if (config.showButton) element.classList.add('x-confetti-trigger--button');
+  if (config.showButton) element.classList.add('x-confetti--trigger-button');
 
   // Inject CSS keyframes if not present
   if (!document.getElementById('x-confetti-styles')) {
@@ -336,7 +336,7 @@ export function confetti(element, options = {}) {
 
   element.wbConfetti = { fire };
   return () => {
-    element.classList.remove('x-confetti-trigger', 'x-confetti-trigger--button');
+    element.classList.remove('x-confetti--trigger', 'x-confetti--trigger-button');
   };
 }
 
@@ -523,9 +523,9 @@ export function marquee(element, options = {}) {
  */
 export function sparkle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '15');
-  element.classList.add('x-sparkle-trigger');
+  element.classList.add('x-sparkle--trigger');
   element.classList.add('x-sparkle');
-  // position/overflow: .x-sparkle-trigger in effects.css (#779).
+  // position/overflow: .x-sparkle--trigger in effects.css (#779).
   
   // Inject sparkle keyframes
   if (!document.getElementById('x-sparkle-styles')) {
@@ -570,7 +570,7 @@ export function sparkle(element, options = {}) {
   
   element.onclick = fire;
   element.wbSparkle = { fire };
-  return () => element.classList.remove('x-sparkle-trigger');
+  return () => element.classList.remove('x-sparkle--trigger');
 }
 
 /**
@@ -706,7 +706,7 @@ export function fireworks(element, options = {}) {
   // The burst lasts `duration`; each particle flies for 2/3 of it, which is
   // the 1s-of-1.5s split the default has always used.
   const burstMs = toMs(config.duration) || 1500;
-  element.classList.add('x-fireworks-trigger');
+  element.classList.add('x-fireworks--trigger');
   // #448: no classList.add('x-fireworks') -- it just duplicated
   // <div x-fireworks>'s own tag name; no CSS selector depends on the bare class.
   // #448 removed this class outright; restored WITH the tag-name guard.
@@ -723,9 +723,9 @@ export function fireworks(element, options = {}) {
   // #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
   // >=1rem padding on every side of a button's text; 0.75rem (12px) failed
   // demo-layout-standards.spec.ts on pages/behaviors.html's "🎆 Fireworks"
-  // trigger. The chrome is .x-fireworks-trigger--button in effects.css
+  // trigger. The chrome is .x-fireworks--trigger-button in effects.css
   // (#779): a rule a theme can reach, not a cssText that beats every rule.
-  if (config.showButton) element.classList.add('x-fireworks-trigger--button');
+  if (config.showButton) element.classList.add('x-fireworks--trigger-button');
 
   // Inject keyframes
   if (!document.getElementById('x-firework-styles')) {
@@ -785,7 +785,7 @@ export function fireworks(element, options = {}) {
   element.wbFireworks = { fire, startRepeat, stopRepeat };
   return () => {
     stopRepeat();
-    element.classList.remove('x-fireworks-trigger', 'x-fireworks-trigger--button');
+    element.classList.remove('x-fireworks--trigger', 'x-fireworks--trigger-button');
   };
 }
 
@@ -807,7 +807,7 @@ export function snow(element, options = {}) {
   // Each flake falls for 3/8..7/8 of `duration` and starts up to 2s late --
   // the 3-7s spread the 8s default has always produced.
   const fallMs = toMs(config.duration) || 8000;
-  element.classList.add('x-snow-trigger');
+  element.classList.add('x-snow--trigger');
   // #448: no classList.add('x-snow') -- it just duplicated <div x-snow>'s own
   // tag name; no CSS selector depends on the bare class.
   // #448 removed this class outright; restored WITH the tag-name guard.
@@ -821,8 +821,8 @@ export function snow(element, options = {}) {
   if (config.showButton && !element.textContent.trim()) {
     element.innerHTML = '❄️ <span>Let it Snow!</span>';
   }
-  // Chrome: .x-snow-trigger--button in effects.css (#779).
-  if (config.showButton) element.classList.add('x-snow-trigger--button');
+  // Chrome: .x-snow--trigger-button in effects.css (#779).
+  if (config.showButton) element.classList.add('x-snow--trigger-button');
   
   // Inject keyframes
   if (!document.getElementById('x-snow-styles')) {
@@ -872,7 +872,7 @@ export function snow(element, options = {}) {
   element.wbSnow = { fire, startRepeat, stopRepeat };
   return () => {
     stopRepeat();
-    element.classList.remove('x-snow-trigger', 'x-snow-trigger--button');
+    element.classList.remove('x-snow--trigger', 'x-snow--trigger-button');
   };
 }
 

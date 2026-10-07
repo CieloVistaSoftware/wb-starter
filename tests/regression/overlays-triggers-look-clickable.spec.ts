@@ -3,12 +3,12 @@ import { test, expect } from '../fixtures/offline';
 /**
  * demos/site/overlays.html: <dialog> triggers already had a real
  * button-like appearance (background/border/padding/radius/pointer cursor
- * via .x-dialog-trigger, dialog.css), but <div x-drawer> and <div x-dropdown>
+ * via .x-dialog--trigger, dialog.css), but <div x-drawer> and <div x-dropdown>
  * triggers had NONE of that -- confirmed live: transparent background, no
  * border, zero padding, and not even `cursor: pointer`. Two separate root
  * causes:
  *
- * - overlay.js drawer(): unconditionally adds .x-drawer-trigger, but that
+ * - overlay.js drawer(): unconditionally adds .x-drawer--trigger, but that
  *   class (layout.css/site.css) only ever set `visibility: visible`
  *   (undoing a base rule meant for schema-built panels, not styling a
  *   trigger). Added real button styling in drawer.css.
@@ -19,7 +19,7 @@ import { test, expect } from '../fixtures/offline';
  *   neither branch, so no trigger button was ever built and the host's own
  *   text stayed completely unstyled (even though clicking it does work --
  *   clickHandler already special-cases `e.target === element`). Added a
- *   `.x-dropdown-trigger` class + matching CSS for this host-is-trigger case.
+ *   `.x-dropdown--trigger` class + matching CSS for this host-is-trigger case.
  */
 
 async function ready(page) {
@@ -29,8 +29,8 @@ async function ready(page) {
 
 async function assertLooksClickable(locator) {
   await expect(locator).toBeVisible();
-  // The trigger CLASS (.x-dialog-trigger/.x-drawer-trigger/
-  // .x-dropdown-trigger) is applied by the behavior's own async/lazy
+  // The trigger CLASS (.x-dialog--trigger/.x-drawer--trigger/
+  // .x-dropdown--trigger) is applied by the behavior's own async/lazy
   // injection (wb-lazy.js's IntersectionObserver-driven scan), not
   // synchronously with the element becoming visible in the DOM -- reading
   // computed style right after toBeVisible() can race that injection
@@ -59,21 +59,21 @@ test.describe('demos/site/overlays.html: every clickable trigger looks like a bu
     // a <dialog> without [open] is display:none by the UA stylesheet, so that
     // locator can never be visible before a click and the test failed with
     // "unexpected value: hidden" -- a symptom, not a cause. The trigger is
-    // whatever carries `.x-dialog-trigger`, the class dialog.css gives the
+    // whatever carries `.x-dialog--trigger`, the class dialog.css gives the
     // button-like padding/border/radius/cursor to.
     //
     // Asserting its PRESENCE first, in the body, is the point: it is currently
     // 0 on this page. dialog.js's `if (element.tagName === 'DIALOG')` branch
     // adds `.x-dialog` + `.x-modal` and RETURNS, shadowing the
-    // `element.classList.add('x-dialog-trigger')` below it, so no <dialog> on
+    // `element.classList.add('x-dialog--trigger')` below it, so no <dialog> on
     // demos/site/overlays.html ever becomes its own trigger -- despite
     // dialog.css:31 stating in a comment that it does. All 14 dialogs on the
     // page render nothing at all. Product defect, tracked on #872; the test
     // stays red and now says why.
-    const trigger = page.locator('.x-dialog-trigger').first();
+    const trigger = page.locator('.x-dialog--trigger').first();
     await expect(
       trigger,
-      'dialog.js must mark a pre-click <dialog> as its own trigger (.x-dialog-trigger); '
+      'dialog.js must mark a pre-click <dialog> as its own trigger (.x-dialog--trigger); '
       + 'without it, the trigger styling in dialog.css matches nothing and the dialog is invisible',
     ).toBeAttached();
 
@@ -85,7 +85,7 @@ test.describe('demos/site/overlays.html: every clickable trigger looks like a bu
     const drawer = page.locator('[x-drawer]').first();
 
     // The root cause was a class that existed but styled nothing: overlay.js's
-    // drawer() adds `.x-drawer-trigger` unconditionally, while layout.css /
+    // drawer() adds `.x-drawer--trigger` unconditionally, while layout.css /
     // site.css only ever set `visibility: visible` on it. Pin the class
     // separately from the appearance so a regression says WHICH half broke --
     // a missing class and a missing stylesheet rule produce the identical
@@ -93,7 +93,7 @@ test.describe('demos/site/overlays.html: every clickable trigger looks like a bu
     await expect(
       drawer,
       'overlay.js drawer() must mark the host as the trigger for drawer.css to reach it',
-    ).toHaveClass(/x-drawer-trigger/);
+    ).toHaveClass(/x-drawer--trigger/);
 
     await assertLooksClickable(drawer);
   });

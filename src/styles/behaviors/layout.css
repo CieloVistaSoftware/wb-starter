@@ -28,14 +28,14 @@
   visibility: hidden;
 }
 /* .x-drawerlayout: enhanced by drawerLayout() (layouts.js) as a page-shell
-   panel. .x-drawer-trigger: enhanced by drawer() (overlay.js) as a
+   panel. .x-drawer--trigger: enhanced by drawer() (overlay.js) as a
    self-triggering button (drawer-behavior root cause -- without this, every
    <div x-drawer title="…" content="…">Label</div> trigger stayed
    invisible even after drawer()'s click handler was correctly attached,
    because this base rule hides every <div x-drawer> that isn't a
    .x-drawerlayout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-[x-drawer].x-drawerlayout, [x-drawer].x-drawer-trigger{
+[x-drawer].x-drawerlayout, [x-drawer].x-drawer--trigger{
   visibility: visible;
 }
 

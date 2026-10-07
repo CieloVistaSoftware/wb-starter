@@ -61,7 +61,7 @@
   100% { background-position: 0% 50%; }
 }
 
-.x-confetti-trigger {
+.x-confetti--trigger {
   position: relative;
 }
 
@@ -430,7 +430,7 @@ MARQUEE & RIPPLE
 }
 
 /* x-confetti */
-.x-confetti-trigger.x-confetti-trigger--button {
+.x-confetti--trigger.x-confetti--trigger-button {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -448,7 +448,7 @@ MARQUEE & RIPPLE
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.x-confetti-trigger.x-confetti-trigger--button:hover {
+.x-confetti--trigger.x-confetti--trigger-button:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
 }
@@ -471,7 +471,7 @@ MARQUEE & RIPPLE
 }
 
 /* x-sparkle */
-.x-sparkle-trigger {
+.x-sparkle--trigger {
   position: relative;
   overflow: visible;
 }
@@ -557,7 +557,7 @@ MARQUEE & RIPPLE
 }
 
 /* x-fireworks */
-.x-fireworks-trigger.x-fireworks-trigger--button {
+.x-fireworks--trigger.x-fireworks--trigger-button {
   cursor: pointer;
   padding: 1rem 1.5rem;
   background: linear-gradient(135deg, var(--fireworks-trigger--button-bg-1, #1a1a2e), var(--fireworks-trigger--button-bg-2, #16213e));
@@ -586,7 +586,7 @@ MARQUEE & RIPPLE
 }
 
 /* x-snow */
-.x-snow-trigger.x-snow-trigger--button {
+.x-snow--trigger.x-snow--trigger-button {
   cursor: pointer;
   padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, var(--snow-trigger--button-bg-1, #a8edea), var(--snow-trigger--button-bg-2, #fed6e3));

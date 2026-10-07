@@ -410,7 +410,7 @@ export async function tooltip(element, options = {}) {
   };
 
   // Init
-  element.classList.add('x-tooltip-trigger');
+  element.classList.add('x-tooltip--trigger');
   element.setAttribute('aria-describedby', tooltipId);
 
   // trigger gating (#1107). Each mode binds only the events it names. "click"

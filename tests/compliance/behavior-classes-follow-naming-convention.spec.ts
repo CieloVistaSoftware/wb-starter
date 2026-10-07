@@ -35,9 +35,9 @@ const root = process.cwd();
 /**
  * Classes applied by behaviors that do not follow the convention. Shrink only.
  * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96,
- * batch 2 (the layout compounds) to 85.
+ * batch 2 (the layout compounds) to 85, batch 3 (the -trigger family) to 66.
  */
-const NON_CONFORMING_MAX = 85;
+const NON_CONFORMING_MAX = 66;
 
 /**
  * Old name -> the name that replaced it. Each old name is gone for good.
@@ -68,6 +68,29 @@ const RETIRED: Record<string, string> = {
   'x-drawer-handle': 'x-drawerlayout__handle',
   'x-drawer-toggle': 'x-drawerlayout__toggle',
   'x-drawer-resize-overlay': 'x-drawerlayout__resize-overlay',
+  // Batch 3, 2026-10-07: the -trigger family. The element carrying the
+  // behavior IS the block, so "this element is the trigger" is a modifier of
+  // it, x-{behavior}--trigger. The look variant of a trigger is one modifier
+  // with a kebab-case value, x-{behavior}--trigger-button.
+  'x-popover-trigger': 'x-popover--trigger',
+  'x-drawer-trigger': 'x-drawer--trigger',
+  'x-lightbox-trigger': 'x-lightbox--trigger',
+  'x-offcanvas-trigger': 'x-offcanvas--trigger',
+  'x-sheet-trigger': 'x-sheet--trigger',
+  'x-confirm-trigger': 'x-confirm--trigger',
+  'x-prompt-trigger': 'x-prompt--trigger',
+  'x-confetti-trigger': 'x-confetti--trigger',
+  'x-confetti-trigger--button': 'x-confetti--trigger-button',
+  'x-fireworks-trigger': 'x-fireworks--trigger',
+  'x-fireworks-trigger--button': 'x-fireworks--trigger-button',
+  'x-snow-trigger': 'x-snow--trigger',
+  'x-snow-trigger--button': 'x-snow--trigger-button',
+  'x-sparkle-trigger': 'x-sparkle--trigger',
+  'x-dialog-trigger': 'x-dialog--trigger',
+  'x-modal-trigger': 'x-modal--trigger',
+  'x-dropdown-trigger': 'x-dropdown--trigger',
+  'x-toast-trigger': 'x-toast--trigger',
+  'x-tooltip-trigger': 'x-tooltip--trigger',
 };
 
 /**
@@ -83,6 +106,8 @@ const CLASS_CONTEXT = /class(?:Name|List|es)?\b|toHaveClass|baseClass|appliesCla
 
 /** Is this match a use of the retired CLASS, rather than of a same-named attribute? */
 function isClassUse(token: string, line: string, at: number): boolean {
+  // A file name that happens to start with an old class, x-drawer-trigger-not-op.spec.ts.
+  if (/^\.(?:spec\.ts|test\.ts|[cm]?js|ts|css|html|md|json)\b/.test(line.slice(at + token.length))) return false;
   if (!ALSO_ATTRIBUTES.has(token)) return true;
   const before = line[at - 1] ?? '';
   const after = line[at + token.length] ?? '';
@@ -106,6 +131,7 @@ const SKIP = [
   'data/releases.json',                                                  // release history
   'data/release-see-it.json',
   'data/issue-titles.json',
+  'data/component-word-audit.json',                                      // quotes old test output verbatim
 ];
 const SCANNED = /\.(js|mjs|ts|css|html|md|json)$/;
 
@@ -131,7 +157,7 @@ function behaviorModules(): Array<{ file: string; src: string }> {
 /** `x-form-row` as a whole class or the stem of a longer one, never inside another word. */
 function retiredPattern(): RegExp {
   const alts = Object.keys(RETIRED).sort((a, b) => b.length - a.length).map((n) => n.replace(/[-_]/g, '\\$&'));
-  return new RegExp(`(?<![\\w-])(?:${alts.join('|')})(?![a-z0-9])[\\w-]*`, 'g');
+  return new RegExp(`(?<!(?<!\\\\)[\\w-])(?:${alts.join('|')})(?![a-z0-9])[\\w-]*`, 'g');
 }
 
 test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)', () => {
@@ -170,6 +196,9 @@ test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)'
     expect(at('x-drawer-layout', "element.classList.add('x-drawer-layout');"), 'a classList call').toBe(true);
     expect(at('x-sidebar-layout', '| Attribute | `x-sidebarlayout` or `x-sidebar-layout` | | Applies to | a container | ' + 'x'.repeat(60) + ' class'), 'class said about something else').toBe(false);
     expect(at('x-drawer-layout', '    // the wrong x-drawer-layout class.'), 'a comment about the class').toBe(true);
+    expect('toHaveClass(/\\bx-tooltip-trigger\\b/)'.match(retiredPattern()), 'an old name right after a regex \\b').not.toBeNull();
+    expect('preview-x-form-row'.match(retiredPattern()), 'inside another word').toBeNull();
+    expect(at('x-drawer-trigger-not-op', 'covered by x-drawer-trigger-not-op.spec.ts).'), 'a spec file name').toBe(false);
     expect(at('x-drawer-layout--vertical', 'see x-drawer-layout--vertical'), 'a suffixed form is always a class').toBe(true);
   });
 

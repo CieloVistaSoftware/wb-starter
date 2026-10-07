@@ -86,7 +86,7 @@ export function heroPermutations() {
     const overlay = (i + round) % 5 !== 0; // on by default; off roughly 1-in-5 so it's exercised too
     // The companion trigger is <button x-modal>: it was a bare <dialog
     // modalTitle> (the migration's reading of <x-modal>), which only
-    // showed at all because .x-dialog-trigger overrode the UA's hidden
+    // showed at all because .x-dialog--trigger overrode the UA's hidden
     // <dialog>, and read to assistive tech as a dialog rather than a button.
     const signatureStyle = i % 2 === 1; // alternate the two original styles
     const attrs = [

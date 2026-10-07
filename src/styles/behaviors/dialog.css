@@ -29,13 +29,13 @@
 }
 
 /* Before it's opened, a <dialog title="…">…</dialog> IS its own
-   trigger (dialog.js adds .x-dialog-trigger to the same element) -- it also
+   trigger (dialog.js adds .x-dialog--trigger to the same element) -- it also
    carries the shared .x-dialog class above, whose `padding: 0` is correct
    for the popped-open dialog box (body padding lives on .x-dialog__main)
    but leaked onto this pre-click trigger state too, leaving its label text
    flush against the element edge. Source order breaks the tie in this
    rule's favor (same 0,1,0 specificity as .x-dialog, declared after it). */
-.x-dialog-trigger {
+.x-dialog--trigger {
   display: inline-block;
   position: relative; /* anchors demo.js's top-right .x-demo__card-doc-link badge */
   padding: 1rem;
@@ -167,7 +167,7 @@
 
 /* #779: dialog.js used to write these onto element.style. */
 
-/* (The trigger's cursor: pointer is .x-dialog-trigger above.) */
+/* (The trigger's cursor: pointer is .x-dialog--trigger above.) */
 
 /* DEFINITION mode: the element only holds the modal's content, which is
    cloned into a real dialog on open() -- the element itself never shows. */

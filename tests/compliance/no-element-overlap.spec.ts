@@ -146,10 +146,10 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         const OVERLAY_CLASS_RE = new RegExp(
           [
             'x-tooltip', 'x-tooltip__arrow', 'x-tooltip__content', 'x-tooltip-glass',
-            'x-popover', 'x-popover-trigger',
+            'x-popover', 'x-popover--trigger',
             'x-dropdown-menu',
             'x-modal', 'x-modal-content', 'x-modal-glass-overlay', 'x-modal-glass-content',
-            '.x-dialog', 'x-dialog-trigger',
+            '.x-dialog', 'x-dialog--trigger',
             'x-toast', 'x-toast-container',
             'x-lightbox',
             'x-drawer__panel', 'x-drawer__backdrop',

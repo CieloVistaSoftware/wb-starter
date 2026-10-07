@@ -201,7 +201,7 @@ test.describe('Behaviors Showcase Page', () => {
         const hasItems = await dropdown.getAttribute('items');
         
         // Check if proper child structure exists
-        const hasTrigger = await dropdown.locator('.x-dropdown-trigger, .x-dropdown__trigger').count() > 0;
+        const hasTrigger = await dropdown.locator('.x-dropdown--trigger, .x-dropdown__trigger').count() > 0;
         const hasMenu = await dropdown.locator('.x-dropdown-menu, .x-dropdown__menu').count() > 0;
         
         // One of these patterns must be true
