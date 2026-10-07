@@ -70,7 +70,9 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
 
     await page.goto('/?page=home');
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
-    await page.waitForTimeout(1500);
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const counts = new Map<string, number>();
     for (const url of schemaRequests) counts.set(url, (counts.get(url) || 0) + 1);

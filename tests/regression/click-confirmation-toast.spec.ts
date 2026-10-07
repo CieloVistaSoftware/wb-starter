@@ -43,7 +43,7 @@ test.describe('site-wide click confirmation (#456)', () => {
     await expect(page).toHaveURL(/#click-confirm-target$/);
     // The confirmation is deferred one tick (click-confirm.js); give it that
     // tick, then require that the anchor raised none.
-    await page.evaluate(() => new Promise((r) => setTimeout(r, 50)));
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
     await expect(page.locator('.x-toast', { hasText: /Clicked: (click-confirm-link|Navigate)/ })).toHaveCount(0);
   });
 

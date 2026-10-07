@@ -52,8 +52,9 @@ test.describe('x-countdown honors to="..." as the target date (#376)', () => {
     expect(first, `expected "<days>d HH:MM:SS" format for a months-away target, got "${first}"`).toMatch(/^\d+d \d{2}:\d{2}:\d{2}$/);
 
     // Confirm it's actually ticking, not just a lucky non-"00:00" render.
-    await page.waitForTimeout(1100);
-    const second = (await el.textContent())?.trim();
-    expect(second, 'countdown display must change over time (it is ticking)').not.toBe(first);
+    // Polled until the display changes (#1516: not a fixed 1100ms).
+    await expect.poll(async () => (await el.textContent())?.trim(), {
+      message: 'countdown display must change over time (it is ticking)', timeout: 5000,
+    }).not.toBe(first);
   });
 });

@@ -45,12 +45,6 @@
   }
 }
 
-/* Safari Sticky Bug: Doesn't work with overflow:hidden ancestors */
-/* Apply to sticky element's container */
-.safari-sticky-container {
-  overflow: visible !important;
-}
-
 /* Safari Animation: grid-template-rows 0 → auto doesn't animate */
 /* Use this pattern instead of height: 0 → auto */
 .collapse-grid {
@@ -132,13 +126,6 @@
     min-width: 0;
     flex-shrink: 1;
   }
-}
-
-/* Safari Position Fixed in Transform Context */
-/* Fixed elements inside transformed parents don't work - use this workaround */
-.safari-fixed-context {
-  transform: none !important;
-  -webkit-transform: none !important;
 }
 
 /* ============================================

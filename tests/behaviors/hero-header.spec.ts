@@ -13,8 +13,7 @@ test.describe('#179 — behaviors hero clears the sticky header', () => {
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
     await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     // ensure we're at the very top
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(200);
+    await page.evaluate(async () => { window.scrollTo(0, 0); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
 
     const r = await page.evaluate(() => {
       const header = document.querySelector('.site__header') as HTMLElement;

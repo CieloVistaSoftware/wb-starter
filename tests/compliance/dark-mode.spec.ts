@@ -139,7 +139,13 @@ test.describe('Dark Mode Compliance', () => {
         }).catch(() => {});
       }
       
-      await page.waitForTimeout(300);
+      // The dark theme has painted, transitions done (#1516: not 300ms).
+      await page.evaluate(async () => {
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        await Promise.all(document.getAnimations()
+          .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+          .map((a) => a.finished.catch(() => {})));
+      });
       
       // Check for elements with missing/broken colors
       const colorIssues = await page.evaluate(() => {
@@ -248,7 +254,12 @@ test.describe('Dark Mode Compliance', () => {
       document.documentElement.setAttribute('data-theme', 'dark');
     });
     
-    await page.waitForTimeout(100);
+    await page.evaluate(async () => {
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await Promise.all(document.getAnimations()
+        .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+        .map((a) => a.finished.catch(() => {})));
+    });
     
     // Check critical theme variables exist
     const variables = await page.evaluate(() => {
@@ -276,7 +287,12 @@ test.describe('Dark Mode Compliance', () => {
       document.documentElement.setAttribute('data-theme', 'dark');
     });
     
-    await page.waitForTimeout(100);
+    await page.evaluate(async () => {
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await Promise.all(document.getAnimations()
+        .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+        .map((a) => a.finished.catch(() => {})));
+    });
     
     // Check background is actually dark
     const bgColor = await page.evaluate(() => {

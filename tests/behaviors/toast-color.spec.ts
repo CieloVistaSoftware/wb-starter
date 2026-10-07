@@ -39,7 +39,15 @@ test.describe('x-toast', () => {
       <button id="b-err" x-toast message="e" toast-variant="error">E</button>`);
     await page.locator('#b-succ').click();
     await page.locator('#b-err').click();
-    await page.waitForTimeout(200);
+    // Both toasts are up and painted (#1516: not 200ms).
+    await expect(page.locator('.x-toast--success').first()).toBeVisible();
+    await expect(page.locator('.x-toast--error').first()).toBeVisible();
+    await page.evaluate(async () => {
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await Promise.all(document.getAnimations()
+        .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+        .map((a) => a.finished.catch(() => {})));
+    });
     const succBg = await page.locator('.x-toast--success').first().evaluate((el) => getComputedStyle(el).backgroundColor);
     const errBg = await page.locator('.x-toast--error').first().evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(succBg).not.toBe(errBg);

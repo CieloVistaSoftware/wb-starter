@@ -11,9 +11,11 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * the second took the positive ones to 43, the third to 26, the fourth to 3,
  * the fifth to 0 (and began on the setup ones); the sixth taught the scan
  * to see a sleep behind a local helper (`await sleep(200)`), which had hidden
- * about thirty; by the tenth no setup sleep was left either: every sleep still
- * in the suite is a reviewed negative proof, a poll interval, a timeout cap or
- * a scenario whose elapsed time is the point.
+ * about thirty; by the tenth no setup sleep was left either, and the eleventh
+ * reviewed every remaining negative: each is now marked with its reason, made a
+ * condition wait, or found to be a scenario. Every sleep still in the suite is
+ * a marked negative proof, a poll interval, a timeout cap or a scenario whose
+ * elapsed time is the point -- and no class may grow back.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -44,7 +46,7 @@ const CEILING = {
   positive: 0,
   redundant: 0,
   setup: 0,
-  negative: 55,
+  negative: 0,
 };
 
 test.describe('no new fixed sleeps (#1516)', () => {

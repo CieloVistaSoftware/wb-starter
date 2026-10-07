@@ -92,6 +92,15 @@ test.describe('Input theming follows the active theme', () => {
       });
       expect(pending, 'measured inputs not yet upgraded').toBe(0);
     }).toPass({ timeout: 20000 });
+    // The upgrade brings the input's stylesheet as a <link> on first use, and
+    // neither settled() nor x-ready waits for it to load: until it has, the
+    // field is the browser's native white (CI, #1516). A loaded <link> has a
+    // sheet.
+    await page.waitForFunction(
+      () => [...document.querySelectorAll('link[rel="stylesheet"]')].every((l) => !!(l as HTMLLinkElement).sheet),
+      null,
+      { timeout: 10000 },
+    );
   });
 
   for (const theme of DARK_THEMES) {

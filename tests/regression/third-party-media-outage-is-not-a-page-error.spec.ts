@@ -215,6 +215,7 @@ test.describe('#1115 third-party media outage', () => {
         .map((v) => v.name);
     }, { timeout: 45000, intervals: [500] }).toEqual([]);
     // Give any trailing async throw (setTimeout 0) and log post time to land.
+    // sleep-proves-negative: no trailing async throw may land after the outage; a throw that never comes fires no event
     await page.waitForTimeout(1000);
 
     const marked = await unreachableHosts(page);

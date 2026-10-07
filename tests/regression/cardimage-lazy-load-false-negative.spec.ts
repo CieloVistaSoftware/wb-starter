@@ -62,6 +62,7 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // 4s check + exponential 500/1000/2000/4000ms backoff) without
     // scrolling. The fix gates the retry clock on real intersection, so
     // this must NOT have given up yet.
+    // sleep-is-the-scenario: the retry clock must not run while off-screen; 28s is longer than the old give-up window
     await page.waitForTimeout(28000);
     await expect(firstCard.locator('.x-media-load-failed'), 'must not give up while still off-screen').toHaveCount(0);
 

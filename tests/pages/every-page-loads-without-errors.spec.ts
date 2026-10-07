@@ -103,7 +103,8 @@ test.describe('Every page loads without errors', () => {
       // Behaviors attach after the fragment is injected, so an error thrown
       // during enhancement lands after load. Waiting only for `load` would
       // miss exactly the class of bug this exists for.
-      await page.waitForTimeout(1500);
+      // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
+      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 
       // A page that does not EXIST also throws nothing: the missing-page
       // fallback catches the 404, prints a placeholder and raises no console

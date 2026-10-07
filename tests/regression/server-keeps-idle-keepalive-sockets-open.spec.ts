@@ -68,6 +68,7 @@ test.describe('#1549 an idle keep-alive socket is not closed under a reusing cli
     sock.write(request);
     await expect.poll(() => /^HTTP\/1\.1 \d{3}/.test(received), { timeout: 10_000 }).toBe(true);
 
+    // sleep-is-the-scenario: the socket must survive IDLE_MS of idleness; the idle time is the scenario
     await new Promise((r) => setTimeout(r, IDLE_MS));
     expect(closedAfterMs, `the server closed the idle socket after ${closedAfterMs}ms`).toBeNull();
 

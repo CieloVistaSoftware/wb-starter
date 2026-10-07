@@ -68,7 +68,11 @@ test('sorting a column of rendered dates orders them chronologically', async ({ 
 
   const header = page.locator('#date-sort thead th').nth(1);
   await header.click();
-  await page.waitForTimeout(300);
+  // Until the rows are in date order, either direction (#1516: not 300ms).
+  const wantAsc = [...ROWS].sort((a, b) => Date.parse(a.shown) - Date.parse(b.shown)).map((r) => r.shown).join('|');
+  const wantDesc = wantAsc.split('|').reverse().join('|');
+  await expect.poll(() => page.$$eval('#date-sort tbody tr', (rows) => rows.map((r) => r.children[1]?.textContent?.trim() || '').join('|')), { timeout: 5000 })
+    .toMatch(new RegExp(`^(${[wantAsc, wantDesc].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})$`));
 
   const order = await page.$$eval('#date-sort tbody tr', (rows) =>
     rows.map((r) => r.children[1]?.textContent?.trim() || ''),
