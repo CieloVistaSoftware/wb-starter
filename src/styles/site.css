@@ -584,6 +584,13 @@ body > button[x-copy] {
   color: var(--primary);
 }
 
+/* #1245: the live site's visit total, set by src/core/visitor-count.js. */
+.footer__visits {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .footer__social {
   display: flex;
   gap: 0.75rem;

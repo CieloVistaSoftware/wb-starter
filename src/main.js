@@ -23,6 +23,7 @@ import { versionNumber } from './core/version-number.js';
 import { traceStatusLabel } from './core/debug-trace.js';
 import { reportDuplicateIds } from './core/duplicate-ids.js';
 import { isDevelopmentOrigin, releaseDevelopmentOrigin } from './core/service-worker.js';
+import { startVisitorCount } from './core/visitor-count.js';
 
 /**
  * Initialize the wb-starter application
@@ -75,6 +76,12 @@ async function init() {
 
     await site.init();
     console.log('site.init() complete');
+
+    // #1245: count this load of the live site and show the total in the
+    // footer (which init() just rendered). Live host only; never awaited and
+    // never throws, so a counter that is down or blocked cannot hold up or
+    // break the boot.
+    startVisitorCount();
 
     await site.navigateTo(site.currentPage);
     console.log('Navigation complete');
