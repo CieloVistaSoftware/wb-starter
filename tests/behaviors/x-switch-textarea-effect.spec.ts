@@ -65,8 +65,9 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.evaluate(async () => {
     const area = document.getElementById('x-switch-textarea-test-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(area, { eager: true });
+    // Built once its work has called back (#1516: not 300ms).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(300);
 }
 
 // Same setup, but flips the module-level autoInject config on first —
@@ -92,8 +93,9 @@ async function setupNative(page: Page, html: string): Promise<void> {
   await page.evaluate(async () => {
     const area = document.getElementById('x-switch-textarea-native-test-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(area, { eager: true });
+    // Built once its work has called back (#1516: not 300ms).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(300);
 }
 
 test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
@@ -193,8 +195,11 @@ test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
     const check = async (id: string) => {
       await page.locator(`#${id}`).click();
       await expect(page.locator(`#${id} input`)).toBeChecked();
-      await page.waitForTimeout(400); // let the track's color transition settle
-      return page.locator(`#${id} .x-switch__track`).evaluate((el) => getComputedStyle(el).backgroundColor);
+      // The track's colour transition has finished, not 400ms (#1516).
+      return page.locator(`#${id} .x-switch__track`).evaluate(async (el) => {
+        await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => {})));
+        return getComputedStyle(el).backgroundColor;
+      });
     };
     const def = await check('sw-default');
     const success = await check('sw-success');

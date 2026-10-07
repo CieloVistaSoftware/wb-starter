@@ -28,8 +28,9 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
   test('<div x-ripple> renders its text, has a real box, and produces a wave', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => !!document.querySelector('[x-ripple]'), null, { timeout: 30000 });
-    // Give await WB.scan() time to attach the behavior.
-    await page.waitForTimeout(1500);
+    // The behavior is attached once WB settles (#1516: not 1500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const result = await page.evaluate(async () => {
       const rp = document.querySelector('[x-ripple]') as HTMLElement;
@@ -38,7 +39,9 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
       rp.dispatchEvent(
         new MouseEvent('mousedown', { clientX: r.x + 30, clientY: r.y + 20, bubbles: true })
       );
-      await new Promise((res) => setTimeout(res, 120));
+      // The wave exists once mousedown has run its handler (#1516: not 120ms).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      await until(() => !!rp.querySelector('.x-ripple__wave'));
       const wave = rp.querySelector('.x-ripple__wave') as HTMLElement | null;
       return {
         text: rp.textContent?.trim() ?? '',
@@ -82,6 +85,7 @@ test.describe('[x-confetti] keeps authored content and never fires unattended (#
 
       const count = () => document.querySelectorAll('.x-confetti-container').length;
       const base = count();
+      // sleep-proves-negative: no confetti may appear without a click; nothing that correctly never happens fires an event
       await new Promise((r) => setTimeout(r, 3500));
       const unattended = count() - base;
       el.click();

@@ -91,6 +91,15 @@ async function readThrough(page: Page): Promise<void> {
       await new Promise((r) => setTimeout(r, 500));
     }
   });
+  // A behavior's stylesheet arrives as a <link> on first use, and the quiet
+  // resource timeline above can end before it has loaded: demos/frameworks.html
+  // was measured with demo.css still pending (padding-top 0) on CI (#1516).
+  // A loaded <link> has a sheet; wait until every one does.
+  await page.waitForFunction(
+    () => [...document.querySelectorAll('link[rel="stylesheet"]')].every((l) => !!(l as HTMLLinkElement).sheet),
+    null,
+    { timeout: 10_000 },
+  ).catch(() => {});
   await page.evaluate(async () => {
     const running = document.getAnimations().filter(
       (a) => a.effect?.getTiming().iterations !== Infinity
