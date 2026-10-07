@@ -12,8 +12,8 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title |
-| `content` | `string` | — | Card content |
+| `title` | text | — | Card title |
+| `content` | text or HTML | — | Card content |
 | `constrain` | `none` · `parent` · `viewport` | `none` | Constrain to area |
 | `axis` | `both` · `x` · `y` | `both` | Drag axis |
 | `snapToGrid` | `number` | `0` | Snap grid size (0=disabled) |

@@ -48,11 +48,11 @@ Inside a card, let the card size the image: give the card a `size` and leave the
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `placeholder` | `string` | — | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
-| `fallback` | `string` | — | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
+| `placeholder` | URL | — | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
+| `fallback` | URL | — | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
 | `width` | `number` | — | Width in pixels (the native attribute). On its own the height follows the photo's shape. With `height`, the two set the shape too and the image is cropped to it. Still shrinks to fit a narrower container. |
 | `height` | `number` | — | Height in pixels (the native attribute). Takes effect only together with `width`; on its own the site's `img { height: auto }` overrides it. An explicit `aspectRatio` wins over the pair. |
-| `aspectRatio` | `string` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
+| `aspectRatio` | ratio, e.g. `16/9` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
 | `lazy` | `boolean` | `false` | Sets `loading="lazy"`, so the browser defers fetching until the image nears the viewport. Bare attribute. |
 | `data-lazy` | `boolean` | `false` | The `data-` spelling of `lazy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `lazy`. |
 | `zoomable` | `boolean` | `false` | Clicking the image opens it full-size in a lightbox. Bare attribute. |

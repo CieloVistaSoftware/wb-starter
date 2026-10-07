@@ -15,7 +15,7 @@
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` |  |
 | `variant` | `default` · `primary` · `success` · `warning` · `error` | `primary` |  |
 | `speed` | `slow` · `medium` · `fast` | `medium` |  |
-| `label` | `string` | `Loading` | Accessible label |
+| `label` | text | `Loading` | Accessible label |
 
 ## Methods
 

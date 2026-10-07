@@ -22,10 +22,10 @@ On another element, write `x-footer`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `copyright` | `string` | — | Copyright text |
-| `brand` | `string` | — | Brand name |
-| `links` | `string` | — | Navigation links as JSON [{label, href}] |
-| `social` | `string` | — | Social links as JSON [{platform, href}] |
+| `copyright` | text | — | Copyright text |
+| `brand` | text | — | Brand name |
+| `links` | JSON array of {label, href} | — | Navigation links as JSON [{label, href}] |
+| `social` | JSON array of {platform, href} | — | Social links as JSON [{platform, href}] |
 | `sticky` | `boolean` | `false` | Sticky at bottom |
 
 ## Methods

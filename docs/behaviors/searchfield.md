@@ -41,15 +41,15 @@ Applied directly to a real `<input>`, it delegates straight to the plain
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `placeholder` | string | `Search...` | Input placeholder. |
-| `value` | string | `""` | Initial search value. |
-| `name` | string | `""` | Form field `name`. |
+| `placeholder` | text | `Search...` | Input placeholder. |
+| `value` | text | `""` | Initial search value. |
+| `name` | text | `""` | Form field `name`. |
 | `debounce` | integer (ms) | `300` | Delay before a non-instant `wb:search` event fires after typing stops. |
 | `instant` | boolean (presence) | `false` | Fire `wb:search` on every keystroke instead of debouncing. |
 | `disabled` | boolean (presence) | `false` | Disables the input. |
 | `size` | `sm` \| `md` \| `lg` | `md` | Applies `x-search--{size}` (omitted for `md`). |
 | `variant` | `default` \| `glass` \| `minimal` | `default` | Applies `x-search--{variant}` (omitted for `default`). |
-| `icon` | string | `🔍` | Icon shown before the input. |
+| `icon` | emoji or icon name | `🔍` | Icon shown before the input. |
 | `clearable` | boolean | `true` | Set `clearable="false"` to hide the clear (✕) button. |
 | `loading` | boolean (presence) | `false` | Shows a loading indicator (⏳) and `x-search--loading`. |
 

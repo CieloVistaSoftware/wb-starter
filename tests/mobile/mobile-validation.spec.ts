@@ -28,6 +28,36 @@ function getScreenshotDir(): string {
   return dir;
 }
 
+/**
+ * The page has finished arriving: fonts in, WB (where the fragment boots it)
+ * settled, and two frames painted. Replaces fixed 500-1500ms sleeps (#1516).
+ *
+ * Bounded from Playwright's side, not the page's: on WebKit, Home's
+ * offline-stand-in MP3 sits at readyState 0 (#1439), and something in this
+ * wait never resolved there -- first the `load` event, then the in-page wait
+ * itself -- timing every iPhone Home check out at 30s. So the wait runs
+ * detached in the page and the test waits at most 10s for it to report done.
+ * An arrival that overruns is not this file's failure: the checks below still
+ * measure the page as it stands, as the sleeps did.
+ */
+async function pageArrived(page: import('@playwright/test').Page): Promise<void> {
+  await page.evaluate(() => {
+    const w = window as any;
+    w.__mvArrived = false;
+    void (async () => {
+      try {
+        await document.fonts.ready;
+        if (typeof w.WB?.settled === 'function') await w.WB.settled({ timeout: 10000 }).catch(() => {});
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      } finally {
+        w.__mvArrived = true;
+      }
+    })();
+  });
+  await page.waitForFunction(() => (window as any).__mvArrived === true, null, { timeout: 10000, polling: 100 })
+    .catch(() => {});
+}
+
 // ═══════════════════════════════════════════════════════════════
 // KEY PAGES TO VALIDATE
 // ═══════════════════════════════════════════════════════════════
@@ -56,7 +86,7 @@ for (const pg of PAGES) {
   test(`screenshot: ${pg.title}`, async ({ page, browserName }) => {
     const fullPage = true;
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1500); // let animations/lazy-load settle
+    await pageArrived(page);
 
     // #1439: on the Windows CI runner, a WebKit capture of any page holding an
     // <audio> or <video> that never loads hangs until the screenshot timeout.
@@ -105,7 +135,7 @@ for (const pg of PAGES) {
 for (const pg of PAGES) {
   test(`no horizontal overflow: ${pg.title}`, async ({ page }) => {
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(500);
+    await pageArrived(page);
 
     const overflow = await page.evaluate(() => {
       return document.documentElement.scrollWidth > document.documentElement.clientWidth;
@@ -139,7 +169,7 @@ for (const pg of PAGES) {
 for (const pg of PAGES) {
   test(`tap targets: ${pg.title}`, async ({ page }) => {
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(500);
+    await pageArrived(page);
 
     const tooSmall = await page.evaluate(() => {
       const MIN_SIZE = 44;
@@ -181,7 +211,7 @@ for (const pg of PAGES) {
 for (const pg of PAGES) {
   test(`text readability: ${pg.title}`, async ({ page }) => {
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(500);
+    await pageArrived(page);
 
     const tinyText = await page.evaluate(() => {
       const MIN_FONT = 12;

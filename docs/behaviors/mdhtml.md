@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `#` | Path to external markdown file |
+| `src` | path or URL of a Markdown file | `#` | Path to external markdown file |
 | `sanitize` | `boolean` | `true` |  |
 | `gfm` | `boolean` | `true` |  |
 

@@ -26,14 +26,18 @@ There are three ways UI gets enhanced, all by the same runtime:
 
 | You write | What happens |
 |---|---|
-| **Custom tag** — `<article title="Hi">` | The tag is mapped to a *behavior* that builds the card |
-| **Behavior attribute** — `<button x-toast type="success">` | Any element gains a behavior via an `x-*` attribute |
-| **Plain element** — `<input type="text">` (with `autoInject`) | Native elements are auto-enhanced |
+| **Semantic element** — `<article title="Hi">` | A native element is mapped to its *behavior* (`<article>` → card, `<nav>` → navbar, `<progress>`, `<table>`, …) |
+| **Behavior attribute** — `<button x-toast toast-variant="success">` | Any element gains a behavior via an `x-*` attribute |
+| **Plain form control** — `<input type="text">` | Native controls are enhanced too, with no attribute at all |
+
+There are no custom tags. The old component tags were removed; every one
+became either the semantic element that already maps to it or a host carrying
+the `x-*` attribute (`src/core/tag-map.js`, `elementMap` is empty on purpose).
 
 A **behavior** is just a function that receives an element and decorates it.
-A **schema** (optional) describes a behavior's structure declaratively. The
-**runtime** (`WB`) scans the DOM, maps tags/attributes to behaviors, and injects
-them lazily as they scroll into view.
+A **schema** (optional) describes a behavior's attributes and, for some
+behaviors, its structure. The **runtime** (`WB`) scans the DOM, maps
+elements/attributes to behaviors, and applies them.
 
 Key principles:
 - **No build step.** Ship HTML + JS; browsers are fast.
@@ -63,7 +67,7 @@ A standalone page needs the theme + base styles and one module script:
 <button
   x-toast
   message="Saved!"
-  type="success">
+  toast-variant="success">
   Save
 </button>
 </div>
@@ -103,27 +107,37 @@ into the live example above:
     <button
       x-toast
       message="Saved!"
-      type="success">
+      toast-variant="success">
       Save
     </button>
     <script type="module">
       import WB from '/src/core/wb-lazy.js';
       window.WB = WB;
-      await WB.init({
-        autoInject: true
-      });
+      await WB.init();
     </script>
   </body>
 
 </html>
 ```
 
+The toast's colour comes from `toast-variant` (or `variant`), not `type`: on a
+`<button>`, `type` is the button's own attribute.
+
 `WB.init(options)`:
 - `scan` (default `true`) — process existing elements on load.
 - `observe` (default `true`) — watch for elements added later (MutationObserver).
-- `autoInject` (default `false`) — also enhance plain native elements (`<input>`, `<button>`, `<article>`, …).
+- `autoInject` (default **`true`**) — enhance semantic and native elements (`<article>`, `<input>`, `<table>`, `<nav>`, …) with no attribute. Pass `false` to opt a page out.
 - `preload: ['ripple','tooltip']` — eagerly load critical behaviors.
 - `theme: 'dark'` — set the starting theme.
+- `debug: true` — verbose logging.
+- `onSettled: () => …` — called once the first build has finished.
+
+To wait for building to finish, use the readiness API both runtimes share
+instead of guessing with a timeout: `await WB.settled()` (every unit of work has
+called back; also fires a `wb:settled` event), `await WB.whenIdle({ timeout })`
+(nothing in flight for a quiet period; rejects on timeout), or
+`WB.isReady(element)` for one element. "Ready" means *settled*, not
+*succeeded*: a behavior that failed is finished too, and is marked `x-error`.
 
 (Inside the full SPA the runtime is wired by `src/main.js` + `src/core/site-engine.js`, so pages loaded via `?page=…` don't need their own init.)
 
@@ -161,14 +175,14 @@ A semantic element maps to its behavior, and any other element takes the `x-*` a
 </progress>
 </div>
 
-**Badge** — `<div x-badge>`:
+**Badge** — `<span x-badge>`:
 
 <div x-demo>
 <span x-badge
   variant="success"
   pill>
   New
-</div>
+</span>
 </div>
 
 **Tabs** — `<nav x-tabs>`:
@@ -207,7 +221,7 @@ need a custom tag:
 <button
   x-toast
   message="Done"
-  type="success">
+  toast-variant="success">
   Notify
 </button>
 <!-- navigation -->
@@ -233,19 +247,35 @@ need a custom tag:
   placeholder="Password with toggle">
 </div>
 
-The full attribute → behavior map is in `src/core/wb-lazy.js`
-(`customElementMappings`). Every behavior name resolves to a module via
-`src/wb-viewmodels/index.js`.
+**Every registered behavior is reachable as `x-<name>`** (#1642). Names live in
+`src/wb-viewmodels/index.js`, which maps each one to its module file; the extra
+aliases (`x-progress`, `x-details`, …) are in `src/core/tag-map.js`
+(`extensionMap`). The old generic form `x-behavior="name"` is deprecated: it
+still runs, and warns once with the `x-<name>` attribute to write instead.
+
+On `wb-lazy.js`, an `x-*` attribute that names no behavior is reported in the
+error log and the element is marked `x-unknown-behavior="<name>"`, so a typo
+like `x-carfile` does not fail silently.
 
 ---
 
 ## 5. Auto-enhanced plain elements
 
-With `autoInject: true`, native elements are upgraded without any attribute —
-e.g. `<input>`, `<select>`, `<textarea>`, `<button>`, `<table>`, `<details>`, and
-`<article>` (→ card). The map lives in `wb-lazy.js` (`autoInjectMappings`) /
-`src/core/tag-map.js` (`nativeMap`). Auto-inject is **off by default** so it never
-surprises an existing page; opt in per page.
+Semantic and native elements are upgraded without any attribute — `autoInject`
+is **on by default** (since 2026-08-15: "semantic HTML at all times"). The map is
+`nativeMap` in `src/core/tag-map.js`, including:
+
+| Element | Behavior |
+|---|---|
+| `<article>` | card |
+| `<nav>` | navbar (a plain `<nav>` gets the link look; `brand`/`items`/`sticky` make it a site header) |
+| `<input>`, `<select>`, `<textarea>`, `<button>`, `<form>`, `<fieldset>`, `<label>` | form controls |
+| `<table>`, `<details>`, `<dialog>`, `<progress>`, `<header>`, `<footer>` | structure |
+| `<img>`, `<video>`, `<audio>`, `<figure>` | media |
+| `<code>`, `<pre>`, `<kbd>`, `<mark>` | text |
+
+To keep a page or a subtree untouched, call `WB.init({ autoInject: false })`, or
+put `x-ignore` on an element.
 
 ---
 
@@ -266,31 +296,44 @@ Switch at runtime with the `Theme` API (`src/core/theme.js`) or drop in a
 
 ## 7. How it works internally
 
-### The runtime — `WB` (`src/core/wb-lazy.js`)
+### Two runtimes — `WB`
 
-A single object exposes:
+There are two implementations of the same contract:
+
+| File | Used by | How it applies behaviors |
+|---|---|---|
+| `src/core/wb.js` | the main site (`src/main.js`, `site-engine.js`) | **eagerly**, with schema support |
+| `src/core/wb-lazy.js` | standalone pages, the doc viewer, the test harness | **lazily**, as elements near the viewport |
+
+A change to injection logic belongs in both, or in the module they share
+(`src/core/runtime-shared.js`). Both expose:
 
 ```js
 WB.init(options)              // boot: scan + observe + preload
 WB.inject(el, name, opts)     // apply a behavior now (async; loads it on demand)
-WB.lazyInject(el, name)       // apply when the element scrolls into view
-WB.scan(root = document.body) // find & schedule behaviors under root
+WB.remove(el, name?)          // run a behavior's cleanup and take it off
+WB.scan(root = document.body) // find & apply behaviors under root
 WB.observe(root)              // MutationObserver for dynamically-added elements
 WB.has(name) / WB.list()      // registry introspection
-WB.render(json, container)    // build DOM from a JSON behavior definition
+WB.settled() / WB.whenIdle()  // wait for building to finish
+WB.isReady(el)                // has this element finished building?
 ```
+
+`wb-lazy.js` adds `WB.lazyInject(el, name)` (apply when the element nears the
+viewport), `WB.preload(names)` and `WB.render(json, container)` (§8).
 
 ### The lifecycle of one element
 
-1. **Map.** `scan()` matches each element against `customElementMappings`
-   (`<article>` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
-   the native map.
-2. **Schedule.** Matches are handed to `lazyInject()`, which observes the element
-   with an `IntersectionObserver` (200px root margin) — behaviors load only when
-   needed.
-3. **Resolve.** On first view, `inject()` calls `getBehavior(name)`, which looks
-   up the module in `src/wb-viewmodels/index.js` and dynamically imports it
-   (cached after first load).
+1. **Map.** `scan()` matches each element against the mappings built from
+   `src/core/tag-map.js` (`<article>` → `card`, `[x-toast]` → `toast`, …), the
+   native map (`autoInject` is on by default), and every registered behavior's
+   `x-<name>` attribute.
+2. **Schedule.** `wb.js` applies matches straight away. `wb-lazy.js` hands them
+   to `lazyInject()`, which observes the element with an `IntersectionObserver`
+   (1200px root margin, so it is built before it scrolls into view, #491).
+3. **Resolve.** `inject()` calls `getBehavior(name)`, which looks up the module
+   in `src/wb-viewmodels/index.js` and dynamically imports it (cached after
+   first load).
 4. **Apply.** The behavior function runs: `behaviorFn(element, options)`. It
    mutates the element (adds classes, builds children, wires events) and returns
    a **cleanup** function. Failures mark the element `x-error` instead of throwing.
@@ -298,36 +341,47 @@ WB.render(json, container)    // build DOM from a JSON behavior definition
 
 ### Behaviors — `src/wb-viewmodels/`
 
-A behavior is a plain function. The contract:
+A behavior is a plain function. The contract, shown with a shortened version of
+the real `toast` in `src/wb-viewmodels/feedback.js`:
 
 ```js
-// src/wb-viewmodels/feedback.js
 export function toast(element, options = {}) {
-  const message = options.message
-    || element.getAttribute('message')
-    || element.getAttribute('message') || 'Notification';
-  const variant = options.variant
-    || element.getAttribute('type') || 'info';
-
-  const show = () => createToast(message, variant);
+  // Read at click time, not bind time, so a framework that re-renders the
+  // attributes is always seen with its current values (#458).
+  const show = () => {
+    const message = options.message || element.getAttribute('message') || 'Notification';
+    const variant = options.variant || element.getAttribute('toast-variant')
+      || element.getAttribute('variant') || 'info';
+    createToast(message, variant);
+  };
   element.addEventListener('click', show);
   return () => element.removeEventListener('click', show); // cleanup
 }
 ```
 
+Attributes are read with plain names. Shared helpers in `src/core/read-attr.js`
+also accept the camelCase and `data-*` spellings (`showClose`, `show-close`,
+`data-show-close`), so older markup keeps working.
+
 `src/wb-viewmodels/index.js` maps every **behavior name → module file**
-(e.g. `card`, `cardhero`, `cardimage` all resolve to `card.js`). Adding a behavior =
-write the function, register the name in `index.js`, and map a selector in
-`wb-lazy.js`.
+(e.g. `card`, `cardhero`, `cardimage` all resolve to `card.js`). Registering the
+name there is all it takes for `x-<name>` to work.
 
 ### Schemas — `src/wb-models/*.schema.json`
 
-Behaviors can be **schema-driven**: a `*.schema.json` declares the behavior's
-`$view` (DOM structure), attributes, variants, and `test.setup` examples. The
-**schema builder** (`src/core/mvvm/schema-builder.js`) loads them (listed in
-`src/wb-models/index.json`) and builds the behavior's DOM before behaviors run.
-This is how a `<article>` knows its header/body/footer structure declaratively.
-Processed elements are marked `x-schema="<name>"`. The generic `x-behavior=`
+Most behaviors have a `*.schema.json` declaring their attributes, variants and
+`test.setup` examples; the Behaviors page, the API panel and the compliance
+tests all read them. A schema may also declare a `$view` (DOM structure), which
+the **schema builder** (`src/core/mvvm/schema-builder.js`, schemas listed in
+`src/wb-models/index.json`) builds before the behavior runs. Processed elements
+are marked `x-schema="<name>"`.
+
+A behavior's DOM is built by **either** its schema **or** its behavior, never
+both — running both is a race in which the last one wipes the other's work. The
+card is behavior-built: `card.schema.json` has an empty `$view` on purpose
+(#202), and `card.js` builds the header/body/footer. A behavior that builds its
+own structure is listed in `SCHEMA_EXCLUDED_TAGS` so the schema pass leaves it
+alone. The generic `x-behavior=`
 form is deprecated (#1642): it still runs, and warns once per spelling with the
 `x-{name}` attribute to write instead.
 
@@ -335,9 +389,14 @@ form is deprecated (#1642): it still runs, and warns once per spelling with the
 
 ```
 src/
+  main.js               ← the site's entry point (wb.js + site-engine.js)
   core/
-    wb-lazy.js          ← the WB runtime (map → lazy-inject → apply)
-    tag-map.js          ← native + custom tag → behavior maps
+    wb.js               ← eager runtime, used by the site
+    wb-lazy.js          ← lazy runtime, used by standalone pages
+    runtime-shared.js   ← logic both runtimes share
+    tag-map.js          ← native element / x- attribute → behavior maps
+    config.js           ← runtime config (autoInject defaults to true)
+    read-attr.js        ← plain / camelCase / data-* attribute reading
     theme.js            ← theme switching
     mvvm/schema-builder.js  ← schema → DOM
   wb-viewmodels/        ← behaviors (one concern per file)
@@ -353,18 +412,31 @@ src/
 
 ## 8. Render from JSON
 
-For dynamic UIs, build elements from a definition instead of HTML:
+For dynamic UIs, build elements from a definition instead of HTML. This is
+`wb-lazy.js` only; the site's eager runtime has no `render()`.
 
 ```js
 WB.render({
-  t: 'x-card',
+  b: 'card',
   d: { title: 'Generated' },
   children: [{ t: 'p', content: 'Built from JSON.' }],
 }, document.body);
 ```
 
-`render()` maps the behavior back to its tag, applies attributes/behaviors, and
-appends to the container.
+That builds a `<div x-card>` holding the paragraph, and the card behavior turns
+it into a card titled "Generated". The fields:
+
+| Field | Meaning |
+|---|---|
+| `t` | tag name (default `div`); `t: 'article'` builds a card with no `b` at all |
+| `b` | behavior name → an `x-<b>` attribute |
+| `behaviors` | more behavior names, each its own `x-<name>` |
+| `d` | the behavior's attributes, e.g. `{ title: 'Generated' }` |
+| `id`, `classes` | the element's id and class |
+| `content` / `html` | text content, or HTML |
+| `children` | nested definitions |
+
+An array renders each item in order.
 
 ---
 
@@ -380,11 +452,13 @@ appends to the container.
    ```
 2. **Register** the name in `src/wb-viewmodels/index.js`:
    `mything: 'my-thing',`
-3. **Map** a selector in `src/core/wb-lazy.js`:
-   `{ selector: 'x-mything', behavior: 'mything' }` (tag) or
-   `{ selector: '[x-mything]', behavior: 'mything' }` (attribute).
+   `<div x-mything>` now works in both runtimes (#1642); no selector to add.
+3. **(Only if a semantic element should get it automatically)** map that element
+   in `nativeMap` in `src/core/tag-map.js`, e.g. `'meter': 'mything'`.
 4. **Style** it in `src/styles/behaviors/mything.css` using theme tokens only.
-5. **(Optional)** add `src/wb-models/mything.schema.json` for declarative DOM.
+5. **Describe** it in `src/wb-models/mything.schema.json` (attributes,
+   variants, `test.setup`), so the Behaviors page and the compliance tests know
+   it. Leave `$view` empty if the behavior builds its own DOM.
 
 That's the whole loop — no build, no registration boilerplate beyond those maps.
 

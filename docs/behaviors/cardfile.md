@@ -44,13 +44,13 @@ The icon comes from the filename's extension; there is no separate type attribut
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `filename` | `string` | — | File name. Its extension picks the icon, and it is the only way to say what kind of file it is (#1119). |
-| `size` | `string` | — | File size (e.g., 2.4 MB) |
-| `date` | `string` | — | File date |
-| `href` | `string` | `#` | Download URL |
+| `filename` | file name with extension | — | File name. Its extension picks the icon, and it is the only way to say what kind of file it is (#1119). |
+| `size` | text, e.g. `2.4 MB` | — | File size (e.g., 2.4 MB) |
+| `date` | date | — | File date |
+| `href` | URL | `#` | Download URL |
 | `downloadable` | `boolean` | `true` | Show download link |
 | `variant` | `default` · `compact` · `elevated` | `default` |  |
-| `hoverText` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hoverText` | text | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 

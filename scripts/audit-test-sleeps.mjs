@@ -29,13 +29,13 @@ if (args.includes('--json')) {
 const total = sleeps.length;
 const byClass = {};
 for (const s of sleeps) byClass[s.class] = (byClass[s.class] || 0) + 1;
-const withSleep = new Set(sleeps.filter((s) => s.class !== 'marked').map((s) => s.file));
+const withSleep = new Set(sleeps.filter((s) => s.class !== 'marked' && s.class !== 'poll').map((s) => s.file));
 
 console.log(`Fixed sleeps in tests/ (#1516)\n`);
 console.log(`spec files            ${files.length}`);
 console.log(`files with a sleep    ${withSleep.size} (unmarked)`);
 console.log(`sleeps                ${total}`);
-for (const c of ['positive', 'redundant', 'setup', 'negative', 'marked']) console.log(`  ${c.padEnd(19)} ${byClass[c] || 0}`);
+for (const c of ['positive', 'redundant', 'setup', 'negative', 'poll', 'marked']) console.log(`  ${c.padEnd(19)} ${byClass[c] || 0}`);
 
 if (only) sleeps = sleeps.filter((s) => s.class === only);
 if (args.includes('--list')) {

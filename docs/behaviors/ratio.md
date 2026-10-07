@@ -14,6 +14,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `ratio` | `string` | `16x9` | The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative. |
+| `ratio` | ratio, e.g. `16/9` | `16x9` | The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative. |
 
 <sub>Schema: [`ratio.schema.json`](../../src/wb-models/ratio.schema.json)</sub>

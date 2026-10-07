@@ -18,15 +18,15 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `background` | `string` | — | Background image URL |
-| `title` | `string` | — | Hero headline |
-| `pretitle` | `string` | — | Small label or count shown above the title (e.g. '100 Behaviors') |
-| `subtitle` | `string` | — | Hero tagline/subheadline |
-| `content` | `string` | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) |
-| `cta` | `string` | — | Call-to-action button text |
-| `ctaHref` | `string` | `#` | Call-to-action link URL |
-| `ctaSecondary` | `string` | — | Secondary CTA text |
-| `ctaSecondaryHref` | `string` | `#` | Secondary CTA URL |
+| `background` | URL | — | Background image URL |
+| `title` | text | — | Hero headline |
+| `pretitle` | text | — | Small label or count shown above the title (e.g. '100 Behaviors') |
+| `subtitle` | text | — | Hero tagline/subheadline |
+| `content` | text or HTML | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) |
+| `cta` | text | — | Call-to-action button text |
+| `ctaHref` | URL | `#` | Call-to-action link URL |
+| `ctaSecondary` | text | — | Secondary CTA text |
+| `ctaSecondaryHref` | URL | `#` | Secondary CTA URL |
 | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant |
 | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) |
 | `overlay` | `boolean` | `true` | Show gradient overlay for text readability |

@@ -41,13 +41,18 @@ async function openBrowseList(page: Page) {
  */
 async function measureRow(page: Page, index: number): Promise<Violation | null> {
   return page.evaluate(async (i: number) => {
-    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    // Wait for the state each step needs, a frame at a time (#1516).
+    const until = async (ok: () => boolean, ms = 5000) => {
+      const end = performance.now() + ms;
+      while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r));
+    };
     const rows = [...document.querySelectorAll('.behaviors-search-results__row')] as HTMLElement[];
     const row = rows[i];
     if (!row) return null;
 
     row.click();
-    await sleep(40);
+    await until(() => !document.getElementById('behaviors-live')?.hasAttribute('aria-busy'));
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
     const stage = document.getElementById('behaviors-live-stage');
     const root = stage?.firstElementChild as HTMLElement | undefined;

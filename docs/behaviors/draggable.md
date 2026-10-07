@@ -13,6 +13,6 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `axis` | `x` · `y` · `both` | `both` |  |
-| `handle` | `string` | — | Selector for drag handle |
+| `handle` | CSS selector | — | Selector for drag handle |
 
 <sub>Schema: [`draggable.schema.json`](../../src/wb-models/draggable.schema.json)</sub>

@@ -15,12 +15,12 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title |
-| `content` | `string` | — | Card content/description |
-| `primary` | `string` | — | Primary button text |
-| `primaryHref` | `string` | `#` | Primary button link URL |
-| `secondary` | `string` | — | Secondary button text |
-| `secondaryHref` | `string` | `#` | Secondary button link URL |
+| `title` | text | — | Card title |
+| `content` | text or HTML | — | Card content/description |
+| `primary` | text | — | Primary button text |
+| `primaryHref` | URL | `#` | Primary button link URL |
+| `secondary` | text | — | Secondary button text |
+| `secondaryHref` | URL | `#` | Secondary button link URL |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 
 ## Events

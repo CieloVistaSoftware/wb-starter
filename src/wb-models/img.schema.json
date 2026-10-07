@@ -28,6 +28,7 @@
     "lazy": {
       "type": "boolean",
       "description": "Sets `loading=\"lazy\"`, so the browser defers fetching until the image nears the viewport. Bare attribute.",
+      "demoNote": "Nothing changes in this box: it is already in view, so the image loads at once. To see the wait, open your browser's Network panel on a long page and scroll down to the image.",
       "default": false,
       "visual": false,
       "visualReason": "Sets loading=\"lazy\", which defers the fetch until the image nears the viewport; the image on screen is unchanged."

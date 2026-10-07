@@ -17,13 +17,13 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `plan` | `string` | — | Plan name (e.g., Basic, Pro, Enterprise) |
-| `price` | `string` | — | Price amount (e.g., $29) |
-| `period` | `string` | `/month` | Billing period (e.g., /month, /year) |
-| `description` | `string` | — | Short plan description |
-| `features` | `string` | — | Comma-separated list of features |
-| `cta` | `string` | `Get Started` | Call-to-action button text |
-| `ctaHref` | `string` | `#` | Call-to-action link URL |
+| `plan` | text | — | Plan name (e.g., Basic, Pro, Enterprise) |
+| `price` | text | — | Price amount (e.g., $29) |
+| `period` | text | `/month` | Billing period (e.g., /month, /year) |
+| `description` | text | — | Short plan description |
+| `features` | comma-separated list | — | Comma-separated list of features |
+| `cta` | text | `Get Started` | Call-to-action button text |
+| `ctaHref` | URL | `#` | Call-to-action link URL |
 | `featured` | `boolean` | `false` | Highlight as featured/recommended plan |
 | `variant` | `default` · `bordered` · `elevated` · `minimal` | `default` | Visual style variant |
 

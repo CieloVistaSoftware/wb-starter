@@ -34,8 +34,8 @@ On another element, write `x-table`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `data` | `string` | — | Table data as JSON array |
-| `columns` | `string` | — | Column config as JSON [{key, label, sortable}] |
+| `data` | JSON array | — | Table data as JSON array |
+| `columns` | JSON array of {key, label, sortable} | — | Column config as JSON [{key, label, sortable}] |
 | `sortable` | `boolean` | `true` | Enable column sorting |
 | `filterable` | `boolean` | `false` | Enable filtering |
 | `paginated` | `boolean` | `false` | Enable pagination |
@@ -44,8 +44,8 @@ On another element, write `x-table`:
 | `hoverable` | `boolean` | `true` | Hover effect on rows |
 | `compact` | `boolean` | `false` | Compact row spacing |
 | `bordered` | `boolean` | `false` | Cell borders |
-| `headers` | `string` | — | Comma-separated column headings. |
-| `rows` | `string` | — | JSON array-of-arrays of row data. |
+| `headers` | comma-separated list | — | Comma-separated column headings. |
+| `rows` | JSON array of arrays | — | JSON array-of-arrays of row data. |
 | `searchable` | `boolean` | `false` | Show a filter input above the table. Alias of filterable. |
 | `copyable` | `boolean` | `false` | Add a control that copies the table as text. |
 | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. |

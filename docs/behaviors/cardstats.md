@@ -12,13 +12,13 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | The main statistic value (e.g., 1,234 or $50K) |
-| `label` | `string` | — | Label describing what the value represents |
-| `icon` | `string` | — | Icon (emoji or icon name) |
+| `value` | text | — | The main statistic value (e.g., 1,234 or $50K) |
+| `label` | text | — | Label describing what the value represents |
+| `icon` | emoji or icon name | — | Icon (emoji or icon name) |
 | `trend` | `` · `up` · `down` · `neutral` | — | Trend direction |
-| `trendValue` | `string` | — | Trend amount (e.g., +12%, -5%) |
+| `trendValue` | text | — | Trend amount (e.g., +12%, -5%) |
 | `variant` | `default` · `compact` · `large` · `minimal` | `default` | Visual style variant |
-| `color` | `string` | — | Accent color (CSS color value) |
+| `color` | CSS colour | — | Accent color (CSS color value) |
 
 ## Methods
 

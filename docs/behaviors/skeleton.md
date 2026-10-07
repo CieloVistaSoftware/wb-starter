@@ -20,7 +20,7 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `variant` | string | `"text"` | `text`, `circle`, `rect` (schema also lists `card`, but no CSS rule styles that value differently from the default block) |
+| `variant` | `text` · `circle` · `rect` | `"text"` | `text`, `circle`, `rect` (schema also lists `card`, but no CSS rule styles that value differently from the default block) |
 | `lines` | number | `1` | For `variant="text"` only — when greater than 1, replaces the block with that many stacked `<span>` line placeholders (the last one rendered narrower for realism) |
 | `width` | string (CSS value) | none | Applied as inline `element.style.width` |
 | `height` | string (CSS value) | none | Applied as inline `element.style.height` |

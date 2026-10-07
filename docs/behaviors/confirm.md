@@ -12,12 +12,12 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `heading` | `string` | `Confirm` | Dialog heading. Only used when `confirmTitle` is absent. |
-| `message` | `string` | `Are you sure?` | Body text. Only used when `confirmMessage` is absent. |
-| `confirmText` | `string` | `OK` | Label on the confirming button. Defaults to `OK`. |
-| `cancelText` | `string` | `Cancel` | Label on the dismissing button. Defaults to `Cancel`. |
-| `confirmTitle` | `string` | — | Dialog heading. Read BEFORE `heading`; defaults to `Confirm`. |
-| `confirmMessage` | `string` | — | Body text. Read BEFORE `message`; defaults to `Are you sure?`. |
+| `heading` | text | `Confirm` | Dialog heading. Only used when `confirmTitle` is absent. |
+| `message` | text | `Are you sure?` | Body text. Only used when `confirmMessage` is absent. |
+| `confirmText` | text | `OK` | Label on the confirming button. Defaults to `OK`. |
+| `cancelText` | text | `Cancel` | Label on the dismissing button. Defaults to `Cancel`. |
+| `confirmTitle` | text | — | Dialog heading. Read BEFORE `heading`; defaults to `Confirm`. |
+| `confirmMessage` | text | — | Body text. Read BEFORE `message`; defaults to `Are you sure?`. |
 
 ## Events
 

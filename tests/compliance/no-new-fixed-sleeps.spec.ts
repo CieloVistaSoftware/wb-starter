@@ -8,8 +8,10 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  * box and fails on a loaded one, which is #961's signature ("passes alone,
  * fails under load"). On 2026-10-06, 202 of 798 spec files held 426 sleeps;
  * the first pass (#1516) took that to 345 and the positive ones from 88 to 68;
- * the second took the positive ones to 43, the third to 26, the fourth to 3
- * (the three left are mobile-validation, which also runs under WebKit).
+ * the second took the positive ones to 43, the third to 26, the fourth to 3,
+ * the fifth to 0 (and began on the setup ones); the sixth taught the scan
+ * to see a sleep behind a local helper (`await sleep(200)`), which had hidden
+ * about thirty.
  * scripts/audit-test-sleeps.mjs classifies every one by what follows it
  * (scripts/lib/test-sleeps.mjs):
  *
@@ -17,6 +19,8 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   redundant  sleep, then a retrying assertion that already waits -- delete it
  *   setup      a "let it settle" sleep before an action or in a helper
  *   negative   sleep, then a check that nothing happened
+ *   poll       the interval of a loop that exits on a condition or a deadline --
+ *              already a condition wait, so not counted
  *   marked     `// sleep-proves-negative: <reason>` -- a reviewed negative proof
  *
  * RATCHET, NOT A CLIFF. The counts below are today's, and they may only go
@@ -31,10 +35,10 @@ import { allSleeps, sleepsIn, specFiles, MARKER } from '../../scripts/lib/test-s
  *   - `elementReady(locator)` / `buildInView(locator)` in tests/base.ts
  */
 const CEILING = {
-  positive: 3,
+  positive: 0,
   redundant: 0,
-  setup: 201,
-  negative: 59,
+  setup: 155,
+  negative: 58,
 };
 
 test.describe('no new fixed sleeps (#1516)', () => {
@@ -81,11 +85,23 @@ test.describe('no new fixed sleeps (#1516)', () => {
         // ${MARKER} nothing may fire within the debounce window
         await p.waitForTimeout(300);
         await p.evaluate(() => new Promise((r) => setTimeout(r, 50)));
+        await p.evaluate(async () => {
+          const deadline = Date.now() + 5000;
+          while (Date.now() < deadline) {
+            if (document.querySelector('.ready')) break;
+            await new Promise((r) => setTimeout(r, 25));
+          }
+        });
+        for (let i = 0; i < 3; i++) { await p.click('#c'); await p.waitForTimeout(100); }
+        const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+        for (let i = 0; i < 30 && !(await p.isVisible('#d')); i++) await sleep(50);
+        await p.click('#e');
+        await sleep(200);
       });
       // await p.waitForTimeout(999) in a comment is not a sleep
       const s = 'p.waitForTimeout(999)';
     `;
     expect(sleepsIn('fixture.spec.ts', src).map((s) => s.class))
-      .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup']);
+      .toEqual(['positive', 'redundant', 'setup', 'negative', 'marked', 'setup', 'poll', 'setup', 'poll', 'setup']);
   });
 });

@@ -12,11 +12,11 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `description` | `string` | — | Popover body text. Only used when `popoverContent` is absent. |
-| `heading` | `string` | — | Popover heading. Only used when `popoverTitle` is absent. |
-| `trigger` | `string` | `click` | What opens it: `click` (default) or `hover`. |
-| `position` | `string` | `top` | Side the popover opens on: `top` (default), `bottom`, `left` or `right`. |
-| `popoverContent` | `string` | — | Popover body text. Read BEFORE `description`. |
-| `popoverTitle` | `string` | — | Popover heading. Read BEFORE `heading`. |
+| `description` | text | — | Popover body text. Only used when `popoverContent` is absent. |
+| `heading` | text | — | Popover heading. Only used when `popoverTitle` is absent. |
+| `trigger` | `click` · `hover` | `click` | What opens it: `click` (default) or `hover`. |
+| `position` | `top` · `bottom` · `left` · `right` | `top` | Side the popover opens on: `top` (default), `bottom`, `left` or `right`. |
+| `popoverContent` | text | — | Popover body text. Read BEFORE `description`. |
+| `popoverTitle` | text | — | Popover heading. Read BEFORE `heading`. |
 
 <sub>Schema: [`popover.schema.json`](../../src/wb-models/popover.schema.json)</sub>

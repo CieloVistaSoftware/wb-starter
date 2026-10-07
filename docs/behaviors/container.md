@@ -18,14 +18,14 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `direction` | string | `"column"` | `column` (stack) or `row` -- only used when `columns` is `1` |
+| `direction` | `column` · `row` | `"column"` | `column` (stack) or `row` -- only used when `columns` is `1` |
 | `columns` | number | `1` | `1` = flex mode (stack/row); `2`+ = responsive auto-fit grid mode |
-| `gap` | string | `"1rem"` | Gap between children |
-| `align` | string | `"stretch"` | `start`, `center`, `end`, `stretch` |
-| `justify` | string | `"start"` | `start`, `center`, `end`, `space-between`, `space-around`, `space-evenly` |
+| `gap` | CSS length | `"1rem"` | Gap between children |
+| `align` | `start` · `center` · `end` · `stretch` | `"stretch"` | `start`, `center`, `end`, `stretch` |
+| `justify` | `start` · `center` · `end` · `space-between` · `space-around` · `space-evenly` | `"start"` | `start`, `center`, `end`, `space-between`, `space-around`, `space-evenly` |
 | `wrap` | boolean | `true` | Whether flex-mode children wrap (`false` forces `nowrap`) |
-| `padding` | string | `"1rem"` | Padding on the container itself |
-| `maxWidth` | string | `""` | Optional max-width; when set, also centers via `margin: 0 auto` |
+| `padding` | CSS padding | `"1rem"` | Padding on the container itself |
+| `maxWidth` | CSS length | `""` | Optional max-width; when set, also centers via `margin: 0 auto` |
 
 ## Usage
 

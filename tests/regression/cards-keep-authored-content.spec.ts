@@ -41,7 +41,8 @@ async function renderAll(page: Page, build: (name: string, marker: string) => st
       document.body.appendChild(host);
       host.innerHTML = tpl.replace(/__NAME__/g, name).replace(/__MARKER__/g, marker);
       await WB.scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 40));
+      // Built once its work has called back (#1516: not 40ms).
+      await WB.settled({ timeout: 10000 });
       const inDom = (host.textContent || '').includes(marker);
       results[name] = { inDom, onScreen: inDom && (host.innerText || '').includes(marker) };
       host.remove();
@@ -80,7 +81,8 @@ test.describe('cards keep the author content (#678)', () => {
       host.innerHTML = '<div id="jb" x-cardbutton variant="elevated">\n  Example x-cardbutton content\n</div>';
       const mod: any = await import('/src/core/wb-lazy.js');
       await (mod.default || mod.WB).scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 60));
+      // Built once its work has called back (#1516: not 60ms).
+      await (mod.default || mod.WB).settled({ timeout: 10000 });
       const el = document.querySelector('#jb') as HTMLElement;
       const r = el.getBoundingClientRect();
       return { text: (el.innerText || '').trim(), w: Math.round(r.width), h: Math.round(r.height) };
@@ -103,7 +105,8 @@ test.describe('cards keep the author content (#678)', () => {
       host.innerHTML = '<div id="c" x-card content="FROM_ATTRIBUTE">FROM_CHILDREN</div>';
       const mod: any = await import('/src/core/wb-lazy.js');
       await (mod.default || mod.WB).scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 60));
+      // Built once its work has called back (#1516: not 60ms).
+      await (mod.default || mod.WB).settled({ timeout: 10000 });
       const card = document.querySelector('#c') as HTMLElement;
       // The card's own body: a direct <main> child (it carries no class).
       const main = card.querySelector(':scope > .x-card__body') as HTMLElement | null;
@@ -125,7 +128,8 @@ test.describe('cards keep the author content (#678)', () => {
       host.innerHTML = '<div id="e" x-card>   \n  </div>';
       const mod: any = await import('/src/core/wb-lazy.js');
       await (mod.default || mod.WB).scan(host, { eager: true });
-      await new Promise((r) => setTimeout(r, 60));
+      // Built once its work has called back (#1516: not 60ms).
+      await (mod.default || mod.WB).settled({ timeout: 10000 });
       const el = document.querySelector('#e')!;
       // Any direct <main> body, classed or not: the old .x-card__main
       // selector matched no card body at all, so this could never fail.

@@ -13,10 +13,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `#` | Image source URL |
-| `alt` | `string` | — | Alt text for image |
-| `initials` | `string` | — | Fallback initials (2 chars) |
-| `name` | `string` | — | Full name (generates initials if not provided) |
+| `src` | URL | `#` | Image source URL |
+| `alt` | text | — | Alt text for image |
+| `initials` | up to 2 characters | — | Fallback initials (2 chars) |
+| `name` | text | — | Full name (generates initials if not provided) |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` |  |
 | `shape` | `circle` · `square` · `rounded` | `circle` |  |
 | `status` | `` · `online` · `offline` · `busy` · `away` | — | Status indicator (empty = no indicator) |

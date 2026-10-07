@@ -12,10 +12,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `seconds` | `string` | `0` | A fixed duration in seconds, used instead of an absolute `date`. |
-| `format` | `string` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. |
-| `date` | `string` | — | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
-| `to` | `string` | — | Alias of `date`, read only when `date` is absent. |
+| `seconds` | number of seconds | `0` | A fixed duration in seconds, used instead of an absolute `date`. |
+| `format` | `auto`, or a pattern using `DD` `HH` `MM` `SS` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. |
+| `date` | date or date-time, e.g. `2026-12-31T23:59` | — | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
+| `to` | date or date-time | — | Alias of `date`, read only when `date` is absent. |
 
 ## Events
 

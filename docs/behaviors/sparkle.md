@@ -12,6 +12,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `count` | `string` | `15` | How many sparkle particles to emit. The behavior's default is `15`. |
+| `count` | number | `15` | How many sparkle particles to emit. The behavior's default is `15`. |
 
 <sub>Schema: [`sparkle.schema.json`](../../src/wb-models/sparkle.schema.json)</sub>

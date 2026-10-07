@@ -26,12 +26,23 @@
  *              the state the next step needs.
  *   marked     carries `// sleep-proves-negative: <reason>` on its line or the
  *              line above: a reviewed, deliberate negative proof.
+ *   poll       the interval of a polling loop: the sleep sits in a loop that
+ *              breaks (or returns) when a condition holds, runs against a
+ *              deadline (`while (Date.now() < deadline)`), or whose condition
+ *              checks state (`for (i < 30 && menuHidden(); ...)`). That IS
+ *              waiting on the condition -- the sleep only paces the checks --
+ *              so it is not a guess. expect.poll says it more plainly, but
+ *              this is not the defect.
  *
  * Sleeps found:
  *   - `<x>.waitForTimeout(<n>)`                      Playwright's own sleep
  *   - `new Promise((r) => setTimeout(r, <n>))`       a promise sleep, in the test
  *                                                    or inside page.evaluate
  *   - `setTimeout(resolve, <n>)` in a Promise executor, any parameter name
+ *   - each call of a local sleep helper (`const sleep = (ms) =>
+ *     new Promise((r) => setTimeout(r, ms))`, then `await sleep(200)`): the
+ *     call is the sleep, so each one is classified where it is used; the
+ *     helper's own setTimeout is not counted
  *
  * TypeScript's parser finds them, so a sleep in a comment or a string is not
  * counted and a multi-line call is.
@@ -47,10 +58,59 @@ const NEGATIVE_MATCHERS = new Set([
   'toBeHidden', 'toBeFalsy', 'toBeNull', 'toBeUndefined', 'toBeDisabled', 'toBeNaN',
 ]);
 
+/**
+ * When `fn` is a sleep helper -- one parameter, whose body is (or returns)
+ * `new Promise((r) => setTimeout(r, <that parameter>))` -- the setTimeout call.
+ */
+function helperTimeout(fn) {
+  if (!fn || !(ts.isArrowFunction(fn) || ts.isFunctionExpression(fn) || ts.isFunctionDeclaration(fn))) return null;
+  if (fn.parameters.length !== 1 || !ts.isIdentifier(fn.parameters[0].name)) return null;
+  const param = fn.parameters[0].name.text;
+  let body = fn.body;
+  if (body && ts.isBlock(body)) {
+    const ret = body.statements.length === 1 && ts.isReturnStatement(body.statements[0]) ? body.statements[0].expression : null;
+    body = ret;
+  }
+  if (!body || !ts.isNewExpression(body) || !ts.isIdentifier(body.expression) || body.expression.text !== 'Promise') return null;
+  let found = null;
+  const visit = (n) => {
+    if (found) return;
+    if (ts.isCallExpression(n) && ts.isIdentifier(n.expression) && n.expression.text === 'setTimeout'
+      && n.arguments[1] && ts.isIdentifier(n.arguments[1]) && n.arguments[1].text === param) { found = n; return; }
+    ts.forEachChild(n, visit);
+  };
+  visit(body);
+  return found;
+}
+
+/** Local sleep helpers in a file: their names, and their own setTimeout calls (not counted). */
+function sleepHelpers(sf) {
+  const names = new Set();
+  const inner = new Set();
+  const visit = (n) => {
+    let fn = null;
+    let name = null;
+    if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name)) { fn = n.initializer; name = n.name.text; }
+    if (ts.isFunctionDeclaration(n) && n.name) { fn = n; name = n.name.text; }
+    const t = name ? helperTimeout(fn) : null;
+    if (t) { names.add(name); inner.add(t); }
+    ts.forEachChild(n, visit);
+  };
+  visit(sf);
+  return { names, inner };
+}
+
+let HELPERS = { names: new Set(), inner: new Set() };
+
 /** True when `node` is a sleep call; returns the delay text when it is. */
 function sleepOf(node) {
   if (!ts.isCallExpression(node)) return null;
+  if (HELPERS.inner.has(node)) return null;
   const callee = node.expression;
+  // sleep(n), where sleep is a local helper (see sleepHelpers)
+  if (ts.isIdentifier(callee) && HELPERS.names.has(callee.text)) {
+    return { kind: callee.text, delay: node.arguments[0] ? node.arguments[0].getText() : '?' };
+  }
   // page.waitForTimeout(n), frame.waitForTimeout(n)
   if (ts.isPropertyAccessExpression(callee) && callee.name.text === 'waitForTimeout') {
     return { kind: 'waitForTimeout', delay: node.arguments[0] ? node.arguments[0].getText() : '?' };
@@ -71,6 +131,54 @@ function sleepOf(node) {
     }
   }
   return null;
+}
+
+/** True when an if-guarded break/return sits in `body` (not in a nested function). */
+function exitsOnCondition(body) {
+  let found = false;
+  const visit = (n) => {
+    if (found || ts.isFunctionLike(n)) return;
+    if ((ts.isBreakStatement(n) || ts.isReturnStatement(n))) {
+      for (let p = n.parent; p && p !== body; p = p.parent) if (ts.isIfStatement(p)) { found = true; return; }
+    }
+    ts.forEachChild(n, visit);
+  };
+  visit(body);
+  return found;
+}
+
+/** True when a call expression sits anywhere under `n`. */
+function hasCall(n) {
+  let found = false;
+  const visit = (c) => { if (found) return; if (ts.isCallExpression(c)) { found = true; return; } ts.forEachChild(c, visit); };
+  visit(n);
+  return found;
+}
+
+/** True when `node` paces a polling loop: see `poll` above. */
+function inPollLoop(node) {
+  for (let p = node.parent; p; p = p.parent) {
+    if (ts.isFunctionLike(p)) {
+      // A sleep helper's own body (const sleep = ...) is not the loop; keep
+      // climbing only through the Promise executor of the sleep itself.
+      if (p.parent && ts.isNewExpression(p.parent)) continue;
+      return false;
+    }
+    if (ts.isWhileStatement(p) || ts.isDoStatement(p) || ts.isForStatement(p)) {
+      const condNode = ts.isForStatement(p) ? p.condition : p.expression;
+      const cond = condNode ? condNode.getText() : '';
+      // A condition that checks state, not only a counter: a deadline, or a
+      // call / && / || in it (`i < 30 && menuHidden()`), as opposed to `i < steps`.
+      if (/\b(Date|performance)\.now\(\)|deadline|until/i.test(cond)) return true;
+      // A loop that only waits -- its body is the sleep alone -- while its
+      // condition checks state; a loop that also acts each pass is not a poll.
+      const onlySleeps = ts.isExpressionStatement(p.statement)
+        || (ts.isBlock(p.statement) && p.statement.statements.length === 1);
+      if (onlySleeps && condNode && (/&&|\|\|/.test(cond) || hasCall(condNode))) return true;
+      return exitsOnCondition(p.statement);
+    }
+  }
+  return false;
 }
 
 /** Playwright's web-first matchers: each retries until it passes or times out. */
@@ -145,6 +253,7 @@ function statementsAfter(node) {
  */
 export function sleepsIn(file, text) {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  HELPERS = sleepHelpers(sf);
   const lines = text.split('\n');
   const out = [];
   const visit = (node) => {
@@ -159,6 +268,8 @@ export function sleepsIn(file, text) {
       if (markLine) {
         cls = 'marked';
         reason = markLine.slice(markLine.indexOf(MARKER) + MARKER.length).trim();
+      } else if (inPollLoop(node)) {
+        cls = 'poll';
       } else {
         // Up to the next sleep in the same block: the first assertion decides.
         let next = null;

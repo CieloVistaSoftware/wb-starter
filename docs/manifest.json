@@ -262,13 +262,13 @@
           "file": "behaviors/alert.md",
           "title": "Alert",
           "description": "x-alert builds an inline alert box from its message, title and variant attributes, with a severity icon and colour, and an optional close button when…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/articles.md",
           "title": "articles",
           "description": "Wraps a set of article-like children in a grid/list/masonry layout, with an optional heading and static pagination controls.",
-          "modified": "2026-09-28"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/aside.md",
@@ -292,13 +292,13 @@
           "file": "behaviors/avatar.md",
           "title": "Avatar",
           "description": "x-avatar renders a round (or shaped) picture from src, and falls back to initials taken from name when there is no image or it fails to load.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/badge.md",
           "title": "Badge",
           "description": "x-badge turns a <span> into a small coloured label: its text comes from label, its colour from variant, and pill, dot, outline and glow change its shape.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/blockquote.md",
@@ -316,7 +316,7 @@
           "file": "behaviors/breadcrumb.md",
           "title": "Breadcrumb",
           "description": "x-breadcrumb builds a breadcrumb trail inside a <nav> from the comma-separated items, drawing separator between them and marking the last item as the…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/button.md",
@@ -370,13 +370,13 @@
           "file": "behaviors/cardimage.md",
           "title": "Image Card",
           "description": "x-cardimage renders a card led by an image from src, with a title, subtitle and caption under it.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardlink.md",
           "title": "Link Card",
           "description": "x-cardlink renders a card that is itself a link to href: the whole surface is clickable and keyboard-focusable, with a title, description, optional icon and…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardminimizable.md",
@@ -388,13 +388,13 @@
           "file": "behaviors/cardnotification.md",
           "title": "Notification Card",
           "description": "x-cardnotification renders a notice card coloured by variant (info, success, warning, error), with an icon, title, message and a dismiss button that removes it.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardoverlay.md",
           "title": "Overlay Card",
           "description": "x-cardoverlay renders a card whose title and subtitle sit on top of a background image, with a gradient behind the text to keep it readable.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardportfolio.md",
@@ -430,13 +430,13 @@
           "file": "behaviors/cardtestimonial.md",
           "title": "Testimonial Card",
           "description": "x-cardtestimonial renders a quotation card with the quote, the author's name, role and avatar, and an optional star rating.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/cardvideo.md",
           "title": "Video Card",
           "description": "x-cardvideo renders a card with a video player from src (with poster shown before playback) above a title and description.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/center.md",
@@ -454,7 +454,7 @@
           "file": "behaviors/chip.md",
           "title": "chip",
           "description": "A small pill-shaped tag/label with optional icon, color variant, and dismiss button.",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/clock.md",
@@ -466,7 +466,7 @@
           "file": "behaviors/cluster.md",
           "title": "Cluster",
           "description": "x-cluster lays its children out in a wrapping row with a fixed gap, centred on a shared line.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/code.md",
@@ -478,7 +478,7 @@
           "file": "behaviors/collapse.md",
           "title": "Collapse",
           "description": "x-collapse hides the element's content behind a button labelled with heading; clicking it shows or hides the content.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/colorpicker.md",
@@ -526,7 +526,7 @@
           "file": "behaviors/countdown.md",
           "title": "Countdown",
           "description": "x-countdown shows the time left until date (or to), or for a fixed number of seconds, and updates it every second until it reaches zero, when…",
-          "modified": "2026-10-05"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/counter.md",
@@ -580,7 +580,7 @@
           "file": "behaviors/draggable.md",
           "title": "Draggable",
           "description": "x-draggable lets the user move the element with the mouse or a finger.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/drawer.md",
@@ -658,7 +658,7 @@
           "file": "behaviors/flex.md",
           "title": "Flex",
           "description": "x-flex makes the element a flex container and sets direction, wrap, justify, align and gap from attributes, so a row or column layout needs no CSS.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/flip.md",
@@ -670,7 +670,7 @@
           "file": "behaviors/floatinglabel.md",
           "title": "x-floatinglabel Behavior",
           "description": "Turns a field's placeholder into a label that floats above the field once it has focus or a value.",
-          "modified": "2026-09-28"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/footer.md",
@@ -700,13 +700,13 @@
           "file": "behaviors/fullscreen.md",
           "title": "Fullscreen",
           "description": "x-fullscreen makes the element a button that expands the page (or the element matched by target) to full screen and back.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/gallery.md",
           "title": "Gallery",
           "description": "x-gallery lays the images inside it out as a grid of columns (or fixed-size tiles with size), and clicking any image opens it full-size in a lightbox you…",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/glass.md",
@@ -802,25 +802,25 @@
           "file": "behaviors/mark.md",
           "title": "Mark",
           "description": "A plain <mark> highlights text; variant picks a success, warning, danger or info colour, and color sets any colour with the text colour chosen to stay readable.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/masked.md",
           "title": "x-masked Behavior",
           "description": "Formats input as the user types against a mask pattern (phone numbers, SSNs, license plates, etc).",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/masonry.md",
           "title": "Masonry",
           "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/mdhtml.md",
           "title": "Markdown to HTML",
           "description": "x-mdhtml fetches the Markdown file at src (or reads its own text) and renders it as HTML in place, including live x-demo examples.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/modal.md",
@@ -844,7 +844,7 @@
           "file": "behaviors/notify.md",
           "title": "Notify",
           "description": "x-notify makes the element pop a toast notification on each click.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/ol.md",
@@ -886,7 +886,7 @@
           "file": "behaviors/print.md",
           "title": "Print",
           "description": "x-print makes the element a button that prints the page, or only the element matched by target.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/progress.md",
@@ -916,7 +916,7 @@
           "file": "behaviors/rainbow.md",
           "title": "Rainbow",
           "description": "x-rainbow paints the element's text with a moving rainbow gradient that cycles every duration.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/range.md",
@@ -928,13 +928,13 @@
           "file": "behaviors/rating.md",
           "title": "Rating",
           "description": "x-rating renders a row of max stars with value of them filled, and lets the user click to set a new rating unless readonly is set; half allows half stars.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/ratio.md",
           "title": "Ratio",
           "description": "x-ratio gives the element a fixed aspect ratio from ratio (16:9, 4x3 or 1/1 all work) and makes a direct image, video or iframe child cover it.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/reel.md",
@@ -946,19 +946,19 @@
           "file": "behaviors/relativetime.md",
           "title": "Relativetime",
           "description": "x-relativetime replaces the element's text with how long ago date was — \"3 days ago\", \"Just now\" — and recomputes it every refresh milliseconds.",
-          "modified": "2026-10-05"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/repeater.md",
           "title": "Repeater",
           "description": "x-repeater stamps out count copies of its <template>, replacing {{index}} with 1, 2, 3… and {{i}} with 0, 1, 2….",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/resizable.md",
           "title": "Resizable",
           "description": "x-resizable adds drag handles to the element so the user can resize it; handles lists which edges and corners get one (se, the bottom-right corner, by default).",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/scrollable.md",
@@ -970,13 +970,13 @@
           "file": "behaviors/search.md",
           "title": "Search",
           "description": "x-search turns a text <input> into a search box with an icon and a clear button, and fires wb:search once typing pauses for debounce milliseconds (or on…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/searchfield.md",
           "title": "x-searchfield Behavior",
           "description": "A complete search input: icon, debounced/instant search events, clear button, and loading state.",
-          "modified": "2026-10-05"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/select.md",
@@ -1006,13 +1006,13 @@
           "file": "behaviors/skeleton.md",
           "title": "skeleton",
           "description": "A shimmering placeholder block for loading states — a single line, multiple stacked lines, a circle, or a rectangle.",
-          "modified": "2026-09-25"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/slidein.md",
           "title": "Slidein",
           "description": "x-slidein slides the element in from the direction edge (left, right, top or bottom) over 0.5 s each time it is clicked.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/slider.md",
@@ -1030,13 +1030,13 @@
           "file": "behaviors/sparkle.md",
           "title": "Sparkle",
           "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/spinner.md",
           "title": "Spinner",
           "description": "x-spinner draws an animated loading ring in the element, sized by size and coloured by variant, with label as its accessible name.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/stack.md",
@@ -1066,7 +1066,7 @@
           "file": "behaviors/steps.md",
           "title": "Steps",
           "description": "x-steps draws a progress indicator for a multi-step process from the comma-separated items, marking steps before current as done and current itself as active.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/sticky.md",
@@ -1132,7 +1132,7 @@
           "file": "behaviors/timeline.md",
           "title": "Timeline",
           "description": "x-timeline draws a vertical timeline, one marker per entry in the comma-separated items.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/toast.md",
@@ -1144,19 +1144,19 @@
           "file": "behaviors/toggle.md",
           "title": "Toggle",
           "description": "x-toggle switches a CSS class (toggle-class, default active) on the element matched by target each time it is clicked, and on itself too unless…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/truncate.md",
           "title": "Truncate",
           "description": "x-truncate cuts text off after lines lines with an ellipsis; expandable adds a \"Show more\" control that reveals the rest.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/typewriter.md",
           "title": "Typewriter",
           "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
-          "modified": "2026-10-04"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/ul.md",
@@ -1168,7 +1168,7 @@
           "file": "behaviors/video.md",
           "title": "Video",
           "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown…",
-          "modified": "2026-10-02"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/vimeo.md",

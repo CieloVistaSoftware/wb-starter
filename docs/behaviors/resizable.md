@@ -14,6 +14,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `handles` | `string` | `se` |  |
+| `handles` | `n` · `s` · `e` · `w` · `ne` · `nw` · `se` · `sw` · `all`, or several separated by spaces | `se` |  |
 
 <sub>Schema: [`resizable.schema.json`](../../src/wb-models/resizable.schema.json)</sub>
