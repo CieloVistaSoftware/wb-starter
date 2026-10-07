@@ -301,8 +301,7 @@ test.describe('[x-drawer-layout] / [x-scrollalong] / [x-sticky] / [x-timeline] -
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     page.on('console', (msg) => { if (msg.type() === 'error') errors.push(msg.text()); });
-    await ready(page);
-    await page.waitForTimeout(500);
+    await ready(page); // ready() waits for WB to settle (#1516)
     expect(errors).toEqual([]);
   });
 });

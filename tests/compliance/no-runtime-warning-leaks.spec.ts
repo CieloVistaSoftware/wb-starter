@@ -46,7 +46,8 @@ test.describe('no component authoring-warning strings leak into shipped pages', 
       // test waited on a waitForFunction(WB) that could only ever time
       // out for it -- removed rather than chased further, since nothing
       // here actually needs it).
-      await page.waitForTimeout(800);
+      // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
+      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
       // Under heavy parallel load, document.body can transiently read null
       // right as a page fragment finishes swapping in (confirmed: a
       // different random subset of pages failed with "Cannot read

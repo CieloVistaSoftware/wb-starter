@@ -28,7 +28,8 @@ test.describe('Full-document boilerplate examples are never auto-live-rendered',
 
     await page.goto('/public/doc-viewer.html?file=docs%2FV3-GUIDE.md', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content', { timeout: 15000 });
-    await page.waitForTimeout(2000);
+    // Everything that could 404 or throw has run once WB settles (#1516: not 2000ms).
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 
     expect(failed404s, `unexpected 404/failed requests: ${failed404s.join(', ')}`).toEqual([]);
     expect(errors, `unexpected page errors: ${errors.join(', ')}`).toEqual([]);
@@ -40,6 +41,7 @@ test.describe('Full-document boilerplate examples are never auto-live-rendered',
 
     await page.goto('/public/doc-viewer.html?file=docs%2FV3-GUIDE.md', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content', { timeout: 15000 });
+    // sleep-proves-negative: the boilerplate example must NOT request themes; a request that never goes out fires no event
     await page.waitForTimeout(2000);
 
     expect(

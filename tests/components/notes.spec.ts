@@ -365,7 +365,7 @@ test.describe('Notes Behavior', () => {
       const content = 'Outgoing note ' + Date.now();
       await page.fill('#test-container .x-notes__textarea', content);
       await page.click('#test-container .x-notes__wide-btn[data-action="new"]');
-      await page.waitForTimeout(300);
+      // No sleep (#1516): not.toContainText below retries until the note resets.
 
       const textarea = page.locator('#test-container .x-notes__textarea');
       await expect(textarea).not.toContainText(content); // reset to a fresh note

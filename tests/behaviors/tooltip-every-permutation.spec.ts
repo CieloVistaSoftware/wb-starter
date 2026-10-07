@@ -179,6 +179,7 @@ test.describe('x-tooltip — delay and hideDelay', () => {
     await harness(page);
     const t = await trigger(page, 'content="d" delay="800"');
     await t.hover();
+    // sleep-is-the-scenario: the show delay is the feature; the tooltip must not appear before it
     await page.waitForTimeout(300);            // the feature IS the passing of time
     await expect(page.locator(TIP), 'shown too early -> delay ignored').toHaveCount(0);
     await expect(page.locator(TIP).first()).toBeVisible({ timeout: 3000 });

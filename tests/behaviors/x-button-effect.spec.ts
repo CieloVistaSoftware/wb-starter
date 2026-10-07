@@ -230,7 +230,7 @@ test.describe('x-ripple -- a real ripple DOM element appears on click, then is r
     // the wave element should still be present (it's appended synchronously
     // in the mousedown handler, removed via setTimeout after config.duration).
     await expect(page.locator('#rip .x-ripple__wave')).toHaveCount(1);
-    await page.waitForTimeout(900);
+    // No sleep (#1516): toHaveCount(0) retries until the wave is removed.
     await expect(page.locator('#rip .x-ripple__wave')).toHaveCount(0);
   });
 });

@@ -94,7 +94,9 @@ test.describe('Playground: 50 x-* behaviors example set', () => {
   });
 
   test('all 50 examples parse as valid elements with zero x-error markers', async ({ page }) => {
-    await page.waitForTimeout(2000); // let the MutationObserver settle every lazy-injected behavior
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     const errorCount = await page.locator('#pg-preview [x-error]').count();
     expect(errorCount, 'no example should carry an x-error attribute (behavior load/apply failure)').toBe(0);
   });

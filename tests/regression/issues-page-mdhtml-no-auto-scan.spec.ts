@@ -83,6 +83,7 @@ test('pages/issues.html never fetches the fake illustrative path embedded in iss
   // code, not promoted into a live element.
   await expect(expander).toContainText('x-mdhtml', { timeout: 10000 });
   await expect(expander.locator('[x-mdhtml]')).toHaveCount(0);
+  // sleep-proves-negative: the illustrative path must NEVER be fetched; a fetch that never happens fires no event
   await page.waitForTimeout(1000);
 
   expect(fetched, 'the fake illustrative /docs/guide.md path embedded in #527\'s own body must never actually be fetched').toEqual([]);

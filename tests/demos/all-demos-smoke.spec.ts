@@ -72,7 +72,8 @@ for (const file of demoFiles()) {
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 5000 }).catch(() => {});
     await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(800);
+    // What the scroll lazily built has settled (#1516: not 800ms).
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 
     const bodyText = (await page.locator('body').innerText().catch(() => '')).trim();
 

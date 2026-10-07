@@ -21,7 +21,9 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
 
     await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2500); // lazy injection + schema build + observer
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     expect(
       schemaWarnings,
@@ -40,6 +42,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
       const home = document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement;
       home?.click();
     }, pagePath('home'));
+    // sleep-proves-negative: navigating away must NOT log a schema warning; a warning that never comes fires no event
     await page.waitForTimeout(800);
     await page.goto('/?page=behaviors');
     await wbIdle(page);

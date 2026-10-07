@@ -11,7 +11,9 @@ test.describe('Legacy Pill Migration', () => {
     for (const url of ['/', '/?page=behaviors']) {
       await page.goto(url);
       await page.waitForFunction(() => (window as any).WB);
-      await page.waitForTimeout(300);
+      // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+      await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+      await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
       // No legacy attributes or legacy-error markers in DOM
       // The LEGACY tag (#857): the 4.0.0 rename pointed this at `x-pill`, which
