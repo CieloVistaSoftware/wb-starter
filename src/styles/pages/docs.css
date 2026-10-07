@@ -66,14 +66,14 @@
   @media (max-width: 600px) {
     .docs-search-wrapper,
     .docs-loading {
-      padding: 1rem !important;
-      margin: 0 !important;
+      padding: 1rem;
+      margin: 0;
       box-sizing: border-box;
     }
     .docs-search-wrapper input[type="search"] {
-      font-size: 1rem !important;
-      padding: 0.5rem 0.75rem !important;
-      border-radius: 1rem !important;
+      font-size: 1rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 1rem;
     }
   }
 
