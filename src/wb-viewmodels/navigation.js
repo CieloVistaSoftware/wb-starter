@@ -242,10 +242,10 @@ export function navbar(element, options = {}) {
 export function sidebar(element, options = {}) {
   /** One item, whichever spelling it came in. */
   const toItem = (raw) => {
-    const label = String(raw.label ?? raw.id ?? '');
+    const name = String(raw.label ?? raw.id ?? '');
     return {
-      id: raw.id == null || raw.id === '' ? label : String(raw.id),
-      label,
+      id: raw.id == null || raw.id === '' ? name : String(raw.id),
+      label: name,
       href: raw.href || '#',
       icon: raw.icon,
       target: raw.target || '',
@@ -256,8 +256,8 @@ export function sidebar(element, options = {}) {
     const text = String(raw || '').trim();
     if (text.startsWith('[')) {
       try {
-        const list = JSON.parse(text);
-        return Array.isArray(list) ? list.map(toItem) : [];
+        const parsed = JSON.parse(text);
+        return Array.isArray(parsed) ? parsed.map(toItem) : [];
       } catch (err) {
         console.warn('[WB:sidebar] items is not valid JSON:', err.message);
         return [];
