@@ -1221,5 +1221,6 @@
   "1642": "x-behavior=\"name\" is deprecated: use x-name everywhere (src, demos, pages, docs, tests)",
   "1645": "Behaviors page: the search input is sometimes wrapped twice (nested x-input__wrapper)",
   "1653": "Hero gallery / playground heroes: on 20 of 120 heroes both buttons go to the same page",
-  "1667": "V3-GUIDE.md is out of date: autoInject default, the two runtimes, toast type=, WB.render, the add-a-behavior recipe"
+  "1667": "V3-GUIDE.md is out of date: autoInject default, the two runtimes, toast type=, WB.render, the add-a-behavior recipe",
+  "1678": "Error Log Viewer: Copy button to hand the list over"
 }

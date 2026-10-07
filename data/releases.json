@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.373",
+      "date": "2026-10-06",
+      "summary": "Audio&#39;s light theme and the dev console still used !important where nothing needed it, and the gate counted a vendored library&#39;s grammar strings. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1675\" target=\"_blank\" rel=\"noopener\">PR 1675</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Clear !important from audio and devconsole; skip vendored src/lib</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7b5b809c70e3cbd92cb14a2b9803b548a9c91085\" target=\"_blank\" rel=\"noopener\"><code>7b5b809</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Gate new !important in src/ and clear dialog, notes, links</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/493c71cf448abf73623b5a32b4730ffe413850af\" target=\"_blank\" rel=\"noopener\"><code>493c71c</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Switch the home page to the light theme and look at the audio player. Before: its light body relied on !important (and src/ held 128). Now: it looks the same with plain rules, and src/ holds 120 across 15 files.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5384b6dfbfbac042118a8d1305e7799bd7e2896e\" target=\"_blank\" rel=\"noopener\"><code>5384b6d</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.372",
       "date": "2026-10-06",
       "summary": "Permutation-compliance&#39;s event checks wait for the event (2s cap, still reported if it never fires) and its keyboard check for the class; fullscreen-failure-rollback waits for the refusal to be logged, for the fullscreen class and Exit label, and for the class to clear; duplicate-ids waits for the second boot&#39;s &quot;called twice&quot; refusal and WB.settled; ten more specs wait for the theme to paint, the lazy upgrade, the saved note, the accordion animation, the live panel, the theme link swap and the page&#39;s content; cardproduct drops two pauses that waited for nothing; a plain fieldset&#39;s no-collapse check is marked as a negative proof; the setup ceiling drops to 99. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1676\" target=\"_blank\" rel=\"noopener\">PR 1676</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
