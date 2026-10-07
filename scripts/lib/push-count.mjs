@@ -44,8 +44,33 @@ export function countBase(root, ref = 'HEAD') {
   try { tag = run(root, 'describe', '--tags', '--abbrev=0', '--match', 'v[0-9]*', ref); } catch { /* no tag */ }
   const anchorHere = isAncestor(root, ANCHOR.commit, ref);
   const tagIsNewer = tag && isAncestor(root, ANCHOR.commit, `${tag}^{commit}`);
-  if (anchorHere && !tagIsNewer) return { release: ANCHOR.version, base: ANCHOR.commit };
-  return tag ? { release: tag.replace(/^v/, ''), base: tag } : null;
+  const found = anchorHere && !tagIsNewer
+    ? { release: ANCHOR.version, base: ANCHOR.commit }
+    : tag ? { release: tag.replace(/^v/, ''), base: tag } : null;
+  // A release commit counts from the moment it lands, tagged or not. The stamp
+  // workflow and release.yml both start on the same push, so the stamp can run
+  // before the tag exists: it then counted from the previous tag, stamped the
+  // release push as an ordinary 1.0.N, and dropped the release's own entry from
+  // data/releases.json. Only a 1.0.N that equals the next push number survived
+  // that race, which is why 1.0.132 shipped and 1.0.400 would not have.
+  const rel = releaseCommit(root, ref);
+  if (rel && (!found || isAncestor(root, `${found.base}^{commit}`, rel.base))) return rel;
+  return found;
+}
+
+/** `release: 1.0.400 — …`: the subject release.mjs gives the commit it tags. */
+export const RELEASE_SUBJECT = /^release: (\d+\.\d+\.\d+)(?:\s|$)/;
+
+/** The newest release commit reachable from ref, as a count base; null when none. */
+export function releaseCommit(root, ref = 'HEAD') {
+  let out = '';
+  try { out = run(root, 'log', '-E', '--grep=^release: [0-9]+\\.[0-9]+\\.[0-9]+', '--format=%H%x1f%s', ref); } catch { /* no history */ }
+  for (const line of out.split('\n').filter(Boolean)) {
+    const [sha, subject] = line.split('\x1f');
+    const m = (subject || '').match(RELEASE_SUBJECT);
+    if (m) return { release: m[1], base: sha };
+  }
+  return null;
 }
 
 /** Subjects of first-parent commits in tag..ref, oldest first. */
@@ -53,7 +78,19 @@ export function firstParentSubjects(root, tag, ref = 'HEAD') {
   return run(root, 'log', '--first-parent', '--reverse', '--format=%s', `${tag}..${ref}`).split('\n').filter(Boolean);
 }
 
+/**
+ * True when sha is the merge that brought base onto main: a release made
+ * through a PR lands as that merge, so the merge IS the release's push (the
+ * badge reads 1.0.400, not 1.0.401), not one more push after it.
+ */
+export function isReleaseMerge(root, base, sha) {
+  try { return run(root, 'rev-parse', `${sha}^2`) === run(root, 'rev-parse', `${base}^{commit}`); } catch { return false; }
+}
+
 /** Pushes to main in tag..ref: first-parent commits that are not stamp commits. */
 export function countPushes(root, tag, ref = 'HEAD') {
-  return firstParentSubjects(root, tag, ref).filter((s) => !STAMP_SUBJECT.test(s)).length;
+  const base = run(root, 'rev-parse', `${tag}^{commit}`);
+  return run(root, 'log', '--first-parent', '--format=%s%x1f%P', `${tag}..${ref}`).split('\n').filter(Boolean)
+    .map((line) => line.split('\x1f'))
+    .filter(([subject, parents]) => !STAMP_SUBJECT.test(subject) && (parents || '').split(' ')[1] !== base).length;
 }
