@@ -25,9 +25,14 @@ test.describe('Demos search (#857)', () => {
     const section = page.locator('.demos-category[category="Card Behaviors"]');
     await expect(section).toBeVisible();
     await expect(section.locator('[x-cardlink]').first()).toHaveJSProperty('hidden', false);
-    const visible = await page.locator('.demos-category:not([hidden])').count();
-    expect(visible, 'sections left showing for "card behaviors"').toBeGreaterThanOrEqual(1);
-    expect(visible, 'sections with no match are hidden').toBeLessThan(total);
+    // Poll, never a one-shot count (#961). The checks above were already true
+    // before the filter ran, so they waited for nothing; and fill() can land
+    // before the page's script attaches its input listener, in which case the
+    // filter only runs when the search-index fetch re-fires the event. Read
+    // once, the count caught that window under load: 11 of 11 sections.
+    const shown = () => page.locator('.demos-category:not([hidden])').count();
+    await expect.poll(shown, { message: 'sections with no match are hidden', timeout: 10_000 }).toBeLessThan(total);
+    expect(await shown(), 'sections left showing for "card behaviors"').toBeGreaterThanOrEqual(1);
   });
 
   test('clearing the search shows every section again', async ({ page }) => {

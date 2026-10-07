@@ -191,5 +191,10 @@
 
       empty.hidden = visibleCount > 0;
     });
+
+    // Text typed before this script attached the listener (a fast typist, or a
+    // test's fill() on a loaded machine, #961) is applied now, not only when
+    // the content index arrives -- which, if that fetch fails, is never.
+    if (input.value.trim()) input.dispatchEvent(new Event('input'));
   })();
 </script>
