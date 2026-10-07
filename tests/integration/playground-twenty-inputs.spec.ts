@@ -124,8 +124,8 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   });
 
   test('10. x-floatinglabel moves the label text out of the placeholder', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .x-floating-label').first();
-    await expect(wrapper.locator('.x-floating-label__label')).toHaveText('Email address');
+    const wrapper = page.locator('#pg-preview .x-floatinglabel').first();
+    await expect(wrapper.locator('.x-floatinglabel__label')).toHaveText('Email address');
     // No placeholder text may remain to sit behind the resting label. The
     // example authors none, and #765's floatinglabel() only clears one that
     // exists (keeping it as the title) instead of stamping placeholder="" on

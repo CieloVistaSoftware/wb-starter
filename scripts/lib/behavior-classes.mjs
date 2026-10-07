@@ -116,3 +116,101 @@ export function allCss(readdirSync, root = 'src/styles') {
   walk(root);
   return out;
 }
+
+/**
+ * NAMING CONFORMANCE (#1096)
+ * ==========================
+ * The convention in docs/standards/CSS-CLASS-CONVENTION.md:
+ *
+ *   x-{behavior}               the host element
+ *   x-{behavior}__{part}       DOM the behavior builds inside the host
+ *   x-{behavior}--{modifier}   a variant or state of the host
+ *
+ * where {behavior} is a REGISTERED behavior name. A class that breaks it fails
+ * one of two ways: its base names a concept rather than a behavior
+ * (`x-pricing` for `cardpricing`), or it has a shape the rule has no slot for
+ * (`x-card-image`: the `cardimage` behavior, or the `image` part of `card`?).
+ */
+
+/** {behavior}, then an optional __part, then an optional --modifier. Words inside a part or modifier may be hyphenated. */
+export const CONVENTION = /^x-([a-z0-9]+)(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$/;
+
+/**
+ * Every registered behavior name, lowercased.
+ *
+ * Two registries, because tag-map.js alone is not the whole surface: it lists
+ * 124 names, while index.js's behaviorModules -- what getBehavior() actually
+ * resolves -- lists every behavior a page can use, `clipboard`, `lazy` and
+ * `countdown` included. Checking against tag-map.js only reported real
+ * behavior names as concepts.
+ *
+ * @param {string} root  repository root
+ * @returns {Set<string>}
+ */
+export function registeredBehaviorNames(root) {
+  const names = new Set();
+  const tagMap = readFileSync(`${root}/src/core/tag-map.js`, 'utf8');
+  for (const m of tagMap.matchAll(/^\s*'[^']+'\s*:\s*'([a-zA-Z][\w-]*)'/gm)) names.add(m[1].toLowerCase());
+  const index = readFileSync(`${root}/src/wb-viewmodels/index.js`, 'utf8');
+  const start = index.indexOf('const behaviorModules = {');
+  const end = index.indexOf('\n};', start);
+  if (start !== -1) {
+    for (const m of index.slice(start, end).matchAll(/(?:^|[,{]\s*|\n\s*)'?([a-zA-Z][\w-]*)'?\s*:/g)) names.add(m[1].toLowerCase());
+  }
+  return names;
+}
+
+/**
+ * Every x- class a behavior module puts on an element, mapped to the modules
+ * that do it. Reads `classList.add(...)` and `classList.toggle(...)` string
+ * arguments and `className = '...'` assignments. A template literal is kept
+ * with each `${…}` replaced by `v`, so `x-alert--${variant}` is judged by its
+ * shape, `x-alert--v`.
+ *
+ * @param {Array<{ file: string, src: string }>} modules
+ * @returns {Map<string, Set<string>>}
+ */
+export function behaviorClassNames(modules) {
+  const out = new Map();
+  const note = (cls, file) => {
+    if (!cls.startsWith('x-')) return;
+    if (!out.has(cls)) out.set(cls, new Set());
+    out.get(cls).add(file);
+  };
+  const strings = (args) => [...args.matchAll(/'([^'\n]*)'|"([^"\n]*)"|`([^`]*)`/g)]
+    .map((m) => (m[1] ?? m[2] ?? m[3]).replace(/\$\{[^}]*\}/g, 'v'));
+  for (const { file, src } of modules) {
+    // Arguments up to the closing paren, stepping over whole strings so a
+    // `${tag.toLowerCase()}` inside a template does not end the call early.
+    for (const m of src.matchAll(/classList\.(?:add|toggle)\(((?:`[^`]*`|'[^'\n]*'|"[^"\n]*"|[^)'"`])*)\)/g)) {
+      const args = strings(m[1]);
+      // toggle(name, force): only the first argument is a class.
+      const classes = /classList\.toggle/.test(m[0]) ? args.slice(0, 1) : args;
+      for (const s of classes) for (const cls of s.split(/\s+/)) note(cls, file);
+    }
+    for (const m of src.matchAll(/\.className\s*=\s*('[^'\n]*'|"[^"\n]*"|`[^`]*`)/g)) {
+      for (const s of strings(m[1])) for (const cls of s.split(/\s+/)) note(cls, file);
+    }
+  }
+  return out;
+}
+
+/**
+ * Sort each class into conforming or one of the two failures.
+ *
+ * @param {Map<string, Set<string>>} classes  from behaviorClassNames()
+ * @param {Set<string>} names                 from registeredBehaviorNames()
+ * @returns {{ conform: string[], baseNotBehavior: string[], wrongShape: string[] }}
+ */
+export function classifyClassNames(classes, names) {
+  const conform = [];
+  const baseNotBehavior = [];
+  const wrongShape = [];
+  for (const cls of [...classes.keys()].sort()) {
+    const m = cls.match(CONVENTION);
+    if (!m) wrongShape.push(cls);
+    else if (!names.has(m[1])) baseNotBehavior.push(cls);
+    else conform.push(cls);
+  }
+  return { conform, baseNotBehavior, wrongShape };
+}

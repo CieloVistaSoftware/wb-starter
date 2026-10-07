@@ -1,0 +1,167 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * Behavior classes follow x-{behavior}[__part][--modifier] (#1096)
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * John: "if we control how .js names classes then we can find them based on
+ * convention." That only works when the convention holds: an author who knows
+ * the behavior is `floatinglabel` has to be able to write `.x-floatinglabel`
+ * without opening floatinglabel.js. The rule is in
+ * docs/standards/CSS-CLASS-CONVENTION.md.
+ *
+ * Measured 2026-10-07 on main (3be6e8ac): 107 of the 700 x- classes the
+ * behaviors apply did not conform. They are being renamed in batches, so this
+ * is a ratchet, not a zero-gate:
+ *
+ *   1. The number that do not conform may only go down. When a batch renames
+ *      some, lower NON_CONFORMING_MAX to the new count in the same change.
+ *   2. A renamed class is RETIRED: no source, stylesheet, test, doc, page,
+ *      demo or data file may use the old name again, so a page cannot keep
+ *      styling a class nothing applies any more.
+ */
+
+import { test, expect } from '../fixtures/offline';
+import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
+import { join, relative } from 'path';
+import {
+  CONVENTION,
+  registeredBehaviorNames,
+  behaviorClassNames,
+  classifyClassNames,
+} from '../../scripts/lib/behavior-classes.mjs';
+
+const root = process.cwd();
+
+/**
+ * Classes applied by behaviors that do not follow the convention. Shrink only.
+ * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96.
+ */
+const NON_CONFORMING_MAX = 96;
+
+/**
+ * Old name -> the name that replaced it. Each old name is gone for good.
+ * Batch 1, 2026-10-07: the form-control family.
+ */
+const RETIRED: Record<string, string> = {
+  'x-floating-label': 'x-floatinglabel',
+  'x-floating-label--active': 'x-floatinglabel--active',
+  'x-floating-label--input': 'x-floatinglabel--input',
+  'x-floating-label--textarea': 'x-floatinglabel--textarea',
+  'x-floating-label--select': 'x-floatinglabel--select',
+  'x-floating-label__label': 'x-floatinglabel__label',
+  'x-form-row': 'x-formrow',
+  'x-form-row--inline': 'x-formrow--inline',
+  'x-input-group': 'x-inputgroup',
+  'x-input-group__prepend': 'x-inputgroup__prepend',
+  'x-input-group__append': 'x-inputgroup__append',
+  'x-radio-wrapper': 'x-radio__wrapper',
+  'x-radio-label': 'x-radio__label',
+};
+
+/**
+ * Where a retired name must not appear. History is left alone on purpose:
+ * release notes, issue titles and archive/ record what the names WERE.
+ */
+const SCAN_DIRS = ['src', 'pages', 'demos', 'docs/behaviors', 'docs/standards', 'tests', 'data', 'packages', 'templates'];
+const SKIP = [
+  'tests/compliance/behavior-classes-follow-naming-convention.spec.ts',   // this file names them to forbid them
+  'tests/fixtures/offline',                                              // cached third-party modules
+  'data/releases.json',                                                  // release history
+  'data/release-see-it.json',
+  'data/issue-titles.json',
+];
+const SCANNED = /\.(js|mjs|ts|css|html|md|json)$/;
+
+function walk(dir: string, acc: string[] = []): string[] {
+  if (!existsSync(dir)) return acc;
+  for (const name of readdirSync(dir)) {
+    if (name === 'node_modules') continue;
+    const full = join(dir, name);
+    const rel = relative(root, full).replace(/\\/g, '/');
+    if (SKIP.some((s) => rel === s || rel.startsWith(s + '/'))) continue;
+    if (statSync(full).isDirectory()) walk(full, acc);
+    else if (SCANNED.test(name)) acc.push(full);
+  }
+  return acc;
+}
+
+function behaviorModules(): Array<{ file: string; src: string }> {
+  return walk(join(root, 'src', 'wb-viewmodels'))
+    .filter((f) => f.endsWith('.js'))
+    .map((f) => ({ file: relative(root, f).replace(/\\/g, '/'), src: readFileSync(f, 'utf8') }));
+}
+
+/** `x-form-row` as a whole class or the stem of a longer one, never inside another word. */
+function retiredPattern(): RegExp {
+  const alts = Object.keys(RETIRED).sort((a, b) => b.length - a.length).map((n) => n.replace(/[-_]/g, '\\$&'));
+  return new RegExp(`(?<![\\w-])(?:${alts.join('|')})(?![a-z0-9])`, 'g');
+}
+
+test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)', () => {
+  test('the detector sorts names the way the convention says', () => {
+    const names = new Set(['alert', 'floatinglabel', 'radio', 'cardpricing']);
+    const classes = behaviorClassNames([{
+      file: 'fixture.js',
+      src: [
+        "el.classList.add('x-alert', 'x-alert__icon');",
+        'el.classList.add(`x-alert--${config.variant.toLowerCase()}`);',
+        "el.classList.toggle('x-floatinglabel--active', on);",
+        "w.className = 'x-radio__wrapper x-radio-label';",
+        "el.classList.add('x-pricing--featured');",
+        "el.classList.add('x-floating-label__label');",
+        "el.classList.add('not-ours');",
+      ].join('\n'),
+    }]);
+    expect([...classes.keys()].sort()).toEqual([
+      'x-alert', 'x-alert--v', 'x-alert__icon', 'x-floating-label__label',
+      'x-floatinglabel--active', 'x-pricing--featured', 'x-radio-label', 'x-radio__wrapper',
+    ]);
+    const sorted = classifyClassNames(classes, names);
+    expect(sorted.conform).toEqual(['x-alert', 'x-alert--v', 'x-alert__icon', 'x-floatinglabel--active', 'x-radio__wrapper']);
+    expect(sorted.baseNotBehavior, 'a concept, not the behavior that applies it').toEqual(['x-pricing--featured']);
+    expect(sorted.wrongShape, 'single-dash compounds the rule has no slot for').toEqual(['x-floating-label__label', 'x-radio-label']);
+    expect('x-card__contact-link').toMatch(CONVENTION);
+    expect('x-card-image').not.toMatch(CONVENTION);
+  });
+
+  test('every replacement name itself follows the convention', () => {
+    const names = registeredBehaviorNames(root);
+    for (const [old, now] of Object.entries(RETIRED)) {
+      const m = now.match(CONVENTION);
+      expect(m, `${old} -> ${now} has the wrong shape`).not.toBeNull();
+      expect(names.has(m![1]), `${old} -> ${now}: "${m![1]}" is not a registered behavior`).toBe(true);
+    }
+  });
+
+  test(`no more than ${NON_CONFORMING_MAX} behavior classes break the convention (ratchet: may only go down)`, () => {
+    const classes = behaviorClassNames(behaviorModules());
+    const { conform, baseNotBehavior, wrongShape } = classifyClassNames(classes, registeredBehaviorNames(root));
+    const bad = [...baseNotBehavior, ...wrongShape];
+    const list = bad.map((c) => `  ${c}  (${[...classes.get(c)!].join(', ')})`).join('\n');
+    console.log(`[#1096] ${classes.size} classes: ${conform.length} conform, ${baseNotBehavior.length} base is not a behavior, ${wrongShape.length} wrong shape`);
+    expect(bad.length,
+      `${bad.length} behavior classes break x-{behavior}[__part][--modifier]; the ceiling is ${NON_CONFORMING_MAX}. ` +
+      `A new class must be named for the behavior that applies it (docs/standards/CSS-CLASS-CONVENTION.md).\n${list}`,
+    ).toBeLessThanOrEqual(NON_CONFORMING_MAX);
+    expect(bad.length,
+      `Only ${bad.length} classes break the convention now -- lower NON_CONFORMING_MAX to ${bad.length} so the gain cannot be lost.`,
+    ).toBeGreaterThanOrEqual(NON_CONFORMING_MAX);
+  });
+
+  test('no file uses a retired class name', () => {
+    const pattern = retiredPattern();
+    const hits: string[] = [];
+    for (const dir of SCAN_DIRS) {
+      for (const file of walk(join(root, dir))) {
+        const lines = readFileSync(file, 'utf8').split('\n');
+        lines.forEach((line, i) => {
+          for (const m of line.matchAll(pattern)) {
+            const old = Object.keys(RETIRED).filter((n) => m[0].startsWith(n)).sort((a, b) => b.length - a.length)[0];
+            hits.push(`${relative(root, file).replace(/\\/g, '/')}:${i + 1}  ${m[0]}  -> use ${RETIRED[old] ?? '(renamed)'}${m[0].slice(old.length)}`);
+          }
+        });
+      }
+    }
+    expect(hits, `Retired class names are back -- nothing applies them, so anything styling or selecting them does nothing:\n${hits.join('\n')}`).toEqual([]);
+  });
+});

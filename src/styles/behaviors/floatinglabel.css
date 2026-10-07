@@ -4,9 +4,9 @@
  * Works with src/wb-viewmodels/floatinglabel.js, which builds (or, on a
  * container host, reuses)
  *
- *   .x-floating-label[--input|--textarea|--select][--active]
+ *   .x-floatinglabel[--input|--textarea|--select][--active]
  *     <input|textarea|select>
- *     label.x-floating-label__label
+ *     label.x-floatinglabel__label
  *
  * and toggles --active while the field has focus or a value. This file never
  * existed, so the label just sat below the field as ordinary text and nothing
@@ -18,14 +18,14 @@
  * -----------------------------------------------------------------------------
  */
 
-.x-floating-label {
+.x-floatinglabel {
   position: relative;
   display: block;
   /* Room above the field for the risen label's top half. */
   margin-top: 0.5rem;
 }
 
-.x-floating-label > :is(input, textarea, select) {
+.x-floatinglabel > :is(input, textarea, select) {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -36,7 +36,7 @@
   line-height: 1.5;
 }
 
-.x-floating-label__label {
+.x-floatinglabel__label {
   position: absolute;
   left: 0.75rem;
   /* Vertically centred on a single-line field: the field's own centre. */
@@ -59,26 +59,26 @@
 }
 
 /* A textarea is taller than one line: rest on its first line, not its middle. */
-.x-floating-label--textarea > .x-floating-label__label {
+.x-floatinglabel--textarea > .x-floatinglabel__label {
   top: 1.45rem;
 }
 
-.x-floating-label--active > .x-floating-label__label {
+.x-floatinglabel--active > .x-floatinglabel__label {
   top: 0;
   transform: translateY(-50%);
   font-size: 0.75rem;
   background-color: var(--bg-primary);
 }
 
-.x-floating-label--active > :focus ~ .x-floating-label__label,
-.x-floating-label--active:focus-within > .x-floating-label__label {
+.x-floatinglabel--active > :focus ~ .x-floatinglabel__label,
+.x-floatinglabel--active:focus-within > .x-floatinglabel__label {
   /* Brighter while typing, not --primary: the theme primary is a saturated
      mid-tone that read as dark blue on the dark field at 0.75rem. */
   color: var(--text-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .x-floating-label__label {
+  .x-floatinglabel__label {
     transition: none;
   }
 }

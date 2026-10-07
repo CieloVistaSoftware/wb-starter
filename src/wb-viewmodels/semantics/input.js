@@ -206,7 +206,7 @@ export function input(element, options = {}) {
   // it: a second x-input__wrapper around the field (in either authoring form,
   // on the field or on a container around it) moved the field out from under
   // the label. Checked by attribute too, since input() may run first.
-  if (element.closest('[x-floatinglabel], .x-floating-label')) {
+  if (element.closest('[x-floatinglabel], .x-floatinglabel')) {
     return () => {};
   }
   // A PART another behavior built for itself -- table.js's x-table__search,

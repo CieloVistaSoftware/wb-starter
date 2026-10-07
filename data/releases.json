@@ -6,6 +6,49 @@
   ],
   "releases": [
     {
+      "version": "1.0.403",
+      "date": "2026-10-07",
+      "summary": "The classes the form-control behaviors add could not be guessed from the behavior&#39;s name: floatinglabel added x-floating-label, formrow added x-form-row, inputgroup added x-input-group, and radio built x-radio-wrapper and x-radio-label. They now follow x-{behavior}[__part][--modifier], and a compliance gate stops the count of classes that break the rule from growing. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1712\" target=\"_blank\" rel=\"noopener\">#1712</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name form-control classes after their behavior, and ratchet the convention (, batch 1)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1712\" target=\"_blank\" rel=\"noopener\">#1712</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/399271335852c6e0587b393840ccae4663d1f313\" target=\"_blank\" rel=\"noopener\"><code>3992713</code></a>",
+          "issues": [
+            1096,
+            1712
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page, inspect the Floating Label example and look at the wrapper&#39;s classes. Before: class=&quot;x-floating-label x-floating-label--input&quot; and a label.x-floating-label__label. Now: class=&quot;x-floatinglabel x-floatinglabel--input&quot; and a label.x-floatinglabel__label, drawn exactly as before. Running the new compliance spec printed 107 non-conforming classes of 700 before and prints 96 now.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/399271335852c6e0587b393840ccae4663d1f313\" target=\"_blank\" rel=\"noopener\"><code>3992713</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.402",
+      "date": "2026-10-07",
+      "summary": "The attribute gate allowed more violations than exist, so new inert, undeclared or duplicated attributes could land unnoticed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1711\" target=\"_blank\" rel=\"noopener\">PR 1711</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The attribute gate&#39;s ceilings drop to today&#39;s counts</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/08e29644a7c4c0ac165c6401973f10c5696c36c9\" target=\"_blank\" rel=\"noopener\"><code>08e2964</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/attributes-comply.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/attributes-comply.spec.ts</a></code>. Before: the ceilings were R3 2, R4 100 and R6 6. Now: they are 0, 90 and 0, the measured counts.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/922898df9ae985f9fd7f14b93c95f3afbf2ceb7e\" target=\"_blank\" rel=\"noopener\"><code>922898d</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.401",
       "date": "2026-10-07",
       "summary": "On CI for #1706, &quot;panel must appear after a real form submit&quot; failed: the submitted panel stayed hidden. The test filled the form the moment its inputs existed, but the example switch&#39;s render() then scans the preview eagerly and upgrades its controls, and a value typed before that scan has finished can be lost, leaving a required field empty so native validation blocks the submit without a word. #1706 widens that window -- an upgrade now waits for a stylesheet that is still loading instead of taking it as loaded -- which is likely why it surfaced there. The test now waits, via waitForFunction, for WB.settled() before filling, the same wait openPlaygroundInputs() makes, and blocks service workers like the other specs that hold page state (#1349). Not reproduced locally: the old spec passed 4/4 here; the new one passed 6/6. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1706\" target=\"_blank\" rel=\"noopener\">PR 1706</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
