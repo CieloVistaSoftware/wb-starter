@@ -6,6 +6,54 @@
   ],
   "releases": [
     {
+      "version": "1.0.367",
+      "date": "2026-10-06",
+      "summary": "Converting dropdown-examples&#39; sleeps to until() left four `sleep` helpers and one `until` helper defined but unused, five new no-unused-vars lint warnings; they are removed, and the counts and the spec are unchanged. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1664\" target=\"_blank\" rel=\"noopener\">PR 1664</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Drop the sleep and until helpers dropdown-examples no longer uses</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d1ab3e275e07554a56e8779faae601598d7a3d1\" target=\"_blank\" rel=\"noopener\"><code>0d1ab3e</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The scan sees sleeps behind a local helper; 20 of them now wait on their state</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/04aeb27c51c18785b34788eb42f71ceb3b4bfe65\" target=\"_blank\" rel=\"noopener\"><code>04aeb27</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx eslint <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/dropdown-examples.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/dropdown-examples.spec.ts</a></code>. Before: 5 warnings. Now: none.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e5d7c7016ac58072e3f9161e1a383e0709b356ea\" target=\"_blank\" rel=\"noopener\"><code>e5d7c70</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "PR",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1664\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1664</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1661\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1661</a>"
+        },
+        {
+          "label": "Classifier",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.366",
       "date": "2026-10-06",
       "summary": "The V3 guide, which 130 hero-gallery buttons open, described the framework as it was months ago: auto-inject off, custom tags, one runtime, and toast examples whose &quot;success&quot; colour never applied. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1667\" target=\"_blank\" rel=\"noopener\">#1667</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1669\" target=\"_blank\" rel=\"noopener\">#1669</a>",
