@@ -29,13 +29,15 @@ function getScreenshotDir(): string {
 }
 
 /**
- * The page has finished arriving: loaded, fonts in, WB (where the fragment
- * boots it) settled, and two frames painted. Replaces fixed 500-1500ms
- * sleeps (#1516). A settle that overruns is not this file's failure -- the
- * checks below still measure the page as it stands, as the sleeps did.
+ * The page has finished arriving: fonts in, WB (where the fragment boots it)
+ * settled, and two frames painted. Replaces fixed 500-1500ms sleeps (#1516).
+ * A settle that overruns is not this file's failure -- the checks below still
+ * measure the page as it stands, as the sleeps did.
+ *
+ * Not the `load` event: WebKit holds it open while Home's offline-stand-in
+ * MP3 sits at readyState 0 (#1439), so every Home test timed out at 30s.
  */
 async function pageArrived(page: import('@playwright/test').Page): Promise<void> {
-  await page.waitForLoadState('load');
   await page.evaluate(async () => {
     await document.fonts.ready;
     const wb = (window as any).WB;
