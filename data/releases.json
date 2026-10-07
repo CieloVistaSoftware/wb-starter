@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.406",
+      "date": "2026-10-07",
+      "summary": "The sidebar and drawer layouts put classes on the page that could not be derived from the behavior applying them: sidebarlayout added x-sidebar-layout, and drawerLayout added x-drawer-layout plus x-drawer-toggle, x-drawer-handle and x-drawer-resize-overlay, which read as parts of the separate drawer behavior. They now follow x-{behavior}[__part][--modifier]; the x-drawer-layout and x-sidebar-layout attributes authors write are unchanged. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1716\" target=\"_blank\" rel=\"noopener\">#1716</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name layout-compound classes after their behavior (, batch 2)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1716\" target=\"_blank\" rel=\"noopener\">#1716</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fba40bd26e448dd81da2a578e6ad107a69273815\" target=\"_blank\" rel=\"noopener\"><code>fba40bd</code></a>",
+          "issues": [
+            1096,
+            1716
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/layout.html\" target=\"_blank\" rel=\"noopener\">demos/site/layout.html</a>, inspect a drawer layout and its collapse arrow. Before: aside.x-drawer-layout holding button.x-drawer-toggle.x-drawer-toggle--left and div.x-drawer-handle. Now: aside.x-drawerlayout holding button.x-drawerlayout__toggle.x-drawerlayout__toggle--left and div.x-drawerlayout__handle, drawn and collapsing exactly as before. The naming compliance spec printed 96 non-conforming classes before and prints 85 now.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fba40bd26e448dd81da2a578e6ad107a69273815\" target=\"_blank\" rel=\"noopener\"><code>fba40bd</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.405",
       "date": "2026-10-07",
       "summary": "Ten classes the form behaviors add had no stylesheet rule, so an input group&#39;s &quot;$&quot; and &quot;USD&quot; fell onto separate lines, an inline form row stacked like a plain one, a colour picker was the browser&#39;s grey box in a dark theme, and a loading autocomplete looked idle. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1717\" target=\"_blank\" rel=\"noopener\">#1717</a>",

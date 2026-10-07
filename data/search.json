@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 304,
-    "totalWords": 5976
+    "totalWords": 5973
   },
   "documents": [
     {
@@ -315,7 +315,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.405\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.405\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.406\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.406\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-07"
@@ -2639,7 +2639,7 @@
       "content": "# Sidebar Layout - wb-starter v3.0 A two-column layout: a fixed-ish sidebar next to a main content area that grows to fill the remaining space. Built on flexbox with the [Every Layout \"sidebar\" pattern](https://every-layout.dev/layouts/sidebar/) — `flex-grow: 999` on the main area means it takes all the room the sidebar doesn't need, and the whole row wraps to a single column once the main area would drop below `contentMin`. ## Overview | Property | Value | |----------|-------| | Behavior | `sidebarlayout` (alias: `sidebar-layout`) | | Attribute | `x-sidebarlayout` or `x-sidebar-layout` | | Applies to | a container with exactly 2 direct children | | Category | Layout | | Source | `src/wb-viewmodels/layouts.js` | ## Properties | Property | Attribute | Type | Default | Description | |----------|-----------|------|---------|-------------| | `side` | `side` | string | `\"left\"` | Which child is the sidebar: `left` (1st child) or anything else (2nd child) | | `sideWidth` | `sideWidth` | string | `\"300px\"` | `flex-basis` of the sidebar child | | `contentMin` | `contentMin` | string | `\"50%\"` | `min-width` of the main content child — forces a wrap to a single column below this width | | `gap` | `gap` | string | `\"1rem\"` | Gap between the sidebar and the main content | The container must have **at least 2 direct children** — the first two children are treated as the sidebar and main content pair (which one is the sidebar depends on `side`). ## Usage ### Sidebar on the left (default) Sidebar navigation Main content grows to fill the remaining space. ### Sidebar on the right Main content comes first in the DOM, sidebar renders after it. Sidebar navigation ### Custom gap and content minimum Sidebar Wider gap, and the main column won't shrink below 60% before wrapping. ## CSS Classes | Class | Applied When | Description | |-------|--------------|-------------| | `.x-sidebarlayout` | Always | Marker class for targeting/testing; the flex layout itself is applied inline | ## Accessibility Because DOM order determines which child is treated as sidebar vs. main content (not visual position), keep the DOM order matching reading order — e.g. put primary content before secondary navigation when `side=\"right\"`, so keyboard and screen-reader users reach the main content first. Use real landmark elements (` `, ` `, ` `) for the two children rather than plain ` `s, so assistive tech can jump between them directly. ## Source [src/wb-viewmodels/layouts.js](../../src/wb-viewmodels/layouts.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/behaviors/skeleton",
@@ -3611,7 +3611,7 @@
       "title": "CSS-CLASS-CONVENTION",
       "description": null,
       "headings": [],
-      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** An inline style beats every selector, so a page needing a different look has no route but `!important` — which is banned. The practical result is that it cannot be changed at all. - **Unthemeable.** Themes work by redefining custom properties that *stylesheets* consume. A value written into `element.style` never sees them. This repo has paid for it twice already: **#1003** removed `style.cssText` from the fullscreen trigger because *\"it also won against the page, so #1004 could not size this button\"*; **#520** traced crowded card buttons to `style.cssText` in `cardpricing()` silently overriding the class's own padding. Measured 2026-09-08: **1,004 inline style writes** across the behaviors. See #1095. **The one legitimate inline write is a custom property**, because only the value varies and the rule still lives in CSS: ```js element.style.setProperty('--x-frame-ratio', config.ratio); ``` --- ## Every class must have a rule A class with no rule is dead weight — and when it is a `--modifier`, it is worse than that: the state becomes **invisible**. `x-card--expanded` styling nothing means an expanded card looks identical to a collapsed one. The behavior believes it is communicating; the reader sees nothing. Measured 2026-09-08: **130 classes are applied and styled by nothing.** --- ## How to find the classes for an element 1. **Derive them.** ` ` auto-injects `card`, so the classes are `x-card`, `x-card__*`, `x-card--*`. 2. **Read the doc.** Each behavior doc carries a `## Classes` table listing every class it applies and whether a stylesheet defines it — generated from a real render (`data/default-gui-census.json`), so it cannot drift from the code. 3. **Decline it entirely** with `x-ignore`, if the behavior is not wanted: ` `.",
+      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout hosts, and the toggle, handle and resize overlay drawerLayout builds), took it to 85. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. **A class is not an attribute.** ` ` is still how an author applies drawerLayout; only the class the behavior adds changed, to `x-drawerlayout`. Where a retired class name is also a live attribute, the gate counts it only where it is used as a class. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** An inline style beats every selector, so a page needing a different look has no route but `!important` — which is banned. The practical result is that it cannot be changed at all. - **Unthemeable.** Themes work by redefining custom properties that *stylesheets* consume. A value written into `element.style` never sees them. This repo has paid for it twice already: **#1003** removed `style.cssText` from the fullscreen trigger because *\"it also won against the page, so #1004 could not size this button\"*; **#520** traced crowded card buttons to `style.cssText` in `cardpricing()` silently overriding the class's own padding. Measured 2026-09-08: **1,004 inline style writes** across the behaviors. See #1095. **The one legitimate inline write is a custom property**, because only the value varies and the rule still lives in CSS: ```js element.style.setProperty('--x-frame-ratio', config.ratio); ``` --- ## Every class must have a rule A class with no rule is dead weight — and when it is a `--modifier`, it is worse than that: the state becomes **invisible**. `x-card--expanded` styling nothing means an expanded card looks identical to a collapsed one. The behavior believes it is communicating; the reader sees nothing. Measured 2026-09-08: **130 classes are applied and styled by nothing.** --- ## How to find the classes for an element 1. **Derive them.",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -6134,7 +6134,8 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
     "85": [
-      "pages/hero-gallery"
+      "pages/hero-gallery",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "86": [
       "pages/hero-gallery",
@@ -6555,7 +6556,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
-    "405": [
+    "406": [
       "pages/home"
     ],
     "448": [
@@ -9539,7 +9540,6 @@
       "docs/npx-commands",
       "docs/pricecard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
@@ -9848,6 +9848,7 @@
       "docs/schema-first-audit-report",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
@@ -10536,7 +10537,6 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/wbservices",
       "demos/frameworks",
@@ -10850,7 +10850,6 @@
       "docs/schema.migration",
       "docs/search",
       "docs/semantic-audit",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -10923,6 +10922,7 @@
       "docs/linkedin-update-article",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -12692,7 +12692,6 @@
       "docs/schema",
       "docs/search",
       "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
@@ -12938,6 +12937,7 @@
       "docs/schema",
       "docs/schema.migration",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/REPO-LAYOUT",
       "docs/styles",
       "demos/autoinject",
@@ -13816,7 +13816,6 @@
       "docs/performance",
       "docs/property-viewer",
       "docs/schema-first-architecture",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "demos/autoinject",
@@ -16957,8 +16956,7 @@
     "drift": [
       "pages/behaviors",
       "docs/MVVM-MIGRATION-PLAN",
-      "docs/code-examples-standard",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/code-examples-standard"
     ],
     "list": [
       "pages/behaviors",
@@ -20169,7 +20167,6 @@
       "docs/properties",
       "docs/schema-test-value",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/site/content"
     ],
@@ -22836,6 +22833,7 @@
       "docs/schema",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles",
       "demos/frameworks",
@@ -24331,7 +24329,6 @@
       "docs/behaviors/range",
       "docs/code-examples-standard",
       "docs/performance",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS"
     ],
     "tag": [
@@ -30977,7 +30974,8 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/cardstats",
       "docs/behaviors/steps",
-      "docs/home-page"
+      "docs/home-page",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "radius": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -31629,6 +31627,7 @@
       "docs/pce-candidates",
       "docs/schema-first-audit-report",
       "docs/search",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/cards",
       "demos/site/content",
       "demos/site/overlays"
@@ -32211,7 +32210,6 @@
       "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "docs/themes"
     ],
@@ -33765,6 +33763,7 @@
       "docs/behaviors/x-resizable",
       "docs/property-viewer",
       "docs/search",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard"
     ],
     "takes": [
@@ -35314,7 +35313,6 @@
       "docs/behaviors/fill",
       "docs/claude/README",
       "docs/escape-hatches",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS"
     ],
     "prefix": [
@@ -36763,7 +36761,8 @@
     "sidebarlayout": [
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/sidebarlayout",
-      "docs/pce-candidates"
+      "docs/pce-candidates",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "centered": [
       "docs/architecture/proposals/proposed-custom-elements",
@@ -36899,6 +36898,7 @@
       "docs/behaviors/drawerLayout",
       "docs/pce-candidates",
       "docs/performance",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/REPO-LAYOUT"
     ],
     "canvas": [
@@ -38028,8 +38028,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
     ],
     "wanted": [
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec"
     ],
     "presented": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -39244,7 +39243,6 @@
       "docs/behaviors/container",
       "docs/behaviors/stagelight",
       "docs/linkedin-standards-article",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/playground"
     ],
     "falls": [
@@ -40554,6 +40552,7 @@
       "docs/behaviors/textarea",
       "docs/behaviors/x-resizable",
       "docs/performance",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject",
       "demos/layout-test",
       "demos/site/cards",
@@ -40679,7 +40678,6 @@
       "docs/behaviors/range",
       "docs/behaviors/table",
       "docs/escape-hatches",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
@@ -43359,7 +43357,6 @@
       "docs/behaviors/x-toggle",
       "docs/claude/TIER1-LAWS",
       "docs/container-pattern",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "demos/site/cards"
     ],
@@ -44183,7 +44180,8 @@
       "docs/linkedin-update-article"
     ],
     "hosts": [
-      "docs/behaviors/dropdown"
+      "docs/behaviors/dropdown",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "affordance": [
       "docs/behaviors/dropdown",
@@ -48997,7 +48995,6 @@
     ],
     "listing": [
       "docs/pricecard",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS"
     ],
     "compare": [
@@ -49775,15 +49772,6 @@
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "communicating": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "gui": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "census": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "decline": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "15a": [
