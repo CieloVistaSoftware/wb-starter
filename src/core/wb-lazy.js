@@ -360,8 +360,17 @@ function getAutoInjectBehaviors(element) {
   // (see wb.js's getAutoInjectBehavior() for the full rationale/incident).
   if (!getConfig('autoInject') && !element.hasAttribute('variant')) return behaviors;
 
-  // Skip if x-behavior is already present (explicit overrides implicit)
-  if (element.hasAttribute('x-behavior')) return behaviors;
+  // Skip if x-behavior is already present (explicit overrides implicit).
+  // #967: ask the shared guard first, so <pre x-behavior="pre"> on an
+  // auto-inject page reports that it restates the tag, on this runtime as on
+  // wb.js. Only the report matters here; the element is skipped either way.
+  if (element.hasAttribute('x-behavior')) {
+    const xPrefix = getConfig('prefix') || 'x';
+    for (const { selector, behavior } of autoInjectMappings) {
+      if (element.matches(selector)) isReplacedByExplicitBehavior(element, behavior, xPrefix);
+    }
+    return behaviors;
+  }
 
   // Skip native/auto-inject entirely when explicitly opted out. wb.js's own
   // autoInjectMappings loop already honors x-ignore this way (see its
