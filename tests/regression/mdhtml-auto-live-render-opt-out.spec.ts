@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { networkBarrier } from '../base';
 
 /**
  * pages/issues.html renders GitHub issue bodies through mdhtml() (arbitrary,
@@ -55,8 +56,9 @@ test.describe('mdhtml() autoLiveRender option', () => {
     }, ISSUE_BODY_MD);
 
     expect(result.hasLiveDemo, 'an issue body\'s embedded example must not become a live element').toBe(false);
-    // sleep-proves-negative: the fake src must NEVER be fetched; a fetch that never happens fires no event
-    await page.waitForTimeout(300);
+    // mdhtml() has finished (awaited above), so a fetch it made has been
+    // issued; once the barrier arrives it has reached the listener (#1516).
+    await networkBarrier(page);
     expect(fetchedFakePath, 'the fake illustrative src must never actually be fetched').toEqual([]);
   });
 });

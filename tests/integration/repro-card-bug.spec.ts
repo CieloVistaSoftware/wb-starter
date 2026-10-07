@@ -34,10 +34,19 @@ test('cardimage/cardvideo survive a fresh nav to Components without being wiped'
   // guards (#279) is a cold schema fetch resolving AFTER the behavior built its
   // media, so each pick is still followed by a wait long enough for a stale
   // fetch to land and wipe it, if the exclusion ever regressed.
+  // Every schema request the pick starts is recorded, so the check can run
+  // after each one has been answered (#1516: not a 2.5s window).
+  const schemaRequests: import('@playwright/test').Request[] = [];
+  page.on('request', (r) => { if (/\.schema\.json|\/index\.json/.test(r.url())) schemaRequests.push(r); });
   const survivors = async (token: 'x-cardimage' | 'x-cardvideo', media: 'img' | 'video') => {
     await pickBehavior(page, token);
-    // sleep-proves-negative: a stale fetch must NOT land and wipe the media; a wipe that never happens fires no event
-    await page.waitForTimeout(2500);
+    // The render the pick started has finished (aria-busy clears on the newest
+    // one), every schema fetch it made has been answered, and WB has settled on
+    // whatever those responses built: a stale fetch has landed by now.
+    await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', 'true', { timeout: 20000 });
+    await Promise.all(schemaRequests.splice(0).map(async (r) => { await (await r.response())?.finished(); }));
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
     return page.evaluate(([t, m]) => {
       const found = Array.from(document.querySelectorAll(`#behaviors-live-example [${t}] ${m}`));
       return found.map((el) => ({

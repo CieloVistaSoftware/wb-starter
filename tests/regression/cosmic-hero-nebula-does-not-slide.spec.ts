@@ -71,10 +71,19 @@ test.describe('cosmic hero nebula does not slide (#1595)', () => {
     // Without x-hero--cosmic the layer is the oversized sheen, which is meant
     // to move; the band needs both classes (#1595).
     test.skip(!/\bx-hero--cosmic\b/.test(first.classes), `home hero has no x-hero--cosmic: ${first.classes}`);
-    // sleep-proves-negative: the nebula must NOT move over time; staying still fires no event
-    await page.waitForTimeout(1500);
-    const later = await readLayer(page, '[x-cardhero]');
     expect(first.animation, 'the home hero nebula runs no slide animation').toBe('none');
-    expect(later.transform, 'the home hero ::before has not moved after 1.5s').toBe(first.transform);
+    // Only an animation or a transition can move a ::before that no script
+    // touches, so "it does not move" is checked as "nothing is animating it"
+    // rather than by watching it for 1.5s (#1516).
+    const moving = await page.evaluate(() => {
+      const hero = document.querySelector('[x-cardhero]');
+      return document.getAnimations()
+        .filter((a) => {
+          const effect = a.effect as KeyframeEffect | null;
+          return effect?.target === hero && effect?.pseudoElement === '::before' && a.playState !== 'finished';
+        })
+        .map((a) => (a as CSSAnimation).animationName || (a as CSSTransition).transitionProperty || a.constructor.name);
+    });
+    expect(moving, 'the home hero ::before is being animated').toEqual([]);
   });
 });

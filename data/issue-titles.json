@@ -1225,5 +1225,6 @@
   "1678": "Error Log Viewer: Copy button to hand the list over",
   "1683": "x-sidebar ignores data-items, and never re-renders when active/items/collapsed change",
   "1685": "demo-docmap.js: 18 doc paths that all 404, imported by demo.js and never read",
-  "1695": "&lt;article variant=\"danger\"&gt; gets no accent border; the other four variants do"
+  "1695": "&lt;article variant=\"danger\"&gt; gets no accent border; the other four variants do",
+  "1698": "data/component-index.json: 74 dead doc paths, read by nothing"
 }

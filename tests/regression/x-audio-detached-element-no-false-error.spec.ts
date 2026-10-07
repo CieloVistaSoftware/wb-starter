@@ -67,9 +67,11 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
     const replaced = newAudioEl !== oldAudioEl;
 
     // Simulate the old, now-detached element's in-flight fetch failing late.
+    // dispatchEvent runs audio.js's handler synchronously, and a throw from it
+    // is reported before dispatchEvent returns; two frames cover anything the
+    // handler queued (#1516: not 300ms).
     oldAudioEl.dispatchEvent(new Event('error'));
-    // sleep-proves-negative: the late error of the detached element must NOT be reported; a report that never comes fires no event
-    await new Promise((r) => setTimeout(r, 300));
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
     return { replaced, oldStillAttached: document.contains(oldAudioEl) };
   });

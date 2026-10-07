@@ -15,6 +15,19 @@ import { test, expect, Page } from '../fixtures/offline';
 
 const PHONE = { width: 375, height: 812 };
 
+/**
+ * The live panel has finished the render the last selection started (#1516).
+ * showLive() marks #behaviors-live aria-busy synchronously on the click or
+ * keystroke and clears it only when the NEWEST render is done (renderSeq), and
+ * that render -- the example, its code panel, its doc -- is the only thing
+ * that runs after a selection and could move a scroller. Two frames after it,
+ * any ResizeObserver or scroll-anchoring correction has landed too.
+ */
+async function liveSettled(page: Page) {
+  await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', 'true', { timeout: 15000 });
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+}
+
 async function loadBrowse(page: Page, query = 'x-tooltip') {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 20000 });
@@ -72,8 +85,7 @@ test.describe('#686 — stacked layout reveals the demo when a result is tapped'
     await loadBrowse(page, '');
     await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 0; });
     await page.type('#behaviors-search', 'x-tool', { delay: 40 });
-    // sleep-proves-negative: nothing may scroll the page after typing, and a scroll that never happens has no event to wait for
-    await page.waitForTimeout(400);
+    await liveSettled(page);
     const scrollTop = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
     expect(scrollTop, 'search must not scroll the page while the reader types').toBe(0);
   });
@@ -88,8 +100,7 @@ test.describe('#686 — two-column layout still does not scroll', () => {
 
     await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 0; });
     await page.locator('.behaviors-search-results__row').first().click();
-    // sleep-proves-negative: side-by-side, picking a result must not scroll the page; there is no event for a scroll that never comes
-    await page.waitForTimeout(400);
+    await liveSettled(page);
 
     const scrollTop = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
     expect(scrollTop, 'side-by-side, the panel is already visible — nothing should move').toBe(0);
@@ -504,8 +515,7 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     });
     expect(visible, 'a row is fully visible in the scrolled list').toBeGreaterThanOrEqual(0);
     await page.locator('.behaviors-search-results__row').nth(visible).click();
-    // sleep-proves-negative: a click must not move the list, and a move that never happens has no event to wait for
-    await page.waitForTimeout(300);
+    await liveSettled(page);
     const after = await page.evaluate(() => document.getElementById('behaviors-search-results')!.scrollTop);
     expect(Math.round(after), 'a click must not move the list').toBe(500);
   });

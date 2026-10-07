@@ -28,6 +28,23 @@ test('a slow earlier navigation does not paint over a newer one (#1519)', async 
   await page.goto('/?page=home');
   await page.waitForFunction(() => !!document.querySelector('#mainPage-home'), null, { timeout: 20000 });
 
+  // Every navigateTo() call the taps make is kept, so the test can wait for the
+  // released one to RETURN -- having written #main, or having seen it was
+  // superseded and stopped -- instead of guessing how long it takes (#1516).
+  // The nav click calls this.navigateTo(), so the instance property catches it.
+  // Home can be on screen before src/index.js assigns window.WBSite.
+  await page.waitForFunction(() => typeof (window as any).WBSite?.navigateTo === 'function', null, { timeout: 20000 });
+  await page.evaluate(() => {
+    const site = (window as any).WBSite;
+    const original = site.navigateTo.bind(site);
+    (window as any).__navigations = [];
+    site.navigateTo = (id: string) => {
+      const run = original(id);
+      (window as any).__navigations.push(Promise.resolve(run).catch(() => {}));
+      return run;
+    };
+  });
+
   const tap = (p: string) => page.evaluate((href) => {
     (document.querySelector(`#siteNav .x-sidebar__item[href="${href}"]`) as HTMLElement).click();
   }, pagePath(p));
@@ -39,11 +56,12 @@ test('a slow earlier navigation does not paint over a newer one (#1519)', async 
   // Let the older navigation finish now, after the newer one has painted.
   releaseAbout();
   await expect.poll(() => released, { timeout: 5000 }).toBe(true);
-  // Give the released navigation every chance to land: it would write #main
-  // after the fragment, its text and its CSS (capped at 2s) have resolved.
-  await page.waitForResponse(/pages\/about\.html/, { timeout: 5000 }).catch(() => {});
-  // sleep-proves-negative: the released older navigation must NOT write #main; a correct router does nothing, so there is no event to wait for
-  await page.waitForTimeout(2500);
+  // The released navigation has run to its end: it would write #main after
+  // the fragment, its text and its CSS (capped at 2s) resolve, and its promise
+  // settles only after that point. Two frames for anything it scheduled.
+  expect(await page.evaluate(() => (window as any).__navigations.length), 'both taps reached navigateTo()').toBeGreaterThanOrEqual(2);
+  await page.evaluate(() => Promise.all((window as any).__navigations));
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
   const state = await page.evaluate(() => ({
     currentPage: (window as any).WBSite?.currentPage,

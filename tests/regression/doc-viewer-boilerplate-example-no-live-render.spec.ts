@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { networkBarrier } from '../base';
 
 /**
  * Live-reported: docs/V3-GUIDE.md:74-100 shows a full-document boilerplate
@@ -41,8 +42,11 @@ test.describe('Full-document boilerplate examples are never auto-live-rendered',
 
     await page.goto('/public/doc-viewer.html?file=docs%2FV3-GUIDE.md', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content', { timeout: 15000 });
-    // sleep-proves-negative: the boilerplate example must NOT request themes; a request that never goes out fires no event
-    await page.waitForTimeout(2000);
+    // A live-rendered example would have built by the time WB settles, and its
+    // <link> starts a request the moment it is inserted; the barrier makes sure
+    // any such request has reached the listener (#1516: not 2000ms).
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+    await networkBarrier(page);
 
     expect(
       themesRequests,
