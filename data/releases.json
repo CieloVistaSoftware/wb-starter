@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.391",
+      "date": "2026-10-07",
+      "summary": "Site.css carried 28 !important declarations, 18 of which won nothing, and the 10 that matter had no recorded reason. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1697\" target=\"_blank\" rel=\"noopener\">PR 1697</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Clear 18 of site.css&#39;s 28 !important; the 10 that hold the nav drawer stay, with their reason</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ba144b99d9dc5cdf7847f0806492cae5ec958f7f\" target=\"_blank\" rel=\"noopener\"><code>ba144b9</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Open the site at 375px and open and close the nav, then at 1280px collapse it. Before: the shell came from 28 !important rules. Now: it looks the same with 10, and src/ holds 23 !important, every one with its reason in <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-important-in-src.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-important-in-src.spec.ts</a>.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/22629fc36adcf3b2328eec96c3bf24405c2574e8\" target=\"_blank\" rel=\"noopener\"><code>22629fc</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.390",
       "date": "2026-10-07",
       "summary": "A danger card written as &lt;article variant=&quot;danger&quot;&gt; or &lt;div x-card variant=&quot;danger&quot;&gt; showed no red accent stripe, while the other four variants did. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1696\" target=\"_blank\" rel=\"noopener\">PR 1696</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1695\" target=\"_blank\" rel=\"noopener\">#1695</a>",
