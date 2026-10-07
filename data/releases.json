@@ -6,6 +6,49 @@
   ],
   "releases": [
     {
+      "version": "1.0.384",
+      "date": "2026-10-07",
+      "summary": "On Windows CI, input-theming read rgb(255,255,255) in the dark and ocean themes. The input upgrade brings its stylesheet as a &lt;link&gt; on first use, and WB.settled() resolves before that link has loaded, so the field was still the browser&#39;s native white. The 1200ms this replaced had covered the load by chance. The beforeEach now waits until every stylesheet link has a sheet, the same signal demo-layout-standards uses. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1686\" target=\"_blank\" rel=\"noopener\">PR 1686</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Input-theming waits for the input&#39;s stylesheet, not only settled()</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cff3eb5a3eeb684bf3c69bc6fd31b6669bc28417\" target=\"_blank\" rel=\"noopener\"><code>cff3eb5</code></a>",
+          "issues": [
+            1516
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Every remaining negative sleep is reviewed -- marked, made a condition wait, or a scenario</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a773fa9d7525e7862128292e4fa81beef0cfa0cf\" target=\"_blank\" rel=\"noopener\"><code>a773fa9</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/637d522f63cd2705a11de937ce223c7747cb978d\" target=\"_blank\" rel=\"noopener\"><code>637d522</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "PR",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1686\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1686</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.383",
       "date": "2026-10-07",
       "summary": "The nav&#39;s collapse transition forced its width with !important where plain rules already won, and two unused Safari helper classes carried three more. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1690\" target=\"_blank\" rel=\"noopener\">PR 1690</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
