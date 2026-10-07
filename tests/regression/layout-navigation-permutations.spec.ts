@@ -268,8 +268,8 @@ test.describe('[x-drawer-layout] / [x-scrollalong] / [x-sticky] / [x-timeline] -
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     await ready(page);
-    // #448: x-drawer-layout no longer carries a same-named
-    // `.x-drawer-layout` class -- select the tag directly.
+    // Select the x-drawer-layout attribute, which the author wrote, rather
+    // than the x-drawerlayout class the behavior adds.
     const drawers = page.locator('#drawer-layout-drawer-layout [x-drawer-layout]');
     await expect(drawers).toHaveCount(3);
     await expect(drawers.nth(0)).toBeVisible();

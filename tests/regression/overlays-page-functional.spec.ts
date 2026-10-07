@@ -21,7 +21,7 @@ import { test, expect } from '../fixtures/offline';
  * '[x-drawer]' -> 'drawerLayout' (an unrelated collapsible-sidebar behavior)
  * instead of 'drawer' (the actual trigger+overlay behavior every demo here
  * uses) -- confirmed live via computed classList showing BOTH
- * x-drawer-trigger AND x-drawer-layout classes (the array-based mapping
+ * x-drawer-trigger AND x-drawerlayout classes (the array-based mapping
  * table let both entries match and both behaviors ran on the same element).
  * Fixed by removing the stale '[x-drawer]': 'drawerLayout' entry so the tag
  * resolves only via the correct, already-shared tag-map.js mapping.
@@ -44,9 +44,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     const trigger = page.locator('[x-drawer]').first();
     await expect(trigger).toBeVisible();
     // The bug this guards: the trigger used to carry BOTH the correct
-    // x-drawer-trigger class AND the wrong x-drawer-layout class.
+    // x-drawer-trigger class AND drawerLayout's x-drawerlayout class.
     await expect(trigger).toHaveClass(/x-drawer-trigger/);
-    await expect(trigger).not.toHaveClass(/x-drawer-layout/);
+    await expect(trigger).not.toHaveClass(/x-drawerlayout/);
 
     await trigger.click();
     // Legacy (non-schema) drawer() builds a plain fixed-position div, not

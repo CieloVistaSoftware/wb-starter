@@ -53,14 +53,14 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       const dl = page.locator(`${EX} [x-drawer-layout]`).first();
       // #1092: the example must render a [x-drawer-layout] element to check
       expect(await dl.count(), 'the x-drawer-layout example renders no [x-drawer-layout] element').toBeGreaterThan(0);
-      await expect(dl).toHaveClass(/x-drawer-layout/);
+      await expect(dl).toHaveClass(/x-drawerlayout/);
     });
 
     // #1092: these three named a demo that no longer exists
-    // (.x-drawer-layout__content, .x-drawer-layout__toggle, "Main Content"),
+    // (a content part, a schema-built toggle part, "Main Content"),
     // so behind their if() guards they had checked nothing since it went. The
     // example is now <aside x-drawer-layout> holding its own <nav> links, and
-    // the toggle layouts.js creates is .x-drawer-toggle (layouts.js drawerLayout).
+    // the toggle layouts.js creates is .x-drawerlayout__toggle (layouts.js drawerLayout).
     test('drawer links are not cut off by the drawer', async ({ page }) => {
       await showBehavior(page, 'x-drawer-layout');
       const drawer = page.locator(`${EX} [x-drawer-layout]`).first();
@@ -78,10 +78,10 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
     test('drawer toggle button does not overlap the drawer links', async ({ page }) => {
       await showBehavior(page, 'x-drawer-layout');
-      const toggle = page.locator(`${EX} .x-drawer-toggle`).first();
-      expect(await toggle.count(), 'x-drawer-layout created no .x-drawer-toggle').toBeGreaterThan(0);
+      const toggle = page.locator(`${EX} .x-drawerlayout__toggle`).first();
+      expect(await toggle.count(), 'x-drawer-layout created no .x-drawerlayout__toggle').toBeGreaterThan(0);
       const tBox = await toggle.boundingBox();
-      expect(tBox, '.x-drawer-toggle has no layout box (not displayed)').not.toBeNull();
+      expect(tBox, '.x-drawerlayout__toggle has no layout box (not displayed)').not.toBeNull();
       const links = page.locator(`${EX} [x-drawer-layout] a`);
       expect(await links.count(), 'the x-drawer-layout example has no links in its drawer').toBeGreaterThan(0);
       for (const link of await links.all()) {

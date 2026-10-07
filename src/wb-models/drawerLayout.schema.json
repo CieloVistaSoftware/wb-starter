@@ -4,12 +4,12 @@
   "title": "Drawer Layout",
   "description": "Collapsible sidebar layout with toggle",
   "schemaFor": "drawer-layout",
-  "baseClass": "x-drawer-layout",
+  "baseClass": "x-drawerlayout",
   "semanticElement": {
     "tagName": "aside"
   },
   "compliance": {
-    "baseClass": "x-drawer-layout",
+    "baseClass": "x-drawerlayout",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -21,7 +21,7 @@
         "right"
       ],
       "default": "left",
-      "appliesClass": "x-drawer-toggle--{{value}}"
+      "appliesClass": "x-drawerlayout__toggle--{{value}}"
     },
     "width": {
       "type": "string",
@@ -129,11 +129,11 @@
       "page": "layout",
       "tag": "x-drawer-layout",
       "renders": true,
-      "baseClass": "x-drawer-layout",
+      "baseClass": "x-drawerlayout",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [
-        "x-drawer-layout--right"
+        "x-drawerlayout--right"
       ],
       "checkAttributes": [
         "position"

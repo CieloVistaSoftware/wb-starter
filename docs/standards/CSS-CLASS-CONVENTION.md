@@ -81,9 +81,15 @@ reported real behaviors like `clipboard` and `lazy` as concepts.
 The classes are renamed in batches, so the gate is a ratchet. Measured
 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family
 (floatinglabel, formrow, inputgroup and the label and wrapper built by radio),
-took it to 96. The count may only go down, and a renamed class is retired: no
-source, stylesheet, test, doc, page, demo or data file may use the old name
-again.
+took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout
+hosts, and the toggle, handle and resize overlay drawerLayout builds), took it
+to 85. The count may only go down, and a renamed class is retired: no source,
+stylesheet, test, doc, page, demo or data file may use the old name again.
+
+**A class is not an attribute.** `<aside x-drawer-layout>` is still how an
+author applies drawerLayout; only the class the behavior adds changed, to
+`x-drawerlayout`. Where a retired class name is also a live attribute, the gate
+counts it only where it is used as a class.
 
 ---
 

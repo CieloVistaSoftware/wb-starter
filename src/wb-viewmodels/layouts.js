@@ -333,8 +333,8 @@ export function sidebarlayout(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-sidebar-layout');
-  // The side/main split is .x-sidebar-layout__side / __main in layout.css,
+  element.classList.add('x-sidebarlayout');
+  // The side/main split is .x-sidebarlayout__side / __main in layout.css,
   // sized by custom properties that travel on the host as a generated rule
   // only when the author changed them (#779).
   setRule(element, 'layout', onlyChanged({
@@ -351,15 +351,15 @@ export function sidebarlayout(element, options = {}) {
     const mainIndex = config.side === 'left' ? 1 : 0;
     side = children[sideIndex];
     main = children[mainIndex];
-    side.classList.add('x-sidebar-layout__side');
-    main.classList.add('x-sidebar-layout__main');
+    side.classList.add('x-sidebarlayout__side');
+    main.classList.add('x-sidebarlayout__main');
   }
 
   return () => {
     clearRules(element);
-    if (side) side.classList.remove('x-sidebar-layout__side');
-    if (main) main.classList.remove('x-sidebar-layout__main');
-    element.classList.remove('x-sidebar-layout');
+    if (side) side.classList.remove('x-sidebarlayout__side');
+    if (main) main.classList.remove('x-sidebarlayout__main');
+    element.classList.remove('x-sidebarlayout');
   };
 }
 
@@ -678,19 +678,14 @@ export function drawerLayout(element, options = {}) {
     ...options
   };
 
-  // #448: no classList.add('x-drawer-layout') -- no CSS selector anywhere
-  // depends on the bare class (layout.css already selects `x-drawer-layout`
-  // only in compound form alongside a DIFFERENT tag, `x-drawer.x-drawer-layout`,
-  // which this element never matches). 'x-drawer' (below) is kept -- it's a
-  // genuinely different class name than this tag (`x-drawer-layout`), not
-  // a self-matching duplicate, and layout.css's x-drawer visibility rules
-  // rely on it.
-  // #448 removed this class outright; restored WITH the tag-name guard.
+  // The host class is named for the behavior, drawerLayout -> x-drawerlayout
+  // (#1096), not for the x-drawer-layout attribute that applies it.
   // permutation-compliance requires compliance.baseClass to cover the host
   // (classList.contains(cls) || tagName === cls), and on an attribute host
-  // like <div x-drawer-layout> the tag is "div" -- so without the class nothing covers
-  // it. Guarded so a literal <x-drawer-layout> tag does not get a redundant class.
-  element.classList.add('x-drawer-layout');
+  // like <aside x-drawer-layout> the tag is "aside", so without the class
+  // nothing covers it (#448). 'x-drawer' (below) is a different class that
+  // layout.css's x-drawer visibility rules rely on.
+  element.classList.add('x-drawerlayout');
   element.classList.add('x-drawer');
   
   const isVertical = config.position === 'top' || config.position === 'bottom';
@@ -704,8 +699,8 @@ export function drawerLayout(element, options = {}) {
   let isCollapsed = savedCollapsed !== null ? savedCollapsed === 'true' : !!config.collapsed;
 
   // Base styles: position/display/direction/transition are layout.css's
-  // .x-drawer-layout (and --vertical); overflow/border while collapsed are
-  // .x-drawer-layout.collapsed (#779). The size is the author's width/height
+  // .x-drawerlayout (and --vertical); overflow/border while collapsed are
+  // .x-drawerlayout.collapsed (#779). The size is the author's width/height
   // or a dragged one, so it travels as a generated rule -- one slot holding
   // size, min-size and flex-basis together, as the three always move as one.
   const setSize = (size) => setRule(element, 'size', isVertical
@@ -722,7 +717,7 @@ export function drawerLayout(element, options = {}) {
   }, { '--x-drawer-min-width': '1.5rem', '--x-drawer-min-height': '1.5rem' }));
 
   if (isVertical) {
-     element.classList.add('x-drawer-layout--vertical');
+     element.classList.add('x-drawerlayout--vertical');
      // Initial state
      const initialHeight = savedWidth || config.height;
      setSize(isCollapsed ? config.minHeight : initialHeight);
@@ -785,13 +780,13 @@ export function drawerLayout(element, options = {}) {
   } else {
     // Create default toggle button
     toggleBtn = document.createElement('button');
-    toggleBtn.className = 'x-drawer-toggle';
+    toggleBtn.className = 'x-drawerlayout__toggle';
     
     toggleBtn.innerHTML = getArrow(isCollapsed);
     
-    // Chrome and per-position placement: .x-drawer-toggle and
-    // .x-drawer-toggle--{position} in layout.css (#779).
-    toggleBtn.classList.add(`x-drawer-toggle--${config.position}`);
+    // Chrome and per-position placement: .x-drawerlayout__toggle and
+    // .x-drawerlayout__toggle--{position} in layout.css (#779).
+    toggleBtn.classList.add(`x-drawerlayout__toggle--${config.position}`);
     toggleBtn.onclick = (e) => {
       e.stopPropagation();
       toggle();
@@ -807,8 +802,8 @@ export function drawerLayout(element, options = {}) {
       handle = document.querySelector(config.handleSelector);
     } else {
       handle = document.createElement('div');
-      // Placement per position: .x-drawer-handle--{position} in layout.css (#779).
-      handle.className = `x-drawer-handle x-drawer-handle--${config.position}`;
+      // Placement per position: .x-drawerlayout__handle--{position} in layout.css (#779).
+      handle.className = `x-drawerlayout__handle x-drawerlayout__handle--${config.position}`;
       element.appendChild(handle);
     }
 
@@ -832,8 +827,8 @@ export function drawerLayout(element, options = {}) {
         // Create overlay for cursor handling (Compliance: No body.style modification)
         const overlay = document.createElement('div');
         overlay.id = 'x-resize-overlay';
-        // .x-drawer-resize-overlay in layout.css (#779).
-        overlay.className = `x-drawer-resize-overlay x-drawer-resize-overlay--${isVertical ? 'row' : 'col'}`;
+        // .x-drawerlayout__resize-overlay in layout.css (#779).
+        overlay.className = `x-drawerlayout__resize-overlay x-drawerlayout__resize-overlay--${isVertical ? 'row' : 'col'}`;
         document.body.appendChild(overlay);
         
         element.classList.add('resizing');
@@ -937,13 +932,13 @@ export function drawerLayout(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('x-drawer-layout', 'x-drawer', 'collapsed', 'resizing');
+    element.classList.remove('x-drawerlayout', 'x-drawer', 'collapsed', 'resizing');
     if (toggleBtn && !config.toggleSelector) toggleBtn.remove();
     if (config.toggleSelector && toggleBtn) toggleBtn.removeEventListener('click', toggle);
     if (resizeCleanup) resizeCleanup();
     
     clearRules(element);
-    element.classList.remove('x-drawer-layout--vertical');
+    element.classList.remove('x-drawerlayout--vertical');
     delete element.wbToggle;
   };
 }

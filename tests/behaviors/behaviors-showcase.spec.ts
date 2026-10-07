@@ -138,7 +138,7 @@ test.describe('Behaviors Showcase Page', () => {
       
       // Get the sidebar text element
       const sidebarText = drawerCard.locator('.demo-area [x-drawer-layout] > div:first-child');
-      const toggleButton = drawerCard.locator('.x-drawer-toggle');
+      const toggleButton = drawerCard.locator('.x-drawerlayout__toggle');
 
       // #1092: this used to sit entirely inside if(count > 0) and PASS with
       // zero assertions. #666 removed every .behavior-card from this page and
@@ -318,10 +318,10 @@ test.describe('Behaviors Showcase Page', () => {
 
     test('drawer toggle button is visible and accessible', async ({ page }) => {
       const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text("Drawer"))');
-      const toggleButton = drawerCard.locator('.x-drawer-toggle');
+      const toggleButton = drawerCard.locator('.x-drawerlayout__toggle');
       
       // #1092: precondition, unconditional -- was if(count > 0) and passed empty.
-      expect(await toggleButton.count(), 'the drawer demo rendered no .x-drawer-toggle').toBeGreaterThan(0);
+      expect(await toggleButton.count(), 'the drawer demo rendered no .x-drawerlayout__toggle').toBeGreaterThan(0);
       await expect(toggleButton).toBeVisible();
 
       // Button should be clickable

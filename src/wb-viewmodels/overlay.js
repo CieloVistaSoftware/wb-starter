@@ -309,7 +309,7 @@ export function drawer(element, options = {}) {
   // comment predates #448's compliance test, which now flags exactly this
   // pattern). No CSS selector depends on the bare class -- layout.css's
   // visibility rule already selects the x-drawer TAG plus the OTHER real
-  // classes here (x-drawer.x-drawer-trigger, x-drawer.x-drawer-layout).
+  // classes here (x-drawer.x-drawer-trigger, x-drawer.x-drawerlayout).
   // #448 removed this class outright; restored WITH the tag-name guard.
   // permutation-compliance requires compliance.baseClass to cover the host
   // (classList.contains(cls) || tagName === cls), and on an attribute host
