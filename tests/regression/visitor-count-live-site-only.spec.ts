@@ -78,9 +78,11 @@ test.describe('visitor count (#1245)', () => {
   test('on localhost the counter is never called and the footer shows no count', async ({ page }) => {
     const calls = counterRequests(page);
     await boot(page, '/');
-    // The count is started right after the shell renders; give a real call
-    // time to have been made before saying none was.
-    await page.waitForTimeout(1000);
+    // No clock needed: main.js starts the count right after site.init() and
+    // only sets window.WBSite after the first navigateTo() resolves, and
+    // startVisitorCount() issues its fetch synchronously when it is called.
+    // So by the time boot() sees WBSite, any counter request has been sent.
+    // The live-host test below proves the same boot DOES send one there.
     expect(calls, 'a counter request from localhost').toEqual([]);
     await expect(page.locator('#footerVisits')).toHaveCount(0);
   });
@@ -105,8 +107,10 @@ test.describe('visitor count (#1245)', () => {
     expect(calls).toEqual([HIT_URL]);
 
     // A page change inside the loaded site is not a new load of index.html.
+    // navigateTo() is awaited to completion, and the about page is on screen,
+    // so any request a navigation would make has already been sent.
     await page.evaluate(() => (window as any).WBSite.navigateTo('about'));
-    await page.waitForTimeout(1000);
+    await expect(page.locator('#mainPage-about')).toBeAttached({ timeout: 15000 });
     expect(calls, 'in-site navigation counted as a hit').toHaveLength(1);
 
     // A reload is.
@@ -128,9 +132,21 @@ test.describe('visitor count (#1245)', () => {
       await page.route(`https://${COUNTER_HOST}/**`, answer);
       await serveLiveSiteLocally(page, baseURL!);
 
+      // The counter request has fully settled (refused, or its body read) ...
+      const settled = page.waitForEvent(name === 'blocked' ? 'requestfailed' : 'requestfinished', {
+        predicate: (r) => r.url() === HIT_URL, timeout: BOOT_TIMEOUT,
+      });
       await boot(page, LIVE_ROOT);
-      await expect.poll(() => calls.length, { timeout: 15000 }).toBe(1);
-      await page.waitForTimeout(500);
+      await settled;
+      expect(calls).toEqual([HIT_URL]);
+      // ... and the page's own handling of it (response.json() and the catch)
+      // has run: a task posted now queues behind those (MessageChannel, not
+      // requestAnimationFrame, which a background tab suspends).
+      await page.evaluate(() => new Promise<void>((resolve) => {
+        const channel = new MessageChannel();
+        channel.port1.onmessage = () => resolve();
+        channel.port2.postMessage(0);
+      }));
 
       await expect(page.locator('#footerVisits')).toHaveCount(0);
       await expect(page.locator('#footerCopyright')).toBeVisible();

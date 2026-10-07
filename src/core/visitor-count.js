@@ -49,13 +49,16 @@ export function isLiveHost(hostname = location.hostname) {
   return hostname === LIVE_HOST;
 }
 
+/** Thousands separators for the total; a number, not a date or time. */
+const COUNT_FORMAT = new Intl.NumberFormat('en-US');
+
 /**
  * "12,345 visits" -- the footer's wording.
  * @param {number} total
  * @returns {string}
  */
 export function visitsLabel(total) {
-  return `${total.toLocaleString('en-US')} ${total === 1 ? 'visit' : 'visits'}`;
+  return `${COUNT_FORMAT.format(total)} ${total === 1 ? 'visit' : 'visits'}`;
 }
 
 /**
