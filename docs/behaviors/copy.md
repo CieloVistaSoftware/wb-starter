@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | — | Text to copy |
-| `target` | `string` | — | Selector of element to copy from |
+| `text` | text | — | Text to copy |
+| `target` | CSS selector | — | Selector of element to copy from |
 
 <sub>Schema: [`copy.schema.json`](../../src/wb-models/copy.schema.json)</sub>

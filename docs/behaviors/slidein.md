@@ -12,6 +12,6 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `direction` | `string` | `left` | Edge the element slides in from: `left` (default), `right`, `top` or `bottom`. |
+| `direction` | `left` · `right` · `top` · `bottom` | `left` | Edge the element slides in from: `left` (default), `right`, `top` or `bottom`. |
 
 <sub>Schema: [`slidein.schema.json`](../../src/wb-models/slidein.schema.json)</sub>

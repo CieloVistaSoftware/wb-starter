@@ -14,10 +14,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `offset` | `string` | `0` | Offset from top when stuck |
+| `offset` | CSS length | `0` | Offset from top when stuck |
 | `zIndex` | `number` | `100` | Z-index when stuck |
 | `threshold` | `number` | `0` | Scroll position to trigger sticky |
-| `stuckClass` | `string` | `is-stuck` | Class added when stuck |
+| `stuckClass` | CSS class name | `is-stuck` | Class added when stuck |
 | `animated` | `boolean` | `true` | Animate stick/unstick |
 
 ## Events

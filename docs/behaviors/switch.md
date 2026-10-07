@@ -12,11 +12,11 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Switch label |
+| `label` | text | — | Switch label |
 | `checked` | `boolean` | `false` | On/off state |
 | `disabled` | `boolean` | `false` | Disabled state |
-| `name` | `string` | — | Form field name |
-| `value` | `string` | — | Form field value when checked |
+| `name` | text | — | Form field name |
+| `value` | text | — | Form field value when checked |
 | `labelPosition` | `start` · `end` | `end` |  |
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `primary` · `success` | `default` |  |

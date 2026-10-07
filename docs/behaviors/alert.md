@@ -13,9 +13,9 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Alert severity/style variant |
-| `title` | `string` | — | Alert title (optional heading) |
-| `message` | `string` | — | Alert message content |
-| `icon` | `string` | — | Icon (emoji or icon name) |
+| `title` | text | — | Alert title (optional heading) |
+| `message` | text | — | Alert message content |
+| `icon` | emoji or icon name | — | Icon (emoji or icon name) |
 | `dismissible` | `boolean` | `false` | Show close button to dismiss alert |
 
 ## Methods

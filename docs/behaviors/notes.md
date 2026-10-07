@@ -15,11 +15,11 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `position` | `left` · `right` · `modal` | `left` |  |
-| `maxWidth` | `string` | `50vw` | Max width when resizing |
-| `minWidth` | `string` | `200px` | Min width when resizing |
-| `defaultWidth` | `string` | `320px` | Default width |
+| `maxWidth` | CSS length | `50vw` | Max width when resizing |
+| `minWidth` | CSS length | `200px` | Min width when resizing |
+| `defaultWidth` | CSS length | `320px` | Default width |
 | `autoSave` | `boolean` | `true` | Auto-save to localStorage |
-| `placeholder` | `string` | `Add your notes here...` | Textarea placeholder |
+| `placeholder` | text | `Add your notes here...` | Textarea placeholder |
 
 ## Events
 

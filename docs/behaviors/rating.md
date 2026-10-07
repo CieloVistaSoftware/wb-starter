@@ -18,7 +18,7 @@
 | `disabled` | `boolean` | `false` | Disabled state |
 | `half` | `boolean` | `false` | Allow half-star ratings |
 | `size` | `sm` · `md` · `lg` | `md` |  |
-| `icon` | `string` | `★` | Custom icon (emoji or symbol) |
+| `icon` | emoji or icon name | `★` | Custom icon (emoji or symbol) |
 
 ## Events
 

@@ -17,10 +17,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `quote` | `string` | — | Testimonial quote text |
-| `author` | `string` | — | Author name |
-| `role` | `string` | — | Author role/title/company |
-| `avatar` | `string` | — | Author avatar image URL |
+| `quote` | text | — | Testimonial quote text |
+| `author` | text | — | Author name |
+| `role` | text | — | Author role/title/company |
+| `avatar` | URL | — | Author avatar image URL |
 | `rating` | `number` | `0` | Star rating (0-5) |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` · `centered` | `default` | Visual style variant |
 | `size` | `sm` · `md` · `lg` | `md` | Card size |

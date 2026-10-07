@@ -12,7 +12,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `string` | — | Comma-separated list of timeline items |
+| `items` | comma-separated list | — | Comma-separated list of timeline items |
 
 ## Methods
 

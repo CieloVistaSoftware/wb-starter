@@ -12,11 +12,11 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Drawer title |
-| `content` | `string` | — | Drawer body content |
+| `title` | text | — | Drawer title |
+| `content` | text or HTML | — | Drawer body content |
 | `position` | `left` · `right` · `top` · `bottom` | `right` |  |
-| `width` | `string` | `320px` | Drawer width (left/right) |
-| `height` | `string` | `auto` | Drawer height (top/bottom) |
+| `width` | CSS length | `320px` | Drawer width (left/right) |
+| `height` | CSS length | `auto` | Drawer height (top/bottom) |
 | `closeOnBackdrop` | `boolean` | `true` | Close on backdrop click |
 | `closeOnEscape` | `boolean` | `true` | Close on Escape key |
 | `showClose` | `boolean` | `true` | Show close button |

@@ -12,8 +12,8 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `datetime` | `string` | — | Alias of `date`, read only when `date` is absent. |
-| `refresh` | `string` | `60000` | How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute. |
-| `date` | `string` | — | The timestamp to describe. `datetime` is accepted as an alias; `date` is read first. |
+| `datetime` | date or date-time | — | Alias of `date`, read only when `date` is absent. |
+| `refresh` | milliseconds | `60000` | How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute. |
+| `date` | date or date-time, e.g. `2026-12-31T23:59` | — | The timestamp to describe. `datetime` is accepted as an alias; `date` is read first. |
 
 <sub>Schema: [`relativetime.schema.json`](../../src/wb-models/relativetime.schema.json)</sub>

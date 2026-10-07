@@ -20,19 +20,19 @@ No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Input label text |
-| `placeholder` | `string` | — | Placeholder text |
-| `value` | `string` | — | Input value |
-| `name` | `string` | — | Form field name |
+| `label` | text | — | Input label text |
+| `placeholder` | text | — | Placeholder text |
+| `value` | text | — | Input value |
+| `name` | text | — | Form field name |
 | `inputType` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type |
-| `helper` | `string` | — | Helper text below input |
-| `error` | `string` | — | Error message (shows error state) |
+| `helper` | text | — | Helper text below input |
+| `error` | text | — | Error message (shows error state) |
 | `variant` | `default` · `success` · `error` | `default` | Visual validation state |
 | `size` | `sm` · `md` · `lg` | `md` | Input size |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `readonly` | `boolean` | `false` | Read-only state |
 | `required` | `boolean` | `false` | Required field |
-| `icon` | `string` | — | Icon (emoji or icon name) |
+| `icon` | emoji or icon name | — | Icon (emoji or icon name) |
 | `iconPosition` | `start` · `end` | `start` | Icon position |
 | `clearable` | `boolean` | `false` | Show clear button when has value |
 

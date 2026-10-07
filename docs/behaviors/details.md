@@ -26,9 +26,9 @@ On another element, write `x-details`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `summary` | `string` | — | Clickable summary text |
+| `summary` | text | — | Clickable summary text |
 | `open` | `boolean` | `false` | Initially expanded |
-| `name` | `string` | — | Accordion group name (native exclusive behavior) |
+| `name` | group name | — | Accordion group name (native exclusive behavior) |
 | `animated` | `boolean` | `true` | Animate open/close |
 | `variant` | `default` · `bordered` · `filled` | `default` |  |
 

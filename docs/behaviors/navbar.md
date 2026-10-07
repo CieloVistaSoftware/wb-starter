@@ -12,12 +12,12 @@ Every `<nav>` picks up navbar; no `x-navbar` attribute needed (#958). A plain `<
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `brand` | `string` | — | Brand text |
-| `brandHref` | `string` | `/` | Brand link URL |
-| `logo` | `string` | — | Logo image URL |
-| `logoSize` | `string` | `32` | Logo size in pixels |
-| `tagline` | `string` | — | Brand tagline or subtitle |
-| `items` | `string` | — | Navigation items as JSON [{label, href}] |
+| `brand` | text | — | Brand text |
+| `brandHref` | URL | `/` | Brand link URL |
+| `logo` | URL | — | Logo image URL |
+| `logoSize` | number of pixels | `32` | Logo size in pixels |
+| `tagline` | text | — | Brand tagline or subtitle |
+| `items` | JSON array of {label, href} | — | Navigation items as JSON [{label, href}] |
 | `sticky` | `boolean` | `false` | Sticky positioning |
 | `variant` | `default` · `dark` · `transparent` | `default` |  |
 

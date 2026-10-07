@@ -40,8 +40,8 @@ always shows a value, so its label is always risen.
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `placeholder` | string | — | Used as the label text if present (checked first). |
-| `label` | string | — | Fallback label text when there's no `placeholder`. |
+| `placeholder` | text | — | Used as the label text if present (checked first). |
+| `label` | text | — | Fallback label text when there's no `placeholder`. |
 
 ## CSS Classes
 

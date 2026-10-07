@@ -74,12 +74,12 @@ a photograph that carries the story can take more of the row:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | — | Image URL |
-| `imageAlt` | `string` | — | Image alt text |
+| `image` | URL | — | Image URL |
+| `imageAlt` | text | — | Image alt text |
 | `imagePosition` | `left` · `right` | `left` | Image position |
-| `imageWidth` | `string` | `40%` | Image width (CSS value) |
-| `title` | `string` | — | Card title |
-| `subtitle` | `string` | — | Card subtitle |
+| `imageWidth` | CSS length | `40%` | Image width (CSS value) |
+| `title` | text | — | Card title |
+| `subtitle` | text | — | Card subtitle |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` | `default` | Visual style variant |
 
 ## Methods

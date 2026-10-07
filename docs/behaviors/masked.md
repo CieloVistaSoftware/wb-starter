@@ -23,8 +23,8 @@ literal separator inserted automatically as the user fills in slots:
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `mask` | string | `""` (behavior is a no-op without one) | Mask pattern. `9` = digit slot, `A` = letter slot (auto-uppercased), any other character is a literal. |
-| `mask-placeholder` | string | `_` | Character used to auto-fill an empty `placeholder` derived from the mask (only applied when the element has no `placeholder` of its own). |
+| `mask` | mask pattern, e.g. `(999) 999-9999` | `""` (behavior is a no-op without one) | Mask pattern. `9` = digit slot, `A` = letter slot (auto-uppercased), any other character is a literal. |
+| `mask-placeholder` | one character | `_` | Character used to auto-fill an empty `placeholder` derived from the mask (only applied when the element has no `placeholder` of its own). |
 
 ## CSS Classes
 

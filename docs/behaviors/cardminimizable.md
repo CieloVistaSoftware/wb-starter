@@ -13,8 +13,8 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title (always visible) |
-| `content` | `string` | — | Minimizable content |
+| `title` | text | — | Card title (always visible) |
+| `content` | text or HTML | — | Minimizable content |
 | `minimized` | `boolean` | `false` | Initial minimized state |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 

@@ -22,11 +22,11 @@ On another element, write `x-header`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `icon` | `string` | — | Logo icon (emoji or text) |
-| `title` | `string` | — | Header title |
-| `subtitle` | `string` | — | Subtitle text |
-| `badge` | `string` | — | Badge text (e.g., version) |
-| `logoHref` | `string` | `/` | Logo link URL |
+| `icon` | emoji or icon name | — | Logo icon (emoji or text) |
+| `title` | text | — | Header title |
+| `subtitle` | text | — | Subtitle text |
+| `badge` | text | — | Badge text (e.g., version) |
+| `logoHref` | URL | `/` | Logo link URL |
 | `sticky` | `boolean` | `false` | Sticky at top |
 
 ## Methods
