@@ -6,6 +6,84 @@
   ],
   "releases": [
     {
+      "version": "1.0.380",
+      "date": "2026-10-06",
+      "summary": "The suite sometimes failed because the test tool lost its connection to a page that had not changed at all, which made unrelated pull requests go red. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1677\" target=\"_blank\" rel=\"noopener\">PR 1677</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>WbIdle: a lost CDP handle on an unchanged page is asked again once</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7df2ac0a3f18f234388fb170a691466ccfa7e2ca\" target=\"_blank\" rel=\"noopener\"><code>7df2ac0</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Spec: wait for the site shell to boot before turning auto-inject off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/967\" target=\"_blank\" rel=\"noopener\">#967</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6c19874caaaadcce4e6bb0f46a683fdabce2089a\" target=\"_blank\" rel=\"noopener\"><code>6c19874</code></a>",
+          "issues": [
+            967,
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>WbIdle names what the page did when its settle dies</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9699630cd7561054dd0fbbb0cb1b0939a8363924\" target=\"_blank\" rel=\"noopener\"><code>9699630</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Gate: two load-dependent tests read the page before it was ready</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fc822f9ca4ba8004c1538130d957f8d423ef77f5\" target=\"_blank\" rel=\"noopener\"><code>fc822f9</code></a>",
+          "issues": [
+            961
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/demo-layout-standards.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/demo-layout-standards.spec.ts</a> --project=compliance. Before: on CI one run in a few died with &quot;Execution context was destroyed&quot; and &quot;(no navigation, load, navigation request or crash recorded)&quot;. Now: that exact case asks the unchanged page again, while a real reload still fails and names it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e74a40c1355ea50d3209e815ed62b47442d8a12f\" target=\"_blank\" rel=\"noopener\"><code>e74a40c</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.379",
+      "date": "2026-10-06",
+      "summary": "The input-theming test could read the inputs before a theme switch had recoloured them, failing with native white in the ocean theme. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1681\" target=\"_blank\" rel=\"noopener\">PR 1681</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Input theming polls until the input has changed colour ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/48c5912e30e4d22bcd41065299600aec42d62fa4\" target=\"_blank\" rel=\"noopener\"><code>48c5912</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Demo layout check survives a page that navigates while it boots ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/de8bf709bb85081047942a63cc66c95df6239228\" target=\"_blank\" rel=\"noopener\"><code>de8bf70</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Give every remaining hex colour in src/ JS its reason</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d8cb71dc3827c55eabf1f8c0750a2bf863bbda75\" target=\"_blank\" rel=\"noopener\"><code>d8cb71d</code></a>",
+          "issues": [
+            790
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a>. Before: CI failed &quot;input background rgb(255, 255, 255) is light/native-white in dark theme ocean&quot;. Now: 8 of 8 pass, each reading once the colour has changed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4c9a35b5ff4f7ebdb53e298b1d09d6de95cbae0a\" target=\"_blank\" rel=\"noopener\"><code>4c9a35b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.378",
       "date": "2026-10-06",
       "summary": "On GitHub Pages the error log lives only in the visitor&#39;s browser, so the list on the live Error Log Viewer could not be handed to anyone. Copy puts every error on screen on the clipboard, one line each: level, source, message, repeat count, file:line:col, page and time. Also makes <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/input-theming.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/input-theming.spec.ts</a> measure inputs only after they have upgraded (it read never-upgraded, native-white inputs on the Windows runner). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1678\" target=\"_blank\" rel=\"noopener\">#1678</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1682\" target=\"_blank\" rel=\"noopener\">#1682</a>",
