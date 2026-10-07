@@ -17,7 +17,7 @@
         {
           "b": "horizontal-card",
           "d": {
-            "image": "/images/placeholder.svg",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg",
             "title": "Built for Speed",
             "subtitle": "No build step required",
             "content": "WB Starter is designed to get you up and running in seconds. No npm install, no webpack configuration, no waiting for builds. Just open index.html and start creating."

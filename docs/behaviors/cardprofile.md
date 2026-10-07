@@ -8,7 +8,7 @@
 <article x-cardprofile
   name="Grace Hopper"
   role="Compiler pioneer"
-  avatar="/images/placeholder.svg"
+  avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg/330px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg"
   bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>
 </div>
 
@@ -18,7 +18,7 @@
 | --- | --- | --- | --- |
 | `name` | text | `John Doe` | Person's name |
 | `role` | text | `Designer` | Job title or role |
-| `avatar` | URL | `/images/avatar.svg` | Avatar image URL |
+| `avatar` | URL | — | Avatar image URL |
 | `bio` | text | — | Short biography |
 | `cover` | URL | — | Cover/banner image URL |
 | `size` | `sm` · `md` · `lg` | `md` | Avatar size |
