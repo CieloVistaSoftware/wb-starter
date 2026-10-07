@@ -230,8 +230,10 @@ article > div:where(.x-card__body),
    but nothing styled it). Colors come from the theme — no literals.
    Doubled selector (.x-card.x-card--success → 0,2,0) so it outranks the
    single-class .x-card--hoverable / .x-card--auto border rules. */
-/* Forced-priority: the .x-card--hoverable/--auto rules reset `border` (shorthand)
-   after these, so the semantic accent must be marked to always win. */.x-card.x-card--success,
+/* The semantic accent. !important on purpose (#1014, measured): the hover
+   rule (`:is([x-card], ...):not([hoverable="false"]):hover`, 0,3,0, later in
+   this file) sets border-color to --primary, which recolours the accent on
+   hover. The accent must keep its variant colour in every state. */.x-card.x-card--success,
 .x-card[variant="success"],
 article.x-card--success,
 article[variant="success"],
@@ -271,22 +273,24 @@ article.x-card--primary,
 article[variant="primary"],
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"],
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--primary { border-left: 4px solid var(--primary) !important; }
-/* Tint the title to match, so the variant reads at a glance. !important because
-   the title carries an inline color (STYLE_TITLE in card.js).
+/* Tint the title to match, so the variant reads at a glance. The title class is
+   doubled (0,4,0) so the tint outranks a card type's own title colour, such as
+   [x-cardhero] .x-card__title.x-card__hero-title (0,3,0) in hero.css, without
+   !important (#1014). card.js no longer writes an inline colour (#779).
    A card's variant is its [variant] attribute (card.js adds no class). This
    block once listed a bare `.x-card__title` and a bare `> header > h3` among
    its selectors, so EVERY card title rendered --success-color, variant or
    not (#887). Each rule now names the variant it tints. */
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="success"] > header > :is(h1, h2, h3, h4),
-:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="success"] .x-card__title { color: var(--success-color) !important; }
+:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="success"] .x-card__title.x-card__title { color: var(--success-color); }
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="danger"] > header > :is(h1, h2, h3, h4),
-:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="danger"] .x-card__title { color: var(--danger-color) !important; }
+:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="danger"] .x-card__title.x-card__title { color: var(--danger-color); }
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="warning"] > header > :is(h1, h2, h3, h4),
-:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="warning"] .x-card__title { color: var(--warning-color) !important; }
+:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="warning"] .x-card__title.x-card__title { color: var(--warning-color); }
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="info"] > header > :is(h1, h2, h3, h4),
-:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="info"] .x-card__title { color: var(--info-color) !important; }
+:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="info"] .x-card__title.x-card__title { color: var(--info-color); }
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"] > header > :is(h1, h2, h3, h4),
-:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"] .x-card__title { color: var(--primary) !important; }
+:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"] .x-card__title.x-card__title { color: var(--primary); }
 
 /* Cards WITHOUT header/main/footer need padding on the card itself */
 /* #945 left `.x-card__main` here on purpose. No card has carried that class
