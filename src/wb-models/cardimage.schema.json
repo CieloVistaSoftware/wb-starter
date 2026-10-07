@@ -84,6 +84,7 @@
     "loading": {
       "type": "string",
       "description": "Image loading strategy",
+      "demoNote": "lazy and eager look the same in this box: it is already in view, so the image loads at once either way. The difference shows on a long page, in the browser's Network panel.",
       "enum": [
         "lazy",
         "eager"
