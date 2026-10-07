@@ -5,11 +5,12 @@
  * on the deployed sub-path (#1047, #1183).
  */
 import { createServer, request as httpRequest, type Server } from 'node:http';
+import type { Page } from '@playwright/test';
 
 export const PREFIX = '/wb-starter';
 
 /** Mounts `origin` under PREFIX, so the site loads exactly as it deploys. */
-export function mountUnderSubPath(origin: string): Promise<{ base: string; close: () => Promise<void> }> {
+export function mountUnderSubPath(origin: string): Promise<{ base: string; close: (page?: Page) => Promise<void> }> {
   const upstream = new URL(origin);
   const proxy: Server = createServer((req, res) => {
     const path = req.url || '/';
@@ -43,7 +44,14 @@ export function mountUnderSubPath(origin: string): Promise<{ base: string; close
       const { port } = proxy.address() as { port: number };
       resolve({
         base: `http://127.0.0.1:${port}${PREFIX}/`,
-        close: () => new Promise<void>((done) => proxy.close(() => done())),
+        // #961: pass the page that loaded through the proxy. It is navigated
+        // away first, so nothing it is still fetching (a lazy module, a retry)
+        // is refused by a closed proxy and logged to data/errors.json as a page
+        // error -- which error-log-empty then reports against an unrelated spec.
+        close: async (page?: Page) => {
+          if (page) await page.goto('about:blank').catch(() => {});
+          await new Promise<void>((done) => proxy.close(() => done()));
+        },
       });
     });
   });

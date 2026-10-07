@@ -81,7 +81,7 @@ for (const doc of DOCS) {
       expect(failed, 'image requests that 404ed').toEqual([]);
       expect(broken, 'images that rendered broken').toEqual([]);
     } finally {
-      await mount.close();
+      await mount.close(page);
     }
   });
 }

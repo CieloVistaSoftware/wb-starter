@@ -86,7 +86,7 @@ test('the catalogue still has asset-bearing rows, and the page lists them (#1047
       `(${missing.join(', ')}). Either the row markup changed or the catalogue and the page have drifted apart.`,
     ).toBeGreaterThanOrEqual(Math.ceil(ASSET_ROWS.length * 0.7));
   } finally {
-    await mount.close();
+    await mount.close(page);
   }
 });
 
@@ -140,7 +140,7 @@ for (const token of ASSET_ROWS) {
         'deployed site does. A green run at "/" proves nothing about this.',
       ).toEqual([]);
     } finally {
-      await mount.close();
+      await mount.close(page);
     }
   });
 }
