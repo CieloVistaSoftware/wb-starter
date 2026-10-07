@@ -6,6 +6,39 @@
   ],
   "releases": [
     {
+      "version": "1.0.393",
+      "date": "2026-10-07",
+      "summary": "Every remaining &quot;sleep-proves-negative&quot; now waits for the point after which the unwanted thing would already have happened, then asserts. A click or keystroke on the Behaviors page waits for the render it started (aria-busy clears on the newest one). A log POST that must not happen waits for logError&#39;s own &quot;[ErrorLogger]&quot; line, which prints only after its POST is answered. The stale navigation waits for its own navigateTo() promise. A disabled x-button is checked with the Navigation API&#39;s navigate event, which fires synchronously on location.href. The wheel fallback, retry and clock timers run on page.clock. A request that must never go out is checked after networkBarrier(), a new helper in <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a>: one marker request that every earlier request precedes. The cosmic nebula is checked as &quot;nothing animates its ::before&quot; instead of watched for 1.5s. The marked ceiling drops to 0. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1700\" target=\"_blank\" rel=\"noopener\">PR 1700</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The last 21 negative proofs wait for the step that would have done the wrong thing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/56536545d591336dd6e1b99fb4650ab011b20ac0\" target=\"_blank\" rel=\"noopener\"><code>5653654</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: 33 sleeps, 21 of them marked negative proofs. Now: 12 sleeps (4 scenarios, 3 polls, 5 caps) and marked 0, and no-new-fixed-sleeps holds it there.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/75da035c84079eb9d2a9b0a8ad71627e3bef664d\" target=\"_blank\" rel=\"noopener\"><code>75da035</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.392",
       "date": "2026-10-07",
       "summary": "Data/component-index.json listed 74 components with doc paths under docs/components/, a folder that no longer exists, and no code in src/, pages/, public/, scripts/ or tests/ reads it. Unused files are removed (John, 2026-10-07). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1698\" target=\"_blank\" rel=\"noopener\">#1698</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1699\" target=\"_blank\" rel=\"noopener\">#1699</a>",
