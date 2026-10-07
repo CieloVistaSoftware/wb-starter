@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.389",
+      "date": "2026-10-07",
+      "summary": "Removing !important from the card title tint left the draggable card&#39;s title untinted, because the drag title&#39;s own colour rule outranked it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1694\" target=\"_blank\" rel=\"noopener\">PR 1694</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Draggable card titles take the variant tint again ( CI)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c0d8b1b22d402d0fb70aed8cfa17491b63546ba1\" target=\"_blank\" rel=\"noopener\"><code>c0d8b1b</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Card variant titles win by specificity; the accent border keeps !important, with its reason</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f2e59a498f3c191c0dc86282961c4e825fba53dc\" target=\"_blank\" rel=\"noopener\"><code>f2e59a4</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/card-title-is-the-cards-not-the-pages.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/card-title-is-the-cards-not-the-pages.spec.ts</a>. Before: &quot;carddraggable: rgb(240, 242, 244) (want rgb(33, 196, 93))&quot;. Now: 5 of 5 pass and the draggable card&#39;s title is green.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/94bda21d4655c5a9ce185fb1e37d4daf6aa290c1\" target=\"_blank\" rel=\"noopener\"><code>94bda21</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.388",
       "date": "2026-10-07",
       "summary": "Src/wb-viewmodels/demo-docmap.js mapped 18 behaviors to doc paths under /docs/components/, a folder that no longer exists, so every one was a 404. demo.js imported the map and never used it. It is removed, and a new check fails whenever code in src/ names a docs/*.md file that does not exist. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1685\" target=\"_blank\" rel=\"noopener\">#1685</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1693\" target=\"_blank\" rel=\"noopener\">#1693</a>",
