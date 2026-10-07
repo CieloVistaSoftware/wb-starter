@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.407",
+      "date": "2026-10-07",
+      "summary": "The site&#39;s left navigation was a hand-written copy of the library&#39;s x-sidebar (its own items, active highlight, collapse and drag-resize), so the library carried two sidebars and the site used neither one&#39;s schema or options. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/829\" target=\"_blank\" rel=\"noopener\">#829</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1715\" target=\"_blank\" rel=\"noopener\">#1715</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The site&#39;s left nav is the library&#39;s own x-sidebar</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/829\" target=\"_blank\" rel=\"noopener\">#829</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1715\" target=\"_blank\" rel=\"noopener\">#1715</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c61efd3a3bb37523822c1cdd4a097203ecb10aeb\" target=\"_blank\" rel=\"noopener\"><code>c61efd3</code></a>",
+          "issues": [
+            829,
+            1715
+          ]
+        }
+      ],
+      "seeIt": "Open the site at desktop width and inspect the left nav, then press the menu button and drag the nav&#39;s right edge. Before: &lt;nav class=&quot;site__nav&quot;&gt; holding &lt;a class=&quot;nav__item&quot;&gt; links and a mouse-only resize strip. Now: &lt;nav class=&quot;site__nav x-sidebar&quot; x-sidebar&gt; holding &lt;a class=&quot;x-sidebar__item&quot;&gt; links that look the same, collapse to icons with tooltips, and a resize handle that also takes the arrow keys.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c61efd3a3bb37523822c1cdd4a097203ecb10aeb\" target=\"_blank\" rel=\"noopener\"><code>c61efd3</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.406",
       "date": "2026-10-07",
       "summary": "The sidebar and drawer layouts put classes on the page that could not be derived from the behavior applying them: sidebarlayout added x-sidebar-layout, and drawerLayout added x-drawer-layout plus x-drawer-toggle, x-drawer-handle and x-drawer-resize-overlay, which read as parts of the separate drawer behavior. They now follow x-{behavior}[__part][--modifier]; the x-drawer-layout and x-sidebar-layout attributes authors write are unchanged. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1716\" target=\"_blank\" rel=\"noopener\">#1716</a>",
