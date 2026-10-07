@@ -178,7 +178,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       await trigger.click();
       // Legacy drawer() fixed-position panels are appended to document.body;
       // find the most recently added one with a real bounding box.
-      await page.waitForTimeout(400);
+      // Until the drawer panel is appended (#1516: not 400ms).
+      await page.waitForFunction(() => Array.from(document.querySelectorAll('body > div')).some(
+        (el) => getComputedStyle(el).position === 'fixed' && el.getBoundingClientRect().width > 0), null, { timeout: 5000 }).catch(() => {});
       const panelRect = await page.evaluate(() => {
         const fixed = Array.from(document.querySelectorAll('body > div')).filter(
           (el) => getComputedStyle(el).position === 'fixed' && el.getBoundingClientRect().width > 0

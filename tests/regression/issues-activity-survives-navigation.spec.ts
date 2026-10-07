@@ -129,6 +129,7 @@ test.describe('#1118 the Issues activity loader outlives its own page', () => {
     await expect(page.locator('#activity-closed')).toHaveCount(0, { timeout: 10_000 });
 
     release();
+    // sleep-proves-negative: the released fetch must NOT write into the departed page; a write that never happens fires no event
     await page.waitForTimeout(800);
 
     const nullWrites = errors.filter((e) =>

@@ -32,7 +32,9 @@ test.describe('demos/site/forms.html uses native elements, not deprecated wrappe
     });
     await page.goto('/demos/site/forms.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-    await page.waitForTimeout(500);
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     expect(warnings).toEqual([]);
   });
 

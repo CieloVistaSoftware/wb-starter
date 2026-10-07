@@ -34,7 +34,7 @@ test('Endpoint sees panel does not persist after switching to a non-form example
 
   // Switch to an unrelated, non-form example.
   await page.selectOption('#pg-examples', 'cards');
-  await page.waitForTimeout(500);
+  // No sleep (#1516): toBeHidden retries until the panel goes.
 
   await expect(endpointPanel, 'stale panel must not persist into an unrelated example').toBeHidden();
 });

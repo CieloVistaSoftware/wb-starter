@@ -42,10 +42,15 @@ test.describe('service worker: audio range requests do not throw unhandled rejec
     // resolving nor rejecting), which previously hung this whole test at
     // Playwright's evaluate() timeout. The test only needs the range
     // request itself to fire, not for playback to actually start.
+    // The range request answered through the worker is the event this test is
+    // about; wait for it (10s cap) rather than 1500ms (#1516). Errors the worker
+    // logs while handling it are in the console by then.
+    const ranged = page.waitForResponse((r) => !!r.request().headers()['range'], { timeout: 10000 }).catch(() => null);
     await audio.evaluate((el: HTMLAudioElement) => {
       el.play().catch(() => {});
     });
-    await page.waitForTimeout(1500);
+    await ranged;
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
     const swErrors = consoleErrors.filter((e) => e.includes('sw.js') || e.includes('Failed to fetch'));
     expect(swErrors, `expected no service-worker fetch errors, got: ${swErrors.join(' | ')}`).toEqual([]);

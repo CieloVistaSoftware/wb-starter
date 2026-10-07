@@ -23,6 +23,7 @@ test('expected fixture errors stay out of the persistent error log', async ({ pa
     document.body.appendChild(container);
     return await (window as any).WB.scan(container);
   });
+  // sleep-proves-negative: an expected error must NOT be POSTed to the log; a request that never goes out fires no event
   await page.waitForTimeout(1500);
   expect(appendRequests).toBe(0);
 

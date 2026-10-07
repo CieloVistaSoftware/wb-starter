@@ -171,7 +171,13 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
       const bgBefore = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
       await toggle.click();
-      await page.waitForTimeout(300);
+      // The toggle has repainted, transitions done (#1516: not 300ms).
+      await page.evaluate(async () => {
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        await Promise.all(document.getAnimations()
+          .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+          .map((a) => a.finished.catch(() => {})));
+      });
       const bgAfter = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
       // Background should still be a real color (not transparent)
       expect(bgAfter).not.toBe('rgba(0, 0, 0, 0)');
@@ -349,7 +355,13 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     // #1092: the example must render a [x-toggle] element to click
     expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
     await toggle.click();
-    await page.waitForTimeout(300);
+    // The toggle has repainted, transitions done (#1516: not 300ms).
+    await page.evaluate(async () => {
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await Promise.all(document.getAnimations()
+        .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+        .map((a) => a.finished.catch(() => {})));
+    });
     const bg = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
     // Should NOT become black or transparent after click
     expect(bg).not.toBe('rgb(0, 0, 0)');

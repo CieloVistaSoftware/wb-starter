@@ -15,6 +15,7 @@ test('Notifications switch fires a real toast when turned ON, not when turned OF
 
   // Starts checked -- turning it OFF must NOT toast.
   await sw.click();
+  // sleep-proves-negative: turning the switch OFF must NOT toast; a toast that correctly never comes fires no event
   await page.waitForTimeout(200);
   expect(await page.locator('.x-toast').count(), 'turning the switch OFF should not fire a toast').toBe(0);
 

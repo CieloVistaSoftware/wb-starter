@@ -471,8 +471,7 @@ test.describe('Interactive Cards', () => {
       
       // Click again to collapse
       await expandBtn.click();
-      await page.waitForTimeout(400);
-      
+      // No sleep (#1516): the retrying matcher waits for the class to go.
       await expect(card).not.toHaveClass(/x-card--expanded/);
     });
     
@@ -599,8 +598,7 @@ test.describe('Notification Cards', () => {
       await expect(closeBtn).toBeVisible();
       
       await closeBtn.click();
-      await page.waitForTimeout(300);
-      
+      // No sleep (#1516): the retrying matcher waits for the card to hide.
       await expect(card).not.toBeVisible();
     });
   });

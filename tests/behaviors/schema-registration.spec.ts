@@ -13,7 +13,9 @@ for (const route of ['/?page=behaviors', '/?page=home']) {
     await page.goto(route);
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    await page.waitForTimeout(2500);
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     expect(warns, 'unexpected schema warnings:\n' + warns.join('\n')).toHaveLength(0);
   });
 }

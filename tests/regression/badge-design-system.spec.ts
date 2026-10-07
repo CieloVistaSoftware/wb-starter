@@ -146,7 +146,8 @@ test.describe('Badge design system — new variants actually differ', () => {
     // No console errors from combining all three.
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
-    await page.waitForTimeout(100);
+    // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
     expect(errors).toHaveLength(0);
   });
 

@@ -65,6 +65,7 @@ test.describe('.x-card tooltip -- themed hover text (#283)', () => {
     await expect(card).toHaveAttribute('title', 'Just a heading, also a native title attribute');
 
     await card.hover();
+    // sleep-proves-negative: a card with no tooltip must NOT show one after the show delay
     await page.waitForTimeout(300); // longer than tooltip.js's 200ms show delay
     // Only a tooltip for THIS card counts. The fixture's other cards do have
     // themed tooltips, and the pointer can cross one on its way here (#1302).

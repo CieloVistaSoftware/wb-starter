@@ -55,6 +55,7 @@ test.describe('mdhtml() autoLiveRender option', () => {
     }, ISSUE_BODY_MD);
 
     expect(result.hasLiveDemo, 'an issue body\'s embedded example must not become a live element').toBe(false);
+    // sleep-proves-negative: the fake src must NEVER be fetched; a fetch that never happens fires no event
     await page.waitForTimeout(300);
     expect(fetchedFakePath, 'the fake illustrative src must never actually be fetched').toEqual([]);
   });
