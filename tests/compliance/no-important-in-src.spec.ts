@@ -22,8 +22,6 @@ const root = process.cwd();
 
 /** !important declarations still in src/ on 2026-10-07, by file. Shrink only. */
 const REGISTER: Record<string, number> = {
-  'src/core/x-devconsole.js': 3,
-  'src/lib/highlight.js': 2,
   'src/styles/behaviors/card.css': 10,
   'src/styles/behaviors/demo.css': 7,
   'src/styles/normalize.css': 5,
@@ -39,7 +37,6 @@ const REGISTER: Record<string, number> = {
   'src/styles/site.css': 28,
   'src/styles/transitions.css': 4,
   'src/styles/x-signature.css': 5,
-  'src/wb-viewmodels/semantics/audio.js': 3,
 };
 
 /** Remove comments. CSS has only block comments; JS also has line comments. */
@@ -74,6 +71,9 @@ test.describe('no !important in src/ (#1014)', () => {
   test('each file holds no more !important than its register entry, and the entry is exact', () => {
     const found: Record<string, number> = {};
     for (const file of walk(join(root, 'src'))) {
+      // src/lib holds vendored libraries; highlight.js's CSS grammar names
+      // "!important" as a token to colour, which is not a declaration.
+      if (/[\\/]src[\\/]lib[\\/]/.test(file)) continue;
       const n = countImportant(readFileSync(file, 'utf8'), file.endsWith('.js'));
       if (n) found[relative(root, file).replace(/\\/g, '/')] = n;
     }
