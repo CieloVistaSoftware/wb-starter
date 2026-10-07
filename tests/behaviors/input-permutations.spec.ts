@@ -54,8 +54,9 @@ async function render(page: Page, html: string): Promise<void> {
   await page.evaluate(async () => {
     const c = document.getElementById('input-perm-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(c, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(250);
 }
 
 /** The element a parameter should have landed on: the field itself. */

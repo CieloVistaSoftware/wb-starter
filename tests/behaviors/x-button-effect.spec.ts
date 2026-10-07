@@ -32,8 +32,14 @@ async function setup(page: Page, html: string, id = 'x-button-effect-area'): Pro
   }, { h: html, containerId: id });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
+    // Built once its work has called back, and its colour transitions have
+    // finished (#1516: no fixed sleep; settle alone read a mid-fade 238 vs 239).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await Promise.all(document.getAnimations()
+      .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+      .map((a) => a.finished.catch(() => {})));
   });
-  await page.waitForTimeout(400);
 }
 
 test.describe('<button> variant -- computed background-color actually differs', () => {

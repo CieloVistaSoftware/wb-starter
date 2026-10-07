@@ -42,7 +42,8 @@ async function createTestPage(page: Page, html: string): Promise<void> {
   
   // Wait for WB to initialize
   await page.waitForFunction(() => window.wbReady === true, { timeout: 5000 });
-  await page.waitForTimeout(300);
+  // Ready means booted; built means its work has called back (#1516: not 300ms).
+  await page.evaluate(() => (window as any).WB.settled?.({ timeout: 10000 }));
 }
 
 test.describe('Base Cards', () => {
