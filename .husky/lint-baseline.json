@@ -73,7 +73,7 @@
     "src/core/features.js": 6,
     "src/core/mvvm/schema-builder.js": 7,
     "src/core/resize.js": 1,
-    "src/core/site-engine.js": 2,
+    "src/core/site-engine.js": 1,
     "src/core/style-loader.js": 1,
     "src/core/wb-lazy.js": 1,
     "src/core/wb.js": 5,

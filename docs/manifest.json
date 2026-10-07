@@ -1000,7 +1000,7 @@
           "file": "behaviors/sidebarlayout.md",
           "title": "Sidebar Layout - wb-starter v3.0",
           "description": "A two-column layout: a fixed-ish sidebar next to a main content area that grows to fill the remaining space.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/skeleton.md",

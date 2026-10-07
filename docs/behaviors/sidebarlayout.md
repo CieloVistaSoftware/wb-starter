@@ -63,7 +63,7 @@ sidebar depends on `side`).
 
 | Class | Applied When | Description |
 |-------|--------------|-------------|
-| `.x-sidebar-layout` | Always | Marker class for targeting/testing; the flex layout itself is applied inline |
+| `.x-sidebarlayout` | Always | Marker class for targeting/testing; the flex layout itself is applied inline |
 
 ## Accessibility
 

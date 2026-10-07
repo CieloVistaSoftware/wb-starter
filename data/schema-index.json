@@ -2538,7 +2538,7 @@
       "title": "Drawer Layout",
       "description": "Collapsible sidebar layout with toggle",
       "tag": "x-drawer-layout",
-      "baseClass": "x-drawer-layout",
+      "baseClass": "x-drawerlayout",
       "properties": {
         "position": {
           "type": "string",
@@ -2547,7 +2547,7 @@
             "right"
           ],
           "default": "left",
-          "appliesClass": "x-drawer-toggle--{{value}}"
+          "appliesClass": "x-drawerlayout__toggle--{{value}}"
         },
         "width": {
           "type": "string",

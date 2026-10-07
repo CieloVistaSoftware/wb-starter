@@ -85,6 +85,13 @@
   cursor: pointer;
 }
 
+/* #1095: while copy() shows its "Copied!" feedback. Two classes, to beat
+   `[data-theme] button` (0,1,1) on the usual <button> host. Same success
+   colour as x-copybutton's copied state. */
+.x-copy.x-copy--copied {
+  color: var(--success-color);
+}
+
 /* The execCommand fallback's scratch textarea: in the document so it can be
    selected, never on screen. */
 .x-copy-buffer {

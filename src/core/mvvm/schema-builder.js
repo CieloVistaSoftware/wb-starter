@@ -352,6 +352,13 @@ function applyDefaults(data, properties) {
 /**
  * Build DOM structure from schema
  */
+// Tags whose content model holds no element children: the void elements, plus
+// textarea/select/option, whose content is their own value or options (#1720).
+const CHILDLESS_HOSTS = new Set([
+  'AREA', 'BASE', 'BR', 'COL', 'EMBED', 'HR', 'IMG', 'INPUT', 'LINK', 'META',
+  'SOURCE', 'TRACK', 'WBR', 'TEXTAREA', 'SELECT', 'OPTION'
+]);
+
 function buildStructure(element, schema, data) {
   const baseClass = getBaseClass(schema);
 
@@ -386,6 +393,16 @@ function buildStructure(element, schema, data) {
   // confirmed live as feedback.js's alert() dismiss button silently
   // losing its click listener (~90% of loads).
   if (schema.$view && schema.$view.length === 0) {
+    return;
+  }
+
+  // #1720: a host that cannot hold element children IS the field -- the
+  // behaviors (semantics/input.js, textarea.js) wrap it rather than read a
+  // built one. Wiping and building here cleared a <textarea>'s authored text
+  // (its value) and hung a label, a second textarea and a counter inside it;
+  // an <input> got the same children, invisible because a void element
+  // serializes none.
+  if (CHILDLESS_HOSTS.has(element.tagName)) {
     return;
   }
 
@@ -956,16 +973,16 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // here documents the same "never race the class" intent explicitly rather
 // than relying on the empty $view being a no-op forever).
 // x-drawer-layout (#556): drawerLayout() (layouts.js) unconditionally
-// builds its own complete toggle <button class="x-drawer-toggle"> --
+// builds its own complete toggle <button class="x-drawerlayout__toggle"> --
 // same self-sufficient pattern as the rest of this list, no
 // options.schemaProcessed cooperation anywhere in that function. Left off
 // this list, schema-builder ALSO ran drawerLayout.schema.json's own $view
-// (a "toggle" part -- getPartClass() above turns baseClass "x-drawer-layout"
-// + part name "toggle" into literally "x-drawer-layout__toggle"), building
+// (a "toggle" part -- getPartClass() above turns baseClass "x-drawerlayout"
+// + part name "toggle" into literally "x-drawerlayout__toggle"), building
 // a SECOND, empty placeholder button on top of the first. Confirmed live via
 // no-element-overlap.spec.ts on demos/site/layout.html: the two buttons sit
-// at the exact same position, an empty "x-drawer-layout__toggle" painted
-// over the real "x-drawer-toggle" arrow.
+// at the exact same position, an empty "x-drawerlayout__toggle" painted
+// over the real "x-drawerlayout__toggle" arrow.
 const SCHEMA_EXCLUDED_TAGS = new Set([
   'x-demo', 'x-details', 'x-stack', 'x-search', 'x-skeleton', 'x-select',
   'x-articles', 'x-dialog', 'x-drawer-layout',

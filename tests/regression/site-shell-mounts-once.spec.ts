@@ -84,7 +84,7 @@ test.describe('#1340 the site shell mounts once', () => {
     await page.goto('/?page=docs');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 
-    const home = page.locator(`.nav__item[href="${pagePath('home')}"]`).first();
+    const home = page.locator(`#siteNav .x-sidebar__item[href="${pagePath('home')}"]`).first();
     await expect(home, 'no nav link to home').toBeVisible({ timeout: 10000 });
     await home.click();
     // The navigation is over once home has rendered and its work settled (#1516: not 1200ms).
