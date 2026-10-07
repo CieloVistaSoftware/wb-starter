@@ -49,7 +49,8 @@ async function select(page, token: string) {
     },
     { LIST, ROW, token }
   );
-  await page.waitForTimeout(600);
+  // The example has rendered once the live panel is no longer busy (#1516: not 600ms).
+  await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
 }
 
 test.describe('the API panel states its attribute count (#993)', () => {
@@ -66,7 +67,9 @@ test.describe('the API panel states its attribute count (#993)', () => {
       const summary = document.querySelector('#behaviors-live-api .behaviors-live__api-summary');
       const label = summary?.textContent?.trim() ?? '';
       (summary as HTMLElement | null)?.click();
-      await new Promise((r) => setTimeout(r, 700));
+      // The attribute list is in once it has rows (#1516: not 700ms).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      await until(() => document.querySelectorAll('#behaviors-live-api-body .behaviors-live__api-name code').length > 0);
       const names = Array.from(
         document.querySelectorAll('#behaviors-live-api-body .behaviors-live__api-name code')
       ).map((c) => c.textContent);
@@ -130,7 +133,9 @@ test.describe('the API panel states its attribute count (#993)', () => {
     const usage = await page.evaluate(async () => {
       const sum = document.querySelector('#behaviors-live-api .behaviors-live__api-summary');
       (sum as HTMLElement | null)?.click();
-      await new Promise((r) => setTimeout(r, 1200));
+      // The usage example is in and highlighted (#1516: not 1200ms).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      await until(() => !!document.querySelector('.behaviors-live__api-usage [class*="hljs"]'));
       const u = document.querySelector('.behaviors-live__api-usage') as HTMLElement | null;
       if (!u) return null;
       const cs = getComputedStyle(u);
