@@ -196,7 +196,7 @@ test.describe('Behaviors selector — permutations render with their option appl
             header = document.getElementById('behaviors-live-token')?.textContent ?? '';
             code = document.querySelector('#behaviors-live-code code')?.textContent ?? '';
             if (header.includes(want as string) && isApplied(code)) break;
-            await new Promise((r) => setTimeout(r, 100));
+            await new Promise((r) => requestAnimationFrame(r));
           }
           const stage = document.getElementById('behaviors-live-stage')!;
           out.push({
@@ -239,7 +239,7 @@ test.describe('Behaviors selector — permutations render with their option appl
         // The host element IS <table>; it holds thead/tbody directly rather
         // than wrapping a nested <table>.
         if (document.querySelector('#behaviors-live-stage tbody tr')) break;
-        await new Promise((r) => setTimeout(r, 100));
+        await new Promise((r) => requestAnimationFrame(r));
       }
       const tbl = document.querySelector('#behaviors-live-stage > *');
       return {
@@ -339,7 +339,7 @@ test.describe('Behaviors selector — interaction', () => {
       while (Date.now() < deadline) {
         const b = document.getElementById('behaviors-live-doc-body');
         if (b && b.querySelector('h1,h2,table')) break;
-        await new Promise((r) => setTimeout(r, 150));
+        await new Promise((r) => requestAnimationFrame(r));
       }
       const panel = document.getElementById('behaviors-live-doc') as HTMLDetailsElement;
       const body = document.getElementById('behaviors-live-doc-body')!;
@@ -406,7 +406,7 @@ test.describe('Behaviors page — the demo sections stay removed', () => {
       while (Date.now() < deadline) {
         const c = document.querySelector('#behaviors-live-code code')?.textContent ?? '';
         if (c.includes('confirm-title')) break;
-        await new Promise((res) => setTimeout(res, 100));
+        await new Promise((r) => requestAnimationFrame(r));
       }
       return {
         // The page's own sections, not the docs panel: a behavior's .md may

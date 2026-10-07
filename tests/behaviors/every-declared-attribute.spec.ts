@@ -231,8 +231,7 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
     // full-suite load, so x-relativetime (which renders and then re-renders on
     // an interval) was compared half-built and failed only when workers
     // contended. WB.whenIdle() is the signal #962 asked for.
-    if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 15000 });
-    else await new Promise((r) => setTimeout(r, 120));
+    await WB?.whenIdle?.({ timeout: 15000 });
 
     // Compare the rendered element with the attribute REMOVED from the
     // comparison, so the attribute's own presence in outerHTML is not what

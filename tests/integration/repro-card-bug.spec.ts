@@ -36,6 +36,7 @@ test('cardimage/cardvideo survive a fresh nav to Components without being wiped'
   // fetch to land and wipe it, if the exclusion ever regressed.
   const survivors = async (token: 'x-cardimage' | 'x-cardvideo', media: 'img' | 'video') => {
     await pickBehavior(page, token);
+    // sleep-proves-negative: a stale fetch must NOT land and wipe the media; a wipe that never happens fires no event
     await page.waitForTimeout(2500);
     return page.evaluate(([t, m]) => {
       const found = Array.from(document.querySelectorAll(`#behaviors-live-example [${t}] ${m}`));

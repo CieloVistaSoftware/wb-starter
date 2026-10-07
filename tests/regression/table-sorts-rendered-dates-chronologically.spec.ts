@@ -58,8 +58,9 @@ async function buildTable(page: Page): Promise<void> {
   }, html);
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(400);
 }
 
 test('sorting a column of rendered dates orders them chronologically', async ({ page }) => {
@@ -67,7 +68,11 @@ test('sorting a column of rendered dates orders them chronologically', async ({ 
 
   const header = page.locator('#date-sort thead th').nth(1);
   await header.click();
-  await page.waitForTimeout(300);
+  // Until the rows are in date order, either direction (#1516: not 300ms).
+  const wantAsc = [...ROWS].sort((a, b) => Date.parse(a.shown) - Date.parse(b.shown)).map((r) => r.shown).join('|');
+  const wantDesc = wantAsc.split('|').reverse().join('|');
+  await expect.poll(() => page.$$eval('#date-sort tbody tr', (rows) => rows.map((r) => r.children[1]?.textContent?.trim() || '').join('|')), { timeout: 5000 })
+    .toMatch(new RegExp(`^(${[wantAsc, wantDesc].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})$`));
 
   const order = await page.$$eval('#date-sort tbody tr', (rows) =>
     rows.map((r) => r.children[1]?.textContent?.trim() || ''),
@@ -115,8 +120,9 @@ test('a column of prose is still sorted as text, not guessed at as dates', async
   });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
-  await page.waitForTimeout(400);
 
   await page.locator('#prose-sort thead th').first().click();
 

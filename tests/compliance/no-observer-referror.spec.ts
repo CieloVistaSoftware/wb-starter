@@ -31,7 +31,9 @@ test.describe('Runtime: no undefined-observer ReferenceError', () => {
       const response = await page.goto(p);
       expect(response?.ok(), `${p} must exist (status ${response?.status()})`).toBe(true);
       await page.waitForFunction(() => (window as any).WB !== undefined, null, { timeout: 10000 });
-      await page.waitForTimeout(350);
+      // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+      await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+      await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
       const found = consoleErrors.find(c => OBSERVER_ERROR_RE.test(c));
       expect(found, `No console.error on ${p} should match observer ReferenceError`).toBeUndefined();

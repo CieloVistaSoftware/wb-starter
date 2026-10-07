@@ -72,7 +72,9 @@ test.describe('Page Fundamentals', () => {
     page.on('pageerror', err => errors.push(err.message));
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForFunction(() => window.WB, { timeout: 10000 });
-    await page.waitForTimeout(4000);
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
     const critical = errors.filter(e => !e.includes('favicon') && !e.includes('404'));
     expect(critical).toEqual([]);
   });

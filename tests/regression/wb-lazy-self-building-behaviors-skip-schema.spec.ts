@@ -34,7 +34,8 @@ test('no self-building behavior is schema-built by wb-lazy', async ({ page }) =>
     document.body.appendChild(host);
     const mod: any = await import('/src/core/wb-lazy.js');
     await (mod.default || mod.WB).scan(host, { eager: true });
-    await new Promise((r) => setTimeout(r, 500));
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (mod.default || mod.WB).settled?.({ timeout: 10000 });
     return Array.from(host.children)
       .filter((el) => el.hasAttribute('x-schema'))
       .map((el) => Array.from(el.attributes).map((a) => a.name).find((n) => n.startsWith('x-') && n !== 'x-schema'));

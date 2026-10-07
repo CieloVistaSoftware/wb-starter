@@ -13,11 +13,15 @@ test('every [x-demo] code panel on content.html has real syntax coloring', async
   // viewport. The codetheme demo sits ~24,000px down the page (further now
   // that the table demos render real rows instead of collapsing to nothing),
   // so waiting for its API without scrolling to it waited for nothing.
-  await page.locator('[x-codetheme]').first().scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => {
-    const el = document.querySelector('[x-codetheme]') as any;
-    return !!(el && el.wbCodeTheme);
-  }, { timeout: 15000 });
+  // One scroll is not enough: the demos above it keep building as the page
+  // scrolls and grow taller, which can push the codetheme demo back out of
+  // view before the runtime sees it (CI timed out exactly so on #1668). So
+  // scroll to it again on every check until it is built.
+  test.setTimeout(60_000);
+  await expect.poll(async () => {
+    await page.locator('[x-codetheme]').first().scrollIntoViewIfNeeded();
+    return page.evaluate(() => !!(document.querySelector('[x-codetheme]') as any)?.wbCodeTheme);
+  }, { timeout: 30_000, message: 'the x-codetheme demo was never built' }).toBe(true);
 
   const codePanels = page.locator('[x-demo] pre code, [x-demo] code.hljs');
   const count = await codePanels.count();

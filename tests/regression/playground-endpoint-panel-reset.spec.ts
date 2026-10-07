@@ -24,7 +24,7 @@ test('Endpoint sees panel does not persist after switching to a non-form example
   // is silently blocked by native constraint validation before the 'submit'
   // event ever fires, so those need filling in first.
   await page.selectOption('#pg-examples', 'form');
-  await page.waitForTimeout(500);
+  // No sleep (#1516): fill() below waits for the form's input to appear.
   await page.fill('#pg-preview form input[name="fullName"]', 'Test User');
   await page.fill('#pg-preview form input[name="email"]', 'test@example.com');
   await page.click('#pg-preview form button[type="submit"]');
@@ -34,7 +34,7 @@ test('Endpoint sees panel does not persist after switching to a non-form example
 
   // Switch to an unrelated, non-form example.
   await page.selectOption('#pg-examples', 'cards');
-  await page.waitForTimeout(500);
+  // No sleep (#1516): toBeHidden retries until the panel goes.
 
   await expect(endpointPanel, 'stale panel must not persist into an unrelated example').toBeHidden();
 });

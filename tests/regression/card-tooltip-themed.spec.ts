@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { freezeClock, pointerTo } from '../base';
 
 /**
  * #283: <article> hover text was only ever wired to the NATIVE browser
@@ -54,6 +55,9 @@ test.describe('.x-card tooltip -- themed hover text (#283)', () => {
   });
 
   test('a card with only a plain title attribute does not get a themed tooltip', async ({ page }) => {
+    // The page's clock is driven from here (#1516), so "after the show delay"
+    // is exact rather than a guessed real-time sleep.
+    await page.clock.install();
     await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-plain-title');
     await card.waitFor();
@@ -64,8 +68,10 @@ test.describe('.x-card tooltip -- themed hover text (#283)', () => {
     await expect(card).not.toHaveAttribute('x-tooltip', /.+/);
     await expect(card).toHaveAttribute('title', 'Just a heading, also a native title attribute');
 
-    await card.hover();
-    await page.waitForTimeout(300); // longer than tooltip.js's 200ms show delay
+    await card.scrollIntoViewIfNeeded();
+    await freezeClock(page);
+    await pointerTo(page, card);
+    await page.clock.runFor(300); // past tooltip.js's 200ms show delay
     // Only a tooltip for THIS card counts. The fixture's other cards do have
     // themed tooltips, and the pointer can cross one on its way here (#1302).
     await expect(page.locator('.x-tooltip', { hasText: 'Just a heading' })).toHaveCount(0);

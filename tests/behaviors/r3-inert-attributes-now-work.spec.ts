@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { freezeClock, pointerTo } from '../base';
 
 /**
  * The 11 attributes that were declared, documented, shown in the showcase --
@@ -82,6 +83,8 @@ test.describe('R3: attributes that were declared and inert', () => {
   test('x-tooltip honours hide-delay, the spelling the docs advertise', async ({ page }) => {
     // Assert the TIMING, not the attribute: reading `hide-delay` and ignoring
     // it is precisely the state this attribute was already in.
+    // The hide timer runs on the page's clock, driven from here (#1516).
+    await page.clock.install();
     const host = await mount(
       page,
       `<button id="tt" x-tooltip content="hi" delay="0" hide-delay="1500">hover</button>
@@ -92,17 +95,19 @@ test.describe('R3: attributes that were declared and inert', () => {
     // Long hide-delay: still on screen shortly after the pointer leaves.
     await host.locator('#tt').hover();
     await expect(page.locator('.x-tooltip--visible')).toHaveCount(1, { timeout: 5000 });
-    await host.locator('#away').hover();
-    // sleep-proves-negative: hide-delay must keep the tooltip up 300ms after the pointer leaves; the delay is the property under test
-    await page.waitForTimeout(300);
+    await freezeClock(page);
+    await pointerTo(page, host.locator('#away')); // the hide timer starts at the frozen instant
+    await page.clock.runFor(300);
     expect(
       await page.locator('.x-tooltip--visible').count(),
       'hide-delay="1500" should keep the tooltip up 300ms after the pointer leaves; ' +
       'it vanished, so the attribute was not read.',
     ).toBe(1);
 
-    // And it does eventually go.
+    // And it does go once the 1500ms have passed.
+    await page.clock.runFor(1300);
     await expect(page.locator('.x-tooltip--visible')).toHaveCount(0, { timeout: 5000 });
+    await page.clock.resume();
 
     // Short hide-delay: gone well before the long one would have been.
     await host.locator('#tt2').hover();

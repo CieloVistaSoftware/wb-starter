@@ -149,7 +149,7 @@ test.describe('Behavior examples handle button clicks (#778)', () => {
 
             // Let a handler that defers to a microtask/frame actually run before
             // the next click, so its error is attributed to the right button.
-            await page.waitForTimeout(30);
+            await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
             // Close anything the click opened. An open <dialog> is modal and would
             // otherwise swallow every later interaction on the page.

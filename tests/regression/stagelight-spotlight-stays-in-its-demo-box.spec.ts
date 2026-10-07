@@ -159,7 +159,8 @@ for (const { url, label, prepare } of PAGES) {
             bubbles: true,
           })
         );
-        await new Promise((res) => setTimeout(res, 150));
+        // Two frames, not 150ms (#1516): the spotlight follows the pointer on the next paint.
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
         const cs = getComputedStyle(host);
         return {
           x: parseFloat(cs.getPropertyValue('--x')),

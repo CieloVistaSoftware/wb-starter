@@ -51,7 +51,8 @@ async function measure(page: any, widths: number[]): Promise<Shot[]> {
       document.body.appendChild(host);
       await (window as any).WB.scan(host, { eager: true });
       await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      await new Promise((r) => setTimeout(r, 250));
+      // Built once its work has called back (#1516: no fixed sleep).
+      await (window as any).WB.settled?.({ timeout: 10000 });
 
       const el = document.getElementById('probe') as HTMLElement;
       const content = el.querySelector('.x-card__hero-content') as HTMLElement;

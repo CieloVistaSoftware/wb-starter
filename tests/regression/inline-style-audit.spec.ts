@@ -90,8 +90,8 @@ test.describe('Inline styles across all behaviors (#779)', () => {
         // Poll for the behavior to land. Behaviors lazy-load their module, so a
         // fixed wait measures before it has run -- the mistake that produced 26
         // false positives on #781.
-        for (let t = 0; t < 40; t++) {
-          await new Promise((r) => setTimeout(r, 25));
+        for (const end = performance.now() + 1000; performance.now() < end;) {
+          await new Promise((r) => requestAnimationFrame(r));
           if (host.className || host.children.length !== 1 || host.querySelector('[style]')) break;
         }
         return host;
@@ -204,8 +204,8 @@ test.describe('Inline styles across all behaviors (#779)', () => {
             host.remove();
             continue;
           }
-          for (let t = 0; t < 40; t++) {
-            await new Promise((r) => setTimeout(r, 25));
+          for (const end = performance.now() + 1000; performance.now() < end;) {
+            await new Promise((r) => requestAnimationFrame(r));
             if (host.className || host.querySelector('[style]')) break;
           }
           const map: Record<string, string> = {};

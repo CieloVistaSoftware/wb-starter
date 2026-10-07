@@ -23,9 +23,17 @@ const FIXTURE = '/tests/fixtures/blank.html';
 // per attempt. Generous so a slow CI runner cannot fail this on timing alone.
 const RETRY_BUDGET_MS = 20000;
 
-async function renderAndCollect(page: Page, markup: string, waitMs: number) {
+/**
+ * What ends the wait (#1516): the outcome each test is about, read every
+ * frame, with waitMs only as the cap. 'failed' = the retry error is thrown and
+ * the fallback class applied; 'fallback' = the both-files error is thrown;
+ * 'loaded' = the image has decoded.
+ */
+type Outcome = 'failed' | 'fallback' | 'loaded';
+
+async function renderAndCollect(page: Page, markup: string, waitMs: number, until: Outcome) {
   await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
-  return page.evaluate(async ({ html, wait }) => {
+  return page.evaluate(async ({ html, wait, outcome }) => {
     const caught: string[] = [];
     window.addEventListener('error', (e) => caught.push(e.message));
 
@@ -37,11 +45,18 @@ async function renderAndCollect(page: Page, markup: string, waitMs: number) {
 
     const mod: any = await import('/src/core/wb-lazy.js');
     await (mod.default || mod.WB).scan(host, { eager: true });
-    await new Promise((r) => setTimeout(r, wait));
-
     const img = host.querySelector('img');
+    const reached = () => {
+      if (outcome === 'loaded') return !!img && img.complete && img.naturalWidth > 0;
+      if (outcome === 'fallback') return caught.some((m) => /fallback/i.test(m));
+      return caught.some((m) => /failed to load/i.test(m)) && /load-failed/.test(img?.className || '');
+    };
+    for (const end = performance.now() + wait; !reached() && performance.now() < end;) {
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+
     return { caught, className: img ? img.className : null };
-  }, { html: markup, wait: waitMs });
+  }, { html: markup, wait: waitMs, outcome: until });
 }
 
 test.describe('image load failures raise runtime errors', () => {
@@ -51,7 +66,8 @@ test.describe('image load failures raise runtime errors', () => {
     const { caught, className } = await renderAndCollect(
       page,
       '<img id="broken" src="/definitely-missing-image.png" alt="broken">',
-      RETRY_BUDGET_MS
+      RETRY_BUDGET_MS,
+      'failed',
     );
 
     const loadErrors = caught.filter((m) => /failed to load/i.test(m));
@@ -68,7 +84,8 @@ test.describe('image load failures raise runtime errors', () => {
     const { className } = await renderAndCollect(
       page,
       '<img id="broken" src="/definitely-missing-image.png" alt="broken">',
-      RETRY_BUDGET_MS
+      RETRY_BUDGET_MS,
+      'failed',
     );
     expect(className, 'the load-failed class must still be applied').toContain('load-failed');
   });
@@ -79,7 +96,8 @@ test.describe('image load failures raise runtime errors', () => {
     const { caught } = await renderAndCollect(
       page,
       '<img id="ok" src="https://picsum.photos/seed/x-load-ok/120/80" alt="ok">',
-      3000
+      3000,
+      'loaded',
     );
     expect(caught.filter((m) => /failed to load/i.test(m)), 'a working image must stay silent')
       .toEqual([]);
@@ -91,7 +109,8 @@ test.describe('image load failures raise runtime errors', () => {
     const { caught } = await renderAndCollect(
       page,
       '<img id="both" src="/missing-primary.png" fallback="/missing-fallback.png" alt="x">',
-      6000
+      6000,
+      'fallback',
     );
 
     const both = caught.filter((m) => /fallback/i.test(m));

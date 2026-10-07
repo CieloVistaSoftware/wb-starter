@@ -22,21 +22,11 @@ const root = process.cwd();
 
 /** !important declarations still in src/ on 2026-10-07, by file. Shrink only. */
 const REGISTER: Record<string, number> = {
-  'src/styles/behaviors/card.css': 10,
-  'src/styles/behaviors/demo.css': 7,
-  'src/styles/normalize.css': 5,
-  'src/styles/pages/about.css': 6,
-  'src/styles/pages/ai-permutation-test.css': 6,
-  'src/styles/pages/behaviors.css': 8,
-  'src/styles/pages/components.css': 5,
-  'src/styles/pages/contact.css': 11,
-  'src/styles/pages/docs.css': 5,
-  'src/styles/pages/services.css': 7,
-  'src/styles/pages/themes-showcase.css': 10,
-  'src/styles/safari-fixes.css': 3,
-  'src/styles/site.css': 28,
-  'src/styles/transitions.css': 4,
-  'src/styles/x-signature.css': 5,
+  'src/styles/behaviors/card.css': 5,   // the variant accent border must survive the hover rule's border-color on every card type
+  'src/styles/normalize.css': 5,   // prefers-reduced-motion and [hidden]: both must beat every component's own value, by design
+  'src/styles/pages/behaviors.css': 1,   // [data-behaviors-search-hidden] must beat whatever display a row's class sets, like [hidden]
+  'src/styles/site.css': 10,   // the mobile off-canvas nav (#165) and its desktop counterpart: removing any one alone changes the shell's layout at 375-1280px (measured, #1014)
+  'src/styles/transitions.css': 2,   // prefers-reduced-motion: no transition or animation, whatever the component sets
 };
 
 /** Remove comments. CSS has only block comments; JS also has line comments. */

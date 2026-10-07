@@ -173,8 +173,8 @@ test.describe('Registered behaviors do something', () => {
           // as the behavior lands, so the common case stays fast, and only a
           // genuinely inert behavior pays the full timeout.
           const settled = async () => {
-            for (let tick = 0; tick < 40; tick++) {
-              await new Promise((r) => setTimeout(r, 25));
+            for (const end = performance.now() + 1000; performance.now() < end;) {
+              await new Promise((r) => requestAnimationFrame(r));
               if (subject.className || subject.children.length !== control.children.length
                   || subject.attributes.length > control.attributes.length + 1
                   || subjectWrap.children.length !== controlWrap.children.length) return;

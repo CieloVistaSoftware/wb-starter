@@ -70,10 +70,13 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
 
 test.describe('[x-confetti] keeps authored content and never fires unattended (#655)', () => {
   test('<div x-confetti> keeps its text; a leftover repeat attribute does nothing', async ({ page }) => {
+    // The removed `repeat` looped on a 3s timer; the page's clock is driven
+    // from here (#1516) so "no burst on its own" covers that window exactly.
+    await page.clock.install();
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => !!(window as any).WB, null, { timeout: 30000 });
 
-    const result = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       const host = document.createElement('div');
       // `repeat` was removed: it looped a burst every 3s with no way to stop
       // it from the page. Markup that still carries it must stay inert.
@@ -83,10 +86,12 @@ test.describe('[x-confetti] keeps authored content and never fires unattended (#
       const el = host.querySelector('[x-confetti]') as HTMLElement & { wbConfetti?: any };
       await (window as any).WB.inject(el, 'confetti');
 
+      (window as any).__confetti = { host, el, base: document.querySelectorAll('.x-confetti-container').length };
+    });
+    await page.clock.runFor(3500);
+    const result = await page.evaluate(() => {
+      const { host, el, base } = (window as any).__confetti;
       const count = () => document.querySelectorAll('.x-confetti-container').length;
-      const base = count();
-      // sleep-proves-negative: no confetti may appear without a click; nothing that correctly never happens fires an event
-      await new Promise((r) => setTimeout(r, 3500));
       const unattended = count() - base;
       el.click();
       const afterClick = count() - base;

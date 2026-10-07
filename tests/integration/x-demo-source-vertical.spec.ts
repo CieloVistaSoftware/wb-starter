@@ -32,7 +32,7 @@ async function scrollAllDemosIntoView(page: Page) {
       return !!next;
     });
     if (!remaining) break;
-    await page.waitForTimeout(30);
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   }
 }
 

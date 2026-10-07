@@ -75,7 +75,8 @@ test.describe('[x-codetheme] theme URLs must never point at a dev-only path', ()
       const el = document.querySelector('[x-codetheme]') as any;
       el.wbCodeTheme.setTheme('monokai');
     });
-    await page.waitForTimeout(200);
+    // The theme link has swapped (#1516: not 200ms).
+    await expect(page.locator('link[data-highlight-theme]')).toHaveAttribute('href', /monokai/);
 
     const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
     expect(href, 'must not build a dev-only node_modules path').not.toContain('/node_modules/');
@@ -94,7 +95,8 @@ test.describe('[x-codetheme] theme URLs must never point at a dev-only path', ()
       const el = document.querySelector('[x-codetheme]') as any;
       el.wbCodeTheme.setTheme('x-grayscale-dark');
     });
-    await page.waitForTimeout(200);
+    // The theme link has swapped (#1516: not 200ms).
+    await expect(page.locator('link[data-highlight-theme]')).toHaveAttribute('href', /grayscale/);
 
     const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
     expect(href, 'a local WB theme must not be misrouted to cdnjs').not.toContain('cdnjs.cloudflare.com');

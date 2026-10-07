@@ -31,7 +31,8 @@ async function showDetailsDemo(page: Page) {
     row.click();
   });
   await page.waitForSelector('#behaviors-live-stage details', { timeout: 10000 });
-  await page.waitForTimeout(400);
+  // The example has rendered once the live panel is no longer busy (#1516: not 400ms).
+  await expect(page.locator('#behaviors-live')).not.toHaveAttribute('aria-busy', /.*/, { timeout: 15000 });
 }
 
 test.describe('#689 — native <details> gets a summary element and a content wrapper', () => {

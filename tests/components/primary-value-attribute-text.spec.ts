@@ -12,8 +12,9 @@ async function inject(page: Page, html: string) {
     container.innerHTML = markup;
     document.body.appendChild(container);
     await (window as any).WB.scan(container);
+    // Built once its work has called back (#1516: no fixed sleep).
+    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
-  await page.waitForTimeout(500);
 }
 
 test.describe('x-* primary values', () => {

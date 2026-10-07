@@ -15,7 +15,10 @@ test('Notifications switch fires a real toast when turned ON, not when turned OF
 
   // Starts checked -- turning it OFF must NOT toast.
   await sw.click();
-  await page.waitForTimeout(200);
+  // The toast comes straight from the input's change handler (switch.js ->
+  // createToast, both synchronous), so once the input reads unchecked that
+  // handler has run and any toast it made is in the DOM (#1516: not 200ms).
+  await expect(sw.locator('input')).not.toBeChecked();
   expect(await page.locator('.x-toast').count(), 'turning the switch OFF should not fire a toast').toBe(0);
 
   // Turning it back ON must fire a real toast demonstrating the effect.

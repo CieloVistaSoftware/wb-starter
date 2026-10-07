@@ -23,14 +23,18 @@ test.describe('viewport-lazy injection prepares elements before visibility (#491
       document.body.appendChild(target);
 
       await (window as any).WB.scan(target.parentElement);
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // settled() includes the observer's first report on the element (#962):
+      // after it, an off-screen element has been told it is off-screen, so an
+      // injection that was going to happen has happened (#1516: not 100ms).
+      await (window as any).WB.settled?.({ timeout: 10000 });
       // ripple.js adds the class `x-ripple`. This read `'[x-ripple]'` -- an
       // attribute SELECTOR used as a class name, which no element ever has --
       // so the lazy half passed vacuously and the eager half could not pass.
       const lazyClassBeforeEagerScan = target.classList.contains('x-ripple');
 
       await (window as any).WB.scan(target.parentElement, { eager: true });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Built once its work has called back (#1516: not 100ms).
+      await (window as any).WB.settled?.({ timeout: 10000 });
 
       return {
         lazyClassBeforeEagerScan,

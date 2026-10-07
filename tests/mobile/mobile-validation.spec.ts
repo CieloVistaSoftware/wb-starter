@@ -258,7 +258,7 @@ for (const pg of PAGES) {
     });
 
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1000);
+    await pageArrived(page);
 
     // Filter out known noise (favicon, network, etc.)
     const realErrors = errors.filter(e =>

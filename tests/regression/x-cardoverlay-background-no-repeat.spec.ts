@@ -29,11 +29,10 @@ async function renderOverlay(page, markup: string) {
     <script type="module">
       import WB from '/src/core/wb.js';
       window.__wbDone = false;
-      WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => { window.__wbDone = true; });
+      WB.init({ autoInject: true }).then(() => WB.scan(document.body)).then(() => WB.settled({ timeout: 10000 }).catch(() => {})).then(() => { window.__wbDone = true; });
     </script>
   `);
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 });
-  await page.waitForTimeout(300);
 }
 
 test.describe('[x-cardoverlay] background-repeat stays no-repeat (#635)', () => {

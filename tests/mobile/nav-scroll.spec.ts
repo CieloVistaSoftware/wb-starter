@@ -41,7 +41,12 @@ async function clickNav(page: Page, id: string): Promise<number> {
     id,
     { timeout: 15000 }
   );
-  await page.waitForTimeout(1000); // let the page render to full height + scroll settle
+  // The page has rendered to full height once WB settles, and the scroll has
+  // landed two frames later (#1516: not 1000ms).
+  await page.evaluate(async () => {
+    await (window as any).WB?.settled?.({ timeout: 15000 });
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  });
   return leftAt;
 }
 
@@ -79,7 +84,8 @@ test.describe('Nav link scroll behavior', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=home');
     await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 15000 });
-    await page.waitForTimeout(400);
+    // Boot is over once WB settles (#1516: not 400ms).
+    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 }));
   });
 
   for (const id of LINKS) {

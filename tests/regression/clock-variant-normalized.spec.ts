@@ -13,6 +13,8 @@ import { test, expect } from '../fixtures/offline';
 test('x-clock normalizes its variant, never throws, and its teardown stops the timer', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
+  // The x-clock interval runs on the page's clock, driven from here (#1516).
+  await page.clock.install();
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
   const r = await page.evaluate(async () => {
@@ -35,8 +37,14 @@ test('x-clock normalizes its variant, never throws, and its teardown stops the t
     const cleanup = clock(el, { variant: 'digital' });
     try { cleanup(); } catch (e: any) { teardownError = e.message; }
     el.textContent = 'frozen';
-    await new Promise((res) => setTimeout(res, 1300));
-    return { ws: cls('ws'), led: cls('led'), junk: cls('junk'), text, teardownError, afterTeardown: el.textContent, removed: el.classList.contains('x-clock') };
+    (window as any).__torndown = el;
+    return { ws: cls('ws'), led: cls('led'), junk: cls('junk'), text, teardownError };
+  });
+  // Past the 1-second tick: a timer that survived teardown would fire here.
+  await page.clock.runFor(1300);
+  const after = await page.evaluate(() => {
+    const el = (window as any).__torndown as HTMLElement;
+    return { afterTeardown: el.textContent, removed: el.classList.contains('x-clock') };
   });
   expect(errors.filter((e) => /DOMTokenList|InvalidCharacterError|interval is not defined/.test(e))).toEqual([]);
   expect(r.ws).toEqual(['x-clock--analog']);
@@ -44,6 +52,6 @@ test('x-clock normalizes its variant, never throws, and its teardown stops the t
   expect(r.junk).toEqual(['x-clock--digital']);
   expect(r.text, '12-hour format with AM/PM and no seconds').toMatch(/^\d{2}:\d{2} (AM|PM)$/);
   expect(r.teardownError).toBe('');
-  expect(r.afterTeardown, 'the timer kept rewriting the element after teardown').toBe('frozen');
-  expect(r.removed).toBe(false);
+  expect(after.afterTeardown, 'the timer kept rewriting the element after teardown').toBe('frozen');
+  expect(after.removed).toBe(false);
 });

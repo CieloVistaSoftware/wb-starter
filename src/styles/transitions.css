@@ -87,7 +87,7 @@
 }
 
 .site__nav--collapsed {
-  width: 60px !important;
+  width: 60px;
 }
 
 @media (max-width: 768px) {
@@ -98,7 +98,7 @@
   
   .site__nav--collapsed {
     transform: translateX(-100%);
-    width: var(--nav-width) !important;
+    width: var(--nav-width);
   }
 }
 

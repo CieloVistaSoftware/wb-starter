@@ -27,7 +27,8 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
       WB.scan = async (el: Element, ...rest: unknown[]) => {
         const result = await scan(el, ...rest);
         if (el && (el as Element).id === 'main' && (window as any).__holdScan) {
-          await new Promise((ok) => setTimeout(ok, 3000));
+          // Held until the test has scrolled (#1516): a gate, not a 3s guess.
+          await new Promise((ok) => { (window as any).__releaseScan = ok; });
           (window as any).__scanReleased = true;
         }
         return result;
@@ -45,8 +46,8 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
     (window as any).__holdScan = true;
     (document.querySelector(`.nav__item[href="${href}"]`) as HTMLElement).click();
   }, pagePath('themes'));
-  // The page is on screen; its scan is still held.
-  await page.waitForFunction(() => !!document.querySelector('#mainPage-themes'), null, { timeout: 20000 });
+  // The page is on screen and its scan is parked at the gate.
+  await page.waitForFunction(() => !!document.querySelector('#mainPage-themes') && typeof (window as any).__releaseScan === 'function', null, { timeout: 20000 });
   expect(await page.evaluate(() => !!(window as any).__scanReleased), 'the scan must still be held').toBe(false);
 
   const scrolled = await page.evaluate(() => {
@@ -56,9 +57,11 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
   });
   expect(scrolled, 'themes must be tall enough to scroll for this check').toBeGreaterThan(100);
 
+  await page.evaluate(() => (window as any).__releaseScan());
   await page.waitForFunction(() => (window as any).__scanReleased === true, null, { timeout: 10000 });
-  // sleep-proves-negative: the scan finishing must NOT move the reader; a scroll that correctly never happens fires no event
-  await page.waitForTimeout(300); // the code after the scan, and a frame
+  // Nothing after the scan writes scrollTop synchronously; the scroll restore
+  // runs from a ResizeObserver or a frame, so two frames cover both.
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
   expect(await page.evaluate(() => document.getElementById('siteBody')!.scrollTop),
     'the scan finishing moved the reader back toward the top').toBeGreaterThanOrEqual(scrolled - 2);
 });

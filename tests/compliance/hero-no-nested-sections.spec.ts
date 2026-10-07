@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/offline';
 import { showBehavior } from '../helpers/behaviors-page';
 
 /**
- * `.page__hero` (src/styles/pages/components.css) sets `text-align: center` —
+ * `.page__hero` (src/styles/site.css) sets `text-align: center` —
  * intentional for the hero banner itself, but if the hero's own `<div>` is
  * never closed, every section AFTER it in the page (cards, docs, whatever)
  * stays nested INSIDE it and inherits that centering. That's exactly what

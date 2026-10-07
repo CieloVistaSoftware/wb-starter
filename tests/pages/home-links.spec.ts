@@ -48,7 +48,7 @@ test.describe('Home page — link integrity', () => {
     // path (#1001); the CTA's own ?page= href is the legacy form.
     await explore.click();
     await expect(page).toHaveURL(/\/behaviors$/);
-    await page.waitForTimeout(300);
+    await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
 
     // Back home, then "Documentation" routes to the docs page.
     await page.goto(BASE);

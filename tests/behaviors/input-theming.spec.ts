@@ -38,6 +38,21 @@ async function setTheme(page: Page, theme: string) {
   });
 }
 
+/**
+ * The first visible input's styles, once its background is on the expected
+ * side (dark or light). Waiting for the switch's animations was not enough:
+ * on the Windows runner the dark reading still came back native white
+ * (#1680/#1668 CI). If it never gets there, the poll gives up and the
+ * assertions below report the colours actually seen.
+ */
+async function settledInputStyles(page: Page, dark: boolean) {
+  await expect.poll(async () => {
+    const bg = (await inputStyles(page))[0]?.bg;
+    return !!bg && (dark ? luminance(bg) < 0.5 : luminance(bg) > 0.6);
+  }, { timeout: 5000 }).toBe(true).catch(() => { /* the assertions below say what was seen */ });
+  return inputStyles(page);
+}
+
 async function inputStyles(page: Page) {
   return page.evaluate(() => {
     // the "Basic Inputs" row in the Inputs section
@@ -62,12 +77,36 @@ test.describe('Input theming follows the active theme', () => {
     // The lazy upgrade has run once WB settles (#1516: not 1200ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
     await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    // #1682 CI: the inputs inputStyles() measures upgrade only once they come
+    // near the viewport, and the demos above them keep rendering after the
+    // scroll -- measured locally, the first one moved from 16471px to 23233px
+    // down the page -- so one scroll can leave them un-upgraded and native
+    // white whatever the theme. Bring each into view until it has upgraded.
+    await expect(async () => {
+      const pending = await page.evaluate(() => {
+        const fields = [...document.querySelectorAll<HTMLElement>('input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"])')]
+          .filter((el) => el.offsetParent !== null)
+          .slice(0, 4);
+        fields.find((el) => !el.hasAttribute('x-ready'))?.scrollIntoView({ block: 'center' });
+        return fields.filter((el) => !el.hasAttribute('x-ready')).length;
+      });
+      expect(pending, 'measured inputs not yet upgraded').toBe(0);
+    }).toPass({ timeout: 20000 });
+    // The upgrade brings the input's stylesheet as a <link> on first use, and
+    // neither settled() nor x-ready waits for it to load: until it has, the
+    // field is the browser's native white (CI, #1516). A loaded <link> has a
+    // sheet.
+    await page.waitForFunction(
+      () => [...document.querySelectorAll('link[rel="stylesheet"]')].every((l) => !!(l as HTMLLinkElement).sheet),
+      null,
+      { timeout: 10000 },
+    );
   });
 
   for (const theme of DARK_THEMES) {
     test(`inputs are DARK in the "${theme}" theme (not native white)`, async ({ page }) => {
       await setTheme(page, theme);
-      const styles = await inputStyles(page);
+      const styles = await settledInputStyles(page, true);
       expect(styles.length, 'no visible text inputs found on the page').toBeGreaterThan(0);
       for (const s of styles) {
         const bgLum = luminance(s.bg);
@@ -82,7 +121,7 @@ test.describe('Input theming follows the active theme', () => {
   for (const theme of LIGHT_THEMES) {
     test(`inputs are LIGHT in the "${theme}" theme`, async ({ page }) => {
       await setTheme(page, theme);
-      const styles = await inputStyles(page);
+      const styles = await settledInputStyles(page, false);
       for (const s of styles) {
         const bgLum = luminance(s.bg);
         expect(bgLum, `input background ${s.bg} is dark in light theme "${theme}"`).toBeGreaterThan(0.6);
@@ -92,9 +131,9 @@ test.describe('Input theming follows the active theme', () => {
 
   test('input background actually changes between dark and light themes', async ({ page }) => {
     await setTheme(page, 'dark');
-    const dark = (await inputStyles(page))[0]?.bg;
+    const dark = (await settledInputStyles(page, true))[0]?.bg;
     await setTheme(page, 'light');
-    const light = (await inputStyles(page))[0]?.bg;
+    const light = (await settledInputStyles(page, false))[0]?.bg;
     expect(dark, 'no input to sample').toBeTruthy();
     expect(dark, `input bg did not change with theme (stuck at ${dark}) — not theme-driven`).not.toBe(light);
   });

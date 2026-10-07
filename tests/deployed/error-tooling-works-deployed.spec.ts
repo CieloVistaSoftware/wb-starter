@@ -64,7 +64,9 @@ test.describe('error tooling on the deployed site (#1000)', () => {
       window.dispatchEvent(
         new ErrorEvent('error', { message: 'wb-test-probe-1000', filename: 'probe.js', lineno: 1 })
       );
-      await new Promise((r) => setTimeout(r, 900));
+      // Until the probe is in the local log (5s cap), not 900ms (#1516).
+      const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+      await until(() => (localStorage.getItem('wb:error-log') || '').includes('wb-test-probe-1000'));
       const after = JSON.parse(localStorage.getItem('wb:error-log') || '{"errors":[]}').errors;
       return {
         imported: true,
@@ -105,11 +107,13 @@ test.describe('error tooling on the deployed site (#1000)', () => {
         window.dispatchEvent(
           new ErrorEvent('error', { message: 'wb-copy-probe-1000', filename: 'probe.js', lineno: 1 })
         );
-        await new Promise((r) => setTimeout(r, 700));
+        // Until the error panel offers its copy button (5s cap), not 700ms (#1516).
+        const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
+        await until(() => !!document.getElementById('x-error-copy'));
         const btn = document.getElementById('x-error-copy') as HTMLElement | null;
         if (!btn) return { imported: true, noPanel: true, fellBack: false };
         btn.click();
-        await new Promise((r) => setTimeout(r, 700));
+        await until(() => fellBack || !!document.getElementById('x-error-copy-fallback'));
         const box = document.getElementById('x-error-copy-fallback');
         return { imported: true, fellBack, offeredTextBox: !!box, label: btn.textContent?.trim() };
       } finally {

@@ -112,7 +112,9 @@ test.describe('#1340 the site shell mounts once', () => {
 
     await page.goto('/?page=behaviors');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-    await page.waitForTimeout(1500);
+    // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const dups = await duplicates(page);
     expect(dups, `the behaviors page duplicated: ${JSON.stringify(dups)}`).toEqual([]);

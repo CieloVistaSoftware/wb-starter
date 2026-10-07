@@ -29,13 +29,15 @@ for (const engine of ['wb-lazy', 'wb'] as const) {
         if (engine === 'wb-lazy') {
           const mod: any = await import('/src/core/wb-lazy.js');
           await (mod.default || mod.WB).scan(host, { eager: true });
+          await (mod.default || mod.WB).settled?.({ timeout: 10000 });
         } else {
           const mod: any = await import('/src/core/wb.js');
           const WB = mod.default || mod.WB;
           if (WB.init) await WB.init({ autoInject: true });
           await WB.scan(host);
+          await WB.settled?.({ timeout: 10000 });
         }
-        await new Promise((res) => setTimeout(res, 800));
+        // Each runtime has settled above (#1516: not 800ms).
 
         const after = host.querySelector('#live') as HTMLButtonElement | null;
         after?.click();

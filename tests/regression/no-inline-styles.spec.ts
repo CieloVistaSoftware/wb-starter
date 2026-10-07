@@ -113,11 +113,11 @@ const SOURCE_DIRS = ['src', 'pages'];
 /**
  * Authored markup checked for style= beyond SOURCE_DIRS. demos/ joined in #779
  * once its 233 attributes moved into each page's stylesheet; public/ and
- * articles/ followed once their 73 did. Still to clean, and so not yet
- * scanned: templates/presets/ (~500), status/ and scripts/tools/ -- tracked
- * on #779.
+ * articles/ followed once their 73 did, then status/ and scripts/tools/ (6).
+ * templates/presets/ (~500) was deleted instead: nothing loaded it. Every
+ * authored markup folder is now scanned (#779).
  */
-const MARKUP_DIRS = [...SOURCE_DIRS, 'demos', 'public', 'articles'];
+const MARKUP_DIRS = [...SOURCE_DIRS, 'demos', 'public', 'articles', 'status', join('scripts', 'tools')];
 
 /**
  * What `npm create wb-starter` gives every new site. It used to be a second
@@ -344,8 +344,8 @@ test.describe('No inline styles anywhere (#779)', () => {
           }
           // Poll for the behavior to land: behaviors lazy-load their module, so
           // a fixed wait measures before it has run (#781's 26 false positives).
-          for (let t = 0; t < 40; t++) {
-            await new Promise((r) => setTimeout(r, 25));
+          for (const end = performance.now() + 1000; performance.now() < end;) {
+            await new Promise((r) => requestAnimationFrame(r));
             if (host.className || host.children.length !== 1 || host.querySelector('[style]')) break;
           }
 

@@ -66,7 +66,10 @@ async function sweep(page: Page, limit: number) {
 
       for (const row of rows) {
         (row as HTMLElement).click();
-        await new Promise((r) => setTimeout(r, 90));
+        // Until that example has rendered (#1516: not 90ms).
+        for (const end = performance.now() + 5000; document.getElementById('behaviors-live')?.hasAttribute('aria-busy') && performance.now() < end;) {
+          await new Promise((r) => requestAnimationFrame(r));
+        }
         if (!stage) continue;
 
         const token = (row as HTMLElement).dataset.browseToken || '?';

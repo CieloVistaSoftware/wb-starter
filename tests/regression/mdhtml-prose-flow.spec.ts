@@ -30,8 +30,9 @@ async function gotoDoc(page) {
     const t = (document.getElementById('content')?.innerText || '');
     return t.length > 200 && !t.includes('Loading documentation');
   }, { timeout: 15000 });
-  // Let the async wb:mdhtml:loaded post-processing settle.
-  await page.waitForTimeout(300);
+  // The async wb:mdhtml:loaded post-processing has run once WB settles (#1516: not 300ms).
+  await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 5000 }).catch(() => {});
+  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
 }
 
 test.describe('mdhtml: prose flows to container width (#471)', () => {

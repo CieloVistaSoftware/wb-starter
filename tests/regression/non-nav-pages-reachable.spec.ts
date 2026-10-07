@@ -114,6 +114,7 @@ test.describe('#725 — a page that does not exist says so', () => {
       } as any;
 
       await (window as any).WBSite.navigateTo('../../etc/passwd');
+      // sleep-proves-negative: a traversal path must NOT be fetched; a fetch that never happens fires no event
       await new Promise((r) => setTimeout(r, 600));
       window.fetch = origFetch;
 

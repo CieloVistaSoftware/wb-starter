@@ -614,6 +614,41 @@ export async function waitForWB(page: Page): Promise<void> {
  * too; failure is reported separately as `x-error`. Assert on the outcome you
  * actually care about after this resolves.
  */
+/**
+ * Stop the page's installed fake clock (page.clock.install()) with no timer of
+ * interest pending yet, so a delay the test then starts runs from a known zero.
+ *
+ * `pauseAt(await page.evaluate(() => Date.now()))` raced: the clock kept
+ * running between the read and the pause, and under CI load the target was
+ * already past -- "Cannot fast-forward to the past" (#1516). So it pauses a
+ * little ahead, and further ahead if the round trip outran that. Call it
+ * BEFORE the action whose timer is under test: the fast-forward then fires
+ * nothing that matters.
+ */
+export async function freezeClock(page: Page): Promise<void> {
+  for (let ahead = 100; ; ahead *= 4) {
+    const now = await page.evaluate(() => Date.now());
+    try {
+      await page.clock.pauseAt(now + ahead);
+      return;
+    } catch (e) {
+      if (!/to the past/.test(String(e)) || ahead > 5000) throw e;
+    }
+  }
+}
+
+/**
+ * Move the pointer onto (or off) an element with one raw input event. Unlike
+ * locator.hover() it waits for no animation frame, so it works while the
+ * page's clock is frozen, and the element's enter/leave timers start at the
+ * frozen instant.
+ */
+export async function pointerTo(page: Page, locator: Locator): Promise<void> {
+  const box = await locator.first().boundingBox();
+  if (!box) throw new Error('pointerTo: the element has no box to point at');
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+}
+
 export async function elementReady(locator: Locator, timeoutMs = 15000): Promise<void> {
   await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
   await locator.first().evaluate(
@@ -781,7 +816,49 @@ export async function wbIdle(
   ).catch((err: Error) => {
     throw new Error(`wbIdle: the site shell never finished booting (window.WBSite was not published within ${timeout}ms) -- ${err.message}`);
   });
-  await page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
+  // #961: on some CI runs this evaluate dies with "Execution context was
+  // destroyed" although nothing visibly navigated -- #1442 (x-ignore) and
+  // schema-dependent-hosts-self-build (2026-10-07, forms.html, 735ms after
+  // goto); neither reproduces locally. Record what the page does while it
+  // settles, so a recurrence names its cause instead of leaving a guess.
+  // Evidence only: no retry, the failure still fails.
+  const t0 = Date.now();
+  const seen: string[] = [];
+  const onNav = (f: any) => { if (f === page.mainFrame()) seen.push(`+${Date.now() - t0}ms navigated ${f.url()}`); };
+  const onLoad = () => seen.push(`+${Date.now() - t0}ms load`);
+  const onReq = (r: any) => { if (r.isNavigationRequest()) seen.push(`+${Date.now() - t0}ms navigation request ${r.method()} ${r.url()} (${r.resourceType()})`); };
+  const onCrash = () => seen.push(`+${Date.now() - t0}ms renderer crashed`);
+  page.on('framenavigated', onNav);
+  page.on('load', onLoad);
+  page.on('request', onReq);
+  page.on('crash', onCrash);
+  const urlBefore = page.url();
+  const settle = () => page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
+  try {
+    try {
+      await settle();
+    } catch (err) {
+      // #961, measured: CI run 37568992926 (landing-page-showcase.html) lost
+      // the evaluate with "Execution context was destroyed" while the page did
+      // NOTHING -- no navigation, load, navigation request or crash recorded,
+      // same URL. Four instances, none a page defect: the harness lost its
+      // handle on a document that is still there. In exactly that case, ask
+      // the same document again, once. Any recorded event, a changed URL or a
+      // second failure still fails, with the evidence.
+      const harnessOnly = /Execution context was destroyed/.test((err as Error).message)
+        && seen.length === 0 && page.url() === urlBefore;
+      if (!harnessOnly) throw err;
+      seen.push(`+${Date.now() - t0}ms context lost with nothing recorded; asked the same document again`);
+      await settle();
+    }
+  } catch (err) {
+    throw new Error(`${(err as Error).message}\n\nWhat the page did while settling (#961):\n${seen.join('\n') || '(no navigation, load, navigation request or crash recorded)'}\nurl now: ${page.url()}`);
+  } finally {
+    page.off('framenavigated', onNav);
+    page.off('load', onLoad);
+    page.off('request', onReq);
+    page.off('crash', onCrash);
+  }
 }
 
 // #962 NOTE — `WB.ready` is still NOT adopted in this file's shared helpers.

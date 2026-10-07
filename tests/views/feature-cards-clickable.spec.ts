@@ -21,7 +21,9 @@ test.describe('#184 — home feature cards are clickable', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=home');
     await page.waitForSelector('.feature-card-link', { timeout: 20000 });
-    await page.waitForTimeout(1000);
+    // The page is built once WB settles (#1516: no fixed sleep).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
   });
 
   test('each feature card is an anchor to a ?page= route', async ({ page }) => {

@@ -114,8 +114,12 @@ test.describe('fieldset is not collapsible (#999)', () => {
       const rows = Array.from(fs.children).filter((c) => c.tagName !== 'LEGEND');
       const visibleBefore = rows.every((r) => r.getBoundingClientRect().height > 0);
       legend.click();
-      // sleep-proves-negative: a plain fieldset must NOT collapse on a legend click; a collapse that correctly never happens fires no event
-      await new Promise((r) => setTimeout(r, 400));
+      // A click handler runs synchronously; a collapse would then animate. So
+      // read after a frame and once any finite animation has finished (#1516).
+      await new Promise((r) => requestAnimationFrame(r));
+      await Promise.all(fs.getAnimations({ subtree: true })
+        .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))
+        .map((a) => a.finished.catch(() => {})));
       const visibleAfter = rows.every((r) => r.getBoundingClientRect().height > 0);
       const classes = fs.className;
       host.remove();

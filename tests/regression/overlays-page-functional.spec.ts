@@ -30,7 +30,9 @@ import { test, expect } from '../fixtures/offline';
 async function ready(page) {
   await page.goto('/demos/site/overlays.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  await page.waitForTimeout(1200);
+  // The page is built once WB settles (#1516: not 1200ms).
+  await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 }
 
 test.describe('demos/site/overlays.html: triggers actually open their overlay', () => {
@@ -176,7 +178,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       await trigger.click();
       // Legacy drawer() fixed-position panels are appended to document.body;
       // find the most recently added one with a real bounding box.
-      await page.waitForTimeout(400);
+      // Until the drawer panel is appended (#1516: not 400ms).
+      await page.waitForFunction(() => Array.from(document.querySelectorAll('body > div')).some(
+        (el) => getComputedStyle(el).position === 'fixed' && el.getBoundingClientRect().width > 0), null, { timeout: 5000 }).catch(() => {});
       const panelRect = await page.evaluate(() => {
         const fixed = Array.from(document.querySelectorAll('body > div')).filter(
           (el) => getComputedStyle(el).position === 'fixed' && el.getBoundingClientRect().width > 0
