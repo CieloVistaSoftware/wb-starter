@@ -16,10 +16,14 @@ const DEVELOPMENT_HOSTNAMES = new Set(['localhost', '127.0.0.1', '[::1]']);
 /**
  * True when the page is served from this machine — the origin development
  * happens on, where a caching layer can only hide what is on disk.
+ *
+ * Safe outside a browser (#1732): error-logger.js asks this at module load,
+ * and Node specs import modules that import the logger. There is no
+ * `location` there, and no origin, so the answer is false.
  * @param {string} [hostname=location.hostname]
  * @returns {boolean}
  */
-export function isDevelopmentOrigin(hostname = location.hostname) {
+export function isDevelopmentOrigin(hostname = typeof location === 'undefined' ? '' : location.hostname) {
   return DEVELOPMENT_HOSTNAMES.has(hostname);
 }
 
