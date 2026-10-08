@@ -24,6 +24,10 @@
 | `target` | `_self` · `_blank` | `_self` | Link target |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` · `glass` | `default` | Visual style variant |
 
+## Events
+
+- `wb:cardlink:click` — Fired when card is clicked
+
 ## Methods
 
 - `show()` — Shows the card
