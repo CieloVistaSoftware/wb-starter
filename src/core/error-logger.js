@@ -5,6 +5,7 @@
 
 import { computeSignature, firstMeaningfulFrame, isTestOrigin, isTestServer, isSameOccurrence } from './error-signature.js';
 import { centralDateTime, centralTime } from './central-time.js';
+import { isDevelopmentOrigin } from './service-worker.js';
 
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
@@ -449,7 +450,18 @@ export async function logError(message, details = {}) {
  * the file so errors-viewer.html reads either without caring which it got.
  */
 const LOCAL_KEY = 'wb:error-log';
-let serverLogging = true;   // flipped off the first time the API refuses
+
+/**
+ * #1732: whether there is a server API to post to at all, decided BEFORE the
+ * first error rather than learned from it. This started `true` and was turned
+ * off only by a 404/405, so on GitHub Pages the first error of every page load
+ * still POSTed, got 405, and the browser printed "Failed to load resource" next
+ * to the very error being logged. The API exists only on the dev server, and
+ * isDevelopmentOrigin() is the site's one definition of that (the same host
+ * list sw.js calls DEVELOPMENT_ORIGIN). Anywhere else the log is this browser's
+ * localStorage (#1000) and nothing is sent.
+ */
+let serverLogging = isDevelopmentOrigin();
 
 /**
  * #1000, second pass. John: "run autoscroll to see all the errors but they are
@@ -561,12 +573,14 @@ async function appendErrorToLog(error) {
  * and not subject to the same lost-update race).
  */
 async function clearErrorLogFile() {
-  try {
-    const response = await fetch(apiUrl('api/error-log/clear'), { method: 'POST' });
-    if (response.status === 404 || response.status === 405) serverLogging = false;
-  } catch {
-    // Same reasoning as the append path: a transient failure is not evidence
-    // that the endpoint does not exist.
+  if (serverLogging) {
+    try {
+      const response = await fetch(apiUrl('api/error-log/clear'), { method: 'POST' });
+      if (response.status === 404 || response.status === 405) serverLogging = false;
+    } catch {
+      // Same reasoning as the append path: a transient failure is not evidence
+      // that the endpoint does not exist.
+    }
   }
   // Clear the local copy too, or "Clear" leaves entries the viewer still shows
   // -- the same silent mismatch #1000 is about.
@@ -579,17 +593,22 @@ async function clearErrorLogFile() {
  * Load errors from JSON file
  */
 export async function loadErrorLog() {
-  try {
-    const response = await fetch(`/${ERROR_LOG_PATH}?t=${Date.now()}`);
-    if (response.ok) {
-      const data = await response.json();
-      if (data && Array.isArray(data.errors) && data.errors.length) {
-        errors = data.errors;
-        return data;
+  // #1732: the file is the dev server's; a static host has only the local log.
+  // Site-relative, like the API routes: `/data/...` addressed the organisation
+  // root on GitHub Pages.
+  if (serverLogging) {
+    try {
+      const response = await fetch(`${apiUrl(ERROR_LOG_PATH)}?t=${Date.now()}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data && Array.isArray(data.errors) && data.errors.length) {
+          errors = data.errors;
+          return data;
+        }
       }
+    } catch {
+      /* fall through to the local log */
     }
-  } catch {
-    /* fall through to the local log */
   }
   // #1000: on a static host the file is absent or empty and the real log lives
   // in the browser. Reading only the file is why the viewer showed nothing.
