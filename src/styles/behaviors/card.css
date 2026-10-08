@@ -1691,10 +1691,14 @@ article[x-cardlink][x-cardlink],
   display: inline-block;
 }
 
-/* Link card title by tag (cardlink() emits no class on it). (0,1,1) beats
-   site.css's bare `h3` page-heading rule, the #887 leak: without it the title
-   rendered --primary blue with 1.5rem above it, like cardhorizontal's did. */
-.x-card__link-title-row > h3 {
+/* Link card title by tag (cardlink() emits no class on it). #887 gave it
+   (0,1,1) to beat site.css's bare `h3` page-heading rule, which rendered the
+   title --primary blue with 1.5rem above it. But site.css also has
+   `.page h3 { color: var(--primary) }`, the same (0,1,1), and site.css loads
+   after the behavior sheets (style-loader.js), so inside the site shell the
+   tie went to site.css: --primary on the dark card, 1.49:1 (#1747).
+   The [x-cardlink] scope makes it (0,2,1), which outranks both. */
+[x-cardlink] .x-card__link-title-row > h3 {
   margin: 0;
   color: var(--text-primary);
 }

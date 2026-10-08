@@ -245,6 +245,20 @@
     "ariaLabelledBy": "dialog title id"
   },
   "events": {
+    "wb:dialog:open": {
+      "description": "Dialog opened",
+      "detail": {
+        "title": "string"
+      }
+    },
+    "wb:dialog:close": {
+      "description": "Dialog closed",
+      "detail": {}
+    },
+    "wb:dialog:cancel": {
+      "description": "Dialog cancelled (Escape/backdrop)",
+      "detail": {}
+    },
     "wb:dialog:ok": {
       "description": "The dialog's confirm button is clicked",
       "detail": {}

@@ -89,5 +89,14 @@
     "icon": "💧",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:ripple:show": {
+      "description": "Ripple started",
+      "detail": {
+        "x": "number",
+        "y": "number"
+      }
+    }
   }
 }

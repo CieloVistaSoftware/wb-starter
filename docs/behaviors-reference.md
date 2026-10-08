@@ -644,7 +644,7 @@ schema, styling) — this table is the cross-behavior index.
 |-------|-----------|------------|----------|
 | `wb:toast:show` | `feedback.js` (`x-toast`) | the toast trigger is clicked | `{ message, variant }` |
 | `wb:notify:show` | `feedback.js` (`x-notify`) | clicked (cycles info→success→warning→error each click) | `{ message, variant }` |
-| `wb:chip:remove` | `feedback.js` (chip) | a chip's remove (×) button is clicked | `—` |
+| `wb:chip:remove` | `feedback.js` (chip) | a chip's remove (×) button is clicked | `{ label }` |
 | `wb:copy:success` | `copy.js` (`x-copy`) | text is copied to the clipboard | `{ text }` |
 | `wb:copy:error` | `copy.js` (`x-copy`) | the clipboard write fails | `{ error }` |
 
@@ -703,7 +703,6 @@ per-implementation breakdown.
 | `wb:cardnotification:dismiss` | `card.js` (`<div x-cardnotification>`) | a notification card is dismissed | `{ variant, title }` |
 | `wb:cardexpandable:toggle` | `card.js` (`<div x-cardexpandable>`) | the card expands/collapses | `{ expanded }` |
 | `wb:cardminimizable:toggle` | `card.js` (`<div x-cardminimizable>`) | the card minimizes/restores | `{ minimized }` |
-| `wb:carddraggable:dragstart/drag/dragend` | `card.js` (`<div x-carddraggable>`) | a draggable card starts/moves/finishes dragging | `{ x, y }` |
 | `wb:cardstats:hydrated` | `card.js` (`<div x-cardstats>`) | stats card finishes initializing (test hook) | `—` |
 
 **Media, layout & effects**
@@ -715,7 +714,7 @@ per-implementation breakdown.
 | `wb:countdown:complete` | `helpers.js` (`x-countdown`) | the countdown reaches zero | `—` |
 | `wb:sticky:stuck` / `wb:sticky:unstuck` | `sticky.js` | a sticky element becomes stuck/unstuck | `{ offset }` / `—` |
 | `wb:resize:start/move/end` | `resizable.js` (`x-resizable`) | a resize handle is pressed/dragged/released | `{ width, height }` |
-| `wb:drag:start/move/end` | `draggable.js` (`x-draggable`) | a draggable element is picked up/moved/dropped | `{ x, y }` |
+| `wb:drag:start/move/end` | `draggable.js` (`x-draggable`, and `x-carddraggable`, which drags through it) | a draggable element is picked up/moved/dropped | `{ x, y }` |
 | `wb:reorder` | `move.js` | drag-reordering a list drops a new order | `{ items }` |
 | `wb:darkmode:toggle` | `darkmode.js` (`x-darkmode`) | the dark-mode button is clicked | `{ theme }` |
 | `wb:darkmode:applied` | `darkmode.js` | a theme is applied (incl. on page load) | `{ theme }` |
