@@ -2,12 +2,12 @@
   "$version": "1.0.0",
   "$stats": {
     "sources": {
-      "pages": 20,
+      "pages": 21,
       "docs": 255,
       "demos": 29
     },
-    "totalDocuments": 304,
-    "totalWords": 5958
+    "totalDocuments": 305,
+    "totalWords": 5959
   },
   "documents": [
     {
@@ -402,6 +402,38 @@
         }
       ],
       "content": "Offshoring Content Offshoring refers to the practice of relocating business processes or services to another country, typically to leverage cost advantages, access specialized skills, or improve efficiency.",
+      "keywords": [],
+      "type": "page",
+      "modified": "2026-10-08"
+    },
+    {
+      "id": "pages/other",
+      "url": "?page=other",
+      "title": "🧭 Other",
+      "description": null,
+      "headings": [
+        {
+          "level": 1,
+          "text": "🧭 Other"
+        },
+        {
+          "level": 2,
+          "text": "🎮 Demos"
+        },
+        {
+          "level": 2,
+          "text": "📄 Pages"
+        },
+        {
+          "level": 2,
+          "text": "🛠️ Tools"
+        },
+        {
+          "level": 2,
+          "text": "📰 Articles"
+        }
+      ],
+      "content": "🧭 Other Everything on the site the main menu does not reach, grouped by folder. 🎮 Demos Standalone demos from the demos/ folder, plus the component library and the plain demos index. 📄 Pages Pages from the pages/ folder that are not in the main menu. 🛠️ Tools Viewers from the public/ folder. 📰 Articles Articles and papers from the articles/ and public/papers/ folders.",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-08"
@@ -7460,6 +7492,7 @@
     "tools": [
       "pages/about",
       "pages/demos",
+      "pages/other",
       "docs/AI",
       "docs/claude/TOOLING-INVENTORY",
       "docs/linkedin-framework-agnostic",
@@ -8252,6 +8285,7 @@
     ],
     "plain": [
       "pages/about",
+      "pages/other",
       "docs/AI",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -9122,6 +9156,7 @@
       "pages/about",
       "pages/features",
       "pages/home",
+      "pages/other",
       "pages/services",
       "docs/V3-GUIDE",
       "docs/audio",
@@ -10060,6 +10095,7 @@
       "pages/ai-permutation-test",
       "pages/hero-variants",
       "pages/newpage",
+      "pages/other",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -10491,6 +10527,7 @@
     ],
     "plus": [
       "pages/ai-permutation-test",
+      "pages/other",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -17580,6 +17617,7 @@
       "pages/behaviors",
       "pages/contact",
       "pages/hero-variants",
+      "pages/other",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behavior-cross-reference",
@@ -17826,6 +17864,7 @@
     "main": [
       "pages/contact",
       "pages/home",
+      "pages/other",
       "pages/releases",
       "docs/BRANCH_PROTECTION",
       "docs/MVVM-MIGRATION-PLAN",
@@ -17926,6 +17965,7 @@
     ],
     "demos": [
       "pages/demos",
+      "pages/other",
       "docs/IMPROVEMENTS",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/articles",
@@ -17966,6 +18006,7 @@
     ],
     "standalone": [
       "pages/demos",
+      "pages/other",
       "docs/V3-GUIDE",
       "docs/standards/REPO-LAYOUT",
       "demos/index",
@@ -18751,7 +18792,8 @@
       "demos/schema-first-architecture"
     ],
     "papers": [
-      "pages/docs"
+      "pages/docs",
+      "pages/other"
     ],
     "sort": [
       "pages/docs",
@@ -18952,6 +18994,7 @@
     "index": [
       "pages/features",
       "pages/hero-variants",
+      "pages/other",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -19032,6 +19075,7 @@
       "pages/features",
       "pages/home",
       "pages/issues",
+      "pages/other",
       "pages/privacy",
       "pages/releases",
       "docs/IMPROVEMENTS",
@@ -20100,6 +20144,7 @@
     ],
     "menu": [
       "pages/features",
+      "pages/other",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/dropdown",
       "docs/behaviors/navbar",
@@ -23551,6 +23596,7 @@
     ],
     "library": [
       "pages/home",
+      "pages/other",
       "docs/IMPROVEMENTS",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -24975,6 +25021,68 @@
     "efficiency": [
       "pages/offshoring",
       "docs/property-viewer"
+    ],
+    "grouped": [
+      "pages/other",
+      "docs/behaviors/address",
+      "docs/card",
+      "demos/index"
+    ],
+    "folder": [
+      "pages/other",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/create-a-website",
+      "docs/schema-first-audit-report",
+      "docs/schema.migration",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/REPO-LAYOUT"
+    ],
+    "component": [
+      "pages/other",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/cardexpandable",
+      "docs/claude/TIER1-LAWS",
+      "docs/schema.migration",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/testing-strategy",
+      "demos/frameworks"
+    ],
+    "viewers": [
+      "pages/other"
+    ],
+    "public": [
+      "pages/other",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/schema-first-architecture",
+      "docs/search",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/REPO-LAYOUT"
+    ],
+    "articles": [
+      "pages/other",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/behavior-cross-reference",
+      "docs/behaviors/articles",
+      "docs/claude/README",
+      "docs/claude/TIER3-REFERENCE",
+      "demos/index",
+      "demos/site/content",
+      "demos/site/index"
+    ],
+    "folders": [
+      "pages/other",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/schema.migration",
+      "docs/standards/REPO-LAYOUT"
     ],
     "privacy": [
       "pages/privacy"
@@ -31889,21 +31997,6 @@
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook"
     ],
-    "component": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors/cardexpandable",
-      "docs/claude/TIER1-LAWS",
-      "docs/schema.migration",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/testing-strategy",
-      "demos/frameworks"
-    ],
     "carry": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/accordion",
@@ -33477,14 +33570,6 @@
     "survives": [
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
-    ],
-    "public": [
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/schema-first-architecture",
-      "docs/search",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/REPO-LAYOUT"
     ],
     "wbnotes": [
       "docs/NOTES-V3-GUIDE"
@@ -35803,17 +35888,6 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/cardexpandable"
     ],
-    "articles": [
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/behavior-cross-reference",
-      "docs/behaviors/articles",
-      "docs/claude/README",
-      "docs/claude/TIER3-REFERENCE",
-      "demos/index",
-      "demos/site/content",
-      "demos/site/index"
-    ],
     "offenders": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
@@ -37997,15 +38071,6 @@
     ],
     "multipliers": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
-    ],
-    "folder": [
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/guides/create-a-website",
-      "docs/schema-first-audit-report",
-      "docs/schema.migration",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/REPO-LAYOUT"
     ],
     "dozen": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
@@ -40971,11 +41036,6 @@
     ],
     "alternatives": [
       "docs/behaviors/address"
-    ],
-    "grouped": [
-      "docs/behaviors/address",
-      "docs/card",
-      "demos/index"
     ],
     "belongs": [
       "docs/behaviors/alert",
@@ -47151,11 +47211,6 @@
     ],
     "ignorable": [
       "docs/claude/TIER3-REFERENCE"
-    ],
-    "folders": [
-      "docs/claude/TIER3-REFERENCE",
-      "docs/schema.migration",
-      "docs/standards/REPO-LAYOUT"
     ],
     "temporary": [
       "docs/claude/TIER3-REFERENCE"

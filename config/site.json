@@ -58,6 +58,12 @@
       "pageToLoad": "issues"
     },
     {
+      "menuItemId": "other",
+      "menuItemText": "Other",
+      "menuItemEmoji": "🧭",
+      "pageToLoad": "other"
+    },
+    {
       "menuItemId": "error-log",
       "menuItemText": "Error Log",
       "menuItemEmoji": "🚨",
