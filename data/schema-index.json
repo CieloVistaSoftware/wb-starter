@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T00:35:35.120Z",
+  "generatedAt": "2026-10-08T02:48:46.418Z",
   "count": 160,
   "schemas": [
     {
@@ -4830,7 +4830,9 @@
         "sanitize": {
           "type": "boolean",
           "default": true,
-          "attribute": "sanitize"
+          "attribute": "sanitize",
+          "visual": false,
+          "visualReason": "Strips unsafe HTML from the rendered output. Safe Markdown, like the showcase sample, renders the same either way."
         },
         "gfm": {
           "type": "boolean",
@@ -4845,7 +4847,9 @@
         "autoLiveRender": {
           "type": "boolean",
           "description": "Render each fenced HTML example in the Markdown as a live component above its code. Set to false for Markdown you did not write, such as an issue body, so its examples stay as code.",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Decides whether fenced HTML examples render live. Markdown with no html fence -- the showcase sample -- looks the same either way (#1723 declared it)."
         }
       },
       "matrix": [
