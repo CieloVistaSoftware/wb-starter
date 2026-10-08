@@ -581,7 +581,7 @@ export function chip(element, options = {}) {
     btn.textContent = '\u00d7';
     btn.setAttribute('aria-label', 'Remove');
     btn.addEventListener('click', () => {
-      element.dispatchEvent(new CustomEvent('wb:chip:remove', { bubbles: true, detail: { label } }));
+      element.dispatchEvent(new CustomEvent('wb:chip:remove', { bubbles: true }));
       element.remove();
     });
     element.appendChild(btn);

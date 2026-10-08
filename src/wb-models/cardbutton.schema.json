@@ -164,15 +164,15 @@
   },
   "events": {
     "wb:cardbutton:primary": {
-      "description": "Primary button clicked (a button with no primaryHref)",
+      "description": "Primary button clicked",
       "detail": {
-        "label": "string"
+        "text": "string"
       }
     },
     "wb:cardbutton:secondary": {
-      "description": "Secondary button clicked (a button with no secondaryHref)",
+      "description": "Secondary button clicked",
       "detail": {
-        "label": "string"
+        "text": "string"
       }
     }
   },

@@ -220,6 +220,20 @@
       "description": "Counter color"
     }
   },
+  "events": {
+    "input": {
+      "description": "Fired on input",
+      "detail": {
+        "value": "string"
+      }
+    },
+    "change": {
+      "description": "Fired on change",
+      "detail": {
+        "value": "string"
+      }
+    }
+  },
   "test": {
     "functional": true,
     "setup": [

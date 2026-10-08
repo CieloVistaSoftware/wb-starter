@@ -100,7 +100,7 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behavior-cross-reference.md",
@@ -280,7 +280,7 @@
           "file": "behaviors/audio.md",
           "title": "Audio",
           "description": "A bare <audio> gets a styled player with a track display, a play button and, when show-eq is set, a 15-band graphic equaliser with bass and treble controls.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/autocomplete.md",
@@ -334,13 +334,13 @@
           "file": "behaviors/cardbutton.md",
           "title": "Button Card",
           "description": "x-cardbutton renders a card with a title and body text and one or two action buttons in its footer, taken from primary and secondary.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/carddraggable.md",
           "title": "Draggable Card",
           "description": "x-carddraggable renders a card the user can pick up by its header and move; axis limits the direction, constrain keeps it inside its parent or the viewport,…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardexpandable.md",
@@ -376,19 +376,19 @@
           "file": "behaviors/cardlink.md",
           "title": "Link Card",
           "description": "x-cardlink renders a card that is itself a link to href: the whole surface is clickable and keyboard-focusable, with a title, description, optional icon and…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardminimizable.md",
           "title": "Minimizable Card",
           "description": "x-cardminimizable renders a card with a minimise button in its header that collapses the body to just the title bar and restores it again.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardnotification.md",
           "title": "Notification Card",
           "description": "x-cardnotification renders a notice card coloured by variant (info, success, warning, error), with an icon, title, message and a dismiss button that removes it.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardoverlay.md",
@@ -436,7 +436,7 @@
           "file": "behaviors/cardvideo.md",
           "title": "Video Card",
           "description": "x-cardvideo renders a card with a video player from src (with poster shown before playback) above a title and description.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/center.md",
@@ -454,7 +454,7 @@
           "file": "behaviors/chip.md",
           "title": "chip",
           "description": "A small pill-shaped tag/label with optional icon, color variant, and dismiss button.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/clock.md",
@@ -490,7 +490,7 @@
           "file": "behaviors/confetti.md",
           "title": "Confetti",
           "description": "x-confetti fires a burst of coloured confetti from the element each time it is clicked; count sets how many pieces and colors their palette.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/confirm.md",
@@ -640,7 +640,7 @@
           "file": "behaviors/fireworks.md",
           "title": "Fireworks",
           "description": "x-fireworks launches a burst of firework particles from the element each time it is clicked; count sets particles per burst and colors their palette.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/fix-card.md",
@@ -766,7 +766,7 @@
           "file": "behaviors/input.md",
           "title": "Input",
           "description": "A plain <input> gets the form styling: variant shows a success or error state, size sets the scale, and clearable adds a button that empties it.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/inputgroup.md",
@@ -838,7 +838,7 @@
           "file": "behaviors/notes.md",
           "title": "Notes",
           "description": "x-notes adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/notify.md",
@@ -970,7 +970,7 @@
           "file": "behaviors/search.md",
           "title": "Search",
           "description": "x-search turns a text <input> into a search box with an icon and a clear button, and fires wb:search once typing pauses for debounce milliseconds (or on…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/searchfield.md",
@@ -982,7 +982,7 @@
           "file": "behaviors/select.md",
           "title": "Select",
           "description": "A plain <select> gets the form styling, with variant for validation state, size, and clearable for a button that resets it.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/shake.md",
@@ -1024,7 +1024,7 @@
           "file": "behaviors/snow.md",
           "title": "Snow",
           "description": "x-snow makes the element a button that starts or stops snowflakes falling over the page; count sets how many and duration how long each takes to fall.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/sparkle.md",
@@ -1114,7 +1114,7 @@
           "file": "behaviors/textarea.md",
           "title": "Textarea",
           "description": "A plain <textarea> gets the form styling, and optionally grows with its content (autosize) and shows a character count against max-length (show-count).",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/themecontrol.md",

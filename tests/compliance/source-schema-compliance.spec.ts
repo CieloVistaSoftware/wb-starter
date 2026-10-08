@@ -11,7 +11,6 @@ import {
   ROOT, PATHS, readFile, fileExists, getJsFiles, getSchemaFiles, loadSchema,
   extractFunction, createsElement
 } from '../base';
-import { reachableCode, dispatchesEvent } from '../helpers/declared-event-dispatch';
 
 // Schemas that don't have JS functions -- these document/describe the
 // SYSTEM rather than a single behavioral component, so they can never have
@@ -189,101 +188,51 @@ test.describe('Source-Schema: Card Border Compliance', () => {
 });
 
 test.describe('Source-Schema: Event Compliance', () => {
+  
+  // #344: every wb: event a schema declares is fired by the code. 47 were not
+  // (2026-10-07): schemas promised dialog open/close, tooltip show/hide,
+  // audio play/pause and more that nothing dispatched, and three named an
+  // event the code fires under another name (chip dismiss/remove,
+  // minimizable/cardminimizable, notification/cardnotification). The
+  // schemas now declare what fires, so the count is exact.
+  //
+  // What counts as fired: the event name as a quoted literal anywhere in
+  // src/ JavaScript, or one of the names a template below expands to. The
+  // old check read only the exported function's body (extractFunction), so an
+  // event fired from a helper in the same module counted as missing. Native
+  // DOM events a schema documents (input, change, focus, blur, toggle) are the
+  // browser's, not the behavior's, so only wb: names are held to this.
+  test('every wb: event a schema declares is fired somewhere in src/', () => {
+    const walk = (dir: string): string[] => fs.readdirSync(dir, { withFileTypes: true })
+      .flatMap((e) => e.isDirectory() ? walk(path.join(dir, e.name))
+        : /\.m?js$/.test(e.name) ? [path.join(dir, e.name)] : []);
+    const code = walk(path.join(ROOT, 'src')).map((f) => readFile(f)).join('\n');
+    const literals = new Set([...code.matchAll(/['`](wb:[A-Za-z0-9:_-]+)['`]/g)].map((m) => m[1]));
 
-  /** index.js's behaviorModules: behavior name -> module path, as loaded. */
-  function runtimeBehaviorModules(): Record<string, string> {
-    const src = readFile(path.join(PATHS.behaviorsJs, 'index.js'));
-    const block = src.match(/const behaviorModules = \{([\s\S]*?)\n\};/);
-    const out: Record<string, string> = {};
-    if (!block) return out;
-    const code = block[1].replace(/\/\/.*$/gm, '');
-    for (const m of code.matchAll(/['"]?([\w-]+)['"]?\s*:\s*'([^']+)'/g)) out[m[1]] = m[2];
-    return out;
-  }
+    // Every `wb:${...}` template in src/, with the names it can produce. A new
+    // template must be added here, and one that disappears must be removed, so
+    // this list cannot drift from the code silently.
+    const TEMPLATES: Record<string, string[]> = {
+      'wb:${kind}:cancel': ['wb:confirm:cancel', 'wb:prompt:cancel'], // overlay.js openDialog(element, 'confirm'|'prompt')
+      'wb:${kind}:ok': ['wb:confirm:ok', 'wb:prompt:ok'],
+      'wb:cardbutton:${kind}': ['wb:cardbutton:primary', 'wb:cardbutton:secondary'], // card.js addActionButton
+      'wb:${methodName}': [], // mvvm/schema-builder.js: one per $methods entry, not a schema event
+    };
+    const templatesInCode = [...new Set([...code.matchAll(/`(wb:[^`]*\$\{[^`]*)`/g)].map((m) => m[1]))].sort();
+    expect(templatesInCode, 'wb: event templates in src/ (update TEMPLATES to match)').toEqual(Object.keys(TEMPLATES).sort());
+    const fired = new Set([...literals, ...Object.values(TEMPLATES).flat()]);
 
-  // #344: the rules below are what the check relies on. Each case is a shape
-  // the old includes()-on-one-body check got wrong, in one direction or the
-  // other; if one of these flips, the check is miscounting again.
-  test('self-test: the dispatch finder follows helpers and computed names, and nothing else', () => {
-    const fixture = [
-      "function fireOk(element, kind) {",
-      "  element.dispatchEvent(new CustomEvent(`wb:${kind}:ok`, { bubbles: true }));",
-      "}",
-      "const announce = (el) => { el.dispatchEvent(new CustomEvent('wb:demo:helper')); };",
-      "function unused(el) { el.dispatchEvent(new CustomEvent('wb:demo:unreached')); }",
-      "export function demo(element, options = {}) {",
-      "  // wb:demo:commented is only mentioned here",
-      "  element.dispatchEvent(new CustomEvent('wb:demo:direct', { bubbles: true }));",
-      "  element.onclick = () => fireOk(element, 'demo');",
-      "  element.addEventListener('focus', announce);",
-      "  const label = 'unused';",
-      "  return () => {};",
-      "}",
-    ].join('\n');
-    const code = reachableCode(fixture, 'demo')!;
-    expect(code, 'demo() was found').not.toBeNull();
-    expect(dispatchesEvent(code, 'wb:demo:direct'), 'a literal in the body').toBe(true);
-    expect(dispatchesEvent(code, 'wb:demo:helper'), 'a helper passed by reference').toBe(true);
-    expect(dispatchesEvent(code, 'wb:demo:ok'), 'a computed name whose part is a literal it passes').toBe(true);
-    expect(dispatchesEvent(code, 'wb:other:ok'), 'a computed name with no literal for its part').toBe(false);
-    expect(dispatchesEvent(code, 'wb:demo:unreached'), 'a helper demo() never names').toBe(false);
-    expect(dispatchesEvent(code, 'wb:demo:commented'), 'a name that is only in a comment').toBe(false);
-    expect(reachableCode(fixture, 'missing'), 'an absent function').toBeNull();
-  });
-
-  test('functions dispatch events defined in schema', () => {
-    const modules = runtimeBehaviorModules();
-    expect(Object.keys(modules).length, 'index.js behaviorModules was parsed').toBeGreaterThan(100);
     const issues: string[] = [];
-    let checked = 0;
-
     for (const file of getSchemaFiles()) {
       const schema = loadSchema(file) as any;
-      if (!schema?.behavior || !schema.events) continue;
-
-      // The function index.js runs, in the module it loads (#344): resolving
-      // through these two tables is what getBehavior() does.
-      const funcName = FUNCTION_NAME_MAP[schema.behavior] || schema.behavior;
-      const moduleName = modules[schema.behavior];
-      const modulePath = moduleName && path.join(PATHS.behaviorsJs, `${moduleName}.js`);
-      if (!modulePath || !fileExists(modulePath)) {
-        issues.push(`${file}: declares events, but index.js loads no module for "${schema.behavior}"`);
-        continue;
-      }
-      const code = reachableCode(readFile(modulePath), funcName);
-      if (!code) {
-        issues.push(`${file}: declares events, but ${moduleName}.js has no function ${funcName}()`);
-        continue;
-      }
-
+      if (!schema?.events) continue;
       for (const eventName of Object.keys(schema.events)) {
-        checked++;
-        if (!dispatchesEvent(code, eventName)) {
-          issues.push(`${schema.behavior}: should dispatch "${eventName}" (${moduleName}.js ${funcName}())`);
+        if (eventName.startsWith('wb:') && !fired.has(eventName)) {
+          issues.push(`${file}: declares "${eventName}", which nothing in src/ fires`);
         }
       }
     }
-
-    // #863 turned this on as a counted ceiling (71, then 56). #344 resolved
-    // every declared event but tooltip's: each is now dispatched, renamed to
-    // what the behavior really fires, or removed because the behavior never
-    // had that state change. The check follows what the runtime loads, so no
-    // ceiling is left to absorb its miscounts.
-    //
-    // tooltip.schema.json and tooltip.js were held out of #344 for separate
-    // work, so its two are listed here EXACTLY. This is an equality, not a
-    // ceiling: a new undispatched event fails, and so does fixing tooltip's,
-    // which is the cue to empty this list.
-    const LEFT_FOR_TOOLTIP = [
-      'tooltip: should dispatch "wb:tooltip:show" (tooltip.js tooltip())',
-      'tooltip: should dispatch "wb:tooltip:hide" (tooltip.js tooltip())',
-    ];
-    expect(checked, 'declared events were found to check').toBeGreaterThan(50);
-    expect(
-      issues,
-      `Schema events not dispatched by their behavior. Dispatch the event where the state `
-      + `changes, or rename/remove the declaration:\n${issues.join('\n')}`,
-    ).toEqual(LEFT_FOR_TOOLTIP);
+    expect(issues, 'Dispatch the event, or remove it from the schema (and its docs/behaviors page)').toEqual([]);
   });
 });
 

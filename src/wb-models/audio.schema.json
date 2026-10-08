@@ -77,7 +77,11 @@
       "public": true,
       "required": true,
       "description": "Transport bar with play button and Marantz-style display",
-      "children": ["play-button", "display", "volume-knob"]
+      "children": [
+        "play-button",
+        "display",
+        "volume-knob"
+      ]
     },
     {
       "name": "play-button",
@@ -242,7 +246,7 @@
       }
     },
     "wb:audio:eqchange": {
-      "description": "EQ band changed",
+      "description": "An EQ band moved (slider, preset or setBand())",
       "detail": {
         "band": "number",
         "gain": "number"

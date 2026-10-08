@@ -40,7 +40,7 @@ write a `<select>` with `<option>` children
 
 ## Events
 
-- `wb:select:change` — Selection changed
+- `wb:select:change` — Selection changed; an array of values for multiple
 
 ## Methods
 

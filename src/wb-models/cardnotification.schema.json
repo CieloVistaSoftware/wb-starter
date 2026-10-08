@@ -193,7 +193,7 @@
   },
   "events": {
     "wb:cardnotification:dismiss": {
-      "description": "Fired when notification is dismissed",
+      "description": "The notification card is dismissed",
       "detail": {
         "variant": "string",
         "title": "string"

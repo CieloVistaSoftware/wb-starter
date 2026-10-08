@@ -25,8 +25,8 @@
 
 ## Events
 
-- `wb:cardbutton:primary` — Primary button clicked (a button with no primaryHref)
-- `wb:cardbutton:secondary` — Secondary button clicked (a button with no secondaryHref)
+- `wb:cardbutton:primary` — Primary button clicked
+- `wb:cardbutton:secondary` — Secondary button clicked
 
 ## Methods
 

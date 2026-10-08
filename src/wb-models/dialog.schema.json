@@ -245,18 +245,22 @@
     "ariaLabelledBy": "dialog title id"
   },
   "events": {
+    "wb:dialog:ok": {
+      "description": "The dialog's confirm button is clicked",
+      "detail": {}
+    },
     "wb:dialog:open": {
-      "description": "Dialog opened",
+      "description": "A dialog the trigger builds is shown",
       "detail": {
         "title": "string"
       }
     },
-    "wb:dialog:close": {
-      "description": "Dialog closed",
+    "wb:dialog:cancel": {
+      "description": "Dismissed without OK: Cancel, the close button, the backdrop or Escape",
       "detail": {}
     },
-    "wb:dialog:cancel": {
-      "description": "Dialog cancelled (Escape/backdrop)",
+    "wb:dialog:close": {
+      "description": "The dialog closed, by any route, once",
       "detail": {}
     }
   },

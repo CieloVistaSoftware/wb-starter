@@ -396,6 +396,20 @@
       "detail": {
         "value": "string"
       }
+    },
+    "change": {
+      "description": "Fired when value is committed",
+      "detail": {
+        "value": "string"
+      }
+    },
+    "focus": {
+      "description": "Fired when input receives focus",
+      "detail": {}
+    },
+    "blur": {
+      "description": "Fired when input loses focus",
+      "detail": {}
     }
   },
   "test": {

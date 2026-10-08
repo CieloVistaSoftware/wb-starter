@@ -97,7 +97,7 @@
   },
   "events": {
     "wb:drawerLayout:toggle": {
-      "description": "Drawer toggled",
+      "description": "Drawer collapsed or expanded",
       "detail": {
         "collapsed": "boolean"
       }

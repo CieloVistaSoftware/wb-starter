@@ -1,11 +1,11 @@
 /**
- * #344: every event a schema declares is one its behavior really fires.
+ * The lifecycle events #1731 removed from the schemas (#344), fired for real.
  *
- * source-schema-compliance's "functions dispatch events defined in schema"
- * reads the source. This is the other half: it builds each behavior whose
- * dispatch #344 added, does the thing a user does, and waits for the event on
- * `document` -- so it also proves the event bubbles -- with the detail the
- * schema declares.
+ * source-schema-compliance's "every wb: event a schema declares is fired
+ * somewhere in src/" reads the source. This is the other half: it builds each
+ * behavior whose dispatch was added, does the thing a user does, and waits for
+ * the event on `document` -- so it also proves the event bubbles -- with the
+ * detail the schema declares.
  *
  * No sleeps: every wait is for the event itself (or a WB signal), with
  * Playwright's own timeout as the failure.
@@ -43,7 +43,7 @@ async function count(page: Page, type: string): Promise<number> {
   return page.evaluate((t) => ((window as any).__seen344 || []).filter((s: Seen) => s.type === t).length, type);
 }
 
-test.describe('#344 declared events are dispatched', () => {
+test.describe('lifecycle events fire with their declared detail', () => {
   test('dropdown: wb:dropdown:open and wb:dropdown:close, once per change', async ({ page }) => {
     await injectAndScan(page, '<div x-dropdown label="Menu" items="One,Two"></div>');
     await record(page, ['wb:dropdown:open', 'wb:dropdown:close']);
@@ -121,14 +121,6 @@ test.describe('#344 declared events are dispatched', () => {
     expect((await arrived(page, 'wb:select:change', { value: 'b' })).detail).toEqual({ value: 'b' });
     await page.locator('#many').selectOption(['x', 'z']);
     expect((await arrived(page, 'wb:select:change', { value: ['x', 'z'] })).detail).toEqual({ value: ['x', 'z'] });
-  });
-
-  test('chip: wb:chip:remove carries the label', async ({ page }) => {
-    await injectAndScan(page, '<span x-chip dismissible>Urgent</span>');
-    await record(page, ['wb:chip:remove']);
-    await page.locator('#test-container .x-chip__remove').click();
-    const removed = await arrived(page, 'wb:chip:remove');
-    expect(removed.detail).toEqual({ label: 'Urgent' });
   });
 
   test('drawer-layout: wb:drawerLayout:toggle carries collapsed', async ({ page }) => {

@@ -29,8 +29,8 @@
 - `wb:search` — Fired when search is triggered (debounced or instant)
 - `wb:search:clear` — Fired when search is cleared
 - `input` — Fired on every input change
-- `wb:search:focus` — Fired when the input receives focus
-- `wb:search:blur` — Fired when the input loses focus
+- `focus` — Fired when input receives focus
+- `blur` — Fired when input loses focus
 
 ## Methods
 

@@ -97,9 +97,10 @@ heading moves into the header, and the rest moves into `<main>`.
 
 ## Events
 
-- `wb:dialog:open` — Dialog opened
-- `wb:dialog:close` — Dialog closed
-- `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop)
+- `wb:dialog:ok` — The dialog's confirm button is clicked
+- `wb:dialog:open` — A dialog the trigger builds is shown
+- `wb:dialog:cancel` — Dismissed without OK: Cancel, the close button, the backdrop or Escape
+- `wb:dialog:close` — The dialog closed, by any route, once
 
 ## Methods
 

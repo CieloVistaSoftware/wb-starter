@@ -215,6 +215,13 @@
     "headers": "scope=\"col\" on th elements"
   },
   "events": {
+    "wb:table:select": {
+      "description": "A row is clicked",
+      "detail": {
+        "row": "HTMLTableRowElement",
+        "index": "number"
+      }
+    },
     "wb:table:sort": {
       "description": "Column sorted",
       "detail": {

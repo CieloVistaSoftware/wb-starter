@@ -25,7 +25,7 @@
 
 ## Events
 
-- `wb:drawerLayout:toggle` — Drawer toggled
+- `wb:drawerLayout:toggle` — Drawer collapsed or expanded
 
 ## Methods
 

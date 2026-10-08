@@ -449,27 +449,16 @@ export function extractFunction(source: string, funcName: string): string | null
   if (!match) return null;
   
   const startIdx = match.index;
+  let braceCount = 0;
+  let endIdx = startIdx;
   // Count braces from the BODY's opening brace (the `{` the pattern ends on),
   // not from `export`. Starting at `export` counted the `{}` of a default
   // parameter -- `function code(element, options = {})` -- as the whole body:
   // the count returned to zero inside the parameter list, so every behavior
   // written that way came back as its bare signature, and the event, baseClass
   // and requiredChildren checks were run against an empty function.
-  const end = blockEnd(source, match.index + match[0].length - 1);
-  return source.substring(startIdx, end === -1 ? startIdx : end);
-}
-
-/**
- * The index just past the `}` that closes the block opened at `openIdx`
- * (which must be a `{`), or -1 when it never closes. Strings, template
- * literals (with their `${}` expressions) and comments are skipped, so a brace
- * inside one is not counted. Shared by extractFunction() and the declared-event
- * check's helper walk (tests/helpers/declared-event-dispatch.ts, #344).
- */
-export function blockEnd(source: string, openIdx: number): number {
-  let braceCount = 0;
-  let i = openIdx;
-
+  let i = match.index + match[0].length - 1;
+  
   while (i < source.length) {
     const char = source[i];
     const prevChar = i > 0 ? source[i - 1] : '';
@@ -526,14 +515,15 @@ export function blockEnd(source: string, openIdx: number): number {
     if (char === '}') {
       braceCount--;
       if (braceCount === 0) {
-        return i + 1;
+        endIdx = i + 1;
+        break;
       }
     }
     
     i++;
   }
   
-  return -1;
+  return source.substring(startIdx, endIdx);
 }
 
 /**

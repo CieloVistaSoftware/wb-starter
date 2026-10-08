@@ -223,19 +223,19 @@
   },
   "events": {
     "wb:cardvideo:play": {
-      "description": "Fired when the video starts playing",
+      "description": "The video starts playing",
       "detail": {
         "currentTime": "number"
       }
     },
     "wb:cardvideo:pause": {
-      "description": "Fired when the video is paused",
+      "description": "The video is paused",
       "detail": {
         "currentTime": "number"
       }
     },
     "wb:cardvideo:ended": {
-      "description": "Fired when video playback ends",
+      "description": "Video playback ends",
       "detail": {
         "currentTime": "number"
       }

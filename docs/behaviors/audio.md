@@ -33,7 +33,7 @@ No attribute needed on `<audio>`. Don't add `x-audio` to it (#746).
 - `wb:audio:pause` — Playback paused
 - `wb:audio:ended` — Playback ended
 - `wb:audio:volumechange` — Volume or mute changed
-- `wb:audio:eqchange` — EQ band changed
+- `wb:audio:eqchange` — An EQ band moved (slider, preset or setBand())
 
 ## Methods
 

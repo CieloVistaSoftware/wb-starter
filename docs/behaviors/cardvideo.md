@@ -29,9 +29,9 @@
 
 ## Events
 
-- `wb:cardvideo:play` — Fired when the video starts playing
-- `wb:cardvideo:pause` — Fired when the video is paused
-- `wb:cardvideo:ended` — Fired when video playback ends
+- `wb:cardvideo:play` — The video starts playing
+- `wb:cardvideo:pause` — The video is paused
+- `wb:cardvideo:ended` — Video playback ends
 
 ## Methods
 

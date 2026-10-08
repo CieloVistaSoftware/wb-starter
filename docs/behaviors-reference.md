@@ -645,7 +645,7 @@ schema, styling) — this table is the cross-behavior index.
 |-------|-----------|------------|----------|
 | `wb:toast:show` | `feedback.js` (`x-toast`) | the toast trigger is clicked | `{ message, variant }` |
 | `wb:notify:show` | `feedback.js` (`x-notify`) | clicked (cycles info→success→warning→error each click) | `{ message, variant }` |
-| `wb:chip:remove` | `feedback.js` (chip) | a chip's remove (×) button is clicked | `{ label }` |
+| `wb:chip:remove` | `feedback.js` (chip) | a chip's remove (×) button is clicked | `—` |
 | `wb:copy:success` | `copy.js` (`x-copy`) | text is copied to the clipboard | `{ text }` |
 | `wb:copy:error` | `copy.js` (`x-copy`) | the clipboard write fails | `{ error }` |
 

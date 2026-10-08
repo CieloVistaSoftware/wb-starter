@@ -135,17 +135,17 @@
     }
   },
   "events": {
-    "wb:dropdown:open": {
-      "description": "Dropdown opened"
-    },
-    "wb:dropdown:close": {
-      "description": "Dropdown closed"
-    },
     "wb:dropdown:select": {
       "description": "Item selected",
       "detail": {
         "value": "string"
       }
+    },
+    "wb:dropdown:open": {
+      "description": "Dropdown opened"
+    },
+    "wb:dropdown:close": {
+      "description": "Dropdown closed"
     }
   },
   "test": {

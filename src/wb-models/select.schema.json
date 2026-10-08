@@ -252,7 +252,7 @@
   },
   "events": {
     "wb:select:change": {
-      "description": "Selection changed",
+      "description": "Selection changed; an array of values for multiple",
       "detail": {
         "value": "string | string[]"
       }
