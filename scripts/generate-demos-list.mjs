@@ -31,6 +31,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { GUARD_SNIPPET } from './audit-page-fragments.mjs';
 
 const ROOT = process.cwd();
 const DEMOS_DIR = path.join(ROOT, 'demos');
@@ -268,7 +269,15 @@ if (!re.test(page)) {
   console.error('markers <!-- demos:auto:start/end --> not found in pages/demos.html');
   process.exit(2);
 }
-const next = page.replace(re, block);
+// #1734: pages/demos.html is a fragment, and its direct-load guard is written
+// here from the one canonical copy (audit-page-fragments.mjs GUARD_SNIPPET)
+// rather than left as hand-kept text. The hand-kept copy redirected without
+// stopping the document, so a direct visit on GitHub Pages still requested
+// src/styles/pages/demos.css relative to /pages/ and got a 404. The guard is
+// the file's first <script>; a page without one gets it at the top.
+const GUARD_RE = /^\s*<script>(?:(?!<\/script>)[\s\S])*?location\.replace\((?:(?!<\/script>)[\s\S])*?<\/script>\n?/;
+const guarded = GUARD_RE.test(page) ? page.replace(GUARD_RE, GUARD_SNIPPET + '\n') : GUARD_SNIPPET + '\n' + page;
+const next = guarded.replace(re, block);
 
 // #237: plain standalone index — links are same-directory relative (./x.html),
 // no SPA, no WB runtime import, so it works even if the framework fails to load.
