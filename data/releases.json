@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.423",
+      "date": "2026-10-07",
+      "summary": "Behaviors-live-examples-layout timed out at 180 s on main and on every PR (rows 1/6 and 2/6, 2 of 2 locally on 547989c5): it was sized in 6 slices for 585 rows, and #1723&#39;s newly declared options grew the Behaviors list to about 1,360 rows at about 650 ms a click; every row is still measured, now in 16 slices, and a per-slice limit names the cause the next time the list grows. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Live-examples layout runs in 16 slices, and says so when the rows outgrow them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d513fcfd6e47969905a632b3ae0d74bea84ea005\" target=\"_blank\" rel=\"noopener\"><code>d513fcf</code></a>",
+          "issues": [
+            961,
+            1751
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/behaviors-live-examples-layout.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/behaviors-live-examples-layout.spec.ts</a> --project=compliance</code>. Before: slices 1/6 and 2/6 hit &quot;Test timeout of 180000ms exceeded&quot; inside measureRow. Now: 16 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d513fcfd6e47969905a632b3ae0d74bea84ea005\" target=\"_blank\" rel=\"noopener\"><code>d513fcf</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.422",
       "date": "2026-10-07",
       "summary": "Link-card titles on the Demos page were dark blue on the dark card background, at 1.49:1 contrast, and barely readable. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1747\" target=\"_blank\" rel=\"noopener\">#1747</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1749\" target=\"_blank\" rel=\"noopener\">#1749</a>",
