@@ -1,4 +1,5 @@
 import { test, expect, newOfflinePage } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 // #1112: one browser context is built in beforeAll and shared by every test
 // below. Playwright stops a context's trace at the end of EACH test, so a
@@ -50,8 +51,8 @@ test.describe('cards are never too narrow', () => {
     await page.evaluate(async () => {
       const WB = (window as any).WB;
       await WB.scan(document.body, { eager: true });
-      if (typeof WB.whenIdle === 'function') await WB.whenIdle({ timeout: 30000 });
     });
+    await settlePage(page, { timeout: 30000 });
 
     rows = await page.evaluate(() => {
       const out: any[] = [];

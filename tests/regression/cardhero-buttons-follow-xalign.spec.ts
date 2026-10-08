@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * A card hero's buttons line up with the rest of its content (#1619).
@@ -32,7 +33,7 @@ test('x-cardhero buttons follow the hero alignment (#1619)', async ({ page }) =>
 
   let measured = 0;
   for (const c of CASES) {
-    const m = await page.evaluate(async ({ variant, xalign }) => {
+    await page.evaluate(async ({ variant, xalign }) => {
       document.querySelectorAll('.cta-align-case').forEach((el) => el.remove());
       const host = document.createElement('div');
       host.className = 'cta-align-case';
@@ -42,7 +43,10 @@ test('x-cardhero buttons follow the hero alignment (#1619)', async ({ page }) =>
         + ` cta="Get Started" cta-href="#a" cta-secondary="View Docs" cta-secondary-href="#b" height="380px"></section>`;
       document.body.appendChild(host);
       await (window as any).WB.scan(host, { eager: true });
-      await (window as any).WB.whenIdle({ timeout: 10_000 });
+    }, c);
+    await settlePage(page, { timeout: 10_000 });
+    const m = await page.evaluate(async () => {
+      const host = document.querySelector('.cta-align-case') as HTMLElement;
       const finite = document.getAnimations().filter((a) => a.effect?.getComputedTiming().endTime !== Infinity);
       await Promise.all(finite.map((a) => a.finished.catch(() => {})));
       const hero = host.firstElementChild as HTMLElement;
@@ -53,7 +57,7 @@ test('x-cardhero buttons follow the hero alignment (#1619)', async ({ page }) =>
       const left = Math.min(...btns.map((b) => b.left));
       const right = Math.max(...btns.map((b) => b.right));
       return { heroCenter: h.left + h.width / 2, rowLeft: r.left, rowRight: r.right, pairLeft: left, pairRight: right, pairCenter: (left + right) / 2, count: btns.length };
-    }, c);
+    });
 
     const where = `${c.variant} xalign=${c.xalign}`;
     expect(m.count, `${where}: both buttons rendered`).toBe(2);

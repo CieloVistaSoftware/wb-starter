@@ -7,6 +7,7 @@
  * and the wb:toggle event.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -29,9 +30,9 @@ async function setup(page: Page, html: string): Promise<void> {
   // itself. x-demo-width-and-toggle.spec.ts uses the same fix.
   await page.evaluate(async () => {
     await (window as any).WB.scan(document.getElementById('toggle-effect-test-area'), { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('[x-toggle] behavior effects', () => {

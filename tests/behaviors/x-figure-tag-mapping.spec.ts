@@ -12,6 +12,7 @@
  * nativeMap and wb-lazy.js's autoInjectMappings.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 const PIXEL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7';
@@ -34,9 +35,9 @@ async function setup(page: Page, html: string): Promise<void> {
     // (WB.init({ autoInject: true })).
     (window as any).WB.config.set('autoInject', true);
     await (window as any).WB.scan(document.body, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('<figure> auto-inject mapping (was completely unmapped)', () => {

@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * scripts/generate-site.mjs builds demo instances for every schema's matrix
  * combinations / enum variants / boolean toggles / defaults fallback as bare
@@ -49,7 +50,7 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     await page.waitForSelector('[x-demo]', { timeout: 10_000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const invisible = await page.evaluate(() => {
       // Only check elements generated INSIDE a <div x-demo> grid -- those are

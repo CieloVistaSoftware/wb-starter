@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * <header icon="🚀" title="App" badge="v1.0"> rendered TWO rocket-ship
@@ -33,9 +34,9 @@ async function inject(page: Page, html: string) {
     container.innerHTML = h;
     document.body.appendChild(container);
     await (window as any).WB.scan(container, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('.x-header + badge attribute: no collision with the generic [badge] semantic property', () => {

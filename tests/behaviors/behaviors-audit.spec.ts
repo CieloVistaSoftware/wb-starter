@@ -9,6 +9,7 @@
 import { test, expect, Page } from '../fixtures/offline';
 import { pickBehavior } from '../helpers/behaviors-page';
 
+import { settlePage } from '../base';
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
@@ -24,7 +25,7 @@ async function loadDark(page: Page) {
   await page.waitForSelector('#mainPage-behaviors', { timeout: 25000 });
   // The page is built once WB settles (#1516: not 2500ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
   await page.evaluate(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
     document.body.setAttribute('data-theme', 'dark');

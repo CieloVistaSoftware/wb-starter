@@ -79,6 +79,7 @@
 import { test, expect, Page } from '../fixtures/offline';
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { settlePage } from '../base';
 
 const ROOT = process.cwd();
 const MODELS = join(ROOT, 'src/wb-models');
@@ -161,24 +162,7 @@ async function harness(page: Page) {
  * then report which ones never reached the behavior at all.
  */
 async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
-  return page.evaluate(async ({ token, tag, inputType, attrs }) => {
-    // A broad-but-fixed slice of computed style. Behaviors that express an
-    // option purely through a CSS attribute selector change nothing in the
-    // markup, so `outerHTML` cannot see them — this is what does.
-    const STYLE_KEYS = [
-      'width', 'height', 'borderRadius', 'display', 'backgroundColor', 'color', 'padding',
-      'margin', 'flexDirection', 'position', 'fontSize', 'fontWeight', 'textAlign',
-      'borderWidth', 'borderColor', 'opacity', 'gap', 'gridTemplateColumns', 'overflow',
-      'maxWidth', 'minHeight', 'boxShadow', 'transform', 'visibility', 'order', 'alignItems',
-      'justifyContent', 'textTransform', 'letterSpacing', 'lineHeight', 'cursor',
-      'borderStyle', 'backgroundImage', 'animationName', 'filter', 'zIndex', 'float',
-      'listStyleType', 'whiteSpace', 'flexWrap',
-    ];
-    const snapStyle = (el: Element) => {
-      const cs = getComputedStyle(el);
-      return STYLE_KEYS.map((k) => (cs as any)[k]).join('|');
-    };
-
+  await page.evaluate(async ({ token, tag, inputType, attrs }) => {
     /**
      * Record every attribute name the behavior looks up on this element.
      * The shared helpers in src/core/read-attr.js (readFlag/readAttr) go
@@ -230,12 +214,38 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
     // left:-9999px, so without it the IntersectionObserver never fires and
     // NOTHING is ever injected.
     if (WB?.scan) await WB.scan(host, { eager: true });
-    // #1066: wait for the runtime to say every injection has finished, not a
-    // fixed 120ms. The fixed wait was long enough at idle and too short under
-    // full-suite load, so x-relativetime (which renders and then re-renders on
-    // an interval) was compared half-built and failed only when workers
-    // contended. WB.whenIdle() is the signal #962 asked for.
-    await WB?.whenIdle?.({ timeout: 15000 });
+    // The spies' Sets live on in the page; the second evaluate below reads them.
+    (window as any).__wbAttrProbeSeen = seenBy;
+  }, { token: b.token, tag: b.tag, inputType: b.inputType, attrs: b.attrs } as any);
+
+  // #1066: wait for the runtime to say every injection has finished, not a
+  // fixed 120ms. The fixed wait was long enough at idle and too short under
+  // full-suite load, so x-relativetime (which renders and then re-renders on
+  // an interval) was compared half-built and failed only when workers
+  // contended. WB.whenIdle() is the signal #962 asked for.
+  await settlePage(page, { timeout: 15000 });
+
+  return page.evaluate(async ({ attrs }) => {
+    // A broad-but-fixed slice of computed style. Behaviors that express an
+    // option purely through a CSS attribute selector change nothing in the
+    // markup, so `outerHTML` cannot see them — this is what does.
+    const STYLE_KEYS = [
+      'width', 'height', 'borderRadius', 'display', 'backgroundColor', 'color', 'padding',
+      'margin', 'flexDirection', 'position', 'fontSize', 'fontWeight', 'textAlign',
+      'borderWidth', 'borderColor', 'opacity', 'gap', 'gridTemplateColumns', 'overflow',
+      'maxWidth', 'minHeight', 'boxShadow', 'transform', 'visibility', 'order', 'alignItems',
+      'justifyContent', 'textTransform', 'letterSpacing', 'lineHeight', 'cursor',
+      'borderStyle', 'backgroundImage', 'animationName', 'filter', 'zIndex', 'float',
+      'listStyleType', 'whiteSpace', 'flexWrap',
+    ];
+    const snapStyle = (el: Element) => {
+      const cs = getComputedStyle(el);
+      return STYLE_KEYS.map((k) => (cs as any)[k]).join('|');
+    };
+
+    const host = document.getElementById('attr-probe')!;
+    const seenBy: Set<string>[] = (window as any).__wbAttrProbeSeen;
+    delete (window as any).__wbAttrProbeSeen;
 
     // Compare the rendered element with the attribute REMOVED from the
     // comparison, so the attribute's own presence in outerHTML is not what
@@ -283,7 +293,7 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
 
     host.remove();
     return ignored;
-  }, { token: b.token, tag: b.tag, inputType: b.inputType, attrs: b.attrs } as any);
+  }, { attrs: b.attrs } as any);
 }
 
 test.describe('Every declared attribute reaches the element', () => {
