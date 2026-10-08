@@ -39,15 +39,20 @@ import { test, expect } from '../fixtures/offline';
 const LIST = '#behaviors-search-results';
 const PANEL = '#behaviors-live';
 const SCROLLER = '#siteBody';
-const WORKSPACE = '#behaviors-workspace';
 const ROW = '.behaviors-search-results__row';
 
 async function ready(page) {
   await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await expect.poll(() => page.locator(`${LIST} ${ROW}`).count(), { timeout: 25_000 }).toBeGreaterThan(0);
-  // Law 18: wait for the page to SAY it is sized. x-ready is cleared whenever a
-  // new sync is queued, so this cannot read a stale signal.
-  await page.waitForSelector(`${WORKSPACE}[x-ready]`, { timeout: 20_000 });
+  // Law 18: wait for the page to SAY it is done. The first, preselected
+  // example has rendered once #behaviors-live's aria-busy clears -- set on the
+  // selection, cleared only by the newest render -- and the layout sync it ran
+  // announced wb:layout-settled before that (#1516: the workspace no longer
+  // carries a second, stateful x-ready copy of the signal).
+  await page.waitForFunction(() => {
+    const live = document.getElementById('behaviors-live');
+    return !!document.querySelector('#behaviors-search-results [aria-current="true"]') && !!live && !live.hasAttribute('aria-busy');
+  }, null, { timeout: 20_000 });
 }
 
 test.describe('browse surface fits its scroller (#992)', () => {

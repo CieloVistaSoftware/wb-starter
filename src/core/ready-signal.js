@@ -143,3 +143,52 @@ export function isReady(element) {
   // front of us would be its own defect.
   return ready.has(element) || (element.hasAttribute?.(READY_ATTRIBUTE) ?? false);
 }
+
+/**
+ * Resolve once `element` has finished building: at once if it already has, or
+ * on its `wb:ready` moment if it has not.
+ *
+ * The one race-free way to wait. Listening for `wb:ready` alone hangs when the
+ * event already fired before the listener was added; reading isReady() alone
+ * misses one that has not fired yet. Every caller that needed both wrote the
+ * pair by hand -- or watched the `x-ready` attribute, which exists only under
+ * automation (see markReady). This is that pair, written once.
+ *
+ * Settled, not succeeded: a behavior that threw resolves this too (failure is
+ * `x-error`). An element below the fold on the lazy runtime is not built until
+ * it nears the viewport, so the timeout says so instead of hanging.
+ *
+ * @param {Element} element
+ * @param {{ timeout?: number }} [options]
+ * @returns {Promise<Element>}
+ */
+export function whenReady(element, { timeout = 15000 } = {}) {
+  if (!element) return Promise.reject(new Error('whenReady: no element given'));
+  if (isReady(element)) return Promise.resolve(element);
+  return new Promise((resolve, reject) => {
+    let timer = null;
+    const onReady = (event) => {
+      if (event.target !== element) return;   // a descendant's moment, not this one
+      element.removeEventListener('wb:ready', onReady);
+      if (timer) clearTimeout(timer);
+      resolve(element);
+    };
+    element.addEventListener('wb:ready', onReady);
+    // It may have become ready between the check above and the listener.
+    if (isReady(element)) {
+      element.removeEventListener('wb:ready', onReady);
+      resolve(element);
+      return;
+    }
+    if (timeout > 0) {
+      timer = setTimeout(() => {
+        element.removeEventListener('wb:ready', onReady);
+        const tag = element.tagName ? element.tagName.toLowerCase() : 'element';
+        reject(new Error(
+          `whenReady: <${tag}${element.id ? ` id="${element.id}"` : ''}> did not finish building within ${timeout}ms. ` +
+          'On the lazy runtime an element below the fold is not built until it nears the viewport -- scroll to it first.'
+        ));
+      }, timeout);
+    }
+  });
+}
