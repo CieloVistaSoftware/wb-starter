@@ -19,6 +19,11 @@
 | `duration` | CSS duration, e.g. `3s` | `3s` | Animation duration |
 | `colors` | JSON array of CSS colours | `["#ff0","#f0f","#0ff","#0f0","#f00"]` | Particle colors as JSON array |
 
+## Events
+
+- `wb:confetti:start` — Animation started
+- `wb:confetti:end` — Animation ended
+
 ## Methods
 
 - `fire()` — Triggers confetti

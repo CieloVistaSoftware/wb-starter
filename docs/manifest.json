@@ -100,7 +100,7 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behavior-cross-reference.md",
@@ -454,7 +454,7 @@
           "file": "behaviors/chip.md",
           "title": "chip",
           "description": "A small pill-shaped tag/label with optional icon, color variant, and dismiss button.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/clock.md",

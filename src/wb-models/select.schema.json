@@ -298,5 +298,13 @@
     "icon": "📋",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:select:change": {
+      "description": "Selection changed",
+      "detail": {
+        "value": "string | string[]"
+      }
+    }
   }
 }
