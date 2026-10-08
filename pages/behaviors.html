@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.413">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.415">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -65,7 +65,7 @@
        behavior runs it immediately instead of scrolling a 13,000px page to find
        its example. -->
   <div class="behaviors-browse">
-    <ul id="behaviors-search-results" class="behaviors-search-results" hidden></ul>
+    <ul id="behaviors-search-results" class="behaviors-search-results" hidden aria-busy="true"></ul>
     <!-- A <div>, deliberately not a <section id>: applyFilter() hides every
          `section[id]` that contains no visible <div x-demo>, which would sweep up
          this panel (it holds injected markup, never a x-demo) and leave it
@@ -736,7 +736,12 @@
         if (!nativeByBehavior) {
           console.warn('[behaviors] tag-map.js did not load; the example generator is not published', err);
         }
-      });
+      })
+      // #961: the list is rendered more than once while its data arrives, and
+      // each render replaces every row. Anything holding rows from an earlier
+      // render -- a script, a test -- holds rows that are no longer on the page,
+      // and clicking them does nothing. aria-busy says when the list is final.
+      .finally(() => { resultsEl.setAttribute('aria-busy', 'false'); });
 
     // #642: John, "the search box says there are 69 items from
     // that search but there is no content. I want an element that has 69

@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 
+import { settlePage } from '../base';
 /**
  * Open demos/playground.html with the "inputs" example set loaded and every
  * input's behavior applied. Shared by playground-twenty-inputs.spec.ts and
@@ -20,5 +21,5 @@ export async function openPlaygroundInputs(page: Page): Promise<void> {
   // input before its behavior applied (no x-ready at hover, CI trace), so the
   // hover hit a plain input and no tooltip ever came. WB.settled() resolves
   // once every injection has called back (#962) -- every input, not one.
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 }

@@ -25,6 +25,7 @@ import { readFileSync } from 'node:fs';
 
 import { mountUnderSubPath, PREFIX } from '../helpers/sub-path';
 
+import { settlePage } from '../base';
 /** A root-absolute path ending in a media extension, wherever it appears. */
 const ROOT_ABSOLUTE_ASSET = /(?:^|["'\s=])\/(?!\/)[^"'\s]*\.(?:svg|png|jpe?g|gif|webp|avif|mp4|webm|mp3)/;
 
@@ -97,7 +98,7 @@ test('the catalogue still has asset-bearing rows, and the page lists them (#1047
       `(${missing.join(', ')}). Either the row markup changed or the catalogue and the page have drifted apart.`,
     ).toBeGreaterThanOrEqual(Math.ceil(ASSET_ROWS.length * 0.7));
   } finally {
-    await mount.close();
+    await mount.close(page);
   }
 });
 
@@ -122,7 +123,7 @@ for (const token of ASSET_ROWS) {
         const el = document.querySelector('#behaviors-live-example > *');
         return !!el && el !== (window as any).__subpathPrevious && el.hasAttribute('x-ready');
       }, null, { timeout: 15_000 }).catch(() => {});
-      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15_000 })).catch(() => {});
+      await settlePage(page, { timeout: 15_000, ifPresent: true }).catch(() => {});
 
       // Nothing rendered anywhere may point at the ORIGIN root.
       const rootAbsolute = await page.evaluate((prefix) => {
@@ -151,7 +152,7 @@ for (const token of ASSET_ROWS) {
         'deployed site does. A green run at "/" proves nothing about this.',
       ).toEqual([]);
     } finally {
-      await mount.close();
+      await mount.close(page);
     }
   });
 }

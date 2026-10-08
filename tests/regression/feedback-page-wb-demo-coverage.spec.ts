@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { safeScrollIntoView } from '../base';
+import { safeScrollIntoView, settlePage } from '../base';
 
 /**
  * demos/site/feedback.html: John asked that every rendered example on this
@@ -22,7 +22,7 @@ async function ready(page) {
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   // x-demo blocks render and highlight after app-ready; built once WB settles (#1516: not 1200ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 }
 
 // Every example <section id="…"> on the page, in document order.

@@ -41,7 +41,7 @@
  */
 
 import { test, expect, type Page } from '../fixtures/offline';
-import { networkBarrier } from '../base';
+import { networkBarrier, settlePage } from '../base';
 
 /**
  * #1349: "every media URL here is intercepted with page.route and ABORTED" is
@@ -189,8 +189,8 @@ async function renderVariants(page: Page, u: (file: string) => string, extra = '
     container.innerHTML = markup;
     document.body.appendChild(container);
     await (window as any).WB.scan(container, { eager: true });
-    await (window as any).WB.settled?.({ timeout: 10000 });
   }, html);
+  await settlePage(page, { timeout: 10000 });
   openGate();
 
   return observed;

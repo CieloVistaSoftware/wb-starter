@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { safeScrollIntoView, elementReady, buildInView } from '../base';
+import { safeScrollIntoView, elementReady, buildInView, settlePage } from '../base';
 
 const DEMO_URL = '/demos/site/cards.html';
 
@@ -74,7 +74,7 @@ test.describe('Page Fundamentals', () => {
     await page.waitForFunction(() => window.WB, { timeout: 10000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
     const critical = errors.filter(e => !e.includes('favicon') && !e.includes('404'));
     expect(critical).toEqual([]);
   });

@@ -1,4 +1,4 @@
-import { readOption, authoredAttr } from '../core/read-attr.js';
+import { readOption, authoredAttr, readFlag } from '../core/read-attr.js';
 /**
  * Markdown to HTML Behavior
  * -----------------------------------------------------------------------------
@@ -156,10 +156,13 @@ export async function mdhtml(element, options = {}) {
     // newline as just whitespace within a paragraph; only a blank line
     // starts a new paragraph. Default now matches that; opt IN per-instance
     // via `breaks="true"` if a specific doc genuinely wants hard breaks.
-    breaks: options.breaks ?? (element.getAttribute('breaks') === 'true'),
+    // #879: readFlag, so a bare `breaks` means on, as every other boolean
+    // option in mdhtml.schema.json does; `breaks="false"` and absent are off.
+    breaks: options.breaks ?? readFlag(element, 'breaks'),
     gfm: options.gfm ?? (element.getAttribute('gfm') !== 'false'),
-    headerIds: options.headerIds ?? (authoredAttr(element, 'header-ids') !== 'false'),
-    highlight: options.highlight ?? element.getAttribute('highlight'),
+    // #879: `header-ids` and `highlight` were read here and nothing used
+    // either value (the heading renderer below always writes an id). Two
+    // options that did nothing, so they are no longer read.
     size: options.size || element.getAttribute('size') || 'xs',
     // Auto-live-render (below) was built for CURATED docs content, where a
     // maintainer wrote and vetted every embedded ```html example. Default

@@ -30,6 +30,16 @@
       "type": "boolean",
       "default": true,
       "attribute": "gfm"
+    },
+    "breaks": {
+      "type": "boolean",
+      "description": "Turn every single newline in the Markdown into a line break (<br>). Off by default, so hard-wrapped source flows as ordinary paragraphs.",
+      "default": false
+    },
+    "autoLiveRender": {
+      "type": "boolean",
+      "description": "Render each fenced HTML example in the Markdown as a live component above its code. Set to false for Markdown you did not write, such as an issue body, so its examples stay as code.",
+      "default": true
     }
   },
   "_metadata": {

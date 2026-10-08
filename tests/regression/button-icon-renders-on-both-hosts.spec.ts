@@ -1,4 +1,5 @@
 import { test, expect, newOfflinePage } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 // #1112: one browser context is built in beforeAll and shared by every test
 // below. Playwright stops a context's trace at the end of EACH test, so a
@@ -48,19 +49,22 @@ test.describe('button icon parity across authoring forms', () => {
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 
-    rows = await page.evaluate(async (icons) => {
-      const out: any[] = [];
-      for (const icon of icons) {
+    rows = [];
+    for (const icon of ICONS) {
+      await page.evaluate(async (icon) => {
         const host = document.createElement('div');
+        host.id = 'button-icon-host';
         host.style.cssText = 'position:fixed;top:0;left:0;width:640px;z-index:99999';
         host.innerHTML =
           `<div id="attr-${icon}" x-button variant="primary" icon="${icon}" size="md">Label</div>` +
           `<button id="native-${icon}" variant="primary" icon="${icon}" size="md">Label</button>`;
         document.body.appendChild(host);
         await (window as any).WB.scan(host, { eager: true });
-        // Built once its work has called back (#1516: no fixed sleep).
-        await (window as any).WB.settled?.({ timeout: 10000 });
+      }, icon);
+      // Built once its work has called back (#1516: no fixed sleep).
+      await settlePage(page, { timeout: 10000 });
 
+      rows.push(await page.evaluate((icon) => {
         const read = (id: string) => {
           const el = document.getElementById(id)!;
           return {
@@ -86,11 +90,11 @@ test.describe('button icon parity across authoring forms', () => {
             })(),
           };
         };
-        out.push({ icon, attr: read(`attr-${icon}`), native: read(`native-${icon}`) });
-        host.remove();
-      }
-      return out;
-    }, ICONS);
+        const row = { icon, attr: read(`attr-${icon}`), native: read(`native-${icon}`) };
+        document.getElementById('button-icon-host')!.remove();
+        return row;
+      }, icon));
+    }
 
     await page.close();
   });

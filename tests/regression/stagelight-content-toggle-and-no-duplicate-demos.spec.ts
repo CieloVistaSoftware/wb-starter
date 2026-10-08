@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #656 — <div x-stagelight>text</div> discarded its authored content,
  *        and stagelight.schema.json's $view raced stagelight() to build
@@ -18,7 +19,7 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
     });
     // Schema and behavior passes are both done once WB settles (#1516: not 2000ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const texts = await page.evaluate(() =>
       [...document.querySelectorAll('[x-stagelight]')].map((e) => (e.textContent ?? '').trim())
@@ -39,7 +40,7 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
     });
     // A racing second overlay would be built before WB settles (#1516: not 1500ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const counts = await page.evaluate(() => ({
       hosts: document.querySelectorAll('.x-stagelight--spotlight').length,
@@ -57,7 +58,7 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
     });
     // The spotlight's overlay is built once WB settles (#1516: not 1500ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const result = await page.evaluate(async () => {
       const host = document.querySelector('.x-stagelight--spotlight') as HTMLElement & {

@@ -1,5 +1,6 @@
 import { test, expect, newOfflinePage } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 // #1112: one browser context is built in beforeAll and shared by every test
 // below. Playwright stops a context's trace at the end of EACH test, so a
 // shared context fails the second test with "Tracing is already stopping".
@@ -62,7 +63,7 @@ async function sweep(page: any, width: number): Promise<Row[]> {
     const built = document.querySelectorAll('#pg-preview [x-cardhero] .x-card__hero-content');
     return heroes.length > 100 && built.length >= heroes.length;
   }, null, { timeout: 90_000 });
-  await page.evaluate(() => (window as any).WB?.whenIdle?.({ timeout: 20_000 }));
+  await settlePage(page, { timeout: 20_000 });
 
   return page.evaluate((_minShare: number) => {
     const rows: any[] = [];

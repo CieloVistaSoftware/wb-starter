@@ -1,4 +1,5 @@
 import { expect, type Page } from '../fixtures/offline';
+import type { Locator } from '@playwright/test';
 
 /**
  * Bring one behavior's demo into the DOM on /?page=behaviors.
@@ -68,6 +69,27 @@ export async function showBehavior(page: Page, token: string): Promise<void> {
   await pickBehavior(page, token);
 }
 
+/**
+ * Open a closed browse-list group the way a reader does, by its summary, and
+ * wait for it to finish opening (#961).
+ *
+ * .x-details__content animates in (details.css `detailsOpen`, 0.2s translateY).
+ * Clicked mid-animation, a row's centre was computed while it was still moving:
+ * under full-suite load Playwright judged it stable in a pause, the layout moved
+ * on, and the click landed on the <details> itself -- not a row, so nothing was
+ * selected and the demo never changed (reproduced 1 in 24-30: click target
+ * DETAILS.x-details). Waiting on the animations' own `finished` promises is the
+ * event, not a guess at its duration.
+ */
+export async function openGroup(group: Locator): Promise<void> {
+  if (!(await group.count())) return;
+  const g = group.first();
+  if (!(await g.evaluate((d) => (d as HTMLDetailsElement).open))) {
+    await g.locator(':scope > summary').click();
+  }
+  await g.evaluate((d) => Promise.all(d.getAnimations({ subtree: true }).map((a) => a.finished.catch(() => undefined))));
+}
+
 /** showBehavior() on a page that is already loaded: pick the row, wait for its render. */
 export async function pickBehavior(page: Page, token: string): Promise<void> {
   // The list fills from two fetches; the second rebuilds it, so wait for the
@@ -80,9 +102,7 @@ export async function pickBehavior(page: Page, token: string): Promise<void> {
   const rows = page.locator(`.behaviors-search-results__row[data-browse-token="${token}"]`);
   await expect(rows.first(), `${token} must appear in the behaviors list`).toBeAttached();
   const group = page.locator('#behaviors-search-results details', { has: rows.first() });
-  if (await group.count() && !(await group.first().evaluate((d) => (d as HTMLDetailsElement).open))) {
-    await group.first().locator(':scope > summary').click();
-  }
+  await openGroup(group);
   await expect(rows.first(), `${token}'s row must be visible to be picked`).toBeVisible();
   // #771 preselects the first row on load. Clicking the row that is already
   // shown re-renders identical markup, which the "markup changed" barrier below

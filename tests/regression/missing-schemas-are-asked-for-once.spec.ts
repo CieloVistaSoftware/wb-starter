@@ -23,7 +23,7 @@
  */
 
 import { test, expect } from '../fixtures/offline';
-import { wbIdle } from '../base';
+import { wbIdle, settlePage } from '../base';
 
 test('a schema that does not exist is requested once, and no schema 404s', async ({ page, baseURL }) => {
   test.slow();
@@ -69,7 +69,7 @@ test('a schema that does not exist is requested once, and no schema 404s', async
   });
   // Every schema fetch has answered once WB settles (#1516: not 2000ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 
   expect(
     schemaRequests.length,
