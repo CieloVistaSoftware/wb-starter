@@ -1049,7 +1049,29 @@ export async function demo(element, options = {}) {
                 let pendingShrinkWidth = 0;
                 const POLL_MS = 200;
                 const MAX_MS = 5000;
-                const startedAt = Date.now();
+                let startedAt = Date.now();
+                let committed = false;
+                let polling = true;
+                // #1759: two equal readings say the CURRENT layout is steady, not
+                // that the control is finished. A control whose behavior builds
+                // after the commit -- <article size="lg"> before card.js has
+                // arrived -- is measured as plain markup, the commit locks that
+                // width in, and the built control (min-width 420px) then overflows
+                // the demo it no longer fits. A control finishing announces
+                // itself with a bubbling `wb:ready`. Before the commit, that
+                // invalidates the readings so far. After it, the committed width
+                // is dropped, so the demo is fit-content again and the grid holds
+                // the built control's width, and the next commit is that.
+                grid.addEventListener('wb:ready', () => {
+                    lastControlWidth = null;
+                    lastCodeWidth = null;
+                    stableCount = 0;
+                    if (!committed) return;
+                    committed = false;
+                    setRule(element, 'shrink', null);
+                    startedAt = Date.now();
+                    if (!polling) { polling = true; requestAnimationFrame(measure); }
+                });
                 const measure = () => {
                     const demoCs = getComputedStyle(element);
                     const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
@@ -1176,6 +1198,8 @@ export async function demo(element, options = {}) {
                         // Lifts demo.css's pre-measure 50vw code cap -- see there.
                         element.classList.remove('x-demo--measuring');
                         element.classList.add('x-demo--measured');
+                        committed = true;
+                        polling = false;
                         return;
                     }
                     setTimeout(measure, POLL_MS);
