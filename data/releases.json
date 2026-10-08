@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.446",
+      "date": "2026-10-08",
+      "summary": "Missing-schema-is-a-quiet-404.spec.ts used desclist as one of its three behaviors with no schema; this PR gives desclist a schema, so its &quot;answers a plain 404&quot; case failed on CI. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1776\" target=\"_blank\" rel=\"noopener\">PR 1776</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Desclist has a schema now, so it is no longer a missing-schema case</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fa09723641550dc7b70069aa8393c5a4270afad6\" target=\"_blank\" rel=\"noopener\"><code>fa09723</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Schemas for ul, ol, dl, list and desclist</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ea024a4cff5bea4941df874ec642226609f1a156\" target=\"_blank\" rel=\"noopener\"><code>ea024a4</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/missing-schema-is-a-quiet-404.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/missing-schema-is-a-quiet-404.spec.ts</a> --project=regression. Before: &quot;desclist.schema.json answers a plain 404&quot; failed (the file now exists and returns 200). Now: 3 passed, checking empty and json, which still have none.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9a1e16b8e13d3bed0f9bf63fb5e66f5178890c52\" target=\"_blank\" rel=\"noopener\"><code>9a1e16b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.445",
       "date": "2026-10-08",
       "summary": "Stagelight&#39;s default colour, size and intensity are defined with the other theme tokens, not inside the effects stylesheet. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1771\" target=\"_blank\" rel=\"noopener\">PR 1771</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/817\" target=\"_blank\" rel=\"noopener\">#817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
