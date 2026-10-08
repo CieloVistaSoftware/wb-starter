@@ -6,6 +6,73 @@
   ],
   "releases": [
     {
+      "version": "1.0.432",
+      "date": "2026-10-08",
+      "summary": "The reflow guard for #1319 sometimes failed with &quot;the stranding reflow never fired&quot;, and its &quot;card was built&quot; check could never fail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Strand the card synchronously after its scroll, and assert it built</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd77d2e8c06f84a1e11bf5ba6921bb93b36e4d8a\" target=\"_blank\" rel=\"noopener\"><code>cd77d2e</code></a>",
+          "issues": [
+            1761,
+            1762
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/cards/cards-showcase.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/cards/cards-showcase.spec.ts</a> --grep &quot;strands it after the scroll&quot; --project=behaviors --repeat-each=200 --workers=8. Before: 1-2 of 200 failed with &quot;the stranding reflow never fired&quot;. Now: 200 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd77d2e8c06f84a1e11bf5ba6921bb93b36e4d8a\" target=\"_blank\" rel=\"noopener\"><code>cd77d2e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.431",
+      "date": "2026-10-08",
+      "summary": "A failing test now carries the page&#39;s CDP lifecycle log (page-lifecycle) and, when its errors say &quot;Promise was collected&quot; or &quot;context was destroyed&quot;, a page-death verdict read from an isolated world: main world dead, page frozen, or main world alive (an app-level hang); failures.json and the live log keep both. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A &quot;Promise was collected&quot; failure says whether the page&#39;s JavaScript died</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d0f6bfbab74b8f725d43d411d82ee6bde0479f6\" target=\"_blank\" rel=\"noopener\"><code>0d0f6bf</code></a>",
+          "issues": [
+            961,
+            1753
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/page-death-diagnostics-name-the-cause.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/page-death-diagnostics-name-the-cause.spec.ts</a> --project=regression</code>. Before: 1 of 3 fail (the failing inner tests carry no page-lifecycle or page-death attachment). Now: 3 of 3 pass, and the deliberately killed page reads &quot;main world dead (heartbeat stopped at +157ms)&quot; while the orphaned promise reads &quot;main world alive (heartbeat running) — app-level hang&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d0f6bfbab74b8f725d43d411d82ee6bde0479f6\" target=\"_blank\" rel=\"noopener\"><code>0d0f6bf</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.430",
+      "date": "2026-10-08",
+      "summary": "The lazy runtime built every card, demo and code panel near the viewport in one main-thread task of 1.4-4.5s, so the page could not paint or answer anything meanwhile. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Build lazy pages in budgeted slices, not one long task</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee5f328b3f5abe7770a4f4b246d004ef724555fd\" target=\"_blank\" rel=\"noopener\"><code>ee5f328</code></a>",
+          "issues": [
+            1752,
+            961,
+            1760
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/lazy-build-has-no-long-task.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/lazy-build-has-no-long-task.spec.ts</a> --project=regression</code>. Before: cards-permutation-matrix.html had a single 1359-3248ms task and failed 5 of 5. Now: the longest task is under 700ms and all 4 pages pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee5f328b3f5abe7770a4f4b246d004ef724555fd\" target=\"_blank\" rel=\"noopener\"><code>ee5f328</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.429",
       "date": "2026-10-08",
       "summary": "Sixteen classes that code, pre, range, textarea, copybutton, audio, label, select, timeline and accordion put on the DOM they build used single-dash compounds the naming convention has no slot for (x-pre-wrapper, x-range-value, x-accordion-head and 13 more); they are now parts, x-pre__wrapper, x-range__value, x-accordion__head, and the audio host is the modifier x-audio--host. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a>",
