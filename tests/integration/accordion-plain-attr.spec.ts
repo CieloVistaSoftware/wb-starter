@@ -13,7 +13,7 @@ test('accordion builds + toggles from plain accordion-title', async ({ page }) =
   await page.goto('/tests/fixtures/accordion-plain.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 15000 });
 
-  const heads = page.locator('#acc .x-accordion-head');
+  const heads = page.locator('#acc .x-accordion__head');
   await expect(heads).toHaveCount(3, { timeout: 10000 });
   await expect(heads.nth(0)).toContainText('What is wb-starter?');
 

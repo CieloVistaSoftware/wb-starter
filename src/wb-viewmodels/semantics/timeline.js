@@ -3,7 +3,7 @@
  * Helper Attribute: [x-timeline]
  *
  * Builds the timeline from the `items` attribute (comma-separated). The CSS
- * (.x-timeline-item) draws the connecting line and the dots via ::before, so
+ * (.x-timeline__item) draws the connecting line and the dots via ::before, so
  * each entry is simply a div with its text. The schema only stamps a single
  * empty item that the stylesheet does not target, so we render here. (#220)
  */
@@ -24,7 +24,7 @@ export function timeline(element, options = {}) {
 
   // #1188: hand-written entries (an <article> with a real <time>, as
   // time.md shows) stay as written. Only an items attribute or plain
-  // comma-separated text is rebuilt into .x-timeline-item divs.
+  // comma-separated text is rebuilt into .x-timeline__item divs.
   if (!itemsAttr && /<[a-z]/i.test(authored)) {
     if (element.innerHTML.trim() !== authored) element.innerHTML = authored;
     element.items = [];
@@ -38,7 +38,7 @@ export function timeline(element, options = {}) {
     element.textContent = '';
     for (const text of items) {
       const item = document.createElement('div');
-      item.className = 'x-timeline-item';
+      item.className = 'x-timeline__item';
       item.textContent = text;
       element.appendChild(item);
     }

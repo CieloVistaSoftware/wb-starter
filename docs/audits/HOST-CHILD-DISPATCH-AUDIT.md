@@ -62,8 +62,8 @@ skip live verification.
   `select(sel, {clearable})` on it directly (line 127) — if a MutationObserver
   separately re-visits that newly-inserted real `<select>` via `nativeMap['select']`
   and dispatches `select()` on it a second time, `clearable: true` would build a
-  second nested `.x-select-clearable` wrapper around the first. Needs a test with
-  `<select clearable options='...'>` checking for exactly one `.x-select-clearable`.
+  second nested `.x-select__clearable` wrapper around the first. Needs a test with
+  `<select clearable options='...'>` checking for exactly one `.x-select__clearable`.
 - **`<div x-notes>`**: `notes.schema.json` declares a `$view` with a `textarea` node, but
   `notes.js` (`src/wb-viewmodels/notes.js`) builds its entire DOM itself from
   `element.dataset.*`, the same self-sufficient pattern as the card family

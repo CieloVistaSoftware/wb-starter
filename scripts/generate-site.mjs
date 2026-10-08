@@ -128,9 +128,27 @@ function camelToKebab(str) {
 // #793: an option that positions something needs that something, or its
 // demo shows nothing -- and input() now reports iconPosition-without-icon as a
 // runtime error. Each variant demo of these props carries its companion.
+//
+// #1736: `target` only says WHERE an href opens -- on its own it does nothing,
+// and button.js warns about exactly that. forms.html showed two buttons with
+// target="_self"/"_blank" and no href. Each target demo now links to its own
+// section, a destination that exists on every generated page and keeps a
+// clicked demo on the site. A companion is only added to a schema that
+// declares it (glow has an enum `target` and no href).
 const DEMO_COMPANIONS = {
   iconPosition: { icon: '★' },
+  target: { href: ({ sectionId }) => `#${sectionId}` },
 };
+
+/** The companion attributes for one enum demo, resolved for its section. */
+function companionsFor(propName, props, context) {
+  const out = {};
+  for (const [key, value] of Object.entries(DEMO_COMPANIONS[propName] || {})) {
+    if (!(key in props)) continue;
+    out[key] = typeof value === 'function' ? value(context) : value;
+  }
+  return out;
+}
 
 function enumSectionHeading(propName) {
   return propName === 'variant' ? 'Variants' : `${propName} variants`;
@@ -368,8 +386,9 @@ function generateComponentSections(schema) {
     // #1125: the attribute is the schema's camelCase name; only the section
     // id stays dashed, because pages and specs link to it.
     const attrName = camelToKebab(propName);
+    const sectionId = slugify(`${schema.schemaFor}-${attrName}-variants`);
     const demos = propDef.enum.map(val => {
-      const attrs = { [propName]: val, ...(DEMO_COMPANIONS[propName] || {}) };
+      const attrs = { [propName]: val, ...companionsFor(propName, props, { sectionId }) };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
           attrs[rk] = samplePropValue(rk, rv);
@@ -387,7 +406,7 @@ function generateComponentSections(schema) {
       // on the long-established {comp}-{prop}-variants ids (e.g.
       // tests/regression/drawer-path-b-content-position-variant.spec.ts's
       // #drawer-variant-variants). Ids are API; headings are copy.
-      id: slugify(`${schema.schemaFor}-${attrName}-variants`),
+      id: sectionId,
       component: schema.schemaFor,
       tag,
       columns,

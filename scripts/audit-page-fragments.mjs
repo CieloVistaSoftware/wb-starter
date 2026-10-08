@@ -78,6 +78,10 @@ export const GUARD_SNIPPET = `<script>
     var m = location.pathname.match(/\\/pages\\/([a-z0-9-]+)\\.html$/i);
     if (!m) return;                       // injected by the SPA: nothing to do
     var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\\?/, '&') + location.hash);
   })();
 </script>`;
@@ -117,6 +121,15 @@ const FETCH_URL = /\bfetch\s*\(\s*("([^"]*)"|'([^']*)')/g;
 
 /** Does the fragment redirect itself to the SPA route when opened alone? */
 const HAS_GUARD = /location\s*\.\s*(?:replace|assign|href)[^;\n]{0,120}\?page=/;
+
+/**
+ * #1734: does the guard stop the document BEFORE it redirects? location.replace()
+ * only schedules the navigation; the parser carries on to the fragment's <link>,
+ * which the browser requests relative to /pages/ and gets a 404 for -- one
+ * console error on every direct visit, on every guarded page. window.stop()
+ * first ends the parse, so nothing after the guard is requested.
+ */
+const GUARD_STOPS_FIRST = /window\s*\.\s*stop\s*\(\s*\)[\s\S]{0,400}?location\s*\.\s*(?:replace|assign|href)[^;\n]{0,120}\?page=/;
 
 const isFullDocument = (src) => /<html[\s>]/i.test(src);
 
@@ -174,7 +187,7 @@ export function auditPageFragments(options = {}) {
   const root = options.root ? path.resolve(options.root) : REPO_ROOT;
   const pagesDir = options.pagesDir ? path.resolve(options.pagesDir) : path.join(root, 'pages');
 
-  const result = { pagesDir, scanned: 0, fragments: 0, unguarded: [], climbing: [], bareFetch: [], ok: [] };
+  const result = { pagesDir, scanned: 0, fragments: 0, unguarded: [], leaky: [], climbing: [], bareFetch: [], ok: [] };
 
   let names;
   try {
@@ -217,9 +230,14 @@ export function auditPageFragments(options = {}) {
       result.unguarded.push({ file: name, refs: [...new Set(bareRefs)].slice(0, 8), count: bareRefs.length });
     }
 
+    if (bareRefs.length && guarded && !GUARD_STOPS_FIRST.test(code)) {
+      result.leaky.push({ file: name, refs: [...new Set(bareRefs)].slice(0, 8), count: bareRefs.length });
+    }
+
     // "ok" means nothing was actually reported for this file — a guarded
     // fragment with bare refs is fine, and must not read as unaccounted-for.
     const reported = result.unguarded.at(-1)?.file === name
+      || result.leaky.at(-1)?.file === name
       || result.climbing.at(-1)?.file === name
       || result.bareFetch.at(-1)?.file === name;
     if (!reported) result.ok.push(name);
@@ -271,6 +289,23 @@ export function formatReport(r) {
     lines.push('');
   }
 
+  if (r.leaky?.length) {
+    lines.push(
+      `${r.leaky.length} fragment guard(s) redirect without stopping the document first (#1734).`,
+      `location.replace() only schedules the navigation, so the parser goes on to the fragment's`,
+      `<link>, and a static host answers pages/src/styles/... with a 404 and a console error.`,
+      ``,
+      `Fix — call window.stop() right before location.replace(), as the guard below does:`,
+      ``,
+      ...GUARD_SNIPPET.split('\n').map((l) => `    ${l}`),
+      ``,
+    );
+    for (const u of r.leaky) {
+      lines.push(`  pages/${u.file} — would request ${u.refs.slice(0, 3).join(', ')} under /pages/`);
+    }
+    lines.push('');
+  }
+
   if (r.climbing.length) {
     lines.push(
       `${r.climbing.length} fragment(s) import a module with '../'.`,
@@ -308,14 +343,14 @@ if (invokedDirectly) {
   } else if (result.scanned === 0) {
     console.log(`page-fragment audit — no pages/ directory at ${result.pagesDir}; nothing to check.`);
   } else {
-    const bad = result.unguarded.length + result.climbing.length + result.bareFetch.length;
+    const bad = result.unguarded.length + result.leaky.length + result.climbing.length + result.bareFetch.length;
     console.log(
       `page-fragment audit — ${result.fragments} fragment(s) of ${result.scanned} file(s) in ${result.pagesDir}\n` +
-      `  ${result.unguarded.length} unguarded, ${result.climbing.length} with '../' imports, ${result.bareFetch.length} bare fetch(), ${result.ok.length} ok\n`,
+      `  ${result.unguarded.length} unguarded, ${result.leaky.length} leaky guard(s), ${result.climbing.length} with '../' imports, ${result.bareFetch.length} bare fetch(), ${result.ok.length} ok\n`,
     );
     if (bad) console.log(formatReport(result));
     else console.log('All fragments survive a direct load.');
   }
 
-  process.exit(result.unguarded.length + result.climbing.length + result.bareFetch.length > 0 ? 1 : 0);
+  process.exit(result.unguarded.length + result.leaky.length + result.climbing.length + result.bareFetch.length > 0 ? 1 : 0);
 }

@@ -6,7 +6,7 @@ import { test, expect } from '../fixtures/offline';
  * (`inline`) applied. That broke the absolutely-positioned `::before`
  * connecting line (an inline containing block gives `top:0;bottom:0` no
  * sane block height to span) and mixed badly with the `display:block`
- * .x-timeline-item children built by src/wb-viewmodels/semantics/timeline.js.
+ * .x-timeline__item children built by src/wb-viewmodels/semantics/timeline.js.
  * Confirmed live on ?page=behaviors: the items rendered (text was there)
  * but the timeline read as broken/unstyled -- "why is this not working?".
  * Fixed by adding `display: block` to `.x-timeline`.
@@ -32,7 +32,7 @@ test.describe('[x-timeline] renders as a real block with a visible connecting li
 
     await expect(timeline).toHaveCSS('display', 'block');
 
-    const items = timeline.locator('.x-timeline-item');
+    const items = timeline.locator('.x-timeline__item');
     await expect(items).toHaveCount(5);
     await expect(items.first()).toContainText('Project Kickoff');
 

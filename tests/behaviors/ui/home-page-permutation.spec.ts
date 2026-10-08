@@ -256,7 +256,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   //
   // #854: do NOT locate this by `.x-audio`. audio.js adds that class to the
   // <audio> host (semantics/audio.js:108) AND to the transport wrapper it
-  // builds around it (`x-audio-host x-audio`, :326), so `.x-audio` resolves to
+  // builds around it (`x-audio x-audio--host`, :326), so `.x-audio` resolves to
   // two elements and every strict-mode assertion below fails. The <audio>
   // element is the unique, semantic handle, and it is what pages/home.html
   // actually authors.
@@ -285,8 +285,8 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   test('Audio: renders audio element and EQ', async ({ page }) => {
     // The behaviour wraps the <audio> in its own transport host and, because
     // `show-eq` is set, builds the equaliser inside it.
-    await expect(page.locator('.x-audio-host > audio')).toHaveCount(1, { timeout: 15000 });
-    await expect(page.locator('.x-audio-host .x-audio__eq-container')).toHaveCount(1, { timeout: 15000 });
+    await expect(page.locator('.x-audio--host > audio')).toHaveCount(1, { timeout: 15000 });
+    await expect(page.locator('.x-audio--host .x-audio__eq-container')).toHaveCount(1, { timeout: 15000 });
   });
 
   // ═══════════════════════════════════════════════════════════════

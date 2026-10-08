@@ -52,7 +52,18 @@ test.describe('Page fragments survive being opened directly', () => {
     const r = auditPageFragments();
     expect(
       r.unguarded.map((u) => `pages/${u.file}`),
-      `\n\n${formatReport({ ...r, climbing: [], bareFetch: [] })}`,
+      `\n\n${formatReport({ ...r, leaky: [], climbing: [], bareFetch: [] })}`,
+    ).toEqual([]);
+  });
+
+  test('every guard stops the document before it redirects (#1734)', () => {
+    // A guard that only calls location.replace() lets the parser carry on to
+    // the fragment's <link>, and a static host 404s it under /pages/. The page
+    // load itself is checked in fragment-guard-requests-nothing-under-pages.
+    const r = auditPageFragments();
+    expect(
+      r.leaky.map((u) => `pages/${u.file}`),
+      `\n\n${formatReport({ ...r, unguarded: [], climbing: [], bareFetch: [] })}`,
     ).toEqual([]);
   });
 
@@ -64,7 +75,7 @@ test.describe('Page fragments survive being opened directly', () => {
     const r = auditPageFragments();
     expect(
       r.climbing.map((c) => `pages/${c.file}`),
-      `\n\n${formatReport({ ...r, unguarded: [], bareFetch: [] })}`,
+      `\n\n${formatReport({ ...r, unguarded: [], leaky: [], bareFetch: [] })}`,
     ).toEqual([]);
   });
 
@@ -76,7 +87,7 @@ test.describe('Page fragments survive being opened directly', () => {
     const r = auditPageFragments();
     expect(
       r.bareFetch.map((b) => `pages/${b.file}`),
-      `\n\n${formatReport({ ...r, unguarded: [], climbing: [] })}`,
+      `\n\n${formatReport({ ...r, unguarded: [], leaky: [], climbing: [] })}`,
     ).toEqual([]);
   });
 });
