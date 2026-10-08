@@ -205,18 +205,6 @@
     "role": "tooltip",
     "ariaDescribedBy": "tooltip id on trigger element"
   },
-  "events": {
-    "wb:tooltip:show": {
-      "description": "Fired when tooltip becomes visible",
-      "detail": {
-        "content": "string"
-      }
-    },
-    "wb:tooltip:hide": {
-      "description": "Fired when tooltip is hidden",
-      "detail": {}
-    }
-  },
   "test": {
     "setup": [
       "<span x-tooltip>Basic tooltip content</span>",
@@ -288,5 +276,17 @@
     "icon": "💬",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:tooltip:show": {
+      "description": "Fired when tooltip becomes visible",
+      "detail": {
+        "content": "string"
+      }
+    },
+    "wb:tooltip:hide": {
+      "description": "Fired when tooltip is hidden",
+      "detail": {}
+    }
   }
 }

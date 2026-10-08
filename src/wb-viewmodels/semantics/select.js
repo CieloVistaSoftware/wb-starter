@@ -87,6 +87,14 @@ export function select(element, options = {}) {
     wrapper.appendChild(clearBtn);
   }
 
+  // #344: select.schema.json declares wb:select:change; nothing fired it. A
+  // multiple select reports every chosen value, a single one its value.
+  const onChange = () => element.dispatchEvent(new CustomEvent('wb:select:change', {
+    bubbles: true,
+    detail: { value: element.multiple ? Array.from(element.selectedOptions, (o) => o.value) : element.value },
+  }));
+  element.addEventListener('change', onChange);
+
   element.wbSelect = {
     getValue: () => element.value,
     setValue: (v) => { element.value = v; },
@@ -94,7 +102,7 @@ export function select(element, options = {}) {
     reset: () => { element.selectedIndex = -1; }
   };
 
-  return () => {};
+  return () => element.removeEventListener('change', onChange);
 }
 
 /**

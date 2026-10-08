@@ -189,53 +189,82 @@ test.describe('Source-Schema: Card Border Compliance', () => {
 
 test.describe('Source-Schema: Event Compliance', () => {
   
-  test('functions dispatch events defined in schema', () => {
-    const allJs = getAllJsSource();
+  // #344: every wb: event a schema declares is fired by the code. 47 were not
+  // (2026-10-07): schemas promised dialog open/close, tooltip show/hide,
+  // audio play/pause and more that nothing dispatched, and three named an
+  // event the code fires under another name (chip dismiss/remove,
+  // minimizable/cardminimizable, notification/cardnotification). The
+  // schemas now declare what fires, so the count is exact.
+  //
+  // What counts as fired: the event name as a quoted literal anywhere in
+  // src/ JavaScript, or one of the names a template below expands to. The
+  // old check read only the exported function's body (extractFunction), so an
+  // event fired from a helper in the same module counted as missing. Native
+  // DOM events a schema documents (input, change, focus, blur, toggle) are the
+  // browser's, not the behavior's, so only wb: names are held to this.
+  test('every wb: event a schema declares is fired somewhere in src/', () => {
+    const walk = (dir: string): string[] => fs.readdirSync(dir, { withFileTypes: true })
+      .flatMap((e) => e.isDirectory() ? walk(path.join(dir, e.name))
+        : /\.m?js$/.test(e.name) ? [path.join(dir, e.name)] : []);
+    const code = walk(path.join(ROOT, 'src')).map((f) => readFile(f)).join('\n');
+    const literals = new Set([...code.matchAll(/['`](wb:[A-Za-z0-9:_-]+)['`]/g)].map((m) => m[1]));
+
+    // Every `wb:${...}` template in src/, with the names it can produce. A new
+    // template must be added here, and one that disappears must be removed, so
+    // this list cannot drift from the code silently.
+    const TEMPLATES: Record<string, string[]> = {
+      'wb:${kind}:cancel': ['wb:confirm:cancel', 'wb:prompt:cancel'], // overlay.js openDialog(element, 'confirm'|'prompt')
+      'wb:${kind}:ok': ['wb:confirm:ok', 'wb:prompt:ok'],
+      'wb:cardbutton:${kind}': ['wb:cardbutton:primary', 'wb:cardbutton:secondary'], // card.js addActionButton
+      'wb:${methodName}': [], // mvvm/schema-builder.js: one per $methods entry, not a schema event
+    };
+    const templatesInCode = [...new Set([...code.matchAll(/`(wb:[^`]*\$\{[^`]*)`/g)].map((m) => m[1]))].sort();
+    expect(templatesInCode, 'wb: event templates in src/ (update TEMPLATES to match)').toEqual(Object.keys(TEMPLATES).sort());
+    const fired = new Set([...literals, ...Object.values(TEMPLATES).flat()]);
+
     const issues: string[] = [];
-    
+    for (const file of getSchemaFiles()) {
+      const schema = loadSchema(file) as any;
+      if (!schema?.events) continue;
+      for (const eventName of Object.keys(schema.events)) {
+        if (eventName.startsWith('wb:') && !fired.has(eventName)) {
+          issues.push(`${file}: declares "${eventName}", which nothing in src/ fires`);
+        }
+      }
+    }
+    expect(issues, 'Dispatch the event, or remove it from the schema (and its docs/behaviors page)').toEqual([]);
+
+    // Fired SOMEWHERE is not enough: carddraggable declared x-draggable's
+    // wb:drag:* while card.js fired wb:carddraggable:dragstart/drag/dragend
+    // from its own copy of the drag code, and the check above passed it. So
+    // each event must also be fired by the module that defines the behavior,
+    // or a module it imports (card.js now drags through draggable.js;
+    // overlay.js's openDialog() fires confirm's and prompt's).
+    const modules = getJsFiles(PATHS.behaviorsJs);
+    const sourceOf = (rel: string) => readFile(path.join(PATHS.behaviorsJs, rel));
+    const importsOf = (rel: string): string[] =>
+      [...sourceOf(rel).matchAll(/^\s*import\b[^'"]*['"](\.{1,2}\/[^'"]+\.js)['"]/gm)]
+        .map((m) => path.relative(PATHS.behaviorsJs, path.resolve(path.dirname(path.join(PATHS.behaviorsJs, rel)), m[1])))
+        .filter((f) => modules.includes(f));
+    const firedBy = (src: string) => new Set([
+      ...[...src.matchAll(/['`](wb:[A-Za-z0-9:_-]+)['`]/g)].map((m) => m[1]),
+      ...Object.entries(TEMPLATES).filter(([tpl]) => src.includes('`' + tpl + '`')).flatMap(([, names]) => names),
+    ]);
+    const misplaced: string[] = [];
     for (const file of getSchemaFiles()) {
       const schema = loadSchema(file) as any;
       if (!schema?.behavior || !schema.events) continue;
-      
-      const funcBody = extractFunction(allJs, schema.behavior);
-      if (!funcBody) continue;
-      
+      const fn = FUNCTION_NAME_MAP[schema.behavior] || schema.behavior;
+      const defining = modules.filter((f) => extractFunction(sourceOf(f), fn) !== null);
+      if (!defining.length) continue;
+      const own = firedBy([...new Set(defining.flatMap((f) => [f, ...importsOf(f)]))].map(sourceOf).join('\n'));
       for (const eventName of Object.keys(schema.events)) {
-        const dispatches = funcBody.includes(`'${eventName}'`) || funcBody.includes(`"${eventName}"`);
-        if (!dispatches) issues.push(`${schema.behavior}: should dispatch "${eventName}"`);
+        if (eventName.startsWith('wb:') && !own.has(eventName)) {
+          misplaced.push(`${file}: declares "${eventName}", which ${schema.behavior}'s own module never fires`);
+        }
       }
     }
-    
-    // #863: this collected `issues` and console.log()ged the first 5, never
-    // asserting -- the schema/implementation event contract was not enforced at
-    // all.
-    //
-    // Turning it on measured 71 issues across 84 schema-declared events. Two
-    // distinct causes, both real:
-    //   - ~29 are dispatched, but from a helper inside the module rather than
-    //     from the top-level exported function extractFunction() slices out
-    //     (e.g. wb:toast:show lives in feedback.js outside toast()). These are
-    //     limitations of the static slice, not defects.
-    //   - 42 of the 84 declared events appear NOWHERE in src/wb-viewmodels at
-    //     all -- schema declares an event no code ever fires (audio:*, dialog:*,
-    //     drawer:*, select:*, table:*, tooltip:*, confetti:*, fireworks:*,
-    //     snow:*, ...). Those are genuine schema/implementation drift.
-    //
-    // Ratcheted at the measured count rather than asserted at zero, because
-    // fixing 42 event contracts is its own piece of work and an unsatisfiable
-    // gate gets bypassed. THIS CEILING MUST ONLY COME DOWN.
-    //
-    // 71 -> 56: extractFunction() (tests/base.ts) ended every
-    // `function x(element, options = {})` at the `{}` default parameter, so
-    // those behaviors were checked as empty bodies. Measured again once it
-    // sliced the real body.
-    const EVENT_DISPATCH_BASELINE = 56;
-    expect(
-      issues.length,
-      `${issues.length} schema events are not dispatched by their behavior `
-      + `function, above the ${EVENT_DISPATCH_BASELINE} ceiling. Either dispatch `
-      + `the event or remove it from the schema:\n${issues.join('\n')}`,
-    ).toBeLessThanOrEqual(EVENT_DISPATCH_BASELINE);
+    expect(misplaced, 'Declare the name the behavior itself fires').toEqual([]);
   });
 });
 
