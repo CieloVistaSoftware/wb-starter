@@ -274,24 +274,6 @@ export function confetti(element, options = {}) {
   // and a :hover the browser tracks, instead of cssText plus two handlers.
   if (config.showButton) element.classList.add('x-confetti--trigger-button');
 
-  // Inject CSS keyframes if not present
-  if (!document.getElementById('x-confetti-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-confetti-styles';
-    style.textContent = `
-      @keyframes x-confetti-gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-      @keyframes x-confetti-fall {
-        0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(100vh) translateX(var(--end-x, 0)) rotate(var(--rotation, 720deg)); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  
   const fire = () => {
     // Create container
     const container = document.createElement('div');
@@ -533,20 +515,7 @@ export function sparkle(element, options = {}) {
   element.classList.add('x-sparkle--trigger');
   element.classList.add('x-sparkle');
   // position/overflow: .x-sparkle--trigger in effects.css (#779).
-  
-  // Inject sparkle keyframes
-  if (!document.getElementById('x-sparkle-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-sparkle-styles';
-    style.textContent = `
-      @keyframes x-sparkle {
-        0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-        100% { transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  
+
   const fire = () => {
     for (let wave = 0; wave < 3; wave++) {
       setTimeout(() => {
@@ -668,21 +637,7 @@ export function glow(element, options = {}) {
 export function rainbow(element, options = {}) {
   const duration = options.duration || element.getAttribute('duration');
   element.classList.add('x-rainbow');
-  
-  // Inject rainbow keyframes
-  if (!document.getElementById('x-rainbow-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-rainbow-styles';
-    style.textContent = `
-      @keyframes x-rainbow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  
+
   // Gradient text and its animation are .x-rainbow in effects.css (#779);
   // only an author-supplied duration travels, as a generated rule.
   if (duration) setRule(element, 'rainbow', { '--x-rainbow-duration': duration });
@@ -734,19 +689,6 @@ export function fireworks(element, options = {}) {
   // (#779): a rule a theme can reach, not a cssText that beats every rule.
   if (config.showButton) element.classList.add('x-fireworks--trigger-button');
 
-  // Inject keyframes
-  if (!document.getElementById('x-firework-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-firework-styles';
-    style.textContent = `
-      @keyframes x-firework-particle {
-        0% { transform: translate(0, 0) scale(1); opacity: 1; }
-        100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  
   const fire = () => {
     const rect = element.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -836,20 +778,7 @@ export function snow(element, options = {}) {
   }
   // Chrome: .x-snow--trigger-button in effects.css (#779).
   if (config.showButton) element.classList.add('x-snow--trigger-button');
-  
-  // Inject keyframes
-  if (!document.getElementById('x-snow-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-snow-styles';
-    style.textContent = `
-      @keyframes x-snow-fall {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(100vh) rotate(360deg); }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  
+
   const fire = () => {
     // Fix: create container
     const container = document.createElement('div');
@@ -905,22 +834,7 @@ export function particle(element, options = {}) {
   // position/overflow and the dot colour default are .x-particle in
   // effects.css; only an author colour travels, as a generated rule (#779).
   if (color) setRule(element, 'color', { '--x-particle-color': color });
-  
-  // Inject keyframes
-  if (!document.getElementById('x-particle-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-particle-styles';
-    style.textContent = `
-      @keyframes x-particle-float {
-        0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-        10% { opacity: 0.6; }
-        90% { opacity: 0.6; }
-        50% { transform: translateY(-100px) translateX(20px); }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  
+
   const particles = [];
   
   for (let i = 0; i < count; i++) {
@@ -941,7 +855,6 @@ export function particle(element, options = {}) {
     element.appendChild(p);
     particles.push(p);
   }
-  
 
   const releasePress = addPressFeedback(element);
   return () => {

@@ -236,22 +236,6 @@ export function sticky(element, options = {}) {
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize, { passive: true });
 
-  // Add CSS for stuck state
-  if (!document.getElementById('x-sticky-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-sticky-styles';
-    style.textContent = `
-      .is-stuck {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-      }
-      
-      .sticky-placeholder {
-        flex-shrink: 0;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
   // Mark as ready
   // API
   element.wbSticky = {

@@ -25,9 +25,9 @@ test.describe('demos/frameworks.html: layout standards', () => {
     // Static source scan, not a live-DOM check. At runtime this page ends
     // up with plenty of legitimate inline style="..." / <style> that never
     // came from its own authored markup:
-    //  - WB's own sanctioned per-behavior style-loading (x-ripple-styles,
-    //    x-button-styles -- Tier-1 Law 14's own singleton-style-tag
-    //    exception) and its pre.js/code.js/demo.js runtime-COMPUTED inline
+    //  - WB's own sanctioned per-behavior style-loading (x-button-styles --
+    //    Tier-1 Law 14's own singleton-style-tag exception) and its
+    //    pre.js/code.js/demo.js runtime-COMPUTED inline
     //    styles (line-number gutter offsets, x-demo's shrink-width custom
     //    property) -- these depend on actual rendered content and can only
     //    be known at runtime, the opposite of a hand-authored one-off style.
