@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.433",
+      "date": "2026-10-08",
+      "summary": "On <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> a single-item demo&#39;s code panel was painted before its demo committed its width and then grew with a control that finished building late (Windows CI: card-card 407 -&gt; 418 -&gt; 420); a measuring demo&#39;s whole code panel is now kept unseen with opacity: 0 until the single width commit, so its first visible frame is its final width. (A first version used visibility: hidden, which started a never-finishing visibility transition on every copy button inside closed &lt;details&gt; on <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a> and hung the layout specs; opacity starts none.) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1757\" target=\"_blank\" rel=\"noopener\">#1757</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1758\" target=\"_blank\" rel=\"noopener\">#1758</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A measuring demo&#39;s code panel stays unseen until its width commits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1757\" target=\"_blank\" rel=\"noopener\">#1757</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1758\" target=\"_blank\" rel=\"noopener\">#1758</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8607e95e29a71c9ce45d22d60c6b82fc2e60db7a\" target=\"_blank\" rel=\"noopener\"><code>8607e95</code></a>",
+          "issues": [
+            1757,
+            1758
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/code-panels-paint-at-final-width.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/code-panels-paint-at-final-width.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-reveal-starts-no-transitions.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-reveal-starts-no-transitions.spec.ts</a> --project=regression</code>. Before: the panel-width spec failed 20/20 at --repeat-each=10 (&quot;code panels painted before their demo committed its width&quot;). Now: both pass, the reveal starts no transition, and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a>&#39;s layout specs settle.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8607e95e29a71c9ce45d22d60c6b82fc2e60db7a\" target=\"_blank\" rel=\"noopener\"><code>8607e95</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.432",
       "date": "2026-10-08",
       "summary": "The reflow guard for #1319 sometimes failed with &quot;the stranding reflow never fired&quot;, and its &quot;card was built&quot; check could never fail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a>",
