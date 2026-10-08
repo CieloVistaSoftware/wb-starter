@@ -671,6 +671,15 @@ export async function elementReady(locator: Locator, timeoutMs = 15000): Promise
   await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
   await locator.first().evaluate(
     (el, ms) => new Promise<void>((resolve, reject) => {
+      // The runtime's own wait when the page has one (#1516): it reads the
+      // readiness WB keeps, not the x-ready attribute, which exists only as a
+      // bridge under automation. The attribute watch below is for pages
+      // without WB.
+      const WB = (window as any).WB;
+      if (WB && typeof WB.whenReady === 'function') {
+        WB.whenReady(el, { timeout: ms }).then(() => resolve(), (e: Error) => reject(new Error(`elementReady: ${e.message}`)));
+        return;
+      }
       if (el.hasAttribute('x-ready')) return resolve();
       const timer = setTimeout(() => {
         obs.disconnect();
@@ -724,7 +733,10 @@ export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<
   await el.waitFor({ state: 'attached', timeout: timeoutMs });
   await el.evaluate(async (node: Element, ms: number) => {
     const end = performance.now() + ms;
-    while (!node.hasAttribute('x-ready')) {
+    // WB.isReady() when the page has WB (#1516); the attribute otherwise.
+    const WB = (window as any).WB;
+    const built = () => (WB && typeof WB.isReady === 'function' ? WB.isReady(node) : node.hasAttribute('x-ready'));
+    while (!built()) {
       if (performance.now() > end) {
         throw new Error(
           `buildInView: <${node.tagName.toLowerCase()}${node.id ? ` id="${node.id}"` : ''}> ` +
