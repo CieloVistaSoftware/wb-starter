@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.440",
+      "date": "2026-10-08",
+      "summary": "Two PRs fixed #1759 in parallel (#1767 and #1769) and both merged; git combined them without a conflict, so main&#39;s demo.js declares `let committed` twice in one block, fails to parse, and no x-demo on the site builds. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1770\" target=\"_blank\" rel=\"noopener\">PR 1770</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Demo.js does not parse on main -- drop the second fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ca6f9f4191742df034d3dff3b73f945651525952\" target=\"_blank\" rel=\"noopener\"><code>ca6f9f4</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run node --check on <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-viewmodels/demo.js\" target=\"_blank\" rel=\"noopener\">src/wb-viewmodels/demo.js</a> copied to a .mjs file. Before: &quot;SyntaxError: Identifier &#39;committed&#39; has already been declared&quot; at line 1230. Now: it parses, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-remeasures-a-control-built-late.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-remeasures-a-control-built-late.spec.ts</a> passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1d4fbec736551b7bec66bb79229cb5cd01a5a739\" target=\"_blank\" rel=\"noopener\"><code>1d4fbec</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.439",
       "date": "2026-10-08",
       "summary": "The new spec holds card.js with page.route(), but with the service worker live sw.js can answer that request first and the hold never applies, so the compliance gate from #1349 failed the PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1769\" target=\"_blank\" rel=\"noopener\">PR 1769</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
