@@ -84,6 +84,7 @@ Without it the displayed text is the only key available. The older `sort-value` 
 - `wb:table:sort` — Column sorted
 - `wb:table:filter` — Data filtered
 - `wb:table:page` — Page changed
+- `wb:table:select` — A row is clicked
 
 ## Methods
 

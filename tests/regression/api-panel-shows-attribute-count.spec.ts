@@ -39,7 +39,13 @@ function declaredAttributes(behavior: string): string[] {
 async function select(page, token: string) {
   await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await expect.poll(() => page.locator(`${LIST} ${ROW}`).count(), { timeout: 25_000 }).toBeGreaterThan(0);
-  await page.waitForSelector('#behaviors-workspace[x-ready]', { timeout: 20_000 });
+  // The first, preselected example has rendered: #behaviors-live's aria-busy
+  // clears only when the newest render finishes (#1516; the page no longer
+  // writes x-ready onto its workspace).
+  await page.waitForFunction(() => {
+    const live = document.getElementById('behaviors-live');
+    return !!document.querySelector('#behaviors-search-results [aria-current="true"]') && !!live && !live.hasAttribute('aria-busy');
+  }, null, { timeout: 20_000 });
   await page.evaluate(
     ({ LIST, ROW, token }) => {
       const row = Array.from(document.querySelectorAll(`${LIST} ${ROW}`)).find(

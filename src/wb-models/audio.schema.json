@@ -77,7 +77,11 @@
       "public": true,
       "required": true,
       "description": "Transport bar with play button and Marantz-style display",
-      "children": ["play-button", "display", "volume-knob"]
+      "children": [
+        "play-button",
+        "display",
+        "volume-knob"
+      ]
     },
     {
       "name": "play-button",
@@ -224,30 +228,6 @@
       "description": "Play button size"
     }
   },
-  "events": {
-    "wb:audio:play": {
-      "description": "Playback started"
-    },
-    "wb:audio:pause": {
-      "description": "Playback paused"
-    },
-    "wb:audio:ended": {
-      "description": "Playback ended"
-    },
-    "wb:audio:volumechange": {
-      "description": "Volume changed",
-      "detail": {
-        "volume": "number"
-      }
-    },
-    "wb:audio:eqchange": {
-      "description": "EQ band changed",
-      "detail": {
-        "band": "number",
-        "gain": "number"
-      }
-    }
-  },
   "test": {
     "setup": [
       "<audio>Basic audio content</audio>",
@@ -296,5 +276,29 @@
     "icon": "🎵",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:audio:play": {
+      "description": "Playback started"
+    },
+    "wb:audio:pause": {
+      "description": "Playback paused"
+    },
+    "wb:audio:ended": {
+      "description": "Playback ended"
+    },
+    "wb:audio:volumechange": {
+      "description": "Volume changed",
+      "detail": {
+        "volume": "number"
+      }
+    },
+    "wb:audio:eqchange": {
+      "description": "EQ band changed",
+      "detail": {
+        "band": "number",
+        "gain": "number"
+      }
+    }
   }
 }

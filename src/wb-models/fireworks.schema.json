@@ -79,14 +79,6 @@
       "description": "Z-index"
     }
   },
-  "events": {
-    "wb:fireworks:start": {
-      "description": "Animation started"
-    },
-    "wb:fireworks:end": {
-      "description": "Animation ended"
-    }
-  },
   "test": {
     "setup": [
       "<div x-fireworks>Basic fireworks content</div>",
@@ -125,5 +117,13 @@
     "icon": "🎆",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:fireworks:start": {
+      "description": "Animation started"
+    },
+    "wb:fireworks:end": {
+      "description": "Animation ended"
+    }
   }
 }

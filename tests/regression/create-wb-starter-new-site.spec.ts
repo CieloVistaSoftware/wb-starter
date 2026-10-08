@@ -173,6 +173,49 @@ test('npm start moves to the next free port when its port is taken', async () =>
   }
 });
 
+test('the About page adds a page: one name, a new file and its menu item (#1231)', async ({ page }) => {
+  // John: "These are manual instructions we need a button to automate this. It
+  // simply asks the user the page name, adds .html and sets up the menu option."
+  const port = await freePort();
+  const bin = path.join(site, 'node_modules', 'wb-starter', 'scripts', 'wb-starter.mjs');
+  const child = spawn(process.execPath, [bin, 'serve'], { cwd: site, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
+  try {
+    const base = `http://localhost:${port}/`;
+    await answering(base);
+    await page.goto(base + '?page=about');
+    await page.locator('#about-faq-add-page summary').scrollIntoViewIfNeeded();
+    await expect(page.locator('#about-add-page'), 'npm start can write files, so the button shows').toBeVisible();
+    await page.locator('#about-add-page-name').fill('Contact Us');
+    await page.locator('#about-add-page-button').click();
+
+    // It opens the new page, and the menu (built from site.json on load) has it.
+    await expect(page.locator('#contact-us-hero h1')).toHaveText('Contact Us');
+    await expect(page.locator('#siteNav')).toContainText('Contact Us');
+    expect(fs.readFileSync(path.join(site, 'pages', 'contact-us.html'), 'utf8')).toContain('<h1>Contact Us</h1>');
+    const menu = JSON.parse(fs.readFileSync(path.join(site, 'config', 'site.json'), 'utf8')).navigationMenu;
+    expect(menu.at(-1)).toEqual({ menuItemId: 'contact-us', menuItemText: 'Contact Us', pageToLoad: 'contact-us' });
+
+    // Asking again for the same page is refused, and says why.
+    await page.goto(base + '?page=about');
+    await page.locator('#about-add-page-name').fill('contact us');
+    await page.locator('#about-add-page-button').click();
+    await expect(page.locator('#about-add-page-status')).toHaveText('There is already a page called "contact-us".');
+
+    const post = (body: string, headers: Record<string, string> = {}) =>
+      fetch(base + 'api/add-page', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body });
+    expect((await post(JSON.stringify({ name: '../x' }))).status, 'a name with a path in it').toBe(400);
+    expect((await post(JSON.stringify({ name: '   ' }))).status, 'an empty name').toBe(400);
+    expect((await post(JSON.stringify({ name: 'Evil' }), { origin: 'https://example.com' })).status, 'another site').toBe(403);
+    expect((await fetch(base + 'api/add-page', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: '{"name":"Evil"}' })).status, 'not JSON').toBe(415);
+    expect(fs.existsSync(path.join(site, 'pages', 'evil.html'))).toBe(false);
+    expect(fs.existsSync(path.join(site, 'x.html'))).toBe(false);
+  } finally {
+    const exited = new Promise((resolve) => child.once('exit', resolve));
+    child.kill();
+    await exited;
+  }
+});
+
 test('npm run build writes a static site that works without wb-starter running', async ({ page }) => {
   execFileSync(NPM, ['run', 'build'], { cwd: site, stdio: 'pipe', shell: process.platform === 'win32' });
   const dist = path.join(site, 'dist');
@@ -186,6 +229,9 @@ test('npm run build writes a static site that works without wb-starter running',
   await expect(page.locator('#about-hero h1')).toHaveText('About');
   await expect(page.locator('#siteNav')).toContainText('Home');
   expect(fs.existsSync(path.join(dist, '.nojekyll')), 'GitHub Pages would drop _-prefixed files').toBe(true);
+  // A static host cannot write files, so the Add page form never shows (#1231).
+  await expect(page.locator('#about-faq-add-page summary')).toBeVisible();
+  await expect(page.locator('#about-add-page')).toBeHidden();
 });
 
 test('a request dropped mid-file leaves no file open, so the site can be deleted', async () => {

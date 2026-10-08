@@ -233,6 +233,13 @@
       "detail": {
         "page": "number"
       }
+    },
+    "wb:table:select": {
+      "description": "A row is clicked",
+      "detail": {
+        "row": "HTMLTableRowElement",
+        "index": "number"
+      }
     }
   },
   "test": {

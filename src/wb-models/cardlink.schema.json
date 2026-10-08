@@ -216,15 +216,6 @@
     "role": "link",
     "tabindex": "0"
   },
-  "events": {
-    "wb:cardlink:click": {
-      "description": "Fired when card is clicked",
-      "detail": {
-        "href": "string",
-        "title": "string"
-      }
-    }
-  },
   "test": {
     "setup": [
       "<div x-cardlink>Basic cardlink content</div>",
@@ -287,5 +278,14 @@
     "icon": "🔗",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:cardlink:click": {
+      "description": "Fired when card is clicked",
+      "detail": {
+        "href": "string",
+        "title": "string"
+      }
+    }
   }
 }
