@@ -250,20 +250,6 @@
       "description": "Selected option background"
     }
   },
-  "events": {
-    "wb:select:change": {
-      "description": "Selection changed",
-      "detail": {
-        "value": "string | string[]"
-      }
-    },
-    "wb:select:open": {
-      "description": "Dropdown opened"
-    },
-    "wb:select:close": {
-      "description": "Dropdown closed"
-    }
-  },
   "test": {
     "functional": true,
     "setup": [

@@ -215,23 +215,11 @@
     "headers": "scope=\"col\" on th elements"
   },
   "events": {
-    "wb:table:sort": {
-      "description": "Column sorted",
+    "wb:table:select": {
+      "description": "A row is clicked",
       "detail": {
-        "column": "string",
-        "direction": "asc|desc"
-      }
-    },
-    "wb:table:filter": {
-      "description": "Data filtered",
-      "detail": {
-        "query": "string"
-      }
-    },
-    "wb:table:page": {
-      "description": "Page changed",
-      "detail": {
-        "page": "number"
+        "row": "HTMLTableRowElement",
+        "index": "number"
       }
     }
   },

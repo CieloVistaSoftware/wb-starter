@@ -19,11 +19,6 @@
 | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay |
 | `duration` | CSS duration, e.g. `3s` | `8s` | Fall duration |
 
-## Events
-
-- `wb:snow:start` — Animation started
-- `wb:snow:stop` — Animation stopped
-
 ## Methods
 
 - `start()` — Starts snow

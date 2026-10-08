@@ -5,9 +5,17 @@
 
 <section id="about-details" class="page__section">
   <h2>Questions</h2>
-  <details id="about-faq-add-page">
+  <details id="about-faq-add-page" open>
     <summary>How do I add a page?</summary>
-    <p>Create <code>pages/contact.html</code>, then add
+    <!-- Shown only while `npm start` is running: it is what creates the file.
+         A built site (npm run build) is static and cannot, so there it stays hidden. -->
+    <form id="about-add-page" hidden>
+      <label for="about-add-page-name">Page name</label>
+      <input id="about-add-page-name" name="name" required maxlength="60" placeholder="Contact" autocomplete="off">
+      <button id="about-add-page-button" type="submit">Add page</button>
+      <p id="about-add-page-status" role="status" aria-live="polite"></p>
+    </form>
+    <p>Or by hand: create <code>pages/contact.html</code>, then add
       <code>{ "menuItemId": "contact", "menuItemText": "Contact", "pageToLoad": "contact" }</code>
       to <code>navigationMenu</code> in <code>config/site.json</code>.</p>
   </details>
@@ -16,3 +24,38 @@
     <p>Run <code>npm run build</code> and upload the <code>dist/</code> folder to any static host, such as GitHub Pages.</p>
   </details>
 </section>
+
+<script>
+  (async () => {
+    const form = document.getElementById('about-add-page');
+    if (!form) return;
+    const status = document.getElementById('about-add-page-status');
+    try {
+      const probe = await fetch('api/add-page', { cache: 'no-store' });
+      if (!probe.ok) return;
+    } catch {
+      return;
+    }
+    form.hidden = false;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const name = form.elements.name.value.trim();
+      status.textContent = 'Adding ' + name + '...';
+      try {
+        const res = await fetch('api/add-page', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ name }),
+        });
+        const body = await res.json();
+        if (!res.ok) { status.textContent = body.error || 'The page was not added.'; return; }
+        status.textContent = 'Added ' + body.page + '. Opening it...';
+        // The menu is built from config/site.json when the site loads. The
+        // address is /about once the site has routed, so go from its folder.
+        location.href = new URL('.', location.href).href + '?page=' + encodeURIComponent(body.slug);
+      } catch (err) {
+        status.textContent = 'The page was not added: ' + err.message;
+      }
+    });
+  })();
+</script>

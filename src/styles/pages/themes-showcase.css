@@ -619,7 +619,8 @@ code.harmony-formula {
 }
 
 /* Form elements */
-input, select {
+:where(#mainPage-themes) input,
+:where(#mainPage-themes) select {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
@@ -630,7 +631,8 @@ input, select {
   box-sizing: border-box;
 }
 
-input:focus, select:focus {
+:where(#mainPage-themes) input:focus,
+:where(#mainPage-themes) select:focus {
   outline: none;
   border-color: var(--primary);
 }
