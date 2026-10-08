@@ -16,6 +16,7 @@
  * scan can leave listeners unattached for a one-shot click/keypress).
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function setup(page: Page, html: string, id = 'x-button-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -32,9 +33,11 @@ async function setup(page: Page, html: string, id = 'x-button-effect-area'): Pro
   }, { h: html, containerId: id });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
-    // Built once its work has called back, and its colour transitions have
-    // finished (#1516: no fixed sleep; settle alone read a mid-fade 238 vs 239).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
+  });
+  // Built once its work has called back, and its colour transitions have
+  // finished (#1516: no fixed sleep; settle alone read a mid-fade 238 vs 239).
+  await settlePage(page, { timeout: 10000 });
+  await page.evaluate(async () => {
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     await Promise.all(document.getAnimations()
       .filter((a) => Number.isFinite(Number(a.effect?.getComputedTiming().endTime)))

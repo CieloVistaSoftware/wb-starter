@@ -21,6 +21,7 @@
  */
 
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 const OVERLAY = `<article x-cardoverlay
   image="https://picsum.photos/seed/city/480/320"
@@ -34,19 +35,22 @@ test.describe('Overlay card fills its host', () => {
     await page.goto('/demos/playground.html');
     await page.waitForSelector('#pg-preview', { timeout: 30_000 });
 
-    const box = await page.evaluate(async (markup) => {
+    await page.evaluate(async (markup) => {
       const host = document.getElementById('pg-preview')!;
       host.innerHTML = markup;
       await (window as any).WB.scan(host, { eager: true });
-      // Built once its work has called back (#1516: no fixed sleep).
-      await (window as any).WB.settled?.({ timeout: 10000 });
+    }, OVERLAY);
+    // Built once its work has called back (#1516: no fixed sleep).
+    await settlePage(page, { timeout: 10000 });
 
+    const box = await page.evaluate(() => {
+      const host = document.getElementById('pg-preview')!;
       const card = host.querySelector('[x-cardoverlay]') as HTMLElement | null;
       if (!card) return null;
       const h = host.getBoundingClientRect();
       const c = card.getBoundingClientRect();
       return { hostLeft: h.left, hostRight: h.right, cardLeft: c.left, cardRight: c.right };
-    }, OVERLAY);
+    });
 
     expect(box, 'the overlay card never rendered — nothing to measure').not.toBeNull();
 
@@ -75,15 +79,17 @@ test.describe('Overlay card fills its host', () => {
     await page.goto('/demos/playground.html');
     await page.waitForSelector('#pg-preview', { timeout: 30_000 });
 
-    const overflow = await page.evaluate(async (markup) => {
+    await page.evaluate(async (markup) => {
       const host = document.getElementById('pg-preview')!;
       host.innerHTML = markup;
       await (window as any).WB.scan(host, { eager: true });
-      // Built once its work has called back (#1516: no fixed sleep).
-      await (window as any).WB.settled?.({ timeout: 10000 });
+    }, OVERLAY);
+    // Built once its work has called back (#1516: no fixed sleep).
+    await settlePage(page, { timeout: 10000 });
+    const overflow = await page.evaluate(() => {
       const el = document.documentElement;
       return el.scrollWidth - el.clientWidth;
-    }, OVERLAY);
+    });
 
     expect(
       overflow,

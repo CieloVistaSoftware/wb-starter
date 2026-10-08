@@ -1,6 +1,7 @@
 
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 test.describe('Auto-Inject Demo', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/demos/autoinject.html');
@@ -17,7 +18,7 @@ test.describe('Auto-Inject Demo', () => {
       { timeout: 20000 }
     );
     // Boot is over once WB settles (#1516: not 1000ms).
-    await page.evaluate(() => (window as any).WB.settled?.({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
   });
 
   test('Page status indicates initialization', async ({ page }) => {

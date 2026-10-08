@@ -17,6 +17,7 @@
  */
 import { expect, Page, Locator } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 export const EXAMPLE_ROOT = '#behaviors-live-example';
 
 // A row is matched by its LABEL as well as its browse token. #764 split every
@@ -99,7 +100,7 @@ export async function renderVariant(page: Page, token: string, variant: string |
     EXAMPLE_ROOT,
     { timeout: 15000 },
   );
-  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 }
 
 /** The rendered example's root element — never a list row. */

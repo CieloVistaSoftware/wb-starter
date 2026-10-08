@@ -53,6 +53,12 @@
       "description": "Vertical tab layout",
       "default": false,
       "appliesClass": "x-tabs--vertical"
+    },
+    "tabTitle": {
+      "type": "string",
+      "description": "Set on each child panel: the label on that panel's tab button. Without it the buttons read \"Tab 1\", \"Tab 2\" and so on. `tab` and `data-tab-title` are read too.",
+      "default": "",
+      "scope": "child"
     }
   },
   "$view": [],

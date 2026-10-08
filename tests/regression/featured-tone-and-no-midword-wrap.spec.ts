@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * #998 -- John: "featured should take a string to indicate what is featured,
@@ -18,7 +19,7 @@ const TONES = { primary: '--primary', success: '--success-color', warning: '--wa
 test('featuredTone paints the marker with each role\'s theme colour; --x-featured-bg overrides', async ({ page }) => {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-  const got = await page.evaluate(async (tones) => {
+  await page.evaluate(async (tones) => {
     const host = document.createElement('div');
     host.style.cssText = 'width:600px';
     host.innerHTML = Object.keys(tones).map((t) =>
@@ -26,7 +27,9 @@ test('featuredTone paints the marker with each role\'s theme colour; --x-feature
       + `<article id="t-custom" featured style="--x-featured-bg: rgb(1, 2, 3)" title="T">x</article>`;
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await (window as any).WB.settled?.({ timeout: 10000 });
+  }, TONES);
+  await settlePage(page, { timeout: 10000 });
+  const got = await page.evaluate((tones) => {
     // The colour each role variable resolves to in this theme, measured the
     // same way the browser measures the marker.
     const probe = document.createElement('i');
@@ -53,13 +56,15 @@ test('featuredTone paints the marker with each role\'s theme colour; --x-feature
 test('the marker never breaks inside a word, however narrow the card', async ({ page }) => {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-  const r = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const host = document.createElement('div');
     host.style.cssText = 'width:120px';
     host.innerHTML = '<article id="narrow" featured title="Ridge loop">x</article>';
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await (window as any).WB.settled?.({ timeout: 10000 });
+  });
+  await settlePage(page, { timeout: 10000 });
+  const r = await page.evaluate(() => {
     const mark = document.querySelector('#narrow > header > mark') as HTMLElement;
     const range = document.createRange();
     range.selectNodeContents(mark);

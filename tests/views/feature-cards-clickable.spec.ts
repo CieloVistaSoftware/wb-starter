@@ -5,6 +5,7 @@
 import { test, expect } from '../fixtures/offline';
 import { pagePath } from '../helpers/page-path';
 
+import { settlePage } from '../base';
 // 'Component Library' became 'Behavior Library' when components were removed
 // (a behavior is an x- attribute on a neutral host) -- pages/home.html's card
 // was renamed with them; this list still named the old card.
@@ -23,7 +24,7 @@ test.describe('#184 — home feature cards are clickable', () => {
     await page.waitForSelector('.feature-card-link', { timeout: 20000 });
     // The page is built once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
   });
 
   test('each feature card is an anchor to a ?page= route', async ({ page }) => {

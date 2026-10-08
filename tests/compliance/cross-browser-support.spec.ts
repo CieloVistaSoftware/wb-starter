@@ -7,6 +7,7 @@
  */
 
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 test.describe('Cross-Browser Support Infrastructure', () => {
   
@@ -362,17 +363,20 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   // ═══════════════════════════════════════════════════════════════
   
   test('x-ignore prevents behavior injection', async ({ page }) => {
-    const skipped = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       // Create element with skip attribute
       const pre = document.createElement('pre');
+      pre.id = 'cbs-x-ignore-pre';
       pre.setAttribute('x-ignore', '');
       pre.textContent = 'test code';
       document.body.appendChild(pre);
       
-      // Any injection has run once WB settles (#1516: not 100ms).
       await new Promise((r) => requestAnimationFrame(r));
-      await (window as any).WB?.settled?.({ timeout: 10000 });
-      
+    });
+    // Any injection has run once WB settles (#1516: not 100ms).
+    await settlePage(page, { timeout: 10000 });
+    const skipped = await page.evaluate(() => {
+      const pre = document.getElementById('cbs-x-ignore-pre')!;
       // Check if behavior was applied
       const hasWbReady = pre.classList.contains('x-ready');
       pre.remove();
@@ -384,9 +388,10 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   });
 
   test('x-ignore prevents auto-injection', async ({ page }) => {
-    const ignored = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       // Create button with x-ignore
       const btn = document.createElement('button');
+      btn.id = 'cbs-x-ignore-btn';
       btn.setAttribute('x-ignore', '');
       btn.textContent = 'Test';
       document.body.appendChild(btn);
@@ -395,10 +400,11 @@ test.describe('Cross-Browser Support Infrastructure', () => {
       if (window.WB) {
         await window.WB.scan(document.body);
       }
-      
-      // Any injection has run once WB settles (#1516: not 100ms).
-      await (window as any).WB?.settled?.({ timeout: 10000 });
-      
+    });
+    // Any injection has run once WB settles (#1516: not 100ms).
+    await settlePage(page, { timeout: 10000 });
+    const ignored = await page.evaluate(() => {
+      const btn = document.getElementById('cbs-x-ignore-btn')!;
       const hasWbReady = btn.classList.contains('x-ready');
       btn.remove();
       

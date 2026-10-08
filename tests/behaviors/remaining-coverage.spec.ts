@@ -32,6 +32,7 @@
  * clicking, so a behavior vanishing from the registry fails loudly.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { openGroup } from '../helpers/behaviors-page';
 
 // Every test here boots the behaviors page from scratch, and that page is not
 // cheap: the SPA shell, then two fetches (tag-map, then the schema index) that
@@ -91,9 +92,7 @@ async function show(page: Page, token: string) {
   // x-audio, x-drawer, x-select and x-tooltip "failed" without ever being
   // looked at. Open the group the way a reader does, by its summary.
   const group = page.locator('#behaviors-search-results details', { has: rows.first() });
-  if (await group.count() && !(await group.first().evaluate((d) => (d as HTMLDetailsElement).open))) {
-    await group.first().locator(':scope > summary').click();
-  }
+  await openGroup(group);
   await expect(rows.first(), `${token}'s row must be visible to be picked`).toBeVisible();
 
   const before = await page.evaluate(

@@ -5,6 +5,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 const BASE = process.env.WB_BASE || '';
 
 test.describe('Side nav stays at the current scroll location', () => {
@@ -16,7 +17,7 @@ test.describe('Side nav stays at the current scroll location', () => {
     // left .site__body with nothing to scroll.
     await page.waitForSelector('#mainPage-themes', { timeout: 25000 });
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const r = await page.evaluate(async () => {
       const nav = document.querySelector('.site__nav') as HTMLElement;

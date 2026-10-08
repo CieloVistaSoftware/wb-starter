@@ -8,6 +8,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 test.describe('#183 — code blocks highlight', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=behaviors');
@@ -16,10 +17,7 @@ test.describe('#183 — code blocks highlight', () => {
     // the demos and highlight.js were still building when the count ran
     // ("Expected > 5, Received 4"). First the runtime's own idle signal, then
     // the highlighted, tokenised blocks themselves.
-    await page.evaluate(async () => {
-      const WB = (window as any).WB;
-      if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 20000 });
-    });
+    await settlePage(page, { timeout: 20000 });
     await expect
       .poll(() => page.evaluate(() =>
         [...document.querySelectorAll('pre code.hljs, code.language-html.hljs')]

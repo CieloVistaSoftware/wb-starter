@@ -7,6 +7,7 @@
  */
 import { test, expect, Page } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 const BASE = process.env.WB_BASE || '';
 // Was `/?page=behaviors` with `waitForSelector('#inputs input')`. `#inputs` was a
 // section on the OLD sectioned page; that page is a searchable browser now, so
@@ -76,7 +77,7 @@ test.describe('Input theming follows the active theme', () => {
     await page.locator('input').first().scrollIntoViewIfNeeded();
     // The lazy upgrade has run once WB settles (#1516: not 1200ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
     // #1682 CI: the inputs inputStyles() measures upgrade only once they come
     // near the viewport, and the demos above them keep rendering after the
     // scroll -- measured locally, the first one moved from 16471px to 23233px
