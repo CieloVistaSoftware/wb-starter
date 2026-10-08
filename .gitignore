@@ -151,3 +151,6 @@ data/inline-style-audit.json
 # videos it renders are large binaries -- kept locally, never committed.
 data/video/audio/
 data/video/out/
+
+# Written by tests/mobile/mobile-validation.spec.ts on every run (#961)
+data/mobile-screenshots/

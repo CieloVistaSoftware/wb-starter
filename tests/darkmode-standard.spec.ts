@@ -1,5 +1,6 @@
 // tests/darkmode-standard.spec.ts
 import { test, expect } from './fixtures/offline';
+import { settlePage } from './base';
 
 // This test checks that demos/site/forms.html (the consolidated Form Controls
 // category page, replacing the deleted buttons.html) is in dark mode and uses
@@ -50,7 +51,8 @@ test.describe('Dark Mode Standard: forms.html', () => {
     for (const btn of buttons) {
       await btn.scrollIntoViewIfNeeded();
       // The button has been built and painted once WB settles (#1516: not 200ms).
-      await page.evaluate(async () => { await (window as any).WB?.settled?.({ timeout: 10000 }); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
+      await settlePage(page, { timeout: 10000 });
+      await page.evaluate(async () => { await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
       const bg = await btn.evaluate(el => getComputedStyle(el).backgroundColor);
       expect(bg).not.toMatch(/(255, 255, 255|249, 250, 251)/);
     }

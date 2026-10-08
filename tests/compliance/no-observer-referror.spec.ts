@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 import * as path from 'path';
-import { readJson, PATHS } from '../base';
+import { readJson, PATHS, settlePage } from '../base';
 
 /**
  * Regression: ensure no ReferenceError for undeclared "observer"-style globals
@@ -33,7 +33,7 @@ test.describe('Runtime: no undefined-observer ReferenceError', () => {
       await page.waitForFunction(() => (window as any).WB !== undefined, null, { timeout: 10000 });
       // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
       await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-      await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+      await settlePage(page, { timeout: 15000 });
 
       const found = consoleErrors.find(c => OBSERVER_ERROR_RE.test(c));
       expect(found, `No console.error on ${p} should match observer ReferenceError`).toBeUndefined();

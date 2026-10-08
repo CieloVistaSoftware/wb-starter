@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
+import { settlePage } from '../base';
 
 /**
  * x-codecontrol IS NOW x-codetheme, AND THE OLD NAME STILL WORKS (#668)
@@ -52,12 +53,14 @@ test.describe('codetheme rename keeps the codecontrol alias (#668)', () => {
   test('the alias also works on a page run by wb.js', async ({ page }) => {
     await page.goto('/?page=home', { waitUntil: 'load' });
     await page.waitForFunction(() => !!(window as any).WB?.scan, null, { timeout: 20_000 });
-    const counts = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       const box = document.createElement('div');
       box.innerHTML = '<div id="new" x-codetheme></div><div id="old" x-codecontrol></div>';
       document.body.appendChild(box);
       await (window as any).WB.scan(box);
-      await (window as any).WB.settled?.({ timeout: 5000 });
+    });
+    await settlePage(page, { timeout: 5000 });
+    const counts = await page.evaluate(() => {
       const count = (id: string) => document.querySelectorAll(`#${id} .x-codetheme__select`).length;
       return { now: count('new'), old: count('old') };
     });

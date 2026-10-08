@@ -79,6 +79,11 @@
       "description": "Indeterminate loading state",
       "default": false,
       "appliesClass": "x-progress--indeterminate"
+    },
+    "showLabel": {
+      "type": "boolean",
+      "description": "Show the built-in percentage label on the bar. Set to false to hide it.",
+      "default": true
     }
   },
   "$view": [],

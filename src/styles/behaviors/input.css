@@ -361,8 +361,9 @@ input[type="radio"] {
 .x-input__wrapper--native > .x-input__field.x-input--lg { padding: 0.75rem 1rem; }
 .x-input__wrapper--native > .x-input__field.x-input--xl { padding: 1rem 1.25rem; }
 
-.x-input__wrapper--native > .x-input__prefix,
-.x-input__wrapper--native > .x-input__suffix {
+/* #879: both hosts -- <div x-input prefix="$"> builds the same parts. */
+.x-input__wrapper > .x-input__prefix,
+.x-input__wrapper > .x-input__suffix {
   padding: 0 0.5rem;
   color: var(--text-secondary);
 }

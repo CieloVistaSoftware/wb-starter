@@ -16,10 +16,11 @@
  */
 import { test, expect, Page } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 async function loadSite(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30000 });
-  await page.evaluate(() => (window as any).WB?.whenIdle?.({ timeout: 20000 }));
+  await settlePage(page, { timeout: 20000 });
 }
 
 test.describe('#724 — the site boots exactly once', () => {
@@ -45,7 +46,7 @@ test.describe('#724 — the site boots exactly once', () => {
   test('a SECOND module instance does not build a second shell', async ({ page }) => {
     await loadSite(page);
 
-    const result = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       // Wait for the state the next read needs, a frame at a time (#1516).
       const until = async (ok: () => boolean, ms = 10000) => {
         const end = performance.now() + ms;
@@ -62,8 +63,14 @@ test.describe('#724 — the site boots exactly once', () => {
       // The second boot has been refused once it says so (not 2500ms); then
       // any work the first instance still had in flight is allowed to finish.
       await until(() => warnings.some((w) => w.includes('called twice')));
-      await (window as any).WB?.settled?.({ timeout: 10000 }).catch(() => {});
-      console.warn = origWarn;
+      (window as any).__wb961Warnings = warnings;
+      (window as any).__wb961OrigWarn = origWarn;
+    });
+    await settlePage(page, { timeout: 10000, ifPresent: true }).catch(() => {});
+
+    const result = await page.evaluate(async () => {
+      const warnings = (window as any).__wb961Warnings as string[];
+      console.warn = (window as any).__wb961OrigWarn;
 
       const mod: any = await import('/src/core/duplicate-ids.js');
       return {

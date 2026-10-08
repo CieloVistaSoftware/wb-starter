@@ -11,8 +11,13 @@
     },
     "placeholder": {
       "type": "string",
-      "description": "Mask placeholder character",
+      "description": "Placeholder text for the empty field. When set it replaces the placeholder derived from the mask.",
       "default": "this is the placeholder"
+    },
+    "maskPlaceholder": {
+      "type": "string",
+      "description": "Character that stands for each unfilled slot when the placeholder is derived from the mask (`999-99-9999` shows `___-__-____`). Used only when the element has no `placeholder` of its own.",
+      "default": "_"
     }
   },
   "required": [],

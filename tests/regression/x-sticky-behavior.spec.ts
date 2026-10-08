@@ -44,6 +44,13 @@ import { elementReady, safeScrollIntoView } from '../base';
 async function ready(page) {
   await page.goto('/demos/site/layout.html', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('[x-sticky]');
+  // #961: the page's own init (WB.init, then WB.scan) runs after the lazy
+  // runtime has already built the demo, and finishing it set the sticky up
+  // again: in a full gate run the host stuck, the test saw is-stuck, and then
+  // "WB v3.0.0 initialized" / "Layout & Navigation initialized" logged and the
+  // host was back to plain `x-sticky`, position static. Start once the page
+  // says it is done.
+  await page.waitForFunction(() => (window as any).__WB_DEMO_INITIALIZED__ === true, undefined, { timeout: 30000 });
   // Deliberately NOT elementReady() here: #sticky-sticky sits below the fold,
   // and on the lazy runtime an element is not injected until it intersects — so
   // x-ready never arrives for an element nobody has scrolled to, and waiting for

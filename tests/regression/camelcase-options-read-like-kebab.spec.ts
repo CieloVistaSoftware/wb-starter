@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
+import { settlePage } from '../base';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -132,12 +133,14 @@ test('every multi-word option builds the same in camelCase as dashed, on every h
   // Build every case now. The lazy runtime builds only what is near the
   // viewport, and two UNBUILT copies compare equal -- which passed the very
   // gap this test exists to catch (navbar.brandHref) on one run and not the next.
-  const built = await page.evaluate(async (n: number) => {
+  await page.evaluate(async (n: number) => {
     const WB = (window as any).WB;
     for (let i = 0; i < n; i++) {
       for (const p of ['k', 'r', 'c']) await WB.scan(document.getElementById(`${p}${i}`), { eager: true });
     }
-    await WB.settled?.();
+  }, all.length);
+  await settlePage(page);
+  const built = await page.evaluate((n: number) => {
     let ok = 0;
     // A native host may be wrapped by what it builds, so the ready mark is
     // looked for anywhere in the case, not only on its first child.

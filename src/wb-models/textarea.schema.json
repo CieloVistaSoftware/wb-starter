@@ -95,6 +95,16 @@
       ],
       "default": "default",
       "appliesClass": "x-textarea--{{value}}"
+    },
+    "minRows": {
+      "type": "number",
+      "description": "Minimum height of the field, in text rows. It never renders shorter than this.",
+      "default": 2
+    },
+    "maxRows": {
+      "type": "number",
+      "description": "With `autosize`, the field stops growing at this many rows and scrolls instead.",
+      "default": 10
     }
   },
   "$view": [

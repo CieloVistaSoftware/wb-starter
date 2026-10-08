@@ -95,14 +95,6 @@
       "description": "Transition"
     }
   },
-  "events": {
-    "wb:drawerLayout:toggle": {
-      "description": "Drawer toggled",
-      "detail": {
-        "collapsed": "boolean"
-      }
-    }
-  },
   "test": {
     "setup": [
       "<div x-drawer-layout>Basic drawer-layout content</div>",
