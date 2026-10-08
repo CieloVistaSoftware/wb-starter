@@ -15,7 +15,7 @@
  * head sat at top:32370 and Playwright's click never found a STABLE element
  * (it auto-scrolls, then waits for the box to stop moving, on a page still
  * growing underneath). The page also renders FOUR [x-accordion] hosts of two
- * different shapes -- three with `.x-accordion-head`, one built from
+ * different shapes -- three with `.x-accordion__head`, one built from
  * `.x-details` with no head -- so `.first()` was a coin toss.
  *
  * None of that is what this spec is about. It tests one behaviour's state
@@ -48,24 +48,24 @@ async function load(page: Page) {
     // an IntersectionObserver and would leave the markup unupgraded.
     await (window as any).WB.scan(host, { eager: true });
   }, MARKUP);
-  await page.waitForSelector('#acc .x-accordion-head', { timeout: 10000 });
+  await page.waitForSelector('#acc .x-accordion__head', { timeout: 10000 });
 }
 
 function state(page: Page) {
   return page.locator('#acc').evaluate((acc: Element) => {
-    const head = acc.querySelector('.x-accordion-head') as HTMLElement | null;
-    const body = acc.querySelector('.x-accordion-body') as HTMLElement | null;
+    const head = acc.querySelector('.x-accordion__head') as HTMLElement | null;
+    const body = acc.querySelector('.x-accordion__body') as HTMLElement | null;
     return {
       hasHead: !!head,
       hasBody: !!body,
-      title: acc.querySelector('.x-accordion-title')?.textContent || '',
+      title: acc.querySelector('.x-accordion__title')?.textContent || '',
       bodyVisible: !!body && body.getBoundingClientRect().height > 0,
       ariaExpanded: head?.getAttribute('aria-expanded') ?? null,
     };
   });
 }
 
-const head = (page: Page) => page.locator('#acc .x-accordion-head').first();
+const head = (page: Page) => page.locator('#acc .x-accordion__head').first();
 
 test.describe('Accordion — disclosure behavior', () => {
   test.beforeEach(async ({ page }) => { await load(page); });

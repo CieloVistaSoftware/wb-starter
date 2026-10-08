@@ -1074,7 +1074,7 @@ export async function demo(element, options = {}) {
                     const codeEls = element.querySelectorAll('.x-demo__code');
                     // +CODE_WIDTH_SAFETY_PX: a code panel with a header/copy-
                     // button (pre.css's .x-pre--has-header) sits inside an
-                    // `.x-pre-wrapper` with its own border -- chrome between
+                    // `.x-pre__wrapper` with its own border -- chrome between
                     // the <pre> being measured and the demo's own edge that
                     // this calculation has no way to see. Sizing to
                     // scrollWidth exactly left the box 1-2px too narrow for
@@ -1137,7 +1137,7 @@ export async function demo(element, options = {}) {
                     // doc-viewer-code-panel-audit.spec.ts waits for before it
                     // measures anything.
                     const guttersReady = Array.from(codeEls).every((panel) => {
-                        const wrapper = panel.closest('.x-pre-wrapper');
+                        const wrapper = panel.closest('.x-pre__wrapper');
                         if (!wrapper) return false;
                         const code = panel.querySelector('code');
                         const lines = ((code || panel).textContent || '').split('\n');

@@ -41,16 +41,20 @@ test.describe('x-timeline keeps hand-written entries (#1188)', () => {
     const timeline = await render(page, docTimelineMarkup());
     await expect(timeline.locator('time[datetime="2024-01"]')).toHaveCount(1);
     await expect(timeline.locator('article.x-timeline__item h4')).toHaveText('Project Started');
-    await expect(timeline.locator('.x-timeline-item')).toHaveCount(0);
+    // Only the authored <article> carries the part class. #1096 renamed the
+    // items the behavior builds to the same x-timeline__item the doc already
+    // wrote by hand, so "rebuilt nothing" is: no built <div> items.
+    await expect(timeline.locator('.x-timeline__item')).toHaveCount(1);
+    await expect(timeline.locator('div.x-timeline__item')).toHaveCount(0);
   });
 
   test('plain comma-separated text is still built into items', async ({ page }) => {
     const timeline = await render(page, '<div x-timeline>Kickoff, Launch, Review</div>');
-    await expect(timeline.locator('.x-timeline-item')).toHaveText(['Kickoff', 'Launch', 'Review']);
+    await expect(timeline.locator('.x-timeline__item')).toHaveText(['Kickoff', 'Launch', 'Review']);
   });
 
   test('an items attribute still wins over authored content', async ({ page }) => {
     const timeline = await render(page, '<div x-timeline items="One, Two"><article>ignored</article></div>');
-    await expect(timeline.locator('.x-timeline-item')).toHaveText(['One', 'Two']);
+    await expect(timeline.locator('.x-timeline__item')).toHaveText(['One', 'Two']);
   });
 });

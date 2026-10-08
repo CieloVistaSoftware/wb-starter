@@ -28,7 +28,7 @@ test.describe('pre.js header controls stay >=1rem apart', () => {
   });
 
   test('copy button, language badge, and toggle never overlap and keep >=1rem gaps', async ({ page }) => {
-    const wrapper = page.locator('#test-container .x-pre-wrapper').filter({
+    const wrapper = page.locator('#test-container .x-pre__wrapper').filter({
       has: page.locator('.x-pre__copy, .x-pre__language, .x-pre__toggle'),
     }).first();
     await expect(wrapper).toBeVisible();

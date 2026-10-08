@@ -35,9 +35,10 @@ const root = process.cwd();
 /**
  * Classes applied by behaviors that do not follow the convention. Shrink only.
  * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96,
- * batch 2 (the layout compounds) to 85, batch 3 (the -trigger family) to 66.
+ * batch 2 (the layout compounds) to 85, batch 3 (the -trigger family) to 66,
+ * batch 4 (the parts semantic elements build) to 50.
  */
-const NON_CONFORMING_MAX = 66;
+const NON_CONFORMING_MAX = 50;
 
 /**
  * Old name -> the name that replaced it. Each old name is gone for good.
@@ -91,6 +92,27 @@ const RETIRED: Record<string, string> = {
   'x-dropdown-trigger': 'x-dropdown--trigger',
   'x-toast-trigger': 'x-toast--trigger',
   'x-tooltip-trigger': 'x-tooltip--trigger',
+  // Batch 4, 2026-10-07: DOM a semantic behavior builds is a PART of it,
+  // x-{behavior}__{part}. The wrapper code, pre, range, textarea and
+  // copybutton build around their element is `__wrapper`. The div audio.js
+  // builds around a native <audio> already carries the block class x-audio,
+  // so "this x-audio is the built host" is a modifier of it, not a part.
+  'x-code-wrapper': 'x-code__wrapper',
+  'x-pre-wrapper': 'x-pre__wrapper',
+  'x-range-wrapper': 'x-range__wrapper',
+  'x-range-labels': 'x-range__labels',
+  'x-range-value': 'x-range__value',
+  'x-textarea-wrapper': 'x-textarea__wrapper',
+  'x-copybutton-wrapper': 'x-copybutton__wrapper',
+  'x-audio-host': 'x-audio--host',
+  'x-label-group': 'x-label__group',
+  'x-select-clearable': 'x-select__clearable',
+  'x-timeline-item': 'x-timeline__item',
+  'x-accordion-item': 'x-accordion__item',
+  'x-accordion-head': 'x-accordion__head',
+  'x-accordion-body': 'x-accordion__body',
+  'x-accordion-title': 'x-accordion__title',
+  'x-accordion-icon': 'x-accordion__icon',
 };
 
 /**

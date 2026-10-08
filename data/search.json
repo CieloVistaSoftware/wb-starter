@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 304,
-    "totalWords": 5970
+    "totalWords": 5957
   },
   "documents": [
     {
@@ -939,7 +939,7 @@
       "title": "HOST-CHILD-DISPATCH-AUDIT",
       "description": null,
       "headings": [],
-      "content": "# Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS **Date:** 2026-07-17 **Trigger:** Found while fixing #360 (x-select) and #361 (x-switch) — both turned out to be instances of the same underlying architecture bug, not one-off mistakes. **Scope:** Every schema in `src/wb-models/*.schema.json` whose `$view` builds a real native form/interactive element (`input`, `select`, `textarea`, `button`) as a child of a behavior host (at the time, a `wb-*` tag; now an `x-*` host). ## The pattern A schema-driven host tag (` `, ` `, ` `, ...) has its `$view` build a real native element inside it. `tag-map.js` dispatches behaviors two ways: `elementMap` maps the **host tag** (` ` → `select`), and `nativeMap` maps the **native tag itself** (`select` → `select`, `input` → `input`, `input[type=\"checkbox\"]` → `checkbox`, ...). `wb.js`'s `scan()`/`observe()` apply *every* matching entry additively — there is no \"most specific wins\" — so a schema-built native child can get dispatched **in addition to** its host, using the exact same or a different behavior function. That collision breaks in three distinct ways, all seen live this session: 1. **Same-name self-collision, no host guard.** The behavior function assumes `element` IS the real native element. When dispatched a second time on the HOST (which is not that native tag), it either does something structurally wrong to the host, or silently no-ops and nothing ever reflects the host's own attributes onto the real child it built. *(x-input, x-textarea)* 2. **Missing type/attribute on the schema's own `$view` node** causes the built child to fail to match its OWN intended nativeMap entry, so it instead falls through to a more generic one that visually clobbers it. *(x-switch, x-checkbox)* 3. **Cross-behavior collision.** A DIFFERENT nativeMap behavior (not the host's own) matches the schema-built child too, and that unrelated behavior's CSS/JS wins the cascade or overwrites structure. *(x-switch's input also matching `checkbox.js`)* ` `'s original bug (#360) was a fourth, more severe variant: the schema never built a real ` ` at all (a fake ` `/` `/` ` widget), so native semantics were gone entirely. Fixed by making it build a real ` ` and re-invoke the native-` ` enhancement path on it. ## Confirmed, code-verified | Behavior | Variant | Status | |---|---|---| | ` ` | fake widget, no real ` ` | ✅ Fixed — [#360](https://github.com/CieloVistaSoftware/wb-starter/issues/360), closed | | ` ` | missing `type` on `$view` input + cross-collision with `checkbox.js`'s global style injector | ✅ Fixed — [#361](https://github.com/CieloVistaSoftware/wb-starter/issues/361), closed | | ` ` | same-name self-collision: host never reflected `placeholder`/`rows`/`variant` onto its built ` ` | ✅ Fixed — [#362](https://github.com/CieloVistaSoftware/wb-starter/issues/362), closed | | ` ` | missing `type=\"checkbox\"` on `$view` input node (identical root cause to #361), plus a self-collision with checkbox.js's own visual styling, plus zero pre-existing CSS for its box/check visual | ✅ Fixed — [#366](https://github.com/CieloVistaSoftware/wb-starter/issues/366), closed | | ` ` | same-name self-collision, no host guard at all — dispatching `input()` on the ` ` host wrapped/styled the whole already-built behavior as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built ` ` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed | ## Suspected, needs live verification (not yet filed) These are structurally exposed to the same class of bug based on reading the code, but I have not reproduced them live the way #361/#362 were reproduced. Verify with a Playwright regression test before filing, the same way the confirmed list above was established — a couple of the \"confirmed\" bugs upstream in this same session looked plausible on paper before the actual behavior turned out to be different, so don't skip live verification. - **`select.js`'s own `select()` (native-` ` branch, lines 22–54) has no idempotency guard for the `clearable` wrapper**, unlike `buildWbSelect()`'s explicit idempotency check (line 65). `buildWbSelect()` creates a real ` ` and calls `select(sel, {clearable})` on it directly (line 127) — if a MutationObserver separately re-visits that newly-inserted real ` ` via `nativeMap['select']` and dispatches `select()` on it a second time, `clearable: true` would build a second nested `.x-select-clearable` wrapper around the first. Needs a test with ` ` checking for exactly one `.x-select-clearable`. - **` `**: `notes.schema.json` declares a `$view` with a `textarea` node, but `notes.js` (`src/wb-viewmodels/notes.js`) builds its entire DOM itself from `element.dataset.*`, the same self-sufficient pattern as the card family (`SCHEMA_EXCLUDED_TAGS` in `schema-builder.js`). ` ` is **not** currently in that exclusion list. If",
+      "content": "# Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS **Date:** 2026-07-17 **Trigger:** Found while fixing #360 (x-select) and #361 (x-switch) — both turned out to be instances of the same underlying architecture bug, not one-off mistakes. **Scope:** Every schema in `src/wb-models/*.schema.json` whose `$view` builds a real native form/interactive element (`input`, `select`, `textarea`, `button`) as a child of a behavior host (at the time, a `wb-*` tag; now an `x-*` host). ## The pattern A schema-driven host tag (` `, ` `, ` `, ...) has its `$view` build a real native element inside it. `tag-map.js` dispatches behaviors two ways: `elementMap` maps the **host tag** (` ` → `select`), and `nativeMap` maps the **native tag itself** (`select` → `select`, `input` → `input`, `input[type=\"checkbox\"]` → `checkbox`, ...). `wb.js`'s `scan()`/`observe()` apply *every* matching entry additively — there is no \"most specific wins\" — so a schema-built native child can get dispatched **in addition to** its host, using the exact same or a different behavior function. That collision breaks in three distinct ways, all seen live this session: 1. **Same-name self-collision, no host guard.** The behavior function assumes `element` IS the real native element. When dispatched a second time on the HOST (which is not that native tag), it either does something structurally wrong to the host, or silently no-ops and nothing ever reflects the host's own attributes onto the real child it built. *(x-input, x-textarea)* 2. **Missing type/attribute on the schema's own `$view` node** causes the built child to fail to match its OWN intended nativeMap entry, so it instead falls through to a more generic one that visually clobbers it. *(x-switch, x-checkbox)* 3. **Cross-behavior collision.** A DIFFERENT nativeMap behavior (not the host's own) matches the schema-built child too, and that unrelated behavior's CSS/JS wins the cascade or overwrites structure. *(x-switch's input also matching `checkbox.js`)* ` `'s original bug (#360) was a fourth, more severe variant: the schema never built a real ` ` at all (a fake ` `/` `/` ` widget), so native semantics were gone entirely. Fixed by making it build a real ` ` and re-invoke the native-` ` enhancement path on it. ## Confirmed, code-verified | Behavior | Variant | Status | |---|---|---| | ` ` | fake widget, no real ` ` | ✅ Fixed — [#360](https://github.com/CieloVistaSoftware/wb-starter/issues/360), closed | | ` ` | missing `type` on `$view` input + cross-collision with `checkbox.js`'s global style injector | ✅ Fixed — [#361](https://github.com/CieloVistaSoftware/wb-starter/issues/361), closed | | ` ` | same-name self-collision: host never reflected `placeholder`/`rows`/`variant` onto its built ` ` | ✅ Fixed — [#362](https://github.com/CieloVistaSoftware/wb-starter/issues/362), closed | | ` ` | missing `type=\"checkbox\"` on `$view` input node (identical root cause to #361), plus a self-collision with checkbox.js's own visual styling, plus zero pre-existing CSS for its box/check visual | ✅ Fixed — [#366](https://github.com/CieloVistaSoftware/wb-starter/issues/366), closed | | ` ` | same-name self-collision, no host guard at all — dispatching `input()` on the ` ` host wrapped/styled the whole already-built behavior as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built ` ` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed | ## Suspected, needs live verification (not yet filed) These are structurally exposed to the same class of bug based on reading the code, but I have not reproduced them live the way #361/#362 were reproduced. Verify with a Playwright regression test before filing, the same way the confirmed list above was established — a couple of the \"confirmed\" bugs upstream in this same session looked plausible on paper before the actual behavior turned out to be different, so don't skip live verification. - **`select.js`'s own `select()` (native-` ` branch, lines 22–54) has no idempotency guard for the `clearable` wrapper**, unlike `buildWbSelect()`'s explicit idempotency check (line 65). `buildWbSelect()` creates a real ` ` and calls `select(sel, {clearable})` on it directly (line 127) — if a MutationObserver separately re-visits that newly-inserted real ` ` via `nativeMap['select']` and dispatches `select()` on it a second time, `clearable: true` would build a second nested `.x-select__clearable` wrapper around the first. Needs a test with ` ` checking for exactly one `.x-select__clearable`. - **` `**: `notes.schema.json` declares a `$view` with a `textarea` node, but `notes.js` (`src/wb-viewmodels/notes.js`) builds its entire DOM itself from `element.dataset.*`, the same self-sufficient pattern as the card family (`SCHEMA_EXCLUDED_TAGS` in `schema-builder.js`). ` ` is **not** currently in that exclusion list. ",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-05"
@@ -1140,7 +1140,7 @@
       "title": "accordion",
       "description": null,
       "headings": [],
-      "content": "# accordion Turns a set of titled child sections into independently expandable/collapsible items. Implemented by `accordion()` in [src/wb-viewmodels/collapse.js](../../src/wb-viewmodels/collapse.js) (registered under the `collapse` module). > ⚠️ **Deprecated.** ` ` / `x-accordion` still work and are documented > here for existing markup, but new pages should use the native > [` `/` `](../behaviors/details.md) element instead — > it needs no JavaScript, works out of the box with assistive tech, and doesn't > carry the quirks described below. Using ` ` specifically also logs > a one-time `console.warn` in the browser console. ## Overview | Property | Value | |----------|-------| | Attribute | `x-accordion` | | Attribute form | ` ` | | Behavior function | `accordion()` — module `collapse` (`src/wb-viewmodels/collapse.js`) | | Recommended replacement | ` `/` ` — see [details](../behaviors/details.md) | | Root CSS Class | ` ` (host), `.x-accordion-item` (each item) | | Category | Interactive | | Schema | none (no `accordion.schema.json`) | ## Properties `accordion()` only looks at plain attributes — no `data-*` equivalents beyond the back-compat ones listed below (Tier-1 Law 11: no `data-*` on behavior elements). | Attribute | Applies to | Type | Description | |-----------|-----------|------|-------------| | `accordionTitle` | each child element | string | Marks that child as its own accordion item; the value becomes the item's clickable heading. `data-accordion-title` / `data-title` are accepted as back-compat aliases | | `open` | a child with `accordionTitle` | boolean | That specific item starts expanded | | `open` | the host element | boolean | When present, and no child already carries its own `open`, the **first** item starts expanded | | `title` | ` ` host only | string | Heading text for the single-item form — only read when the host tag is literally ` ` (not read for `x-accordion` on any other tag) | **Fallback behavior worth knowing:** `accordion()` only builds real accordion markup (`.x-accordion-item` / `.x-accordion-head` / `.x-accordion-body`) when either (a) the host has children carrying `accordionTitle`, or (b) the host tag is literally ` `. Put `x-accordion` on any *other* element with no titled children (e.g. ` A `) and it silently falls back to the plain [`x-collapse`](x-collapse.md) behavior instead — a single toggle button + content panel styled with `.x-collapse__trigger` / `.x-collapse__content`, not accordion classes. Use the multi-item form below for a real accordion via `x-accordion` on semantic HTML. ## Usage ### Multi-item FAQ list A schema-first, no-build website starter kit. No — every behavior runs directly in the browser. No, prefer the native details/summary element for new markup. ### One item pre-opened This item starts collapsed. This item starts expanded because it carries its own open attribute. ### Host-level `open` expands the first item Opens automatically — the host itself carries open, and no child overrides it. Stays collapsed. ## CSS Classes | Class | Applied to | Description | |-------|-----------|-------------| | ` ` | host element | Marker class added once the accordion is built | | `.x-accordion-item` | each item wrapper | Bordered row; adjacent items share a collapsed border | | `.x-accordion-item.open` | an expanded item | Reveals `.x-accordion-body` | | `.x-accordion-head` | each item's clickable row | `role=\"button\"`, keyboard-focusable, flex row (title + icon) | | `.x-accordion-title` | the heading text span | — | | `.x-accordion-icon` | the ▸/▾ disclosure glyph | Text content flips between `▸` (closed) and `▾` (open); no CSS transition | | `.x-accordion-body` | the content panel | `display: none` unless the parent `.x-accordion-item` has `.open` | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:accordion:ready` | the multi-item form finishes building | `{ items }` — number of items built | | `wb:accordion:toggle` | any item's head is clicked or activated via Enter/Space | `{ open, title }` | Both events bubble, so one listener on an ancestor (or `document`) catches every accordion on the page: ```javascript document.addEventListener('wb:accordion:toggle', (e) => { console.log(`\"${e.detail.title}\" is now ${e.detail.open ? 'open' : 'closed'}`); }); ``` - [Schema/Test]: no dedicated schema or test file for `accordion`; see [tests/behaviors/accordion.spec.ts](../../tests/behaviors/accordion.spec.ts) for the disclosure-behavior coverage that does exist.",
+      "content": "# accordion Turns a set of titled child sections into independently expandable/collapsible items. Implemented by `accordion()` in [src/wb-viewmodels/collapse.js](../../src/wb-viewmodels/collapse.js) (registered under the `collapse` module). > ⚠️ **Deprecated.** ` ` / `x-accordion` still work and are documented > here for existing markup, but new pages should use the native > [` `/` `](../behaviors/details.md) element instead — > it needs no JavaScript, works out of the box with assistive tech, and doesn't > carry the quirks described below. Using ` ` specifically also logs > a one-time `console.warn` in the browser console. ## Overview | Property | Value | |----------|-------| | Attribute | `x-accordion` | | Attribute form | ` ` | | Behavior function | `accordion()` — module `collapse` (`src/wb-viewmodels/collapse.js`) | | Recommended replacement | ` `/` ` — see [details](../behaviors/details.md) | | Root CSS Class | ` ` (host), `.x-accordion__item` (each item) | | Category | Interactive | | Schema | none (no `accordion.schema.json`) | ## Properties `accordion()` only looks at plain attributes — no `data-*` equivalents beyond the back-compat ones listed below (Tier-1 Law 11: no `data-*` on behavior elements). | Attribute | Applies to | Type | Description | |-----------|-----------|------|-------------| | `accordionTitle` | each child element | string | Marks that child as its own accordion item; the value becomes the item's clickable heading. `data-accordion-title` / `data-title` are accepted as back-compat aliases | | `open` | a child with `accordionTitle` | boolean | That specific item starts expanded | | `open` | the host element | boolean | When present, and no child already carries its own `open`, the **first** item starts expanded | | `title` | ` ` host only | string | Heading text for the single-item form — only read when the host tag is literally ` ` (not read for `x-accordion` on any other tag) | **Fallback behavior worth knowing:** `accordion()` only builds real accordion markup (`.x-accordion__item` / `.x-accordion__head` / `.x-accordion__body`) when either (a) the host has children carrying `accordionTitle`, or (b) the host tag is literally ` `. Put `x-accordion` on any *other* element with no titled children (e.g. ` A `) and it silently falls back to the plain [`x-collapse`](x-collapse.md) behavior instead — a single toggle button + content panel styled with `.x-collapse__trigger` / `.x-collapse__content`, not accordion classes. Use the multi-item form below for a real accordion via `x-accordion` on semantic HTML. ## Usage ### Multi-item FAQ list A schema-first, no-build website starter kit. No — every behavior runs directly in the browser. No, prefer the native details/summary element for new markup. ### One item pre-opened This item starts collapsed. This item starts expanded because it carries its own open attribute. ### Host-level `open` expands the first item Opens automatically — the host itself carries open, and no child overrides it. Stays collapsed. ## CSS Classes | Class | Applied to | Description | |-------|-----------|-------------| | ` ` | host element | Marker class added once the accordion is built | | `.x-accordion__item` | each item wrapper | Bordered row; adjacent items share a collapsed border | | `.x-accordion__item.open` | an expanded item | Reveals `.x-accordion__body` | | `.x-accordion__head` | each item's clickable row | `role=\"button\"`, keyboard-focusable, flex row (title + icon) | | `.x-accordion__title` | the heading text span | — | | `.x-accordion__icon` | the ▸/▾ disclosure glyph | Text content flips between `▸` (closed) and `▾` (open); no CSS transition | | `.x-accordion__body` | the content panel | `display: none` unless the parent `.x-accordion__item` has `.open` | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:accordion:ready` | the multi-item form finishes building | `{ items }` — number of items built | | `wb:accordion:toggle` | any item's head is clicked or activated via Enter/Space | `{ open, title }` | Both events bubble, so one listener on an ancestor (or `document`) catches every accordion on the page: ```javascript document.addEventListener('wb:accordion:toggle', (e) => { console.log(`\"${e.detail.title}\" is now ${e.detail.open ? 'open' : 'closed'}`); }); ``` - [Schema/Test]: no dedicated schema or test file for `accordion`; see [tests/behaviors/accordion.spec.ts](../../tests/behaviors/accordion.spec.ts) for the disclosure-behavior coverage that does exist.",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-06"
@@ -3037,7 +3037,7 @@
       "title": "x-copybutton",
       "description": null,
       "headings": [],
-      "content": "# x-copybutton Overlays a small positioned copy button (default: top-right corner) on ANY element. The button copies the host element's own `value`/`textContent` — or a target override — to the clipboard, with visible \"Copied ✓\" feedback. See [src/wb-viewmodels/copy.js](../../src/wb-viewmodels/copy.js) (`copyButton()`). - **Type:** Attribute - **Usage:** `[x-copybutton]`, or `x-copybutton=\"#targetId\"` to copy another element's content ## Attribute API | Attribute | Default | Description | |---|---|---| | `x-copybutton` | — | Bare to copy the host's own value/text. A selector value (`x-copybutton=\"#targetId\"`) copies that element's `value`/`textContent` instead. | | `copyTarget` | — | Explicit form of the target override — same effect as `x-copybutton=\"#selector\"`. | | `label` | `\"Copy\"` | Button `aria-label` and `title`. | | `position` | `\"top-right\"` | One of `top-right`, `top-left`, `bottom-right`, `bottom-left`. | | `copyFeedback` | `\"Copied ✓\"` | Text shown on the button after a successful copy. | | `copyDuration` | `2000` | Milliseconds before the button reverts to its idle icon. | ## Demo npm install wb-starter const wb = require('wb-starter'); wb.init(); npm install wb-starter --save Install command ↑ ## Events - `wb:copy:success` — fired on the host element with `detail: { text }` after a successful copy. - `wb:copy:error` — fired on the host element with `detail: { text }` if every copy path (Clipboard API + `document.execCommand('copy')` fallback) failed. ## A11y - The injected control is a real ` `, so it's keyboard-focusable and activatable without any extra wiring. - `aria-label` (from `label`, default `\"Copy\"`) and a matching `title` are always set. - Feedback is communicated visually (button text swaps to `copyFeedback`) and via the `wb:copy:success` event for anything listening; consumers that need it announced to a screen reader can wire an `aria-live` region off that event. ## Differences — x-copy vs x-copybutton vs the old pre.js button | | **x-copy** (existing) | **x-copybutton** (this behavior) | pre.js copy button (legacy, now consolidated) | |---|---|---|---| | **What it is** | Makes the element ITSELF the click-to-copy trigger | Overlays a SEPARATE floating button on the element | Hand-rolled button injected only inside code blocks | | **Markup** | ` Copy ` | ` ` | (internal, not authorable) | | **What gets copied** | a specified `copy-text` (or the element's text) | the host element's `value`/`textContent` (or `#target`'s) | the ` `'s text | | **The trigger** | the element you clicked | a distinct button in the corner (host stays interactive) | the injected button | | **Best for** | \"copy this snippet\" chips, inline actions | textareas, code, cards, any block you want a copy affordance on | replaced by pre.js reusing `x-copybutton`'s clipboard core | **Key line:** `x-copy` turns an element INTO a copy trigger; `x-copybutton` PUTS a copy trigger ON an element without changing what the element does. ### Consolidation status (#291) Both `copy()` (`x-copy`) and `copyButton()` (`x-copybutton`) — plus `semantics/pre.js`'s own copy-button control and the Playground's copy actions (`demos/playground.html`) — now share one `writeToClipboard()` core (`src/wb-viewmodels/copy.js`), so the clipboard-write + `document.execCommand` fallback logic exists in exactly one place project-wide. `pre.js`'s copy button intentionally keeps its own DOM structure (it's one of several controls — copy button, language badge, hide/show toggle — sequenced right-to-left inside `pre.js`'s own `.x-pre-wrapper`, using real measured widths). Building it via `x-copybutton`'s own `.x-copybutton-wrapper` would nest a second relative/absolute positioning context inside that wrapper and break the sequential-offset measurement the other header controls depend on — so it reuses `x-copybutton`'s shared clipboard core without adopting its wrapper markup. The Playground's `pg-copy` button is a toolbar action button (already positioned by the toolbar's own flex layout, not an overlay), so it likewise reuses the shared clipboard core rather than being re-marked-up as an `x-copybutton` overlay. ## Schema/Test No dedicated schema file — like most `x-*` attribute behaviors (`x-copy`, `x-draggable`'s siblings, etc.), this one is pure JS with no schema-driven rendering. Effect test: [tests/behaviors/x-copybutton-effect.spec.ts](../../tests/behaviors/x-copybutton-effect.spec.ts).",
+      "content": "# x-copybutton Overlays a small positioned copy button (default: top-right corner) on ANY element. The button copies the host element's own `value`/`textContent` — or a target override — to the clipboard, with visible \"Copied ✓\" feedback. See [src/wb-viewmodels/copy.js](../../src/wb-viewmodels/copy.js) (`copyButton()`). - **Type:** Attribute - **Usage:** `[x-copybutton]`, or `x-copybutton=\"#targetId\"` to copy another element's content ## Attribute API | Attribute | Default | Description | |---|---|---| | `x-copybutton` | — | Bare to copy the host's own value/text. A selector value (`x-copybutton=\"#targetId\"`) copies that element's `value`/`textContent` instead. | | `copyTarget` | — | Explicit form of the target override — same effect as `x-copybutton=\"#selector\"`. | | `label` | `\"Copy\"` | Button `aria-label` and `title`. | | `position` | `\"top-right\"` | One of `top-right`, `top-left`, `bottom-right`, `bottom-left`. | | `copyFeedback` | `\"Copied ✓\"` | Text shown on the button after a successful copy. | | `copyDuration` | `2000` | Milliseconds before the button reverts to its idle icon. | ## Demo npm install wb-starter const wb = require('wb-starter'); wb.init(); npm install wb-starter --save Install command ↑ ## Events - `wb:copy:success` — fired on the host element with `detail: { text }` after a successful copy. - `wb:copy:error` — fired on the host element with `detail: { text }` if every copy path (Clipboard API + `document.execCommand('copy')` fallback) failed. ## A11y - The injected control is a real ` `, so it's keyboard-focusable and activatable without any extra wiring. - `aria-label` (from `label`, default `\"Copy\"`) and a matching `title` are always set. - Feedback is communicated visually (button text swaps to `copyFeedback`) and via the `wb:copy:success` event for anything listening; consumers that need it announced to a screen reader can wire an `aria-live` region off that event. ## Differences — x-copy vs x-copybutton vs the old pre.js button | | **x-copy** (existing) | **x-copybutton** (this behavior) | pre.js copy button (legacy, now consolidated) | |---|---|---|---| | **What it is** | Makes the element ITSELF the click-to-copy trigger | Overlays a SEPARATE floating button on the element | Hand-rolled button injected only inside code blocks | | **Markup** | ` Copy ` | ` ` | (internal, not authorable) | | **What gets copied** | a specified `copy-text` (or the element's text) | the host element's `value`/`textContent` (or `#target`'s) | the ` `'s text | | **The trigger** | the element you clicked | a distinct button in the corner (host stays interactive) | the injected button | | **Best for** | \"copy this snippet\" chips, inline actions | textareas, code, cards, any block you want a copy affordance on | replaced by pre.js reusing `x-copybutton`'s clipboard core | **Key line:** `x-copy` turns an element INTO a copy trigger; `x-copybutton` PUTS a copy trigger ON an element without changing what the element does. ### Consolidation status (#291) Both `copy()` (`x-copy`) and `copyButton()` (`x-copybutton`) — plus `semantics/pre.js`'s own copy-button control and the Playground's copy actions (`demos/playground.html`) — now share one `writeToClipboard()` core (`src/wb-viewmodels/copy.js`), so the clipboard-write + `document.execCommand` fallback logic exists in exactly one place project-wide. `pre.js`'s copy button intentionally keeps its own DOM structure (it's one of several controls — copy button, language badge, hide/show toggle — sequenced right-to-left inside `pre.js`'s own `.x-pre__wrapper`, using real measured widths). Building it via `x-copybutton`'s own `.x-copybutton__wrapper` would nest a second relative/absolute positioning context inside that wrapper and break the sequential-offset measurement the other header controls depend on — so it reuses `x-copybutton`'s shared clipboard core without adopting its wrapper markup. The Playground's `pg-copy` button is a toolbar action button (already positioned by the toolbar's own flex layout, not an overlay), so it likewise reuses the shared clipboard core rather than being re-marked-up as an `x-copybutton` overlay. ## Schema/Test No dedicated schema file — like most `x-*` attribute behaviors (`x-copy`, `x-draggable`'s siblings, etc.), this one is pure JS with no schema-driven rendering. Effect test: [tests/behaviors/x-copybutton-effect.spec.ts](../../tests/behaviors/x-copybutton-effect.spec.ts).",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-06"
@@ -3589,7 +3589,7 @@
           "text": "${title}"
         }
       ],
-      "content": "# HTML5 Semantic Standard (Mandatory) ## The Rule **Every WB-Starter behavior MUST use HTML5 semantic elements. ` ` is only permitted when no semantic element exists for that purpose.** --- ## Semantic Element Reference ### Document Structure | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Self-contained composition | Cards, posts, comments, widgets | | ` ` | Thematic grouping | Page sections, tab panels | | ` ` | Tangentially related | Sidebars, callouts, pull quotes | | ` ` | Navigation | Menus, breadcrumbs, pagination | | ` ` | Introductory content | Card headers, page headers, section headers | | ` ` | Main content | The page's one primary content area. Never inside a card: ` ` is only valid under `html`, `body`, `div` or `form`, so a card body is ` ` (#945) | | ` ` | Footer content | Card footers, page footers, actions | | ` ` | Self-contained media | Images with captions, diagrams | | ` ` | Figure caption | Caption for figure | | ` ` | Contact information | Author info, contact details | | ` ` | Date/time | Timestamps, dates | | ` ` | Highlighted text | Search results, highlights | | ` ` | Disclosure widget | Expandable sections | | ` ` | Details summary | Clickable header for details | | ` ` | Dialog box | Modals, popups, alerts | ### Text Structure | Element | Purpose | Use For | |---------|---------|---------| | ` - ` | Headings | Titles (use correct hierarchy) | | ` ` | Paragraph | Text blocks | | ` ` | Quotation | Testimonials, quotes | | ` ` | Citation | Source attribution | | ` ` | Code | Inline code | | ` ` | Preformatted | Code blocks | | ` `, ` `, ` ` | Lists | Feature lists, navigation items | | ` `, ` `, ` ` | Description list | Key-value pairs, glossaries | ### Interactive | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Clickable action | Buttons (not ` `) | | ` ` | Hyperlink | Links, navigation | | ` ` | Form container | Input groups | | ` ` | Input field | Text, checkbox, radio, etc. | | ` ` | Dropdown | Select menus | | ` ` | Multi-line input | Text areas | | ` ` | Form label | Input labels | | ` ` | Form group | Related inputs | | ` ` | Fieldset title | Group title | | ` ` | Calculation result | Computed values | | ` ` | Progress indicator | Progress bars | | ` ` | Scalar measurement | Gauges, ratings | ### Media | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Image | Images (with alt text) | | ` ` | Responsive image | Art direction, formats | | ` ` | Video | Video players | | ` ` | Audio | Audio players | | ` ` | Media source | Multiple formats | | ` ` | Text track | Captions, subtitles | | ` ` | Graphics | Drawing, charts | | ` ` | Vector graphics | Icons, illustrations | --- ## Behavior Mapping ### Cards (ALL variants) ```html-static Title Content goes here Action Title Content Action ``` ### Modals/Dialogs ```html-static Modal Title × Modal content Cancel Confirm ... ... ``` ### Navigation ```html-static Home About Home About ``` ### Accordion/Expandable Use the native ` `: it is the expandable, and it gets the `details` behavior from its tag. There is no `x-accordion-item`; a group of panels is `x-accordion` (see [accordion](./behaviors/accordion.md)). Section Title Section content ### Tabs Each child ` ` is a panel and its `title` is the tab label. `x-tabs` builds the `role=\"tablist\"` nav, the tab buttons and the ARIA wiring itself, so they are never hand-written: Panel 1 Panel 2 ### Sidebar/Aside `x-sidebar` builds its links from `items`; children are replaced, not kept: ### Testimonials/Quotes The quote and its author are attributes; the behavior builds the ` `, ` ` and footer from them: ### Progress/Stats 75% ### Forms `autoInjectComponents` is on by default — a plain ` ` is enhanced automatically, no `x-form` attribute needed. ```html Personal Info Name Submit ``` --- ## When ` ` IS Acceptable Only use ` ` for: 1. **Pure layout wrappers** - grid/flex containers with no semantic meaning 2. **Styling hooks** - when you need a wrapper for CSS only 3. **No semantic equivalent** - truly generic grouping **MANDATORY RULE: All elements, including ` `s, MUST have a unique `id` attribute.** A layout wrapper with an ID: First card Second card Third card --- ## Behavior Implementation Rules ### 1. createElement Calls ```javascript // WRONG const header = document.createElement('div'); header.className = 'x-card__header'; // CORRECT const header = document.createElement('header'); header.className = 'x-card__header'; ``` ### 2. innerHTML Generation ```javascript // WRONG element.innerHTML = ` ${title} ${content} `; // CORRECT element.innerHTML = ` ${title} ${content} `; ``` ### 3. Wrapper Elements When behavior needs to wrap content: ```javascript // WRONG const wrapper = document.createElement('div'); // CORRECT - choose semantic element based on purpose const wrapper = document.createElement('section'); // for sections const wrapper = document.createElement('article'); // for cards const wrapper = document.createE",
+      "content": "# HTML5 Semantic Standard (Mandatory) ## The Rule **Every WB-Starter behavior MUST use HTML5 semantic elements. ` ` is only permitted when no semantic element exists for that purpose.** --- ## Semantic Element Reference ### Document Structure | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Self-contained composition | Cards, posts, comments, widgets | | ` ` | Thematic grouping | Page sections, tab panels | | ` ` | Tangentially related | Sidebars, callouts, pull quotes | | ` ` | Navigation | Menus, breadcrumbs, pagination | | ` ` | Introductory content | Card headers, page headers, section headers | | ` ` | Main content | The page's one primary content area. Never inside a card: ` ` is only valid under `html`, `body`, `div` or `form`, so a card body is ` ` (#945) | | ` ` | Footer content | Card footers, page footers, actions | | ` ` | Self-contained media | Images with captions, diagrams | | ` ` | Figure caption | Caption for figure | | ` ` | Contact information | Author info, contact details | | ` ` | Date/time | Timestamps, dates | | ` ` | Highlighted text | Search results, highlights | | ` ` | Disclosure widget | Expandable sections | | ` ` | Details summary | Clickable header for details | | ` ` | Dialog box | Modals, popups, alerts | ### Text Structure | Element | Purpose | Use For | |---------|---------|---------| | ` - ` | Headings | Titles (use correct hierarchy) | | ` ` | Paragraph | Text blocks | | ` ` | Quotation | Testimonials, quotes | | ` ` | Citation | Source attribution | | ` ` | Code | Inline code | | ` ` | Preformatted | Code blocks | | ` `, ` `, ` ` | Lists | Feature lists, navigation items | | ` `, ` `, ` ` | Description list | Key-value pairs, glossaries | ### Interactive | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Clickable action | Buttons (not ` `) | | ` ` | Hyperlink | Links, navigation | | ` ` | Form container | Input groups | | ` ` | Input field | Text, checkbox, radio, etc. | | ` ` | Dropdown | Select menus | | ` ` | Multi-line input | Text areas | | ` ` | Form label | Input labels | | ` ` | Form group | Related inputs | | ` ` | Fieldset title | Group title | | ` ` | Calculation result | Computed values | | ` ` | Progress indicator | Progress bars | | ` ` | Scalar measurement | Gauges, ratings | ### Media | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Image | Images (with alt text) | | ` ` | Responsive image | Art direction, formats | | ` ` | Video | Video players | | ` ` | Audio | Audio players | | ` ` | Media source | Multiple formats | | ` ` | Text track | Captions, subtitles | | ` ` | Graphics | Drawing, charts | | ` ` | Vector graphics | Icons, illustrations | --- ## Behavior Mapping ### Cards (ALL variants) ```html-static Title Content goes here Action Title Content Action ``` ### Modals/Dialogs ```html-static Modal Title × Modal content Cancel Confirm ... ... ``` ### Navigation ```html-static Home About Home About ``` ### Accordion/Expandable Use the native ` `: it is the expandable, and it gets the `details` behavior from its tag. There is no item-level accordion attribute; a group of panels is `x-accordion` (see [accordion](./behaviors/accordion.md)). Section Title Section content ### Tabs Each child ` ` is a panel and its `title` is the tab label. `x-tabs` builds the `role=\"tablist\"` nav, the tab buttons and the ARIA wiring itself, so they are never hand-written: Panel 1 Panel 2 ### Sidebar/Aside `x-sidebar` builds its links from `items`; children are replaced, not kept: ### Testimonials/Quotes The quote and its author are attributes; the behavior builds the ` `, ` ` and footer from them: ### Progress/Stats 75% ### Forms `autoInjectComponents` is on by default — a plain ` ` is enhanced automatically, no `x-form` attribute needed. ```html Personal Info Name Submit ``` --- ## When ` ` IS Acceptable Only use ` ` for: 1. **Pure layout wrappers** - grid/flex containers with no semantic meaning 2. **Styling hooks** - when you need a wrapper for CSS only 3. **No semantic equivalent** - truly generic grouping **MANDATORY RULE: All elements, including ` `s, MUST have a unique `id` attribute.** A layout wrapper with an ID: First card Second card Third card --- ## Behavior Implementation Rules ### 1. createElement Calls ```javascript // WRONG const header = document.createElement('div'); header.className = 'x-card__header'; // CORRECT const header = document.createElement('header'); header.className = 'x-card__header'; ``` ### 2. innerHTML Generation ```javascript // WRONG element.innerHTML = ` ${title} ${content} `; // CORRECT element.innerHTML = ` ${title} ${content} `; ``` ### 3. Wrapper Elements When behavior needs to wrap content: ```javascript // WRONG const wrapper = document.createElement('div'); // CORRECT - choose semantic element based on purpose const wrapper = document.createElement('section'); // for sections const wrapper = document.createElement('article'); // for cards const wrapper = docu",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-06"
@@ -3611,7 +3611,7 @@
       "title": "CSS-CLASS-CONVENTION",
       "description": null,
       "headings": [],
-      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout hosts, and the toggle, handle and resize overlay drawerLayout builds), took it to 85. Batch 3, the trigger family, took it to 66. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. **\"This element is the trigger\" is a modifier.** The element carrying the behavior is the block, so the class that marks it as the trigger is `x-{behavior}--trigger` (`x-dialog--trigger`, `x-popover--trigger`, `x-toast--trigger`). A look variant of the trigger is one modifier with a kebab-case value: `x-confetti--trigger-button`. Where `.x-{behavior}` already names the panel the behavior builds (`.x-popover`, `.x-sheet`, `.x-toast`, `.x-tooltip`, `.x-dialog`), the trigger carries only the modifier, so no panel rule can match it. **A class is not an attribute.** ` ` is still how an author applies drawerLayout; only the class the behavior adds changed, to `x-drawerlayout`. Where a retired class name is also a live attribute, the gate counts it only where it is used as a class. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** An inline style beats every selector, so a page needing a different look has no route but `!important` — which is banned. The practical result is that it cannot be changed at all. - **Unthemeable.** Themes work by redefining custom properties that *stylesheets* consume. A value written into `element.style` never sees them. This repo has paid for it twice already: **#1003** removed `style.cssText` from the fullscreen trigger because *\"it also won against the page, so #1004 could not size this button\"*; **#520** traced crowded card buttons to `style.cssText` in `cardpricing()` silently overriding the class's own padding. Measured 2026-09-08: **1,004 inline style writes** across the behaviors. See #1095. **The one legitimate inline write is a custom property**, because only",
+      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout hosts, and the toggle, handle and resize overlay drawerLayout builds), took it to 85. Batch 3, the trigger family, took it to 66. Batch 4, the parts that semantic elements build (code, pre, range, textarea, copybutton, audio, label, select, timeline and the accordion items), took it to 50. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. **\"This element is the trigger\" is a modifier.** The element carrying the behavior is the block, so the class that marks it as the trigger is `x-{behavior}--trigger` (`x-dialog--trigger`, `x-popover--trigger`, `x-toast--trigger`). A look variant of the trigger is one modifier with a kebab-case value: `x-confetti--trigger-button`. Where `.x-{behavior}` already names the panel the behavior builds (`.x-popover`, `.x-sheet`, `.x-toast`, `.x-tooltip`, `.x-dialog`), the trigger carries only the modifier, so no panel rule can match it. **A wrapper the behavior builds is a part.** DOM a behavior creates around or inside its element is `x-{behavior}__{part}`: `x-pre__wrapper`, `x-code__wrapper`, `x-range__wrapper` with `x-range__value` and `x-range__labels`, `x-textarea__wrapper`, `x-copybutton__wrapper`, `x-label__group`, `x-select__clearable`, `x-timeline__item`, and the accordion's `x-accordion__item`, `__head`, `__title`, `__icon` and `__body`. The one exception is a built element that already carries the block class: the div audio.js builds around a native ` ` is `x-audio`, so \"this is the built host\" is the modifier `x-audio--host` on it. **A class is not an attribute.** ` ` is still how an author applies drawerLayout; only the class the behavior adds changed, to `x-drawerlayout`. Where a retired class name is also a live attribute, the gate counts it only where it is used as a class. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** A",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -5961,6 +5961,7 @@
       "docs/behaviors/typewriter",
       "docs/behaviors/x-resizable",
       "docs/property-viewer",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes",
@@ -6583,9 +6584,6 @@
     "513": [
       "docs/linkedin-update-article"
     ],
-    "520": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
     "540": [
       "docs/behaviors/img"
     ],
@@ -6778,12 +6776,6 @@
     "1000": [
       "docs/inline-editing"
     ],
-    "1003": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "1004": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
     "1005": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
@@ -6822,9 +6814,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audio",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
-    ],
-    "1095": [
-      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "1096": [
       "docs/standards/CSS-CLASS-CONVENTION"
@@ -7543,7 +7532,6 @@
       "docs/pce-candidates",
       "docs/schema-first-architecture",
       "docs/schema-test-value",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
       "demos/autoinject",
@@ -7634,6 +7622,7 @@
       "docs/linkedin-update-article",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
@@ -9322,7 +9311,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/linkedin-standards-article",
       "docs/performance",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles",
       "docs/themes",
       "demos/landing-page-showcase",
@@ -9430,7 +9418,6 @@
       "docs/index",
       "docs/performance",
       "docs/semantic-audit",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "demos/frameworks",
       "demos/landing-page-showcase"
@@ -9905,6 +9892,7 @@
       "docs/property-viewer",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject",
       "demos/site/forms"
     ],
@@ -10316,7 +10304,6 @@
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/wbservices",
@@ -11581,7 +11568,6 @@
       "docs/property-viewer",
       "docs/schema",
       "docs/schema.migration",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
@@ -12746,7 +12732,6 @@
       "docs/behaviors/figure",
       "docs/behaviors/flex",
       "docs/linkedin-update-article",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles",
       "docs/wbservices",
       "demos/charity-food",
@@ -13455,7 +13440,6 @@
       "docs/property-viewer",
       "docs/schema.migration",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
@@ -13479,7 +13463,6 @@
       "docs/guides/create-a-website",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -14061,6 +14044,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/create-a-website",
       "docs/inline-editing",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles"
     ],
     "sets": [
@@ -15690,7 +15674,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/claude/TOOLING-INVENTORY",
       "docs/npx-commands",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/REPO-LAYOUT",
       "docs/testing-runbook"
@@ -15895,6 +15878,7 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -16127,7 +16111,6 @@
       "docs/schema-first-architecture",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -16868,6 +16851,7 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/styles",
       "docs/themes"
@@ -17691,7 +17675,6 @@
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/properties",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
@@ -19350,7 +19333,6 @@
       "docs/performance",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/themes",
       "demos/autoinject",
       "demos/multi-behavior-demo-generated",
@@ -19531,7 +19513,6 @@
       "docs/schema",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
@@ -19923,7 +19904,8 @@
       "docs/behaviors/details",
       "docs/inline-editing",
       "docs/semantic-audit",
-      "docs/semantic-standard"
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "tabs": [
       "pages/features",
@@ -20180,6 +20162,7 @@
       "docs/behaviors/time",
       "docs/behaviors/timeline",
       "docs/schema.migration",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/layout"
     ],
     "stat": [
@@ -20372,6 +20355,7 @@
       "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/testing-strategy",
       "demos/index",
       "demos/site/content",
@@ -20505,6 +20489,7 @@
       "docs/code-examples-standard",
       "docs/properties",
       "docs/schema-test-value",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject"
     ],
     "checkbox": [
@@ -20546,6 +20531,7 @@
       "docs/behaviors/slider",
       "docs/inline-editing",
       "docs/properties",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject"
     ],
     "colorpicker": [
@@ -20936,7 +20922,6 @@
       "docs/linkedin-standards-article",
       "docs/properties",
       "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "demos/autoinject",
@@ -21447,7 +21432,6 @@
       "docs/pce-candidates",
       "docs/property-viewer",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
@@ -22925,6 +22909,7 @@
       "docs/inline-editing",
       "docs/search",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/layout-test",
       "demos/site/content"
     ],
@@ -23081,6 +23066,7 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
@@ -23224,8 +23210,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/fieldset",
       "docs/behaviors/flash",
-      "docs/behaviors/heartbeat",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/behaviors/heartbeat"
     ],
     "problem": [
       "pages/home",
@@ -23320,6 +23305,7 @@
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
+      "docs/semantic-standard",
       "docs/styles",
       "docs/testing-runbook",
       "demos/autoinject"
@@ -23967,8 +23953,7 @@
     ],
     "stylesheets": [
       "pages/home",
-      "docs/claude/PAGE-GENERATION",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/claude/PAGE-GENERATION"
     ],
     "module": [
       "pages/home",
@@ -24602,6 +24587,7 @@
       "docs/inline-editing",
       "docs/properties",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject"
     ],
     "updated": [
@@ -26218,8 +26204,7 @@
       "pages/themes"
     ],
     "beats": [
-      "pages/themes",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "pages/themes"
     ],
     "base": [
       "pages/themes",
@@ -26268,7 +26253,6 @@
       "docs/escape-hatches",
       "docs/guides/search-index",
       "docs/mcp",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles",
       "docs/testing-runbook",
       "docs/themes"
@@ -26739,7 +26723,6 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "demos/standalone"
     ],
@@ -29188,6 +29171,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
       "docs/code-examples-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles"
     ],
@@ -31832,7 +31816,6 @@
       "docs/pricecard",
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook"
@@ -32098,6 +32081,7 @@
       "docs/behaviors/pre",
       "docs/behaviors/tags",
       "docs/behaviors/x-copybutton",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "demos/mdhtml-pre-debug",
       "demos/pre-debug"
@@ -32529,6 +32513,7 @@
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/testing-strategy",
       "demos/frameworks",
       "demos/pre-debug",
@@ -32965,7 +32950,6 @@
       "docs/escape-hatches",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/frameworks"
     ],
@@ -33429,6 +33413,7 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject",
       "demos/charity-food",
       "demos/code",
@@ -34112,6 +34097,7 @@
       "docs/linkedin-framework-agnostic",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/testing-strategy",
       "docs/wbservices",
@@ -36748,7 +36734,8 @@
       "docs/behaviors/inputgroup",
       "docs/behaviors/radio",
       "docs/behaviors/scrollable",
-      "docs/semantic-standard"
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "versatile": [
       "docs/architecture/proposals/proposed-custom-elements",
@@ -37324,7 +37311,6 @@
       "docs/behaviors/file",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
     "registerschema": [
@@ -37627,6 +37613,7 @@
       "docs/behaviors/steps",
       "docs/claude/TIER1-LAWS",
       "docs/npx-commands",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/learn-more"
     ],
     "elaborate": [
@@ -38887,6 +38874,7 @@
       "docs/guides/create-a-website",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS"
     ],
     "schematype": [
@@ -38970,6 +38958,7 @@
       "docs/behaviors/accordion",
       "docs/committing-fixes",
       "docs/home-page",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles"
     ],
     "shell": [
@@ -39703,6 +39692,7 @@
       "docs/behaviors/search",
       "docs/behaviors/searchfield",
       "docs/behaviors/select",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject"
     ],
     "buildwbselect": [
@@ -39752,8 +39742,7 @@
     ],
     "csstext": [
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/inline-editing",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/inline-editing"
     ],
     "assign": [
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -39838,8 +39827,7 @@
     ],
     "won": [
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/sidebarlayout",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/behaviors/sidebarlayout"
     ],
     "bloat": [
       "docs/audits/INLINE-STYLES-AUDIT"
@@ -40326,7 +40314,6 @@
     ],
     "overriding": [
       "docs/auto-injection",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/interactive"
     ],
     "dashboard": [
@@ -40385,7 +40372,8 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/copybutton",
       "docs/behaviors/x-copy",
-      "docs/behaviors/x-copybutton"
+      "docs/behaviors/x-copybutton",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "countdown": [
       "docs/behavior-cross-reference",
@@ -42250,8 +42238,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "traced": [
-      "docs/behaviors/cardexpandable",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/behaviors/cardexpandable"
     ],
     "narrowed": [
       "docs/behaviors/cardexpandable"
@@ -42464,8 +42451,7 @@
     ],
     "route": [
       "docs/behaviors/cardhorizontal",
-      "docs/claude/TIER1-LAWS",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/claude/TIER1-LAWS"
     ],
     "imagealt": [
       "docs/behaviors/cardhorizontal"
@@ -43937,7 +43923,6 @@
       "docs/behaviors/dialog",
       "docs/behaviors/fullscreen",
       "docs/behaviors/video",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/overlays"
     ],
     "untrue": [
@@ -47772,7 +47757,6 @@
       "docs/guides/create-a-website",
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/playground"
     ],
     "dependency": [
@@ -48049,8 +48033,7 @@
       "docs/index"
     ],
     "practical": [
-      "docs/index",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/index"
     ],
     "locally": [
       "docs/index",
@@ -49469,7 +49452,7 @@
     "acceptable": [
       "docs/semantic-standard"
     ],
-    "createe": [
+    "docu": [
       "docs/semantic-standard"
     ],
     "observed": [
@@ -49735,33 +49718,6 @@
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "unoverridable": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "needing": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "banned": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "unthemeable": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "redefining": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "consume": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "paid": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "crowded": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "004": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "legitimate": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "15a": [

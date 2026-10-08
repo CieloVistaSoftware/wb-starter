@@ -43,7 +43,7 @@ async function ready(page) {
 
 // The lazy runtime (#491) builds a host only once it nears the viewport, so
 // the tabs/scrollalong/timeline sections further down this long page are
-// still bare markup at load: no .x-tabs__tab, no .x-timeline-item, no sticky.
+// still bare markup at load: no .x-tabs__tab, no .x-timeline__item, no sticky.
 // Scroll each host in and wait for its x-ready before asserting on it.
 async function built(locator) {
   for (const el of await locator.all()) await buildInView(el);
@@ -292,9 +292,9 @@ test.describe('[x-drawer-layout] / [x-scrollalong] / [x-sticky] / [x-timeline] -
     const timelines = page.locator('#timeline-timeline [x-timeline]');
     await built(timelines);
     // <div x-timeline items="Project Kickoff,Design Phase,Development,Testing,Launch">
-    await expect(timelines.nth(0).locator('.x-timeline-item')).toHaveCount(5);
+    await expect(timelines.nth(0).locator('.x-timeline__item')).toHaveCount(5);
     // <div x-timeline items="Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery">
-    await expect(timelines.nth(1).locator('.x-timeline-item')).toHaveCount(4);
+    await expect(timelines.nth(1).locator('.x-timeline__item')).toHaveCount(4);
   });
 
   test('no console errors anywhere on the page after full settle', async ({ page }) => {

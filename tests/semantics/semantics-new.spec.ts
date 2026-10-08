@@ -25,8 +25,9 @@ import { test, expect } from '../fixtures/offline';
  * naming. The two original timeline assertions were both wrong about names
  * while the feature itself worked:
  *
- *   '.x-timeline__item'  — the rendered class is `x-timeline-item`, single
- *                           hyphen, not BEM double-underscore.
+ *   '.x-timeline__item'  — the rendered class then had a single hyphen, not
+ *                           BEM double-underscore. #1096 renamed it to this
+ *                           part, which the assertions below now select.
  *
  * The #448 assertion that lived here is gone with the component tags: it
  * checked that a <div x-timeline> host did not also carry a `[x-timeline]` class.
@@ -41,14 +42,14 @@ async function render(page: import('@playwright/test').Page, markup: string) {
   await page.waitForFunction(() => !!(window as any).WB);
   await page.evaluate((html) => { document.body.innerHTML = html; }, markup);
   await page.evaluate(async () => { await (window as any).WB.scan(document.body); });
-  await page.waitForSelector('.x-timeline-item', { timeout: 5000 });
+  await page.waitForSelector('.x-timeline__item', { timeout: 5000 });
 }
 
 test.describe('Timeline behavior', () => {
   test('renders one entry per item', async ({ page }) => {
     await render(page, '<div x-timeline id="t" items="Step 1, Step 2"></div>');
 
-    const items = page.locator('#t .x-timeline-item');
+    const items = page.locator('#t .x-timeline__item');
     await expect(items).toHaveCount(2);
     await expect(items.nth(0)).toHaveText('Step 1');
     await expect(items.nth(1)).toHaveText('Step 2');
@@ -68,7 +69,7 @@ test.describe('Timeline behavior', () => {
 
     const items = await page.evaluate(() => (document.getElementById('t') as any).items);
     expect(items).toEqual(['Step 1', 'Step 2']);
-    await expect(page.locator('#t .x-timeline-item')).toHaveCount(2);
+    await expect(page.locator('#t .x-timeline__item')).toHaveCount(2);
   });
 
 });

@@ -74,8 +74,8 @@ copy-button control and the Playground's copy actions (`demos/playground.html`) 
 
 `pre.js`'s copy button intentionally keeps its own DOM structure (it's one of several controls —
 copy button, language badge, hide/show toggle — sequenced right-to-left inside `pre.js`'s own
-`.x-pre-wrapper`, using real measured widths). Building it via `x-copybutton`'s own
-`.x-copybutton-wrapper` would nest a second relative/absolute positioning context inside that
+`.x-pre__wrapper`, using real measured widths). Building it via `x-copybutton`'s own
+`.x-copybutton__wrapper` would nest a second relative/absolute positioning context inside that
 wrapper and break the sequential-offset measurement the other header controls depend on — so it
 reuses `x-copybutton`'s shared clipboard core without adopting its wrapper markup. The Playground's
 `pg-copy` button is a toolbar action button (already positioned by the toolbar's own flex layout,

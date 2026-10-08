@@ -480,7 +480,7 @@ export async function mdhtml(element, options = {}) {
     // WB.scan(docEl) call (docs that DID import wb.js for other reasons,
     // e.g. an embedded <div x-demo>) still found no [x-pre]/[x-code] elements
     // to enhance. Confirmed live: every plain ```fenced``` code block
-    // rendered through doc-viewer.html stayed unstyled (no .x-pre-wrapper,
+    // rendered through doc-viewer.html stayed unstyled (no .x-pre__wrapper,
     // no copy button, no line numbers), while only <div x-demo>'s OWN code
     // panels (styled via demo.js's separate, unconditional scan call) got
     // pre()'s enhancement. Splitting the marking out from the WB-gated

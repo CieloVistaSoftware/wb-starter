@@ -294,7 +294,7 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           const lines = text.split('\n');
           if (lines.length && lines[lines.length - 1] === '') lines.pop();
 
-          const wrapper = panel.closest('.x-pre-wrapper');
+          const wrapper = panel.closest('.x-pre__wrapper');
           if (!wrapper) return false;
           const nums = Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[];
           if (nums.length !== lines.length) return false; // gutter still being built
@@ -342,7 +342,7 @@ function readPanels(page: import('@playwright/test').Page): Promise<PanelReport[
         const rawLines = text.split('\n');
         if (rawLines.length && rawLines[rawLines.length - 1] === '') rawLines.pop();
 
-        const wrapper = panel.closest('.x-pre-wrapper');
+        const wrapper = panel.closest('.x-pre__wrapper');
         const gutterEls = wrapper
           ? (Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[])
           : [];

@@ -83,7 +83,9 @@ The classes are renamed in batches, so the gate is a ratchet. Measured
 (floatinglabel, formrow, inputgroup and the label and wrapper built by radio),
 took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout
 hosts, and the toggle, handle and resize overlay drawerLayout builds), took it
-to 85. Batch 3, the trigger family, took it to 66. The count may only go down,
+to 85. Batch 3, the trigger family, took it to 66. Batch 4, the parts that
+semantic elements build (code, pre, range, textarea, copybutton, audio, label,
+select, timeline and the accordion items), took it to 50. The count may only go down,
 and a renamed class is retired: no source, stylesheet, test, doc, page, demo or
 data file may use the old name again.
 
@@ -95,6 +97,16 @@ kebab-case value: `x-confetti--trigger-button`. Where `.x-{behavior}` already
 names the panel the behavior builds (`.x-popover`, `.x-sheet`, `.x-toast`,
 `.x-tooltip`, `.x-dialog`), the trigger carries only the modifier, so no panel
 rule can match it.
+
+**A wrapper the behavior builds is a part.** DOM a behavior creates around or
+inside its element is `x-{behavior}__{part}`: `x-pre__wrapper`, `x-code__wrapper`,
+`x-range__wrapper` with `x-range__value` and `x-range__labels`,
+`x-textarea__wrapper`, `x-copybutton__wrapper`, `x-label__group`,
+`x-select__clearable`, `x-timeline__item`, and the accordion's `x-accordion__item`,
+`__head`, `__title`, `__icon` and `__body`. The one exception is a built element
+that already carries the block class: the div audio.js builds around a native
+`<audio>` is `x-audio`, so "this is the built host" is the modifier
+`x-audio--host` on it.
 
 **A class is not an attribute.** `<aside x-drawer-layout>` is still how an
 author applies drawerLayout; only the class the behavior adds changed, to
