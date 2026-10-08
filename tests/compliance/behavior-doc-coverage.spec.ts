@@ -30,6 +30,11 @@ test.use({ serviceWorkers: 'block' });
 async function openShowcase(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30000 });
+  // #961: wait for the list's LAST render. It is rebuilt when the schema index
+  // and examples land; on CI that landed just after the first click, every row
+  // captured below was replaced, and the next 19 clicks did nothing ("the doc
+  // panel never filled").
+  await page.waitForSelector('#behaviors-search-results[aria-busy="false"]', { state: 'attached', timeout: 30000 });
   await page.fill('#behaviors-search', 'x-');
   await page.waitForFunction(
     () => document.querySelectorAll('.behaviors-search-results__row').length > 50,

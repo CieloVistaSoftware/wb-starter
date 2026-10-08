@@ -7,8 +7,8 @@
     "errors": 0,
     "skipped": 0,
     "totalComponents": 69,
-    "totalSections": 209,
-    "totalDemos": 757
+    "totalSections": 212,
+    "totalDemos": 763
   },
   "pages": [
     {
@@ -19,8 +19,8 @@
       "status": "ok",
       "filename": "cards.html",
       "componentCount": 19,
-      "sectionCount": 67,
-      "totalDemos": 262,
+      "sectionCount": 68,
+      "totalDemos": 264,
       "components": [
         {
           "name": "card",
@@ -73,8 +73,8 @@
         {
           "name": "cardlink",
           "status": "ok",
-          "sections": 3,
-          "demos": 13
+          "sections": 4,
+          "demos": 15
         },
         {
           "name": "cardminimizable",
@@ -220,7 +220,7 @@
       "filename": "forms.html",
       "componentCount": 9,
       "sectionCount": 43,
-      "totalDemos": 154,
+      "totalDemos": 156,
       "components": [
         {
           "name": "button",
@@ -256,7 +256,7 @@
           "name": "switch",
           "status": "ok",
           "sections": 5,
-          "demos": 14
+          "demos": 16
         },
         {
           "name": "textarea",
@@ -384,8 +384,8 @@
       "status": "ok",
       "filename": "content.html",
       "componentCount": 6,
-      "sectionCount": 14,
-      "totalDemos": 27,
+      "sectionCount": 15,
+      "totalDemos": 28,
       "components": [
         {
           "name": "articles",
@@ -396,8 +396,8 @@
         {
           "name": "mdhtml",
           "status": "ok",
-          "sections": 1,
-          "demos": 3
+          "sections": 2,
+          "demos": 4
         },
         {
           "name": "audio",
@@ -476,8 +476,8 @@
       "status": "ok",
       "filename": "interactive.html",
       "componentCount": 8,
-      "sectionCount": 11,
-      "totalDemos": 13,
+      "sectionCount": 12,
+      "totalDemos": 14,
       "components": [
         {
           "name": "draggable",
@@ -494,8 +494,8 @@
         {
           "name": "copy",
           "status": "ok",
-          "sections": 1,
-          "demos": 2
+          "sections": 2,
+          "demos": 3
         },
         {
           "name": "darkmode",

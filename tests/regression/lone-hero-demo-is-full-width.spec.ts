@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #1387 -- a hero that is the only thing in an x-demo fills the demo's row.
  *
@@ -19,7 +20,7 @@ test('a lone x-hero in an x-demo spans the section, not its text width', async (
   const heroes = section.locator('[x-hero]');
   await expect(heroes).toHaveCount(2);
   for (const i of [0, 1]) await expect(heroes.nth(i)).toHaveAttribute('x-ready', '', { timeout: 30_000 });
-  await page.evaluate(() => (window as any).WB?.whenIdle?.({ timeout: 10_000 }));
+  await settlePage(page, { timeout: 10_000 });
 
   const sizes = await section.evaluate((s) => {
     const content = s.clientWidth - parseFloat(getComputedStyle(s).paddingLeft) - parseFloat(getComputedStyle(s).paddingRight);

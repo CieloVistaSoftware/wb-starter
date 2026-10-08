@@ -48,6 +48,7 @@
  *    suite red for an already-traced, reported defect.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -65,9 +66,9 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.evaluate(async () => {
     const area = document.getElementById('x-switch-textarea-test-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(area, { eager: true });
-    // Built once its work has called back (#1516: not 300ms).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: not 300ms).
+  await settlePage(page, { timeout: 10000 });
 }
 
 // Same setup, but flips the module-level autoInject config on first —
@@ -93,9 +94,9 @@ async function setupNative(page: Page, html: string): Promise<void> {
   await page.evaluate(async () => {
     const area = document.getElementById('x-switch-textarea-native-test-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(area, { eager: true });
-    // Built once its work has called back (#1516: not 300ms).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: not 300ms).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('<div x-switch> — real effects (self-build path, #279)', () => {

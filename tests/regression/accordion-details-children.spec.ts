@@ -27,6 +27,7 @@
  */
 
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 const EXAMPLE = `
   <div id="acc" x-accordion>
@@ -47,9 +48,9 @@ async function render(page: Page) {
   await page.evaluate(async () => {
     const el = document.getElementById('acc-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(el, { eager: true });
-    // Built once its work has called back (#1516: not 250ms).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: not 250ms).
+  await settlePage(page, { timeout: 10000 });
 }
 
 /** Which panels are open, by index. */

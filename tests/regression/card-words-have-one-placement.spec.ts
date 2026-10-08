@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
+import { settlePage } from '../base';
 
 /**
  * ONE WORD, ONE PLACEMENT (#968)
@@ -25,13 +26,15 @@ const CASES = [
 test('the subtitle sits under the title and the description is .x-card__description, on every card that takes both', async ({ page }) => {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.scan, null, { timeout: 20_000 });
-  const results = await page.evaluate(async (cases) => {
+  await page.evaluate(async (cases) => {
     const box = document.createElement('div');
     box.innerHTML = cases.map((c: string, i: number) =>
       `<article id="c${i}" ${c} title="Title" subtitle="The subtitle" description="The description"></article>`).join('');
     document.body.appendChild(box);
     await (window as any).WB.scan(box, { eager: true });
-    await (window as any).WB.settled({ timeout: 5000 });
+  }, CASES);
+  await settlePage(page, { timeout: 5000 });
+  const results = await page.evaluate((cases) => {
     return cases.map((c: string, i: number) => {
       const card = document.getElementById(`c${i}`)!;
       const leaves = (t: string) => [...card.querySelectorAll('*')].filter((e) => e.children.length === 0 && e.textContent!.trim() === t);
@@ -52,14 +55,14 @@ test('the subtitle sits under the title and the description is .x-card__descript
 test('the text between the tags is the card content; no doc or example writes content= on a card', async ({ page }) => {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.scan, null, { timeout: 20_000 });
-  const body = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const box = document.createElement('div');
     box.innerHTML = '<article id="cb" x-cardbutton title="Upgrade" primary="Go">Shared workspaces and SSO.</article>';
     document.body.appendChild(box);
     await (window as any).WB.scan(box, { eager: true });
-    await (window as any).WB.settled({ timeout: 5000 });
-    return document.getElementById('cb')!.textContent;
   });
+  await settlePage(page, { timeout: 5000 });
+  const body = await page.evaluate(() => document.getElementById('cb')!.textContent);
   expect(body).toContain('Shared workspaces and SSO.');
 
   const sources = ['demos/playground.html', 'data/behavior-examples.json', 'scripts/seed-behavior-examples.mjs',

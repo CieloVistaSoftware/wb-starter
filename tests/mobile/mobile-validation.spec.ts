@@ -15,6 +15,7 @@
 import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
+import { settlePage } from '../base';
 
 // Device name is determined at runtime inside each test
 function getDeviceName(): string {
@@ -35,27 +36,30 @@ function getScreenshotDir(): string {
  * Bounded from Playwright's side, not the page's: on WebKit, Home's
  * offline-stand-in MP3 sits at readyState 0 (#1439), and something in this
  * wait never resolved there -- first the `load` event, then the in-page wait
- * itself -- timing every iPhone Home check out at 30s. So the wait runs
- * detached in the page and the test waits at most 10s for it to report done.
- * An arrival that overruns is not this file's failure: the checks below still
- * measure the page as it stands, as the sleeps did.
+ * itself -- timing every iPhone Home check out at 30s. So every step is
+ * raced against one 10s budget on Playwright's side, and a step that overruns
+ * is abandoned (its late result or failure ignored). An arrival that overruns
+ * is not this file's failure: the checks below still measure the page as it
+ * stands, as the sleeps did. The WB wait goes through settlePage (#961), and
+ * only where the page has a runtime to ask, as before.
  */
 async function pageArrived(page: import('@playwright/test').Page): Promise<void> {
-  await page.evaluate(() => {
-    const w = window as any;
-    w.__mvArrived = false;
-    void (async () => {
-      try {
-        await document.fonts.ready;
-        if (typeof w.WB?.settled === 'function') await w.WB.settled({ timeout: 10000 }).catch(() => {});
-        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      } finally {
-        w.__mvArrived = true;
-      }
-    })();
-  });
-  await page.waitForFunction(() => (window as any).__mvArrived === true, null, { timeout: 10000, polling: 100 })
-    .catch(() => {});
+  const deadline = Date.now() + 10000;
+  const within = async <T>(work: Promise<T>): Promise<T | undefined> => {
+    const left = deadline - Date.now();
+    const quiet = work.then((v) => v, () => undefined);
+    if (left <= 0) return undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const out = await Promise.race([quiet, new Promise<undefined>((r) => { timer = setTimeout(() => r(undefined), left); })]);
+    clearTimeout(timer);
+    return out;
+  };
+  const hasWB = await within(page.evaluate(async () => {
+    await document.fonts.ready;
+    return typeof (window as any).WB?.settled === 'function';
+  }));
+  if (hasWB) await within(settlePage(page, { timeout: 10000 }));
+  await within(page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())))));
 }
 
 // ═══════════════════════════════════════════════════════════════

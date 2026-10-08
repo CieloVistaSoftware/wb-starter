@@ -50,8 +50,9 @@ export function sticky(element, options = {}) {
     threshold: options.threshold ?? element.getAttribute('threshold') ?? readAttr(element, 'threshold') ?? null,
     // `stuck-class` first: sticky.schema.json declares stuckClass, which the
     // docs render as stuck-class -- the one spelling not read here (#861).
-    // `class-name` and dataset.class stay as back-compat.
-    stuckClass: options.class ?? authoredAttr(element, 'stuck-class') ?? authoredAttr(element, 'class-name') ?? element.dataset.class ?? 'is-stuck',
+    // dataset.class stays as back-compat (tests/behaviors/sticky.spec.ts).
+    // #879: `class-name` was a third name nobody declared, taught or used.
+    stuckClass: options.class ?? authoredAttr(element, 'stuck-class') ?? element.dataset.class ?? 'is-stuck',
     // #669: the schema, docs and demo all say `animated`; this read only
     // `animate`, and nothing used the result, so animated="false" did nothing.
     // `animated` is the name now, `animate` stays as back-compat, and false

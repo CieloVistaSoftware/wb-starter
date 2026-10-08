@@ -19,8 +19,9 @@ export function toggle(element, options = {}) {
     // unreachable for any element with a class. toggle.schema.json declares
     // only `target`, so nothing justified reading the class attribute.
     class: options.class || authoredAttr(element, 'toggle-class') || 'active',
-    // Support both data-target/data-toggle-target for flexibility
-    target: options.target || element.getAttribute('target') || authoredAttr(element, 'toggle-target'),
+    // #879: `toggle-target` was read as a second name for `target`. No
+    // schema declared it, no doc taught it and no markup used it.
+    target: options.target || element.getAttribute('target'),
     self: options.self ?? (authoredAttr(element, 'toggle-self') !== 'false'),
     ...options
   };

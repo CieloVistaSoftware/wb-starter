@@ -25,6 +25,16 @@
       "type": "string",
       "description": "Selector for drag handle",
       "default": "this is the handle"
+    },
+    "bounds": {
+      "type": "string",
+      "description": "Keeps the element inside an area while it is dragged: `parent`, `viewport`, or a CSS selector for the containing element. Unset, it can be dragged anywhere.",
+      "default": ""
+    },
+    "grid": {
+      "type": "number",
+      "description": "Snaps the dragged position to a grid of this many pixels. 0 moves freely.",
+      "default": 0
     }
   },
   "$view": [],

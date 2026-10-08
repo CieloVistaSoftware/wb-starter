@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function inject(page: Page, html: string) {
   await page.goto('/demos/test-harness.html');
@@ -12,9 +13,9 @@ async function inject(page: Page, html: string) {
     container.innerHTML = markup;
     document.body.appendChild(container);
     await (window as any).WB.scan(container);
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('x-* primary values', () => {

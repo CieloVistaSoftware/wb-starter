@@ -1,5 +1,6 @@
 import { test, expect, Page } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * Badge design system (John: "we need a badge design system this is too
  * plain") — adds `variant="glass"`, `variant="gradient"`, and a `glow`
@@ -147,7 +148,7 @@ test.describe('Badge design system — new variants actually differ', () => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+    await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
     expect(errors).toHaveLength(0);
   });
 

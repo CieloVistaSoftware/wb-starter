@@ -22,6 +22,11 @@
       "default": 1,
       "minimum": 1,
       "maximum": 6
+    },
+    "events": {
+      "type": "string",
+      "description": "Custom event names separated by spaces or commas (e.g. `wb:switch:change`). Adds a live log under the demo that lists each event as it fires, and a code sample showing how to listen for it.",
+      "default": ""
     }
   },
   "$cssAPI": {
