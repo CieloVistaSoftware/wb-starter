@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * #1229 -- John, in the playground: "WB: clock Failed to execute 'add' on
@@ -17,7 +18,7 @@ test('x-clock normalizes its variant, never throws, and its teardown stops the t
   await page.clock.install();
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-  const r = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const host = document.createElement('div');
     host.innerHTML =
       '<div id="ws" x-clock variant="analogue\n    "></div>' +
@@ -26,7 +27,9 @@ test('x-clock normalizes its variant, never throws, and its teardown stops the t
       '<div id="fmt" x-clock format=" 12 " show-seconds="false"></div>';
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await (window as any).WB.settled?.({ timeout: 10000 });
+  });
+  await settlePage(page, { timeout: 10000 });
+  const r = await page.evaluate(async () => {
     const cls = (id: string) => [...document.getElementById(id)!.classList].filter((c) => c.startsWith('x-clock--'));
     const text = document.getElementById('fmt')!.textContent || '';
     // Teardown: the cleanup returned by clock() must clear its own timer.

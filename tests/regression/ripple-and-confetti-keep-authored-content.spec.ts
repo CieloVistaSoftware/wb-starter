@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #654 — `<div x-ripple>text</div>` rendered NOTHING.
  * #655 — `<div x-confetti>` lost its authored text.
@@ -30,7 +31,7 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
     await page.waitForFunction(() => !!document.querySelector('[x-ripple]'), null, { timeout: 30000 });
     // The behavior is attached once WB settles (#1516: not 1500ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const result = await page.evaluate(async () => {
       const rp = document.querySelector('[x-ripple]') as HTMLElement;

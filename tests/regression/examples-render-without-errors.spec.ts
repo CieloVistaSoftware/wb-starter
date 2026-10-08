@@ -26,6 +26,7 @@
  */
 
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /** Noise that is about the test environment, not the example. */
 const IGNORE = [
@@ -107,12 +108,11 @@ test.describe('Examples render clean', () => {
     // the runtime's own "nothing left to build" signal.
     for (const { i, label } of rows) {
       const before = errors.length;
-      await page.evaluate(async (idx) => {
+      await page.evaluate((idx) => {
         const row = document.querySelectorAll('.behaviors-search-results__row')[idx] as HTMLElement;
         row?.click();
-        const WB = (window as any).WB;
-        if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 15000 });
       }, i);
+      await settlePage(page, { timeout: 15000 });
       for (const e of errors.slice(before)) perExample.push(`${label}: ${e}`);
     }
 
@@ -131,15 +131,19 @@ test.describe('Examples render clean', () => {
 
     // logError() is the framework's own channel, surfaced on the Error Log
     // page. The entry John pasted arrived here, not through console.error.
-    const entries = await page.evaluate(async () => {
+    const rowCount = await page.evaluate(() => {
       const rows = [...document.querySelectorAll('.behaviors-search-results__row')].slice(0, 80);
+      (window as any).__wb961Rows = rows;
+      return rows.length;
+    });
+    for (let r = 0; r < rowCount; r++) {
+      await page.evaluate((idx) => ((window as any).__wb961Rows[idx] as HTMLElement).click(), r);
+      // #1111: let the example finish before the next click aborts it.
+      await settlePage(page, { timeout: 15000 });
+    }
+    const entries = await page.evaluate(async () => {
       const found: string[] = [];
       const WB = (window as any).WB;
-      for (const row of rows) {
-        (row as HTMLElement).click();
-        // #1111: let the example finish before the next click aborts it.
-        if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 15000 });
-      }
       // getErrors() is exported by error-logger.js and re-exported on WB in
       // builds that expose it; fall back to the stored log if not.
       try {

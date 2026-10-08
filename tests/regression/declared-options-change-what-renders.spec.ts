@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
+import { settlePage } from '../base';
 
 /**
  * #1279: declared, documented options that rendered exactly like the default.
@@ -28,10 +29,12 @@ test('declared options change what renders (#1279)', async ({ page }) => {
     `<section id="gridAlt" class="probe"><div x-grid columns="1" alt-rows><div>1</div><div>2</div></div></section>`,
   ].join(''));
 
-  const m = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const WB = (window as any).WB;
     for (const s of document.querySelectorAll('section.probe')) await WB.scan(s, { eager: true });
-    await WB.settled?.();
+  });
+  await settlePage(page);
+  const m = await page.evaluate(() => {
     const host = (id: string) => document.getElementById(id)!.firstElementChild as HTMLElement;
     const box = (el: Element) => el.getBoundingClientRect();
     const ratio = (id: string) => { const r = box(host(id)); return r.width / r.height; };

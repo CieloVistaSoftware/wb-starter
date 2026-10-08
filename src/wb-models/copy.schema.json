@@ -19,6 +19,11 @@
       "type": "string",
       "description": "Selector of element to copy from",
       "default": "this is the target"
+    },
+    "toast": {
+      "type": "boolean",
+      "description": "Confirm the copy with a toast notification instead of swapping the element's own text for the feedback message.",
+      "default": false
     }
   },
   "$view": [],

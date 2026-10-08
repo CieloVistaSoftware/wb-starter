@@ -1,4 +1,5 @@
 import { test, expect, newOfflinePage } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 // #1112: one browser context is built in beforeAll and shared by every test
 // below. Playwright stops a context's trace at the end of EACH test, so a
@@ -59,7 +60,7 @@ test.describe('featured', () => {
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 
-    const both = await page.evaluate(async (body) => {
+    await page.evaluate(async (body) => {
       const host = document.createElement('div');
       host.style.cssText = 'width:900px';
       host.innerHTML =
@@ -68,9 +69,11 @@ test.describe('featured', () => {
         `<article id="custom" featured="Deal of the week" ${body}>The north gate is open.</article>`;
       document.body.appendChild(host);
       await (window as any).WB.scan(host, { eager: true });
-      // Built once its work has called back (#1516: no fixed sleep).
-      await (window as any).WB.settled?.({ timeout: 10000 });
+    }, BODY);
+    // Built once its work has called back (#1516: no fixed sleep).
+    await settlePage(page, { timeout: 10000 });
 
+    const both = await page.evaluate(() => {
       const read = (id: string) => {
         const el = document.getElementById(id)!;
         const cs = getComputedStyle(el);
@@ -92,7 +95,7 @@ test.describe('featured', () => {
         };
       };
       return { feat: read('feat'), plain: read('plain'), custom: read('custom') };
-    }, BODY);
+    });
 
     featured = both.feat;
     plain = both.plain;

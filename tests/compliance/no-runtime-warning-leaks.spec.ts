@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import { globSync } from 'glob';
 
+import { settlePage } from '../base';
 /**
  * Release gate: some components (e.g. x-cardfile) intentionally surface a
  * visible in-DOM warning when authored with missing/invalid config, so the
@@ -47,7 +48,7 @@ test.describe('no component authoring-warning strings leak into shipped pages', 
       // out for it -- removed rather than chased further, since nothing
       // here actually needs it).
       // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+      await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
       // Under heavy parallel load, document.body can transiently read null
       // right as a page fragment finishes swapping in (confirmed: a
       // different random subset of pages failed with "Cannot read

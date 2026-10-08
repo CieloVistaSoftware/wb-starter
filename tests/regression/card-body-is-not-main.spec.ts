@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { waitForWB } from '../base';
+import { waitForWB, settlePage } from '../base';
 
 /**
  * #945 -- no <main> inside a card.
@@ -52,7 +52,7 @@ test.describe('a card body is not a <main> (#945)', () => {
     await page.goto(HARNESS);
     await waitForWB(page);
 
-    const result = await page.evaluate(async ({ cards, hosts, common, detect }) => {
+    await page.evaluate(async ({ cards, hosts, common }) => {
       const stage = document.createElement('div');
       // On screen and a real width: the harness runs the lazy runtime, which
       // only builds what it can see.
@@ -61,15 +61,19 @@ test.describe('a card body is not a <main> (#945)', () => {
         `<${tag} x-${name} ${common}>Authored body text</${tag}>`)).join('');
       document.body.appendChild(stage);
       await (window as any).WB.scan(stage, { eager: true });
-      if ((window as any).WB.settled) await (window as any).WB.settled();
+      (window as any).__wb961Stage = stage;
+    }, { cards: CARDS, hosts: HOSTS, common: COMMON });
+    await settlePage(page);
 
+    const result = await page.evaluate((detect) => {
+      const stage = (window as any).__wb961Stage as HTMLElement;
       const offenders = Array.from(stage.querySelectorAll(detect)).map((m) => {
         const host = m.closest('article, section, aside') as HTMLElement;
         const name = Array.from(host.attributes).find((a) => /^x-card/.test(a.name))?.name;
         return `<${host.tagName.toLowerCase()} ${name}> builds <main${m.className ? ` class="${m.className}"` : ''}>`;
       });
       return { offenders, bodies: stage.querySelectorAll('.x-card__body').length };
-    }, { cards: CARDS, hosts: HOSTS, common: COMMON, detect: DETECT });
+    }, DETECT);
 
     expect(result.offenders, `a <main> inside a card is invalid HTML:\n${result.offenders.join('\n')}`).toEqual([]);
     // Not vacuous: the cards did build bodies, as the one class they all share.
@@ -80,7 +84,7 @@ test.describe('a card body is not a <main> (#945)', () => {
     await page.goto(HARNESS);
     await waitForWB(page);
 
-    const result = await page.evaluate(async (detect) => {
+    await page.evaluate(async () => {
       const stage = document.createElement('div');
       stage.style.cssText = 'position:absolute;top:0;left:0;width:640px';
       stage.innerHTML =
@@ -89,8 +93,12 @@ test.describe('a card body is not a <main> (#945)', () => {
         '<footer>Foot</footer></article>';
       document.body.appendChild(stage);
       await (window as any).WB.scan(stage, { eager: true });
-      if ((window as any).WB.settled) await (window as any).WB.settled();
+      (window as any).__wb961Stage = stage;
+    });
+    await settlePage(page);
 
+    const result = await page.evaluate((detect) => {
+      const stage = (window as any).__wb961Stage as HTMLElement;
       const card = document.getElementById('authored')!;
       const body = card.querySelector(':scope > .x-card__body') as HTMLElement | null;
       return {

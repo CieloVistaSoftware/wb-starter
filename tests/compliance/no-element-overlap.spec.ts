@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import { globSync } from 'glob';
 
+import { settlePage } from '../base';
 /**
  * Standard §22 (new) — GitHub #274: "Elements must never visually overlap
  * unless intentionally layered." Scope matches demo-layout-standards.spec.ts's
@@ -95,9 +96,8 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
       // WB.whenIdle() covers the lazy/eager scan; the loop waits for finite animations
       // and transitions to END. Infinite ones (spinners, rainbow) never finish, so
       // they are skipped, not awaited.
+      await settlePage(page, { ifPresent: true });
       await page.evaluate(async () => {
-        const w = window as unknown as { WB?: { whenIdle?: () => Promise<unknown> } };
-        if (w.WB && typeof w.WB.whenIdle === 'function') await w.WB.whenIdle();
         await document.fonts.ready;
         for (let round = 0; round < 5; round += 1) {
           const running = document.getAnimations().filter((a) => {

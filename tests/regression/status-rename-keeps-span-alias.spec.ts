@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -54,8 +55,8 @@ test.describe('status rename keeps the span alias (#1105)', () => {
       box.innerHTML = html;
       document.body.appendChild(box);
       await (window as any).WB.scan(box);
-      await (window as any).WB.settled?.({ timeout: 5000 });
     }, MARKUP);
+    await settlePage(page, { timeout: 5000 });
     await expect(page.locator('#oldDot')).toHaveClass(/x-status--red/);
     const [, , nowDot, oldDot] = await read(page);
     expect(oldDot.background).toBe(nowDot.background);

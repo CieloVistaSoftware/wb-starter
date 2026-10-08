@@ -24,6 +24,7 @@
  */
 
 import { test, expect, type Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /** Alphabetical by month name gives a DIFFERENT order to chronological here. */
 const ROWS = [
@@ -58,9 +59,9 @@ async function buildTable(page: Page): Promise<void> {
   }, html);
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test('sorting a column of rendered dates orders them chronologically', async ({ page }) => {
@@ -120,9 +121,9 @@ test('a column of prose is still sorted as text, not guessed at as dates', async
   });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 
   await page.locator('#prose-sort thead th').first().click();
 

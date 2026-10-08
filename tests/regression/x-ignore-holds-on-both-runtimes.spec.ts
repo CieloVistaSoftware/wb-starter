@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { wbIdle } from '../base';
+import { wbIdle, settlePage } from '../base';
 
 /**
  * #1168 -- x-ignore opts an element out of every behavior, on both runtimes.
@@ -33,14 +33,20 @@ for (const { runtime, url } of CASES) {
     // #1442 recurrence probed at 498ms while site.init() finished at 594ms.
     // wbIdle() now waits for the boot (window.WBSite) before WB.settled().
     await wbIdle(page, { timeout: 30_000 });
-    const result = await page.evaluate(async () => {
+    const whatThePageDid = (err: Error): never => {
+      throw new Error(`${err.message}\n\nWhat the page did (#1442):\n${navigations.join('\n')}\nurl now: ${page.url()}`);
+    };
+    await page.evaluate(async () => {
       const WB = (window as any).WB;
       const host = document.createElement('div');
       host.id = 'probe-1168';
       host.innerHTML = '<span id="ignored" x-chip x-ignore>Ignored</span><span id="control" x-chip>Control</span>';
       document.body.appendChild(host);
       await WB.scan(host, { eager: true });
-      await WB.whenIdle?.({ timeout: 10_000 });
+    }).catch(whatThePageDid);
+    await settlePage(page, { timeout: 10_000 }).catch(whatThePageDid);
+    const result = await page.evaluate(() => {
+      const host = document.getElementById('probe-1168')!;
       const ignored = document.getElementById('ignored')!;
       const control = document.getElementById('control')!;
       const out = {
@@ -50,9 +56,7 @@ for (const { runtime, url } of CASES) {
       };
       host.remove();
       return out;
-    }).catch((err: Error) => {
-      throw new Error(`${err.message}\n\nWhat the page did (#1442):\n${navigations.join('\n')}\nurl now: ${page.url()}`);
-    });
+    }).catch(whatThePageDid);
     expect(result.controlIsChip, 'control: the chip behavior must apply at all, or this test proves nothing').toBe(true);
     expect(result.ignoredClasses, 'x-ignore must keep the chip behavior off').not.toContain('x-chip');
   });

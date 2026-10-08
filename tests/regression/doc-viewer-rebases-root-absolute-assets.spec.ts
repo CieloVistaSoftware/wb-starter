@@ -113,6 +113,6 @@ test('the doc viewer resolves root-absolute doc assets under the deploy base', a
 
     expect([...new Set(notFound)], 'Requests that 404 when the site is served under /wb-starter/.').toEqual([]);
   } finally {
-    await mount.close();
+    await mount.close(page);
   }
 });

@@ -33,6 +33,7 @@
 
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 const DESKTOP = { width: 1427, height: 861 };
 const MOBILE = { width: 375, height: 812 };
 
@@ -67,7 +68,7 @@ async function openBehaviors(page: import('@playwright/test').Page) {
   // diagnoses of this failure were wrong -- a half-built page, the nav rail's
   // max-height, and header.css padding -- and are recorded on #1106 so they are
   // not tried again.
-  await page.evaluate(() => (window as any).WB.whenIdle({ timeout: 15_000 }));
+  await settlePage(page, { timeout: 15_000 });
   await page.evaluate(() => {
     const pageBox = document.querySelector('#mainPage-behaviors');
     return Promise.all((pageBox ? pageBox.getAnimations() : [])
