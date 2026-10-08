@@ -12,6 +12,10 @@ import { test, expect } from '../fixtures/offline';
  * released. demo.js now listens for the control's bubbling `wb:ready` and
  * measures again, so the second commit is the built card's width.
  */
+// #1349: page.route() below holds card.js, and sw.js would otherwise answer
+// that fetch itself, out of Playwright's reach, so the hold would never apply.
+test.use({ serviceWorkers: 'block' });
+
 test('a demo whose control builds after its width commit is measured again (#1759)', async ({ page }) => {
   let release!: () => void;
   const cardJsHeld = new Promise<void>((r) => { release = r; });
