@@ -13,6 +13,9 @@ import { test, expect } from '../fixtures/offline';
  * it is not an artificial state. The demo must end up wide enough for the
  * control it holds.
  */
+// page.route() cannot see a request the service worker answers (#1349).
+test.use({ serviceWorkers: 'block' });
+
 test('a demo grows to fit a control that finishes building after the demo committed (#1759)', async ({ page }) => {
   let releaseCardJs: () => void = () => {};
   const cardJsHeld = new Promise<void>((resolve) => { releaseCardJs = resolve; });
