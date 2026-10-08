@@ -115,6 +115,12 @@
   --x-stagelight-light: hsl(0, 0%, 100%);     /* the beam unless color= is set; was #ffffff */
   --x-stagelight-fixture: hsl(0, 0%, 20%);    /* was #333 */
   --x-stagelight-housing: hsl(0, 0%, 13.333%); /* was #222 */
+  /* x-stagelight's defaults, which its color/size/intensity attributes
+     override per element. They sat on .x-stagelight in the <style>
+     stagelight.js injected, out of css-oop-compliance's sight (#817). */
+  --x-stagelight-color: var(--x-stagelight-light);
+  --x-stagelight-size: 300px;
+  --x-stagelight-intensity: 0.5;
   --x-audio-knob: linear-gradient(180deg, #f8f8ff 0%, #c8c8e0 30%, #8888b0 60%, #5858a0 100%);
   --x-audio-knob-flat: linear-gradient(180deg, #f8f8ff 0%, #8888b0 60%, #5858a0 100%);
   --x-audio-volume-track: linear-gradient(90deg, #1e293b 0%, #334155 100%);

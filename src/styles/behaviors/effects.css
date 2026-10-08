@@ -654,9 +654,7 @@ MARQUEE & RIPPLE
 .x-stagelight {
   position: relative;
   pointer-events: none; /* Let clicks pass through generally */
-  --x-stagelight-color: var(--x-stagelight-light);
-  --x-stagelight-size: 300px;
-  --x-stagelight-intensity: 0.5;
+  /* --x-stagelight-color, -size and -intensity default in themes.css. */
 }
 
 /* === VARIANT: BEAM === */
