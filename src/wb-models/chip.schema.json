@@ -141,7 +141,9 @@
   "events": {
     "wb:chip:remove": {
       "description": "The chip's remove (×) button is clicked, right before the chip removes itself",
-      "detail": {}
+      "detail": {
+        "label": "string"
+      }
     }
   },
   "test": {

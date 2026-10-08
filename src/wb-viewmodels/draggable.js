@@ -55,42 +55,31 @@ export function draggable(element, options = {}) {
   // stylesheet rule (src/core/dynamic-style.js), never the style attribute.
   const place = (x, y) => setRule(element, 'position', { left: `${x}px`, top: `${y}px` });
 
-  // Get bounds
-  const getBounds = () => {
+  // Get bounds, in the same left/top space place() writes. #344: viewport and
+  // parent used to clamp to [0, container - size], which is only right for an
+  // element whose origin is the container's corner. A position:relative
+  // element sits wherever the page flow puts it, so a card halfway down its
+  // parent could not be dragged up at all. The limits are measured instead:
+  // how far the box can move from where it is now to each edge.
+  const boundsRect = () => {
     if (!config.bounds) return null;
-    
-    if (config.bounds === 'viewport') {
-      return {
-        left: 0,
-        top: 0,
-        right: window.innerWidth - element.offsetWidth,
-        bottom: window.innerHeight - element.offsetHeight
-      };
-    }
-    
-    if (config.bounds === 'parent') {
-      const parent = element.parentElement;
-      return {
-        left: 0,
-        top: 0,
-        right: parent.clientWidth - element.offsetWidth,
-        bottom: parent.clientHeight - element.offsetHeight
-      };
-    }
-    
-    const boundsEl = document.querySelector(config.bounds);
-    if (boundsEl) {
-      const boundsRect = boundsEl.getBoundingClientRect();
-      const elementRect = element.getBoundingClientRect();
-      return {
-        left: boundsRect.left - elementRect.left + element.offsetLeft,
-        top: boundsRect.top - elementRect.top + element.offsetTop,
-        right: boundsRect.right - elementRect.left - element.offsetWidth + element.offsetLeft,
-        bottom: boundsRect.bottom - elementRect.top - element.offsetHeight + element.offsetTop
-      };
-    }
-    
-    return null;
+    if (config.bounds === 'viewport') return { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+    const boundsEl = config.bounds === 'parent' ? element.parentElement : document.querySelector(config.bounds);
+    return boundsEl ? boundsEl.getBoundingClientRect() : null;
+  };
+  const getBounds = () => {
+    const outer = boundsRect();
+    if (!outer) return null;
+    const box = element.getBoundingClientRect();
+    const applied = window.getComputedStyle(element);
+    const left = parseFloat(applied.left) || 0;
+    const top = parseFloat(applied.top) || 0;
+    return {
+      left: left - (box.left - outer.left),
+      top: top - (box.top - outer.top),
+      right: left + (outer.right - box.right),
+      bottom: top + (outer.bottom - box.bottom)
+    };
   };
 
   // Constrain position to bounds
