@@ -6,6 +6,72 @@
   ],
   "releases": [
     {
+      "version": "1.0.435",
+      "date": "2026-10-08",
+      "summary": "Card-spacing-standard-13&#39;s footer check read `.x-card__footer` with .first(), whichever card had built its footer first; since #1760 builds lazy pages in slices that was sometimes an x-cardexpandable, whose 0.75rem vertical padding is deliberate, so the check failed about 1 run in 6 on main (&quot;Received: 12&quot;) and on PRs that touch no card code. It now builds the plain Default Card in #card-card in view and measures that card&#39;s footer. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The card footer spacing check measures the standard card&#39;s own footer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d562d3f867214a8a24b4c6738c62c160cda4b4f0\" target=\"_blank\" rel=\"noopener\"><code>d562d3f</code></a>",
+          "issues": [
+            469,
+            1764
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/card-spacing-standard-13.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/card-spacing-standard-13.spec.ts</a> --grep &quot;footer has&quot; --project=regression --repeat-each=30 --workers=6</code>. Before: 5 of 30 failed on main with &quot;card footer padding-top must be ≥16px (1rem)&quot;, Received 12. Now: 30 passed, and lowering .x-card__footer&#39;s padding still fails it (Received 8).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d562d3f867214a8a24b4c6738c62c160cda4b4f0\" target=\"_blank\" rel=\"noopener\"><code>d562d3f</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.434",
+      "date": "2026-10-08",
+      "summary": "On GitHub Pages every page that logged an error also POSTed to api/error-log/append, got 405, and printed a &quot;Failed to load resource&quot; console error next to the error it was logging. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1732\" target=\"_blank\" rel=\"noopener\">#1732</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1739\" target=\"_blank\" rel=\"noopener\">#1739</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Keep the log in localStorage on a static host and never POST</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1732\" target=\"_blank\" rel=\"noopener\">#1732</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1739\" target=\"_blank\" rel=\"noopener\">#1739</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/73e121df0c53927d65245032e7cf1cda336e183d\" target=\"_blank\" rel=\"noopener\"><code>73e121d</code></a>",
+          "issues": [
+            1732,
+            1739
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a> with the devtools Network tab open and run throw new Error(&#39;probe&#39;) in the console. Before: a POST to api/error-log/append answered 405 and the console showed &quot;Failed to load resource&quot;. Now: no request is made and the entry is in localStorage under wb:error-log.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/73e121df0c53927d65245032e7cf1cda336e183d\" target=\"_blank\" rel=\"noopener\"><code>73e121d</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.433",
+      "date": "2026-10-08",
+      "summary": "On <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> a single-item demo&#39;s code panel was painted before its demo committed its width and then grew with a control that finished building late (Windows CI: card-card 407 -&gt; 418 -&gt; 420); a measuring demo&#39;s whole code panel is now kept unseen with opacity: 0 until the single width commit, so its first visible frame is its final width. (A first version used visibility: hidden, which started a never-finishing visibility transition on every copy button inside closed &lt;details&gt; on <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a> and hung the layout specs; opacity starts none.) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1757\" target=\"_blank\" rel=\"noopener\">#1757</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1758\" target=\"_blank\" rel=\"noopener\">#1758</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A measuring demo&#39;s code panel stays unseen until its width commits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1757\" target=\"_blank\" rel=\"noopener\">#1757</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1758\" target=\"_blank\" rel=\"noopener\">#1758</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8607e95e29a71c9ce45d22d60c6b82fc2e60db7a\" target=\"_blank\" rel=\"noopener\"><code>8607e95</code></a>",
+          "issues": [
+            1757,
+            1758
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/code-panels-paint-at-final-width.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/code-panels-paint-at-final-width.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-reveal-starts-no-transitions.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-reveal-starts-no-transitions.spec.ts</a> --project=regression</code>. Before: the panel-width spec failed 20/20 at --repeat-each=10 (&quot;code panels painted before their demo committed its width&quot;). Now: both pass, the reveal starts no transition, and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a>&#39;s layout specs settle.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8607e95e29a71c9ce45d22d60c6b82fc2e60db7a\" target=\"_blank\" rel=\"noopener\"><code>8607e95</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.432",
       "date": "2026-10-08",
       "summary": "The reflow guard for #1319 sometimes failed with &quot;the stranding reflow never fired&quot;, and its &quot;card was built&quot; check could never fail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a>",
