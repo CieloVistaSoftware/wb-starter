@@ -146,13 +146,18 @@ export function dropdown(element, options = {}) {
     menu.classList.toggle('x-dropdown__menu--open', isOpen);
     element.classList.toggle('open', isOpen);
     (trigger || element).setAttribute('aria-expanded', String(isOpen));
+    // #344: dropdown.schema.json declares open and close; only select fired.
+    element.dispatchEvent(new CustomEvent(isOpen ? 'wb:dropdown:open' : 'wb:dropdown:close', { bubbles: true }));
   };
 
   const close = () => {
+    // Outside clicks and Escape call close() on a closed menu too.
+    const wasOpen = isOpen;
     isOpen = false;
     menu.classList.remove('x-dropdown__menu--open');
     element.classList.remove('open');
     (trigger || element).setAttribute('aria-expanded', 'false');
+    if (wasOpen) element.dispatchEvent(new CustomEvent('wb:dropdown:close', { bubbles: true }));
   };
 
   // Click handler
