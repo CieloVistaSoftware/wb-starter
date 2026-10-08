@@ -22,6 +22,11 @@
 | `showClose` | `boolean` | `true` | Show close button |
 | `variant` | `default` · `overlay` · `push` | `overlay` |  |
 
+## Events
+
+- `wb:drawer:open` — Drawer opened
+- `wb:drawer:close` — Drawer closed
+
 ## Methods
 
 - `open()` — Opens the drawer

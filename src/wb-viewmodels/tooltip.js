@@ -355,6 +355,17 @@ export async function tooltip(element, options = {}) {
     setRule(tip, 'position', { top: `${top}px`, left: `${left}px` });
   };
 
+  // #344: tooltip.schema.json declares show and hide; nothing fired them.
+  // Announced when the tip actually appears or starts to go, once each.
+  let announced = false;
+  const announce = (shown) => {
+    if (announced === shown) return;
+    announced = shown;
+    element.dispatchEvent(shown
+      ? new CustomEvent('wb:tooltip:show', { bubbles: true, detail: { content } })
+      : new CustomEvent('wb:tooltip:hide', { bubbles: true, detail: {} }));
+  };
+
   // Show / Hide
   const show = () => {
     if (state.destroyed) return;
@@ -366,6 +377,7 @@ export async function tooltip(element, options = {}) {
     // it back rather than waiting out a removal that is no longer wanted.
     if (state.visible) {
       tip.classList.add('x-tooltip--visible');
+      announce(true);
       return;
     }
 
@@ -376,6 +388,7 @@ export async function tooltip(element, options = {}) {
       void tip.offsetWidth;
       tip.classList.add('x-tooltip--visible');
       state.visible = true;
+      announce(true);
     }, config.delay);
   };
 
@@ -387,6 +400,7 @@ export async function tooltip(element, options = {}) {
     state.hideTimer = setTimeout(() => {
       if (state.destroyed) return;
       tip.classList.remove('x-tooltip--visible');
+      announce(false);
       state.removeTimer = setTimeout(() => {
         if (tip.parentNode) tip.remove();
         state.visible = false;
