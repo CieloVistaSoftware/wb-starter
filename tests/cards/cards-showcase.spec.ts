@@ -547,6 +547,20 @@ test.describe('Cards Showcase Page', () => {
      * animation frame callbacks BEFORE "update intersection observations", so a
      * mutation made in a rAF callback is what the observer sees that frame.
      *
+     * #1761: a rAF tick alone LOST a race ~1 run in 100. buildInView re-scrolls
+     * from inside its OWN rAF callback, which runs AFTER this tick in the same
+     * frame (callbacks run in registration order, and the tick always
+     * re-registers first). So when the page's own load-time reflow pushed the
+     * card out of "near" right after the first scroll, the tick saw it far,
+     * buildInView then scrolled it back into range, and the observer built it
+     * that same frame -- zero strands, `__wb1319` empty, "the stranding reflow
+     * never fired". Measured on a failing run: scroll lands, card 8,273px
+     * below the fold at the next tick, x-ready on the following re-scroll. The
+     * strand therefore ALSO runs synchronously right after the card's own
+     * scrollIntoView(), so no scroll can reach the observer un-stranded; the
+     * tick still covers scrolls that do not go through that method
+     * (Playwright's scrollIntoViewIfNeeded, the old one-scroll form).
+     *
      * It strands STRANDS times and then stops. One scroll followed by a passive
      * wait is therefore permanently stranded (the old form, seen red: `18 x
      * locator resolved to 0 elements`, the same signature as CI run
@@ -595,11 +609,10 @@ test.describe('Cards Showcase Page', () => {
         root.parentElement?.insertBefore(spacer, root);
 
         let used = 0;
-        const tick = () => {
-          // Stops as soon as the strands are spent (or the card builds): after
-          // that this loop has nothing left to do, and a per-frame layout read
-          // on a page this tall is not free.
-          if (used >= strands || el.hasAttribute('x-ready')) return;
+        // Strands the card if it is near enough to build. Returns false once
+        // there is nothing left to do (strands spent, or the card built).
+        const strand = (): boolean => {
+          if (used >= strands || el.hasAttribute('x-ready')) return false;
           const r = el.getBoundingClientRect();
           const near = r.top < window.innerHeight + 1300 && r.bottom > -1300;
           if (near) {
@@ -609,15 +622,34 @@ test.describe('Cards Showcase Page', () => {
             // really pushed it outside the 1200px build margin.
             w.__wb1319!.push(el.getBoundingClientRect().top - window.innerHeight);
           }
-          requestAnimationFrame(tick);
+          return true;
         };
+
+        // #1761: the reflow lands in the same task as the scroll, before any
+        // rAF callback or intersection update can run. An own property on
+        // this one element, so nothing else on the page is affected.
+        const scrollIntoView = el.scrollIntoView;
+        el.scrollIntoView = function (this: Element, ...args: Parameters<Element['scrollIntoView']>) {
+          scrollIntoView.apply(this, args);
+          strand();
+        };
+
+        // Stops as soon as the strands are spent (or the card builds): after
+        // that this loop has nothing left to do, and a per-frame layout read
+        // on a page this tall is not free.
+        const tick = () => { if (strand()) requestAnimationFrame(tick); };
         requestAnimationFrame(tick);
       }, { strands: STRANDS, strandPx: STRAND_PX });
 
       await buildInView(authored);
 
-      const card = page.locator('[x-cardnotification][variant="info"]');
-      await expect(card, 'the stranded card must still end up built').not.toHaveCount(0);
+      // The AUTHORED card itself, by its x-ready stamp. Not a count of
+      // `[x-cardnotification][variant="info"]`: since #969 dropped the
+      // `.x-notification` class from that selector it matches the unbuilt host
+      // too, so a count of it can never be 0 and the old one-scroll form
+      // passed this guard (#1761, measured: stranded 12,897px below the fold,
+      // never built, green).
+      await expect(authored, 'the stranded card must still end up built').toHaveAttribute('x-ready', '');
 
       // GUARD INTEGRITY: prove the strand really happened and really put the
       // card outside the lazy observer's 1200px build margin. Without this the
