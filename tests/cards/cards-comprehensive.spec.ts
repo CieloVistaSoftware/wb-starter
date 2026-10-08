@@ -15,6 +15,7 @@
 
 import { test, expect, Page } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 // Helper to create a test page with WB initialized
 async function createTestPage(page: Page, html: string): Promise<void> {
   // Establish the dev-server origin so the inline `import '/src/core/wb-lazy.js'` resolves
@@ -43,7 +44,7 @@ async function createTestPage(page: Page, html: string): Promise<void> {
   // Wait for WB to initialize
   await page.waitForFunction(() => window.wbReady === true, { timeout: 5000 });
   // Ready means booted; built means its work has called back (#1516: not 300ms).
-  await page.evaluate(() => (window as any).WB.settled?.({ timeout: 10000 }));
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('Base Cards', () => {

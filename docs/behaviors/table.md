@@ -49,6 +49,7 @@ On another element, write `x-table`:
 | `searchable` | `boolean` | `false` | Show a filter input above the table. Alias of filterable. |
 | `copyable` | `boolean` | `false` | Add a control that copies the table as text. |
 | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. |
+| `sortValue` | string, on a body cell | — | The value that cell's column sorts by instead of its text. See [Sorting by something other than the displayed text](#sorting-by-something-other-than-the-displayed-text) below. |
 
 No attribute name carries a dash — only the `x-` behavior prefix does (#1125). This table said `pageSize` until #1344, while `table.schema.json` has always said `pageSize`; the dashed spelling is still read, so existing markup keeps working, but write the camelCase one.
 

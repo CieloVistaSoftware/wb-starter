@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * A REAL VISITOR'S DOM CARRIES NO x-ready (#1094)
@@ -29,13 +30,16 @@ for (const { url, runtime } of PAGES) test(`a page run by ${runtime}, loaded by 
   });
   await page.goto(url);
   await page.waitForFunction(() => (window as any).WB?.scan, null, { timeout: 20_000 });
-  const result = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const box = document.createElement('div');
     box.innerHTML = '<article id="card" title="Ready?">Body</article><button id="btn" x-ripple>Tap</button>';
     document.body.appendChild(box);
     const WB = (window as any).WB;
     await WB.scan(box, { eager: true });
-    await WB.settled({ timeout: 5000 });
+  });
+  await settlePage(page, { timeout: 5000 });
+  const result = await page.evaluate(() => {
+    const WB = (window as any).WB;
     return {
       webdriver: navigator.webdriver,
       stamped: document.querySelectorAll('[x-ready]').length,

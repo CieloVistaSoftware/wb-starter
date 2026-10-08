@@ -31,6 +31,7 @@
 import { test, expect, Page } from '../fixtures/offline';
 import { pagePath } from '../helpers/page-path';
 
+import { settlePage } from '../base';
 /** Ask the page's own detector what it sees. */
 async function duplicates(page: Page): Promise<{ id: string; count: number }[]> {
   return page.evaluate(async () => {
@@ -62,7 +63,7 @@ test.describe('#1340 the site shell mounts once', () => {
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
     // Boot is over when every injection has called back (#1516: not 600ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const counts = await shellCounts(page, SHELL);
     expect(counts, 'the shell is present exactly once').toEqual({ 'app': 1, 'error-template': 1 });
@@ -90,7 +91,7 @@ test.describe('#1340 the site shell mounts once', () => {
     // The navigation is over once home has rendered and its work settled (#1516: not 1200ms).
     await page.waitForFunction(() => !!document.getElementById('mainPage-home'), null, { timeout: 20000 });
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const counts = await shellCounts(page, SHELL);
     expect(counts, 'navigating re-mounted part of the shell').toEqual({ 'app': 1, 'error-template': 1 });
@@ -114,7 +115,7 @@ test.describe('#1340 the site shell mounts once', () => {
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const dups = await duplicates(page);
     expect(dups, `the behaviors page duplicated: ${JSON.stringify(dups)}`).toEqual([]);

@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * demos/site/overlays.html had NO test coverage of its actual functionality
  * before this file -- only tests/compliance/demo-layout-standards.spec.ts
@@ -32,7 +33,7 @@ async function ready(page) {
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   // The page is built once WB settles (#1516: not 1200ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 }
 
 test.describe('demos/site/overlays.html: triggers actually open their overlay', () => {

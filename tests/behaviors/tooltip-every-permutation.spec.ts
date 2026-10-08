@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '../fixtures/offline';
-import { freezeClock, pointerTo } from '../base';
+import { freezeClock, pointerTo, settlePage } from '../base';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -60,8 +60,8 @@ async function trigger(page: Page, attrs: string) {
     if (!host.isConnected) document.body.appendChild(host);
     const WB = (window as any).WB;
     await WB.scan(host, { eager: true });
-    if (WB.whenIdle) await WB.whenIdle({ timeout: 10000 });
   }, attrs);
+  await settlePage(page, { timeout: 10000 });
   return page.locator('#tip-trigger');
 }
 

@@ -131,6 +131,16 @@
       "type": "boolean",
       "description": "Show clear button when has value",
       "default": false
+    },
+    "prefix": {
+      "type": "string",
+      "description": "Text shown inside the field before the value, such as `$`. Takes the place of an `icon` at the start.",
+      "default": ""
+    },
+    "suffix": {
+      "type": "string",
+      "description": "Text shown inside the field after the value, such as `kg`. Takes the place of an `icon` at the end.",
+      "default": ""
     }
   },
   "$view": [

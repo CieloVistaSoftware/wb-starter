@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { buildInView } from '../base';
+import { buildInView, settlePage } from '../base';
 
 /**
  * demos/site/layout.html showcases every documented attribute permutation
@@ -38,7 +38,7 @@ async function ready(page) {
   await page.waitForSelector('.x-header');
   // The auto-inject pass has run once WB settles (#1516: not 400ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 }
 
 // The lazy runtime (#491) builds a host only once it nears the viewport, so

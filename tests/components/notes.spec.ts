@@ -1,5 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
-import { elementReady } from '../base';
+import { elementReady, settlePage } from '../base';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -16,7 +16,7 @@ test.describe('Notes Behavior', () => {
     // identically on a 10s timeout at this line, regardless of what it was
     // actually testing -- pre-existing, unrelated to today's notes.js work.
     // Boot is over once WB settles (#1516: not 100ms).
-    await page.evaluate(() => (window as any).WB.settled?.({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
     
     // Clear localStorage to prevent state interference
     await page.evaluate(() => localStorage.clear());

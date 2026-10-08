@@ -89,6 +89,11 @@ export function input(element, options = {}) {
     // `iconposition` and never matched the kebab spelling.
     const iconPosition = readAttr(element, 'iconPosition', 'start');
     reportIconPositionWithoutIcon(element, icon);
+    // #879: prefix/suffix were honoured only on a native <input> host (below),
+    // so the documented <div x-input> form ignored them. Same rule here as
+    // there: an explicit prefix/suffix takes the place of the icon at its end.
+    const prefix = element.getAttribute('prefix') || '';
+    const suffix = element.getAttribute('suffix') || '';
     const clearable = element.hasAttribute('clearable');
     const disabled = element.hasAttribute('disabled');
     const readonly = element.hasAttribute('readonly');
@@ -126,7 +131,12 @@ export function input(element, options = {}) {
     // Layout: .x-input__wrapper in input.css (#779).
     wrapper.className = 'x-input__wrapper';
 
-    if (icon && iconPosition === 'start') {
+    if (prefix) {
+      const pre = document.createElement('span');
+      pre.className = 'x-input__prefix';
+      pre.textContent = prefix;
+      wrapper.appendChild(pre);
+    } else if (icon && iconPosition === 'start') {
       const iconEl = document.createElement('span');
       iconEl.textContent = icon;
       wrapper.appendChild(iconEl);
@@ -150,7 +160,12 @@ export function input(element, options = {}) {
     // within the wrapper: `.x-input__wrapper > .x-input__field` (#779).
     wrapper.appendChild(realInput);
 
-    if (icon && iconPosition === 'end') {
+    if (suffix) {
+      const suf = document.createElement('span');
+      suf.className = 'x-input__suffix';
+      suf.textContent = suffix;
+      wrapper.appendChild(suf);
+    } else if (icon && iconPosition === 'end') {
       const iconEl = document.createElement('span');
       iconEl.textContent = icon;
       wrapper.appendChild(iconEl);

@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * #1100 -- arriving at a section by its anchor shows it built, not blank.
@@ -23,8 +24,8 @@ test('an anchor jump lands on a built section, not raw markup', async ({ page })
     { timeout: 30_000, message: 'the page never finished building what the anchor jump landed on' },
   ).toBe(true);
 
+  await settlePage(page, { timeout: 20_000 });
   const state = await page.evaluate(async () => {
-    await (window as any).WB.whenIdle({ timeout: 20_000 });
     const vh = window.innerHeight;
     const inView = Array.from(document.querySelectorAll('#cardfile-file-card *')).filter((el) => {
       if (!Array.from(el.attributes).some((a) => a.name.startsWith('x-') && a.name !== 'x-ready')) return false;

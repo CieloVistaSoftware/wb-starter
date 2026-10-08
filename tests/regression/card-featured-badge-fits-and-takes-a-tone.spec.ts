@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * THE FEATURED BADGE FITS, TAKES A TONE, AND THE META BLOCK CLEARS THE EDGE (#1006)
@@ -21,13 +22,17 @@ import { test, expect } from '../fixtures/offline';
 type Badge = { text: string; inset: number; bg: string } | null;
 
 async function render(page: import('@playwright/test').Page, attrs: string) {
-  return page.evaluate(async (a) => {
+  await page.evaluate(async (a) => {
     const host = document.createElement('div');
     host.style.width = '360px';
     host.innerHTML = `<article ${a} title="Ridge loop" subtitle="Moderate" category="Trails" date="2026-08-20" author="Ada Lovelace">Body text.</article>`;
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await (window as any).WB.settled?.({ timeout: 5000 });
+    (window as any).__wb961Host = host;
+  }, attrs);
+  await settlePage(page, { timeout: 5000 });
+  return page.evaluate(() => {
+    const host = (window as any).__wb961Host as HTMLElement;
     const card = host.querySelector('article')!;
     const mark = card.querySelector('mark');
     let badge: Badge = null;
@@ -49,7 +54,7 @@ async function render(page: import('@playwright/test').Page, attrs: string) {
     });
     host.remove();
     return { badge, metaInset: meta.length ? Math.min(...meta) : null };
-  }, attrs);
+  });
 }
 
 test.describe('card featured badge (#1006)', () => {
