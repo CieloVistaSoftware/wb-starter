@@ -6,6 +6,81 @@
   ],
   "releases": [
     {
+      "version": "1.0.418",
+      "date": "2026-10-07",
+      "summary": "Three places guarded &quot;a slower, older run must not paint over a newer one&quot; with their own hand-rolled counter -- site-engine&#39;s _navSeq for navigation (#1519), behaviors.html&#39;s renderSeq for the live panel (#950/#771) and a node-identity check for its doc panel (#1488). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/latest-wins.js\" target=\"_blank\" rel=\"noopener\">src/core/latest-wins.js</a> is now the one implementation: begin() takes a ticket before the first await, run.isCurrent() says whether a newer run has started, and starting a run aborts the previous run&#39;s signal so a superseded fetch is cancelled instead of finishing for nobody. All three use it; the doc panel now aborts its stale fetch and no longer caches an aborted one as &quot;no doc&quot;. It is also exposed as WB.latestWins() on both runtimes, so a page&#39;s classic script can use it without an import. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1729\" target=\"_blank\" rel=\"noopener\">PR 1729</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>One shared latest-wins guard for async jobs a reader can restart</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/30da2cb5f4110ae6bf4c1cf9bb2570dd11262f82\" target=\"_blank\" rel=\"noopener\"><code>30da2cb</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/latest-wins-guard.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/latest-wins-guard.spec.ts</a></code>. Before: no shared guard existed; each feature rolled its own. Now: 5/5 pass (older run made stale and aborted, slower older run does not win, cancel(), both runtimes expose it), and navigation-latest-wins, doc-panel-never-shows-a-stale-doc and behaviors-live-selector still pass on the shared guard.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1d2ef50d42cf0f181dcad6e9156affb7caa3339d\" target=\"_blank\" rel=\"noopener\"><code>1d2ef50</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (stale navigation)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1519\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1519</a>"
+        },
+        {
+          "label": "Related (stale doc)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1488\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1488</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.417",
+      "date": "2026-10-07",
+      "summary": "The 41.89px gaps under the site header, the behaviors panel strip and card headers were not browser defaults. They came from a leftover `header { margin-bottom: var(--space-xl) }` rule in the behaviors page&#39;s stylesheet, which stays loaded after the SPA moves to another page, so it styled every &lt;header&gt; on the site. Its `footer` rule did the same to the site footer. Each gap had been &quot;fixed&quot; by zeroing that one element. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1737\" target=\"_blank\" rel=\"noopener\">PR 1737</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/780\" target=\"_blank\" rel=\"noopener\">#780</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Page stylesheets stop styling every page&#39;s headers, footers and inputs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/780\" target=\"_blank\" rel=\"noopener\">#780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8c703b5bbf8106ed41a0096cab5bd8229f34269b\" target=\"_blank\" rel=\"noopener\"><code>8c703b5</code></a>",
+          "issues": [
+            780
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page and scroll to the bottom. Before: the site footer has a 42px gap above it, centered text and rounded corners. Now: it matches every other page. Then open Components. Before: the default card&#39;s header had a 42px gap under it after visiting Behaviors. Now: 0.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2f1c3769631d29cb04ad7735668aee9363ec5372\" target=\"_blank\" rel=\"noopener\"><code>2f1c376</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.416",
+      "date": "2026-10-07",
+      "summary": "19 behavior schemas, and the docs pages generated from them, promised 47 events that nothing fires (dialog open/close/cancel, tooltip show/hide, audio play/pause, table sort/filter/page, ...), and three named an event the code fires under another name; the check counted them under a ceiling of 56. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1731\" target=\"_blank\" rel=\"noopener\">PR 1731</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Schemas declare only the events their behaviors fire</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c4bf51cad13a78efa0301fa25034fb30353218b9\" target=\"_blank\" rel=\"noopener\"><code>c4bf51c</code></a>",
+          "issues": [
+            344
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fdialog.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/dialog.md</a>, then run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/source-schema-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/source-schema-compliance.spec.ts</a> --project=compliance. Before: the page listed wb:dialog:open, wb:dialog:close and wb:dialog:cancel, none of which a listener would ever receive, and the check allowed 56 such events. Now: it lists wb:dialog:ok, the event the dialog really fires, and the check allows 0.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/564d6bfefd568835c0b01ec7d3d48e889e80e630\" target=\"_blank\" rel=\"noopener\"><code>564d6bf</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.415",
       "date": "2026-10-07",
       "summary": "On 85c5a367 the &quot;Builder del() guard&quot; job waited on an Ubuntu package mirror inside `playwright install --with-deps` for six hours, until GitHub cancelled it, and the PR could not go green. docs-safety.yml was the only workflow whose jobs had no time limit. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1702\" target=\"_blank\" rel=\"noopener\">PR 1702</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a>",
