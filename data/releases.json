@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.438",
+      "date": "2026-10-08",
+      "summary": "The new spec holds card.js with page.route(), and the compliance gate (#1349) requires such a spec to block the service worker: sw.js can answer that fetch itself, out of Playwright&#39;s reach, and the hold would silently not apply. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1767\" target=\"_blank\" rel=\"noopener\">PR 1767</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The late-control spec blocks the service worker</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/003f86ecfb87f03d79eab0d310e3f7b47a45133d\" target=\"_blank\" rel=\"noopener\"><code>003f86e</code></a>",
+          "issues": [
+            1759
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A demo measures again when its control finishes building</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e6cd7b4d36d6599120b2754004952c588bcb6e15\" target=\"_blank\" rel=\"noopener\"><code>e6cd7b4</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/mocked-specs-block-the-service-worker.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/mocked-specs-block-the-service-worker.spec.ts</a>. Before: 1 failed, naming regression/demo-remeasures-a-control-built-late.spec.ts. Now: passed. The spec itself still fails on main&#39;s demo.js (card 65px past the demo&#39;s edge) and passes with the fix.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/52c78a832177390fccd37663f766700655e55012\" target=\"_blank\" rel=\"noopener\"><code>52c78a8</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.437",
       "date": "2026-10-08",
       "summary": "The cards showcase test &quot;notification cards render all variants&quot; could not fail. It counted [x-cardnotification][variant=...] and checked the first was visible, which is true of the authored markup whether or not the behavior ever ran. x-ready did not help either: the runtime stamps it once the behavior returns, built or not. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1766\" target=\"_blank\" rel=\"noopener\">PR 1766</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1763\" target=\"_blank\" rel=\"noopener\">#1763</a>",
