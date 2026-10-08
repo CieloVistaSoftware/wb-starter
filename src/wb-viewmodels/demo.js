@@ -865,14 +865,6 @@ export async function demo(element, options = {}) {
         // throw must never leave a permanently invisible code panel.
         pre.classList.remove('x-demo__code--pending');
     }
-    // #1757: demo.css now keeps a measuring block's whole code panel hidden
-    // until the width commit below swaps the class out. Every measuring path
-    // removes it itself; this is the floor under a throw in between, so the
-    // panel can never stay hidden for good. Well past MAX_MS on purpose: an
-    // early removal would show the uncommitted width.
-    if (element.classList.contains('x-demo--measuring')) {
-        setTimeout(() => element.classList.remove('x-demo--measuring'), 10000);
-    }
 
     // #486: measure the GRID's own rendered width and hand it to demo.css as
     // --x-demo-shrink-width, for single-item demos only (desktop rule in
