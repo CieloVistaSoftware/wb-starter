@@ -306,6 +306,8 @@ export function table(element, options = {}) {
         // pager below owns: a row can be off-page and filtered out at once.
         row.classList.toggle('x-table__row--filtered', !match);
       });
+      // #344: table.schema.json declares filter, sort and page; nothing fired them.
+      element.dispatchEvent(new CustomEvent('wb:table:filter', { bubbles: true, detail: { query: searchInput.value } }));
     };
   }
 
@@ -361,6 +363,9 @@ export function table(element, options = {}) {
         });
         
         dataRows.forEach(row => tbody.appendChild(row));
+        element.dispatchEvent(new CustomEvent('wb:table:sort', {
+          bubbles: true, detail: { column: th.textContent.trim(), direction: sortDir },
+        }));
       };
       
       // Right-click copy
@@ -474,8 +479,10 @@ function buildPager(element, tableEl, pageSize) {
     next.disabled = page >= pages - 1;
   };
 
-  const onPrev = () => { if (page > 0) { page--; render(); } };
-  const onNext = () => { page++; render(); };
+  // The page a reader sees: 1-based, as the status line says it.
+  const announce = () => element.dispatchEvent(new CustomEvent('wb:table:page', { bubbles: true, detail: { page: page + 1 } }));
+  const onPrev = () => { if (page > 0) { page--; render(); announce(); } };
+  const onNext = () => { page++; render(); announce(); };
   prev.addEventListener('click', onPrev);
   next.addEventListener('click', onNext);
   render();

@@ -329,7 +329,14 @@ export function confetti(element, options = {}) {
     }
     
     document.body.appendChild(container);
-    setTimeout(() => { clearRulesIn(container); container.remove(); }, 5000);
+    // #344: confetti.schema.json declares start and end; nothing fired them.
+    // End is when the burst leaves the page, after its longest piece lands.
+    element.dispatchEvent(new CustomEvent('wb:confetti:start', { bubbles: true }));
+    setTimeout(() => {
+      clearRulesIn(container);
+      container.remove();
+      element.dispatchEvent(new CustomEvent('wb:confetti:end', { bubbles: true }));
+    }, 5000);
   };
   
   element.onclick = fire;
@@ -776,7 +783,13 @@ export function fireworks(element, options = {}) {
     }
     
     document.body.appendChild(animContainer);
-    setTimeout(() => { clearRulesIn(animContainer); animContainer.remove(); }, burstMs);
+    // #344: fireworks.schema.json declares start and end; nothing fired them.
+    element.dispatchEvent(new CustomEvent('wb:fireworks:start', { bubbles: true }));
+    setTimeout(() => {
+      clearRulesIn(animContainer);
+      animContainer.remove();
+      element.dispatchEvent(new CustomEvent('wb:fireworks:end', { bubbles: true }));
+    }, burstMs);
   };
 
   element.onclick = fire;
@@ -863,7 +876,13 @@ export function snow(element, options = {}) {
     }
     
     document.body.appendChild(container);
-    setTimeout(() => { clearRulesIn(container); container.remove(); }, fallMs);
+    // #344: snow.schema.json declares start and stop; nothing fired them.
+    element.dispatchEvent(new CustomEvent('wb:snow:start', { bubbles: true }));
+    setTimeout(() => {
+      clearRulesIn(container);
+      container.remove();
+      element.dispatchEvent(new CustomEvent('wb:snow:stop', { bubbles: true }));
+    }, fallMs);
   };
 
   element.onclick = fire;
