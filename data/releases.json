@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.442",
+      "date": "2026-10-08",
+      "summary": "The themes showcase page sized its cards, swatches, chips and radii in px, so they ignored the reader&#39;s browser font-size setting. 32 of those values are now rem, and the px-creep gate&#39;s baseline drops from 545 to 508, so neither these nor the 5 converted since the last status can come back. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1772\" target=\"_blank\" rel=\"noopener\">PR 1772</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The themes page&#39;s sizes are rem, and the px gate holds 508</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/204e93d2dafa07ca4bfbd92c7887d7f73a7af3d0\" target=\"_blank\" rel=\"noopener\"><code>204e93d</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=themes and set the browser&#39;s default font size to 20px. Before: the theme cards, swatches and radii stayed the same size. Now: they grow with the text. At the default 16px nothing moves: all 1,112 elements on the page compute the same size, padding, margin, gap, radius and font-size before and after.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6a7cfb92fae837fe6c3dff5dcc88c466788fe8bf\" target=\"_blank\" rel=\"noopener\"><code>6a7cfb9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.441",
       "date": "2026-10-08",
       "summary": "43 identity classes behaviors add had no stylesheet rule: 19 now carry a visible look (a themed fieldset frame, danger-coloured x-error, muted x-help, a dashed file picker, pointer cursors on click-to-open triggers, hidden line numbers until placed) and 24 are recorded, with reasons, as needing none. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1724\" target=\"_blank\" rel=\"noopener\">#1724</a>",
