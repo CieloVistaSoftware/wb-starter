@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { setupBehaviorTest, setupTestContainer } from '../base';
+import { setupBehaviorTest, setupTestContainer, settlePage } from '../base';
 
 /**
  * #923: a semantic host plus its own family's explicit attribute must render
@@ -93,7 +93,7 @@ test.describe('the same guard holds on the lazy runtime (#923)', () => {
   async function mount(page: any, markup: string) {
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
-    return page.evaluate(async (h: string) => {
+    await page.evaluate(async (h: string) => {
       document.getElementById('dbl')?.remove();
       const c = document.createElement('div');
       c.id = 'dbl';
@@ -103,13 +103,16 @@ test.describe('the same guard holds on the lazy runtime (#923)', () => {
       // container below the fold never initializes -- nothing would render and
       // the test would pass for the wrong reason.
       await (window as any).WB.scan(c, { eager: true });
-      // Built once its work has called back (#1516: no fixed sleep).
-      await (window as any).WB.settled?.({ timeout: 10000 });
+    }, markup);
+    // Built once its work has called back (#1516: no fixed sleep).
+    await settlePage(page, { timeout: 10000 });
+    return page.evaluate(() => {
+      const c = document.getElementById('dbl') as HTMLElement;
       const host = c.firstElementChild as HTMLElement;
       const t = host.getAttribute('title') || '';
       return Array.from(host.querySelectorAll('*'))
         .filter((e) => e.textContent?.trim() === t && !e.querySelector('*')).length;
-    }, markup);
+    });
   }
 
   test('control: a bare semantic tag renders one title', async ({ page }) => {

@@ -22,7 +22,7 @@
 import { test, expect, Page } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
-import { wbIdle } from '../base';
+import { wbIdle, settlePage } from '../base';
 
 /**
  * After a click, key, hover or focus: let the page react, without guessing a
@@ -33,11 +33,8 @@ import { wbIdle } from '../base';
  * not have class") see a wrong state the action produced at once.
  */
 async function afterAction(page: Page): Promise<void> {
-  await page.evaluate(async () => {
-    const wb = (window as any).WB;
-    if (typeof wb?.settled === 'function') await wb.settled({ timeout: 10000 });
-    await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
-  });
+  await settlePage(page, { timeout: 10000 });
+  await page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))));
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

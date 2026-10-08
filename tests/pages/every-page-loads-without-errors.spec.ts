@@ -2,6 +2,7 @@ import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 
+import { settlePage } from '../base';
 /**
  * Every page loads without throwing. The minimum smoke test.
  *
@@ -104,7 +105,7 @@ test.describe('Every page loads without errors', () => {
       // during enhancement lands after load. Waiting only for `load` would
       // miss exactly the class of bug this exists for.
       // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+      await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
 
       // A page that does not EXIST also throws nothing: the missing-page
       // fallback catches the 404, prints a placeholder and raises no console

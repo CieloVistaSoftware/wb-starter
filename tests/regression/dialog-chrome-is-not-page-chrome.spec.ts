@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * A DIALOG'S HEADER AND FOOTER ARE ITS OWN CHROME, NOT THE PAGE'S (#874)
@@ -23,7 +24,7 @@ test.describe('dialog chrome is not page chrome (#874)', () => {
     await page.goto('/demos/test-harness.html', { waitUntil: 'load' });
     await page.waitForFunction(() => !!(window as any).WB?.scan, null, { timeout: 15_000 });
 
-    const chrome = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       const btn = document.createElement('button');
       btn.setAttribute('x-modal', '');
       btn.setAttribute('size', 'sm');
@@ -36,8 +37,10 @@ test.describe('dialog chrome is not page chrome (#874)', () => {
       // Until the dialog is open (#1516: not 50ms).
       const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
       await until(() => !!document.querySelector('dialog[open]'));
-      // Let any auto-inject pass that would reach the chrome finish first.
-      await (window as any).WB.settled?.({ timeout: 5000 });
+    });
+    // Let any auto-inject pass that would reach the chrome finish first.
+    await settlePage(page, { timeout: 5000 });
+    const chrome = await page.evaluate(() => {
       const dialog = document.querySelector('dialog[open]');
       const header = dialog?.querySelector('.x-dialog__header') as HTMLElement | null;
       const footer = dialog?.querySelector('.x-dialog__footer') as HTMLElement | null;

@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { waitForWB } from '../base';
+import { waitForWB, settlePage } from '../base';
 
 /**
  * #350: John reported a card footer's text ("This is the footer") rendering
@@ -127,14 +127,17 @@ for (const { width, height, label } of VIEWPORTS) {
         // same page must -- otherwise this would pass simply because
         // auto-injection had stopped running at all.
         await expect(footer).not.toHaveClass(/\bx-footer\b/);
-        const chrome = await page.evaluate(async () => {
+        await page.evaluate(async () => {
           const bare = document.createElement('footer');
           bare.id = 'footer-repro-chrome-control';
           bare.textContent = 'site chrome footer';
           document.body.appendChild(bare);
           if ((window as any).WB?.scan) await (window as any).WB.scan(bare, { eager: true });
-          // Built once its work has called back (#1516: no fixed sleep).
-          await (window as any).WB.settled?.({ timeout: 10000 });
+        });
+        // Built once its work has called back (#1516: no fixed sleep).
+        await settlePage(page, { timeout: 10000 });
+        const chrome = await page.evaluate(() => {
+          const bare = document.getElementById('footer-repro-chrome-control')!;
           const cls = bare.className;
           bare.remove();
           return cls;

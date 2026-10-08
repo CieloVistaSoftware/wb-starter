@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * Live-reported: docs/V3-GUIDE.md's bare <span x-spinner>/<progress> examples
  * (no size-driving attributes of their own -- a spinner is a small icon,
@@ -30,7 +31,7 @@ test.describe('[x-demo] code panels never collapse to unreadable vertical strips
     // Every demo has built and laid out once WB settles (#1516: not 2000ms).
     // The doc viewer loads WB as a module, so wait for it to exist first.
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const demos = page.locator('[x-demo]');
     const count = await demos.count();

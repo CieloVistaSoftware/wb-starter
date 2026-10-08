@@ -40,6 +40,17 @@ export const ATTRIBUTE_ALIASES = Object.freeze({
   // but the schema build did not, so the schema-built panel opened on its
   // "this is the title"/"this is the content" defaults instead.
   drawer: { title: ['drawer-title', 'heading'], content: ['drawer-content', 'description'] },
+  // #879: each of these was read by its behavior and declared nowhere, so it
+  // worked and nobody could find it. Every one is still taught or written:
+  // docs/behaviors/copy.md and the Behaviors page author `copy-text`;
+  // docs/behaviors/ripple.md teaches the `ripple-*` names;
+  // tests/regression/sticky-animated-false-drops-the-transition.spec.ts keeps
+  // the older `animate="false"` working; docs/behaviors-reference.md titles
+  // tab panels with `tab="Tab 1"`.
+  copy: { text: ['copy-text'] },
+  ripple: { color: ['ripple-color'], duration: ['ripple-duration'], centered: ['ripple-centered'] },
+  sticky: { animated: ['animate'] },
+  tabs: { tabTitle: ['tab'] },
 });
 
 /**

@@ -31,7 +31,12 @@ const CEILING = {
   R3: 0,   // CONSUMED   — declared, documented, inert (the #861 residue). #1526: was 11;
            //              8 of them were read via readAttr, which the audit could not see.
            //              #879, 2026-10-07: 0 measured, so the ceiling is 0.
-  R4: 90,  // DECLARED   — read by code, declared by no schema. #879, 2026-10-07: 90 measured.
+  R4: 37,  // DECLARED   — read by code, declared by no schema. #879, 2026-10-07: 90 measured;
+           //              then 37: 31 declared (25 as schema properties, 6 as registered
+           //              synonyms), 7 dead reads removed, 2 moved off attributes, and 13 that
+           //              are not options (written only, or platform attributes) no longer
+           //              counted. The 37 left belong to behaviors with no schema, to
+           //              namespaced reads #354 has not ruled on, or to schemas open PRs hold.
   R5: 0,   // CENTRAL    — aliases live in the registry, never inline
   R6: 0,   // DISTINCT   — one behavior defined by two schema files. #879, 2026-10-07: 0 measured.
 };

@@ -19,6 +19,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 test.describe('#312 — schema.json is fetched on-demand, not eagerly for every schema', () => {
   test('home page fetches only a handful of schema.json files, not all of them', async ({ page }) => {
     const schemaRequests: string[] = [];
@@ -33,7 +34,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
     // Deferred/lazy schema fetches (scroll-triggered, MutationObserver-driven)
     // have answered once WB settles (#1516: not 1500ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const uniqueSchemaRequests = new Set(schemaRequests);
 
@@ -72,7 +73,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const counts = new Map<string, number>();
     for (const url of schemaRequests) counts.set(url, (counts.get(url) || 0) + 1);
