@@ -29,7 +29,7 @@
     },
     "striped": {
       "type": "boolean",
-      "description": "Shade every other row. Applies to the horizontal variant. Bare attribute.",
+      "description": "Shade every other term and its description, in either layout. Bare attribute.",
       "default": false
     }
   },

@@ -39,7 +39,9 @@ export function dl(element, options = {}) {
     dd.classList.add('x-dl__definition');
 
     // Striped background on every other term/definition pair
-    if (config.striped && horizontal && index % 2 === 0) {
+    // Every other term-and-description pair, in either layout: striped set on a
+    // vertical list used to do nothing (variants-render-differently).
+    if (config.striped && index % 2 === 0) {
       const term = terms[index];
       if (term) {
         term.classList.add('x-dl__term--striped');

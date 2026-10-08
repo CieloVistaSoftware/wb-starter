@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T22:14:45.936Z",
+  "generatedAt": "2026-10-08T23:04:02.981Z",
   "count": 166,
   "schemas": [
     {
@@ -2234,7 +2234,7 @@
         },
         "striped": {
           "type": "boolean",
-          "description": "Shade every other row. Applies to the horizontal variant. Bare attribute.",
+          "description": "Shade every other term and its description, in either layout. Bare attribute.",
           "default": false
         }
       },
