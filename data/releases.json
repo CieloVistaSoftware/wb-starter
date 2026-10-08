@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.443",
+      "date": "2026-10-08",
+      "summary": "On PR #1775&#39;s Windows CI, &quot;size=sm/md/lg/xl/full show increasing visual weight&quot; ran out of its default 30s: the page took 10s to create and the first of its five cards 16s to build behind the fixture&#39;s ~100 images and videos, and every assertion passed at 38s. Nothing in the PR touches that fixture (it does not load <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/behaviors.css\" target=\"_blank\" rel=\"noopener\">pages/behaviors.css</a>). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1775\" target=\"_blank\" rel=\"noopener\">PR 1775</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The five-card portfolio size sweep gets a 60s budget</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ebadc68692f48399a3e1749ae335e68593a0d1a0\" target=\"_blank\" rel=\"noopener\"><code>ebadc68</code></a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The behaviors page&#39;s sizes are rem, and the px gate holds 491</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b8ff6a02fa0eb8b1569a5f87a869fd333540e672\" target=\"_blank\" rel=\"noopener\"><code>b8ff6a0</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/cardportfolio-variant-size-availability.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/cardportfolio-variant-size-availability.spec.ts</a>. Before: on a starved runner, &quot;Test timeout of 30000ms exceeded&quot; with the assertions already passing. Now: the sweep has 60s, the room #1246 gives the other per-card sweeps; locally 6/6 over two repeats.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2601b021ed58e229ed7f3a15b0c2b731fad960ee\" target=\"_blank\" rel=\"noopener\"><code>2601b02</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.442",
       "date": "2026-10-08",
       "summary": "The themes showcase page sized its cards, swatches, chips and radii in px, so they ignored the reader&#39;s browser font-size setting. 32 of those values are now rem, and the px-creep gate&#39;s baseline drops from 545 to 508, so neither these nor the 5 converted since the last status can come back. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1772\" target=\"_blank\" rel=\"noopener\">PR 1772</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
