@@ -22,6 +22,25 @@
   background-color: var(--bg-color);
 }
 
+/* GLOW -- an opt-in theme token (#817). "This whole site glows" is a theme
+   characteristic, not a per-element decision: x-glow is for the one
+   emphasised button, and repeating it on every heading of every page is how
+   a site ends up with some headings glowing and some not. A theme opts in
+   by setting --wb-glow-spread (and, optionally, --wb-glow-strength, 0-1)
+   in its own block, e.g. --wb-glow-spread: 1.6rem; --wb-glow-strength: 0.55.
+   (No literal theme selector here: the theme specs parse this file for them.)
+
+   Off unless a theme sets it. --wb-glow-spread has no fallback on purpose:
+   unset, the declaration is invalid at computed-value time, so headings
+   inherit their text-shadow exactly as they did before this rule existed
+   (not forced to none). :where() keeps it at zero specificity, so any
+   heading rule a page or theme already has still wins. */
+:where([data-theme]) :where(h1, h2, h3) {
+  text-shadow:
+    0 0 calc(var(--wb-glow-spread) * 0.4) currentColor,
+    0 0 var(--wb-glow-spread) color-mix(in srgb, currentColor calc(var(--wb-glow-strength, 0.5) * 100%), transparent);
+}
+
 /* Native button reset — browsers override inherited colors with OS defaults.
    #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
    >=1rem padding on every side of a button's text, and buttons aren't on
