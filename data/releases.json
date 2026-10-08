@@ -6,6 +6,69 @@
   ],
   "releases": [
     {
+      "version": "1.0.415",
+      "date": "2026-10-07",
+      "summary": "On 85c5a367 the &quot;Builder del() guard&quot; job waited on an Ubuntu package mirror inside `playwright install --with-deps` for six hours, until GitHub cancelled it, and the PR could not go green. docs-safety.yml was the only workflow whose jobs had no time limit. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1702\" target=\"_blank\" rel=\"noopener\">PR 1702</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>: docs-safety jobs get a time limit, so a hung apt mirror fails in 20 minutes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d200f36cfc8c21b36ef99bc1c1d7f9fb57b9e0ee\" target=\"_blank\" rel=\"noopener\"><code>d200f36</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: two more load races from the gate runs, x-sticky and the sub-path proxy</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/eb7aa68c2dc8b759b88e9e46b77e4227f57b37c2\" target=\"_blank\" rel=\"noopener\"><code>eb7aa68</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: the behaviors list says when it is final; doc coverage waits for it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ff7475f7655521c6b6c859ebc69fefb9a1d7c1d1\" target=\"_blank\" rel=\"noopener\"><code>ff7475f</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: behavior-doc-coverage re-reads a panel that missed its 10s window</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ffc1eb870b2ef1e937c6946b6bfbc2805f4778c\" target=\"_blank\" rel=\"noopener\"><code>6ffc1eb</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: stop tracking test screenshots; no-element-overlap skips pages with no WB</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a7b8f2898f68f759b544e0374ed200f7442c1ae2\" target=\"_blank\" rel=\"noopener\"><code>a7b8f28</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>SettlePage({ ifPresent }): a page with no WB is skipped, as WB?.settled?.() did</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c178e6f1fdc086eec63229be4fa63dc7a5e1d14f\" target=\"_blank\" rel=\"noopener\"><code>c178e6f</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: one shared settle helper for every spec; two load races fixed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/45f1c766f1d9181559e334d19d80f44c184a7d7c\" target=\"_blank\" rel=\"noopener\"><code>45f1c76</code></a>",
+          "issues": [
+            961
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/.github/workflows/docs-safety.yml\" target=\"_blank\" rel=\"noopener\">.github/workflows/docs-safety.yml</a>. Before: no timeout-minutes, and the job&#39;s log shows apt-get stopping at 19:02 and &quot;The operation was canceled&quot; at 01:02. Now: 10 minutes for the two quick jobs and 20 for the builder guard, which normally takes about five.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/52586565163edd26c8789b404026769adcec9657\" target=\"_blank\" rel=\"noopener\"><code>5258656</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.414",
       "date": "2026-10-07",
       "summary": "90 attributes were read by behavior code but declared by no schema, so options like x-draggable bounds, x-textarea minRows, x-switch themeControl and x-codetheme persist worked but were invisible to the docs, the showcase and autocomplete. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1723\" target=\"_blank\" rel=\"noopener\">#1723</a>",
