@@ -1050,6 +1050,27 @@ export async function demo(element, options = {}) {
                 const POLL_MS = 200;
                 const MAX_MS = 5000;
                 const startedAt = Date.now();
+                // #1759: "settled" means the readings stopped moving, not that
+                // the control is built. A control whose behavior loads after
+                // the commit grows past it: <article size="lg"> committed at
+                // ~387px, then card.js added .x-card--lg (min-width: 420px)
+                // and the card overflowed its demo. Waiting for x-ready would
+                // hold every demo whose children are plain elements that
+                // never get it, so instead, after the commit, any later growth
+                // of the control widens the demo to match. Grow only: the
+                // demo never shrinks again, so it cannot oscillate.
+                const growWithLateControls = (committed, hPad) => {
+                    if (typeof ResizeObserver !== 'function') return;
+                    let current = committed;
+                    const grow = () => {
+                        const needed = Math.ceil(grid.scrollWidth + hPad);
+                        if (needed <= current) return;
+                        current = needed;
+                        setRule(element, 'shrink', { '--x-demo-shrink-width': current + 'px' });
+                    };
+                    const watch = new ResizeObserver(grow);
+                    for (const control of grid.children) watch.observe(control);
+                };
                 const measure = () => {
                     const demoCs = getComputedStyle(element);
                     const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
@@ -1172,6 +1193,7 @@ export async function demo(element, options = {}) {
                         // the only one the reader ever sees.
                         if (pendingShrinkWidth > 0) {
                             setRule(element, 'shrink', { '--x-demo-shrink-width': pendingShrinkWidth + 'px' });
+                            growWithLateControls(pendingShrinkWidth, hPad);
                         }
                         // Lifts demo.css's pre-measure 50vw code cap -- see there.
                         element.classList.remove('x-demo--measuring');
