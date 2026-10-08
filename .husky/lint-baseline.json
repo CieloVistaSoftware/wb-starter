@@ -5,11 +5,11 @@
     "Pre-commit fails only if a STAGED file exceeds its number here.",
     "Numbers fall automatically when you fix things; they never rise on their own.",
     "To raise a number you must run `npm run lint:baseline` deliberately and say why.",
-    "Auto-lowered by 1 on 2026-10-07."
+    "Auto-lowered by 1 on 2026-10-08."
   ],
-  "generated": "2026-10-07",
-  "totalProblems": 306,
-  "filesWithProblems": 138,
+  "generated": "2026-10-08",
+  "totalProblems": 304,
+  "filesWithProblems": 137,
   "files": {
     "scripts/add-site-tests.mjs": 1,
     "scripts/analyze-failures.js": 7,
@@ -138,7 +138,6 @@
     "tests/compliance/project-integrity.spec.ts": 4,
     "tests/compliance/proposed-css-architecture.spec.ts": 1,
     "tests/compliance/schema-validation.spec.ts": 1,
-    "tests/compliance/source-schema-compliance.spec.ts": 1,
     "tests/compliance/terminology-wb-starter.spec.ts": 1,
     "tests/compliance/terminology.spec.ts": 1,
     "tests/regression/article-code.spec.ts": 3,

@@ -147,43 +147,13 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   HEADER ENHANCEMENTS
-   ═══════════════════════════════════════════════════════════════════ */
-header {
-  display: flex;
-  justify-content: space-between;
-  /* flex-start, not center: John asked for the theme control in the
-     header's upper-right corner. Also fixes a real bug this surfaced --
-     this whole flex layout was silently never applying at all, because
-     src/styles/pages/*.css was linked with a bare relative href
-     ("src/styles/pages/behaviors.css"), which only resolves correctly when
-     the page loads at the site root. A direct visit to
-     /pages/behaviors.html (not routed through the SPA) resolves it against
-     /pages/ instead, producing a 404'd, doubled path
-     (/pages/src/styles/pages/behaviors.css) -- silently dropped, no
-     console error. Fixed across all 11 pages/*.html files with this same
-     pattern by making the href root-relative (a leading `/`). */
-  align-items: flex-start;
-  margin-bottom: var(--space-xl, 2rem);
-  padding-bottom: var(--space-lg, 1.5rem);
-  flex-wrap: wrap;
-  gap: var(--space-md, 1rem);
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-.header-subtitle {
-  margin: 0.5rem 0 0 0;
-  font-size: 0.875rem;
-}
-
-#header-content {
-  flex: 1;
-}
+/* #780: a bare `header { margin-bottom: var(--space-xl) ... }` rule lived here,
+   with `header h1`, .header-subtitle and #header-content -- the layout of a page
+   title this page no longer has. It styled EVERY <header> once this stylesheet
+   was loaded, and stayed loaded after the SPA navigated away: 41.89px under the
+   site header and the panel strip (each then zeroed by its own patch), and
+   42px under a card header on Components, which nothing zeroed. Removed, with
+   the two patches that only hid it. */
 
 .nav-links {
   display: flex;
@@ -210,18 +180,18 @@ header h1 {
 /* ═══════════════════════════════════════════════════════════════════
    SECTIONS
    ═══════════════════════════════════════════════════════════════════ */
-section {
+:where(#mainPage-behaviors) section {
   margin-bottom: var(--space-xl, 2rem);
   padding-bottom: var(--space-xl, 2rem);
 }
 
-section h2 {
+:where(#mainPage-behaviors) section h2 {
   margin: var(--space-xl, 2rem) 0 var(--space-lg, 1.5rem);
   padding-bottom: 0.5rem;
   font-size: 1.5rem;
 }
 
-section h3 {
+:where(#mainPage-behaviors) section h3 {
   margin: var(--space-lg, 1.5rem) 0 var(--space-md, 1rem);
   font-size: 1.125rem;
 }
@@ -377,22 +347,22 @@ section h3 {
 /* ═══════════════════════════════════════════════════════════════════
    FOOTER
    ═══════════════════════════════════════════════════════════════════ */
-footer {
+:where(#mainPage-behaviors) footer {
   margin-top: var(--space-xl, 2rem);
   padding: var(--space-xl, 2rem);
   text-align: center;
   border-radius: 12px;
 }
 
-footer p {
+:where(#mainPage-behaviors) footer p {
   margin: 0.5rem 0;
 }
 
-footer a {
+:where(#mainPage-behaviors) footer a {
   text-decoration: none;
 }
 
-footer a:hover {
+:where(#mainPage-behaviors) footer a:hover {
   text-decoration: underline;
 }
 
@@ -400,7 +370,7 @@ footer a:hover {
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  header h1 {
+  :where(#mainPage-behaviors) header h1 {
     font-size: 1.5rem;
   }
 
@@ -414,7 +384,7 @@ footer a:hover {
     font-size: 1rem;
   }
 
-  section h2 {
+  :where(#mainPage-behaviors) section h2 {
     font-size: 1.25rem;
   }
 }
@@ -1521,18 +1491,12 @@ details[open] > .behaviors-live__doc-summary {
                                                     strip and the stage, on top
                                                     of the stage's own 1rem
 
-   Both are inherited element margins (a <header> and a block that picks up a
-   base em-based margin), invisible until the page title above them was removed
-   and there was nothing left to absorb them.
-
-   Zeroed here so the only vertical spacing is the 1rem each container declares
-   for itself. */
+   .behaviors-search's is its own rule's margin-top (var(--space-lg)), zeroed
+   below where it sits in the workspace. The panel strip's came from the bare
+   `header` rule this file used to carry; #780 removed that rule, so the strip
+   has no margin to zero. */
 .behaviors-workspace > .behaviors-search {
   margin-top: 0;
-}
-
-.behaviors-live__head {
-  margin-bottom: 0;
 }
 
 /* =============================================================================
@@ -1630,21 +1594,13 @@ details[open] > .behaviors-live__doc-summary {
    Measured from the site header's bottom edge down, it was 90px in three
    separate pieces — which is why fixing one of them never moved the needle:
 
-     41.89px  <header> carrying an inherited em-based margin-bottom
+     41.89px  <header> margin-bottom from this file's bare `header` rule
      32px     main.site__main padding-top
      16px     #behaviors-hero padding-top   <- the only one I had touched
 
-   That header margin is the same defect already found on .behaviors-search and
-   .behaviors-live__head today: a browser-default element margin nobody set deliberately,
-   invisible while a page had a big heading to absorb it.
-
-   Zeroed globally, because a sticky site header with a 42px bottom margin is
-   wrong on every page, not just this one. The remaining 1rem comes from main,
+   The 41.89px was the bare `header` rule this file carried, not a browser
+   default; #780 removed it at the source. The remaining 1rem comes from main,
    scoped to this page so no other layout shifts. */
-.site__header {
-  margin-bottom: 0;
-}
-
 main.site__main:has(#mainPage-behaviors) {
   padding-top: 1rem;
 }

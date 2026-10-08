@@ -27,14 +27,6 @@ No attribute needed on `<audio>`. Don't add `x-audio` to it (#746).
 | `bass` | `number` | `0` | Bass boost (-12 to 12 dB) |
 | `treble` | `number` | `0` | Treble boost (-12 to 12 dB) |
 
-## Events
-
-- `wb:audio:play` — Playback started
-- `wb:audio:pause` — Playback paused
-- `wb:audio:ended` — Playback ended
-- `wb:audio:volumechange` — Volume changed
-- `wb:audio:eqchange` — EQ band changed
-
 ## Methods
 
 - `play()` — Starts playback

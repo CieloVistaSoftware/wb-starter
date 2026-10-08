@@ -20,11 +20,6 @@
 | `duration` | CSS duration, e.g. `3s` | `1.5s` | Animation duration |
 | `colors` | JSON array of CSS colours | `["#ff0","#f00","#0ff","#f0f"]` | Particle colors as JSON array |
 
-## Events
-
-- `wb:fireworks:start` — Animation started
-- `wb:fireworks:end` — Animation ended
-
 ## Methods
 
 - `fire()` — Triggers fireworks
