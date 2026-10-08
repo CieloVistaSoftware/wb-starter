@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-08T22:04:46.302Z",
-  "count": 161,
+  "generatedAt": "2026-10-08T22:14:45.936Z",
+  "count": 166,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -2204,6 +2204,70 @@
       },
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "dl.schema.json",
+      "name": "dl",
+      "title": "Description list",
+      "description": "Enhances a <dl>: vertical or horizontal layout, borders, striping and spacing.",
+      "tag": "x-dl",
+      "baseClass": "x-dl",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "enum": [
+            "vertical",
+            "horizontal"
+          ],
+          "description": "vertical stacks each term over its description; horizontal puts them side by side.",
+          "default": "vertical"
+        },
+        "gap": {
+          "type": "string",
+          "description": "Space between items (any CSS length).",
+          "default": "0.5rem"
+        },
+        "bordered": {
+          "type": "boolean",
+          "description": "Draw a border around the list. Bare attribute.",
+          "default": false
+        },
+        "striped": {
+          "type": "boolean",
+          "description": "Shade every other row. Applies to the horizontal variant. Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+      }
+    },
+    {
+      "file": "desclist.schema.json",
+      "name": "desclist",
+      "title": "Description list from items",
+      "description": "Fills a <dl> with one term/description pair per entry of its items attribute.",
+      "tag": "x-desclist",
+      "baseClass": "x-desclist",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "A JSON array of {\"term\": ..., \"desc\": ...} objects.",
+          "default": "[]"
+        },
+        "horizontal": {
+          "type": "boolean",
+          "description": "Put each term beside its description instead of above it. Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+      }
     },
     {
       "file": "details.schema.json",
@@ -4779,6 +4843,31 @@
       }
     },
     {
+      "file": "list.schema.json",
+      "name": "list",
+      "title": "List from items",
+      "description": "Fills a <ul> or <ol> with one <li> per entry of its items attribute.",
+      "tag": "x-list",
+      "baseClass": "x-list",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "The entries: a comma-separated list (\"One, Two\") or a JSON array of strings.",
+          "default": ""
+        },
+        "dividers": {
+          "type": "boolean",
+          "description": "Draw a divider between items. Bare attribute.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+      }
+    },
+    {
       "file": "mark.schema.json",
       "name": "mark",
       "title": "Mark",
@@ -5297,6 +5386,51 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "ol.schema.json",
+      "name": "ol",
+      "title": "Ordered list",
+      "description": "Enhances an <ol>: stepped and timeline variants, number style, start number, indent and item spacing.",
+      "tag": "x-ol",
+      "baseClass": "x-ol",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "stepped",
+            "timeline"
+          ],
+          "description": "List style. stepped draws numbered step badges; timeline draws a connected timeline.",
+          "default": "default"
+        },
+        "numberType": {
+          "type": "string",
+          "description": "CSS list-style-type for the numbers (decimal, lower-alpha, upper-roman, ...). Ignored by the stepped and timeline variants, which draw their own.",
+          "default": "decimal"
+        },
+        "start": {
+          "type": "number",
+          "description": "Number of the first item.",
+          "default": 1
+        },
+        "gap": {
+          "type": "string",
+          "description": "Space between items (any CSS length).",
+          "default": "0.5rem"
+        },
+        "indentSize": {
+          "type": "string",
+          "description": "Left indent of the list (any CSS length). Ignored by the stepped and timeline variants.",
+          "default": "1.5rem"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
       }
     },
     {
@@ -8772,6 +8906,47 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "ul.schema.json",
+      "name": "ul",
+      "title": "Unordered list",
+      "description": "Enhances a <ul>: checklist and icon-list variants, marker style, indent and item spacing.",
+      "tag": "x-ul",
+      "baseClass": "x-ul",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "enum": [
+            "default",
+            "checklist",
+            "icon-list",
+            "none"
+          ],
+          "description": "List style. checklist ticks items marked `checked`; icon-list uses each item's `icon`; none hides the markers.",
+          "default": "default"
+        },
+        "marker": {
+          "type": "string",
+          "description": "CSS list-style-type for the bullets (disc, circle, square, ...). Ignored by the checklist, icon-list and none variants, which draw their own.",
+          "default": "disc"
+        },
+        "gap": {
+          "type": "string",
+          "description": "Space between items (any CSS length).",
+          "default": "0.5rem"
+        },
+        "indentSize": {
+          "type": "string",
+          "description": "Left indent of the list (any CSS length). Ignored by the checklist, icon-list and none variants.",
+          "default": "1.5rem"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+        "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
       }
     },
     {

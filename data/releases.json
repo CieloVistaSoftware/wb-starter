@@ -6,6 +6,97 @@
   ],
   "releases": [
     {
+      "version": "1.0.446",
+      "date": "2026-10-08",
+      "summary": "Missing-schema-is-a-quiet-404.spec.ts used desclist as one of its three behaviors with no schema; this PR gives desclist a schema, so its &quot;answers a plain 404&quot; case failed on CI. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1776\" target=\"_blank\" rel=\"noopener\">PR 1776</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Desclist has a schema now, so it is no longer a missing-schema case</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fa09723641550dc7b70069aa8393c5a4270afad6\" target=\"_blank\" rel=\"noopener\"><code>fa09723</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Schemas for ul, ol, dl, list and desclist</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ea024a4cff5bea4941df874ec642226609f1a156\" target=\"_blank\" rel=\"noopener\"><code>ea024a4</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/missing-schema-is-a-quiet-404.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/missing-schema-is-a-quiet-404.spec.ts</a> --project=regression. Before: &quot;desclist.schema.json answers a plain 404&quot; failed (the file now exists and returns 200). Now: 3 passed, checking empty and json, which still have none.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9a1e16b8e13d3bed0f9bf63fb5e66f5178890c52\" target=\"_blank\" rel=\"noopener\"><code>9a1e16b</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.445",
+      "date": "2026-10-08",
+      "summary": "Stagelight&#39;s default colour, size and intensity are defined with the other theme tokens, not inside the effects stylesheet. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1771\" target=\"_blank\" rel=\"noopener\">PR 1771</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/817\" target=\"_blank\" rel=\"noopener\">#817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-stagelight&#39;s default variables live in themes.css</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/817\" target=\"_blank\" rel=\"noopener\">#817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/10524eb43043e0dd5c13388d23cb152dcbbe00ae\" target=\"_blank\" rel=\"noopener\"><code>10524eb</code></a>",
+          "issues": [
+            817
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Demo.js does not parse on main -- drop the second fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/53f0d81afa68aabbfc28347cb197908311af21e8\" target=\"_blank\" rel=\"noopener\"><code>53f0d81</code></a>",
+          "issues": [
+            1759
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Every effect&#39;s CSS comes from effects.css, none is injected</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/817\" target=\"_blank\" rel=\"noopener\">#817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/28d58d5c799215b40f57d27c5deb438036020a9a\" target=\"_blank\" rel=\"noopener\"><code>28d58d5</code></a>",
+          "issues": [
+            817
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Move stagelight&#39;s CSS into effects.css and add an opt-in glow theme token</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/817\" target=\"_blank\" rel=\"noopener\">#817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/985b4ac720c7d3690a987b5a465c2b9e743dccec\" target=\"_blank\" rel=\"noopener\"><code>985b4ac</code></a>",
+          "issues": [
+            817
+          ]
+        }
+      ],
+      "seeIt": "Run node --check on <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-viewmodels/demo.js\" target=\"_blank\" rel=\"noopener\">src/wb-viewmodels/demo.js</a> copied to a .mjs file. Before: &quot;SyntaxError: Identifier &#39;committed&#39; has already been declared&quot; at line 1230. Now: it parses, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-remeasures-a-control-built-late.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-remeasures-a-control-built-late.spec.ts</a> passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cdfddbe32a28aeabc28a9a1cdaefc248476b40f2\" target=\"_blank\" rel=\"noopener\"><code>cdfddbe</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.444",
+      "date": "2026-10-08",
+      "summary": "Transitions.css repeated `transition: none !important; (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1774\" target=\"_blank\" rel=\"noopener\">PR 1774</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Transitions.css reduced-motion block without !important</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/658db22faed50c28c56b9a883553b9238d445146\" target=\"_blank\" rel=\"noopener\"><code>658db22</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/reduced-motion-without-important.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/reduced-motion-without-important.spec.ts</a></code>. Before: the nav and page stayed still under reduced motion only because of two !important flags in transitions.css. Now: they stay still with no !important, and the spec checks it with the preference really on.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a2260fa22d48dd019e5c1d8b677854a5e8ed1381\" target=\"_blank\" rel=\"noopener\"><code>a2260fa</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.443",
       "date": "2026-10-08",
       "summary": "On PR #1775&#39;s Windows CI, &quot;size=sm/md/lg/xl/full show increasing visual weight&quot; ran out of its default 30s: the page took 10s to create and the first of its five cards 16s to build behind the fixture&#39;s ~100 images and videos, and every assertion passed at 38s. Nothing in the PR touches that fixture (it does not load <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/behaviors.css\" target=\"_blank\" rel=\"noopener\">pages/behaviors.css</a>). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1775\" target=\"_blank\" rel=\"noopener\">PR 1775</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
