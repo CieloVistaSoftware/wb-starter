@@ -49,7 +49,7 @@ export function range(element, options = {}) {
   // the behaviors page rendered the same bare div. On a container host, build
   // the real slider inside it and enhance that, reading the host's options.
   if (element.tagName !== 'INPUT') {
-    let input = element.querySelector(':scope > input[type="range"], :scope > .x-range-wrapper > input[type="range"]');
+    let input = element.querySelector(':scope > input[type="range"], :scope > .x-range__wrapper > input[type="range"]');
     if (!input) {
       input = document.createElement('input');
       input.type = 'range';
@@ -81,7 +81,7 @@ export function range(element, options = {}) {
     wrapper = document.createElement('div');
     // Layout for the wrapper, value and labels is in input.css (#779: it was
     // written onto each element's style attribute).
-    wrapper.className = 'x-range-wrapper';
+    wrapper.className = 'x-range__wrapper';
 
     moveKeepingFocus(element, () => {   // #961
       element.parentNode.insertBefore(wrapper, element);
@@ -91,7 +91,7 @@ export function range(element, options = {}) {
     // Value display
     if (config.showValue) {
       valueDisplay = document.createElement('output');
-      valueDisplay.className = 'x-range-value';
+      valueDisplay.className = 'x-range__value';
       valueDisplay.textContent = `${config.valuePrefix}${element.value}${config.valueSuffix}`;
       wrapper.insertBefore(valueDisplay, element);
     }
@@ -99,7 +99,7 @@ export function range(element, options = {}) {
     // Min/Max labels
     if (config.showLabels) {
       const labelsContainer = document.createElement('div');
-      labelsContainer.className = 'x-range-labels';
+      labelsContainer.className = 'x-range__labels';
 
       minLabel = document.createElement('span');
       minLabel.textContent = element.min || '0';

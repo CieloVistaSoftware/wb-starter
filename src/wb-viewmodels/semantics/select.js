@@ -55,9 +55,9 @@ export function select(element, options = {}) {
     element.parentNode.insertBefore(searchBoxFor(element, element.getAttribute('aria-label') || ''), element);
   }
 
-  if (clearable && !element.parentElement?.classList.contains('x-select-clearable')) {
+  if (clearable && !element.parentElement?.classList.contains('x-select__clearable')) {
     const wrapper = document.createElement('div');
-    wrapper.className = 'x-select-clearable';
+    wrapper.className = 'x-select__clearable';
     moveKeepingFocus(element, () => {   // #961
       if (element.parentNode) {
         element.parentNode.insertBefore(wrapper, element);

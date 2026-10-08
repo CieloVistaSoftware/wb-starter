@@ -2536,8 +2536,11 @@ export function cardexpandable(element, options = {}) {
       detail: { expanded: isExpanded }
     }));
     // A collapse that leaves the height unchanged fires no ResizeObserver
-    // callback, so re-measure once the new state has laid out (#1598).
-    requestAnimationFrame(updateNothingToExpand);
+    // callback, so re-measure once the new state has laid out (#1598) --
+    // but only once the content's transition has settled (#1727). Mid-
+    // collapse the box is still tall enough to hold everything, and measuring
+    // then hid the very button that had just been clicked.
+    remeasureWhenSettled();
   };
 
   btn.onclick = toggle;
@@ -2556,9 +2559,22 @@ export function cardexpandable(element, options = {}) {
   // ResizeObserver re-measures when the width or content changes, so the
   // toggle comes back once there is something to reveal. Expanded, the button
   // stays: it is how the card collapses again.
+  let settling = false;
   const updateNothingToExpand = () => {
-    if (isExpanded) return;
+    if (isExpanded || settling) return;
     element.classList.toggle('x-card--nothing-to-expand', contentWrap.scrollHeight <= contentWrap.clientHeight + 1);
+  };
+  // getAnimations() flushes style, so the transition the toggle just started
+  // is already listed. With none (reduced motion, no height change), the next
+  // frame is settled.
+  const remeasureWhenSettled = () => {
+    const running = contentWrap.getAnimations();
+    if (!running.length) { requestAnimationFrame(updateNothingToExpand); return; }
+    settling = true;
+    Promise.all(running.map((a) => a.finished.catch(() => {}))).then(() => {
+      settling = false;
+      updateNothingToExpand();
+    });
   };
   const overflowObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(updateNothingToExpand) : null;
   overflowObserver?.observe(contentWrap);

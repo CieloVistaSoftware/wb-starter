@@ -123,12 +123,12 @@ async function render(page: Page, markup: string[]): Promise<Observed[]> {
   return page.evaluate(() => {
     const out: Observed[] = [];
     for (const input of Array.from(document.querySelectorAll('#range-area input[type="range"]'))) {
-      const wrapper = input.closest('.x-range-wrapper');
-      const valueEl = wrapper?.querySelector('.x-range-value') || null;
+      const wrapper = input.closest('.x-range__wrapper');
+      const valueEl = wrapper?.querySelector('.x-range__value') || null;
       out.push({
         id: input.id,
         hasValue: !!valueEl,
-        hasLabels: !!wrapper?.querySelector('.x-range-labels'),
+        hasLabels: !!wrapper?.querySelector('.x-range__labels'),
         valueText: valueEl ? (valueEl.textContent || '') : '',
       });
     }

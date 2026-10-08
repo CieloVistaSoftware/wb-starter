@@ -2335,7 +2335,7 @@
         if (el.id) return;
         // The bare root belongs to the example root -- but only if nothing
         // holds it yet. Some behaviors WRAP their element after the fact
-        // (audio.js builds a .x-audio-host around the <audio>), so on the
+        // (audio.js builds a .x-audio--host around the <audio>), so on the
         // second pass the new wrapper is firstElementChild while the original
         // already carries `root`. Handing it out twice would put a duplicate
         // id in the document and break the very selector the snippet teaches.

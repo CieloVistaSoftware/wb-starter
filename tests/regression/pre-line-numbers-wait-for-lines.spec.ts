@@ -26,7 +26,7 @@ test('line numbers are not marked placed while the code is still on one row', as
     document.getElementById('main')!.prepend(pre);
     await WB.scan(pre.parentElement, { eager: true });
     for (let i = 0; i < 6; i++) await new Promise((r) => requestAnimationFrame(r));
-    const wrapper = pre.closest('.x-pre-wrapper')!;
+    const wrapper = pre.closest('.x-pre__wrapper')!;
     return {
       numbers: wrapper.querySelectorAll('.x-pre__line-numbers > div').length,
       placed: wrapper.querySelectorAll('.x-pre__line-number--placed').length,
@@ -38,10 +38,10 @@ test('line numbers are not marked placed while the code is still on one row', as
   // Let it lay out as lines: now every number is placed, each on its own line.
   await page.evaluate(() => document.getElementById('one-row-pre')!.style.removeProperty('white-space'));
   await page.waitForFunction(() =>
-    document.getElementById('one-row-pre')!.closest('.x-pre-wrapper')!
+    document.getElementById('one-row-pre')!.closest('.x-pre__wrapper')!
       .querySelectorAll('.x-pre__line-number--placed').length === 3);
   const tops = await page.evaluate(() => {
-    const wrapper = document.getElementById('one-row-pre')!.closest('.x-pre-wrapper')!;
+    const wrapper = document.getElementById('one-row-pre')!.closest('.x-pre__wrapper')!;
     return Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')).map((n) => Math.round(n.getBoundingClientRect().top));
   });
   expect(new Set(tops).size, `line numbers stacked: ${tops.join(', ')}`).toBe(3);
