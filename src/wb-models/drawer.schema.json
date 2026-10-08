@@ -246,5 +246,13 @@
     "icon": "📜",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:drawer:open": {
+      "description": "Drawer opened"
+    },
+    "wb:drawer:close": {
+      "description": "Drawer closed"
+    }
   }
 }

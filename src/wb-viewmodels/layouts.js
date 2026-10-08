@@ -767,6 +767,8 @@ export function drawerLayout(element, options = {}) {
       const restoredSize = element.dataset.originalSize || (isVertical ? config.height : config.width);
       setSize(restoredSize);
     }
+    // #344: drawerLayout.schema.json declares this event; nothing fired it.
+    element.dispatchEvent(new CustomEvent('wb:drawerLayout:toggle', { bubbles: true, detail: { collapsed: isCollapsed } }));
   };
 
   // Expose toggle function on element

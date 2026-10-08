@@ -38,6 +38,10 @@ write a `<select>` with `<option>` children
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `success` · `error` | `default` |  |
 
+## Events
+
+- `wb:select:change` — Selection changed
+
 ## Methods
 
 - `getValue()` — Gets selected value(s)

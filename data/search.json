@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 304,
-    "totalWords": 5965
+    "totalWords": 5971
   },
   "documents": [
     {
@@ -1132,7 +1132,7 @@
       "content": "# WB-Starter Reference > **This is the cross-behavior INDEX, not the per-behavior documentation.** > Every behavior now has its own page, generated from its schema, at > `docs/behaviors/ .md` — e.g. [button](behaviors/button.md), > [ripple](behaviors/ripple.md), [tooltip](behaviors/tooltip.md). Each of those > pages opens by stating which of the two behavior types it is (decorates a > semantic element vs. adds a new capability) and how to write it. Go there for > attributes, events and examples; this page is for *browsing what exists* and > for the shared syntax/auto-injection/event rules below. > > Reach this page from an `x-demo` 📖 badge? That means the behavior has no > page of its own yet — find its row in the tables below (#842). This document lists all available behaviors in the WB Starter kit, categorized by function. --- ## What is a Behavior? A **behavior** is a JavaScript function that **enhances** an HTML element by adding: - CSS classes (styling hooks) - Inline styles (visual enhancement) - Event listeners (interactivity) - ARIA attributes (accessibility) - Data attributes (state tracking) A behavior does **NOT** change what the element fundamentally is - it enhances it. --- ## Syntax & Usage Behaviors are applied using attributes with a configurable prefix (default: `x-`). ### 1. Decoration (`x-{behavior}`) Enhances an element without changing its fundamental structure. Click Me Hover Me | Element | Behavior | Result | |---------|----------|--------| | ` ` | `button` | Button with variants, sizes, loading state | | ` ` | `table` | Table with sorting, striping, hover | | ` ` | `details` | Details with smooth animation | | ` ` | `dialog` | Dialog with backdrop, animations | | ` ` | `img` | Lazy loading, fade-in, lightbox | ### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783) There is no `-as-` infix any more. A behavior that builds out a behavior's internals is applied exactly like any other: the attribute name **is** the behavior name, and on a semantic element it is injected for you. Title Content | Element | Behavior | Written as | |---------|----------|------------| | ` ` | `card` | ` ` (auto-injected) or ` ` | | ` ` | `navbar` | ` ` (auto-injected) or ` ` | | ` ` | `sidebar` | ` ` (auto-injected) or ` ` | ### 3. Configuration (Optional) If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally. ```javascript // In your main entry point WB.init({ prefix: 'b' // Changes syntax to b-ripple, b-card, etc. }); ``` --- ## Auto Injection Behaviors can be configured to automatically attach to standard HTML5 semantic elements. It is **on by default** (`autoInject: true` in src/core/config.js). To opt a page out, pass `{ autoInject: false }` to `WB.init()`; to opt one element out, give it `x-ignore`. When enabled, plain semantic elements like ` ` and ` ` below get the `dialog`/`img` behaviors attached automatically, with no `x-` attribute needed: Auto-decorated dialog (zero x- attributes): Auto-decorated dialog content. --- ## Categories ### 1. Semantic HTML & Forms Enhances standard HTML elements with better styling and functionality. | Behavior | Element | Type | Description | |----------|---------|------|-------------| | [`audio`](behaviors/audio.md) | ` ` | Decorate | Enhanced audio player styling | | [`video`](behaviors/video.md) | ` ` | Decorate | Enhanced video player styling | | [`img`](behaviors/img.md) | ` ` | Decorate | Lazy loading, fade-in, lightbox | | [`figure`](behaviors/figure.md) | ` ` | Decorate | Figure with caption styling | | [`table`](behaviors/table.md) | ` ` | Decorate | Sortable headers, striped rows | | [`code`](behaviors/code.md) | ` ` | Decorate | Inline code styling | | [`pre`](behaviors/pre.md) | ` ` | Decorate | Code block with copy button | | [`input`](behaviors/input.md) | ` ` | Decorate | Styled input with variants | | [`textarea`](behaviors/textarea.md) | ` ` | Decorate | Auto-resize, counter | | [`select`](behaviors/select.md) | ` ` | Decorate | Custom dropdown styling | | [`checkbox`](behaviors/checkbox.md) | ` ` | Decorate | Custom checkbox styling | | [`radio`](behaviors/radio.md) | ` ` | Decorate | Custom radio styling | | [`button`](behaviors/button.md) | ` ` | Decorate | Variants, sizes, loading state | | [`switch`](behaviors/switch.md) | ` ` | Decorate | Toggle switch UI | | [`range`](behaviors/range.md) | ` ` | Decorate | Custom track/thumb styling | | [`rating`](behaviors/rating.md) | ` ` | - | Star rating input | | [`form`](behaviors/form.md) | ` ` | Decorate | Validation UI, loading states | | [`details`](behaviors/details.md) | ` ` | Decorate | Smooth expand/collapse animation | | [`dialog`](behaviors/dialog.md) | ` ` | Decorate | Backdrop, close button, animations | | [`fieldset`](behaviors/fieldset.md) | ` ` | Decorate | Groups related form controls | | [`formrow`](behaviors/formrow.md) | ` ` | - | Form field wrapper laid out as a row | | [`inputgroup`](behaviors/inputgroup.md) | ` ` | - | Input joined with prepend",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/behaviors/accordion",
@@ -1204,7 +1204,7 @@
       "title": "audio",
       "description": null,
       "headings": [],
-      "content": "# Audio A bare ` ` gets a styled player with a track display, a play button and, when `showEq` is set, a 15-band graphic equaliser with bass and treble controls. Write the native element with `src` and `controls`; the behavior adds the rest around it. ## Usage No attribute needed on ` `. Don't add `x-audio` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3` | Audio source URL | | `volume` | `number` | `0.8` | Initial volume (0-1) | | `loop` | `boolean` | `false` | Loop playback | | `autoplay` | `boolean` | `false` | Auto-play (requires muted) | | `muted` | `boolean` | `false` | Start muted | | `showEq` | `boolean` | `false` | Show 15-band equalizer | | `showDisplay` | `boolean` | `true` | Show Marantz-style URL/track display with scrolling text | | `showPlayButton` | `boolean` | `true` | Show a visible custom play/pause button | | `bass` | `number` | `0` | Bass boost (-12 to 12 dB) | | `treble` | `number` | `0` | Treble boost (-12 to 12 dB) | ## Methods - `play()` — Starts playback - `pause()` — Pauses playback - `stop()` — Stops and resets - `toggle()` — Toggles play/pause - `setVolume()` — Sets volume - `getVolume()` — Gets volume - `setBand()` — Sets EQ band gain - `applyPreset()` — Applies EQ preset - `resetEq()` — Resets all EQ bands to 0 Schema: [`audio.schema.json`](../../src/wb-models/audio.schema.json)",
+      "content": "# Audio A bare ` ` gets a styled player with a track display, a play button and, when `showEq` is set, a 15-band graphic equaliser with bass and treble controls. Write the native element with `src` and `controls`; the behavior adds the rest around it. ## Usage No attribute needed on ` `. Don't add `x-audio` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3` | Audio source URL | | `volume` | `number` | `0.8` | Initial volume (0-1) | | `loop` | `boolean` | `false` | Loop playback | | `autoplay` | `boolean` | `false` | Auto-play (requires muted) | | `muted` | `boolean` | `false` | Start muted | | `showEq` | `boolean` | `false` | Show 15-band equalizer | | `showDisplay` | `boolean` | `true` | Show Marantz-style URL/track display with scrolling text | | `showPlayButton` | `boolean` | `true` | Show a visible custom play/pause button | | `bass` | `number` | `0` | Bass boost (-12 to 12 dB) | | `treble` | `number` | `0` | Treble boost (-12 to 12 dB) | ## Events - `wb:audio:play` — Playback started - `wb:audio:pause` — Playback paused - `wb:audio:ended` — Playback ended - `wb:audio:volumechange` — Volume changed - `wb:audio:eqchange` — EQ band changed ## Methods - `play()` — Starts playback - `pause()` — Pauses playback - `stop()` — Stops and resets - `toggle()` — Toggles play/pause - `setVolume()` — Sets volume - `getVolume()` — Gets volume - `setBand()` — Sets EQ band gain - `applyPreset()` — Applies EQ preset - `resetEq()` — Resets all EQ bands to 0 Schema: [`audio.schema.json`](../../src/wb-models/audio.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1391,7 +1391,7 @@
       "title": "cardlink",
       "description": null,
       "headings": [],
-      "content": "# Link Card `x-cardlink` renders a card that is itself a link to `href`: the whole surface is clickable and keyboard-focusable, with a title, description, optional icon and badge. Use it for navigation tiles. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `href` | URL | `https://example.com` | Link destination URL | | `title` | text | — | Card title | | `description` | text | — | Card description text | | `icon` | emoji or icon name | — | Icon (emoji or icon name) | | `badge` | text | — | Badge text | | `target` | `_self` · `_blank` | `_self` | Link target | | `variant` | `default` · `elevated` · `bordered` · `minimal` · `glass` | `default` | Visual style variant | ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles visibility - `navigate()` — Triggers navigation to href - `setHref()` — Updates the href ## Accessibility - **role** — link - **tabindex** — 0 Schema: [`cardlink.schema.json`](../../src/wb-models/cardlink.schema.json)",
+      "content": "# Link Card `x-cardlink` renders a card that is itself a link to `href`: the whole surface is clickable and keyboard-focusable, with a title, description, optional icon and badge. Use it for navigation tiles. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `href` | URL | `https://example.com` | Link destination URL | | `title` | text | — | Card title | | `description` | text | — | Card description text | | `icon` | emoji or icon name | — | Icon (emoji or icon name) | | `badge` | text | — | Badge text | | `target` | `_self` · `_blank` | `_self` | Link target | | `variant` | `default` · `elevated` · `bordered` · `minimal` · `glass` | `default` | Visual style variant | ## Events - `wb:cardlink:click` — Fired when card is clicked ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles visibility - `navigate()` — Triggers navigation to href - `setHref()` — Updates the href ## Accessibility - **role** — link - **tabindex** — 0 Schema: [`cardlink.schema.json`](../../src/wb-models/cardlink.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1501,7 +1501,7 @@
       "title": "cardvideo",
       "description": null,
       "headings": [],
-      "content": "# Video Card `x-cardvideo` renders a card with a video player from `src` (with `poster` shown before playback) above a title and description. Use it where the video needs a heading and context; for a bare player use ` `. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm` | Video source URL | | `poster` | URL | `#` | Poster image URL | | `title` | text | — | Video title | | `description` | text | — | Video description | | `autoplay` | `boolean` | `false` | Auto-play video (requires muted) | | `muted` | `boolean` | `false` | Mute video | | `loop` | `boolean` | `false` | Loop video playback | | `controls` | `boolean` | `true` | Show video controls | | `aspect` | `16/9` · `4/3` · `1/1` · `21/9` · `9/16` | `16/9` | Video aspect ratio | | `variant` | `default` · `minimal` · `bordered` · `elevated` | `default` | Visual style variant | ## Methods - `play()` — Plays the video - `pause()` — Pauses the video - `stop()` — Stops and resets the video - `toggle()` — Toggles play/pause - `mute()` — Mutes the video - `unmute()` — Unmutes the video - `setSource()` — Changes the video source - `getCurrentTime()` — Gets current playback time - `setCurrentTime()` — Seeks to time - `getDuration()` — Gets video duration Schema: [`cardvideo.schema.json`](../../src/wb-models/cardvideo.schema.json)",
+      "content": "# Video Card `x-cardvideo` renders a card with a video player from `src` (with `poster` shown before playback) above a title and description. Use it where the video needs a heading and context; for a bare player use ` `. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm` | Video source URL | | `poster` | URL | `#` | Poster image URL | | `title` | text | — | Video title | | `description` | text | — | Video description | | `autoplay` | `boolean` | `false` | Auto-play video (requires muted) | | `muted` | `boolean` | `false` | Mute video | | `loop` | `boolean` | `false` | Loop video playback | | `controls` | `boolean` | `true` | Show video controls | | `aspect` | `16/9` · `4/3` · `1/1` · `21/9` · `9/16` | `16/9` | Video aspect ratio | | `variant` | `default` · `minimal` · `bordered` · `elevated` | `default` | Visual style variant | ## Events - `wb:video:play` — Fired when video starts playing - `wb:video:pause` — Fired when video is paused - `wb:video:ended` — Fired when video playback ends - `wb:video:timeupdate` — Fired on time update ## Methods - `play()` — Plays the video - `pause()` — Pauses the video - `stop()` — Stops and resets the video - `toggle()` — Toggles play/pause - `mute()` — Mutes the video - `unmute()` — Unmutes the video - `setSource()` — Changes the video source - `getCurrentTime()` — Gets current playback time - `setCurrentTime()` — Seeks to time - `getDuration()` — Gets video duration Schema: [`cardvideo.schema.json`](../../src/wb-models/cardvideo.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1534,10 +1534,10 @@
       "title": "chip",
       "description": null,
       "headings": [],
-      "content": "# chip A small pill-shaped tag/label with optional icon, color variant, and dismiss button. Implemented by `chip()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-chip` | | Attribute form | ` ` | | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | ` ` | | Category | Feedback | | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) | ## Properties `chip()` clears the element's existing children and rebuilds them from these attributes, so any hand-written inner content is discarded in favor of `label`. | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | text | `\"\"` | Chip text | | `icon` | emoji or icon name | `\"\"` | Leading icon/emoji shown before the label | | `dismissible` | boolean | `false` | Adds a × button that removes the chip. Bare `dismissible` or `data-dismissible` both work | | `disabled` | boolean | `false` | Disabled/faded state; also suppresses the dismiss button even if `dismissible` is set. Bare `disabled` or `data-disabled` both work | | `outlined` | boolean | `false` | Transparent background with a colored border instead of a filled background. Bare `outlined` or `data-outlined` both work | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `\"default\"` | `default`, `primary`, `success`, `warning`, `error`, `info` | | `size` | `sm` · `md` · `lg` | `\"md\"` | `sm`, `md`, `lg` | ## Usage ### Basic chip ### Variant + size ### Dismissible ### Icon + outlined ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` | host isn't already a ` ` tag | Base pill shape, padding, background | | `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color | | `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale | | `.x-chip--outlined` | `outlined` | Transparent background, colored border | | `.x-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled=\"true\"` | | `.x-chip__icon` | `icon` set | Leading icon wrapper | | `.x-chip__label` | Always | Wraps the label text | | `.x-chip__remove` | `dismissible` and not `disabled` | The × remove button (a ` `) | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | — (no detail) | ```javascript document.addEventListener('wb:chip:remove', (e) => { console.log('A chip was dismissed:', e.target); }); ``` - [Demo](../../demos/site/feedback.html#chip-chip) - [Schema](../../src/wb-models/chip.schema.json)",
+      "content": "# chip A small pill-shaped tag/label with optional icon, color variant, and dismiss button. Implemented by `chip()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-chip` | | Attribute form | ` ` | | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | ` ` | | Category | Feedback | | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) | ## Properties `chip()` clears the element's existing children and rebuilds them from these attributes, so any hand-written inner content is discarded in favor of `label`. | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | text | `\"\"` | Chip text | | `icon` | emoji or icon name | `\"\"` | Leading icon/emoji shown before the label | | `dismissible` | boolean | `false` | Adds a × button that removes the chip. Bare `dismissible` or `data-dismissible` both work | | `disabled` | boolean | `false` | Disabled/faded state; also suppresses the dismiss button even if `dismissible` is set. Bare `disabled` or `data-disabled` both work | | `outlined` | boolean | `false` | Transparent background with a colored border instead of a filled background. Bare `outlined` or `data-outlined` both work | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `\"default\"` | `default`, `primary`, `success`, `warning`, `error`, `info` | | `size` | `sm` · `md` · `lg` | `\"md\"` | `sm`, `md`, `lg` | ## Usage ### Basic chip ### Variant + size ### Dismissible ### Icon + outlined ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` | host isn't already a ` ` tag | Base pill shape, padding, background | | `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color | | `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale | | `.x-chip--outlined` | `outlined` | Transparent background, colored border | | `.x-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled=\"true\"` | | `.x-chip__icon` | `icon` set | Leading icon wrapper | | `.x-chip__label` | Always | Wraps the label text | | `.x-chip__remove` | `dismissible` and not `disabled` | The × remove button (a ` `) | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | `{ label }`: the chip's text | ```javascript document.addEventListener('wb:chip:remove', (e) => { console.log('A chip was dismissed:', e.detail.label); }); ``` - [Demo](../../demos/site/feedback.html#chip-chip) - [Schema](../../src/wb-models/chip.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-07"
     },
     {
       "id": "docs/behaviors/clock",
@@ -1611,7 +1611,7 @@
       "title": "confetti",
       "description": null,
       "headings": [],
-      "content": "# Confetti `x-confetti` fires a burst of coloured confetti from the element each time it is clicked; `count` sets how many pieces and `colors` their palette. Use it on a button that completes something worth celebrating. ## Usage Celebrate ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `50` | Number of particles | | `label` | text | `Fire Confetti!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `3s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]` | Particle colors as JSON array | ## Methods - `fire()` — Triggers confetti - `stop()` — Stops animation Schema: [`confetti.schema.json`](../../src/wb-models/confetti.schema.json)",
+      "content": "# Confetti `x-confetti` fires a burst of coloured confetti from the element each time it is clicked; `count` sets how many pieces and `colors` their palette. Use it on a button that completes something worth celebrating. ## Usage Celebrate ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `50` | Number of particles | | `label` | text | `Fire Confetti!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `3s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]` | Particle colors as JSON array | ## Events - `wb:confetti:start` — Animation started - `wb:confetti:end` — Animation ended ## Methods - `fire()` — Triggers confetti - `stop()` — Stops animation Schema: [`confetti.schema.json`](../../src/wb-models/confetti.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1768,7 +1768,7 @@
           "text": "Confirm the merge"
         }
       ],
-      "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: Delete branch… ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Dialog title | | `content` | text or HTML | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). | | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. | | `showClose` | `boolean` | `true` | Show the × button in the header | | `variant` | `default` · `centered` · `fullscreen` | `default` | | These three are on by default, so you only ever write them to turn something **off**: ```html Confirm the merge Escape still gets you out. ``` ### What `\"false\"` means `\"false\"` and `\"0\"` turn a boolean option off. The attribute being present is not what switches it on — its value is read: ```html ``` This is worth spelling out because it used to be untrue: `showClose=\"false\"` showed the close button anyway (#747). The old dashed spellings (`showClose`, `closeOnBackdrop`, `closeOnEscape`) are still read, so pages already written keep working — but no attribute name carries a dash, so the camelCase names above are the ones to write (#1125). ### A dialog always has an exit Hiding the close button is allowed; leaving no way out is not. With `showClose=\"false\"`, Escape is the dialog's exit, so it cannot be turned off too (#794): ```html ``` That combination is refused: Escape stays on, and the console says why. `closeOnBackdrop=\"false\"` is fine with either, because Escape is the platform's own way out of a modal and the one a keyboard user reaches for. A backdrop click is something a user finds by accident. `dialog.schema.json` states the same rule as an `if`/`then`. ### Layout Every dialog has the same three parts as a card, by tag: | Part | Element | Class | | --- | --- | --- | | Header (title, ×) | ` ` | `x-dialog__header` | | Content | ` ` | `x-dialog__main` | | Cancel / OK (a dialog built from a trigger) | ` ` | `x-dialog__footer` | The ` ` frame has no padding; the parts carry it, so content sits at least 1rem from the frame (DEMOS-AND-DOCS-STANDARDS.md §13). An authored ` ` gets the header and main built around its own markup: its first heading moves into the header, and the rest moves into ` `. ## Events - `wb:dialog:ok` — The dialog's confirm button is clicked ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
+      "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: Delete branch… ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Dialog title | | `content` | text or HTML | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). | | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. | | `showClose` | `boolean` | `true` | Show the × button in the header | | `variant` | `default` · `centered` · `fullscreen` | `default` | | These three are on by default, so you only ever write them to turn something **off**: ```html Confirm the merge Escape still gets you out. ``` ### What `\"false\"` means `\"false\"` and `\"0\"` turn a boolean option off. The attribute being present is not what switches it on — its value is read: ```html ``` This is worth spelling out because it used to be untrue: `showClose=\"false\"` showed the close button anyway (#747). The old dashed spellings (`showClose`, `closeOnBackdrop`, `closeOnEscape`) are still read, so pages already written keep working — but no attribute name carries a dash, so the camelCase names above are the ones to write (#1125). ### A dialog always has an exit Hiding the close button is allowed; leaving no way out is not. With `showClose=\"false\"`, Escape is the dialog's exit, so it cannot be turned off too (#794): ```html ``` That combination is refused: Escape stays on, and the console says why. `closeOnBackdrop=\"false\"` is fine with either, because Escape is the platform's own way out of a modal and the one a keyboard user reaches for. A backdrop click is something a user finds by accident. `dialog.schema.json` states the same rule as an `if`/`then`. ### Layout Every dialog has the same three parts as a card, by tag: | Part | Element | Class | | --- | --- | --- | | Header (title, ×) | ` ` | `x-dialog__header` | | Content | ` ` | `x-dialog__main` | | Cancel / OK (a dialog built from a trigger) | ` ` | `x-dialog__footer` | The ` ` frame has no padding; the parts carry it, so content sits at least 1rem from the frame (DEMOS-AND-DOCS-STANDARDS.md §13). An authored ` ` gets the header and main built around its own markup: its first heading moves into the header, and the rest moves into ` `. ## Events - `wb:dialog:open` — Dialog opened - `wb:dialog:close` — Dialog closed - `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop) - `wb:dialog:ok` — The dialog's confirm button is clicked ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1801,7 +1801,7 @@
       "title": "drawer",
       "description": null,
       "headings": [],
-      "content": "# Drawer `x-drawer` turns a button into the trigger for a slide-out panel: clicking it opens a drawer from the `position` edge with `title` and `content`, closed by its close button, Escape or a backdrop click. ## Usage Open filters ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Drawer title | | `content` | text or HTML | — | Drawer body content | | `position` | `left` · `right` · `top` · `bottom` | `right` | | | `width` | CSS length | `320px` | Drawer width (left/right) | | `height` | CSS length | `auto` | Drawer height (top/bottom) | | `closeOnBackdrop` | `boolean` | `true` | Close on backdrop click | | `closeOnEscape` | `boolean` | `true` | Close on Escape key | | `showClose` | `boolean` | `true` | Show close button | | `variant` | `default` · `overlay` · `push` | `overlay` | | ## Methods - `open()` — Opens the drawer - `close()` — Closes the drawer - `toggle()` — Toggles the drawer - `isOpen()` — Returns open state Schema: [`drawer.schema.json`](../../src/wb-models/drawer.schema.json)",
+      "content": "# Drawer `x-drawer` turns a button into the trigger for a slide-out panel: clicking it opens a drawer from the `position` edge with `title` and `content`, closed by its close button, Escape or a backdrop click. ## Usage Open filters ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Drawer title | | `content` | text or HTML | — | Drawer body content | | `position` | `left` · `right` · `top` · `bottom` | `right` | | | `width` | CSS length | `320px` | Drawer width (left/right) | | `height` | CSS length | `auto` | Drawer height (top/bottom) | | `closeOnBackdrop` | `boolean` | `true` | Close on backdrop click | | `closeOnEscape` | `boolean` | `true` | Close on Escape key | | `showClose` | `boolean` | `true` | Show close button | | `variant` | `default` · `overlay` · `push` | `overlay` | | ## Events - `wb:drawer:open` — Drawer opened - `wb:drawer:close` — Drawer closed ## Methods - `open()` — Opens the drawer - `close()` — Closes the drawer - `toggle()` — Toggles the drawer - `isOpen()` — Returns open state Schema: [`drawer.schema.json`](../../src/wb-models/drawer.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1812,7 +1812,7 @@
       "title": "drawerLayout",
       "description": null,
       "headings": [],
-      "content": "# Drawer Layout `x-drawer-layout` makes a sidebar collapsible: a toggle shrinks it from `width` to `minWidth` and back. Put it on the ` ` or ` ` that holds your side navigation. ## Usage Overview Runs Settings ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `position` | `left` · `right` | `left` | | | `width` | CSS length | `250px` | Expanded width | | `minWidth` | CSS length | `48px` | Collapsed width | | `collapsed` | `boolean` | `false` | Initial collapsed state | ## Methods - `expand()` — Expands the drawer - `collapse()` — Collapses the drawer - `toggle()` — Toggles collapsed state - `isCollapsed()` — Returns collapsed state Schema: [`drawerLayout.schema.json`](../../src/wb-models/drawerLayout.schema.json)",
+      "content": "# Drawer Layout `x-drawer-layout` makes a sidebar collapsible: a toggle shrinks it from `width` to `minWidth` and back. Put it on the ` ` or ` ` that holds your side navigation. ## Usage Overview Runs Settings ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `position` | `left` · `right` | `left` | | | `width` | CSS length | `250px` | Expanded width | | `minWidth` | CSS length | `48px` | Collapsed width | | `collapsed` | `boolean` | `false` | Initial collapsed state | ## Events - `wb:drawerLayout:toggle` — Drawer toggled ## Methods - `expand()` — Expands the drawer - `collapse()` — Collapses the drawer - `toggle()` — Toggles collapsed state - `isCollapsed()` — Returns collapsed state Schema: [`drawerLayout.schema.json`](../../src/wb-models/drawerLayout.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -1900,7 +1900,7 @@
       "title": "fireworks",
       "description": null,
       "headings": [],
-      "content": "# Fireworks `x-fireworks` launches a burst of firework particles from the element each time it is clicked; `count` sets particles per burst and `colors` their palette. ## Usage Launch ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Particles per burst | | `label` | text | `Fireworks!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `false` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `1.5s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]` | Particle colors as JSON array | ## Methods - `fire()` — Triggers fireworks - `stop()` — Stops animation Schema: [`fireworks.schema.json`](../../src/wb-models/fireworks.schema.json)",
+      "content": "# Fireworks `x-fireworks` launches a burst of firework particles from the element each time it is clicked; `count` sets particles per burst and `colors` their palette. ## Usage Launch ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Particles per burst | | `label` | text | `Fireworks!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `false` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `1.5s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]` | Particle colors as JSON array | ## Events - `wb:fireworks:start` — Animation started - `wb:fireworks:end` — Animation ended ## Methods - `fire()` — Triggers fireworks - `stop()` — Stops animation Schema: [`fireworks.schema.json`](../../src/wb-models/fireworks.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -2306,7 +2306,7 @@
       "title": "notes",
       "description": null,
       "headings": [],
-      "content": "# Notes `x-notes` adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to `localStorage` as you type. ## Usage Notes stay pinned beside the content while you scroll. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `position` | `left` · `right` · `modal` | `left` | | | `maxWidth` | CSS length | `50vw` | Max width when resizing | | `minWidth` | CSS length | `200px` | Min width when resizing | | `defaultWidth` | CSS length | `320px` | Default width | | `autoSave` | `boolean` | `true` | Auto-save to localStorage | | `placeholder` | text | `Add your notes here...` | Textarea placeholder | ## Events - `wb:notes:open` — Drawer opened - `wb:notes:close` — Drawer closed - `wb:notes:save` — Notes saved - `wb:notes:position` — Position changed ## Methods - `show()` — Opens the drawer - `hide(side?)` — Closes the drawer; with `'left'` or `'right'` it docks there first - `toggle()` — Toggles drawer - `setPosition()` — Sets position - `save()` — Saves notes to JSON - `copy()` — Copies notes to clipboard - `clear()` — Clears all notes - `getContent()` — Gets notes content - `setContent()` — Sets notes content Schema: [`notes.schema.json`](../../src/wb-models/notes.schema.json)",
+      "content": "# Notes `x-notes` adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to `localStorage` as you type. ## Usage Notes stay pinned beside the content while you scroll. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `position` | `left` · `right` · `modal` | `left` | | | `maxWidth` | CSS length | `50vw` | Max width when resizing | | `minWidth` | CSS length | `200px` | Min width when resizing | | `defaultWidth` | CSS length | `320px` | Default width | | `autoSave` | `boolean` | `true` | Auto-save to localStorage | | `placeholder` | text | `Add your notes here...` | Textarea placeholder | ## Events - `wb:notes:open` — Drawer opened - `wb:notes:close` — Drawer closed - `wb:notes:save` — Notes saved - `wb:notes:copy` — Notes copied to clipboard - `wb:notes:clear` — Notes cleared - `wb:notes:position` — Position changed ## Methods - `show()` — Opens the drawer - `hide(side?)` — Closes the drawer; with `'left'` or `'right'` it docks there first - `toggle()` — Toggles drawer - `setPosition()` — Sets position - `save()` — Saves notes to JSON - `copy()` — Copies notes to clipboard - `clear()` — Clears all notes - `getContent()` — Gets notes content - `setContent()` — Sets notes content Schema: [`notes.schema.json`](../../src/wb-models/notes.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -2603,7 +2603,7 @@
       "title": "select",
       "description": null,
       "headings": [],
-      "content": "# Select A plain ` ` gets the form styling, with `variant` for validation state, `size`, and `clearable` for a button that resets it. Its ` ` children stay the source of choices. ## Usage main develop fix/706-dropdown No attribute needed on ` `. Don't add `x-select` to it (#746). ` ` is for choosing a value; a menu of actions is [x-dropdown](dropdown.md). The ` ` form is deprecated: write a ` ` with ` ` children ([the rule](../standards/V3-STANDARDS.md#choosing-a-value-or-an-action-select-or-x-dropdown), #682). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Select label | | `placeholder` | text | `Select...` | Placeholder text | | `options` | JSON array of {value, label} | — | Options as JSON [{value, label}] | | `value` | text | — | Selected value | | `name` | text | — | Form field name | | `searchable` | `boolean` | `false` | Enable search | | `clearable` | `boolean` | `false` | Enable clear button | | `multiple` | `boolean` | `false` | Allow multiple selection | | `disabled` | `boolean` | `false` | Disabled state | | `required` | `boolean` | `false` | Required field | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `success` · `error` | `default` | | ## Methods - `getValue()` — Gets selected value(s) - `setValue()` — Sets selected value(s) - `clear()` — Clears selection - `open()` — Opens dropdown - `close()` — Closes dropdown - `toggle()` — Toggles dropdown - `focus()` — Focuses the select - `enable()` — Enables the select - `disable()` — Disables the select - `setOptions()` — Updates options Schema: [`select.schema.json`](../../src/wb-models/select.schema.json)",
+      "content": "# Select A plain ` ` gets the form styling, with `variant` for validation state, `size`, and `clearable` for a button that resets it. Its ` ` children stay the source of choices. ## Usage main develop fix/706-dropdown No attribute needed on ` `. Don't add `x-select` to it (#746). ` ` is for choosing a value; a menu of actions is [x-dropdown](dropdown.md). The ` ` form is deprecated: write a ` ` with ` ` children ([the rule](../standards/V3-STANDARDS.md#choosing-a-value-or-an-action-select-or-x-dropdown), #682). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Select label | | `placeholder` | text | `Select...` | Placeholder text | | `options` | JSON array of {value, label} | — | Options as JSON [{value, label}] | | `value` | text | — | Selected value | | `name` | text | — | Form field name | | `searchable` | `boolean` | `false` | Enable search | | `clearable` | `boolean` | `false` | Enable clear button | | `multiple` | `boolean` | `false` | Allow multiple selection | | `disabled` | `boolean` | `false` | Disabled state | | `required` | `boolean` | `false` | Required field | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `success` · `error` | `default` | | ## Events - `wb:select:change` — Selection changed ## Methods - `getValue()` — Gets selected value(s) - `setValue()` — Sets selected value(s) - `clear()` — Clears selection - `open()` — Opens dropdown - `close()` — Closes dropdown - `toggle()` — Toggles dropdown - `focus()` — Focuses the select - `enable()` — Enables the select - `disable()` — Disables the select - `setOptions()` — Updates options Schema: [`select.schema.json`](../../src/wb-models/select.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -2680,7 +2680,7 @@
       "title": "snow",
       "description": null,
       "headings": [],
-      "content": "# Snow `x-snow` makes the element a button that starts or stops snowflakes falling over the page; `count` sets how many and `duration` how long each takes to fall. ## Usage Let it snow ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Number of snowflakes | | `label` | text | `Let it Snow!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `true` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `8s` | Fall duration | ## Methods - `start()` — Starts snow - `stop()` — Stops snow - `toggle()` — Toggles snow Schema: [`snow.schema.json`](../../src/wb-models/snow.schema.json)",
+      "content": "# Snow `x-snow` makes the element a button that starts or stops snowflakes falling over the page; `count` sets how many and `duration` how long each takes to fall. ## Usage Let it snow ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Number of snowflakes | | `label` | text | `Let it Snow!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `true` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `8s` | Fall duration | ## Events - `wb:snow:start` — Animation started - `wb:snow:stop` — Animation stopped ## Methods - `start()` — Starts snow - `stop()` — Stops snow - `toggle()` — Toggles snow Schema: [`snow.schema.json`](../../src/wb-models/snow.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -2812,7 +2812,7 @@
       "title": "table",
       "description": null,
       "headings": [],
-      "content": "# Table A plain ` ` gets sortable column headers, and can be filled from attributes: `headers` for the column names and `rows` for the data as JSON. `searchable` adds a filter box, `paginated` splits long tables into pages. ## Usage No attribute needed on ` `. Don't add `x-table` to it (#746). On another element, write `x-table`: ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `data` | JSON array | — | Table data as JSON array | | `columns` | JSON array of {key, label, sortable} | — | Column config as JSON [{key, label, sortable}] | | `sortable` | `boolean` | `true` | Enable column sorting | | `filterable` | `boolean` | `false` | Enable filtering | | `paginated` | `boolean` | `false` | Enable pagination | | `pageSize` | `number` | `10` | Rows per page | | `striped` | `boolean` | `false` | Striped rows | | `hoverable` | `boolean` | `true` | Hover effect on rows | | `compact` | `boolean` | `false` | Compact row spacing | | `bordered` | `boolean` | `false` | Cell borders | | `headers` | comma-separated list | — | Comma-separated column headings. | | `rows` | JSON array of arrays | — | JSON array-of-arrays of row data. | | `searchable` | `boolean` | `false` | Show a filter input above the table. Alias of filterable. | | `copyable` | `boolean` | `false` | Add a control that copies the table as text. | | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. | | `sortValue` | string, on a body cell | — | The value that cell's column sorts by instead of its text. See [Sorting by something other than the displayed text](#sorting-by-something-other-than-the-displayed-text) below. | No attribute name carries a dash — only the `x-` behavior prefix does (#1125). This table said `pageSize` until #1344, while `table.schema.json` has always said `pageSize`; the dashed spelling is still read, so existing markup keeps working, but write the camelCase one. `hover` is not an attribute. It was read by the behavior but declared nowhere, and was dropped in #1344 — the option is `hoverable`. ### Booleans are bare Write the attribute to switch it on and leave it out to switch it off: ```html-static ``` `striped=\"false\"` and `striped=\"0\"` also mean off. Until #1344 they meant **on** for `striped`, `bordered`, `compact`, `copyable`, `selectable` and `searchable`, because the behavior only asked whether the attribute was present — so markup that said \"false\" did the opposite of what it said. `sortable` and `hoverable` are on by default. Switch them off with `sortable=\"false\"` / `hoverable=\"false\"`. ### Sorting by something other than the displayed text A cell can declare its own sort key with `sortValue`, for a column whose display text does not order the way the data does — a date shown as \"Sep 5, 2026\", a size shown as \"1.2 MB\", a dash for an unrated row: ```html High — ``` Without it the displayed text is the only key available. The older `sort-value` spelling is still read (#1344). ## Events - `wb:table:select` — A row is clicked ## Methods - `setData()` — Sets table data - `getData()` — Gets current data - `sort()` — Sorts by column - `filter()` — Filters data - `goToPage()` — Goes to page - `refresh()` — Refreshes table ## Accessibility - **role** — table - **headers** — scope=\"col\" on th elements Schema: [`table.schema.json`](../../src/wb-models/table.schema.json)",
+      "content": "# Table A plain ` ` gets sortable column headers, and can be filled from attributes: `headers` for the column names and `rows` for the data as JSON. `searchable` adds a filter box, `paginated` splits long tables into pages. ## Usage No attribute needed on ` `. Don't add `x-table` to it (#746). On another element, write `x-table`: ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `data` | JSON array | — | Table data as JSON array | | `columns` | JSON array of {key, label, sortable} | — | Column config as JSON [{key, label, sortable}] | | `sortable` | `boolean` | `true` | Enable column sorting | | `filterable` | `boolean` | `false` | Enable filtering | | `paginated` | `boolean` | `false` | Enable pagination | | `pageSize` | `number` | `10` | Rows per page | | `striped` | `boolean` | `false` | Striped rows | | `hoverable` | `boolean` | `true` | Hover effect on rows | | `compact` | `boolean` | `false` | Compact row spacing | | `bordered` | `boolean` | `false` | Cell borders | | `headers` | comma-separated list | — | Comma-separated column headings. | | `rows` | JSON array of arrays | — | JSON array-of-arrays of row data. | | `searchable` | `boolean` | `false` | Show a filter input above the table. Alias of filterable. | | `copyable` | `boolean` | `false` | Add a control that copies the table as text. | | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. | | `sortValue` | string, on a body cell | — | The value that cell's column sorts by instead of its text. See [Sorting by something other than the displayed text](#sorting-by-something-other-than-the-displayed-text) below. | No attribute name carries a dash — only the `x-` behavior prefix does (#1125). This table said `pageSize` until #1344, while `table.schema.json` has always said `pageSize`; the dashed spelling is still read, so existing markup keeps working, but write the camelCase one. `hover` is not an attribute. It was read by the behavior but declared nowhere, and was dropped in #1344 — the option is `hoverable`. ### Booleans are bare Write the attribute to switch it on and leave it out to switch it off: ```html-static ``` `striped=\"false\"` and `striped=\"0\"` also mean off. Until #1344 they meant **on** for `striped`, `bordered`, `compact`, `copyable`, `selectable` and `searchable`, because the behavior only asked whether the attribute was present — so markup that said \"false\" did the opposite of what it said. `sortable` and `hoverable` are on by default. Switch them off with `sortable=\"false\"` / `hoverable=\"false\"`. ### Sorting by something other than the displayed text A cell can declare its own sort key with `sortValue`, for a column whose display text does not order the way the data does — a date shown as \"Sep 5, 2026\", a size shown as \"1.2 MB\", a dash for an unrated row: ```html High — ``` Without it the displayed text is the only key available. The older `sort-value` spelling is still read (#1344). ## Events - `wb:table:sort` — Column sorted - `wb:table:filter` — Data filtered - `wb:table:page` — Page changed - `wb:table:select` — A row is clicked ## Methods - `setData()` — Sets table data - `getData()` — Gets current data - `sort()` — Sorts by column - `filter()` — Filters data - `goToPage()` — Goes to page - `refresh()` — Refreshes table ## Accessibility - **role** — table - **headers** — scope=\"col\" on th elements Schema: [`table.schema.json`](../../src/wb-models/table.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-07"
@@ -13646,6 +13646,7 @@
       "docs/behaviors/bounce",
       "docs/behaviors/button",
       "docs/behaviors/card",
+      "docs/behaviors/cardlink",
       "docs/behaviors/confirm",
       "docs/behaviors/darkmode",
       "docs/behaviors/dialog",
@@ -13864,6 +13865,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardstats",
+      "docs/behaviors/cardvideo",
       "docs/behaviors/ol",
       "docs/behaviors/range",
       "docs/behaviors/release",
@@ -16306,6 +16308,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/autocomplete",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardlink",
       "docs/behaviors/cardproduct",
       "docs/behaviors/chip",
       "docs/behaviors/confetti",
@@ -16777,6 +16780,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/details",
+      "docs/behaviors/dialog",
       "docs/behaviors/drawer",
       "docs/behaviors/fieldset",
       "docs/behaviors/notes"
@@ -17059,19 +17063,23 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/articles",
+      "docs/behaviors/audio",
       "docs/behaviors/autocomplete",
       "docs/behaviors/button",
       "docs/behaviors/cardbutton",
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardlink",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/cardnotification",
       "docs/behaviors/cardproduct",
+      "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
       "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
+      "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
       "docs/behaviors/copybutton",
@@ -17079,9 +17087,12 @@
       "docs/behaviors/counter",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
+      "docs/behaviors/drawer",
+      "docs/behaviors/drawerLayout",
       "docs/behaviors/dropdown",
       "docs/behaviors/fieldset",
       "docs/behaviors/file",
+      "docs/behaviors/fireworks",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/formrow",
       "docs/behaviors/input",
@@ -17095,7 +17106,9 @@
       "docs/behaviors/rating",
       "docs/behaviors/search",
       "docs/behaviors/searchfield",
+      "docs/behaviors/select",
       "docs/behaviors/skeleton",
+      "docs/behaviors/snow",
       "docs/behaviors/sticky",
       "docs/behaviors/switch",
       "docs/behaviors/table",
@@ -19015,6 +19028,7 @@
       "docs/behaviors/release",
       "docs/behaviors/ripple",
       "docs/behaviors/search",
+      "docs/behaviors/select",
       "docs/behaviors/stepper",
       "docs/behaviors/switch",
       "docs/behaviors/tabs",
@@ -21745,9 +21759,13 @@
       "pages/home",
       "pages/services",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/audio",
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardpricing",
+      "docs/behaviors/confetti",
+      "docs/behaviors/fireworks",
       "docs/behaviors/ol",
+      "docs/behaviors/snow",
       "docs/behaviors/time",
       "docs/guides/search-index",
       "docs/home-page",
@@ -24305,6 +24323,8 @@
       "pages/issues",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/behaviors/accordion",
+      "docs/behaviors/dialog",
+      "docs/behaviors/drawer",
       "docs/behaviors/notes",
       "docs/behaviors/popover"
     ],
@@ -25573,11 +25593,14 @@
     "changed": [
       "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
+      "docs/behaviors/audio",
       "docs/behaviors/card",
       "docs/behaviors/flash",
       "docs/behaviors/move",
       "docs/behaviors/notes",
       "docs/behaviors/rating",
+      "docs/behaviors/select",
+      "docs/behaviors/table",
       "docs/behaviors/tabs",
       "docs/behaviors/toast",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -32002,7 +32025,6 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/button",
       "docs/behaviors/cardlink",
-      "docs/behaviors/chip",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
@@ -33238,6 +33260,7 @@
     ],
     "toggled": [
       "docs/NOTES-V3-GUIDE",
+      "docs/behaviors/drawerLayout",
       "docs/behaviors/dropdown",
       "docs/behaviors/searchfield",
       "docs/behaviors/x-toggle"
@@ -35210,6 +35233,7 @@
       "docs/audio",
       "docs/behaviors/accordion",
       "docs/behaviors/audio",
+      "docs/behaviors/cardvideo",
       "docs/behaviors/draggable",
       "docs/behaviors/glass",
       "docs/behaviors/prompt",
@@ -41090,8 +41114,10 @@
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cluster",
+      "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/dropdown",
+      "docs/behaviors/fireworks",
       "docs/behaviors/flex",
       "docs/behaviors/grid",
       "docs/behaviors/input",
@@ -41331,6 +41357,24 @@
     "marantz": [
       "docs/behaviors/audio"
     ],
+    "paused": [
+      "docs/behaviors/audio",
+      "docs/behaviors/cardvideo"
+    ],
+    "ended": [
+      "docs/behaviors/audio",
+      "docs/behaviors/carddraggable",
+      "docs/behaviors/cardvideo",
+      "docs/behaviors/confetti",
+      "docs/behaviors/fireworks",
+      "docs/claude/TOOLING-INVENTORY"
+    ],
+    "volumechange": [
+      "docs/behaviors/audio"
+    ],
+    "eqchange": [
+      "docs/behaviors/audio"
+    ],
     "pauses": [
       "docs/behaviors/audio",
       "docs/behaviors/cardvideo",
@@ -41446,7 +41490,8 @@
     ],
     "filtered": [
       "docs/behaviors/autocomplete",
-      "docs/behaviors/codetheme"
+      "docs/behaviors/codetheme",
+      "docs/behaviors/table"
     ],
     "insensitively": [
       "docs/behaviors/autocomplete"
@@ -41493,8 +41538,10 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/button",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardlink",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/cardproduct",
+      "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
       "docs/behaviors/code",
       "docs/behaviors/colorpicker",
@@ -42060,6 +42107,7 @@
     ],
     "ends": [
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardvideo",
       "docs/behaviors/range",
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
@@ -42106,10 +42154,6 @@
     "snap": [
       "docs/behaviors/carddraggable",
       "docs/behaviors/reel"
-    ],
-    "ended": [
-      "docs/behaviors/carddraggable",
-      "docs/claude/TOOLING-INVENTORY"
     ],
     "getposition": [
       "docs/behaviors/carddraggable"
@@ -42789,6 +42833,15 @@
       "docs/behaviors/cardvideo"
     ],
     "mute": [
+      "docs/behaviors/cardvideo"
+    ],
+    "playing": [
+      "docs/behaviors/cardvideo",
+      "docs/behaviors/video",
+      "docs/behaviors/vimeo",
+      "docs/behaviors/youtube"
+    ],
+    "timeupdate": [
       "docs/behaviors/cardvideo"
     ],
     "mutes": [
@@ -43542,6 +43595,7 @@
     "copied": [
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
+      "docs/behaviors/notes",
       "docs/behaviors/x-copybutton"
     ],
     "copyfeedback": [
@@ -43930,6 +43984,9 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "accident": [
+      "docs/behaviors/dialog"
+    ],
+    "cancelled": [
       "docs/behaviors/dialog"
     ],
     "setcontent": [
@@ -44383,6 +44440,7 @@
     ],
     "cleared": [
       "docs/behaviors/floatinglabel",
+      "docs/behaviors/notes",
       "docs/behaviors/search",
       "docs/claude/TIER1-LAWS",
       "docs/search",
@@ -45839,6 +45897,10 @@
     "8s": [
       "docs/behaviors/snow"
     ],
+    "stopped": [
+      "docs/behaviors/snow",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
+    ],
     "sparkle": [
       "docs/behaviors/sparkle",
       "docs/behaviors/x-effects"
@@ -46036,6 +46098,9 @@
       "docs/behaviors/table"
     ],
     "unrated": [
+      "docs/behaviors/table"
+    ],
+    "sorted": [
       "docs/behaviors/table"
     ],
     "setdata": [
@@ -46318,11 +46383,6 @@
     ],
     "ios": [
       "docs/behaviors/video"
-    ],
-    "playing": [
-      "docs/behaviors/video",
-      "docs/behaviors/vimeo",
-      "docs/behaviors/youtube"
     ],
     "unattended": [
       "docs/behaviors/video",
@@ -49494,9 +49554,6 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "waited": [
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
-    ],
-    "stopped": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "timeouts": [
