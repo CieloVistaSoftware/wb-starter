@@ -132,6 +132,11 @@ const SKIP = [
   'data/release-see-it.json',
   'data/issue-titles.json',
   'data/component-word-audit.json',                                      // quotes old test output verbatim
+  // Generated from every doc, including history this scan leaves alone on
+  // purpose (docs/schema-test-value.md quotes `x-dropdown-trigger`). The
+  // version-stamp bot regenerates it on main, which put the retired name back
+  // after #1719 and turned main red. Its sources are scanned where it matters.
+  'data/search.json',
 ];
 const SCANNED = /\.(js|mjs|ts|css|html|md|json)$/;
 
