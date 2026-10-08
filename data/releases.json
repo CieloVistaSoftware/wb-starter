@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.432",
+      "date": "2026-10-08",
+      "summary": "The reflow guard for #1319 sometimes failed with &quot;the stranding reflow never fired&quot;, and its &quot;card was built&quot; check could never fail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Strand the card synchronously after its scroll, and assert it built</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd77d2e8c06f84a1e11bf5ba6921bb93b36e4d8a\" target=\"_blank\" rel=\"noopener\"><code>cd77d2e</code></a>",
+          "issues": [
+            1761,
+            1762
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/cards/cards-showcase.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/cards/cards-showcase.spec.ts</a> --grep &quot;strands it after the scroll&quot; --project=behaviors --repeat-each=200 --workers=8. Before: 1-2 of 200 failed with &quot;the stranding reflow never fired&quot;. Now: 200 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd77d2e8c06f84a1e11bf5ba6921bb93b36e4d8a\" target=\"_blank\" rel=\"noopener\"><code>cd77d2e</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.431",
       "date": "2026-10-08",
       "summary": "A failing test now carries the page&#39;s CDP lifecycle log (page-lifecycle) and, when its errors say &quot;Promise was collected&quot; or &quot;context was destroyed&quot;, a page-death verdict read from an isolated world: main world dead, page frozen, or main world alive (an app-level hang); failures.json and the live log keep both. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a>",
