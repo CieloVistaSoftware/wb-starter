@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "desclist.schema.json",
+  "title": "Description list from items",
+  "description": "Fills a <dl> with one term/description pair per entry of its items attribute.",
+  "schemaFor": "desclist",
+  "semanticElement": {
+    "tagName": "dl"
+  },
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "A JSON array of {\"term\": ..., \"desc\": ...} objects.",
+      "default": "[]"
+    },
+    "horizontal": {
+      "type": "boolean",
+      "description": "Put each term beside its description instead of above it. Bare attribute.",
+      "default": false
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-dl"
+  },
+  "test": {
+    "setup": [
+      "<dl x-desclist items='[{\"term\":\"Version\",\"desc\":\"4.2.0\"},{\"term\":\"License\",\"desc\":\"MIT\"}]'></dl>",
+      "<dl x-desclist horizontal items='[{\"term\":\"Version\",\"desc\":\"4.2.0\"}]'></dl>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+  }
+}

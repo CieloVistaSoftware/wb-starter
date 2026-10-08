@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "dl.schema.json",
+  "title": "Description list",
+  "description": "Enhances a <dl>: vertical or horizontal layout, borders, striping and spacing.",
+  "schemaFor": "dl",
+  "semanticElement": {
+    "tagName": "dl"
+  },
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "vertical",
+        "horizontal"
+      ],
+      "description": "vertical stacks each term over its description; horizontal puts them side by side.",
+      "default": "vertical"
+    },
+    "gap": {
+      "type": "string",
+      "description": "Space between items (any CSS length).",
+      "default": "0.5rem"
+    },
+    "bordered": {
+      "type": "boolean",
+      "description": "Draw a border around the list. Bare attribute.",
+      "default": false
+    },
+    "striped": {
+      "type": "boolean",
+      "description": "Shade every other row. Applies to the horizontal variant. Bare attribute.",
+      "default": false
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-dl"
+  },
+  "test": {
+    "setup": [
+      "<dl x-dl><dt>Version</dt><dd>4.2.0</dd><dt>License</dt><dd>MIT</dd></dl>",
+      "<dl x-dl variant=\"horizontal\" bordered striped><dt>Version</dt><dd>4.2.0</dd><dt>License</dt><dd>MIT</dd></dl>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ul.schema.json",
+  "title": "Unordered list",
+  "description": "Enhances a <ul>: checklist and icon-list variants, marker style, indent and item spacing.",
+  "schemaFor": "ul",
+  "semanticElement": {
+    "tagName": "ul"
+  },
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "default",
+        "checklist",
+        "icon-list",
+        "none"
+      ],
+      "description": "List style. checklist ticks items marked `checked`; icon-list uses each item's `icon`; none hides the markers.",
+      "default": "default"
+    },
+    "marker": {
+      "type": "string",
+      "description": "CSS list-style-type for the bullets (disc, circle, square, ...). Ignored by the checklist, icon-list and none variants, which draw their own.",
+      "default": "disc"
+    },
+    "gap": {
+      "type": "string",
+      "description": "Space between items (any CSS length).",
+      "default": "0.5rem"
+    },
+    "indentSize": {
+      "type": "string",
+      "description": "Left indent of the list (any CSS length). Ignored by the checklist, icon-list and none variants.",
+      "default": "1.5rem"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-ul"
+  },
+  "test": {
+    "setup": [
+      "<ul x-ul><li>Light DOM</li><li>No build</li><li>Composition</li></ul>",
+      "<ul x-ul variant=\"checklist\"><li checked>Done</li><li>To do</li></ul>",
+      "<ul x-ul marker=\"square\" indentSize=\"2.5rem\" gap=\"1rem\"><li>One</li><li>Two</li></ul>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+  }
+}
