@@ -11,6 +11,10 @@ import { waitForWB, wbIdle } from '../base';
  * Reproduced the way the issue found it: card.js is held until the demo's
  * code panel exists, so measure() settles on the plain article.
  */
+// page.route() below holds card.js back; sw.js would answer first from its
+// cache and the hold would never happen (#1349).
+test.use({ serviceWorkers: 'block' });
+
 test('a demo grows to fit its control when the control builds after the width commit', async ({ page }) => {
   let release!: () => void;
   const released = new Promise<void>((r) => { release = r; });
