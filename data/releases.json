@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.414",
+      "date": "2026-10-07",
+      "summary": "90 attributes were read by behavior code but declared by no schema, so options like x-draggable bounds, x-textarea minRows, x-switch themeControl and x-codetheme persist worked but were invisible to the docs, the showcase and autocomplete. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1723\" target=\"_blank\" rel=\"noopener\">#1723</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Declare 31 attributes behaviors read in secret, drop 9 dead reads</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1723\" target=\"_blank\" rel=\"noopener\">#1723</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e309c861b11419f1a793c6cab078a097d73313b6\" target=\"_blank\" rel=\"noopener\"><code>e309c86</code></a>",
+          "issues": [
+            1723
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node -e &quot;import(&#39;./scripts/lib/attribute-audit.mjs&#39;).then(m=&gt;console.log(m.auditAll().totals.byRule.R4))&quot;</code>, then open /demos/test-harness.html and add &lt;div x-input prefix=&quot;$&quot;&gt;&lt;/div&gt;. Before: the audit printed 90 and the field showed no &quot;$&quot;. Now: it prints 37 and the &quot;$&quot; sits inside the field.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e309c861b11419f1a793c6cab078a097d73313b6\" target=\"_blank\" rel=\"noopener\"><code>e309c86</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.413",
       "date": "2026-10-07",
       "summary": "Nothing counted visits to the live site, so there was no way to know how many people opened index.html. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1704\" target=\"_blank\" rel=\"noopener\">#1704</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1245\" target=\"_blank\" rel=\"noopener\">#1245</a>",

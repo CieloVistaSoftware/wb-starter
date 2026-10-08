@@ -1090,7 +1090,7 @@
           "file": "behaviors/table.md",
           "title": "Table",
           "description": "A plain <table> gets sortable column headers, and can be filled from attributes: headers for the column names and rows for the data as JSON.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/tabs.md",
