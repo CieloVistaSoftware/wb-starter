@@ -33,11 +33,6 @@ No attribute needed on `<textarea>`. Don't add `x-textarea` to it (#746).
 | `resize` | `none` · `vertical` · `horizontal` · `both` | `vertical` |  |
 | `variant` | `default` · `success` · `error` | `default` |  |
 
-## Events
-
-- `input` — Fired on input
-- `change` — Fired on change
-
 ## Methods
 
 - `getValue()` — Gets current value

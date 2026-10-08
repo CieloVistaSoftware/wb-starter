@@ -21,8 +21,8 @@
 
 ## Events
 
-- `wb:snow:start` — Animation started
-- `wb:snow:stop` — Animation stopped
+- `wb:snow:start` — Snowfall started
+- `wb:snow:stop` — Snowfall finished and removed
 
 ## Methods
 

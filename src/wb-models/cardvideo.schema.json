@@ -222,17 +222,20 @@
     }
   },
   "events": {
-    "wb:video:play": {
-      "description": "Fired when video starts playing"
+    "wb:cardvideo:play": {
+      "description": "Fired when the video starts playing",
+      "detail": {
+        "currentTime": "number"
+      }
     },
-    "wb:video:pause": {
-      "description": "Fired when video is paused"
+    "wb:cardvideo:pause": {
+      "description": "Fired when the video is paused",
+      "detail": {
+        "currentTime": "number"
+      }
     },
-    "wb:video:ended": {
-      "description": "Fired when video playback ends"
-    },
-    "wb:video:timeupdate": {
-      "description": "Fired on time update",
+    "wb:cardvideo:ended": {
+      "description": "Fired when video playback ends",
       "detail": {
         "currentTime": "number"
       }

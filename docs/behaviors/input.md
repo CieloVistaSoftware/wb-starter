@@ -39,9 +39,6 @@ No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 ## Events
 
 - `input` — Fired when value changes
-- `change` — Fired when value is committed
-- `focus` — Fired when input receives focus
-- `blur` — Fired when input loses focus
 
 ## Methods
 

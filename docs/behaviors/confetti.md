@@ -21,8 +21,8 @@
 
 ## Events
 
-- `wb:confetti:start` — Animation started
-- `wb:confetti:end` — Animation ended
+- `wb:confetti:start` — Burst started
+- `wb:confetti:end` — Burst finished and removed
 
 ## Methods
 

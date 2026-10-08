@@ -81,10 +81,13 @@
   },
   "events": {
     "wb:fireworks:start": {
-      "description": "Animation started"
+      "description": "Burst started",
+      "detail": {
+        "count": "number"
+      }
     },
     "wb:fireworks:end": {
-      "description": "Animation ended"
+      "description": "Burst finished and removed"
     }
   },
   "test": {

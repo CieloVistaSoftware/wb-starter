@@ -1160,6 +1160,7 @@ export function cardvideo(element, options = {}) {
 
   // Video figure
   let retryCleanup = null;
+  let stopAnnouncing = null;
   if (config.src) {
     const coverFigure = base.createFigure();
     // #1003: the property card.css already reads. #779: a generated rule.
@@ -1190,9 +1191,27 @@ export function cardvideo(element, options = {}) {
 
     coverFigure.appendChild(video);
     element.insertBefore(coverFigure, element.firstChild);
+
+    // #344: the card announces its own playback. A <video>'s play/pause/ended
+    // do not bubble, so a listener on the card or the page never heard them.
+    const announce = (type) => element.dispatchEvent(new CustomEvent(type, {
+      bubbles: true,
+      detail: { currentTime: video.currentTime },
+    }));
+    const onPlay = () => announce('wb:cardvideo:play');
+    const onPause = () => announce('wb:cardvideo:pause');
+    const onEnded = () => announce('wb:cardvideo:ended');
+    video.addEventListener('play', onPlay);
+    video.addEventListener('pause', onPause);
+    video.addEventListener('ended', onEnded);
+    stopAnnouncing = () => {
+      video.removeEventListener('play', onPlay);
+      video.removeEventListener('pause', onPause);
+      video.removeEventListener('ended', onEnded);
+    };
   }
 
-  return () => { base.cleanup(); if (retryCleanup) retryCleanup(); };
+  return () => { base.cleanup(); if (retryCleanup) retryCleanup(); if (stopAnnouncing) stopAnnouncing(); };
 }
 
 /**

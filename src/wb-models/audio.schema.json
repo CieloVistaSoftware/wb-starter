@@ -235,9 +235,10 @@
       "description": "Playback ended"
     },
     "wb:audio:volumechange": {
-      "description": "Volume changed",
+      "description": "Volume or mute changed",
       "detail": {
-        "volume": "number"
+        "volume": "number",
+        "muted": "boolean"
       }
     },
     "wb:audio:eqchange": {

@@ -213,19 +213,22 @@
       "description": "Column sorted",
       "detail": {
         "column": "string",
+        "index": "number",
         "direction": "asc|desc"
       }
     },
     "wb:table:filter": {
-      "description": "Data filtered",
+      "description": "Rows filtered by the search box",
       "detail": {
-        "query": "string"
+        "query": "string",
+        "matches": "number"
       }
     },
     "wb:table:page": {
-      "description": "Page changed",
+      "description": "Page changed (1-based)",
       "detail": {
-        "page": "number"
+        "page": "number",
+        "pages": "number"
       }
     }
   },

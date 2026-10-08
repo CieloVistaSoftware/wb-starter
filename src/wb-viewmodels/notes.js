@@ -390,6 +390,8 @@ export function notes(element, options = {}) {
     try {
       await navigator.clipboard.writeText(text);
       showStatus('Copied!', 'success');
+      // #344: declared in notes.schema.json; nothing fired it.
+      element.dispatchEvent(new CustomEvent('wb:notes:copy', { bubbles: true, detail: { content: text } }));
     } catch (e) {
       showStatus('Copy failed', 'error');
     }

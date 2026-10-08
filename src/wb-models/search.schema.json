@@ -251,12 +251,12 @@
         "value": "string"
       }
     },
-    "focus": {
-      "description": "Fired when input receives focus",
+    "wb:search:focus": {
+      "description": "Fired when the input receives focus",
       "detail": {}
     },
-    "blur": {
-      "description": "Fired when input loses focus",
+    "wb:search:blur": {
+      "description": "Fired when the input loses focus",
       "detail": {}
     }
   },

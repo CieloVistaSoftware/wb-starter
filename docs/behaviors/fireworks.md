@@ -22,8 +22,8 @@
 
 ## Events
 
-- `wb:fireworks:start` — Animation started
-- `wb:fireworks:end` — Animation ended
+- `wb:fireworks:start` — Burst started
+- `wb:fireworks:end` — Burst finished and removed
 
 ## Methods
 

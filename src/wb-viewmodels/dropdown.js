@@ -139,6 +139,10 @@ export function dropdown(element, options = {}) {
 
   let isOpen = false;
 
+  // #344: wb:dropdown:open / wb:dropdown:close, once per real change. close()
+  // runs on every outside click, so it announces only when the menu was open.
+  const announce = (type) => element.dispatchEvent(new CustomEvent(type, { bubbles: true }));
+
   const toggle = () => {
     if (config.trigger === 'hover' && isOpen) return;
     isOpen = !isOpen;
@@ -146,13 +150,16 @@ export function dropdown(element, options = {}) {
     menu.classList.toggle('x-dropdown__menu--open', isOpen);
     element.classList.toggle('open', isOpen);
     (trigger || element).setAttribute('aria-expanded', String(isOpen));
+    announce(isOpen ? 'wb:dropdown:open' : 'wb:dropdown:close');
   };
 
   const close = () => {
+    const wasOpen = isOpen;
     isOpen = false;
     menu.classList.remove('x-dropdown__menu--open');
     element.classList.remove('open');
     (trigger || element).setAttribute('aria-expanded', 'false');
+    if (wasOpen) announce('wb:dropdown:close');
   };
 
   // Click handler

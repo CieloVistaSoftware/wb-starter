@@ -193,10 +193,18 @@
   },
   "events": {
     "wb:drawer:open": {
-      "description": "Drawer opened"
+      "description": "Drawer opened",
+      "detail": {
+        "position": "string",
+        "variant": "string"
+      }
     },
     "wb:drawer:close": {
-      "description": "Drawer closed"
+      "description": "Drawer closed",
+      "detail": {
+        "position": "string",
+        "variant": "string"
+      }
     }
   },
   "test": {

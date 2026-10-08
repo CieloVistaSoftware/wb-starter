@@ -76,10 +76,13 @@
   },
   "events": {
     "wb:confetti:start": {
-      "description": "Animation started"
+      "description": "Burst started",
+      "detail": {
+        "count": "number"
+      }
     },
     "wb:confetti:end": {
-      "description": "Animation ended"
+      "description": "Burst finished and removed"
     }
   },
   "test": {

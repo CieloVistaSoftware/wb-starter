@@ -138,21 +138,23 @@
     }
   },
   "events": {
-    "wb:drag:start": {
+    "wb:carddraggable:dragstart": {
       "description": "Drag started",
       "detail": {
         "x": "number",
         "y": "number"
       }
     },
-    "wb:drag:move": {
+    "wb:carddraggable:drag": {
       "description": "During drag",
       "detail": {
         "x": "number",
-        "y": "number"
+        "y": "number",
+        "deltaX": "number",
+        "deltaY": "number"
       }
     },
-    "wb:drag:end": {
+    "wb:carddraggable:dragend": {
       "description": "Drag ended",
       "detail": {
         "x": "number",

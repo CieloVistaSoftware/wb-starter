@@ -168,14 +168,32 @@ export function dialog(element, options = {}) {
     // Show using native dialog API
     dialogEl.showModal();
 
-    // Close handlers
-    const close = () => {
-      dialogEl.close();
+    // #344: open, cancel and close are announced on the element that opened
+    // the dialog -- the <dialog> itself is built here and removed on close, so
+    // nothing outside could listen on it. Cancel is every way out that is not
+    // OK (Cancel, the close button, the backdrop, Escape); close follows every
+    // way out, once.
+    const announce = (type, detail = {}) => element.dispatchEvent(new CustomEvent(type, { bubbles: true, detail }));
+    announce('wb:dialog:open', { title: titleText });
+
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
       dialogEl.remove();
+      announce('wb:dialog:close');
+    };
+    const close = () => {
+      if (dialogEl.open) dialogEl.close();
+      finish();
+    };
+    const cancel = () => {
+      announce('wb:dialog:cancel');
+      close();
     };
 
-    if (closeBtn) closeBtn.onclick = close;
-    cancelBtn.onclick = close;
+    if (closeBtn) closeBtn.onclick = cancel;
+    cancelBtn.onclick = cancel;
     okBtn.onclick = () => {
       element.dispatchEvent(new CustomEvent('wb:dialog:ok', { bubbles: true }));
       close();
@@ -184,18 +202,18 @@ export function dialog(element, options = {}) {
     // Click outside to close (on backdrop)
     if (config.closeOnBackdrop) {
       dialogEl.addEventListener('click', (e) => {
-        if (e.target === dialogEl) close();
+        if (e.target === dialogEl) cancel();
       });
     }
     
     // ESC key handled automatically by <dialog>; `closeOnEscape="false"`
-    // cancels the native 'cancel' event so Escape leaves it open.
-    if (!config.closeOnEscape) {
-      dialogEl.addEventListener('cancel', (e) => e.preventDefault());
-    }
-    dialogEl.addEventListener('close', () => {
-      dialogEl.remove();
+    // cancels the native 'cancel' event so Escape leaves it open. Otherwise
+    // Escape is a cancel, and the native 'close' that follows runs finish().
+    dialogEl.addEventListener('cancel', (e) => {
+      if (!config.closeOnEscape) { e.preventDefault(); return; }
+      announce('wb:dialog:cancel');
     });
+    dialogEl.addEventListener('close', finish);
   };
 
   // Gate widened from tagName==='WB-MODAL' to also cover x-modal on any

@@ -81,8 +81,8 @@ Without it the displayed text is the only key available. The older `sort-value` 
 ## Events
 
 - `wb:table:sort` — Column sorted
-- `wb:table:filter` — Data filtered
-- `wb:table:page` — Page changed
+- `wb:table:filter` — Rows filtered by the search box
+- `wb:table:page` — Page changed (1-based)
 
 ## Methods
 

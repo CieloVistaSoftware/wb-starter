@@ -74,11 +74,11 @@ attributes, so any hand-written inner content is discarded in favor of `label`.
 
 | Event | Fires when | `detail` |
 |-------|-----------|----------|
-| `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | — (no detail) |
+| `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | `{ label }` — the chip's label text |
 
 ```javascript
 document.addEventListener('wb:chip:remove', (e) => {
-  console.log('A chip was dismissed:', e.target);
+  console.log('A chip was dismissed:', e.detail.label);
 });
 ```
 

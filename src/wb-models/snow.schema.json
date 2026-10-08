@@ -84,10 +84,13 @@
   },
   "events": {
     "wb:snow:start": {
-      "description": "Animation started"
+      "description": "Snowfall started",
+      "detail": {
+        "count": "number"
+      }
     },
     "wb:snow:stop": {
-      "description": "Animation stopped"
+      "description": "Snowfall finished and removed"
     }
   },
   "test": {

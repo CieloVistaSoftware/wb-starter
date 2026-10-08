@@ -21,9 +21,9 @@
 
 ## Events
 
-- `wb:drag:start` — Drag started
-- `wb:drag:move` — During drag
-- `wb:drag:end` — Drag ended
+- `wb:carddraggable:dragstart` — Drag started
+- `wb:carddraggable:drag` — During drag
+- `wb:carddraggable:dragend` — Drag ended
 
 ## Methods
 

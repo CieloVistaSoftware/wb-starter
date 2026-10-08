@@ -139,8 +139,8 @@
     }
   },
   "events": {
-    "wb:chip:dismiss": {
-      "description": "Chip dismissed",
+    "wb:chip:remove": {
+      "description": "Chip removed with its dismiss button",
       "detail": {
         "label": "string"
       }

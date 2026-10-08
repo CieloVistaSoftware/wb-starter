@@ -306,6 +306,11 @@ export function table(element, options = {}) {
         // pager below owns: a row can be off-page and filtered out at once.
         row.classList.toggle('x-table__row--filtered', !match);
       });
+      // #344: what was typed, and how many rows still show.
+      element.dispatchEvent(new CustomEvent('wb:table:filter', {
+        bubbles: true,
+        detail: { query: searchInput.value, matches: tbody.querySelectorAll('tr:not(.x-table__row--filtered)').length },
+      }));
     };
   }
 
@@ -361,6 +366,11 @@ export function table(element, options = {}) {
         });
         
         dataRows.forEach(row => tbody.appendChild(row));
+        // #344: the column by its header text and position, and the direction.
+        element.dispatchEvent(new CustomEvent('wb:table:sort', {
+          bubbles: true,
+          detail: { column: th.textContent.trim(), index: colIndex, direction: sortDir },
+        }));
       };
       
       // Right-click copy
@@ -474,8 +484,21 @@ function buildPager(element, tableEl, pageSize) {
     next.disabled = page >= pages - 1;
   };
 
-  const onPrev = () => { if (page > 0) { page--; render(); } };
-  const onNext = () => { page++; render(); };
+  // #344: wb:table:page when the page really changes; Next on the last page
+  // renders the same page and announces nothing. `page` in the detail is
+  // 1-based, as the pager's own "Page N of M" shows it.
+  const go = (delta) => {
+    const before = page;
+    page = Math.max(0, page + delta);
+    render();
+    if (page === before) return;
+    element.dispatchEvent(new CustomEvent('wb:table:page', {
+      bubbles: true,
+      detail: { page: page + 1, pages: Math.max(1, Math.ceil(tbody.querySelectorAll('tr').length / pageSize)) },
+    }));
+  };
+  const onPrev = () => go(-1);
+  const onNext = () => go(1);
   prev.addEventListener('click', onPrev);
   next.addEventListener('click', onNext);
   render();

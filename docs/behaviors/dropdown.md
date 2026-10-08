@@ -83,6 +83,8 @@ The classes below are the ones genuinely applied and meaningfully stylable.
 | Event | Fires when | `detail` |
 |-------|-----------|----------|
 | `wb:dropdown:select` | a menu item is clicked | `{ value, href }` — `value` is the item's trimmed text, `href` is the link URL or `null` |
+| `wb:dropdown:open` | the menu opens | — |
+| `wb:dropdown:close` | the menu closes (trigger, Escape, outside click, or a selection) | — |
 
 ```javascript
 document.querySelector('[x-dropdown]').addEventListener('wb:dropdown:select', (e) => {

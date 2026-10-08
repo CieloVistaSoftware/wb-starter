@@ -256,12 +256,6 @@
       "detail": {
         "value": "string | string[]"
       }
-    },
-    "wb:select:open": {
-      "description": "Dropdown opened"
-    },
-    "wb:select:close": {
-      "description": "Dropdown closed"
     }
   },
   "test": {

@@ -634,6 +634,7 @@ schema, styling) — this table is the cross-behavior index.
 | `wb:colorpicker:change` | `colorpicker.js` (`x-colorpicker`) | a color is picked | `{ value }` |
 | `wb:autocomplete:select` | `autocomplete.js` (`x-autocomplete`) | a suggestion is chosen | `{ value }` |
 | `wb:file:change` | `file.js` (`x-file`) | the native file input changes | `{ files }` |
+| `wb:select:change` | `semantics/select.js` (`<select>`) | the selection changes | `{ value }` (an array for `multiple`) |
 | `wb:otp:input` | `otp.js` | a digit is typed into an OTP field | `{ value }` |
 | `wb:otp:complete` | `enhancements.js` (OTP auto-enhance) | every OTP digit is filled | `{ value }` |
 | `wb:validator:validate` | `validator.js` (`x-validator`) | the form's `validate()` runs | `{ valid }` |
@@ -644,7 +645,7 @@ schema, styling) — this table is the cross-behavior index.
 |-------|-----------|------------|----------|
 | `wb:toast:show` | `feedback.js` (`x-toast`) | the toast trigger is clicked | `{ message, variant }` |
 | `wb:notify:show` | `feedback.js` (`x-notify`) | clicked (cycles info→success→warning→error each click) | `{ message, variant }` |
-| `wb:chip:remove` | `feedback.js` (chip) | a chip's remove (×) button is clicked | `—` |
+| `wb:chip:remove` | `feedback.js` (chip) | a chip's remove (×) button is clicked | `{ label }` |
 | `wb:copy:success` | `copy.js` (`x-copy`) | text is copied to the clipboard | `{ text }` |
 | `wb:copy:error` | `copy.js` (`x-copy`) | the clipboard write fails | `{ error }` |
 
@@ -657,9 +658,14 @@ schema, styling) — this table is the cross-behavior index.
 | `wb:prompt:ok` | `overlay.js` (`x-prompt`) | the prompt dialog's OK button (or Enter) is used | `{ value }` |
 | `wb:prompt:cancel` | `overlay.js` (`x-prompt`) | the prompt dialog's Cancel button (or Escape) is used | `—` |
 | `wb:dialog:ok` | `semantics/dialog.js` (`<dialog>`) | the dialog's confirm button is clicked | `—` |
+| `wb:dialog:open` | `semantics/dialog.js` (trigger) | a dialog the trigger builds is shown | `{ title }` |
+| `wb:dialog:cancel` | `semantics/dialog.js` (trigger) | Cancel, the close button, the backdrop or Escape dismisses it | `—` |
+| `wb:dialog:close` | `semantics/dialog.js` (trigger) | the dialog closes, by any route, once | `—` |
+| `wb:drawer:open` / `wb:drawer:close` | `overlay.js` (`x-drawer`) | the drawer panel opens/closes | `{ position, variant }` |
 | `wb:notes:open` / `wb:notes:close` | `notes.js` | the notes panel opens/closes | `—` |
 | `wb:notes:save` | `notes.js` | a note is saved | `{ path, data, newNote }` |
 | `wb:notes:position` | `notes.js` | the notes panel is moved | `{ position }` |
+| `wb:notes:copy` | `notes.js` | `wbNotes.copy()` puts the note on the clipboard | `{ content }` |
 
 **Navigation**
 
@@ -669,6 +675,7 @@ schema, styling) — this table is the cross-behavior index.
 | `wb:menu:select` | `navigation.js` (`x-menu`) | a menu item is clicked | `{ index, label, value }` |
 | `wb:pagination:change` | `navigation.js` (`x-pagination`) | a page control is clicked | `{ page }` |
 | `wb:dropdown:select` | `dropdown.js` (`x-dropdown`) | a dropdown item is chosen | `{ value, href }` |
+| `wb:dropdown:open` / `wb:dropdown:close` | `dropdown.js` (`x-dropdown`) | the menu opens/closes | `—` |
 | `wb:details:toggle` | `semantics/details.js` (`<details>`) | the element opens/closes | `{ open }` |
 | `wb:collapse:toggle` | `collapse.js` (`x-collapse`) | the collapsible region opens/closes | `{ open }` |
 | `wb:accordion:toggle` | `collapse.js` (accordion) | an accordion item opens/closes | `{ open, title }` |
@@ -704,6 +711,7 @@ per-implementation breakdown.
 | `wb:cardexpandable:toggle` | `card.js` (`<div x-cardexpandable>`) | the card expands/collapses | `{ expanded }` |
 | `wb:cardminimizable:toggle` | `card.js` (`<div x-cardminimizable>`) | the card minimizes/restores | `{ minimized }` |
 | `wb:carddraggable:dragstart/drag/dragend` | `card.js` (`<div x-carddraggable>`) | a draggable card starts/moves/finishes dragging | `{ x, y }` |
+| `wb:cardvideo:play/pause/ended` | `card.js` (`<div x-cardvideo>`) | the card's video plays/pauses/ends | `{ currentTime }` |
 | `wb:cardstats:hydrated` | `card.js` (`<div x-cardstats>`) | stats card finishes initializing (test hook) | `—` |
 
 **Media, layout & effects**
@@ -722,6 +730,16 @@ per-implementation breakdown.
 | `wb:theme:change` | `themecontrol.js` (`<div x-themecontrol>`) | a theme is selected | `{ theme, name }` |
 | `wb:tags:add` / `wb:tags:remove` | `tags.js` (`x-tags`) | a tag is added/removed | `{ tag }` |
 | `wb:table:select` | `semantics/table.js` (`<table>`) | a row is clicked | `{ row, index }` |
+| `wb:table:sort` | `semantics/table.js` (`<table>`) | a header is clicked to sort | `{ column, index, direction }` |
+| `wb:table:filter` | `semantics/table.js` (`<table searchable>`) | the search box filters the rows | `{ query, matches }` |
+| `wb:table:page` | `semantics/table.js` (`<table paginated>`) | Previous/Next changes the page | `{ page, pages }` |
+| `wb:audio:play/pause/ended` | `semantics/audio.js` (`<audio>`) | playback starts/pauses/ends | `—` |
+| `wb:audio:volumechange` | `semantics/audio.js` | the volume or mute changes | `{ volume, muted }` |
+| `wb:audio:eqchange` | `semantics/audio.js` (`show-eq`) | an EQ band moves (slider, preset or `setBand()`) | `{ band, gain }` |
+| `wb:drawerLayout:toggle` | `layouts.js` (`x-drawerLayout`) | the layout drawer collapses/expands | `{ collapsed }` |
+| `wb:confetti:start` / `wb:confetti:end` | `effects.js` (`x-confetti`) | a burst starts / finishes and is removed | `{ count }` / `—` |
+| `wb:fireworks:start` / `wb:fireworks:end` | `effects.js` (`x-fireworks`) | a burst starts / finishes and is removed | `{ count }` / `—` |
+| `wb:snow:start` / `wb:snow:stop` | `effects.js` (`x-snow`) | a snowfall starts / finishes and is removed | `{ count }` / `—` |
 | `wb:code:copy` | `semantics/code.js` (`<pre>`/`<code>`) | the code block's copy button is clicked | `{ text }` |
 | `wb:mdhtml:loaded` | `mdhtml.js` (`x-mdhtml`) | Markdown finishes rendering | `{ src, length }` |
 | `wb:mdhtml:error` | `mdhtml.js` | the Markdown fetch/render fails | `{ src, error }` |

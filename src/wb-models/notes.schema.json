@@ -206,10 +206,10 @@
       }
     },
     "wb:notes:copy": {
-      "description": "Notes copied to clipboard"
-    },
-    "wb:notes:clear": {
-      "description": "Notes cleared"
+      "description": "Notes copied to clipboard",
+      "detail": {
+        "content": "string"
+      }
     },
     "wb:notes:position": {
       "description": "Position changed",

@@ -302,6 +302,11 @@ export function drawer(element, options = {}) {
   // here) each decide backdrop-vs-push from it, and config never changes after
   // this point, so two copies could only ever drift.
   const isPush = config.variant === 'push';
+  // #344: both paths announce open and close on the trigger, once per change.
+  const announce = (type) => element.dispatchEvent(new CustomEvent(type, {
+    bubbles: true,
+    detail: { position: config.position, variant: config.variant },
+  }));
 
   element.classList.add('x-drawer--trigger');
   // #448: no classList.add('x-drawer') here -- it just duplicated this
@@ -389,17 +394,21 @@ export function drawer(element, options = {}) {
       let pushed = null;
       const isOpen = () => builtPanel.classList.contains('x-drawer__panel--open');
       const show = () => {
+        const wasOpen = isOpen();
         builtPanel.classList.add('x-drawer__panel--open');
         // push has no dimming backdrop -- see PATH B's show() for the pattern.
         if (builtBackdrop && !isPush) builtBackdrop.classList.add('x-drawer__backdrop--open');
         if (isPush) pushed = pushPageAside(builtPanel, config.position, [builtPanel, builtBackdrop]);
         document.body.classList.add('x-scroll-lock');
+        if (!wasOpen) announce('wb:drawer:open');
       };
       const hide = () => {
+        const wasOpen = isOpen();
         builtPanel.classList.remove('x-drawer__panel--open');
         if (builtBackdrop) builtBackdrop.classList.remove('x-drawer__backdrop--open');
         if (pushed) { releasePushedPage(pushed); pushed = null; }
         document.body.classList.remove('x-scroll-lock');
+        if (wasOpen) announce('wb:drawer:close');
       };
       const toggle = () => (isOpen() ? hide() : show());
 
@@ -497,6 +506,7 @@ export function drawer(element, options = {}) {
     document.body.appendChild(panelEl);
     if (config.closeOnEscape) document.addEventListener('keydown', onEscape);
     document.body.classList.add('x-scroll-lock');
+    announce('wb:drawer:open');
 
     // Panel/backdrop must exist in the DOM with their CLOSED transform for
     // at least one frame before `--open` is added, or the browser paints
@@ -515,11 +525,13 @@ export function drawer(element, options = {}) {
   const onEscape = (e) => { if (e.key === 'Escape') hide(); };
 
   const hide = () => {
+    const wasOpen = !!panelEl;
     document.removeEventListener('keydown', onEscape);
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { clearRules(panelEl); panelEl.remove(); panelEl = null; }
     if (pushTarget) { releasePushedPage(pushTarget); pushTarget = null; }
     document.body.classList.remove('x-scroll-lock');
+    if (wasOpen) announce('wb:drawer:close');
   };
 
   const toggle = () => panelEl ? hide() : show();

@@ -94,7 +94,25 @@ export function select(element, options = {}) {
     reset: () => { element.selectedIndex = -1; }
   };
 
-  return () => {};
+  // #344: wb:select:change carries the value itself -- every selected value
+  // for a `multiple` select, where the native `value` holds only the first.
+  // The <div x-select> form builds this same <select>, so it bubbles to that
+  // host too. A re-run must not announce each change twice.
+  if (element._wbSelectStopAnnouncing) element._wbSelectStopAnnouncing();
+  const onChange = () => {
+    const value = element.multiple
+      ? Array.from(element.selectedOptions, (o) => o.value)
+      : element.value;
+    element.dispatchEvent(new CustomEvent('wb:select:change', { bubbles: true, detail: { value } }));
+  };
+  element.addEventListener('change', onChange);
+  const stopAnnouncing = () => {
+    element.removeEventListener('change', onChange);
+    delete element._wbSelectStopAnnouncing;
+  };
+  element._wbSelectStopAnnouncing = stopAnnouncing;
+
+  return stopAnnouncing;
 }
 
 /**
