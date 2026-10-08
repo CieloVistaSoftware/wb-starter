@@ -52,7 +52,8 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
 import { localFor } from '../../scripts/sample-media-catalog.mjs';
-import { installProtocolErrorRecorder, protocolErrorsSince, describeProtocolErrors } from '../helpers/protocol-errors';
+import { installProtocolErrorRecorder, protocolErrorsSince, describeProtocolErrors, describePageLifecycle } from '../helpers/protocol-errors';
+import { armHeartbeat, diagnoseContext, PAGE_DEATH_ERROR } from '../helpers/page-death';
 
 export * from '@playwright/test';
 
@@ -309,6 +310,8 @@ export const test = base.extend<OfflineFixtures>({
   context: async ({ context, offlineBlocked }, use, testInfo) => {
     void offlineBlocked; // created first, so the list outlives the context
     await routeOffline(context, testInfo);
+    // #961: a heartbeat on <html>, read back only if the page's JS stops.
+    await armHeartbeat(context);
     // #1406: every request this test's browser made, kept in case it fails.
     // The default trace cannot carry this -- Playwright records network only
     // with DOM snapshots on, and snapshots on CI cost timeouts and a
@@ -329,6 +332,13 @@ export const test = base.extend<OfflineFixtures>({
         body: describeProtocolErrors(errors, since) + '\n',
         contentType: 'text/plain',
       });
+      // #961: when contexts and frames came and went, on the same clock.
+      await testInfo.attach('page-lifecycle', { body: describePageLifecycle(since) + '\n', contentType: 'text/plain' });
+      // #961: a dead or frozen main world vs. an orphaned promise.
+      const said = [...errors.map((e) => e.message), ...testInfo.errors.map((e) => e.message || '')];
+      if (said.some((m) => PAGE_DEATH_ERROR.test(m))) {
+        await testInfo.attach('page-death', { body: (await diagnoseContext(context, since)) + '\n', contentType: 'text/plain' });
+      }
     }
     if (testInfo.status !== testInfo.expectedStatus && network.length) {
       const file = testInfo.outputPath('network.txt');
