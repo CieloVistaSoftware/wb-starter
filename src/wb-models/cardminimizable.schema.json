@@ -113,7 +113,7 @@
     }
   },
   "events": {
-    "wb:minimizable:toggle": {
+    "wb:cardminimizable:toggle": {
       "description": "Fired on minimize/expand",
       "detail": {
         "minimized": "boolean"
