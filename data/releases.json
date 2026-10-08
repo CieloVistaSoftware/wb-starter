@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.439",
+      "date": "2026-10-08",
+      "summary": "The new spec holds card.js with page.route(), but with the service worker live sw.js can answer that request first and the hold never applies, so the compliance gate from #1349 failed the PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1769\" target=\"_blank\" rel=\"noopener\">PR 1769</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Block the service worker in the late-control demo spec</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a655b5061f1b69ff1eaf0eb250e39083968ab063\" target=\"_blank\" rel=\"noopener\"><code>a655b50</code></a>",
+          "issues": [
+            1759
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-demo grows to fit a control that builds after it committed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/80c09070089ec4c54c11b845aedd7d5fbae58bfb\" target=\"_blank\" rel=\"noopener\"><code>80c0907</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/mocked-specs-block-the-service-worker.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/mocked-specs-block-the-service-worker.spec.ts</a> --project=compliance. Before: it failed naming regression/demo-grows-for-late-built-control.spec.ts. Now: 5 passed, and the spec still fails on main&#39;s demo.js with the card 49px past the demo and passes with the fix.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/faef76b0dfc762ff453170d157430320b1997559\" target=\"_blank\" rel=\"noopener\"><code>faef76b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.438",
       "date": "2026-10-08",
       "summary": "The new spec holds card.js with page.route(), and the compliance gate (#1349) requires such a spec to block the service worker: sw.js can answer that fetch itself, out of Playwright&#39;s reach, and the hold would silently not apply. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1767\" target=\"_blank\" rel=\"noopener\">PR 1767</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",

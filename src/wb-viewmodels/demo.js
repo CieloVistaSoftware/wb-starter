@@ -1188,13 +1188,22 @@ export async function demo(element, options = {}) {
                         return Array.from(nums).every((n) => n.classList.contains('x-pre__line-number--placed'));
                     });
                     if (!guttersReady) stableCount = 0;
+                    if (controlBuiltSinceLastPoll) {
+                        // #1759: the control (or something in it) finished
+                        // building during this poll, so two equal readings
+                        // before that moment say nothing about its final width.
+                        controlBuiltSinceLastPoll = false;
+                        stableCount = 0;
+                    }
                     if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) {
                         // #985: the single commit. Settled, or out of budget --
                         // either way this is the best value available, and it is
                         // the only one the reader ever sees.
                         if (pendingShrinkWidth > 0) {
                             setRule(element, 'shrink', { '--x-demo-shrink-width': pendingShrinkWidth + 'px' });
+                            committedWidth = pendingShrinkWidth;
                         }
+                        committed = true;
                         // Lifts demo.css's pre-measure 50vw code cap -- see there.
                         element.classList.remove('x-demo--measuring');
                         element.classList.add('x-demo--measured');
@@ -1204,6 +1213,42 @@ export async function demo(element, options = {}) {
                     }
                     setTimeout(measure, POLL_MS);
                 };
+                // #1759: a control whose behavior builds AFTER the commit (a
+                // lazy chunk, a slow network) changes width once the demo has
+                // already locked its own. Measured on demos/site/cards.html with
+                // card.js held back: the demo committed 387px, then
+                // <article size="lg"> became .x-card--lg (min-width 420px) and
+                // overflowed it. wb:ready bubbles from every element that
+                // finishes building, so the demo hears its control's moment
+                // without knowing which behaviors it carries.
+                //
+                // Before the commit it restarts the stability count (above).
+                // After it, the demo re-measures once the control's
+                // transitions end and grows to fit. Grow only: a demo that
+                // narrows after the reader has seen it is the jump #985
+                // removed, and a control never needs less room once built.
+                let committed = false;
+                let committedWidth = 0;
+                let controlBuiltSinceLastPoll = false;
+                const regrowToFit = () => {
+                    const demoCs = getComputedStyle(element);
+                    const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
+                    // scrollWidth, not the box: the box is held at the committed
+                    // width, and the overflow is exactly what has to fit.
+                    const needed = Math.ceil(Math.max(grid.getBoundingClientRect().width, grid.scrollWidth) + hPad);
+                    if (needed > committedWidth) {
+                        committedWidth = needed;
+                        setRule(element, 'shrink', { '--x-demo-shrink-width': needed + 'px' });
+                    }
+                };
+                grid.addEventListener('wb:ready', () => {
+                    if (!committed) { controlBuiltSinceLastPoll = true; return; }
+                    if (!committedWidth) return;   // nothing was committed to grow from
+                    const running = only.getAnimations({ subtree: true })
+                        .filter((a) => (a.effect?.getTiming().iterations ?? 1) !== Infinity);
+                    Promise.all(running.map((a) => a.finished.catch(() => {})))
+                        .then(() => requestAnimationFrame(regrowToFit));
+                });
                 requestAnimationFrame(measure);
             }
         }
