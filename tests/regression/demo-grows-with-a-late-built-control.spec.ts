@@ -19,6 +19,11 @@ test('a demo grows to fit its control when the control builds after the width co
     await route.continue();
   });
 
+  // Growing from inside the observer's callback logged "ResizeObserver loop
+  // completed with undelivered notifications", which the page's error logger
+  // shows as an error panel (overlap.spec.ts caught it on shop-now).
+  const loopErrors: string[] = [];
+  page.on('console', (m) => { if (/ResizeObserver loop/.test(m.text())) loopErrors.push(m.text()); });
   await page.goto('/demos/site/cards.html');
   const demo = page.locator('[x-demo]', { has: page.locator('article[size="lg"][title="Large Card"]') });
   await demo.scrollIntoViewIfNeeded();
@@ -35,4 +40,5 @@ test('a demo grows to fit its control when the control builds after the width co
     const [cardBox, demoBox] = await Promise.all([card.boundingBox(), demo.boundingBox()]);
     return Math.round(cardBox!.x + cardBox!.width) <= Math.round(demoBox!.x + demoBox!.width);
   }, { message: 'the card ends inside its demo' }).toBe(true);
+  expect(loopErrors, 'growing the demo raised no ResizeObserver loop error').toEqual([]);
 });

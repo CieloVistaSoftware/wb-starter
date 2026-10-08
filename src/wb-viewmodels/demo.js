@@ -1062,13 +1062,24 @@ export async function demo(element, options = {}) {
                 const growWithLateControls = (committed, hPad) => {
                     if (typeof ResizeObserver !== 'function') return;
                     let current = committed;
+                    let queued = false;
                     const grow = () => {
+                        queued = false;
                         const needed = Math.ceil(grid.scrollWidth + hPad);
                         if (needed <= current) return;
                         current = needed;
                         setRule(element, 'shrink', { '--x-demo-shrink-width': current + 'px' });
                     };
-                    const watch = new ResizeObserver(grow);
+                    // Resizing inside the observer's own callback is a layout
+                    // change it has to report again in the same frame, which
+                    // the browser logs as "ResizeObserver loop completed with
+                    // undelivered notifications" -- and the error logger shows
+                    // it on the page. One write per frame, after it.
+                    const watch = new ResizeObserver(() => {
+                        if (queued) return;
+                        queued = true;
+                        requestAnimationFrame(grow);
+                    });
                     for (const control of grid.children) watch.observe(control);
                 };
                 const measure = () => {
