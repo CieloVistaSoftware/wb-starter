@@ -4,6 +4,13 @@
  * Toast auto-dismisses — close button is optional.
  */
 
+/* #1095: the element that shows a toast on click. Never .x-toast, which is
+   the popup below; on a <div> host the arrow cursor gave no sign it does
+   anything. */
+.x-toast--trigger {
+  cursor: pointer;
+}
+
 .x-toast-container {
   position: fixed;
   /* Anchored below the site header (--site-header-height, site.css) rather

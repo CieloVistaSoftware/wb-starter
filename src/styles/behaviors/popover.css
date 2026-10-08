@@ -21,6 +21,12 @@
   display: block;
 }
 
+/* #1095: the element that opens the popover. Never .x-popover, which is the
+   panel above; on a <span> host the arrow cursor gave no sign it opens one. */
+.x-popover--trigger {
+  cursor: pointer;
+}
+
 /* =============================================================================
    #779 — the floating panel overlay.js's popover() builds
    -----------------------------------------------------------------------------
