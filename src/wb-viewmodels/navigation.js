@@ -517,10 +517,16 @@ export function pagination(element, options = {}) {
 
   element.setAttribute('role', 'navigation');
 
-  const createBtn = (text, attrs) => {
+  // #879: which page a button goes to is this behavior's own state, kept
+  // here. It used to be written to a `page` attribute only to be read back on
+  // click, which made it look like an option an author could pass.
+  const pageOf = new WeakMap();
+
+  const createBtn = (text, attrs, page) => {
     const span = document.createElement('span');
     span.setAttribute('role', 'button');
     for (const [k, v] of Object.entries(attrs)) span.setAttribute(k, v);
+    if (page) pageOf.set(span, page);
     span.textContent = text;
     element.appendChild(document.createTextNode('\n  '));
     element.appendChild(span);
@@ -534,9 +540,9 @@ export function pagination(element, options = {}) {
     createBtn('\u2039', prevAttrs);
 
     for (let i = 1; i <= pages; i++) {
-      const attrs = { page: String(i), 'aria-label': `Page ${i}` };
+      const attrs = { 'aria-label': `Page ${i}` };
       if (i === current) attrs['aria-current'] = 'page';
-      createBtn(String(i), attrs);
+      createBtn(String(i), attrs, i);
     }
 
     const nextAttrs = { action: 'next', 'aria-label': 'Next page' };
@@ -551,10 +557,10 @@ export function pagination(element, options = {}) {
     if (!btn || btn.getAttribute('aria-disabled') === 'true') return;
 
     const action = btn.getAttribute('action');
-    const page = btn.getAttribute('page');
+    const page = pageOf.get(btn);
     if (action === 'prev') current--;
     else if (action === 'next') current++;
-    else if (page) current = parseInt(page);
+    else if (page) current = page;
 
     render();
     element.dispatchEvent(new CustomEvent('wb:pagination:change', {
@@ -617,23 +623,29 @@ export function treeview(element, options = {}) {
   element.classList.add('x-treeview');
   element.setAttribute('role', 'tree');
 
-  const renderNode = (node, depth = 0) => {
+  const renderNode = (node) => {
     const hasChildren = node.children && node.children.length > 0;
 
     return `
       <div class="x-treeview__item" role="treeitem">
-        <div class="x-treeview__node${hasChildren ? ' x-treeview__node--branch' : ''}" data-depth="${depth}">
+        <div class="x-treeview__node${hasChildren ? ' x-treeview__node--branch' : ''}">
           ${hasChildren ? '<span class="x-treeview__toggle">▶</span>' : '<span class="x-treeview__spacer"></span>'}
           <span class="x-treeview__label">${node.name}</span>
         </div>
-        ${hasChildren ? `<div class="x-treeview__children">${node.children.map(c => renderNode(c, depth + 1)).join('')}</div>` : ''}
+        ${hasChildren ? `<div class="x-treeview__children">${node.children.map(c => renderNode(c)).join('')}</div>` : ''}
       </div>
     `;
   };
 
   element.innerHTML = config.items.map(item => renderNode(item)).join('');
+  // #879: the depth is where the node sits, so it is counted from the tree
+  // itself. It used to be written into a data-depth attribute only to be read
+  // straight back here, which made internal state look like an author option.
   element.querySelectorAll('.x-treeview__node').forEach((nodeEl) => {
-    const depth = parseInt(nodeEl.getAttribute('data-depth'), 10) || 0;
+    let depth = 0;
+    for (let p = nodeEl.parentElement; p && p !== element; p = p.parentElement) {
+      if (p.classList.contains('x-treeview__children')) depth++;
+    }
     if (depth) setRule(nodeEl, 'indent', { paddingLeft: `${depth * 1.5}rem` }, { weight: 2 });
   });
 

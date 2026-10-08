@@ -24,6 +24,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 const PAGE = '/demos/site/feedback.html';
 
 test.describe('#312 follow-up — <div x-demo> blocks build lazily, not all at once', () => {
@@ -32,7 +33,7 @@ test.describe('#312 follow-up — <div x-demo> blocks build lazily, not all at o
     await page.waitForSelector('[x-demo] .x-demo__grid', { timeout: 20000 });
     // The eager blocks are done when the runtime says it is idle (#1516), not
     // after a guessed 1000ms; the deferred ones are then still unbuilt.
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     const counts = await page.evaluate(() => {
       const all = [...document.querySelectorAll('[x-demo]')];

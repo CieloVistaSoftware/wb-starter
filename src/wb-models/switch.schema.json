@@ -68,6 +68,20 @@
       ],
       "default": "primary",
       "appliesClass": "x-switch--{{value}}"
+    },
+    "themeControl": {
+      "type": "boolean",
+      "description": "Makes the switch drive the page theme: on is dark, off is light. It starts in the position that matches the current theme.",
+      "default": false,
+      "visual": false,
+      "visualReason": "Changes the page theme, not the switch. It starts on in a dark theme, so on its own it looks exactly like checked (#879)."
+    },
+    "notifyControl": {
+      "type": "boolean",
+      "description": "Makes the switch show what it does: turning it on pops a toast (\"<label> enabled\"); turning it off is silent.",
+      "default": false,
+      "visual": false,
+      "visualReason": "Pops a toast when turned on. The switch itself is drawn as any unchecked switch (#879)."
     }
   },
   "$view": [

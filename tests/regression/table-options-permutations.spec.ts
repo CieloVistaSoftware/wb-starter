@@ -62,6 +62,9 @@ const DECLARED = [
   'searchable',
   'selectable',
   'sortable',
+  // #879: set on a body cell, not the host (scope "child"); sorting by it is
+  // x-table-sort-value.spec.ts's job, not a boolean permuted here.
+  'sortValue',
   'striped',
 ];
 

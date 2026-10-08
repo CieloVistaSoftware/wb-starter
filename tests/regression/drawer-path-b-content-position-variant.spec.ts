@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * demos/site/overlays.html <div x-drawer> (src/wb-viewmodels/overlay.js's
  * drawer(), PATH B -- "no schema involved", the branch every <div x-drawer> on
@@ -63,7 +64,7 @@ async function ready(page) {
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   // The page is built once WB settles (#1516: not 1000ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 }
 
 test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position, variant', () => {

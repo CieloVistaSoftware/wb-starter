@@ -61,6 +61,15 @@
         "glass"
       ],
       "default": "default"
+    },
+    "badgeVariant": {
+      "type": "string",
+      "description": "Style of the badge pill beside the title: glass (translucent tag) or gradient (filled gradient badge). Shows only when `badge` is set.",
+      "enum": [
+        "glass",
+        "gradient"
+      ],
+      "default": "glass"
     }
   },
   "$view": [

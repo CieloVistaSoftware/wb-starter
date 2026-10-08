@@ -3,7 +3,7 @@
  * ON = dark, OFF = light. (#210)
  */
 import { test, expect } from '../fixtures/offline';
-import { setupBehaviorTest, setupTestContainer } from '../base';
+import { setupBehaviorTest, setupTestContainer, settlePage } from '../base';
 
 // This used to wait for the Dark Mode switch on /?page=behaviors. That page is
 // a browser now that builds one example on selection (#666/#910) and has no
@@ -22,10 +22,7 @@ test('Dark Mode switch toggles data-theme between dark and light', async ({ page
   //      handler's owner is in place before anything is clicked.
   //   3. Each click is followed by waiting for data-theme to REACH the expected value.
   // A genuine failure still fails: the wait times out and names the value it saw.
-  await page.evaluate(async () => {
-    const w = window as unknown as { WB?: { whenIdle?: () => Promise<unknown> } };
-    if (w.WB && typeof w.WB.whenIdle === 'function') await w.WB.whenIdle();
-  });
+  await settlePage(page);
   await page.waitForSelector('#test-container [x-switch][theme-control] input');
 
   const start = await page.evaluate(() => {

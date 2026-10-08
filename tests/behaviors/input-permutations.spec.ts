@@ -25,6 +25,7 @@
 import { test, expect, Page } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { settlePage } from '../base';
 
 const schema = JSON.parse(
   readFileSync(join(process.cwd(), 'src/wb-models/input.schema.json'), 'utf8')
@@ -54,9 +55,9 @@ async function render(page: Page, html: string): Promise<void> {
   await page.evaluate(async () => {
     const c = document.getElementById('input-perm-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(c, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 /** The element a parameter should have landed on: the field itself. */

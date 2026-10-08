@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T03:56:54.953Z",
+  "generatedAt": "2026-10-08T00:35:35.120Z",
   "count": 160,
   "schemas": [
     {
@@ -1746,7 +1746,23 @@
       "description": "Dropdown that picks a highlight.js code theme and applies it to every code block on the page at once.",
       "tag": "x-codetheme",
       "baseClass": "x-codetheme",
-      "properties": {},
+      "properties": {
+        "showLabel": {
+          "type": "boolean",
+          "description": "Show the \"Code:\" label before the theme picker.",
+          "default": true
+        },
+        "showCategory": {
+          "type": "boolean",
+          "description": "Group the themes in the picker under their category headings (dark, light and so on). Set to false for one flat list.",
+          "default": true
+        },
+        "persist": {
+          "type": "boolean",
+          "description": "Remember the chosen code theme in localStorage and restore it on the next visit.",
+          "default": true
+        }
+      },
       "matrix": [
         {}
       ],
@@ -1996,6 +2012,11 @@
           "type": "string",
           "description": "Selector of element to copy from",
           "default": "this is the target"
+        },
+        "toast": {
+          "type": "boolean",
+          "description": "Confirm the copy with a toast notification instead of swapping the element's own text for the feedback message.",
+          "default": false
         }
       },
       "matrix": [
@@ -2174,6 +2195,11 @@
           "default": 1,
           "minimum": 1,
           "maximum": 6
+        },
+        "events": {
+          "type": "string",
+          "description": "Custom event names separated by spaces or commas (e.g. `wb:switch:change`). Adds a live log under the demo that lists each event as it fires, and a code sample showing how to listen for it.",
+          "default": ""
         }
       },
       "matrix": [],
@@ -2353,6 +2379,16 @@
           "type": "string",
           "description": "Selector for drag handle",
           "default": "this is the handle"
+        },
+        "bounds": {
+          "type": "string",
+          "description": "Keeps the element inside an area while it is dragged: `parent`, `viewport`, or a CSS selector for the containing element. Unset, it can be dragged anywhere.",
+          "default": ""
+        },
+        "grid": {
+          "type": "number",
+          "description": "Snaps the dragged position to a grid of this many pixels. 0 moves freely.",
+          "default": 0
         }
       },
       "matrix": [
@@ -3686,6 +3722,16 @@
             "5",
             "6"
           ]
+        },
+        "ctaTooltip": {
+          "type": "string",
+          "description": "Tooltip shown when hovering the primary call-to-action button. Shows only when `cta` is set.",
+          "default": ""
+        },
+        "ctaSecondaryTooltip": {
+          "type": "string",
+          "description": "Tooltip shown when hovering the secondary call-to-action button. Shows only when `ctaSecondary` is set.",
+          "default": ""
         }
       },
       "matrix": [
@@ -4470,6 +4516,16 @@
           "type": "boolean",
           "description": "Show clear button when has value",
           "default": false
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Text shown inside the field before the value, such as `$`. Takes the place of an `icon` at the start.",
+          "default": ""
+        },
+        "suffix": {
+          "type": "string",
+          "description": "Text shown inside the field after the value, such as `kg`. Takes the place of an `icon` at the end.",
+          "default": ""
         }
       },
       "matrix": [
@@ -4678,6 +4734,15 @@
             "glass"
           ],
           "default": "default"
+        },
+        "badgeVariant": {
+          "type": "string",
+          "description": "Style of the badge pill beside the title: glass (translucent tag) or gradient (filled gradient badge). Shows only when `badge` is set.",
+          "enum": [
+            "glass",
+            "gradient"
+          ],
+          "default": "glass"
         }
       },
       "matrix": [
@@ -4771,6 +4836,16 @@
           "type": "boolean",
           "default": true,
           "attribute": "gfm"
+        },
+        "breaks": {
+          "type": "boolean",
+          "description": "Turn every single newline in the Markdown into a line break (<br>). Off by default, so hard-wrapped source flows as ordinary paragraphs.",
+          "default": false
+        },
+        "autoLiveRender": {
+          "type": "boolean",
+          "description": "Render each fenced HTML example in the Markdown as a live component above its code. Set to false for Markdown you did not write, such as an issue body, so its examples stay as code.",
+          "default": true
         }
       },
       "matrix": [
@@ -4807,8 +4882,13 @@
         },
         "placeholder": {
           "type": "string",
-          "description": "Mask placeholder character",
+          "description": "Placeholder text for the empty field. When set it replaces the placeholder derived from the mask.",
           "default": "this is the placeholder"
+        },
+        "maskPlaceholder": {
+          "type": "string",
+          "description": "Character that stands for each unfilled slot when the placeholder is derived from the mask (`999-99-9999` shows `___-__-____`). Used only when the element has no `placeholder` of its own.",
+          "default": "_"
         }
       },
       "matrix": [],
@@ -5083,6 +5163,11 @@
           "type": "string",
           "description": "Textarea placeholder",
           "default": "Add your notes here..."
+        },
+        "savePath": {
+          "type": "string",
+          "description": "URL of the notes file: the panel loads saved notes from it and names it in the \"Saved to\" message.",
+          "default": "/data/notes.json"
         }
       },
       "matrix": [
@@ -6022,6 +6107,11 @@
           "description": "Indeterminate loading state",
           "default": false,
           "appliesClass": "x-progress--indeterminate"
+        },
+        "showLabel": {
+          "type": "boolean",
+          "description": "Show the built-in percentage label on the bar. Set to false to hide it.",
+          "default": true
         }
       },
       "matrix": [
@@ -7687,6 +7777,20 @@
           ],
           "default": "primary",
           "appliesClass": "x-switch--{{value}}"
+        },
+        "themeControl": {
+          "type": "boolean",
+          "description": "Makes the switch drive the page theme: on is dark, off is light. It starts in the position that matches the current theme.",
+          "default": false,
+          "visual": false,
+          "visualReason": "Changes the page theme, not the switch. It starts on in a dark theme, so on its own it looks exactly like checked (#879)."
+        },
+        "notifyControl": {
+          "type": "boolean",
+          "description": "Makes the switch show what it does: turning it on pops a toast (\"<label> enabled\"); turning it off is silent.",
+          "default": false,
+          "visual": false,
+          "visualReason": "Pops a toast when turned on. The switch itself is drawn as any unchecked switch (#879)."
         }
       },
       "matrix": [
@@ -7847,6 +7951,12 @@
           "description": "Let a row be clicked to become the active row.",
           "visual": false,
           "visualReason": "Clicking a row makes it the active row. Only the click shows it (#773)."
+        },
+        "sortValue": {
+          "type": "string",
+          "description": "Set on a body cell: the value its column sorts by instead of the cell's text, such as an ISO date behind a friendly one. `sort-value` is read too.",
+          "default": "",
+          "scope": "child"
         }
       },
       "matrix": [
@@ -7914,6 +8024,12 @@
           "description": "Vertical tab layout",
           "default": false,
           "appliesClass": "x-tabs--vertical"
+        },
+        "tabTitle": {
+          "type": "string",
+          "description": "Set on each child panel: the label on that panel's tab button. Without it the buttons read \"Tab 1\", \"Tab 2\" and so on. `tab` and `data-tab-title` are read too.",
+          "default": "",
+          "scope": "child"
         }
       },
       "matrix": [
@@ -8163,6 +8279,16 @@
           ],
           "default": "default",
           "appliesClass": "x-textarea--{{value}}"
+        },
+        "minRows": {
+          "type": "number",
+          "description": "Minimum height of the field, in text rows. It never renders shorter than this.",
+          "default": 2
+        },
+        "maxRows": {
+          "type": "number",
+          "description": "With `autosize`, the field stops growing at this many rows and scrolls instead.",
+          "default": 10
         }
       },
       "matrix": [
@@ -8197,7 +8323,18 @@
       "description": "Theme switcher control.",
       "tag": "x-themecontrol",
       "baseClass": "x-themecontrol",
-      "properties": {},
+      "properties": {
+        "showLabel": {
+          "type": "boolean",
+          "description": "Show the \"Theme:\" label before the theme picker.",
+          "default": true
+        },
+        "persist": {
+          "type": "boolean",
+          "description": "Remember the chosen theme in localStorage and restore it on the next visit.",
+          "default": true
+        }
+      },
       "matrix": [
         {}
       ],
@@ -8363,6 +8500,16 @@
           "type": "string",
           "description": "Selector of target element",
           "default": "this is the target"
+        },
+        "toggleClass": {
+          "type": "string",
+          "description": "The class each click toggles, on `target` and, unless `toggleSelf` is false, on the element itself. It changes nothing visible unless that class is styled.",
+          "default": "active"
+        },
+        "toggleSelf": {
+          "type": "boolean",
+          "description": "Also toggle the class on the clicked element itself. Set to false to change only `target`.",
+          "default": true
         }
       },
       "matrix": [
