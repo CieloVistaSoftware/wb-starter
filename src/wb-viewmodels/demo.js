@@ -4,6 +4,7 @@ import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
 import { getNativeBehavior } from '../core/tag-map.js';
 import { centralTime } from '../core/central-time.js';
+import { sliceOverBudget, nextSlice } from '../core/main-thread-budget.js';
 
 /** Behaviors that fill their row by nature: a demo holding only one of them is full width (#1387). */
 const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero'];
@@ -540,6 +541,11 @@ export async function demo(element, options = {}) {
     } else {
         try {
             const pageSource = await getPageSource();
+            // #961: the page source is cached after the first block, so this
+            // await resumes as a microtask, and every demo on the page then
+            // parsed its source block in the same task. Hand the task back
+            // when the runtime's slice budget is used (main-thread-budget.js).
+            while (sliceOverBudget()) await nextSlice();
             // #934: `[x-demo]`, not `x-demo`. This searched for a TAG that
             // cannot exist since 4.0.0 removed custom elements, so BOTH the
             // live count and the source count came out 0 -- #580's mismatch
@@ -671,6 +677,9 @@ export async function demo(element, options = {}) {
             loadDocsManifest().catch(() => null),
             loadDocsIndex().catch(() => null),
         ]);
+        // #961: same as after getPageSource() above -- both are cached, so
+        // without this every demo's doc links were built in one task.
+        while (sliceOverBudget()) await nextSlice();
         const root = siteRoot();
 
         // John (reported repeatedly): pages/behaviors.html's demos are

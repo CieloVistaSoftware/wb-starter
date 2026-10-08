@@ -52,7 +52,22 @@ test.describe('#970: the lazy runtime records its own workflow', () => {
     ).toBe(true);
   });
 
+  test('with tracing off, the trace still names entry points and parameter values', async ({ page }) => {
+    // Recorded for every visitor, tracing on or not -- but without the caller,
+    // which costs a stack capture per call (#961: 113ms of one long task).
+    await page.goto(DEMO, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => (window as any).WB?.flowTrace);
+    const trace: string[] = await page.evaluate(() => (window as any).WB.flowTrace());
+    expect(trace.length, 'the page loaded and recorded no workflow').toBeGreaterThan(0);
+    expect(
+      trace.filter((l) => /^\w+\(.*\)$/.test(l)).length,
+      `no fn(params) lines with tracing off. Sample: ${JSON.stringify(trace.slice(0, 3))}`,
+    ).toBeGreaterThan(0);
+  });
+
   test('a real page load produces a trace naming entry points and parameter values', async ({ page }) => {
+    // The caller is captured while the `flow` category is on (#961).
+    await page.addInitScript(() => { try { localStorage.setItem('x-debug', 'flow'); } catch { /* storage blocked */ } });
     await page.goto(DEMO, { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => (window as any).WB);
 
