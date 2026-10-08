@@ -118,9 +118,9 @@ test.describe('#344 declared events are dispatched', () => {
     ].join(''));
     await record(page, ['wb:select:change']);
     await page.locator('#one').selectOption('b');
-    await arrived(page, 'wb:select:change', { value: 'b' });
+    expect((await arrived(page, 'wb:select:change', { value: 'b' })).detail).toEqual({ value: 'b' });
     await page.locator('#many').selectOption(['x', 'z']);
-    await arrived(page, 'wb:select:change', { value: ['x', 'z'] });
+    expect((await arrived(page, 'wb:select:change', { value: ['x', 'z'] })).detail).toEqual({ value: ['x', 'z'] });
   });
 
   test('chip: wb:chip:remove carries the label', async ({ page }) => {
@@ -136,9 +136,9 @@ test.describe('#344 declared events are dispatched', () => {
     await record(page, ['wb:drawerLayout:toggle']);
     const toggle = page.locator('#test-container .x-drawerlayout__toggle');
     await toggle.click();
-    await arrived(page, 'wb:drawerLayout:toggle', { collapsed: true });
+    expect((await arrived(page, 'wb:drawerLayout:toggle', { collapsed: true })).detail).toEqual({ collapsed: true });
     await toggle.click();
-    await arrived(page, 'wb:drawerLayout:toggle', { collapsed: false });
+    expect((await arrived(page, 'wb:drawerLayout:toggle', { collapsed: false })).detail).toEqual({ collapsed: false });
   });
 
   test('notes: wb:notes:copy carries what was copied', async ({ page, context }) => {
@@ -180,21 +180,21 @@ test.describe('#344 declared events are dispatched', () => {
     await record(page, ['wb:audio:play', 'wb:audio:pause', 'wb:audio:ended', 'wb:audio:volumechange', 'wb:audio:eqchange']);
 
     await page.evaluate(() => (document.querySelector('#test-container [x-audio]') as any).wbAudio.setVolume(0.3));
-    await arrived(page, 'wb:audio:volumechange', { volume: 0.3, muted: true });
+    expect((await arrived(page, 'wb:audio:volumechange', { volume: 0.3, muted: true })).detail).toEqual({ volume: 0.3, muted: true });
 
     await page.locator('#test-container .x-audio__eq-slider').first().fill('5');
-    await arrived(page, 'wb:audio:eqchange', { band: 0, gain: 5 });
+    expect((await arrived(page, 'wb:audio:eqchange', { band: 0, gain: 5 })).detail).toEqual({ band: 0, gain: 5 });
 
     await page.evaluate(() => (document.querySelector('#test-container [x-audio]') as any).wbAudio.play());
-    await arrived(page, 'wb:audio:play');
+    expect((await arrived(page, 'wb:audio:play')).type).toBe('wb:audio:play');
     await page.evaluate(() => (document.querySelector('#test-container [x-audio]') as any).wbAudio.pause());
-    await arrived(page, 'wb:audio:pause');
+    expect((await arrived(page, 'wb:audio:pause')).type).toBe('wb:audio:pause');
     await page.evaluate(() => {
       const audio = document.querySelector('#test-container [x-audio] audio') as HTMLAudioElement;
       audio.currentTime = Math.max(0, audio.duration - 0.2);
       return audio.play();
     });
-    await arrived(page, 'wb:audio:ended');
+    expect((await arrived(page, 'wb:audio:ended')).type).toBe('wb:audio:ended');
   });
 
   test('cardvideo: wb:cardvideo:play, pause and ended carry currentTime', async ({ page }) => {
