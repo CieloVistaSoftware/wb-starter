@@ -7,6 +7,10 @@
     var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
     if (!m) return;
     var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
   })();
 </script>
