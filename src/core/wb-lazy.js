@@ -24,7 +24,8 @@ import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
 import { isComponentLandmark } from './component-landmark.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
-import { makeDlog, traceStatusLabel } from './debug-trace.js';
+import { makeDlog, traceStatusLabel, isTraceCategoryEnabled } from './debug-trace.js';
+import { sliceOverBudget, nextSlice } from './main-thread-budget.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import {
   beginInFlight, failInjection, removeApplied, installReadiness,
@@ -92,10 +93,16 @@ function elLabel(el) {
  * warnings), level-filtered by whatever is reading it, and unordered across
  * frames. `WB.flowTrace()` hands back the exact sequence instead.
  *
- * Always recorded, even when the `flow` category is off: the cost is one
- * string per injection, and a trace you have to reproduce a failure to enable
- * is useless for the failure that already happened. Logging still respects the
- * category, so consoles stay quiet by default.
+ * Always recorded, even when the `flow` category is off: the entry point and
+ * its parameters cost one string per call, and a trace you have to reproduce
+ * a failure to enable is useless for the failure that already happened.
+ * Logging still respects the category, so consoles stay quiet by default.
+ *
+ * The CALLER is recorded only while the `flow` category is on (#961). Finding
+ * it means capturing and parsing a stack on every call, and on
+ * cards-permutation-matrix.html that was 113ms of a single 1.7s main-thread
+ * task, paid by every visitor whose tracing was off. Turn the category on to
+ * get `fn(params) <- caller` lines again.
  */
 const FLOW_LIMIT = 20000;
 const flowBuffer = [];
@@ -107,9 +114,9 @@ const flowBuffer = [];
  * re-entrant path or 295 unrelated ones, and those are different bugs.
  *
  * Frames inside this module are skipped so the answer is the outside caller,
- * not `flow` itself. Cheap enough at this volume: constructing an Error and
- * slicing its stack costs microseconds, and it is only done for traced entry
- * points, not per element.
+ * not `flow` itself. Called only while the `flow` category is on: it was
+ * described as "microseconds", but inject/lazyInject/getAutoInjectBehaviors
+ * ARE per element, and a profile of one card page put it at 113ms (#961).
  */
 function callerFrame(tracedFn) {
   const raw = new Error().stack;
@@ -130,10 +137,26 @@ function callerFrame(tracedFn) {
   return '(top-level)';
 }
 
+// Whether the `flow` category is on, read at most every 250ms: the category
+// lives in localStorage, and reading and parsing it on every call was its own
+// cost on the hot path (#961). A flip still takes effect without a reload.
+let flowCheckedAt = -Infinity;
+let flowOn = false;
+function flowEnabled() {
+  const t = performance.now();
+  if (t - flowCheckedAt > 250) {
+    flowOn = isTraceCategoryEnabled('flow');
+    flowCheckedAt = t;
+  }
+  return flowOn;
+}
+
 function flow(fn, ...parts) {
-  const line = `${fn}(${parts.filter((p) => p !== undefined).join(', ')}) <- ${callerFrame(fn)}`;
+  const on = flowEnabled();
+  const call = `${fn}(${parts.filter((p) => p !== undefined).join(', ')})`;
+  const line = on ? `${call} <- ${callerFrame(fn)}` : call;
   if (flowBuffer.length < FLOW_LIMIT) flowBuffer.push(line);
-  dlog('flow', `[flow] ${line}`);
+  if (on) dlog('flow', `[flow] ${line}`);
 }
 // Always announce the tracing state — first thing in the console, every
 // load, regardless of whether it's on or off.
@@ -835,6 +858,20 @@ const WB = {
         return null;
       }
 
+      // #961: each await above resolves as a microtask once the module is
+      // cached, so without a yield every injection on the page, and the DOM
+      // it builds, ran inside ONE task: 1.4s to 4.5s on the card matrix
+      // fixture, with the page unable to paint or answer anything meanwhile.
+      // Give the task back when this slice has used its budget. The check is
+      // inline and synchronous right before the work it guards (see
+      // main-thread-budget.js). The injection is already counted as in
+      // flight, so settled()/whenIdle() keep waiting through the yield, and
+      // x-ready is still stamped only in the finally below.
+      while (sliceOverBudget()) await nextSlice();
+      if (!element.isConnected) {
+        return null;
+      }
+
       // v3.0: build the host's internal DOM from its schema (if any) BEFORE
       // the behavior runs against it -- see buildSchemaIfNeeded()'s comment
       // above for the full rationale (#489, split off #322).
@@ -852,6 +889,11 @@ const WB = {
       // stamped x-ready and released whenIdle() while the element was still
       // empty and loading, and the Promise was recorded as its "cleanup", so
       // removal tore nothing down. wb.js already awaited; this had drifted (#1219).
+      // Same slice check as above, again right before the synchronous part.
+      while (sliceOverBudget()) await nextSlice();
+      if (!element.isConnected) {
+        return null;
+      }
       const cleanup = await behaviorFn(element, options);
 
       // Track for cleanup
@@ -1073,97 +1115,133 @@ const WB = {
       WB._observer.disconnect();
     }
 
-    const observer = new MutationObserver(mutations => {
-      for (const mutation of mutations) {
-        // Handle added nodes
-        for (const node of mutation.addedNodes) {
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            // Check if node itself has x-behavior
-            if (node.hasAttribute('x-behavior')) {
-              warnXBehaviorDeprecated(node); // #1642
-              const behaviorList = node.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
-              const isEager = node.hasAttribute('x-eager');
+    // One mutation record, handled exactly as the observer used to handle it
+    // inline.
+    const handleMutation = (mutation) => {
+      // Handle added nodes
+      for (const node of mutation.addedNodes) {
+        // Handled a task later now: a node removed again meanwhile is not
+        // enhanced (re-inserting it queues a fresh record).
+        if (node.nodeType === Node.ELEMENT_NODE && node.isConnected) {
+          // Check if node itself has x-behavior
+          if (node.hasAttribute('x-behavior')) {
+            warnXBehaviorDeprecated(node); // #1642
+            const behaviorList = node.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
+            const isEager = node.hasAttribute('x-eager');
+            behaviorList.forEach(name => {
+              if (isEager) WB.inject(node, name);
+              else WB.lazyInject(node, name);
+            });
+          } else {
+            // Check auto-inject for the node itself
+            const autoBehaviors = getAutoInjectBehaviors(node);
+            autoBehaviors.forEach(name => WB.lazyInject(node, name));
+          }
+
+          // Check descendants
+          if (node.hasChildNodes?.()) {
+            node.querySelectorAll?.('[x-behavior]').forEach(el => {
+              warnXBehaviorDeprecated(el); // #1642
+              const behaviorList = el.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
+              const isEager = el.hasAttribute('x-eager');
               behaviorList.forEach(name => {
-                if (isEager) WB.inject(node, name);
-                else WB.lazyInject(node, name);
+                if (isEager) WB.inject(el, name);
+                else WB.lazyInject(el, name);
               });
-            } else {
-              // Check auto-inject for the node itself
-              const autoBehaviors = getAutoInjectBehaviors(node);
-              autoBehaviors.forEach(name => WB.lazyInject(node, name));
-            }
+            });
+          }
 
-            // Check descendants
-            if (node.hasChildNodes?.()) {
-              node.querySelectorAll?.('[x-behavior]').forEach(el => {
-                warnXBehaviorDeprecated(el); // #1642
-                const behaviorList = el.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
-                const isEager = el.hasAttribute('x-eager');
-                behaviorList.forEach(name => {
-                  if (isEager) WB.inject(el, name);
-                  else WB.lazyInject(el, name);
-                });
+          // Check descendants for custom elements (always active)
+          if (node.hasChildNodes?.()) {
+            customElementMappings.forEach(({ selector, behavior }) => {
+              node.querySelectorAll?.(selector).forEach(el => {
+                WB.lazyInject(el, behavior);
               });
-            }
+            });
+          }
 
-            // Check descendants for custom elements (always active)
-            if (node.hasChildNodes?.()) {
-              customElementMappings.forEach(({ selector, behavior }) => {
-                node.querySelectorAll?.(selector).forEach(el => {
+          // Check descendants for auto-inject. Unconditional per-element
+          // check -- `variant` triggers the mapped behavior regardless of
+          // the global autoInject setting.
+          if (node.hasChildNodes?.()) {
+            autoInjectMappings.forEach(({ selector, behavior }) => {
+              node.querySelectorAll?.(selector).forEach(el => {
+                if (!getConfig('autoInject') && !el.hasAttribute('variant')) return;
+                // Same x-ignore opt-out as the scan path and
+                // getAutoInjectBehaviors(). This third copy never had it, so a
+                // content <header x-ignore> inside any node added after load
+                // (every SPA page fragment) still got header() and .x-header.
+                if (el.hasAttribute('x-ignore')) return;
+                // Same landmark rule as the scan path (component-landmark.js).
+                if (isComponentLandmark(el)) return;
+                // #923: same replacement guard as the scan path -- a node
+                // added later must resolve identically to the same markup
+                // present at load.
+                if (isReplacedByExplicitBehavior(el, behavior)) return;
+                if (!el.hasAttribute('x-behavior')) {
                   WB.lazyInject(el, behavior);
-                });
+                }
               });
-            }
-
-            // Check descendants for auto-inject. Unconditional per-element
-            // check -- `variant` triggers the mapped behavior regardless of
-            // the global autoInject setting.
-            if (node.hasChildNodes?.()) {
-              autoInjectMappings.forEach(({ selector, behavior }) => {
-                node.querySelectorAll?.(selector).forEach(el => {
-                  if (!getConfig('autoInject') && !el.hasAttribute('variant')) return;
-                  // Same x-ignore opt-out as the scan path and
-                  // getAutoInjectBehaviors(). This third copy never had it, so a
-                  // content <header x-ignore> inside any node added after load
-                  // (every SPA page fragment) still got header() and .x-header.
-                  if (el.hasAttribute('x-ignore')) return;
-                  // Same landmark rule as the scan path (component-landmark.js).
-                  if (isComponentLandmark(el)) return;
-                  // #923: same replacement guard as the scan path -- a node
-                  // added later must resolve identically to the same markup
-                  // present at load.
-                  if (isReplacedByExplicitBehavior(el, behavior)) return;
-                  if (!el.hasAttribute('x-behavior')) {
-                    WB.lazyInject(el, behavior);
-                  }
-                });
-              });
-            }
+            });
           }
         }
+      }
 
-        // Handle attribute changes on x-behavior
-        if (mutation.type === 'attributes' && mutation.attributeName === 'x-behavior') {
-          const element = mutation.target;
-          warnXBehaviorDeprecated(element); // #1642
-          const behaviorList = element.getAttribute('x-behavior')?.split(/\s+/).filter(Boolean) || [];
-          const isEager = element.hasAttribute('x-eager');
-          
-          // Remove behaviors no longer in list
-          const current = applied.get(element) || [];
-          current.forEach(({ name, cleanup }) => {
-            if (!behaviorList.includes(name)) {
-              if (typeof cleanup === 'function') cleanup();
-            }
-          });
+      // Handle attribute changes on x-behavior
+      if (mutation.type === 'attributes' && mutation.attributeName === 'x-behavior') {
+        const element = mutation.target;
+        warnXBehaviorDeprecated(element); // #1642
+        const behaviorList = element.getAttribute('x-behavior')?.split(/\s+/).filter(Boolean) || [];
+        const isEager = element.hasAttribute('x-eager');
+        
+        // Remove behaviors no longer in list
+        const current = applied.get(element) || [];
+        current.forEach(({ name, cleanup }) => {
+          if (!behaviorList.includes(name)) {
+            if (typeof cleanup === 'function') cleanup();
+          }
+        });
 
-          // Add new behaviors
-          behaviorList.forEach(name => {
-            if (isEager) WB.inject(element, name);
-            else WB.lazyInject(element, name);
-          });
+        // Add new behaviors
+        behaviorList.forEach(name => {
+          if (isEager) WB.inject(element, name);
+          else WB.lazyInject(element, name);
+        });
+      }
+    };
+
+    // #961: this used to run inside the MutationObserver callback itself. A
+    // callback is a microtask delivered after EVERY behavior that touched the
+    // DOM, and each delivery queried ~30 selectors per added node and read
+    // getComputedStyle() (lazyWatchTarget) on a document the previous behavior
+    // had just dirtied, forcing a full style recalc each time -- all inside the
+    // one long task the injections already formed. Records are now queued and
+    // handled in a later task, in budgeted slices, so one style recalc serves a
+    // whole batch. The batch is counted as work (track) from the moment it is
+    // queued, so settled()/whenIdle() still cannot resolve between a node's
+    // insertion and its lazyInject().
+    let queued = [];
+    const drain = async () => {
+      await nextSlice();
+      while (queued.length) {
+        const batch = queued;
+        queued = [];
+        for (let i = 0; i < batch.length; i++) {
+          if (sliceOverBudget()) {
+            queued = batch.slice(i).concat(queued);
+            await nextSlice();
+            break;
+          }
+          handleMutation(batch[i]);
         }
       }
+    };
+    let draining = null;
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) queued.push(mutation);
+      if (draining) return;
+      draining = drain().finally(() => { draining = null; });
+      injectionTracker.track('observe (queued mutations)', draining);
     });
 
     return startObserving(WB, observer, root, ['x-behavior']);
