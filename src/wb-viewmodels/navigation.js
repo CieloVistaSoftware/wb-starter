@@ -376,6 +376,17 @@ export function sidebar(element, options = {}) {
   };
   setWidth(options.width ?? readAttr(element, 'width'));
 
+  // resize-min/max bound the sidebar's width however it is set -- a drag, the
+  // width attribute or a stylesheet -- not only a drag (#828). Unset, the
+  // defaults in navigation.css apply.
+  const applyBounds = () => {
+    const vars = {};
+    if (readAttr(element, 'resize-min', '') !== '') vars['--x-sidebar-min-width'] = `${minWidth()}px`;
+    if (readAttr(element, 'resize-max', '') !== '') vars['--x-sidebar-max-width'] = `${maxWidth()}px`;
+    setRule(element, 'bounds', Object.keys(vars).length ? vars : null);
+  };
+  applyBounds();
+
   if (config.resizable) {
     element.classList.add('x-sidebar--resizable');
     handle = document.createElement('div');
@@ -429,6 +440,7 @@ export function sidebar(element, options = {}) {
     const changed = new Set(mutations.map((m) => String(m.attributeName).replace(/^data-/, '')));
     if (changed.has('width')) setWidth(readAttr(element, 'width'));
     if (changed.has('itemstyle')) applyItemStyle(readAttr(element, 'itemstyle'));
+    if (changed.has('resize-min') || changed.has('resize-max')) applyBounds();
     config.active = readAttr(element, 'active');
     if (changed.has('items') || changed.has('collapsed')) {
       config.collapsed = readFlag(element, 'collapsed');
@@ -441,7 +453,10 @@ export function sidebar(element, options = {}) {
 
   observer.observe(element, {
     attributes: true,
-    attributeFilter: ['collapsed', 'items', 'active', 'width', 'itemstyle', 'data-collapsed', 'data-items', 'data-active', 'data-width', 'data-itemstyle'],
+    attributeFilter: [
+      'collapsed', 'items', 'active', 'width', 'itemstyle', 'resize-min', 'resize-max',
+      'data-collapsed', 'data-items', 'data-active', 'data-width', 'data-itemstyle', 'data-resize-min', 'data-resize-max',
+    ],
   });
 
   return () => {

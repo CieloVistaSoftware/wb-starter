@@ -44,12 +44,12 @@
     },
     "resizeMin": {
       "type": "number",
-      "description": "Smallest width the handle allows, in px",
+      "description": "Smallest width, in px: the sidebar is never narrower, whether dragged, set by width or styled. Unset: 10rem, and 60px for a drag",
       "default": 60
     },
     "resizeMax": {
       "type": "number",
-      "description": "Largest width the handle allows, in px",
+      "description": "Largest width, in px: the sidebar is never wider, whether dragged, set by width or styled. Unset: the container's width, and 600px for a drag",
       "default": 600
     },
     "itemstyle": {

@@ -94,3 +94,15 @@ test('x-sidebar itemstyle="pill" rounds its items, follows the attribute, and th
   await sidebar.evaluate((el) => el.setAttribute('itemstyle', 'block'));
   await expect(sidebar).not.toHaveClass(/x-sidebar--pill/);
 });
+
+test('resize-min and resize-max bound the sidebar however its width is set, not only during a drag', async ({ page }) => {
+  // Declaring them in sidebar.schema.json (#828) made the every-declared-attribute
+  // sweep ask what they do set on their own: before, nothing until a drag.
+  await injectAndScan(page, `
+    <div style="width: 200px"><div id="narrow" x-sidebar items="Home" resize-min="320"></div></div>
+    <div style="width: 600px"><div id="wide" x-sidebar items="Home" resize-max="200"></div></div>`);
+  await expect(page.locator('#narrow')).toHaveClass(/x-sidebar/, { timeout: 15000 });
+  const widthOf = (id: string) => page.locator(`#${id}`).evaluate((el) => Math.round(el.getBoundingClientRect().width));
+  await expect.poll(() => widthOf('wide')).toBe(200);
+  await expect.poll(() => widthOf('narrow'), { message: 'a 200px container does not squeeze it below resize-min' }).toBe(320);
+});
