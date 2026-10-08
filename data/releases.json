@@ -6,6 +6,29 @@
   ],
   "releases": [
     {
+      "version": "1.0.430",
+      "date": "2026-10-08",
+      "summary": "The lazy runtime built every card, demo and code panel near the viewport in one main-thread task of 1.4-4.5s, so the page could not paint or answer anything meanwhile. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Build lazy pages in budgeted slices, not one long task</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee5f328b3f5abe7770a4f4b246d004ef724555fd\" target=\"_blank\" rel=\"noopener\"><code>ee5f328</code></a>",
+          "issues": [
+            1752,
+            961,
+            1760
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/lazy-build-has-no-long-task.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/lazy-build-has-no-long-task.spec.ts</a> --project=regression</code>. Before: cards-permutation-matrix.html had a single 1359-3248ms task and failed 5 of 5. Now: the longest task is under 700ms and all 4 pages pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee5f328b3f5abe7770a4f4b246d004ef724555fd\" target=\"_blank\" rel=\"noopener\"><code>ee5f328</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.429",
       "date": "2026-10-08",
       "summary": "Sixteen classes that code, pre, range, textarea, copybutton, audio, label, select, timeline and accordion put on the DOM they build used single-dash compounds the naming convention has no slot for (x-pre-wrapper, x-range-value, x-accordion-head and 13 more); they are now parts, x-pre__wrapper, x-range__value, x-accordion__head, and the audio host is the modifier x-audio--host. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a>",

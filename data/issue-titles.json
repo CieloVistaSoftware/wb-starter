@@ -1241,5 +1241,7 @@
   "1747": "x-cardlink titles render --primary blue on the dark card (1.49:1): site.css .page h3 outranks card.css",
   "1752": "perf: lazy runtime builds a page in one 1.4-4.5s main-thread task (card-variant-surface flake)",
   "1756": "Fire the useful lifecycle events #1731 removed",
-  "1757": "cards.html #card-card code panel grows 407 → 420px after first paint on the Windows CI runner"
+  "1757": "cards.html #card-card code panel grows 407 → 420px after first paint on the Windows CI runner",
+  "1759": "x-demo commits its width before a late-building control finishes, and the control then overflows the demo",
+  "1761": "cards-showcase \"stranding reflow\" guard fails ~1 in 20: the card can be built before the strand ever fires"
 }
