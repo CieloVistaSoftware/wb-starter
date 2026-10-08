@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.421",
+      "date": "2026-10-07",
+      "summary": "Readiness was already one idea -- a once-only wb:ready moment from markReady() plus WB.isReady() -- but waiting on it was not. A listener alone hangs when the moment already passed and a check alone misses one still to come, so callers wrote the pair by hand or watched the x-ready attribute, which exists only under automation. ready-signal.js now has whenReady(el, { timeout }): resolves at once if the element is built, else on its own wb:ready (a descendant&#39;s does not count), and rejects naming the element on timeout. It is WB.whenReady() on both runtimes, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a> elementReady()/buildInView() use it (attribute only on pages without WB). The Behaviors page stops writing x-ready onto its workspace -- a second, stateful copy of its wb:layout-settled event that shipped to every visitor; the three specs that read it now wait on the live panel&#39;s render (aria-busy). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1754\" target=\"_blank\" rel=\"noopener\">PR 1754</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>WB.whenReady(el) — one race-free way to wait for an element to be built</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4c5e68d9d722693d71972511221df2cd41365003\" target=\"_blank\" rel=\"noopener\"><code>4c5e68d</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/when-ready-signal.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/when-ready-signal.spec.ts</a></code>. Before: no shared wait existed, and #behaviors-workspace carried x-ready in production markup. Now: 4/4 pass (built element resolves at once, unbuilt one on wb:ready, a descendant does not count, a timeout names the element), and the workspace no longer carries the attribute.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c1f6772286c6c9b116d8adbc9e0ec3ac311bce2a\" target=\"_blank\" rel=\"noopener\"><code>c1f6772</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (x-ready internal only)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1094\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1094</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.420",
       "date": "2026-10-07",
       "summary": "The search index lagged two lines behind the docs once main&#39;s mdhtml fix was merged in. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1755\" target=\"_blank\" rel=\"noopener\">PR 1755</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
