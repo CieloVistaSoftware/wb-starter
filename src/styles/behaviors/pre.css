@@ -154,6 +154,14 @@
   right: 0.25rem;
 }
 
+/* #1095: a number is shown once pre.js has measured its line and marked it
+   placed. Before that it has no top of its own, so every number piles onto
+   line 1 -- the "topmost number seems to be overwritten" report. A number
+   whose line never measures stays hidden rather than overprinting another. */
+.x-pre__line-numbers > div:not(.x-pre__line-number--placed) {
+  visibility: hidden;
+}
+
 /* #779: the hide-code toggle used to write display:none onto the <pre> and
    its gutter. Doubled class so it beats `.x-pre { display: block }` and any
    single-class display rule regardless of file order. */

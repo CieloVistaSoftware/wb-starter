@@ -40,3 +40,42 @@
   flex: 1 1 auto;
   min-width: 0;
 }
+
+/* #1095: the form-field behaviors below added a class and no stylesheet
+   defined it, so each rendered as plain markup. Their stylesheet is this one
+   (behavior-css-manifest.js maps them here). */
+
+/* fieldset(): the group's frame in the theme's border colour. The browser's
+   own groove border ignores the theme and reads as a bevel in a dark one. */
+.x-fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+/* help(): permanent hint text under a field, quieter than the label. */
+.x-help {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* error(): an error message reads in the danger colour, not as body text. */
+.x-error {
+  color: var(--danger-color, #ef4444);
+}
+
+/* file(): the picker it builds is a drop area, not a bare native input. */
+.x-file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm, 0.5rem);
+  padding: var(--space-md, 1rem);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md, 0.375rem);
+  background: var(--bg-secondary);
+}
+
+/* masked(): every digit the same width, so a value keeps the shape of its
+   mask while it is typed ("(555) 123-4567" does not shift as 1s go in). */
+.x-masked {
+  font-variant-numeric: tabular-nums;
+}

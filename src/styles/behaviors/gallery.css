@@ -21,3 +21,10 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* #1095: with lightbox on, gallery.js marks each image an item that opens
+   full size on click; the cursor says so. Two classes, to beat the
+   .x-gallery img rule above. */
+.x-gallery .x-gallery__item {
+  cursor: zoom-in;
+}
