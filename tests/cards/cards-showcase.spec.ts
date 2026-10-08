@@ -529,9 +529,16 @@ test.describe('Cards Showcase Page', () => {
         // reflow cannot strand it. Same mirror-image fix as #1304, which made
         // a click wait for readiness instead of assuming it.
         await buildInView(page.locator(`[x-cardnotification][variant="${variant}"]`));
-        const card = page.locator(`[x-cardnotification][variant="${variant}"]`);
-        await expect(card, `variant="${variant}" should be demonstrated`).not.toHaveCount(0);
-        await expect(card.first()).toBeVisible();
+        const card = page.locator(`[x-cardnotification][variant="${variant}"]`).first();
+        await expect(card).toBeVisible();
+        // #1763: what the behavior BUILT, not the authored host. The selector
+        // above matches the markup whether or not cardnotification ever ran
+        // (#969 dropped .x-notification from it), and x-ready is stamped by the
+        // runtime once the behavior returns, built or not -- measured: with
+        // cardnotification() made a no-op, the old count-and-visible form passed.
+        // role="alert" and the icon exist only once it has run.
+        await expect(card, `variant="${variant}" was never built`).toHaveAttribute('role', 'alert');
+        await expect(card.locator('.x-notification__icon'), `variant="${variant}" has no icon`).toHaveCount(1);
       }
     });
 
