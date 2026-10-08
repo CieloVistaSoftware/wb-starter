@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "list.schema.json",
+  "title": "List from items",
+  "description": "Fills a <ul> or <ol> with one <li> per entry of its items attribute.",
+  "schemaFor": "list",
+  "semanticElement": {
+    "tagName": "ul"
+  },
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "The entries: a comma-separated list (\"One, Two\") or a JSON array of strings.",
+      "default": ""
+    },
+    "dividers": {
+      "type": "boolean",
+      "description": "Draw a divider between items. Bare attribute.",
+      "default": false
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-list"
+  },
+  "test": {
+    "setup": [
+      "<ul x-list items=\"Item 1, Item 2, Item 3\"></ul>",
+      "<ul x-list items=\"Item 1, Item 2\" dividers></ul>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+  }
+}
