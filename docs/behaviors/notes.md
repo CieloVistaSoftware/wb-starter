@@ -26,8 +26,6 @@
 - `wb:notes:open` — Drawer opened
 - `wb:notes:close` — Drawer closed
 - `wb:notes:save` — Notes saved
-- `wb:notes:copy` — Notes copied to clipboard
-- `wb:notes:clear` — Notes cleared
 - `wb:notes:position` — Position changed
 
 ## Methods

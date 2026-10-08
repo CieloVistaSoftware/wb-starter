@@ -23,10 +23,6 @@
 | `minWidth` | CSS length | `48px` | Collapsed width |
 | `collapsed` | `boolean` | `false` | Initial collapsed state |
 
-## Events
-
-- `wb:drawerLayout:toggle` — Drawer toggled
-
 ## Methods
 
 - `expand()` — Expands the drawer

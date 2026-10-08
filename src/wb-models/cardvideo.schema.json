@@ -221,23 +221,6 @@
       "description": "Description color"
     }
   },
-  "events": {
-    "wb:video:play": {
-      "description": "Fired when video starts playing"
-    },
-    "wb:video:pause": {
-      "description": "Fired when video is paused"
-    },
-    "wb:video:ended": {
-      "description": "Fired when video playback ends"
-    },
-    "wb:video:timeupdate": {
-      "description": "Fired on time update",
-      "detail": {
-        "currentTime": "number"
-      }
-    }
-  },
   "test": {
     "setup": [
       "<div x-cardvideo>Basic cardvideo content</div>",
