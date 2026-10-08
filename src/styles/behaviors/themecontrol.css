@@ -6,10 +6,10 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector -- themecontrol() no longer adds a redundant
-   classList.add('x-themecontrol') that just duplicated the
-   <div x-themecontrol> tag name. */
-[x-themecontrol]{
+/* The attribute styles an authored host before themecontrol() runs; the class
+   carries the same look onto a host themecontrol() reaches without the
+   attribute (WB.inject), so it still sits inline with its label (#1095). */
+[x-themecontrol], .x-themecontrol{
   display: inline-block;
 }
 

@@ -114,6 +114,13 @@ export const BEHAVIOR_CSS_MAP = {
   inputgroup: ['input.css'],
   colorpicker: ['input.css'],
   formrow: ['form.css'],
+  // #1095: their host classes are styled in form.css; unmapped, the rule
+  // would never load.
+  fieldset: ['form.css'],
+  help: ['form.css'],
+  error: ['form.css'],
+  file: ['form.css'],
+  masked: ['form.css'],
 
   label: ['label.css'],
   // #773: the status variants (x-status--primary, --success...; x-span until
@@ -207,6 +214,7 @@ export const BEHAVIOR_CSS_MAP = {
   truncate: ['helpers.css'],
   highlight: ['helpers.css'],
   external: ['helpers.css'],
+  relativetime: ['helpers.css'], // #1095: .x-relativetime
   countdown: ['helpers.css'],
   clock: ['helpers.css'],
   offline: ['helpers.css'],

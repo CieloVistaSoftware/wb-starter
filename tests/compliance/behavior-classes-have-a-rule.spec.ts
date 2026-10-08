@@ -33,59 +33,65 @@ import { behaviorSourceFiles, styledClasses } from '../helpers/styled-classes';
  *     stale. Delete its line, and lower CEILING to the new length.
  *   - CEILING may only go down. The issue's correction comment says the fix is
  *     to write the missing rules, never to delete the classes, so the list
- *     empties by styling.
+ *     empties by styling. A class that needs no rule of its own leaves it for
+ *     NEEDS_NO_RULE below, with the reason, which is a reviewed decision.
  */
 const UNSTYLED: Record<string, string> = {
+  // Held for #1096 batch 4 (#1726, merged), which renamed the x-accordion-*
+  // parts in accordion.css and the pre wrapper (now x-pre__wrapper) on the
+  // same demo.css lines that select [x-demo]. Batch 4 has landed; these two
+  // are next to be styled.
   'x-accordion': 'collapse.js',
-  'x-articles': 'article.js',
-  'x-avatar': 'feedback.js',
-  'x-behavior': 'behavior.js',
-  'x-behaviors-showcase': 'behaviors-showcase.js',
-  'x-chip': 'feedback.js',
-  'x-collapse': 'collapse.js',
-  'x-confetti': 'effects.js',
-  'x-confirm--trigger': 'overlay.js',
-  'x-control': 'x-control.js',
-  'x-countup': 'effects.js',
-  'x-darkmode': 'darkmode.js',
   'x-demo': 'demo.js',
-  'x-demo--measured': 'demo.js',
-  'x-demo__source--unavailable': 'demo.js',
-  'x-drawer': 'layouts.js, overlay.js',
-  'x-error': 'error.js',
-  'x-external': 'helpers.js',
-  'x-fieldset': 'fieldset.js',
-  'x-file': 'file.js',
-  'x-fireworks': 'effects.js',
+  // Left for the card-family batch: it composes card() and its look is card.css.
   'x-fix-card': 'fix-card.js',
-  'x-form': 'form.js',
-  'x-gallery__item': 'semantics/gallery.js',
-  'x-globe': 'globe.js',
-  'x-help': 'help.js',
-  'x-lightbox': 'overlay.js',
-  'x-masked': 'masked.js',
-  'x-modal': 'semantics/dialog.js',
-  'x-modal--trigger': 'semantics/dialog.js',
-  'x-move': 'move.js',
-  'x-offcanvas--trigger': 'overlay.js',
-  'x-parallax': 'effects.js',
-  'x-popover--trigger': 'overlay.js',
-  'x-pre__line-number--placed': 'semantics/pre.js',
-  'x-prompt--trigger': 'overlay.js',
-  'x-relativetime': 'helpers.js',
-  'x-sheet--trigger': 'overlay.js',
-  'x-slider': 'slider.js',
-  'x-snow': 'effects.js',
-  'x-sparkle': 'effects.js',
-  'x-status': 'status.js',
-  'x-themecontrol': 'themecontrol.js',
-  'x-toast--trigger': 'feedback.js',
-  'x-tooltip--trigger': 'tooltip.js',
-  'x-validator': 'validator.js',
 };
 
-/** Only ever lowered. 64 when this gate was written; 54 after batch 1; 46 after batch 2. */
-const CEILING = 46;
+/**
+ * DECIDED: NO RULE (#1095 batch 3). Kept apart from UNSTYLED, which is debt;
+ * these are decisions. Each class here needs no rule of its own, because its
+ * look already comes from somewhere a reader will find it, or because it is a
+ * hook for JS or tests only. The reason names where the look comes from.
+ *
+ * Adding a line is a reviewed decision, not a way past the gate. A class a
+ * user would see differently with a rule gets the rule instead. A line whose
+ * class gains a rule, or is no longer added, fails as stale.
+ */
+const NEEDS_NO_RULE: Record<string, string> = {
+  // A marker with nothing to show: the behavior builds no DOM and sets no state.
+  'x-behavior': 'the generic marker behavior.js adds and nothing more; permutation-compliance reads it as the baseClass',
+  'x-behaviors-showcase': 'page wiring on the showcase container (nav highlight, smooth scroll); the page stylesheet styles that page',
+  'x-control': 'control() adds its baseClass and does nothing else (control.schema.json says so); a rule would style a no-op',
+  'x-globe': 'globe() adds its baseClass and builds nothing; a rule would style an empty host',
+  'x-slider': 'slider() adds its baseClass and builds nothing; a rule would style an empty host',
+  // The look is on a sibling class the same behavior adds to the same element.
+  'x-confetti': 'confetti() also adds x-confetti--trigger (and --trigger-button), which effects.css styles',
+  'x-fireworks': 'fireworks() also adds x-fireworks--trigger (and --trigger-button), which effects.css styles',
+  'x-snow': 'snow() also adds x-snow--trigger (and --trigger-button), which effects.css styles',
+  'x-sparkle': 'sparkle() also adds x-sparkle--trigger, which effects.css styles (position: relative for the sparks)',
+  'x-lightbox': 'lightbox() also adds x-lightbox--trigger, which overlays.css styles (cursor: pointer)',
+  'x-modal': 'added beside x-dialog on a <dialog>; the tag and dialog.css\'s .x-dialog rules are its look',
+  'x-modal--trigger': 'added beside x-dialog--trigger, which dialog.css styles (cursor: pointer)',
+  'x-drawer': 'added beside x-drawer--trigger (drawer) or x-drawerlayout (drawerLayout); layout.css styles both',
+  'x-status': 'status text with no variant is plain running text by design (status.css); each look is an x-status--{variant} class',
+  'x-articles': 'a plain container; its look is its parts (x-articles__header, __list with --grid/--list/--masonry, __pagination) in article.css',
+  'x-form': 'the <form> tag is the look; the states form() shows are x-form__message, x-form__field--invalid and x-form--loading, styled in form.css',
+  'x-validator': 'the host is the author\'s own <form> or <input>; the feedback validator() shows is x-validator__error, styled in validator.css',
+  'x-move': 'a container whose children move; the motion is x-move__item--animated and x-move--offset, styled in move.css',
+  'x-external': 'the host is the author\'s <a>; the mark external() adds is x-external__icon, styled in helpers.css',
+  'x-darkmode': 'the host is the author\'s button (button.css); the visible effect is the data-theme it sets on the page',
+  'x-tooltip--trigger': 'the trigger is whatever element the tooltip describes, often a button or link with its own cursor; the visible feedback is the .x-tooltip panel',
+  // The visible change is made another way; the class is a signal for JS or tests.
+  'x-parallax': 'its look is the per-scroll transform dynamic-style.js generates; a static rule has nothing to add',
+  'x-demo--measured': 'readiness signal tests wait on; the visible change at that moment is the removal of x-demo--measuring, which demo.css styles',
+  'x-demo__source--unavailable': 'the panel text is an HTML comment saying the source is unavailable, which the highlighter already paints in the theme\'s comment colour',
+};
+
+/**
+ * Only ever lowered. 64 when this gate was written; 54 after batch 1; 46 after
+ * batch 2; 3 after batch 3, which styled 19 and recorded 24 as NEEDS_NO_RULE.
+ */
+const CEILING = 3;
 
 test('every class a behavior adds has a stylesheet rule, or is on the shrinking list (#1095)', () => {
   const root = process.cwd();
@@ -109,7 +115,7 @@ test('every class a behavior adds has a stylesheet rule, or is on the shrinking 
 
   const unstyled = [...added.keys()].filter((c) => !isStyled(c)).sort();
   const fresh = unstyled
-    .filter((c) => !(c in UNSTYLED))
+    .filter((c) => !(c in UNSTYLED) && !(c in NEEDS_NO_RULE))
     .map((c) => `.${c} <- ${[...added.get(c)!].join(', ')}`);
   expect(
     fresh,
@@ -124,4 +130,17 @@ test('every class a behavior adds has a stylesheet rule, or is on the shrinking 
   ).toEqual([]);
 
   expect(Object.keys(UNSTYLED).length, 'UNSTYLED may only shrink').toBeLessThanOrEqual(CEILING);
+
+  // The decisions stay true: a decided class is still added, still has no
+  // rule, is not also listed as debt, and says why.
+  const decided = Object.keys(NEEDS_NO_RULE);
+  expect(decided.filter((c) => c in UNSTYLED), 'listed both as debt and as decided').toEqual([]);
+  expect(
+    decided.filter((c) => !unstyled.includes(c)),
+    'decided as needing no rule but now styled or no longer added: delete these lines',
+  ).toEqual([]);
+  expect(
+    decided.filter((c) => NEEDS_NO_RULE[c].trim().length < 40),
+    'each decision names where the look comes from, or what the hook is for',
+  ).toEqual([]);
 });

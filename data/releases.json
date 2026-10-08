@@ -6,6 +6,70 @@
   ],
   "releases": [
     {
+      "version": "1.0.442",
+      "date": "2026-10-08",
+      "summary": "The themes showcase page sized its cards, swatches, chips and radii in px, so they ignored the reader&#39;s browser font-size setting. 32 of those values are now rem, and the px-creep gate&#39;s baseline drops from 545 to 508, so neither these nor the 5 converted since the last status can come back. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1772\" target=\"_blank\" rel=\"noopener\">PR 1772</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The themes page&#39;s sizes are rem, and the px gate holds 508</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/204e93d2dafa07ca4bfbd92c7887d7f73a7af3d0\" target=\"_blank\" rel=\"noopener\"><code>204e93d</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=themes and set the browser&#39;s default font size to 20px. Before: the theme cards, swatches and radii stayed the same size. Now: they grow with the text. At the default 16px nothing moves: all 1,112 elements on the page compute the same size, padding, margin, gap, radius and font-size before and after.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6a7cfb92fae837fe6c3dff5dcc88c466788fe8bf\" target=\"_blank\" rel=\"noopener\"><code>6a7cfb9</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.441",
+      "date": "2026-10-08",
+      "summary": "43 identity classes behaviors add had no stylesheet rule: 19 now carry a visible look (a themed fieldset frame, danger-coloured x-error, muted x-help, a dashed file picker, pointer cursors on click-to-open triggers, hidden line numbers until placed) and 24 are recorded, with reasons, as needing none. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1724\" target=\"_blank\" rel=\"noopener\">#1724</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Identity classes get a rule or a recorded decision (batch 3)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1724\" target=\"_blank\" rel=\"noopener\">#1724</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/654c7d2b6853d9d59c53db5a5a9bddbff115f044\" target=\"_blank\" rel=\"noopener\"><code>654c7d2</code></a>",
+          "issues": [
+            1095,
+            1724
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;span x-sheet&gt;Open sheet&lt;/span&gt;, then hover it. Before: the arrow cursor gave no sign the text opens anything. Now: the pointer cursor, like every other click-to-open trigger.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/654c7d2b6853d9d59c53db5a5a9bddbff115f044\" target=\"_blank\" rel=\"noopener\"><code>654c7d2</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.440",
+      "date": "2026-10-08",
+      "summary": "Two PRs fixed #1759 in parallel (#1767 and #1769) and both merged; git combined them without a conflict, so main&#39;s demo.js declares `let committed` twice in one block, fails to parse, and no x-demo on the site builds. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1770\" target=\"_blank\" rel=\"noopener\">PR 1770</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Demo.js does not parse on main -- drop the second fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ca6f9f4191742df034d3dff3b73f945651525952\" target=\"_blank\" rel=\"noopener\"><code>ca6f9f4</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run node --check on <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-viewmodels/demo.js\" target=\"_blank\" rel=\"noopener\">src/wb-viewmodels/demo.js</a> copied to a .mjs file. Before: &quot;SyntaxError: Identifier &#39;committed&#39; has already been declared&quot; at line 1230. Now: it parses, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-remeasures-a-control-built-late.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-remeasures-a-control-built-late.spec.ts</a> passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1d4fbec736551b7bec66bb79229cb5cd01a5a739\" target=\"_blank\" rel=\"noopener\"><code>1d4fbec</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.439",
       "date": "2026-10-08",
       "summary": "The new spec holds card.js with page.route(), but with the service worker live sw.js can answer that request first and the hold never applies, so the compliance gate from #1349 failed the PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1769\" target=\"_blank\" rel=\"noopener\">PR 1769</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",

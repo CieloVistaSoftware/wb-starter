@@ -2,11 +2,13 @@
  * Avatar Behavior Styles
  * -----------------------------------------------------------------------------
  * Custom element: <span x-avatar>
- * CSS targets the tag and attributes directly — JS adds no classes.
+ * #1095: every host rule is :is([x-avatar], .x-avatar), so the look follows the
+ * class avatar() adds -- an avatar applied with WB.inject() (no attribute) is a
+ * circle too. :is() keeps each selector's specificity exactly as it was.
  * -----------------------------------------------------------------------------
  */
 
-[x-avatar]{
+:is([x-avatar], .x-avatar){
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -22,17 +24,17 @@
 }
 
 /* Sizes — attribute selectors (schema: xs, sm, md, lg, xl, 2xl) */
-[x-avatar][size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }
-[x-avatar][size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
-[x-avatar][size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
-[x-avatar][size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
-[x-avatar][size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
-[x-avatar][size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }
+:is([x-avatar], .x-avatar)[size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }
+:is([x-avatar], .x-avatar)[size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
+:is([x-avatar], .x-avatar)[size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
+:is([x-avatar], .x-avatar)[size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
+:is([x-avatar], .x-avatar)[size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
+:is([x-avatar], .x-avatar)[size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }
 
 /* Shapes — attribute selectors (schema: circle [default], square, rounded) */
-[x-avatar][shape="circle"] { border-radius: 50%; }
-[x-avatar][shape="square"] { border-radius: 0; }
-[x-avatar][shape="rounded"] { border-radius: 20%; }
+:is([x-avatar], .x-avatar)[shape="circle"] { border-radius: 50%; }
+:is([x-avatar], .x-avatar)[shape="square"] { border-radius: 0; }
+:is([x-avatar], .x-avatar)[shape="rounded"] { border-radius: 20%; }
 
 /* Bordered — `bordered` is declared in avatar.schema.json and had no rule at
    all here, so the attribute was inert: grep "bordered" in this file returned
@@ -43,20 +45,20 @@
    fixed-size box, changing the avatar's footprint depending on whether the
    attribute is present. An outline-style ring keeps every size honest, which
    matters because the size rules above are pixel-exact and asserted as such. */
-[x-avatar][bordered] {
+:is([x-avatar], .x-avatar)[bordered] {
   border: 2px solid var(--avatar-border, var(--border-color, rgba(255, 255, 255, 0.25)));
   box-sizing: content-box;
 }
 
 /* Image child */
-[x-avatar] img{
+:is([x-avatar], .x-avatar) img{
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Status dot — shared base via attribute substring selector */
-[x-avatar] span[class*="x-avatar__status"]{
+:is([x-avatar], .x-avatar) span[class*="x-avatar__status"]{
   position: absolute;
   bottom: 0;
   right: 0;

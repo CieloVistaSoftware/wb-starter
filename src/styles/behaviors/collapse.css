@@ -6,9 +6,10 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector -- collapse() no longer adds a redundant classList.add
-   ('x-collapse') that just duplicated the <div x-collapse> tag name. */
-[x-collapse]{
+/* The attribute styles an authored host before collapse() runs; the class
+   carries the same look onto a host collapse() reaches without the attribute
+   (WB.inject), so a <span> collapse is still a block (#1095). */
+[x-collapse], .x-collapse{
   display: block;
 }
 
