@@ -8374,7 +8374,7 @@
       "title": "Toast",
       "description": "Toast notification system for temporary messages. Container (.x-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
       "tag": "x-toast",
-      "baseClass": "x-toast-trigger",
+      "baseClass": "x-toast--trigger",
       "properties": {
         "message": {
           "type": "string",
@@ -8521,7 +8521,7 @@
       "title": "Tooltip",
       "description": "Tooltip for displaying additional information on hover/focus",
       "tag": "x-tooltip",
-      "baseClass": "x-tooltip-trigger",
+      "baseClass": "x-tooltip--trigger",
       "properties": {
         "content": {
           "type": "string",

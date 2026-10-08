@@ -209,9 +209,9 @@ export function toast(element, options = {}) {
   // line 21) is the popup itself, with its own background and positioning, so
   // putting it on a button would paint the button as a toast. The trigger gets
   // the `-trigger` suffix every other trigger behavior here already uses
-  // (x-tooltip-trigger, x-confetti-trigger, x-fireworks-trigger). toast.schema
+  // (x-tooltip--trigger, x-confetti--trigger, x-fireworks--trigger). toast.schema
   // .json's compliance.baseClass was corrected to match (#883).
-  element.classList.add('x-toast-trigger');
+  element.classList.add('x-toast--trigger');
 
   // #458: message/variant/duration are read INSIDE showToast (at click time),
   // not captured once here at bind time. A framework (React, etc.) that

@@ -107,7 +107,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
       //   <dialog …>            the semantic form — the element IS in the stage,
       //                         closed, and a trigger beside it opens it.
       //   <button x-dialog …>   the attribute form — the stage holds only a
-      //                         TRIGGER (.x-dialog-trigger). Measured live:
+      //                         TRIGGER (.x-dialog--trigger). Measured live:
       //                         document.querySelectorAll('dialog').length is 0
       //                         until that trigger is clicked, and the dialog is
       //                         then created outside the stage.
@@ -120,7 +120,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
         document.querySelector('dialog[open]') as HTMLDialogElement | null;
       const stageTrigger = () =>
         document.querySelector(
-          '.behaviors-live__stage .x-dialog-trigger, .behaviors-live__stage button:not(.x-dialog__close)'
+          '.behaviors-live__stage .x-dialog--trigger, .behaviors-live__stage button:not(.x-dialog__close)'
         ) as HTMLElement | null;
 
       // The thing to wait on is THIS ROW'S SAMPLE, whichever shape it takes —
@@ -130,7 +130,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
       // ready, and opening correctly.
       const stageSample = () =>
         document.querySelector(
-          '.behaviors-live__stage dialog, .behaviors-live__stage .x-dialog-trigger'
+          '.behaviors-live__stage dialog, .behaviors-live__stage .x-dialog--trigger'
         ) as HTMLElement | null;
 
       for (const row of rows) {

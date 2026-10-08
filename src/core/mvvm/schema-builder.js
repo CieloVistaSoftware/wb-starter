@@ -352,6 +352,13 @@ function applyDefaults(data, properties) {
 /**
  * Build DOM structure from schema
  */
+// Tags whose content model holds no element children: the void elements, plus
+// textarea/select/option, whose content is their own value or options (#1720).
+const CHILDLESS_HOSTS = new Set([
+  'AREA', 'BASE', 'BR', 'COL', 'EMBED', 'HR', 'IMG', 'INPUT', 'LINK', 'META',
+  'SOURCE', 'TRACK', 'WBR', 'TEXTAREA', 'SELECT', 'OPTION'
+]);
+
 function buildStructure(element, schema, data) {
   const baseClass = getBaseClass(schema);
 
@@ -386,6 +393,16 @@ function buildStructure(element, schema, data) {
   // confirmed live as feedback.js's alert() dismiss button silently
   // losing its click listener (~90% of loads).
   if (schema.$view && schema.$view.length === 0) {
+    return;
+  }
+
+  // #1720: a host that cannot hold element children IS the field -- the
+  // behaviors (semantics/input.js, textarea.js) wrap it rather than read a
+  // built one. Wiping and building here cleared a <textarea>'s authored text
+  // (its value) and hung a label, a second textarea and a counter inside it;
+  // an <input> got the same children, invisible because a void element
+  // serializes none.
+  if (CHILDLESS_HOSTS.has(element.tagName)) {
     return;
   }
 

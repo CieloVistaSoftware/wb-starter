@@ -231,8 +231,8 @@ export function dialog(element, options = {}) {
     // built from the attributes. (Previously x-modal was always hidden with only a
     // showModal() method and no click handler, so "Open Modal" did nothing. #251)
     if (hasTriggerAttrs) {
-      // cursor: pointer is .x-dialog-trigger in dialog.css (#779).
-      element.classList.add('x-modal-trigger', 'x-dialog-trigger');
+      // cursor: pointer is .x-dialog--trigger in dialog.css (#779).
+      element.classList.add('x-modal--trigger', 'x-dialog--trigger');
       const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);
       // .open() alongside .showModal(): the docs teach an external trigger
       // calling document.getElementById(id).open() (matching the native
@@ -367,7 +367,7 @@ export function dialog(element, options = {}) {
     };
   }
 
-  element.classList.add('x-dialog-trigger');
+  element.classList.add('x-dialog--trigger');
   // #448: no classList.add('x-dialog') here -- it just duplicated this
   // element's own <dialog> tag name (the "Marker for test compliance"
   // comment predates #448's compliance test, which now flags exactly this

@@ -466,7 +466,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     const btn = page.locator('button[x-tooltip]');
     await expect(btn).toHaveCount(1);
     // tooltip() marks its trigger on attach; wait on that, not on a timeout.
-    await expect(btn).toHaveClass(/\bx-tooltip-trigger\b/);
+    await expect(btn).toHaveClass(/\bx-tooltip--trigger\b/);
 
     // The content pipeline: tooltip() reads the x-tooltip attribute and puts
     // it in the tip's own .x-tooltip__content div. Asserting the rendered text
@@ -512,7 +512,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   test('Interaction: confetti button spawns particles that really fall', async ({ page }) => {
     const btn = page.locator('button[x-confetti]');
     await expect(btn).toHaveCount(1);
-    await expect(btn).toHaveClass(/\bx-confetti-trigger\b/);
+    await expect(btn).toHaveClass(/\bx-confetti--trigger\b/);
     await expect(page.locator('.x-confetti-container')).toHaveCount(0);
 
     // Armed on the document BEFORE the click: the particles do not exist yet,

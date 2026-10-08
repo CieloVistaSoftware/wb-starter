@@ -37,7 +37,7 @@ test.describe('.x-dialog is excluded from schema $view building (#387)', () => {
       // tag-to-attribute migration rewrote it as a bare <dialog> -- which
       // dialog.js (#1005) rightly treats as the dialog ITSELF, enhanced in
       // place and hidden until opened, never as a trigger. So the host could
-      // never gain .x-dialog-trigger and the spec stopped testing #387.
+      // never gain .x-dialog--trigger and the spec stopped testing #387.
       container.innerHTML = '<button x-dialog id="dlg-387" title="Test Dialog">Open the dialog</button>';
       document.body.appendChild(container);
     });
@@ -51,7 +51,7 @@ test.describe('.x-dialog is excluded from schema $view building (#387)', () => {
     const host = page.locator('#dlg-387');
     // Confirms dialog.js's own trigger-mode behavior still ran (unaffected
     // by the schema exclusion).
-    await expect(host).toHaveClass(/x-dialog-trigger/);
+    await expect(host).toHaveClass(/x-dialog--trigger/);
     await expect(host).toHaveClass(/x-modal/);
 
     // Confirms schema did NOT write its stale $view chrome into the host --

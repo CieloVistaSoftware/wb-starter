@@ -318,7 +318,7 @@
     "x-column": {
       "js": "src/wb-viewmodels/layouts.js"
     },
-    "x-confetti-trigger": {
+    "x-confetti--trigger": {
       "js": "src/wb-viewmodels/effects.js"
     },
     "x-control": {
@@ -405,7 +405,7 @@
     "x-fireworks": {
       "js": "src/wb-viewmodels/effects.js",
       "variants": [
-        "x-fireworks-trigger"
+        "x-fireworks--trigger"
       ],
       "schema": "src/wb-models/fireworks.schema.json"
     },
@@ -627,7 +627,7 @@
     "x-snow": {
       "js": "src/wb-viewmodels/effects.js",
       "variants": [
-        "x-snow-trigger"
+        "x-snow--trigger"
       ],
       "schema": "src/wb-models/snow.schema.json"
     },
@@ -638,7 +638,7 @@
     "x-sparkle": {
       "js": "src/wb-viewmodels/effects.js",
       "variants": [
-        "x-sparkle-trigger"
+        "x-sparkle--trigger"
       ]
     },
     "x-spinner": {
@@ -722,7 +722,7 @@
       "css": "src/styles/behaviors/timeline.css",
       "schema": "src/wb-models/timeline.schema.json"
     },
-    "x-tooltip-trigger": {
+    "x-tooltip--trigger": {
       "js": "src/wb-viewmodels/tooltip.js"
     },
     "x-treeview": {

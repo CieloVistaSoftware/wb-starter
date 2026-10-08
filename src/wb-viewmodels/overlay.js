@@ -33,7 +33,7 @@ export function popover(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-popover-trigger');
+  element.classList.add('x-popover--trigger');
   // NOT '.x-popover' — that class is popover.css's styling for the
   // dynamically-created CONTENT PANEL (position:absolute; z-index:1000),
   // reused here by name collision on the TRIGGER too. That yanked the
@@ -93,7 +93,7 @@ export function popover(element, options = {}) {
 
   return () => {
     hide();
-    element.classList.remove('x-popover-trigger');
+    element.classList.remove('x-popover--trigger');
     element.removeAttribute('aria-haspopup');
     element.removeAttribute('aria-expanded');
   };
@@ -303,13 +303,13 @@ export function drawer(element, options = {}) {
   // this point, so two copies could only ever drift.
   const isPush = config.variant === 'push';
 
-  element.classList.add('x-drawer-trigger');
+  element.classList.add('x-drawer--trigger');
   // #448: no classList.add('x-drawer') here -- it just duplicated this
   // element's own <div x-drawer> tag name (the "Marker for test compliance"
   // comment predates #448's compliance test, which now flags exactly this
   // pattern). No CSS selector depends on the bare class -- layout.css's
   // visibility rule already selects the x-drawer TAG plus the OTHER real
-  // classes here (x-drawer.x-drawer-trigger, x-drawer.x-drawerlayout).
+  // classes here (x-drawer.x-drawer--trigger, x-drawer.x-drawerlayout).
   // #448 removed this class outright; restored WITH the tag-name guard.
   // permutation-compliance requires compliance.baseClass to cover the host
   // (classList.contains(cls) || tagName === cls), and on an attribute host
@@ -429,7 +429,7 @@ export function drawer(element, options = {}) {
         clearRules(builtPanel);
         builtPanel.remove();
         if (builtBackdrop) builtBackdrop.remove();
-        element.classList.remove('x-drawer-trigger');
+        element.classList.remove('x-drawer--trigger');
       };
     }
     // No .x-drawer__panel found despite schemaProcessed being true --
@@ -529,7 +529,7 @@ export function drawer(element, options = {}) {
   return () => {
     hide();
     element.removeEventListener('click', toggle);
-    element.classList.remove('x-drawer-trigger');
+    element.classList.remove('x-drawer--trigger');
   };
 }
 
@@ -549,9 +549,9 @@ export function lightbox(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-lightbox-trigger');
+  element.classList.add('x-lightbox--trigger');
   element.classList.add('x-lightbox');
-  // cursor: pointer comes from .x-lightbox-trigger in overlays.css (#779).
+  // cursor: pointer comes from .x-lightbox--trigger in overlays.css (#779).
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -589,7 +589,7 @@ export function lightbox(element, options = {}) {
     document.body.appendChild(overlay);
   };
 
-  return () => element.classList.remove('x-lightbox-trigger');
+  return () => element.classList.remove('x-lightbox--trigger');
 }
 
 /**
@@ -604,7 +604,7 @@ export function offcanvas(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-offcanvas-trigger');
+  element.classList.add('x-offcanvas--trigger');
   let panelEl = null;
   let backdropEl = null;
 
@@ -642,7 +642,7 @@ export function offcanvas(element, options = {}) {
   element.onclick = () => panelEl ? hide() : show();
   element.wbOffcanvas = { show, hide, toggle: () => panelEl ? hide() : show() };
 
-  return () => { hide(); element.classList.remove('x-offcanvas-trigger'); };
+  return () => { hide(); element.classList.remove('x-offcanvas--trigger'); };
 }
 
 /**
@@ -659,7 +659,7 @@ export function sheet(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-sheet-trigger');
+  element.classList.add('x-sheet--trigger');
   // Only what differs from overlays.css's .x-sheet defaults travels in the
   // generated rule, plus a width the user dragged to.
   const sheetSize = (width = config.width) => onlyChanged(
@@ -744,7 +744,7 @@ export function sheet(element, options = {}) {
   return () => { 
     hide(); 
     element.removeEventListener('click', toggle);
-    element.classList.remove('x-sheet-trigger'); 
+    element.classList.remove('x-sheet--trigger'); 
   };
 }
 
@@ -798,7 +798,7 @@ export function confirm(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-confirm-trigger');
+  element.classList.add('x-confirm--trigger');
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -810,7 +810,7 @@ export function confirm(element, options = {}) {
     });
   };
 
-  return () => element.classList.remove('x-confirm-trigger');
+  return () => element.classList.remove('x-confirm--trigger');
 }
 
 /**
@@ -826,7 +826,7 @@ export function prompt(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-prompt-trigger');
+  element.classList.add('x-prompt--trigger');
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -851,7 +851,7 @@ export function prompt(element, options = {}) {
     input.select();
   };
 
-  return () => element.classList.remove('x-prompt-trigger');
+  return () => element.classList.remove('x-prompt--trigger');
 }
 
 export default { popover, drawer, lightbox, offcanvas, sheet, confirm, prompt };

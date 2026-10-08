@@ -17,6 +17,13 @@
   cursor: pointer;
 }
 .x-rating.x-rating--readonly { cursor: default; }
+
+/* #1095: `half` picks i - 0.5 or i from where the pointer sits on a star, so
+   a gap between stars is a strip that picks nothing. In half mode the gap
+   becomes each star's own padding: the stars touch, every point along the
+   row belongs to a half, and the spacing between glyphs is unchanged. */
+.x-rating.x-rating--half { gap: 0; }
+.x-rating--half > .x-rating__star { padding-inline: 0.125rem; }
 .x-rating.x-rating--disabled { cursor: not-allowed; }
 
 /* Star colours: an author color="…" / empty-color="…" arrives as a generated

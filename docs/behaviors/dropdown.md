@@ -16,7 +16,7 @@ value that a form submits, use a plain [`<select>`](select.md)
 | Attribute form | `<div x-dropdown>` |
 | Behavior function | `dropdown()` — `src/wb-viewmodels/dropdown.js` |
 | Semantic element | `<div implicitRole="menu">` |
-| Root CSS Class | `<div x-dropdown>` (plus `x-dropdown-trigger` on the host itself) |
+| Root CSS Class | `<div x-dropdown>` (plus `x-dropdown--trigger` on the host itself) |
 | Category | Overlay |
 | Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — `closeOnOutside="false"` keeps the menu open on outside clicks; `offset` is the gap in px between trigger and menu (default 4) |
 
@@ -72,7 +72,7 @@ The classes below are the ones genuinely applied and meaningfully stylable.
 | Class | Applied to | Description |
 |-------|-----------|-------------|
 | `<div x-dropdown>` | host isn't already a `<div x-dropdown>` tag | Marker class (`x-dropdown.css`'s tag selector covers real `<div x-dropdown>` hosts) |
-| `.x-dropdown-trigger` | host, always | Button-like affordance (background/border/padding/cursor) for when the host's own text is the trigger |
+| `.x-dropdown--trigger` | host, always | Button-like affordance (background/border/padding/cursor) for when the host's own text is the trigger |
 | `.x-dropdown__trigger` | the generated trigger `<button>` | Only exists when `label` is set or there are real child items |
 | `.x-dropdown__menu` | the generated menu `<div>` | Positioned via inline styles; visibility toggled via inline `display` |
 | `.x-dropdown__item` | each menu item (generated from `items`, or moved-in child elements) | `role="menuitem"` |

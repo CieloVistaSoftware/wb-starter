@@ -297,7 +297,7 @@ test('#747 showClose is honoured on a trigger too, in all four states', async ({
       if ((window as any).WB?.scan) await (window as any).WB.scan(el, { eager: true });
     });
     await expect
-      .poll(() => page.locator('#trig.x-dialog-trigger, #trig.x-modal-trigger').count(), {
+      .poll(() => page.locator('#trig.x-dialog--trigger, #trig.x-modal--trigger').count(), {
         timeout: 20000,
         message: 'dialog() never made the button a trigger',
       })
@@ -380,7 +380,7 @@ test('#747 a trigger declared in camelCase is read as a trigger', async ({ page 
     if ((window as any).WB?.scan) await (window as any).WB.scan(el, { eager: true });
   });
   await expect
-    .poll(() => page.locator('#camel.x-dialog-trigger, #camel.x-modal-trigger').count(), {
+    .poll(() => page.locator('#camel.x-dialog--trigger, #camel.x-modal--trigger').count(), {
       timeout: 20000,
       message: 'dialog() never made the button a trigger',
     })

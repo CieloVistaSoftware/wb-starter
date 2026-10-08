@@ -25,3 +25,11 @@
 .x-resizable__handle--nw { top: -0.25rem; left: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: nw-resize; }
 .x-resizable__handle--se { bottom: -0.25rem; right: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: se-resize; }
 .x-resizable__handle--sw { bottom: -0.25rem; left: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: sw-resize; }
+
+/* #1095: while a handle is being dragged. The box shows it is being resized,
+   and text inside it is not selected by the drag. */
+.x-resizable.x-resizable--resizing {
+  outline: 2px dashed var(--primary);
+  outline-offset: 2px;
+  user-select: none;
+}

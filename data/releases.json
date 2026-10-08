@@ -6,6 +6,94 @@
   ],
   "releases": [
     {
+      "version": "1.0.411",
+      "date": "2026-10-07",
+      "summary": "Sixteen behaviors marked their host as the trigger with a class the naming convention has no slot for, x-{behavior}-trigger (x-dialog-trigger, x-popover-trigger, x-toast-trigger and 13 more), plus x-confetti-trigger--button and its fireworks and snow twins. The host is the behavior&#39;s block, so these are now modifiers of it: x-{behavior}--trigger and x-{behavior}--trigger-button. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1719\" target=\"_blank\" rel=\"noopener\">#1719</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Make &quot;this element is the trigger&quot; a modifier of its behavior (, batch 3)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1719\" target=\"_blank\" rel=\"noopener\">#1719</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/67b786a60cad78b53ce928cfa255084ec518f1ac\" target=\"_blank\" rel=\"noopener\"><code>67b786a</code></a>",
+          "issues": [
+            1096,
+            1719
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page, pick x-dialog and inspect its button. Before: class=&quot;x-modal-trigger x-dialog-trigger&quot;. Now: class=&quot;x-modal--trigger x-dialog--trigger&quot;, with the same pointer cursor, and clicking it opens the same dialog. The naming compliance spec printed 85 non-conforming classes before and prints 66 now.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/67b786a60cad78b53ce928cfa255084ec518f1ac\" target=\"_blank\" rel=\"noopener\"><code>67b786a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.410",
+      "date": "2026-10-07",
+      "summary": "The modal timing test sometimes failed on CI because it clicked while the runner was still doing its first, blocking font lookup. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1721\" target=\"_blank\" rel=\"noopener\">#1721</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Time the modal on the settled page, not during the first font lookup</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1721\" target=\"_blank\" rel=\"noopener\">#1721</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3c04c2a5b8c1fad576e979a33229bc7428a846c3\" target=\"_blank\" rel=\"noopener\"><code>3c04c2a</code></a>",
+          "issues": [
+            961,
+            1721
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/performance/interaction.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/performance/interaction.spec.ts</a> --project=performance</code> on a fresh Windows runner (the CI performance job). Before: the job&#39;s first page clicked at 232.7ms (508ms and 675ms in the two failures). Now: the same cold page clicks at 15ms because the test waits for the page to settle first.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3c04c2a5b8c1fad576e979a33229bc7428a846c3\" target=\"_blank\" rel=\"noopener\"><code>3c04c2a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.409",
+      "date": "2026-10-07",
+      "summary": "The schema build no longer wipes a form control or void element and hangs label/field/counter elements inside it, so a &lt;textarea x-textarea&gt; keeps the text written in it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1722\" target=\"_blank\" rel=\"noopener\">#1722</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1720\" target=\"_blank\" rel=\"noopener\">#1720</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Never build $view inside a textarea, input or other childless host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1722\" target=\"_blank\" rel=\"noopener\">#1722</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1720\" target=\"_blank\" rel=\"noopener\">#1720</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5d5fa24d15d928ce536784797ac1ee186240becc\" target=\"_blank\" rel=\"noopener\"><code>5d5fa24</code></a>",
+          "issues": [
+            1722,
+            1720
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, scan <code>&lt;textarea x-textarea&gt;hi&lt;/textarea&gt;</code> and read its value. Before: &quot;&quot; with a label and a second textarea inside it. Now: &quot;hi&quot; and no children.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5d5fa24d15d928ce536784797ac1ee186240becc\" target=\"_blank\" rel=\"noopener\"><code>5d5fa24</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.408",
+      "date": "2026-10-07",
+      "summary": "Eight state classes behaviors toggle had no stylesheet rule, so the state never showed: a stats card that failed to build looked healthy, a box being resized gave no sign of it, &quot;Copied!&quot; looked like any text, and a lazy image popped in. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1718\" target=\"_blank\" rel=\"noopener\">#1718</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>State classes get visible rules (batch 2)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1718\" target=\"_blank\" rel=\"noopener\">#1718</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/df50165dcca7ac65c00e4b8fbbad21f15a54b4db\" target=\"_blank\" rel=\"noopener\"><code>df50165</code></a>",
+          "issues": [
+            1095,
+            1718
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html, add &lt;div x-resizable&gt;Resize me&lt;/div&gt; and drag its bottom-right corner. Before: nothing marked the box while it was being dragged. Now: a dashed outline in the theme&#39;s primary colour shows for as long as you drag.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/df50165dcca7ac65c00e4b8fbbad21f15a54b4db\" target=\"_blank\" rel=\"noopener\"><code>df50165</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.407",
       "date": "2026-10-07",
       "summary": "The site&#39;s left navigation was a hand-written copy of the library&#39;s x-sidebar (its own items, active highlight, collapse and drag-resize), so the library carried two sidebars and the site used neither one&#39;s schema or options. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/829\" target=\"_blank\" rel=\"noopener\">#829</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1715\" target=\"_blank\" rel=\"noopener\">#1715</a>",

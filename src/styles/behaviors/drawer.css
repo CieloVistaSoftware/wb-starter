@@ -16,14 +16,14 @@
  */
 
 /* The host itself IS the trigger (overlay.js drawer(): element.classList.add
-   ('x-drawer-trigger') runs unconditionally) -- layout.css/site.css only
+   ('x-drawer--trigger') runs unconditionally) -- layout.css/site.css only
    ever gave it `visibility: visible` (undoing the base x-drawer{visibility:
    hidden} rule meant for a schema-built PANEL, not this use), leaving the
    trigger's own label text completely unstyled: no background, border,
-   padding, or pointer cursor. Matches .x-dialog-trigger's button-like
+   padding, or pointer cursor. Matches .x-dialog--trigger's button-like
    affordance (dialog.css) for the same "host text is a clickable trigger"
    pattern. */
-.x-drawer-trigger {
+.x-drawer--trigger {
   display: inline-block;
   position: relative; /* anchors demo.js's top-right .x-demo__card-doc-link badge */
   padding: 1rem;
