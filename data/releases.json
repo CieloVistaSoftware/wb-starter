@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.413",
+      "date": "2026-10-07",
+      "summary": "Nothing counted visits to the live site, so there was no way to know how many people opened index.html. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1704\" target=\"_blank\" rel=\"noopener\">#1704</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1245\" target=\"_blank\" rel=\"noopener\">#1245</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Count every load of the live site and show it in the footer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1704\" target=\"_blank\" rel=\"noopener\">#1704</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1245\" target=\"_blank\" rel=\"noopener\">#1245</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/848d3e08900e4c7b9589f588bd2902a25a3ad38a\" target=\"_blank\" rel=\"noopener\"><code>848d3e0</code></a>",
+          "issues": [
+            1704,
+            1245
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a> and look at the footer, then reload. Before: the footer showed only the copyright line and links. Now: it ends with a visit total such as &quot;1,234 visits&quot; that goes up by one on each load (localhost shows no count and calls no counter).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/848d3e08900e4c7b9589f588bd2902a25a3ad38a\" target=\"_blank\" rel=\"noopener\"><code>848d3e0</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.412",
       "date": "2026-10-07",
       "summary": "The class-naming gate failed on main because the version-stamp bot regenerated <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/search.json\" target=\"_blank\" rel=\"noopener\">data/search.json</a> from <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fschema-test-value.md\" target=\"_blank\" rel=\"noopener\">docs/schema-test-value.md</a>, a history doc the scan leaves alone on purpose, which put x-dropdown-trigger back in a scanned file. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1725\" target=\"_blank\" rel=\"noopener\">#1725</a>",
