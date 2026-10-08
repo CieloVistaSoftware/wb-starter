@@ -390,6 +390,8 @@ export function notes(element, options = {}) {
     try {
       await navigator.clipboard.writeText(text);
       showStatus('Copied!', 'success');
+      // #344: notes.schema.json declares copy and clear; nothing fired them.
+      element.dispatchEvent(new CustomEvent('wb:notes:copy', { bubbles: true }));
     } catch (e) {
       showStatus('Copy failed', 'error');
     }
@@ -491,6 +493,8 @@ export function notes(element, options = {}) {
     textarea.value = buildHeaderLine() + '\n';
     notesContent = textarea.value;
     saveToLocal();
+    // A new note clears the old one off the page (it was saved first).
+    element.dispatchEvent(new CustomEvent('wb:notes:clear', { bubbles: true }));
     // One combined message, not two in a row -- saveToFile()'s own "Saved"
     // status would otherwise be silently overwritten by this one before
     // anyone (a real user, or a test's own assertion) could ever see it.

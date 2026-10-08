@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.418">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.422">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -1279,7 +1279,6 @@
      * recalculated from whatever was just rendered.
      */
     function syncListHeight() {
-      wsEl.removeAttribute('x-ready');   // Law 18: never let a stale signal be read
       sizeContainers();
       keepSelectionVisible();
 
@@ -1304,8 +1303,9 @@
         if (scrollerEl && resetPage) scrollerEl.scrollTop = 0;
       }
       // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
-      // so it says so. Waiters listen instead of sleeping.
-      wsEl.setAttribute('x-ready', '');
+      // so it says so. Waiters listen instead of sleeping. The event is the
+      // signal; the x-ready attribute this used to write as well shipped to
+      // every visitor and was a second, stateful copy of it (#1516).
       wsEl.dispatchEvent(new CustomEvent('wb:layout-settled', { bubbles: true }));
     }
     // #717 -- John: "When using the down or up button the current selection must

@@ -137,5 +137,13 @@
     "icon": "📐",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:drawerLayout:toggle": {
+      "description": "Drawer toggled",
+      "detail": {
+        "collapsed": "boolean"
+      }
+    }
   }
 }

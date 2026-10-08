@@ -276,5 +276,29 @@
     "icon": "🎵",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:audio:play": {
+      "description": "Playback started"
+    },
+    "wb:audio:pause": {
+      "description": "Playback paused"
+    },
+    "wb:audio:ended": {
+      "description": "Playback ended"
+    },
+    "wb:audio:volumechange": {
+      "description": "Volume changed",
+      "detail": {
+        "volume": "number"
+      }
+    },
+    "wb:audio:eqchange": {
+      "description": "EQ band changed",
+      "detail": {
+        "band": "number",
+        "gain": "number"
+      }
+    }
   }
 }

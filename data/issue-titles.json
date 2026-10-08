@@ -1238,5 +1238,7 @@
   "1736": "forms.html target demos are buttons with target but no href",
   "1738": "Add an \"Other\" nav item linking the demos, pages and tools the nav does not reach",
   "1742": "x-mdhtml fails for anyone who cannot reach jsdelivr: marked.js is loaded from an unpinned CDN",
-  "1747": "x-cardlink titles render --primary blue on the dark card (1.49:1): site.css .page h3 outranks card.css"
+  "1747": "x-cardlink titles render --primary blue on the dark card (1.49:1): site.css .page h3 outranks card.css",
+  "1752": "perf: lazy runtime builds a page in one 1.4-4.5s main-thread task (card-variant-surface flake)",
+  "1756": "Fire the useful lifecycle events #1731 removed"
 }
