@@ -83,6 +83,12 @@
   font-size: 0.8em;
 }
 
+/* ── relativetime ─────────────────────────────────────────────────────── */
+/* "3 days ago" is one phrase; it never breaks across lines (#1095). */
+.x-relativetime {
+  white-space: nowrap;
+}
+
 /* ── countdown ────────────────────────────────────────────────────────── */
 /* padding floored at 1rem (#486, Standard §13). */
 .x-countdown {

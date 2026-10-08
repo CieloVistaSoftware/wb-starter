@@ -6,9 +6,11 @@
  * -----------------------------------------------------------------------------
  */
 
-/* #448: tag selector -- chip() no longer adds a redundant classList.add
-   ('x-chip') that just duplicated the <span x-chip> tag name. */
-[x-chip]{
+/* The attribute styles an authored <span x-chip> before chip() runs; the class
+   carries the same look onto a host chip() reaches without the attribute
+   (WB.inject), whose --variant classes already applied but whose pill did not
+   (#1095). */
+[x-chip], .x-chip{
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;

@@ -406,6 +406,10 @@ MARQUEE & RIPPLE
 .x-typewriter { cursor: pointer; }
 .x-typewriter.x-typewriter--cursor { border-right: 2px solid var(--primary); }
 
+/* x-countup: every digit the same width, so the number does not jitter
+   sideways as it counts (#1095). */
+.x-countup { font-variant-numeric: tabular-nums; }
+
 /* x-reveal: hidden until scrolled into view */
 .x-reveal {
   opacity: 0;

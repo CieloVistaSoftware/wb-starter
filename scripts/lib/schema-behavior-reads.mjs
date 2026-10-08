@@ -72,8 +72,12 @@ function readInSource(src, prop) {
 
 function styledInCss(css, host, base, prop, def) {
   const hosts = [`\\[${escape(host)}\\]`, `\\.${escape(base)}`].join('|');
+  // The host may also be named inside a selector group, `:is([x-avatar],
+  // .x-avatar)[shape="square"]`, which styles the attribute on both spellings
+  // of the host (#1095 batch 3 wrote avatar.css this way).
+  const group = `:(?:is|where)\\([^)]*(?:${hosts})[^)]*\\)`;
   const attr = spellings(prop).map((f) => escape(f.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase()))).join('|');
-  if (new RegExp(`(?:${hosts})\\[(?:${attr})(?:[\\]=~|^$*])`).test(css)) return true;
+  if (new RegExp(`(?:${hosts}|${group})\\[(?:${attr})(?:[\\]=~|^$*])`).test(css)) return true;
   return Array.isArray(def.enum) && def.enum.some((v) =>
     typeof v === 'string' && v !== 'default' && css.includes(`.${base}--${v}`));
 }

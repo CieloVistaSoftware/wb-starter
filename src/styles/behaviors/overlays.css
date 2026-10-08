@@ -19,6 +19,15 @@
   cursor: pointer;
 }
 
+/* #1095: the other click-to-open triggers in this file say so the same way.
+   On a <div> or <span> host the arrow cursor gave no sign it opens anything. */
+.x-offcanvas--trigger,
+.x-sheet--trigger,
+.x-confirm--trigger,
+.x-prompt--trigger {
+  cursor: pointer;
+}
+
 .x-lightbox__overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
