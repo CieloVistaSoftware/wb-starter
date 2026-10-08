@@ -24,7 +24,7 @@ import { wbIdle } from '../base';
  *
  * Two consequences for what is recorded here:
  *   - widths count only while the wrapper is visible. A ResizeObserver also
- *     reports a visibility:hidden box, and the hidden panel now legitimately
+ *     reports a hidden (opacity: 0) box, and the hidden panel now legitimately
  *     changes width before its reveal. Before #1757 the wrapper was never
  *     hidden, so this is the same contract, not a looser one.
  *   - "shown while measuring" is asserted directly. The card has to land
@@ -44,9 +44,10 @@ for (const url of ['/demos/site/layout.html', '/demos/site/cards.html']) {
       const last = new Map<Element, number>();
       (window as any).__panelWidths = seen;
       (window as any).__shownWhileMeasuring = shownWhileMeasuring;
-      // false for a visibility:hidden box (its own or inherited) and for one
-      // under a display:none ancestor.
-      const shown = (el: Element) => el.checkVisibility({ visibilityProperty: true } as any);
+      // false for a visibility:hidden box (its own or inherited), for one at
+      // opacity 0 (its own or an ancestor's: demo.css hides a measuring panel
+      // that way) and for one under a display:none ancestor.
+      const shown = (el: Element) => el.checkVisibility({ visibilityProperty: true, opacityProperty: true } as any);
       const record = (el: Element) => {
         const w = last.get(el);
         if (!w || !shown(el)) return;

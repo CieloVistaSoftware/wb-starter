@@ -284,13 +284,19 @@
    -> 420 as <article size="lg"> got .x-card--lg (min-width: 420px, through
    the card's 0.2s `transition: all`) and the commit landed. Windows CI
    recorded the same growth from mid-transition (407 -> 418 -> 420).
-   visibility, never display, so the panel still lays out and demo.js can
-   measure it. Every path that adds
-   .x-demo--measuring removes it (the commit, the MAX_MS budget, the media
-   fallback, and a floor in demo.js), so a panel never stays hidden. */
+   opacity, never display, so the panel still lays out and demo.js can
+   measure it. Never visibility either: it is inherited and interpolable, so
+   the reveal started a 0.2s visibility transition on every .x-pre__copy
+   (`transition: all`). In a closed <details> (pages/demos.html) Chromium
+   never services that transition, its `finished` promise never resolves,
+   and the layout specs' settle await hung on Windows CI. opacity is not
+   inherited, and neither element it is set on transitions it.
+   Every path that adds .x-demo--measuring removes it (the commit, the
+   MAX_MS budget, the media fallback, and a floor in demo.js), so a panel
+   never stays hidden. */
 [x-demo].x-demo--measuring > .x-pre__wrapper,
 [x-demo].x-demo--measuring > .x-demo__code {
-  visibility: hidden;
+  opacity: 0;
 }
 
 /* Escape hatch for §7: a `full-width` demo (e.g. a page hero) is a single
