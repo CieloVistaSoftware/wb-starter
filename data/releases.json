@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.431",
+      "date": "2026-10-08",
+      "summary": "A failing test now carries the page&#39;s CDP lifecycle log (page-lifecycle) and, when its errors say &quot;Promise was collected&quot; or &quot;context was destroyed&quot;, a page-death verdict read from an isolated world: main world dead, page frozen, or main world alive (an app-level hang); failures.json and the live log keep both. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A &quot;Promise was collected&quot; failure says whether the page&#39;s JavaScript died</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d0f6bfbab74b8f725d43d411d82ee6bde0479f6\" target=\"_blank\" rel=\"noopener\"><code>0d0f6bf</code></a>",
+          "issues": [
+            961,
+            1753
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/page-death-diagnostics-name-the-cause.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/page-death-diagnostics-name-the-cause.spec.ts</a> --project=regression</code>. Before: 1 of 3 fail (the failing inner tests carry no page-lifecycle or page-death attachment). Now: 3 of 3 pass, and the deliberately killed page reads &quot;main world dead (heartbeat stopped at +157ms)&quot; while the orphaned promise reads &quot;main world alive (heartbeat running) — app-level hang&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d0f6bfbab74b8f725d43d411d82ee6bde0479f6\" target=\"_blank\" rel=\"noopener\"><code>0d0f6bf</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.430",
       "date": "2026-10-08",
       "summary": "The lazy runtime built every card, demo and code panel near the viewport in one main-thread task of 1.4-4.5s, so the page could not paint or answer anything meanwhile. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a>",
