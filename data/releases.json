@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.428",
+      "date": "2026-10-08",
+      "summary": "Demos/site/forms.html showed two buttons with target=&quot;_self&quot; and target=&quot;_blank&quot; but no href, so neither did anything and button.js warned &quot;has no effect without an href&quot; for each. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Target demos get an href, so forms.html buttons open somewhere</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5bd2fe9f57a2661dbc367ca39fe28ceaf47b3f5b\" target=\"_blank\" rel=\"noopener\"><code>5bd2fe9</code></a>",
+          "issues": [
+            1736,
+            1750
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/forms.html\" target=\"_blank\" rel=\"noopener\">demos/site/forms.html</a> with the devtools console open and scroll to &quot;target variants&quot;. Before: two &quot;[x-button] target=... has no effect without an href&quot; warnings, and the buttons did nothing. Now: no warning, and each button opens the section it sits in (the _blank one in a new tab).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5bd2fe9f57a2661dbc367ca39fe28ceaf47b3f5b\" target=\"_blank\" rel=\"noopener\"><code>5bd2fe9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.427",
       "date": "2026-10-08",
       "summary": "The Themes page logged &quot;One of your code blocks includes unescaped HTML. This is a potentially serious security risk&quot; three times, because its three &quot;How to Use Themes&quot; listings sat inside a second, live &lt;code&gt; element. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1735\" target=\"_blank\" rel=\"noopener\">#1735</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1748\" target=\"_blank\" rel=\"noopener\">#1748</a>",
