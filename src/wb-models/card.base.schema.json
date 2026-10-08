@@ -154,8 +154,7 @@
         "focusable": "when data-clickable",
         "click": {
           "when": "clickable",
-          "action": "toggles x-card--active class",
-          "event": "wb:card:click"
+          "action": "toggles x-card--active class"
         },
         "hover": {
           "when": "hoverable",
@@ -181,16 +180,6 @@
     "element": {
       "roleWhenClickable": "button",
       "tabindexWhenClickable": "0"
-    }
-  },
-  "events": {
-    "wb:card:click": {
-      "source": "element",
-      "bubbles": true,
-      "detail": {
-        "active": "boolean"
-      },
-      "firesWhen": "clickable card is clicked"
     }
   },
   "$view": [],
