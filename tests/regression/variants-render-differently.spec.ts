@@ -100,6 +100,7 @@ import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { extensionMap, nativeMap } from '../../src/core/tag-map.js';
+import { settlePage } from '../base';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -302,10 +303,16 @@ async function openPanel(page: Page) {
 
 type Finding = { clashes: string[]; unrendered: string[]; labels: string[] };
 
-/** Render every option row of `token` and fingerprint what reached the screen. */
+/**
+ * Render every option row of `token` and fingerprint what reached the screen.
+ *
+ * Each row is read in steps, and the page settles between them through
+ * settlePage() (#961): the in-page half of the sweep lives on window.__vfp,
+ * built once by the first evaluate, so its state (the fingerprints seen so
+ * far, the semantic-host flag) carries from one step to the next.
+ */
 async function fingerprintOptions(page: Page, token: string, form: string, options: OptionInfo[]): Promise<Finding> {
-  return page.evaluate(async ({ tok, frm, props, widgets, exempt, same, opens }) => {
-    const WB = (window as unknown as { WB?: { whenIdle?: (o?: { timeout?: number }) => Promise<void> } }).WB;
+  const rowCount: number = await page.evaluate(({ tok, frm, props, widgets, exempt, same, opens }) => {
     const frame = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
     const stage = document.getElementById('behaviors-live-example')!;
     const codeNow = () => document.querySelector('#behaviors-live-code pre code');
@@ -387,190 +394,203 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
     const labels: string[] = [];
     // #997: see the semantic-host wait below.
     let semanticRootReports = true;
+    // The row being read, shared by the steps below.
+    let label = '';
 
-    try {
-      for (const row of rows) {
-        const value = row.dataset.variant || '';
-        const label = row.dataset.prop && row.dataset.prop !== 'variant'
-          ? `${row.dataset.prop}=${value}` : value;
-        labels.push(label);
+    /** Click row `i` and wait for its render; false when the row is done (unrendered). */
+    const beforeIdle = async (i: number): Promise<boolean> => {
+      const row = rows[i];
+      const value = row.dataset.variant || '';
+      label = row.dataset.prop && row.dataset.prop !== 'variant'
+        ? `${row.dataset.prop}=${value}` : value;
+      labels.push(label);
 
-        const prevCode = codeNow();
-        row.click();
-        // The render barrier: renderSource() builds a NEW code panel for every
-        // selection (a superseded render drops out before building one) and
-        // highlights it only after the stage has been scanned, so a new code
-        // element carrying .hljs means THIS row's render is on screen.
-        const rendered = await until(() => {
-          const code = codeNow();
-          return !!code && code !== prevCode && code.classList.contains('hljs')
-            && stage.children.length > 0;
-        }, 10_000);
-        if (!rendered) { unrendered.push(label); continue; }
-        // Idle means "nothing in flight", not "built": a host the runtime has
-        // deferred to its viewport observer is not in flight YET, so under load
-        // whenIdle() resolved before x-mdhtml had even started, and gfm=false
-        // and sanitize=false both read as the same empty <div>. The row's own
-        // hosts carry x-ready once their behavior has finished, so wait for
-        // that first, then for whatever those behaviors started in turn.
-        if (frm === 'attribute') {
-          const hosts = Array.from(stage.querySelectorAll(`[${CSS.escape(tok)}]`));
-          if (!(await until(() => hosts.every((h) => h.hasAttribute('x-ready')), 10_000))) {
-            unrendered.push(`${label} (its ${tok} host never reported x-ready)`);
-            continue;
-          }
-        } else {
-          // #997: a semantic host carries no x-* attribute to wait on, and
-          // rows that only change TEXT (header's title, footer's links) read
-          // as identical when fingerprinted before the behavior had built
-          // anything. Wait briefly for the root to report x-ready. Some roots
-          // never carry it (an <input> the behavior wraps): the first time
-          // the wait runs out, stop waiting for this behavior's other rows,
-          // or a 30-row behavior spends its whole budget here.
-          const root = stage.firstElementChild;
-          if (root && semanticRootReports) {
-            semanticRootReports = await until(() => root.hasAttribute('x-ready'), 3_000);
-          }
+      const prevCode = codeNow();
+      row.click();
+      // The render barrier: renderSource() builds a NEW code panel for every
+      // selection (a superseded render drops out before building one) and
+      // highlights it only after the stage has been scanned, so a new code
+      // element carrying .hljs means THIS row's render is on screen.
+      const rendered = await until(() => {
+        const code = codeNow();
+        return !!code && code !== prevCode && code.classList.contains('hljs')
+          && stage.children.length > 0;
+      }, 10_000);
+      if (!rendered) { unrendered.push(label); return false; }
+      // Idle means "nothing in flight", not "built": a host the runtime has
+      // deferred to its viewport observer is not in flight YET, so under load
+      // whenIdle() resolved before x-mdhtml had even started, and gfm=false
+      // and sanitize=false both read as the same empty <div>. The row's own
+      // hosts carry x-ready once their behavior has finished, so wait for
+      // that first, then for whatever those behaviors started in turn.
+      if (frm === 'attribute') {
+        const hosts = Array.from(stage.querySelectorAll(`[${CSS.escape(tok)}]`));
+        if (!(await until(() => hosts.every((h) => h.hasAttribute('x-ready')), 10_000))) {
+          unrendered.push(`${label} (its ${tok} host never reported x-ready)`);
+          return false;
         }
-        // Behaviors attach asynchronously (module + stylesheet on first use).
-        // #1246: on Windows CI (and on main's own CI, 6bb465df) x-progress never
-        // settles: "progress (awaiting viewport)" -- the lazy runtime is still
-        // waiting for an IntersectionObserver report that does not come. It
-        // does not reproduce on Linux, so when it happens the failure carries
-        // what the page looked like, to find the cause from the CI log alone.
-        if (WB?.whenIdle) {
-          try {
-            await WB.whenIdle({ timeout: 20_000 });
-          } catch (err) {
-            const lazies = Array.from(stage.querySelectorAll('progress, [x-progress]')).map((el) => {
-              const cs = getComputedStyle(el);
-              const r = el.getBoundingClientRect();
-              let hiddenBy = '';
-              for (let a = el.parentElement; a; a = a.parentElement) {
-                const acs = getComputedStyle(a);
-                if (acs.display === 'none' || acs.contentVisibility === 'hidden') { hiddenBy = `${a.tagName.toLowerCase()}#${a.id}.${a.className}`; break; }
-              }
-              return `<${el.tagName.toLowerCase()} ${Array.from(el.attributes).map((x) => `${x.name}="${x.value}"`).join(' ')}> connected=${el.isConnected} display=${cs.display} visibility=${cs.visibility} cv=${cs.contentVisibility} rect=${Math.round(r.x)},${Math.round(r.y)},${Math.round(r.width)}x${Math.round(r.height)} ready=${el.hasAttribute('x-ready')} hiddenBy=${hiddenBy || '-'}`;
-            });
-            throw new Error(`${(err as Error).message}\n  [#1246 diagnostics] label=${label} visibility=${document.visibilityState} focus=${document.hasFocus()} viewport=${innerWidth}x${innerHeight} scrollY=${Math.round(scrollY)}\n  ${lazies.join('\n  ') || '(no progress elements in the stage)'}`);
-          }
+      } else {
+        // #997: a semantic host carries no x-* attribute to wait on, and
+        // rows that only change TEXT (header's title, footer's links) read
+        // as identical when fingerprinted before the behavior had built
+        // anything. Wait briefly for the root to report x-ready. Some roots
+        // never carry it (an <input> the behavior wraps): the first time
+        // the wait runs out, stop waiting for this behavior's other rows,
+        // or a 30-row behavior spends its whole budget here.
+        const root = stage.firstElementChild;
+        if (root && semanticRootReports) {
+          semanticRootReports = await until(() => root.hasAttribute('x-ready'), 3_000);
         }
-        // And the example's images have arrived (loaded or failed). An image
-        // still in flight is a 0x0 box, which is how x-cardimage's aspect=4/3
-        // and aspect=21/9 once read as the same card: neither had its picture
-        // yet. `complete` is the browser's own "done, either way" signal.
-        const images = Array.from(stage.querySelectorAll('img')) as HTMLImageElement[];
-        if (!(await until(() => images.every((img) => img.complete), 10_000))) {
-          unrendered.push(`${label} (an image never finished loading)`);
-          continue;
-        }
-        // Likewise its <video>/<audio> have reached the look they rest at. An
-        // autoplay video is drawn at its poster's size until playback starts and
-        // at its own frame's size after, so read before that and autoplay=true
-        // is the same box as loop=true (Windows CI, #962: once whenIdle() lost
-        // its 50ms quiet window, nothing else happened to cover the gap).
-        // Autoplay rests once playing; any other media once its metadata is in;
-        // either one once the browser has given up on it.
-        const media = Array.from(stage.querySelectorAll('video, audio')) as HTMLMediaElement[];
-        const atRest = (m: HTMLMediaElement) => !!m.error || m.networkState === HTMLMediaElement.NETWORK_NO_SOURCE
-          || (m.autoplay ? !m.paused && m.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
-            : m.readyState >= HTMLMediaElement.HAVE_METADATA);
-        if (!(await until(() => media.every(atRest), 10_000))) {
-          unrendered.push(`${label} (a video or audio never loaded, played or failed)`);
-          continue;
-        }
-        // x-typewriter types with timers, not animations, so finish() below
-        // cannot end it: read early, "custom cursor" and "long sentence" were
-        // both still near-empty and fingerprinted alike. Wait until no
-        // typewriter's text has grown across 400ms (the slowest example types
-        // a character every 150ms).
-        const typed = () => Array.from(stage.querySelectorAll('.x-typewriter')).map((el) => (el.textContent || '').length).join(',');
-        let lastTyped = typed();
-        let typingSettled = !lastTyped;
-        for (const end = performance.now() + 15_000; !typingSettled && performance.now() < end;) {
-          await new Promise((r) => setTimeout(r, 400));
-          const now = typed();
-          typingSettled = now === lastTyped;
-          lastTyped = now;
-        }
-        if (!typingSettled) {
-          unrendered.push(`${label} (a typewriter never finished typing)`);
-          continue;
-        }
-        // Freeze every animation at its start and let finite transitions end,
-        // so the reading is the option's look, not a moment in its motion.
-        const anims = stage.getAnimations({ subtree: true });
-        await Promise.all(anims
-          .filter((a) => a.effect?.getTiming().iterations !== Infinity)
-          .map((a) => { a.finish(); return a.finished.catch(() => undefined); }));
-        // Only the INFINITE ones are rewound. A finished animation that fills
-        // forwards (x-cardhero's fade-in, `both`) is still listed, and
-        // rewinding it put the hero's whole content back at opacity 0.
-        stage.getAnimations({ subtree: true })
-          .filter((a) => a.effect?.getTiming().iterations === Infinity)
-          .forEach((a) => { a.pause(); a.currentTime = 0; });
-        await frame();
-
-        if (!stage.firstElementChild) { unrendered.push(label); continue; }
-        // A non-visual option is rendered (it must still work) but has no
-        // look to compare -- see the header.
-        if (exempt[label] === 'non-visual') continue;
-        // An option the schema marks `visibleWhen: "open"` styles an overlay
-        // (a dialog's size, a menu's position) that is on screen only once
-        // the example is used. Use it the way a reader does -- activate its
-        // trigger -- and read what opens. A modal <dialog> is in the stage's
-        // DOM but a trigger-mode one is not, so open dialogs are read
-        // wherever they are.
-        let opened = '';
-        if (opens.includes(label)) {
-          // Its visible trigger when it has one (a dialog's button, a menu's
-          // toggle). A drawer opened from elsewhere on a real page -- x-notes
-          // is toggled from the site's navbar -- has none in the example, so
-          // its documented imperative API is the opener instead: show(), the
-          // canonical verb (#782 retired open()).
-          const trigger = (Array.from(stage.querySelectorAll('[aria-haspopup], button, [role="button"]')) as HTMLElement[])
-            .find((el) => el.checkVisibility({ visibilityProperty: true, opacityProperty: true }));
-          if (trigger) trigger.click();
-          else {
-            for (const el of Array.from(stage.querySelectorAll('*'))) {
-              const api = Object.entries(el).find(([k, v]) => /^wb[A-Z]/.test(k) && typeof (v as { show?: unknown })?.show === 'function');
-              if (api) { (api[1] as { show: () => void }).show(); break; }
-            }
-          }
-          await frame();
-          if (WB?.whenIdle) await WB.whenIdle({ timeout: 10_000 });
-          await Promise.all(document.getAnimations()
-            .filter((a) => a.effect?.getTiming().iterations !== Infinity)
-            .map((a) => { a.finish(); return a.finished.catch(() => undefined); }));
-          await frame();
-          opened = Array.from(document.querySelectorAll('dialog[open]'))
-            .filter((d) => !stage.contains(d))
-            .map((d) => fingerprint(d, true)).join('\n--\n');
-        }
-        // The whole stage, not its first child: an example is often more than
-        // one element (a trigger and its <dialog>; a filter box inserted
-        // before its <table> or <select>), and the option may land on any of
-        // them.
-        const fp = fingerprint(stage) + (opened ? '\n--\n' + opened : '');
-        // Close whatever was opened, so the next row starts from a page with
-        // no modal over it.
-        document.querySelectorAll('dialog[open]').forEach((d) => (d as HTMLDialogElement).close());
-        if (!seen.has(fp)) seen.set(fp, []);
-        seen.get(fp)!.push(label);
       }
-    } finally {
-      document.removeEventListener('click', noNav, true);
-    }
+      return true;
+    };
 
-    // A fingerprint shared by two or more REAL options is the defect; the
-    // default collapsing onto one real option is expected.
-    const clashes: string[] = [];
-    for (const [, group] of seen) {
-      // An alias counts once, as the option it names.
-      const real = [...new Set(group.filter((l) => exempt[l] !== 'default').map((l) => same[l] || l))];
-      if (real.length >= 2) clashes.push(`${tok} (${frm}): ${real.join(' = ')} render identically`);
-    }
-    return { clashes, unrendered, labels };
+    /** What the page looked like when it would not settle (#1246). */
+    const idleDiagnostics = (): string => {
+      const lazies = Array.from(stage.querySelectorAll('progress, [x-progress]')).map((el) => {
+        const cs = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        let hiddenBy = '';
+        for (let a = el.parentElement; a; a = a.parentElement) {
+          const acs = getComputedStyle(a);
+          if (acs.display === 'none' || acs.contentVisibility === 'hidden') { hiddenBy = `${a.tagName.toLowerCase()}#${a.id}.${a.className}`; break; }
+        }
+        return `<${el.tagName.toLowerCase()} ${Array.from(el.attributes).map((x) => `${x.name}="${x.value}"`).join(' ')}> connected=${el.isConnected} display=${cs.display} visibility=${cs.visibility} cv=${cs.contentVisibility} rect=${Math.round(r.x)},${Math.round(r.y)},${Math.round(r.width)}x${Math.round(r.height)} ready=${el.hasAttribute('x-ready')} hiddenBy=${hiddenBy || '-'}`;
+      });
+      return `\n  [#1246 diagnostics] label=${label} visibility=${document.visibilityState} focus=${document.hasFocus()} viewport=${innerWidth}x${innerHeight} scrollY=${Math.round(scrollY)}\n  ${lazies.join('\n  ') || '(no progress elements in the stage)'}`;
+    };
+
+    /** Fingerprint the row's resting look; 'open' when it must be used first. */
+    const afterIdle = async (): Promise<'next' | 'open'> => {
+      // And the example's images have arrived (loaded or failed). An image
+      // still in flight is a 0x0 box, which is how x-cardimage's aspect=4/3
+      // and aspect=21/9 once read as the same card: neither had its picture
+      // yet. `complete` is the browser's own "done, either way" signal.
+      const images = Array.from(stage.querySelectorAll('img')) as HTMLImageElement[];
+      if (!(await until(() => images.every((img) => img.complete), 10_000))) {
+        unrendered.push(`${label} (an image never finished loading)`);
+        return 'next';
+      }
+      // Likewise its <video>/<audio> have reached the look they rest at. An
+      // autoplay video is drawn at its poster's size until playback starts and
+      // at its own frame's size after, so read before that and autoplay=true
+      // is the same box as loop=true (Windows CI, #962: once whenIdle() lost
+      // its 50ms quiet window, nothing else happened to cover the gap).
+      // Autoplay rests once playing; any other media once its metadata is in;
+      // either one once the browser has given up on it.
+      const media = Array.from(stage.querySelectorAll('video, audio')) as HTMLMediaElement[];
+      const atRest = (m: HTMLMediaElement) => !!m.error || m.networkState === HTMLMediaElement.NETWORK_NO_SOURCE
+        || (m.autoplay ? !m.paused && m.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+          : m.readyState >= HTMLMediaElement.HAVE_METADATA);
+      if (!(await until(() => media.every(atRest), 10_000))) {
+        unrendered.push(`${label} (a video or audio never loaded, played or failed)`);
+        return 'next';
+      }
+      // x-typewriter types with timers, not animations, so finish() below
+      // cannot end it: read early, "custom cursor" and "long sentence" were
+      // both still near-empty and fingerprinted alike. Wait until no
+      // typewriter's text has grown across 400ms (the slowest example types
+      // a character every 150ms).
+      const typed = () => Array.from(stage.querySelectorAll('.x-typewriter')).map((el) => (el.textContent || '').length).join(',');
+      let lastTyped = typed();
+      let typingSettled = !lastTyped;
+      for (const end = performance.now() + 15_000; !typingSettled && performance.now() < end;) {
+        await new Promise((r) => setTimeout(r, 400));
+        const now = typed();
+        typingSettled = now === lastTyped;
+        lastTyped = now;
+      }
+      if (!typingSettled) {
+        unrendered.push(`${label} (a typewriter never finished typing)`);
+        return 'next';
+      }
+      // Freeze every animation at its start and let finite transitions end,
+      // so the reading is the option's look, not a moment in its motion.
+      const anims = stage.getAnimations({ subtree: true });
+      await Promise.all(anims
+        .filter((a) => a.effect?.getTiming().iterations !== Infinity)
+        .map((a) => { a.finish(); return a.finished.catch(() => undefined); }));
+      // Only the INFINITE ones are rewound. A finished animation that fills
+      // forwards (x-cardhero's fade-in, `both`) is still listed, and
+      // rewinding it put the hero's whole content back at opacity 0.
+      stage.getAnimations({ subtree: true })
+        .filter((a) => a.effect?.getTiming().iterations === Infinity)
+        .forEach((a) => { a.pause(); a.currentTime = 0; });
+      await frame();
+
+      if (!stage.firstElementChild) { unrendered.push(label); return 'next'; }
+      // A non-visual option is rendered (it must still work) but has no
+      // look to compare -- see the header.
+      if (exempt[label] === 'non-visual') return 'next';
+      // An option the schema marks `visibleWhen: "open"` styles an overlay
+      // (a dialog's size, a menu's position) that is on screen only once
+      // the example is used. Use it the way a reader does -- activate its
+      // trigger -- and read what opens. A modal <dialog> is in the stage's
+      // DOM but a trigger-mode one is not, so open dialogs are read
+      // wherever they are.
+      if (opens.includes(label)) {
+        // Its visible trigger when it has one (a dialog's button, a menu's
+        // toggle). A drawer opened from elsewhere on a real page -- x-notes
+        // is toggled from the site's navbar -- has none in the example, so
+        // its documented imperative API is the opener instead: show(), the
+        // canonical verb (#782 retired open()).
+        const trigger = (Array.from(stage.querySelectorAll('[aria-haspopup], button, [role="button"]')) as HTMLElement[])
+          .find((el) => el.checkVisibility({ visibilityProperty: true, opacityProperty: true }));
+        if (trigger) trigger.click();
+        else {
+          for (const el of Array.from(stage.querySelectorAll('*'))) {
+            const api = Object.entries(el).find(([k, v]) => /^wb[A-Z]/.test(k) && typeof (v as { show?: unknown })?.show === 'function');
+            if (api) { (api[1] as { show: () => void }).show(); break; }
+          }
+        }
+        await frame();
+        return 'open';
+      }
+      record('');
+      return 'next';
+    };
+
+    /** Read what opening the row's example showed. */
+    const afterOpen = async () => {
+      await Promise.all(document.getAnimations()
+        .filter((a) => a.effect?.getTiming().iterations !== Infinity)
+        .map((a) => { a.finish(); return a.finished.catch(() => undefined); }));
+      await frame();
+      const opened = Array.from(document.querySelectorAll('dialog[open]'))
+        .filter((d) => !stage.contains(d))
+        .map((d) => fingerprint(d, true)).join('\n--\n');
+      record(opened);
+    };
+
+    const record = (opened: string) => {
+      // The whole stage, not its first child: an example is often more than
+      // one element (a trigger and its <dialog>; a filter box inserted
+      // before its <table> or <select>), and the option may land on any of
+      // them.
+      const fp = fingerprint(stage) + (opened ? '\n--\n' + opened : '');
+      // Close whatever was opened, so the next row starts from a page with
+      // no modal over it.
+      document.querySelectorAll('dialog[open]').forEach((d) => (d as HTMLDialogElement).close());
+      if (!seen.has(fp)) seen.set(fp, []);
+      seen.get(fp)!.push(label);
+    };
+
+    const cleanup = () => document.removeEventListener('click', noNav, true);
+
+    const finish = (): Finding => {
+      // A fingerprint shared by two or more REAL options is the defect; the
+      // default collapsing onto one real option is expected.
+      const clashes: string[] = [];
+      for (const [, group] of seen) {
+        // An alias counts once, as the option it names.
+        const real = [...new Set(group.filter((l) => exempt[l] !== 'default').map((l) => same[l] || l))];
+        if (real.length >= 2) clashes.push(`${tok} (${frm}): ${real.join(' = ')} render identically`);
+      }
+      return { clashes, unrendered, labels };
+    };
+
+    (window as any).__vfp = { beforeIdle, idleDiagnostics, afterIdle, afterOpen, cleanup, finish };
+    return rows.length;
   }, {
     tok: token,
     frm: form,
@@ -580,6 +600,30 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
     same: Object.fromEntries(options.filter((o) => o.same).map((o) => [o.label, o.same!])),
     opens: options.filter((o) => o.open).map((o) => o.label),
   });
+
+  try {
+    for (let i = 0; i < rowCount; i++) {
+      if (!(await page.evaluate((n) => (window as any).__vfp.beforeIdle(n), i))) continue;
+      // Behaviors attach asynchronously (module + stylesheet on first use).
+      // #1246: on Windows CI (and on main's own CI, 6bb465df) x-progress never
+      // settles: "progress (awaiting viewport)" -- the lazy runtime is still
+      // waiting for an IntersectionObserver report that does not come. It
+      // does not reproduce on Linux, so when it happens the failure carries
+      // what the page looked like, to find the cause from the CI log alone.
+      try {
+        await settlePage(page, { timeout: 20_000 });
+      } catch (err) {
+        const diagnostics: string = await page.evaluate(() => (window as any).__vfp.idleDiagnostics()).catch(() => '');
+        throw new Error(`${(err as Error).message}${diagnostics}`);
+      }
+      if ((await page.evaluate(() => (window as any).__vfp.afterIdle())) !== 'open') continue;
+      await settlePage(page, { timeout: 10_000 });
+      await page.evaluate(() => (window as any).__vfp.afterOpen());
+    }
+  } finally {
+    await page.evaluate(() => (window as any).__vfp?.cleanup()).catch(() => undefined);
+  }
+  return page.evaluate(() => (window as any).__vfp.finish());
 }
 
 test.describe('Showcase variants are visually distinct', () => {

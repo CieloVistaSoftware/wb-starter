@@ -19,6 +19,7 @@
  * (x-input inputType, x-switch labelPosition, x-textarea showCount, ...).
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { openGroup as openGroupAndSettle } from '../helpers/behaviors-page';
 
 test.describe.configure({ timeout: 120_000 });
 
@@ -26,9 +27,7 @@ async function openGroup(page: Page, token: string) {
   const rows = page.locator(`.behaviors-search-results__row[data-browse-token="${token}"]`);
   await expect(rows.first()).toBeAttached({ timeout: 30_000 });
   const group = page.locator('#behaviors-search-results details', { has: rows.first() });
-  if (await group.count() && !(await group.first().evaluate((d) => (d as HTMLDetailsElement).open))) {
-    await group.first().locator(':scope > summary').click();
-  }
+  await openGroupAndSettle(group);
   return rows;
 }
 

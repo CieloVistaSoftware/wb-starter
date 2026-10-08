@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * "every page on our web site must follow our standards" -- including
  * tests/fixtures/cards-permutation-matrix.html, even though it's a test
@@ -16,7 +17,7 @@ test('tests/fixtures/cards-permutation-matrix.html: page content keeps >=1rem cl
   await page.goto('/tests/fixtures/cards-permutation-matrix.html', { waitUntil: 'domcontentloaded' });
   // The page is built once WB settles (#1516: not 500ms).
   await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-  await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+  await settlePage(page, { timeout: 15000 });
 
   const bodyPaddingLeft = await page.evaluate(() => parseFloat(getComputedStyle(document.body).paddingLeft));
   expect(bodyPaddingLeft, 'body (or its content wrapper) must have >=1rem left padding').toBeGreaterThanOrEqual(16);

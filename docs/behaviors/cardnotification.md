@@ -25,7 +25,7 @@
 
 ## Events
 
-- `wb:notification:dismiss` — Fired when notification is dismissed
+- `wb:cardnotification:dismiss` — The notification card is dismissed
 
 ## Methods
 

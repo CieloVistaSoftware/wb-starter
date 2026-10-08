@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * A card hero's title never breaks inside a word.
@@ -33,7 +34,7 @@ test('a card hero title never breaks inside a word, at any variant, xalign or wi
   await page.setViewportSize({ width: 1400, height: 900 });
   await openSite(page);
 
-  const splits = await page.evaluate(async ({ titles, variants, xaligns, widths }) => {
+  await page.evaluate(async ({ titles, variants, xaligns, widths }) => {
     const stage = document.createElement('div');
     document.body.appendChild(stage);
     const cases: Array<{ wrap: HTMLElement; label: string }> = [];
@@ -57,7 +58,14 @@ test('a card hero title never breaks inside a word, at any variant, xalign or wi
       }
     }
     await (window as any).WB.scan();
-    if ((window as any).WB.whenIdle) await (window as any).WB.whenIdle({ timeout: 10_000 });
+    (window as any).__wb961Stage = stage;
+    (window as any).__wb961Cases = cases;
+  }, { titles: TITLES, variants: VARIANTS, xaligns: XALIGNS, widths: WIDTHS });
+  await settlePage(page, { timeout: 10_000 });
+
+  const splits = await page.evaluate(async () => {
+    const stage = (window as any).__wb961Stage as HTMLElement;
+    const cases = (window as any).__wb961Cases as Array<{ wrap: HTMLElement; label: string }>;
     await document.fonts.ready;
     // Let the entrance animation finish so the layout is the resting one.
     // (Infinite ones, like the sheen sweep, cannot finish and do not move text.)
@@ -91,7 +99,7 @@ test('a card hero title never breaks inside a word, at any variant, xalign or wi
     }
     stage.remove();
     return found;
-  }, { titles: TITLES, variants: VARIANTS, xaligns: XALIGNS, widths: WIDTHS });
+  });
 
   expect(splits, `Card hero titles broken inside a word:\n  ${splits.join('\n  ')}`).toEqual([]);
 });

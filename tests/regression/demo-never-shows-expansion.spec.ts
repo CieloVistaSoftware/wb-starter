@@ -24,6 +24,7 @@
  */
 
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * Wait for the demo SOURCE PANELS, not for a duration.
@@ -65,7 +66,7 @@ test.describe('the demo source panel never shows the expansion (#1003)', () => {
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
     await demoPanelsReady(page);
 
-    const result = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       // Built at runtime: absent from the page source, and with no _rawSource,
       // which is exactly the state that used to trigger the innerHTML fallback.
       const host = document.createElement('div');
@@ -81,8 +82,12 @@ test.describe('the demo source panel never shows the expansion (#1003)', () => {
       // Until the source panel has text, then settled (#1516: not 2500ms).
       const until = async (ok: () => boolean, ms = 5000) => { const end = performance.now() + ms; while (!ok() && performance.now() < end) await new Promise((r) => requestAnimationFrame(r)); };
       await until(() => !!(host.querySelector('pre code')?.textContent || '').trim(), 10000);
-      await (window as any).WB?.settled?.({ timeout: 10000 }).catch(() => {});
+      (window as any).__wb961Host = host;
+    });
+    await settlePage(page, { timeout: 10000, ifPresent: true }).catch(() => {});
 
+    const result = await page.evaluate(() => {
+      const host = (window as any).__wb961Host as HTMLElement;
       const code = host.querySelector('pre code');
       const text = code ? (code.textContent || '') : null;
       host.remove();

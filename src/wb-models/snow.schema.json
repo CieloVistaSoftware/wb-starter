@@ -82,14 +82,6 @@
       "description": "Snowflake color"
     }
   },
-  "events": {
-    "wb:snow:start": {
-      "description": "Animation started"
-    },
-    "wb:snow:stop": {
-      "description": "Animation stopped"
-    }
-  },
   "test": {
     "setup": [
       "<div x-snow>Basic snow content</div>",

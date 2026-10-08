@@ -102,6 +102,12 @@
       "description": "Let a row be clicked to become the active row.",
       "visual": false,
       "visualReason": "Clicking a row makes it the active row. Only the click shows it (#773)."
+    },
+    "sortValue": {
+      "type": "string",
+      "description": "Set on a body cell: the value its column sorts by instead of the cell's text, such as an ISO date behind a friendly one. `sort-value` is read too.",
+      "default": "",
+      "scope": "child"
     }
   },
   "$view": [
@@ -209,23 +215,11 @@
     "headers": "scope=\"col\" on th elements"
   },
   "events": {
-    "wb:table:sort": {
-      "description": "Column sorted",
+    "wb:table:select": {
+      "description": "A row is clicked",
       "detail": {
-        "column": "string",
-        "direction": "asc|desc"
-      }
-    },
-    "wb:table:filter": {
-      "description": "Data filtered",
-      "detail": {
-        "query": "string"
-      }
-    },
-    "wb:table:page": {
-      "description": "Page changed",
-      "detail": {
-        "page": "number"
+        "row": "HTMLTableRowElement",
+        "index": "number"
       }
     }
   },

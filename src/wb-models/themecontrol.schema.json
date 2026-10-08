@@ -9,7 +9,18 @@
     "supportLevel": "stable",
     "accessibility": "high"
   },
-  "properties": {},
+  "properties": {
+    "showLabel": {
+      "type": "boolean",
+      "description": "Show the \"Theme:\" label before the theme picker.",
+      "default": true
+    },
+    "persist": {
+      "type": "boolean",
+      "description": "Remember the chosen theme in localStorage and restore it on the next visit.",
+      "default": true
+    }
+  },
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

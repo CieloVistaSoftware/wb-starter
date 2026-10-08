@@ -280,7 +280,7 @@
           "file": "behaviors/audio.md",
           "title": "Audio",
           "description": "A bare <audio> gets a styled player with a track display, a play button and, when show-eq is set, a 15-band graphic equaliser with bass and treble controls.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/autocomplete.md",
@@ -376,19 +376,19 @@
           "file": "behaviors/cardlink.md",
           "title": "Link Card",
           "description": "x-cardlink renders a card that is itself a link to href: the whole surface is clickable and keyboard-focusable, with a title, description, optional icon and…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardminimizable.md",
           "title": "Minimizable Card",
           "description": "x-cardminimizable renders a card with a minimise button in its header that collapses the body to just the title bar and restores it again.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardnotification.md",
           "title": "Notification Card",
           "description": "x-cardnotification renders a notice card coloured by variant (info, success, warning, error), with an icon, title, message and a dismiss button that removes it.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/cardoverlay.md",
@@ -436,7 +436,7 @@
           "file": "behaviors/cardvideo.md",
           "title": "Video Card",
           "description": "x-cardvideo renders a card with a video player from src (with poster shown before playback) above a title and description.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/center.md",
@@ -490,7 +490,7 @@
           "file": "behaviors/confetti.md",
           "title": "Confetti",
           "description": "x-confetti fires a burst of coloured confetti from the element each time it is clicked; count sets how many pieces and colors their palette.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/confirm.md",
@@ -568,7 +568,7 @@
           "file": "behaviors/dialog.md",
           "title": "Dialog",
           "description": "A plain <dialog> gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/dl.md",
@@ -586,13 +586,13 @@
           "file": "behaviors/drawer.md",
           "title": "Drawer",
           "description": "x-drawer turns a button into the trigger for a slide-out panel: clicking it opens a drawer from the position edge with title and content, closed by its…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/drawerLayout.md",
           "title": "Drawer Layout",
           "description": "x-drawer-layout makes a sidebar collapsible: a toggle shrinks it from width to min-width and back.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/dropdown.md",
@@ -640,7 +640,7 @@
           "file": "behaviors/fireworks.md",
           "title": "Fireworks",
           "description": "x-fireworks launches a burst of firework particles from the element each time it is clicked; count sets particles per burst and colors their palette.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/fix-card.md",
@@ -838,7 +838,7 @@
           "file": "behaviors/notes.md",
           "title": "Notes",
           "description": "x-notes adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/notify.md",
@@ -982,7 +982,7 @@
           "file": "behaviors/select.md",
           "title": "Select",
           "description": "A plain <select> gets the form styling, with variant for validation state, size, and clearable for a button that resets it.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/shake.md",
@@ -1024,7 +1024,7 @@
           "file": "behaviors/snow.md",
           "title": "Snow",
           "description": "x-snow makes the element a button that starts or stops snowflakes falling over the page; count sets how many and duration how long each takes to fall.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/sparkle.md",
@@ -1090,7 +1090,7 @@
           "file": "behaviors/table.md",
           "title": "Table",
           "description": "A plain <table> gets sortable column headers, and can be filled from attributes: headers for the column names and rows for the data as JSON.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-07"
         },
         {
           "file": "behaviors/tabs.md",

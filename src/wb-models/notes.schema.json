@@ -52,6 +52,11 @@
       "type": "string",
       "description": "Textarea placeholder",
       "default": "Add your notes here..."
+    },
+    "savePath": {
+      "type": "string",
+      "description": "URL of the notes file: the panel loads saved notes from it and names it in the \"Saved to\" message.",
+      "default": "/data/notes.json"
     }
   },
   "$view": [
@@ -204,12 +209,6 @@
       "detail": {
         "content": "string"
       }
-    },
-    "wb:notes:copy": {
-      "description": "Notes copied to clipboard"
-    },
-    "wb:notes:clear": {
-      "description": "Notes cleared"
     },
     "wb:notes:position": {
       "description": "Position changed",
