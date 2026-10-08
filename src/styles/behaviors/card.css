@@ -869,6 +869,33 @@ article[variant="elevated"],
   border-color: var(--card-glass-border-hover);
 }
 
+/* #832: the moving sheen is what reads as glass, and reduced motion (which
+   Android's "Remove animations" and its power-saving modes turn on) froze it,
+   leaving an 8% tint and a still streak -- "a slightly tinted rectangle".
+   Without the motion, glass carries a static treatment instead: the stronger
+   hover tint and border, and a bright top edge with a soft inner highlight.
+   After the glass + elevated rules above, so it wins over them too, and an
+   elevated glass card keeps its elevation shadow under the highlight. */
+@media (prefers-reduced-motion: reduce) {
+  .x-card--glass,
+  [variant="glass"],
+  .x-card--glass.x-card--elevated,
+  [variant="glass"][elevated] {
+    background: var(--card-glass-bg-hover);
+    border-color: var(--card-glass-border-hover);
+    box-shadow:
+      inset 0 1px 0 var(--card-glass-border-hover),
+      inset 0 0 1.5rem var(--card-glass-sheen);
+  }
+  .x-card--glass.x-card--elevated,
+  [variant="glass"][elevated] {
+    box-shadow:
+      inset 0 1px 0 var(--card-glass-border-hover),
+      inset 0 0 1.5rem var(--card-glass-sheen),
+      var(--shadow-elevated, 0 8px 24px rgba(0,0,0,0.4));
+  }
+}
+
 @supports not (backdrop-filter: blur(1px)) {.x-card--glass.x-card--elevated,
 .x-card--glass.x-card--elevated:hover,
 [variant="glass"][elevated],
