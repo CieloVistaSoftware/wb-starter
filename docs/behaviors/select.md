@@ -38,12 +38,6 @@ write a `<select>` with `<option>` children
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `success` · `error` | `default` |  |
 
-## Events
-
-- `wb:select:change` — Selection changed
-- `wb:select:open` — Dropdown opened
-- `wb:select:close` — Dropdown closed
-
 ## Methods
 
 - `getValue()` — Gets selected value(s)

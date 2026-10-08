@@ -27,13 +27,6 @@
 | `aspect` | `16/9` · `4/3` · `1/1` · `21/9` · `9/16` | `16/9` | Video aspect ratio |
 | `variant` | `default` · `minimal` · `bordered` · `elevated` | `default` | Visual style variant |
 
-## Events
-
-- `wb:video:play` — Fired when video starts playing
-- `wb:video:pause` — Fired when video is paused
-- `wb:video:ended` — Fired when video playback ends
-- `wb:video:timeupdate` — Fired on time update
-
 ## Methods
 
 - `play()` — Plays the video
