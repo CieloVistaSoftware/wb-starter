@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.441",
+      "date": "2026-10-08",
+      "summary": "43 identity classes behaviors add had no stylesheet rule: 19 now carry a visible look (a themed fieldset frame, danger-coloured x-error, muted x-help, a dashed file picker, pointer cursors on click-to-open triggers, hidden line numbers until placed) and 24 are recorded, with reasons, as needing none. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1724\" target=\"_blank\" rel=\"noopener\">#1724</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Identity classes get a rule or a recorded decision (batch 3)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1724\" target=\"_blank\" rel=\"noopener\">#1724</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/654c7d2b6853d9d59c53db5a5a9bddbff115f044\" target=\"_blank\" rel=\"noopener\"><code>654c7d2</code></a>",
+          "issues": [
+            1095,
+            1724
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;span x-sheet&gt;Open sheet&lt;/span&gt;, then hover it. Before: the arrow cursor gave no sign the text opens anything. Now: the pointer cursor, like every other click-to-open trigger.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/654c7d2b6853d9d59c53db5a5a9bddbff115f044\" target=\"_blank\" rel=\"noopener\"><code>654c7d2</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.440",
       "date": "2026-10-08",
       "summary": "Two PRs fixed #1759 in parallel (#1767 and #1769) and both merged; git combined them without a conflict, so main&#39;s demo.js declares `let committed` twice in one block, fails to parse, and no x-demo on the site builds. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1770\" target=\"_blank\" rel=\"noopener\">PR 1770</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
