@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.436",
+      "date": "2026-10-08",
+      "summary": "The main nav had no way to reach the standalone demos, the component library, pages such as Contact and Features, or the schema and fix viewers. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1738\" target=\"_blank\" rel=\"noopener\">#1738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1744\" target=\"_blank\" rel=\"noopener\">#1744</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Add an Other menu item listing the demos, pages and tools the nav does not reach</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1738\" target=\"_blank\" rel=\"noopener\">#1738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1744\" target=\"_blank\" rel=\"noopener\">#1744</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3d9946cb050f8f7d08010c9305e278067a0beeac\" target=\"_blank\" rel=\"noopener\"><code>3d9946c</code></a>",
+          "issues": [
+            1738,
+            1744
+          ]
+        }
+      ],
+      "seeIt": "Open the site and click Other in the left nav. Before: there was no Other item, and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=other\" target=\"_blank\" rel=\"noopener\">?page=other</a> showed the not-found page. Now: the Other page lists Demos, Pages, Tools and Articles as cards that open each page.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3d9946cb050f8f7d08010c9305e278067a0beeac\" target=\"_blank\" rel=\"noopener\"><code>3d9946c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.435",
       "date": "2026-10-08",
       "summary": "Card-spacing-standard-13&#39;s footer check read `.x-card__footer` with .first(), whichever card had built its footer first; since #1760 builds lazy pages in slices that was sometimes an x-cardexpandable, whose 0.75rem vertical padding is deliberate, so the check failed about 1 run in 6 on main (&quot;Received: 12&quot;) and on PRs that touch no card code. It now builds the plain Default Card in #card-card in view and measures that card&#39;s footer. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a>",
