@@ -6,6 +6,38 @@
   ],
   "releases": [
     {
+      "version": "1.0.447",
+      "date": "2026-10-08",
+      "summary": "A description list with striped now shades every other term and description whether it is laid out vertically or horizontally. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1777\" target=\"_blank\" rel=\"noopener\">PR 1777</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/828\" target=\"_blank\" rel=\"noopener\">#828</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Striped shades every other pair in a vertical list too</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5e1a2d45e32a8a5f5b827e177a76eccd437dea34\" target=\"_blank\" rel=\"noopener\"><code>5e1a2d4</code></a>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-sidebar&#39;s resize-min/max bound its width on their own; pill corners in rem</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/828\" target=\"_blank\" rel=\"noopener\">#828</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/abd176f634d894098a35d4cb65f281da6738b5b3\" target=\"_blank\" rel=\"noopener\"><code>abd176f</code></a>",
+          "issues": [
+            828
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>A pill nav item style, navigationItemStyle / x-sidebar itemstyle</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/828\" target=\"_blank\" rel=\"noopener\">#828</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cf6f26637bd7f3dcd9062db1b5d27b2b81988af2\" target=\"_blank\" rel=\"noopener\"><code>cf6f266</code></a>",
+          "issues": [
+            828
+          ]
+        }
+      ],
+      "seeIt": "Put &lt;div x-sidebar items=&quot;Home&quot; resize-max=&quot;200&quot;&gt; in a 600px container. Before: it filled the 600px. Now: it is 200px wide.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7b945d391b609a939db514b576f7362a60fed116\" target=\"_blank\" rel=\"noopener\"><code>7b945d3</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.446",
       "date": "2026-10-08",
       "summary": "Missing-schema-is-a-quiet-404.spec.ts used desclist as one of its three behaviors with no schema; this PR gives desclist a schema, so its &quot;answers a plain 404&quot; case failed on CI. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1776\" target=\"_blank\" rel=\"noopener\">PR 1776</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
