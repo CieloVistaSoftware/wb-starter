@@ -1,5 +1,7 @@
 import { test, expect, type Page } from '../fixtures/offline';
 import { serveAsGitHubPages, PAGES_ROOT } from '../helpers/github-pages';
+import { pathToFileURL } from 'node:url';
+import path from 'node:path';
 
 /**
  * #1732 -- the error logger must not POST to a server that is not there.
@@ -81,5 +83,16 @@ test.describe('error logger on a host with no server API (#1732)', () => {
     await logProbe(page, 'probe-1732 logged on the dev server');
 
     expect(posts.filter((b) => b.includes('probe-1732 logged on the dev server'))).toHaveLength(1);
+  });
+
+  // The logger now asks isDevelopmentOrigin() when it loads, and Node specs
+  // import modules that import it (docs-illustrations-never-render-live imports
+  // behavior-markup.js). With no `location` in Node that threw a ReferenceError
+  // at import time and broke them.
+  test('the logger still loads outside a browser, where there is no location', async () => {
+    const sw = await import(pathToFileURL(path.resolve('src/core/service-worker.js')).href);
+    expect(sw.isDevelopmentOrigin()).toBe(false);
+    const logger = await import(pathToFileURL(path.resolve('src/core/error-logger.js')).href);
+    expect(logger.isLocalOnly()).toBe(true);
   });
 });
