@@ -123,6 +123,12 @@ test.describe('[x-cardportfolio] variant/size/availability (regression)', () => 
   });
 
   test('size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid', async ({ page }) => {
+    // Five cards built one after another on a fixture that also loads ~100
+    // images and videos. On a starved Windows runner (PR #1775's CI) the page
+    // took 10s to create and the first card 16s to build behind that media, so
+    // the run ended at 38s with every assertion passing -- past the default 30s.
+    // The same room #1246 gives the other per-card sweeps.
+    test.setTimeout(60_000);
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-size-variants');
     await section.locator('[x-cardportfolio]').first().waitFor();

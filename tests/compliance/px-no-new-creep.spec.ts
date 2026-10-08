@@ -43,7 +43,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // screen. The reason is written beside them.
 // 508: 540 measured on 2026-10-08, then pages/themes-showcase.css converted (32
 // values) with every element on /?page=themes computing the same at 16px.
-const BASELINE = 508;
+// 491: pages/behaviors.css converted (17 values: radii and two 600px caps),
+// the first 6,000 elements of /?page=behaviors computing the same at 16px.
+const BASELINE = 491;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
