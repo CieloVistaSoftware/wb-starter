@@ -70,21 +70,6 @@ export function ripple(element, options = {}) {
     }, config.duration);
   };
 
-  // Add keyframes if not already present
-  if (!document.getElementById('x-ripple-styles')) {
-    const style = document.createElement('style');
-    style.id = 'x-ripple-styles';
-    style.textContent = `
-      @keyframes x-ripple-animation {
-        to {
-          transform: scale(1);
-          opacity: 0;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
   // mousedown, not click -- ripple should start the instant the button is
   // pressed, not wait for the full click (press+release) to complete.
   // Both listeners used to be attached here, firing createRipple TWICE per

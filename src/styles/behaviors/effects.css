@@ -839,3 +839,39 @@ MARQUEE & RIPPLE
   color: var(--text-secondary);
   font-family: monospace;
 }
+
+/* =============================================================================
+   KEYFRAMES once injected at runtime (#817)
+   sparkle, rainbow, fireworks, snow, particle and ripple each appended a
+   <style> with these keyframes the first time they ran. They live here now
+   with the rest of each effect's CSS, so every effect is styled one way.
+============================================================================= */
+@keyframes x-sparkle {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1); opacity: 0; }
+}
+@keyframes x-rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes x-firework-particle {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0; }
+}
+@keyframes x-snow-fall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); }
+}
+@keyframes x-particle-float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  50% { transform: translateY(-100px) translateX(20px); }
+}
+@keyframes x-ripple-animation {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
