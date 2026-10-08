@@ -23,7 +23,6 @@ const root = process.cwd();
 /** !important declarations still in src/ on 2026-10-07, by file. Shrink only. */
 const REGISTER: Record<string, number> = {
   'src/styles/normalize.css': 5,   // prefers-reduced-motion and [hidden]: both must beat every component's own value, by design
-  'src/styles/transitions.css': 2,   // prefers-reduced-motion: no transition or animation, whatever the component sets
 };
 
 /** Remove comments. CSS has only block comments; JS also has line comments. */

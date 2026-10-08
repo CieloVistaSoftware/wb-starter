@@ -257,8 +257,13 @@
   :where(.site__nav) .x-sidebar__icon,
   .nav__toggle svg,
   .footer__social-link {
-    transition: none !important;
-    animation: none !important;
+    /* #1014: no !important needed. These selectors match the transition
+       rules above at the same specificity, and this block comes later, so
+       it wins on source order. normalize.css's reduced-motion rule also
+       cuts every element to 0.01ms. tests/compliance/
+       reduced-motion-without-important.spec.ts holds both. */
+    transition: none;
+    animation: none;
   }
   
   .page--enter {
