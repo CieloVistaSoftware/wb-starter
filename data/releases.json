@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.435",
+      "date": "2026-10-08",
+      "summary": "Card-spacing-standard-13&#39;s footer check read `.x-card__footer` with .first(), whichever card had built its footer first; since #1760 builds lazy pages in slices that was sometimes an x-cardexpandable, whose 0.75rem vertical padding is deliberate, so the check failed about 1 run in 6 on main (&quot;Received: 12&quot;) and on PRs that touch no card code. It now builds the plain Default Card in #card-card in view and measures that card&#39;s footer. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The card footer spacing check measures the standard card&#39;s own footer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d562d3f867214a8a24b4c6738c62c160cda4b4f0\" target=\"_blank\" rel=\"noopener\"><code>d562d3f</code></a>",
+          "issues": [
+            469,
+            1764
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/card-spacing-standard-13.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/card-spacing-standard-13.spec.ts</a> --grep &quot;footer has&quot; --project=regression --repeat-each=30 --workers=6</code>. Before: 5 of 30 failed on main with &quot;card footer padding-top must be ≥16px (1rem)&quot;, Received 12. Now: 30 passed, and lowering .x-card__footer&#39;s padding still fails it (Received 8).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d562d3f867214a8a24b4c6738c62c160cda4b4f0\" target=\"_blank\" rel=\"noopener\"><code>d562d3f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.434",
       "date": "2026-10-08",
       "summary": "On GitHub Pages every page that logged an error also POSTed to api/error-log/append, got 405, and printed a &quot;Failed to load resource&quot; console error next to the error it was logging. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1732\" target=\"_blank\" rel=\"noopener\">#1732</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1739\" target=\"_blank\" rel=\"noopener\">#1739</a>",
