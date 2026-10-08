@@ -339,7 +339,7 @@
           "text": "Issues"
         }
       ],
-      "content": "🐛 Issues Live from GitHub — open and closed, including the full issue body. Filter and search Open Closed All Working on now ( 0 ) Copy Work completed Current Active: 0 Work done loading… Nothing recorded in this window. Closed Opened Commits Issues Loading issues… : auto-injects the table behavior (tag-map.js nativeMap), and `sortable` is its own attribute, so the column sorting is the framework's — the same code #1011 taught to sort dates and versions properly. Writing a private sort here would mean this page could disagree with every other table on the site. Rows are rebuilt by render(); the behavior sorts whatever rows it finds, so filtering and sorting do not fight. The default order is set in the DATA, not by the behavior: severity first, newest first within a severity. --> Priority # Title Kind State Labels Updated",
+      "content": "🐛 Issues Live from GitHub — open and closed, including the full issue body. Filter and search Open Closed All Working on now ( 0 ) Copy Work completed Current Active: 0 Work done loading… Nothing recorded in this window. Work completed is built by the local dev server from git log and gh, so it is not available on the static site. The full history is on GitHub . Closed Opened Commits Issues Loading issues… : auto-injects the table behavior (tag-map.js nativeMap), and `sortable` is its own attribute, so the column sorting is the framework's — the same code #1011 taught to sort dates and versions properly. Writing a private sort here would mean this page could disagree with every other table on the site. Rows are rebuilt by render(); the behavior sorts whatever rows it finds, so filtering and sorting do not fight. The default order is set in the DATA, not by the behavior: severity first, newest first within a severity. --> Priority # Title Kind State Labels Updated",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-07"
@@ -1132,7 +1132,7 @@
       "content": "# WB-Starter Reference > **This is the cross-behavior INDEX, not the per-behavior documentation.** > Every behavior now has its own page, generated from its schema, at > `docs/behaviors/ .md` — e.g. [button](behaviors/button.md), > [ripple](behaviors/ripple.md), [tooltip](behaviors/tooltip.md). Each of those > pages opens by stating which of the two behavior types it is (decorates a > semantic element vs. adds a new capability) and how to write it. Go there for > attributes, events and examples; this page is for *browsing what exists* and > for the shared syntax/auto-injection/event rules below. > > Reach this page from an `x-demo` 📖 badge? That means the behavior has no > page of its own yet — find its row in the tables below (#842). This document lists all available behaviors in the WB Starter kit, categorized by function. --- ## What is a Behavior? A **behavior** is a JavaScript function that **enhances** an HTML element by adding: - CSS classes (styling hooks) - Inline styles (visual enhancement) - Event listeners (interactivity) - ARIA attributes (accessibility) - Data attributes (state tracking) A behavior does **NOT** change what the element fundamentally is - it enhances it. --- ## Syntax & Usage Behaviors are applied using attributes with a configurable prefix (default: `x-`). ### 1. Decoration (`x-{behavior}`) Enhances an element without changing its fundamental structure. Click Me Hover Me | Element | Behavior | Result | |---------|----------|--------| | ` ` | `button` | Button with variants, sizes, loading state | | ` ` | `table` | Table with sorting, striping, hover | | ` ` | `details` | Details with smooth animation | | ` ` | `dialog` | Dialog with backdrop, animations | | ` ` | `img` | Lazy loading, fade-in, lightbox | ### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783) There is no `-as-` infix any more. A behavior that builds out a behavior's internals is applied exactly like any other: the attribute name **is** the behavior name, and on a semantic element it is injected for you. Title Content | Element | Behavior | Written as | |---------|----------|------------| | ` ` | `card` | ` ` (auto-injected) or ` ` | | ` ` | `navbar` | ` ` (auto-injected) or ` ` | | ` ` | `sidebar` | ` ` (auto-injected) or ` ` | ### 3. Configuration (Optional) If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally. ```javascript // In your main entry point WB.init({ prefix: 'b' // Changes syntax to b-ripple, b-card, etc. }); ``` --- ## Auto Injection Behaviors can be configured to automatically attach to standard HTML5 semantic elements. It is **on by default** (`autoInject: true` in src/core/config.js). To opt a page out, pass `{ autoInject: false }` to `WB.init()`; to opt one element out, give it `x-ignore`. When enabled, plain semantic elements like ` ` and ` ` below get the `dialog`/`img` behaviors attached automatically, with no `x-` attribute needed: Auto-decorated dialog (zero x- attributes): Auto-decorated dialog content. --- ## Categories ### 1. Semantic HTML & Forms Enhances standard HTML elements with better styling and functionality. | Behavior | Element | Type | Description | |----------|---------|------|-------------| | [`audio`](behaviors/audio.md) | ` ` | Decorate | Enhanced audio player styling | | [`video`](behaviors/video.md) | ` ` | Decorate | Enhanced video player styling | | [`img`](behaviors/img.md) | ` ` | Decorate | Lazy loading, fade-in, lightbox | | [`figure`](behaviors/figure.md) | ` ` | Decorate | Figure with caption styling | | [`table`](behaviors/table.md) | ` ` | Decorate | Sortable headers, striped rows | | [`code`](behaviors/code.md) | ` ` | Decorate | Inline code styling | | [`pre`](behaviors/pre.md) | ` ` | Decorate | Code block with copy button | | [`input`](behaviors/input.md) | ` ` | Decorate | Styled input with variants | | [`textarea`](behaviors/textarea.md) | ` ` | Decorate | Auto-resize, counter | | [`select`](behaviors/select.md) | ` ` | Decorate | Custom dropdown styling | | [`checkbox`](behaviors/checkbox.md) | ` ` | Decorate | Custom checkbox styling | | [`radio`](behaviors/radio.md) | ` ` | Decorate | Custom radio styling | | [`button`](behaviors/button.md) | ` ` | Decorate | Variants, sizes, loading state | | [`switch`](behaviors/switch.md) | ` ` | Decorate | Toggle switch UI | | [`range`](behaviors/range.md) | ` ` | Decorate | Custom track/thumb styling | | [`rating`](behaviors/rating.md) | ` ` | - | Star rating input | | [`form`](behaviors/form.md) | ` ` | Decorate | Validation UI, loading states | | [`details`](behaviors/details.md) | ` ` | Decorate | Smooth expand/collapse animation | | [`dialog`](behaviors/dialog.md) | ` ` | Decorate | Backdrop, close button, animations | | [`fieldset`](behaviors/fieldset.md) | ` ` | Decorate | Groups related form controls | | [`formrow`](behaviors/formrow.md) | ` ` | - | Form field wrapper laid out as a row | | [`inputgroup`](behaviors/inputgroup.md) | ` ` | - | Input joined with prepend",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/accordion",
@@ -1537,7 +1537,7 @@
       "content": "# chip A small pill-shaped tag/label with optional icon, color variant, and dismiss button. Implemented by `chip()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-chip` | | Attribute form | ` ` | | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | ` ` | | Category | Feedback | | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) | ## Properties `chip()` clears the element's existing children and rebuilds them from these attributes, so any hand-written inner content is discarded in favor of `label`. | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | text | `\"\"` | Chip text | | `icon` | emoji or icon name | `\"\"` | Leading icon/emoji shown before the label | | `dismissible` | boolean | `false` | Adds a × button that removes the chip. Bare `dismissible` or `data-dismissible` both work | | `disabled` | boolean | `false` | Disabled/faded state; also suppresses the dismiss button even if `dismissible` is set. Bare `disabled` or `data-disabled` both work | | `outlined` | boolean | `false` | Transparent background with a colored border instead of a filled background. Bare `outlined` or `data-outlined` both work | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `\"default\"` | `default`, `primary`, `success`, `warning`, `error`, `info` | | `size` | `sm` · `md` · `lg` | `\"md\"` | `sm`, `md`, `lg` | ## Usage ### Basic chip ### Variant + size ### Dismissible ### Icon + outlined ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` | host isn't already a ` ` tag | Base pill shape, padding, background | | `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color | | `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale | | `.x-chip--outlined` | `outlined` | Transparent background, colored border | | `.x-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled=\"true\"` | | `.x-chip__icon` | `icon` set | Leading icon wrapper | | `.x-chip__label` | Always | Wraps the label text | | `.x-chip__remove` | `dismissible` and not `disabled` | The × remove button (a ` `) | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | `{ label }`: the chip's text | ```javascript document.addEventListener('wb:chip:remove', (e) => { console.log('A chip was dismissed:', e.detail.label); }); ``` - [Demo](../../demos/site/feedback.html#chip-chip) - [Schema](../../src/wb-models/chip.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/clock",
@@ -9280,6 +9280,7 @@
     "built": [
       "pages/about",
       "pages/home",
+      "pages/issues",
       "pages/services",
       "pages/themes",
       "docs/AI",
@@ -10116,6 +10117,7 @@
     ],
     "log": [
       "pages/ai-permutation-test",
+      "pages/issues",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/chip",
@@ -13574,6 +13576,7 @@
     ],
     "dev": [
       "pages/ai-permutation-test",
+      "pages/issues",
       "docs/behaviors/sidebarlayout",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -13581,6 +13584,7 @@
     ],
     "server": [
       "pages/ai-permutation-test",
+      "pages/issues",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -24319,6 +24323,86 @@
       "demos/site/cards",
       "demos/site/learn-more"
     ],
+    "local": [
+      "pages/issues",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/BRANCH_PROTECTION",
+      "docs/behaviors/clock",
+      "docs/behaviors/input",
+      "docs/mcp",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook",
+      "demos/charity-food"
+    ],
+    "git": [
+      "pages/issues",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/committing-fixes",
+      "docs/linkedin-standards-article",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/REPO-LAYOUT"
+    ],
+    "gh": [
+      "pages/issues",
+      "docs/BRANCH_PROTECTION",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/testing-runbook"
+    ],
+    "available": [
+      "pages/issues",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/standards/ERROR-MESSAGE",
+      "docs/behaviors-reference",
+      "docs/behaviors/blockquote",
+      "docs/behaviors/cardportfolio",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/switcher",
+      "docs/behaviors/table",
+      "docs/card",
+      "docs/properties",
+      "docs/themes",
+      "docs/wbservices"
+    ],
+    "static": [
+      "pages/issues",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/articles",
+      "docs/behaviors/container",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/skeleton",
+      "docs/behaviors/table",
+      "docs/behaviors/time",
+      "docs/code-examples-standard",
+      "docs/guides/create-a-website",
+      "docs/linkedin-standards-article",
+      "docs/performance",
+      "docs/semantic-standard",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/testing-strategy",
+      "demos/autoinject",
+      "demos/landing-page-showcase",
+      "demos/pre-debug"
+    ],
+    "history": [
+      "pages/issues",
+      "docs/NOTES-V3-GUIDE",
+      "docs/behaviors/cardbutton",
+      "docs/behaviors/ol",
+      "docs/claude/README",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/inline-editing"
+    ],
     "opened": [
       "pages/issues",
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28916,17 +29000,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/linkedin-update-article"
     ],
-    "local": [
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/BRANCH_PROTECTION",
-      "docs/behaviors/clock",
-      "docs/behaviors/input",
-      "docs/mcp",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook",
-      "demos/charity-food"
-    ],
     "gating": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/testing-strategy"
@@ -29242,18 +29315,6 @@
     "installs": [
       "docs/ANNOUNCE_TEST_POLICY"
     ],
-    "git": [
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/committing-fixes",
-      "docs/linkedin-standards-article",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/REPO-LAYOUT"
-    ],
     "hooks": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/behaviors-reference",
@@ -29542,12 +29603,6 @@
     ],
     "owner": [
       "docs/BRANCH_PROTECTION"
-    ],
-    "gh": [
-      "docs/BRANCH_PROTECTION",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/testing-runbook"
     ],
     "patch": [
       "docs/BRANCH_PROTECTION",
@@ -32232,28 +32287,6 @@
       "docs/behaviors-reference",
       "docs/styles"
     ],
-    "static": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/articles",
-      "docs/behaviors/container",
-      "docs/behaviors/scrollable",
-      "docs/behaviors/skeleton",
-      "docs/behaviors/table",
-      "docs/behaviors/time",
-      "docs/code-examples-standard",
-      "docs/guides/create-a-website",
-      "docs/linkedin-standards-article",
-      "docs/performance",
-      "docs/semantic-standard",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/testing-strategy",
-      "demos/autoinject",
-      "demos/landing-page-showcase",
-      "demos/pre-debug"
-    ],
     "journey": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD"
@@ -33495,15 +33528,6 @@
       "docs/behaviors/x-copy",
       "docs/behaviors/x-copybutton",
       "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "history": [
-      "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/cardbutton",
-      "docs/behaviors/ol",
-      "docs/claude/README",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/inline-editing"
     ],
     "drawer": [
       "docs/NOTES-V3-GUIDE",
@@ -35171,20 +35195,6 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/accordion",
       "docs/semantic-audit"
-    ],
-    "available": [
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/standards/ERROR-MESSAGE",
-      "docs/behaviors-reference",
-      "docs/behaviors/blockquote",
-      "docs/behaviors/cardportfolio",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/switcher",
-      "docs/behaviors/table",
-      "docs/card",
-      "docs/properties",
-      "docs/themes",
-      "docs/wbservices"
     ],
     "me": [
       "docs/WB_BEHAVIOR_SYSTEM",
