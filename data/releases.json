@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.429",
+      "date": "2026-10-08",
+      "summary": "Sixteen classes that code, pre, range, textarea, copybutton, audio, label, select, timeline and accordion put on the DOM they build used single-dash compounds the naming convention has no slot for (x-pre-wrapper, x-range-value, x-accordion-head and 13 more); they are now parts, x-pre__wrapper, x-range__value, x-accordion__head, and the audio host is the modifier x-audio--host. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name the parts semantic elements build x-{behavior}__{part} (, batch 4)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/428b6e44b49ab655ef0ee4761f769f0f911b7a6a\" target=\"_blank\" rel=\"noopener\"><code>428b6e4</code></a>",
+          "issues": [
+            1096,
+            1726
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page, pick x-accordion and inspect an item&#39;s clickable row. Before: class=&quot;x-accordion-head&quot;. Now: class=&quot;x-accordion__head&quot;, with the same flex row and pointer cursor, and clicking it opens the same panel; the naming compliance spec printed 66 non-conforming classes before and prints 50 now.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/428b6e44b49ab655ef0ee4761f769f0f911b7a6a\" target=\"_blank\" rel=\"noopener\"><code>428b6e4</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.428",
       "date": "2026-10-08",
       "summary": "Demos/site/forms.html showed two buttons with target=&quot;_self&quot; and target=&quot;_blank&quot; but no href, so neither did anything and button.js warned &quot;has no effect without an href&quot; for each. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a>",
