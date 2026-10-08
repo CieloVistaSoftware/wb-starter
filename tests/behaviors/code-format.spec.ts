@@ -17,12 +17,12 @@ test('NO demo code block wraps/breaks tokens (editor style, horizontal scroll)',
   // other panels to join it.
   await page.waitForSelector('#behaviors-live-code pre code.hljs', { timeout: 30000 });
   await expect.poll(
-    () => page.locator('pre.x-pre, .x-pre-wrapper pre, pre.x-demo__code').count(),
+    () => page.locator('pre.x-pre, .x-pre__wrapper pre, pre.x-demo__code').count(),
     { timeout: 15000 },
   ).toBeGreaterThan(3);
 
   const blocks = await page.evaluate(() => {
-    const pres = [...document.querySelectorAll('pre.x-pre, .x-pre-wrapper pre, pre.x-demo__code')];
+    const pres = [...document.querySelectorAll('pre.x-pre, .x-pre__wrapper pre, pre.x-demo__code')];
     return pres.map((p, i) => {
       const cs = getComputedStyle(p as HTMLElement);
       return { i, whiteSpace: cs.whiteSpace, overflowX: cs.overflowX, wordBreak: cs.wordBreak };

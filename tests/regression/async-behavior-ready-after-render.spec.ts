@@ -34,11 +34,11 @@ test('x-ready and WB.whenIdle() wait for an async behavior to finish rendering',
   // has already landed -- by construction rather than inside a 1500ms guess.
   let openGate!: () => void;
   const gate = new Promise<void>((r) => { openGate = r; });
-  await page.route(/marked(\.min)?\.js/, async (route) => {
+  await page.route(/marked(\.esm|\.min)?\.js/, async (route) => {
     await gate;
     await route.fallback();
   });
-  const markedRequested = page.waitForRequest(/marked(\.min)?\.js/, { timeout: 20_000 });
+  const markedRequested = page.waitForRequest(/marked(\.esm|\.min)?\.js/, { timeout: 20_000 });
   await page.setContent('<div id="md" x-mdhtml gfm="false">| a | b |\n|---|---|\n| 1 | 2 |</div>');
   await page.addScriptTag({
     type: 'module',

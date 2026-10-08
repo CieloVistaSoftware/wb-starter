@@ -21,7 +21,14 @@
 import { test, expect, Page } from '../fixtures/offline';
 
 const MIN_TEXT_EDGE_PX = 15;   // 1rem at the default root size, minus rounding slack
-const SLICES = 6;              // split the 585 rows so no single test runs long
+// Every row is measured; the rows are split so no single test runs long. Six
+// slices fit the 585 rows this was written for. #1723 declared more options,
+// each with its own variant rows: 1,360 rows on 2026-10-08, averaging 650 ms
+// (up to 2.1 s) a click, so a slice of about 227 rows took about 150 s locally
+// and hit the 180 s budget on CI. MAX_ROWS_PER_SLICE turns the next growth into
+// a clear message instead of a timeout: raise SLICES when it fires.
+const SLICES = 16;
+const MAX_ROWS_PER_SLICE = 120;
 
 type Violation = { token: string; variant: string; tag: string; worstPx: number };
 
@@ -101,6 +108,7 @@ for (let slice = 0; slice < SLICES; slice++) {
       () => document.querySelectorAll('.behaviors-search-results__row').length,
     );
     const per = Math.ceil(total / SLICES);
+    expect(per, `${total} rows / ${SLICES} slices = ${per} per slice; at ~650 ms a row that outgrows the 180 s budget -- raise SLICES`).toBeLessThanOrEqual(MAX_ROWS_PER_SLICE);
     const start = slice * per;
     const end = Math.min(start + per, total);
 

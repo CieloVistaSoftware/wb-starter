@@ -17,7 +17,7 @@ Turns a set of titled child sections into independently expandable/collapsible i
 | Attribute form | `<div x-accordion>` |
 | Behavior function | `accordion()` — module `collapse` (`src/wb-viewmodels/collapse.js`) |
 | Recommended replacement | `<details>`/`<summary>` — see [details](../behaviors/details.md) |
-| Root CSS Class | `<div x-accordion>` (host), `.x-accordion-item` (each item) |
+| Root CSS Class | `<div x-accordion>` (host), `.x-accordion__item` (each item) |
 | Category | Interactive |
 | Schema | none (no `accordion.schema.json`) |
 
@@ -34,7 +34,7 @@ back-compat ones listed below (Tier-1 Law 11: no `data-*` on behavior elements).
 | `title` | `<div x-accordion>` host only | string | Heading text for the single-item form — only read when the host tag is literally `<div x-accordion>` (not read for `x-accordion` on any other tag) |
 
 **Fallback behavior worth knowing:** `accordion()` only builds real accordion
-markup (`.x-accordion-item` / `.x-accordion-head` / `.x-accordion-body`) when
+markup (`.x-accordion__item` / `.x-accordion__head` / `.x-accordion__body`) when
 either (a) the host has children carrying `accordionTitle`, or (b) the host tag
 is literally `<div x-accordion>`. Put `x-accordion` on any *other* element with no
 titled children (e.g. `<div x-accordion title="Q">A</div>`) and it silently falls
@@ -78,12 +78,12 @@ a real accordion via `x-accordion` on semantic HTML.
 | Class | Applied to | Description |
 |-------|-----------|-------------|
 | `<div x-accordion>` | host element | Marker class added once the accordion is built |
-| `.x-accordion-item` | each item wrapper | Bordered row; adjacent items share a collapsed border |
-| `.x-accordion-item.open` | an expanded item | Reveals `.x-accordion-body` |
-| `.x-accordion-head` | each item's clickable row | `role="button"`, keyboard-focusable, flex row (title + icon) |
-| `.x-accordion-title` | the heading text span | — |
-| `.x-accordion-icon` | the ▸/▾ disclosure glyph | Text content flips between `▸` (closed) and `▾` (open); no CSS transition |
-| `.x-accordion-body` | the content panel | `display: none` unless the parent `.x-accordion-item` has `.open` |
+| `.x-accordion__item` | each item wrapper | Bordered row; adjacent items share a collapsed border |
+| `.x-accordion__item.open` | an expanded item | Reveals `.x-accordion__body` |
+| `.x-accordion__head` | each item's clickable row | `role="button"`, keyboard-focusable, flex row (title + icon) |
+| `.x-accordion__title` | the heading text span | — |
+| `.x-accordion__icon` | the ▸/▾ disclosure glyph | Text content flips between `▸` (closed) and `▾` (open); no CSS transition |
+| `.x-accordion__body` | the content panel | `display: none` unless the parent `.x-accordion__item` has `.open` |
 
 ## Events
 

@@ -50,7 +50,7 @@ test.describe('x-* primary values', () => {
   test('supports timeline items attributes and authored text', async ({ page }) => {
     await inject(page, '<div x-timeline id="attribute" items="One,Two"></div><div x-timeline id="text">Three,Four</div>');
 
-    await expect(page.locator('#attribute .x-timeline-item')).toHaveText(['One', 'Two']);
-    await expect(page.locator('#text .x-timeline-item')).toHaveText(['Three', 'Four']);
+    await expect(page.locator('#attribute .x-timeline__item')).toHaveText(['One', 'Two']);
+    await expect(page.locator('#text .x-timeline__item')).toHaveText(['Three', 'Four']);
   });
 });

@@ -6,6 +6,160 @@
   ],
   "releases": [
     {
+      "version": "1.0.429",
+      "date": "2026-10-08",
+      "summary": "Sixteen classes that code, pre, range, textarea, copybutton, audio, label, select, timeline and accordion put on the DOM they build used single-dash compounds the naming convention has no slot for (x-pre-wrapper, x-range-value, x-accordion-head and 13 more); they are now parts, x-pre__wrapper, x-range__value, x-accordion__head, and the audio host is the modifier x-audio--host. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name the parts semantic elements build x-{behavior}__{part} (, batch 4)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/428b6e44b49ab655ef0ee4761f769f0f911b7a6a\" target=\"_blank\" rel=\"noopener\"><code>428b6e4</code></a>",
+          "issues": [
+            1096,
+            1726
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page, pick x-accordion and inspect an item&#39;s clickable row. Before: class=&quot;x-accordion-head&quot;. Now: class=&quot;x-accordion__head&quot;, with the same flex row and pointer cursor, and clicking it opens the same panel; the naming compliance spec printed 66 non-conforming classes before and prints 50 now.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/428b6e44b49ab655ef0ee4761f769f0f911b7a6a\" target=\"_blank\" rel=\"noopener\"><code>428b6e4</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.428",
+      "date": "2026-10-08",
+      "summary": "Demos/site/forms.html showed two buttons with target=&quot;_self&quot; and target=&quot;_blank&quot; but no href, so neither did anything and button.js warned &quot;has no effect without an href&quot; for each. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Target demos get an href, so forms.html buttons open somewhere</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5bd2fe9f57a2661dbc367ca39fe28ceaf47b3f5b\" target=\"_blank\" rel=\"noopener\"><code>5bd2fe9</code></a>",
+          "issues": [
+            1736,
+            1750
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/forms.html\" target=\"_blank\" rel=\"noopener\">demos/site/forms.html</a> with the devtools console open and scroll to &quot;target variants&quot;. Before: two &quot;[x-button] target=... has no effect without an href&quot; warnings, and the buttons did nothing. Now: no warning, and each button opens the section it sits in (the _blank one in a new tab).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5bd2fe9f57a2661dbc367ca39fe28ceaf47b3f5b\" target=\"_blank\" rel=\"noopener\"><code>5bd2fe9</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.427",
+      "date": "2026-10-08",
+      "summary": "The Themes page logged &quot;One of your code blocks includes unescaped HTML. This is a potentially serious security risk&quot; three times, because its three &quot;How to Use Themes&quot; listings sat inside a second, live &lt;code&gt; element. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1735\" target=\"_blank\" rel=\"noopener\">#1735</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1748\" target=\"_blank\" rel=\"noopener\">#1748</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Usage code listings are plain text, so highlight.js stops warning</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1735\" target=\"_blank\" rel=\"noopener\">#1735</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1748\" target=\"_blank\" rel=\"noopener\">#1748</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab9983fe4177f6b321864b1afa1ba14e78409c3c\" target=\"_blank\" rel=\"noopener\"><code>ab9983f</code></a>",
+          "issues": [
+            1735,
+            1748
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=themes\" target=\"_blank\" rel=\"noopener\">?page=themes</a> with the devtools console open and scroll to &quot;How to Use Themes&quot;. Before: three highlight.js &quot;unescaped HTML&quot; warnings from <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/lib/highlight.js\" target=\"_blank\" rel=\"noopener\">src/lib/highlight.js</a>. Now: no warning, and the three listings are still highlighted.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab9983fe4177f6b321864b1afa1ba14e78409c3c\" target=\"_blank\" rel=\"noopener\"><code>ab9983f</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.426",
+      "date": "2026-10-08",
+      "summary": "Markdown blocks failed with &quot;Failed to load marked.js from CDN&quot; for any visitor who could not reach cdn.jsdelivr.net, and the live site ran whatever marked was newest; marked 17.0.1, the version package.json declares, now ships in src/lib and loads on first use. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1742\" target=\"_blank\" rel=\"noopener\">#1742</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1743\" target=\"_blank\" rel=\"noopener\">#1743</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Marked ships with the site instead of an unpinned CDN</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1742\" target=\"_blank\" rel=\"noopener\">#1742</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1743\" target=\"_blank\" rel=\"noopener\">#1743</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/180bc5de4090358b6746e25262cacc9bc3990fe3\" target=\"_blank\" rel=\"noopener\"><code>180bc5d</code></a>",
+          "issues": [
+            1742,
+            1743
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=themes\" target=\"_blank\" rel=\"noopener\">?page=themes</a> with cdn.jsdelivr.net blocked in DevTools. Before: the markdown sections stay empty and the error viewer logs &quot;mdhtml Unexpected Error&quot;. Now: they render.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/180bc5de4090358b6746e25262cacc9bc3990fe3\" target=\"_blank\" rel=\"noopener\"><code>180bc5d</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.425",
+      "date": "2026-10-08",
+      "summary": "Opening a page file such as <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a> directly on GitHub Pages requested its stylesheet relative to /pages/ (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/src/styles/pages/demos.css\" target=\"_blank\" rel=\"noopener\">pages/src/styles/pages/demos.css</a>), which returned 404 with a console error before the page redirected to <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a>; all 16 guarded fragments did this. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1734\" target=\"_blank\" rel=\"noopener\">#1734</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1746\" target=\"_blank\" rel=\"noopener\">#1746</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Fragment guards stop the document before redirecting, so no CSS 404s under /pages/</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1734\" target=\"_blank\" rel=\"noopener\">#1734</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1746\" target=\"_blank\" rel=\"noopener\">#1746</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4e337c17b206f737ab0b500dbb60ef311fa1ad3d\" target=\"_blank\" rel=\"noopener\"><code>4e337c1</code></a>",
+          "issues": [
+            1734,
+            1746
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/pages/demos.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/pages/demos.html</a> with the devtools Network tab open. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/src/styles/pages/demos.css\" target=\"_blank\" rel=\"noopener\">pages/src/styles/pages/demos.css</a>?v=... answered 404 and the console showed &quot;Failed to load resource&quot;, then the page moved to <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a>. Now: the page moves to <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a> with no 404 and no console error.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4e337c17b206f737ab0b500dbb60ef311fa1ad3d\" target=\"_blank\" rel=\"noopener\"><code>4e337c1</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.424",
+      "date": "2026-10-08",
+      "summary": "On GitHub Pages the Issues page fetched root-absolute /api/issues and /api/activity, which 404 at the domain root and put two &quot;Failed to load resource&quot; errors on the console of every visit, and the Work completed button opened nothing. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1733\" target=\"_blank\" rel=\"noopener\">#1733</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1745\" target=\"_blank\" rel=\"noopener\">#1745</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No api/ requests on the static site; say Work completed needs the dev server</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1733\" target=\"_blank\" rel=\"noopener\">#1733</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1745\" target=\"_blank\" rel=\"noopener\">#1745</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d7077abaf25b023feaaf167cf282e407b937772a\" target=\"_blank\" rel=\"noopener\"><code>d7077ab</code></a>",
+          "issues": [
+            1733,
+            1745
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=issues\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=issues</a> with the devtools Network tab open and press Work completed. Before: /api/issues and /api/activity?hours=672 answered 404 and the panel stayed shut. Now: no api/ request is made, the list loads from the GitHub API, and the panel says Work completed is not available on the static site.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d7077abaf25b023feaaf167cf282e407b937772a\" target=\"_blank\" rel=\"noopener\"><code>d7077ab</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.423",
+      "date": "2026-10-07",
+      "summary": "Behaviors-live-examples-layout timed out at 180 s on main and on every PR (rows 1/6 and 2/6, 2 of 2 locally on 547989c5): it was sized in 6 slices for 585 rows, and #1723&#39;s newly declared options grew the Behaviors list to about 1,360 rows at about 650 ms a click; every row is still measured, now in 16 slices, and a per-slice limit names the cause the next time the list grows. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Live-examples layout runs in 16 slices, and says so when the rows outgrow them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d513fcfd6e47969905a632b3ae0d74bea84ea005\" target=\"_blank\" rel=\"noopener\"><code>d513fcf</code></a>",
+          "issues": [
+            961,
+            1751
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/behaviors-live-examples-layout.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/behaviors-live-examples-layout.spec.ts</a> --project=compliance</code>. Before: slices 1/6 and 2/6 hit &quot;Test timeout of 180000ms exceeded&quot; inside measureRow. Now: 16 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d513fcfd6e47969905a632b3ae0d74bea84ea005\" target=\"_blank\" rel=\"noopener\"><code>d513fcf</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.422",
       "date": "2026-10-07",
       "summary": "Link-card titles on the Demos page were dark blue on the dark card background, at 1.49:1 contrast, and barely readable. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1747\" target=\"_blank\" rel=\"noopener\">#1747</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1749\" target=\"_blank\" rel=\"noopener\">#1749</a>",

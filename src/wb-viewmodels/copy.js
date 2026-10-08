@@ -194,7 +194,7 @@ export function copy(element, options = {}) {
  */
 export function copyButton(element, options = {}) {
   // Idempotency — never double-wrap an element that already has its button.
-  if (element.closest('.x-copybutton-wrapper')) return () => {};
+  if (element.closest('.x-copybutton__wrapper')) return () => {};
 
   const attrValue = (element.getAttribute('x-copybutton') || '').trim();
 
@@ -225,9 +225,9 @@ export function copyButton(element, options = {}) {
   // content model can't hold a child <button> at all (it would just become
   // part of the textarea's text value), so a sibling-in-a-wrapper is the
   // only structure that works for every element this behavior targets.
-  // Mirrors semantics/pre.js's own .x-pre-wrapper pattern.
+  // Mirrors semantics/pre.js's own .x-pre__wrapper pattern.
   const wrapper = document.createElement('div');
-  wrapper.className = 'x-copybutton-wrapper';
+  wrapper.className = 'x-copybutton__wrapper';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
 

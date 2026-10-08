@@ -304,7 +304,7 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
           // sample) as an alternate "needed width", not just the control.
           // NOT scoped to direct children (`:scope >`): a code panel with a
           // header/copy-button (pre.css's `.x-pre--has-header`) is wrapped
-          // in an intermediate `.x-pre-wrapper` div, so it's a GRANDCHILD of
+          // in an intermediate `.x-pre__wrapper` div, so it's a GRANDCHILD of
           // x-demo, not a direct child -- `:scope >` silently found zero
           // panels there and flagged demos/registry-browser.html's
           // correctly-sized boxes as false violations. demo.js's own

@@ -32,7 +32,7 @@ export function label(element, options = {}) {
     // never splits them onto separate lines (a bare pair of siblings could
     // wrap between them, stranding the label on its own line).
     group = document.createElement('span');
-    group.className = 'x-label-group';
+    group.className = 'x-label__group';
     element.parentNode.insertBefore(group, element);
     if (onRight) {
       group.appendChild(element);

@@ -196,7 +196,7 @@
           "file": "behaviors/x-copybutton.md",
           "title": "X-Copybutton",
           "description": "Overlays a positioned copy button on any element",
-          "modified": "2026-10-06"
+          "modified": "2026-10-08"
         },
         {
           "file": "behaviors/x-draggable.md",
@@ -250,7 +250,7 @@
           "file": "behaviors/accordion.md",
           "title": "accordion",
           "description": "Turns a set of titled child sections into independently expandable/collapsible items.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-08"
         },
         {
           "file": "behaviors/address.md",
@@ -1318,7 +1318,7 @@
           "file": "audits/HOST-CHILD-DISPATCH-AUDIT.md",
           "title": "Host/Child Dispatch Audit",
           "description": "Schema-built native elements vs. their behavior JS -- collision patterns and fixes (#360-#369)",
-          "modified": "2026-10-05"
+          "modified": "2026-10-08"
         },
         {
           "file": "audits/INLINE-STYLES-AUDIT.md",
@@ -1390,7 +1390,7 @@
           "file": "standards/CSS-CLASS-CONVENTION.md",
           "title": "CSS class convention — you can name the class without reading the code",
           "description": "Convention over configuration.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-08"
         },
         {
           "file": "standards/ERROR-LOG-RETENTION.md",
@@ -1558,7 +1558,7 @@
           "file": "semantic-standard.md",
           "title": "Semantic Standard",
           "description": "Semantic HTML standard documentation",
-          "modified": "2026-10-06"
+          "modified": "2026-10-08"
         },
         {
           "file": "wbservices.md",

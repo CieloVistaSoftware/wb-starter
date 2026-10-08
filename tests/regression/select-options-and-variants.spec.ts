@@ -167,14 +167,14 @@ test.describe('select: options render and are selectable (#681)', () => {
     await render(page, `<select id="c" clearable>${OPTIONS}</select>`);
 
     const wrapped = await page.evaluate(() =>
-      !!document.querySelector('#c')!.closest('.x-select-clearable')
+      !!document.querySelector('#c')!.closest('.x-select__clearable')
     );
     expect(wrapped, 'clearable should wrap the control').toBe(true);
 
     const cleared = await page.evaluate(() => {
       const el = document.querySelector('#c') as HTMLSelectElement;
       el.value = 'beta';
-      const btn = el.closest('.x-select-clearable')!.querySelector('.x-select__clear') as HTMLElement;
+      const btn = el.closest('.x-select__clearable')!.querySelector('.x-select__clear') as HTMLElement;
       if (!btn) return { hadButton: false, index: el.selectedIndex };
       btn.click();
       return { hadButton: true, index: el.selectedIndex };

@@ -9,11 +9,15 @@
     var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
     if (!m) return;                       // injected by the SPA: nothing to do
     var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
   })();
 </script>
 <!-- Page styles: src/styles/pages/themes-showcase.css -->
-<link rel="stylesheet" href="src/styles/pages/themes-showcase.css?v=1.0.422">
+<link rel="stylesheet" href="src/styles/pages/themes-showcase.css?v=1.0.429">
 
 <div id="themes-hero" class="page__hero">
   <h1>🎨 Themes Showcase</h1>
@@ -863,31 +867,35 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
 
 <!-- USAGE SECTION -->
 <div class="page__section" id="autogen-themes-html-3">
+  <!-- #1735: each listing is the code[language] block's own escaped text.
+       These were wrapped in a second, live <code> element, and highlight.js
+       warns ("unescaped HTML ... security risk") whenever the block it
+       highlights has child elements. -->
   <h2 class="section-title">How to Use Themes</h2>
   <p class="section-subtitle">Simple implementation with CSS custom properties</p>
   
   <div class="page__grid">
     <div class="usage-card">
       <h3>1. Set Theme Attribute</h3>
-      <code language="html"><code>&lt;html data-theme="ocean"&gt;
+      <code language="html">&lt;html data-theme="ocean"&gt;
   ...
-&lt;/html&gt;</code></code>
+&lt;/html&gt;</code>
     </div>
     
     <div class="usage-card">
       <h3>2. Switch via JavaScript</h3>
-      <code language="javascript"><code>// Switch theme programmatically
+      <code language="javascript">// Switch theme programmatically
 document.documentElement
-  .setAttribute('data-theme', 'cyberpunk');</code></code>
+  .setAttribute('data-theme', 'cyberpunk');</code>
     </div>
     
     <div class="usage-card">
       <h3>3. Use CSS Variables</h3>
-      <code language="css"><code>.my-behavior {
+      <code language="css">.my-behavior {
   background: var(--bg-secondary);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
-}</code></code>
+}</code>
     </div>
   </div>
 </div>

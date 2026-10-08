@@ -9,8 +9,8 @@ import { writeToClipboard } from '../copy.js';
  *
  * The copy control below is a header row item positioned alongside the
  * language badge and hide/show toggle inside this behavior's OWN
- * .x-pre-wrapper (see the "Header controls" measurement block) -- it is not
- * built via x-copybutton's separate .x-copybutton-wrapper, since that would
+ * .x-pre__wrapper (see the "Header controls" measurement block) -- it is not
+ * built via x-copybutton's separate .x-copybutton__wrapper, since that would
  * nest a second relative/absolute positioning context inside this one and
  * break the sequential right-offset measurement every other header control
  * here depends on. It DOES reuse x-copybutton's/x-copy's shared
@@ -29,7 +29,7 @@ export function pre(element, options = {}) {
   if (element.tagName !== 'PRE') {
     let inner = element.querySelector(':scope > pre');
     if (!inner) {
-      if (element.querySelector(':scope > .x-pre-wrapper')) return () => {};
+      if (element.querySelector(':scope > .x-pre__wrapper')) return () => {};
       inner = document.createElement('pre');
       while (element.firstChild) inner.appendChild(element.firstChild);
       element.appendChild(inner);
@@ -50,7 +50,7 @@ export function pre(element, options = {}) {
   }
 
   // Idempotency check
-  if (element.classList.contains('x-pre') || element.closest('.x-pre-wrapper')) {
+  if (element.classList.contains('x-pre') || element.closest('.x-pre__wrapper')) {
     return () => {};
   }
 
@@ -106,7 +106,7 @@ export function pre(element, options = {}) {
 
   // Always wrap to provide the container look
   wrapper = document.createElement('div');
-  wrapper.className = 'x-pre-wrapper';
+  wrapper.className = 'x-pre__wrapper';
 
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
@@ -203,7 +203,7 @@ export function pre(element, options = {}) {
     toggleButton.textContent = '⏷';
     toggleButton.title = 'Hide code';
     // right offset is genuinely per-instance (see copy button comment above).
-    // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
+    // min-height for the collapsed state lives on .x-pre__wrapper in pre.css.
     setRule(toggleButton, 'right', { right: `${nextControlRightPx}px` });
     toggleButton.addEventListener('click', () => {
       collapsed = !collapsed;
