@@ -188,24 +188,57 @@ test.describe('Source-Schema: Card Border Compliance', () => {
 });
 
 test.describe('Source-Schema: Event Compliance', () => {
-  
+
+  /**
+   * The source of every module that exports `name`, and of the modules each
+   * imports, joined; null when none does. #344: the event check read only the
+   * exported function's own body, so an event fired from a helper -- openDialog()'s
+   * wb:{kind}:ok for confirm and prompt, draggable.js's wb:drag:* for
+   * carddraggable -- counted as never fired.
+   */
+  const moduleFiles = getJsFiles(PATHS.behaviorsJs);
+  const sourceOf = (rel: string) => readFile(path.join(PATHS.behaviorsJs, rel));
+  const importsOf = (rel: string): string[] =>
+    [...sourceOf(rel).matchAll(/^\s*import\b[^'"]*['"](\.{1,2}\/[^'"]+\.js)['"]/gm)]
+      .map((m) => path.relative(PATHS.behaviorsJs, path.resolve(path.dirname(path.join(PATHS.behaviorsJs, rel)), m[1])))
+      .filter((f) => moduleFiles.includes(f));
+  const moduleDefining = (name: string): string | null => {
+    const defining = moduleFiles.filter((f) => extractFunction(sourceOf(f), name) !== null);
+    if (!defining.length) return null;
+    return [...new Set(defining.flatMap((f) => [f, ...importsOf(f)]))].map(sourceOf).join('\n');
+  };
+
+  /**
+   * True when `src` names `eventName` as a string, or builds it from a
+   * template: `wb:${kind}:ok` builds wb:confirm:ok and wb:prompt:ok.
+   */
+  const firesIn = (src: string, eventName: string): boolean => {
+    if (src.includes(`'${eventName}'`) || src.includes(`"${eventName}"`) || src.includes('`' + eventName + '`')) return true;
+    for (const [, tpl] of src.matchAll(/`(wb:[^`]*\$\{[^`]*)`/g)) {
+      const pattern = tpl.split(/\$\{[^}]*\}/).map((part) => part.replace(/[.*+?^$()|[\]\\]/g, '\\$&')).join('[\\w-]+');
+      if (new RegExp(`^${pattern}$`).test(eventName)) return true;
+    }
+    return false;
+  };
+
   test('functions dispatch events defined in schema', () => {
-    const allJs = getAllJsSource();
     const issues: string[] = [];
-    
+
     for (const file of getSchemaFiles()) {
       const schema = loadSchema(file) as any;
       if (!schema?.behavior || !schema.events) continue;
-      
-      const funcBody = extractFunction(allJs, schema.behavior);
-      if (!funcBody) continue;
-      
+
+      const moduleSrc = moduleDefining(FUNCTION_NAME_MAP[schema.behavior] || schema.behavior);
+      if (!moduleSrc) continue;
+
       for (const eventName of Object.keys(schema.events)) {
-        const dispatches = funcBody.includes(`'${eventName}'`) || funcBody.includes(`"${eventName}"`);
-        if (!dispatches) issues.push(`${schema.behavior}: should dispatch "${eventName}"`);
+        // focus, blur, change: the browser fires native events; a schema lists
+        // them as documentation, not as something the behavior must dispatch.
+        if (!eventName.startsWith('wb:')) continue;
+        if (!firesIn(moduleSrc, eventName)) issues.push(`${schema.behavior}: should dispatch "${eventName}"`);
       }
     }
-    
+
     // #863: this collected `issues` and console.log()ged the first 5, never
     // asserting -- the schema/implementation event contract was not enforced at
     // all.
@@ -229,7 +262,17 @@ test.describe('Source-Schema: Event Compliance', () => {
     // `function x(element, options = {})` at the `{}` default parameter, so
     // those behaviors were checked as empty bodies. Measured again once it
     // sliced the real body.
-    const EVENT_DISPATCH_BASELINE = 56;
+    //
+    // 56 -> 23 (#344, 2026-10-08): the check now reads the whole module that
+    // defines the behavior, plus the modules it imports, and counts names built
+    // from a template (`wb:${kind}:ok`), so the helper-dispatched events above
+    // are no longer miscounted; native events (focus, blur, change) are the
+    // browser's. audio, cardvideo, dialog, drawer, tooltip and dropdown now fire
+    // their declared events (tests/regression/schema-events-fire.spec.ts). The
+    // 23 left are declared and fired nowhere: carddraggable, cardlink,
+    // cardminimizable, cardnotification, chip, confetti, fireworks, snow,
+    // ripple, drawer-layout, notes, select and table.
+    const EVENT_DISPATCH_BASELINE = 23;
     expect(
       issues.length,
       `${issues.length} schema events are not dispatched by their behavior `

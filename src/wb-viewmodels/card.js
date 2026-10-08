@@ -1174,6 +1174,13 @@ export function cardvideo(element, options = {}) {
     if (config.loop) video.loop = true;
     if (config.controls) video.controls = true;
     video.playsInline = true;
+    // #344: cardvideo.schema.json declares these events; nothing fired them.
+    // Each relays the native media event onto the card, where a page listens.
+    video.addEventListener('play', () => element.dispatchEvent(new CustomEvent('wb:video:play', { bubbles: true })));
+    video.addEventListener('pause', () => element.dispatchEvent(new CustomEvent('wb:video:pause', { bubbles: true })));
+    video.addEventListener('ended', () => element.dispatchEvent(new CustomEvent('wb:video:ended', { bubbles: true })));
+    video.addEventListener('timeupdate', () => element.dispatchEvent(
+      new CustomEvent('wb:video:timeupdate', { bubbles: true, detail: { currentTime: video.currentTime } })));
     retryCleanup = attachVideoLoadRetry(video);
     traceCardMedia('cardvideo', element, video, config.src);
 
