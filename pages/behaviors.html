@@ -9,6 +9,10 @@
     var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
     if (!m) return;                       // injected by the SPA: nothing to do
     var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
   })();
 </script>
@@ -16,7 +20,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.422">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.430">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -2331,7 +2335,7 @@
         if (el.id) return;
         // The bare root belongs to the example root -- but only if nothing
         // holds it yet. Some behaviors WRAP their element after the fact
-        // (audio.js builds a .x-audio-host around the <audio>), so on the
+        // (audio.js builds a .x-audio--host around the <audio>), so on the
         // second pass the new wrapper is firstElementChild while the original
         // already carries `root`. Handing it out twice would put a duplicate
         // id in the document and break the very selector the snippet teaches.

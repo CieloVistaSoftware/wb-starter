@@ -20,7 +20,7 @@ const CASES: { name: string; markup: string; wrapper: string }[] = [
   { name: 'native <input> (input.js)', markup: '<input type="text" value="hello world">', wrapper: '.x-input__wrapper--native' },
   { name: '<input x-search> (search.js)', markup: '<input type="search" x-search value="hello world">', wrapper: '.x-search__wrapper' },
   { name: '<input type="password"> (password.js)', markup: '<input type="password" value="hello world">', wrapper: '.x-password' },
-  { name: '<textarea show-count> (textarea.js)', markup: '<textarea show-count maxlength="40">hello world</textarea>', wrapper: '.x-textarea-wrapper' },
+  { name: '<textarea show-count> (textarea.js)', markup: '<textarea show-count maxlength="40">hello world</textarea>', wrapper: '.x-textarea__wrapper' },
 ];
 
 for (const c of CASES) {

@@ -34,7 +34,7 @@ async function buildEqDemo(page: Page): Promise<void> {
 // into view -- and for `[class*=".x-audio"]`, a selector no class attribute can
 // match (the wb-audio -> .x-audio rename applied inside a class string). A native
 // <audio> renders no children, so audio.js mounts its UI in a wrapping
-// .x-audio-host (uiHost()) while wbAudio stays on the <audio> itself; the
+// .x-audio--host (uiHost()) while wbAudio stays on the <audio> itself; the
 // tests address both where they actually live. Without `controls` that <audio>
 // has no box of its own, so it is the demo around it that gets scrolled to.
 test('Studio EQ Player: a band slider actually changes its filter gain (#233)', async ({ page }) => {
@@ -48,12 +48,12 @@ test('Studio EQ Player: a band slider actually changes its filter gain (#233)', 
   // (domcontentloaded alone is not enough and was flaky).
   await page.waitForFunction(() => {
     const host = document.querySelector('audio[playlist]') as any;
-    return !!host?.wbAudio && (host.closest('.x-audio-host') || host).querySelectorAll('.x-audio__eq-slider').length > 5;
+    return !!host?.wbAudio && (host.closest('.x-audio--host') || host).querySelectorAll('.x-audio__eq-slider').length > 5;
   }, { timeout: 20000 });
 
   const result = await page.evaluate(() => {
     const studio = document.querySelector('audio[playlist]') as any;
-    const ui = studio?.closest('.x-audio-host') || studio;
+    const ui = studio?.closest('.x-audio--host') || studio;
     if (!studio?.wbAudio || ui.querySelectorAll('.x-audio__eq-slider').length <= 5) return { found: false };
 
     const slider = ui.querySelectorAll('.x-audio__eq-slider')[3] as HTMLInputElement;
@@ -77,12 +77,12 @@ test('Studio EQ Player: a preset applies its gain curve to the real filters (#23
   await buildEqDemo(page);
   await page.waitForFunction(() => {
     const host = document.querySelector('audio[playlist]') as any;
-    return !!host?.wbAudio && (host.closest('.x-audio-host') || host).querySelectorAll('.x-audio__eq-slider').length > 5;
+    return !!host?.wbAudio && (host.closest('.x-audio--host') || host).querySelectorAll('.x-audio__eq-slider').length > 5;
   }, { timeout: 20000 });
 
   const gains = await page.evaluate(() => {
     const studio = document.querySelector('audio[playlist]') as any;
-    const ui = studio?.closest('.x-audio-host') || studio;
+    const ui = studio?.closest('.x-audio--host') || studio;
     if (!studio?.wbAudio) return null;
     const bassBtn = [...ui.querySelectorAll('button')].find((b) => /bass boost/i.test(b.textContent || ''));
     bassBtn?.dispatchEvent(new MouseEvent('click', { bubbles: true }));

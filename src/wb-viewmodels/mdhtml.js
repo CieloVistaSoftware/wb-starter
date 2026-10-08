@@ -41,34 +41,20 @@ if (typeof window !== 'undefined') {
   window.addEventListener('pagehide', () => { pageIsUnloading = true; }, { once: true });
 }
 
-// Check if marked is available, if not load it
-let markedLoaded = false;
+// marked ships with the site (src/lib/marked.esm.js, v17.0.1 -- the version
+// package.json declares and the tests run). It used to be fetched at runtime
+// from cdn.jsdelivr.net, unpinned: the live site ran whatever marked was
+// newest, and any visitor who could not reach jsdelivr got
+// "Failed to load marked.js from CDN" on every markdown block. Imported on
+// first use, so pages without markdown never download it.
 let markedPromise = null;
 
-async function loadMarked() {
-  if (markedLoaded && window.marked) return window.marked;
-  
-  if (markedPromise) return markedPromise;
-  
-  markedPromise = new Promise((resolve, reject) => {
-    // Check if already loaded
-    if (window.marked) {
-      markedLoaded = true;
-      resolve(window.marked);
-      return;
-    }
-    
-    // Load from CDN
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
-    script.onload = () => {
-      markedLoaded = true;
-      resolve(window.marked);
-    };
-    script.onerror = () => reject(new Error('Failed to load marked.js from CDN'));
-    document.head.appendChild(script);
-  });
-  
+function loadMarked() {
+  if (!markedPromise) {
+    markedPromise = import('../lib/marked.esm.js').then((mod) => mod.marked);
+    // A failed import must not stick: the next mdhtml retries it.
+    markedPromise.catch(() => { markedPromise = null; });
+  }
   return markedPromise;
 }
 
@@ -483,7 +469,7 @@ export async function mdhtml(element, options = {}) {
     // WB.scan(docEl) call (docs that DID import wb.js for other reasons,
     // e.g. an embedded <div x-demo>) still found no [x-pre]/[x-code] elements
     // to enhance. Confirmed live: every plain ```fenced``` code block
-    // rendered through doc-viewer.html stayed unstyled (no .x-pre-wrapper,
+    // rendered through doc-viewer.html stayed unstyled (no .x-pre__wrapper,
     // no copy button, no line numbers), while only <div x-demo>'s OWN code
     // panels (styled via demo.js's separate, unconditional scan call) got
     // pre()'s enhancement. Splitting the marking out from the WB-gated

@@ -115,7 +115,7 @@ pre > .x-code {
   color: var(--text-on-accent, #fff);
 }
 
-.x-code-wrapper {
+.x-code__wrapper {
   position: relative;
   display: inline-block;
 }
@@ -139,13 +139,13 @@ pre > .x-code {
   background: var(--bg-tertiary, #374151);
 }
 
-/* Doubled selector, the same fix as .x-pre-wrapper .x-pre__copy in pre.css:
+/* Doubled selector, the same fix as .x-pre__wrapper .x-pre__copy in pre.css:
    the copy control is a real <button>, so native auto-injection gives it a
    plain .x-button whose rule lands in <head> later at equal (0,1,0)
    specificity and won -- measured a 54x52px button, x-button's md padding,
    line-height 1.5 and font-size 1rem, reaching down onto the first line of
    the listing. Qualified to 0,2,0 it stays the small corner control above. */
-.x-code-wrapper .x-code__copy {
+.x-code__wrapper .x-code__copy {
   padding: 0.1rem 0.3rem;
   font-size: max(0.6rem, 12px);
   line-height: 1;
