@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * #298: pre.js's line-number gutter positioned line 1 with a hardcoded
@@ -35,9 +36,8 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
     if (document.readyState !== 'complete') {
       await new Promise((r) => window.addEventListener('load', r, { once: true }));
     }
-    const wb = (window as unknown as { WB?: { whenIdle?: (o: object) => Promise<void> } }).WB;
-    if (wb?.whenIdle) await wb.whenIdle({ timeout: 10000 });
   });
+  await settlePage(page, { timeout: 10000 });
 
   // pre.js positions the gutter async (double-rAF, plus a ResizeObserver that
   // can re-fire). Wait until two consecutive animation frames report the same

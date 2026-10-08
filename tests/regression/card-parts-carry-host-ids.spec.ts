@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
+import { settlePage } from '../base';
 
 /**
  * A card's built parts carry ids derived from its host (#940).
@@ -25,14 +26,18 @@ async function open(page: import('@playwright/test').Page) {
 test('every card part is named after its host, and no two collide', async ({ page }) => {
   expect(SETUPS.length, 'the card schemas were read, so this can fail').toBeGreaterThan(50);
   await open(page);
-  const result = await page.evaluate(async (setups) => {
+  await page.evaluate(async (setups) => {
     const host = document.createElement('div');
     // One id per card, so the whole set must come out free of duplicates.
     host.innerHTML = setups.map((m, i) => m.replace(/^<(\w+)/, `<$1 id="c${i}"`)).join('');
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    // Ids are stamped in a microtask after the build; settled() covers it.
-    await (window as any).WB.settled({ timeout: 5000 });
+    (window as any).__wb961Host = host;
+  }, SETUPS);
+  // Ids are stamped in a microtask after the build; settled() covers it.
+  await settlePage(page, { timeout: 5000 });
+  const result = await page.evaluate(async () => {
+    const host = (window as any).__wb961Host as HTMLElement;
     const unnamed: string[] = [];
     let parts = 0;
     // A nested behavior host (a badge inside a card) owns its own parts.
@@ -54,7 +59,7 @@ test('every card part is named after its host, and no two collide', async ({ pag
     const dups = findDuplicateIds(host);
     host.remove();
     return { parts, unnamed: unnamed.slice(0, 10), dups };
-  }, SETUPS);
+  });
   expect(result.parts, 'cards built parts to name').toBeGreaterThan(100);
   expect(result.unnamed, 'a card part with no id').toEqual([]);
   expect(result.dups, 'a part id that repeats inside one render').toEqual([]);
@@ -62,13 +67,17 @@ test('every card part is named after its host, and no two collide', async ({ pag
 
 test('an anonymous card gets no invented ids', async ({ page }) => {
   await open(page);
-  const ids = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const host = document.createElement('div');
     host.innerHTML = '<article title="Plain" subtitle="No id">Body text</article>';
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    // Ids are stamped in a microtask after the build; settled() covers it.
-    await (window as any).WB.settled({ timeout: 5000 });
+    (window as any).__wb961Host = host;
+  });
+  // Ids are stamped in a microtask after the build; settled() covers it.
+  await settlePage(page, { timeout: 5000 });
+  const ids = await page.evaluate(() => {
+    const host = (window as any).__wb961Host as HTMLElement;
     const found = [...host.querySelectorAll('[id]')].map((el) => el.id);
     host.remove();
     return found;
@@ -78,13 +87,17 @@ test('an anonymous card gets no invented ids', async ({ page }) => {
 
 test('a card rendered twice into one host is reported, not silent (#923)', async ({ page }) => {
   await open(page);
-  const dups = await page.evaluate(async () => {
+  await page.evaluate(async () => {
     const host = document.createElement('div');
     host.innerHTML = '<article id="twice" title="Twice" subtitle="Rendered again">Body text</article>';
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    // Ids are stamped in a microtask after the build; settled() covers it.
-    await (window as any).WB.settled({ timeout: 5000 });
+    (window as any).__wb961Host = host;
+  });
+  // Ids are stamped in a microtask after the build; settled() covers it.
+  await settlePage(page, { timeout: 5000 });
+  const dups = await page.evaluate(async () => {
+    const host = (window as any).__wb961Host as HTMLElement;
     // #923's shape: a second render appended its parts beside the first.
     const card = host.firstElementChild!;
     for (const part of [...card.children]) card.appendChild(part.cloneNode(true));

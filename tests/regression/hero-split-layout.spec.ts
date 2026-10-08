@@ -1,4 +1,5 @@
 import { test, expect, newOfflinePage } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 // #1112: one browser context is built in beforeAll and shared by every test
 // below. Playwright stops a context's trace at the end of EACH test, so a
@@ -42,33 +43,39 @@ const DECLARED_HEIGHT = 440;
 type Shot = { hostWidth: number; heroW: number; heroH: number; contentW: number; share: number };
 
 async function measure(page: any, widths: number[]): Promise<Shot[]> {
-  return page.evaluate(async ({ widths, markup }) => {
-    const out: any[] = [];
-    for (const hostWidth of widths) {
+  const out: Shot[] = [];
+  for (const hostWidth of widths) {
+    await page.evaluate(async ({ hostWidth, markup }) => {
       const host = document.createElement('div');
       host.style.cssText = `width:${hostWidth}px`;
       host.innerHTML = markup;
       document.body.appendChild(host);
+      (window as any).__heroHost = host;
       await (window as any).WB.scan(host, { eager: true });
       await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      // Built once its work has called back (#1516: no fixed sleep).
-      await (window as any).WB.settled?.({ timeout: 10000 });
+    }, { hostWidth, markup: HERO });
+    // Built once its work has called back (#1516: no fixed sleep).
+    await settlePage(page, { timeout: 10000 });
 
+    out.push(await page.evaluate((hostWidth) => {
+      const host = (window as any).__heroHost as HTMLElement;
       const el = document.getElementById('probe') as HTMLElement;
       const content = el.querySelector('.x-card__hero-content') as HTMLElement;
       const heroW = el.getBoundingClientRect().width;
       const contentW = content ? content.getBoundingClientRect().width : 0;
-      out.push({
+      const shot = {
         hostWidth,
         heroW: Math.round(heroW),
         heroH: Math.round(el.getBoundingClientRect().height),
         contentW: Math.round(contentW),
         share: heroW ? Math.round((contentW / heroW) * 100) : 0,
-      });
+      };
       host.remove();
-    }
-    return out;
-  }, { widths, markup: HERO });
+      delete (window as any).__heroHost;
+      return shot;
+    }, hostWidth));
+  }
+  return out;
 }
 
 test.describe('cardhero variant="split"', () => {

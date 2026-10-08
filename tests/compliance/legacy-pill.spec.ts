@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 test.describe('Legacy Pill Migration', () => {
   test('no legacy data-wb="pill" or legacy error markers on important pages', async ({ page }) => {
     const errorLogs: string[] = [];
@@ -13,7 +14,7 @@ test.describe('Legacy Pill Migration', () => {
       await page.waitForFunction(() => (window as any).WB);
       // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
       await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-      await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+      await settlePage(page, { timeout: 15000 });
 
       // No legacy attributes or legacy-error markers in DOM
       // The LEGACY tag (#857): the 4.0.0 rename pointed this at `x-pill`, which

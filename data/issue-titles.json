@@ -1229,5 +1229,12 @@
   "1698": "data/component-index.json: 74 dead doc paths, read by nothing",
   "1709": "code · copy example shows no copy button in the code; the only Copy is the source panel's",
   "1713": "sw.js passes a transient 503 from GitHub Pages straight to the page instead of retrying or using its cached copy",
-  "1720": "Schema build wipes a native <textarea x-textarea>'s text and puts label/textarea/counter elements inside it (input too)"
+  "1720": "Schema build wipes a native <textarea x-textarea>'s text and puts label/textarea/counter elements inside it (input too)",
+  "1727": "x-cardexpandable: Show Less hides its own button while the card collapses",
+  "1732": "error-logger POSTs to api/error-log/append on a static host (GitHub Pages)",
+  "1733": "Issues page fetches root-absolute /api/issues and /api/activity on GitHub Pages",
+  "1734": "Opening a pages/*.html fragment on a static host requests its CSS under /pages/ and 404s before redirecting",
+  "1735": "Themes page triggers 3 highlight.js 'unescaped HTML' warnings",
+  "1736": "forms.html target demos are buttons with target but no href",
+  "1738": "Add an \"Other\" nav item linking the demos, pages and tools the nav does not reach"
 }

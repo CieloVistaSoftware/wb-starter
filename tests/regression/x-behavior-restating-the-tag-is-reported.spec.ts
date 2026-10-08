@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { wbIdle } from '../base';
+import { wbIdle, settlePage } from '../base';
 
 /**
  * <pre x-behavior="pre"> says the same thing twice (#967).
@@ -29,7 +29,7 @@ type Run = { reported: string[]; enhanced: boolean };
  * return what the replacement guard logged for it.
  */
 async function mount(page: any, markup: string, autoInject: boolean): Promise<Run> {
-  return page.evaluate(async ({ markup, autoInject, code }) => {
+  const before: number = await page.evaluate(async ({ markup, autoInject }) => {
     const { setConfig } = await import('/src/core/config.js');
     const { getErrors } = await import('/src/core/error-logger.js');
     setConfig('autoInject', autoInject);
@@ -37,8 +37,15 @@ async function mount(page: any, markup: string, autoInject: boolean): Promise<Ru
     const c = document.createElement('div');
     c.innerHTML = markup;
     document.body.appendChild(c);
+    (window as any).__restateHost = c;
     await (window as any).WB.scan(c, { eager: true });
-    if (typeof (window as any).WB.whenIdle === 'function') await (window as any).WB.whenIdle({ timeout: 10000 });
+    return before;
+  }, { markup, autoInject });
+  await settlePage(page, { timeout: 10000 });
+  return page.evaluate(async ({ before, code }) => {
+    const { getErrors } = await import('/src/core/error-logger.js');
+    const c = (window as any).__restateHost as HTMLElement;
+    delete (window as any).__restateHost;
     const host = c.firstElementChild as HTMLElement;
     const reported = getErrors().slice(before)
       .filter((e: any) => (e.context?.code || e.code) === code || /says the same thing twice/.test(e.message || ''))
@@ -46,7 +53,7 @@ async function mount(page: any, markup: string, autoInject: boolean): Promise<Ru
     const enhanced = host.className.split(/\s+/).some((cls) => cls.startsWith('x-'));
     c.remove();
     return { reported, enhanced };
-  }, { markup, autoInject, code: CODE });
+  }, { before, code: CODE });
 }
 
 const RUNTIMES = [

@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #390: demos/site/forms.html used <div x-checkbox>/<textarea> — both
  * explicitly DEPRECATED (see the console warning + header comment in
@@ -34,7 +35,7 @@ test.describe('demos/site/forms.html uses native elements, not deprecated wrappe
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
     expect(warnings).toEqual([]);
   });
 

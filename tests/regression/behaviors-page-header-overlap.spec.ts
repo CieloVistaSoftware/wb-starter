@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 /**
  * pages/behaviors.html's hero `<header id="header">` (H1 + subtitle +
@@ -53,9 +54,9 @@ async function ready(page) {
       <nav id="nav"><a href="#a">Section A</a> <a href="#b">Section B</a></nav>`;
     document.body.appendChild(container);
     await (window as any).WB.scan(container, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('content <header x-ignore>: sized to its content, no overlap with the following nav', () => {
