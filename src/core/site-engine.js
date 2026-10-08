@@ -398,9 +398,12 @@ export default class WBSite {
 
     // Applied by render() once the nav exists (#779: no style="" here).
     this.navWidth = navigationLayout && navigationLayout.navigationWidth ? navigationLayout.navigationWidth : 'fit-content';
+    // #828: navigationItemStyle "pill" insets the active fill and rounds it;
+    // anything else is "block", the full-width fill every site has had.
+    const itemStyle = navigationLayout && navigationLayout.navigationItemStyle === 'pill' ? ' itemstyle="pill"' : '';
 
     return `
-      <nav class="site__nav" id="siteNav" x-sidebar resizable aria-label="Site navigation"${this.navCollapsed ? ' collapsed' : ''}></nav>
+      <nav class="site__nav" id="siteNav" x-sidebar resizable aria-label="Site navigation"${itemStyle}${this.navCollapsed ? ' collapsed' : ''}></nav>
     `;
   }
 

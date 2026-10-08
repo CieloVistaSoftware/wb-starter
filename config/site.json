@@ -73,6 +73,7 @@
   "navigationLayout": {
     "navigationPosition": "left",
     "navigationWidth": "fit-content",
+    "navigationItemStyle": "block",
     "navigationCanCollapse": true,
     "navigationStartCollapsed": false
   },
