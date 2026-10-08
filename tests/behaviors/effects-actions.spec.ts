@@ -65,12 +65,12 @@ const CLICK_EFFECTS: { token: string; cls: string }[] = [
 
 /** Continuous / particle effects: the class each one adds once it has attached. */
 const PARTICLE_EFFECTS: { token: string; cls: string }[] = [
-  { token: 'x-confetti', cls: 'x-confetti-trigger' },
+  { token: 'x-confetti', cls: 'x-confetti--trigger' },
   { token: 'x-rainbow', cls: 'x-rainbow' },
   { token: 'x-glow', cls: 'x-glow' },
-  { token: 'x-sparkle', cls: 'x-sparkle-trigger' },
-  { token: 'x-snow', cls: 'x-snow-trigger' },
-  { token: 'x-fireworks', cls: 'x-fireworks-trigger' },
+  { token: 'x-sparkle', cls: 'x-sparkle--trigger' },
+  { token: 'x-snow', cls: 'x-snow--trigger' },
+  { token: 'x-fireworks', cls: 'x-fireworks--trigger' },
 ];
 
 async function loadBehaviors(page: Page): Promise<void> {

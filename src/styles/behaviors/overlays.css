@@ -15,7 +15,7 @@
  */
 
 /* ── lightbox ────────────────────────────────────────────────────────────── */
-.x-lightbox-trigger {
+.x-lightbox--trigger {
   cursor: pointer;
 }
 

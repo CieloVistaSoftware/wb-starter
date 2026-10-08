@@ -16,6 +16,16 @@
 
 ---
 
+**Updated 2026-10-07, night.** Class naming convention, batch 3 (#1096).
+
+**Files touched:** `src/wb-viewmodels/overlay.js`, `effects.js`, `semantics/dialog.js`, `dropdown.js`, `feedback.js`, `tooltip.js`; `src/styles/behaviors/dialog.css`, `drawer.css`, `dropdown.css`, `effects.css`, `layout.css`, `overlays.css`; `src/wb-models/toast.schema.json`, `tooltip.schema.json`; `docs/behaviors/dropdown.md`, `docs/standards/CSS-CLASS-CONVENTION.md`; the naming and has-a-rule compliance specs and 15 specs that selected trigger classes.
+
+**Last action:** every `x-{behavior}-trigger` class is now the modifier `x-{behavior}--trigger`, and `x-{confetti,fireworks,snow}-trigger--button` is `x-{behavior}--trigger-button`. Ratchet now 66 of 700.
+
+**Next step:** batch 4. The remaining single-dash compounds are mostly semantic wrappers (`x-code-wrapper`, `x-pre-wrapper`, `x-range-wrapper`, `x-textarea-wrapper`, `x-copybutton-wrapper`) and the accordion parts in `collapse.js`.
+
+---
+
 **Updated 2026-10-07, evening.** Class naming convention, batch 2 (#1096).
 
 **Files touched:** `src/wb-viewmodels/layouts.js`, `src/styles/behaviors/layout.css`, `src/wb-models/drawerLayout.schema.json`, `src/core/mvvm/schema-builder.js` (comment), `src/wb-viewmodels/overlay.js` (comment), `docs/behaviors/sidebarlayout.md`, `docs/standards/CSS-CLASS-CONVENTION.md`, `tests/compliance/behavior-classes-follow-naming-convention.spec.ts`, five specs that selected the old classes, `data/schema-index.json`, `data/behavior-component-index.json`, `data/search.json`.

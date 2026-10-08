@@ -114,7 +114,7 @@ async function openDialog(page: Page, size: string = 'md', title: string = SHORT
   }, { sizeVal: size, titleVal: title });
 
   const trigger = page.locator('#x-871-trigger-host button');
-  await expect(trigger, 'x-modal must hydrate its trigger').toHaveClass(/x-dialog-trigger/);
+  await expect(trigger, 'x-modal must hydrate its trigger').toHaveClass(/x-dialog--trigger/);
   await trigger.click();
 
   const dialog = page.locator('dialog.x-dialog[open]');

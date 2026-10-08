@@ -6,7 +6,7 @@
   "styles": "src/styles/behaviors/toast.css",
   "host": "<div x-toast>Show</div>",
   "hostNote": "A DIV, not a BUTTON. toast.schema.json's semanticElement is div, and its own test.setup authors <div x-toast>. It also matters for the test: tag-map.js's nativeMap auto-injects the `button` behavior into every <button>, and that behavior reads `variant` and `icon` too -- so a <button x-toast icon=\"...\"> would prove nothing about which behavior built the icon. A <div> is in no native map, so x-toast is the only thing running.",
-  "twoElements": "x-toast decorates the TRIGGER (.x-toast-trigger). The toast itself is a popup createToast() appends to a .x-toast-container on document.body. Every assertion below about structure, colour or position is about the POPUP; the trigger only carries the attributes.",
+  "twoElements": "x-toast decorates the TRIGGER (.x-toast--trigger). The toast itself is a popup createToast() appends to a .x-toast-container on document.body. Every assertion below about structure, colour or position is about the POPUP; the trigger only carries the attributes.",
   "simpleWorkingCase": {
     "markup": "<div x-toast message=\"Saved\">Show</div>",
     "action": "click the trigger",
