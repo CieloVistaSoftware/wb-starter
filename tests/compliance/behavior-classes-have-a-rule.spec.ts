@@ -37,9 +37,10 @@ import { behaviorSourceFiles, styledClasses } from '../helpers/styled-classes';
  *     NEEDS_NO_RULE below, with the reason, which is a reviewed decision.
  */
 const UNSTYLED: Record<string, string> = {
-  // Waits on #1096 batch 4, which is renaming the x-accordion-* parts in
-  // accordion.css, and x-pre-wrapper on the same demo.css lines that select
-  // [x-demo]. Styled after it lands, so the two do not collide.
+  // Held for #1096 batch 4 (#1726, merged), which renamed the x-accordion-*
+  // parts in accordion.css and the pre wrapper (now x-pre__wrapper) on the
+  // same demo.css lines that select [x-demo]. Batch 4 has landed; these two
+  // are next to be styled.
   'x-accordion': 'collapse.js',
   'x-demo': 'demo.js',
   // Left for the card-family batch: it composes card() and its look is card.css.
