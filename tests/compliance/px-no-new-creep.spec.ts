@@ -41,7 +41,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // 545: five of those were the card size minimums (card.css), which went back
 // to px -- a layout floor that grows with a phone's 112.5% root overflows the
 // screen. The reason is written beside them.
-const BASELINE = 545;
+// 508: 540 measured on 2026-10-08, then pages/themes-showcase.css converted (32
+// values) with every element on /?page=themes computing the same at 16px.
+const BASELINE = 508;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
