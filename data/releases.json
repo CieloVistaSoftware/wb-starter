@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.437",
+      "date": "2026-10-08",
+      "summary": "The cards showcase test &quot;notification cards render all variants&quot; could not fail. It counted [x-cardnotification][variant=...] and checked the first was visible, which is true of the authored markup whether or not the behavior ever ran. x-ready did not help either: the runtime stamps it once the behavior returns, built or not. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1766\" target=\"_blank\" rel=\"noopener\">PR 1766</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1763\" target=\"_blank\" rel=\"noopener\">#1763</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Notification cards must be built, not just authored</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1763\" target=\"_blank\" rel=\"noopener\">#1763</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/18ef2f27c8b3ee082b775605bf98d30b085a6708\" target=\"_blank\" rel=\"noopener\"><code>18ef2f2</code></a>",
+          "issues": [
+            1763
+          ]
+        }
+      ],
+      "seeIt": "Serve card.js with cardnotification() turned into a no-op and run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/cards/cards-showcase.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/cards/cards-showcase.spec.ts</a> -g &quot;render all variants&quot;. Before: passed. Now: fails with &#39;variant=&quot;info&quot; was never built&#39;. On the real page it passes (15/15 over three repeats).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab42a3833d84f88ce7a91ca0367b686a814c0086\" target=\"_blank\" rel=\"noopener\"><code>ab42a38</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.436",
       "date": "2026-10-08",
       "summary": "The main nav had no way to reach the standalone demos, the component library, pages such as Contact and Features, or the schema and fix viewers. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1738\" target=\"_blank\" rel=\"noopener\">#1738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1744\" target=\"_blank\" rel=\"noopener\">#1744</a>",
