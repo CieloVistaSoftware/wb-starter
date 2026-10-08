@@ -68,7 +68,10 @@
   <div class="activity__body">
     <p id="activity-counts" class="activity__counts">loading…</p>
     <p id="activity-empty" class="activity__empty" hidden>Nothing recorded in this window.</p>
-    <div class="activity__cols">
+    <!-- #1733: the account is built by the dev server (git log + gh). The
+         static site has no server, so it says so here instead of failing. -->
+    <p id="activity-static" class="activity__empty" hidden>Work completed is built by the local dev server from git log and gh, so it is not available on the static site. The full history is on <a href="https://github.com/CieloVistaSoftware/wb-starter/commits/main" target="_blank" rel="noopener">GitHub</a>.</p>
+    <div id="activity-cols" class="activity__cols">
       <section class="activity__col">
         <h3 class="activity__heading">Closed <span id="activity-closed-n" class="activity__n"></span></h3>
         <ul id="activity-closed" class="activity__list"></ul>
@@ -134,6 +137,18 @@
   let allIssues = [];
   let currentState = 'open';
   let shownIssues = [];   // the rows render() last put on screen, in order -- what Copy copies
+
+  // #1733: the two server routes this page uses exist only on the dev server.
+  // They are SITE-relative (the page runs with the document's base, the site
+  // root): '/api/...' addressed the organisation root on GitHub Pages and
+  // 404ed there, the same defect public/errors-viewer.html had (#1000). And on
+  // a static host they are not tried at all -- a failed request is not how the
+  // page should find out there is no server. isDevelopmentOrigin() is the
+  // site's one definition of "the dev server" (src/core/service-worker.js).
+  const apiUrl = (route) => new URL(route, document.baseURI).href;
+  const onDevServer = import(new URL('src/core/service-worker.js', document.baseURI).href)
+    .then((m) => m.isDevelopmentOrigin())
+    .catch(() => false);
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -656,29 +671,32 @@
       // unauthenticated budget -- which is precisely when localStorage is empty
       // and the old code had nothing to fall back to.
       //
-      // Silent, deliberate fallback: the deployed GitHub Pages site is STATIC
-      // and has no server, so /api/issues 404s there and the direct call below
-      // is the only route. A missing proxy is not an error condition.
-      try {
-        statusEl.textContent = 'Loading issues…';
-        statusEl.style.display = '';
-        const proxied = await fetch('/api/issues');
-        if (proxied.ok) {
-          const payload = await proxied.json();
-          if (Array.isArray(payload.issues) && payload.issues.length) {
-            allIssues = payload.issues.filter((i) => !i.pull_request);
-            try { localStorage.removeItem(LIMIT_KEY); } catch { /* private mode */ }
-            saveCache(allIssues);
-            render();
-            if (payload.source === 'stale-cache') {
-              const mins = Math.round((payload.ageMs || 0) / 60000);
-              statusEl.textContent = `Showing a cached list from the server — ${mins} minute${mins === 1 ? '' : 's'} old (live fetch failed).`;
-              statusEl.style.display = '';
+      // The deployed GitHub Pages site is STATIC and has no server, so there
+      // the direct call below is the only route, and the proxy is not even
+      // asked (#1733: asking cost a 404 and a console error on every visit).
+      // On the dev server a failing proxy still falls through silently.
+      if (await onDevServer) {
+        try {
+          statusEl.textContent = 'Loading issues…';
+          statusEl.style.display = '';
+          const proxied = await fetch(apiUrl('api/issues'));
+          if (proxied.ok) {
+            const payload = await proxied.json();
+            if (Array.isArray(payload.issues) && payload.issues.length) {
+              allIssues = payload.issues.filter((i) => !i.pull_request);
+              try { localStorage.removeItem(LIMIT_KEY); } catch { /* private mode */ }
+              saveCache(allIssues);
+              render();
+              if (payload.source === 'stale-cache') {
+                const mins = Math.round((payload.ageMs || 0) / 60000);
+                statusEl.textContent = `Showing a cached list from the server — ${mins} minute${mins === 1 ? '' : 's'} old (live fetch failed).`;
+                statusEl.style.display = '';
+              }
+              return;
             }
-            return;
           }
-        }
-      } catch { /* no server here — fall through to the public API */ }
+        } catch { /* no server here — fall through to the public API */ }
+      }
 
       // Public, unauthenticated GitHub REST API -- works identically on the
       // deployed GitHub Pages site (static hosting, no server-side proxy
@@ -727,8 +745,8 @@
   // Served by /api/activity, which reads git log and an AUTHENTICATED gh — so it
   // costs nothing against the 60/hour unauthenticated budget the list itself
   // used to burn (#1045). On the static Pages deploy there is no server, so the
-  // panel simply stays hidden rather than erroring: an absent proxy is not a
-  // failure, it is a different deployment.
+  // route is not called and the panel says the account is not available there
+  // (#1733): an absent proxy is not a failure, it is a different deployment.
   /**
    * #1089 — John: "Make this summary cover the past 4 weeks."
    *
@@ -759,9 +777,19 @@
     const countsEl = document.getElementById('activity-counts');
     if (!panel || !countsEl) return;
 
+    if (!(await onDevServer)) {
+      if (!panel.isConnected) return;
+      countsEl.hidden = true;
+      const cols = document.getElementById('activity-cols');
+      if (cols) cols.hidden = true;
+      const notice = document.getElementById('activity-static');
+      if (notice) notice.hidden = false;
+      return;
+    }
+
     let data;
     try {
-      const res = await fetch(`/api/activity?hours=${hours}`);
+      const res = await fetch(apiUrl(`api/activity?hours=${hours}`));
       if (!res.ok) throw new Error(String(res.status));
       data = await res.json();
     } catch {
