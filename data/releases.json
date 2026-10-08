@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.419",
+      "date": "2026-10-07",
+      "summary": "Main&#39;s regression check was red on every run: &quot;x-mdhtml (attribute): autoLiveRender=false = sanitize=false render identically&quot;. Both options change behaviour, not appearance, so on the showcase&#39;s sample Markdown (no html fence, no unsafe HTML) they look the same. This is #1751&#39;s fix, ported here so this PR&#39;s CI can go green; it no-ops once #1751 lands. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1741\" target=\"_blank\" rel=\"noopener\">PR 1741</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1231\" target=\"_blank\" rel=\"noopener\">#1231</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Port -- mdhtml autoLiveRender and sanitize are non-visual</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1231\" target=\"_blank\" rel=\"noopener\">#1231</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d0d91dfdb36a9e831ab63d506de69ac4a13ebbca\" target=\"_blank\" rel=\"noopener\"><code>d0d91df</code></a>",
+          "issues": [
+            1231,
+            1751
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>An Add page button on a new site&#39;s About page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1231\" target=\"_blank\" rel=\"noopener\">#1231</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a20f6f7f134791cdd5d6926191f5f21bf9824d0b\" target=\"_blank\" rel=\"noopener\"><code>a20f6f7</code></a>",
+          "issues": [
+            1231
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/variants-render-differently.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/variants-render-differently.spec.ts</a> -g x-mdhtml. Before: 1 failed, &quot;autoLiveRender=false = sanitize=false render identically&quot;. Now: passed (3 of 3).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd6c2d21ceadc517592c752bf40c7cbaa9d27235\" target=\"_blank\" rel=\"noopener\"><code>cd6c2d2</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.418",
       "date": "2026-10-07",
       "summary": "Three places guarded &quot;a slower, older run must not paint over a newer one&quot; with their own hand-rolled counter -- site-engine&#39;s _navSeq for navigation (#1519), behaviors.html&#39;s renderSeq for the live panel (#950/#771) and a node-identity check for its doc panel (#1488). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/latest-wins.js\" target=\"_blank\" rel=\"noopener\">src/core/latest-wins.js</a> is now the one implementation: begin() takes a ticket before the first await, run.isCurrent() says whether a newer run has started, and starting a run aborts the previous run&#39;s signal so a superseded fetch is cancelled instead of finishing for nobody. All three use it; the doc panel now aborts its stale fetch and no longer caches an aborted one as &quot;no doc&quot;. It is also exposed as WB.latestWins() on both runtimes, so a page&#39;s classic script can use it without an import. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1729\" target=\"_blank\" rel=\"noopener\">PR 1729</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
