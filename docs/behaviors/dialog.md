@@ -97,6 +97,9 @@ heading moves into the header, and the rest moves into `<main>`.
 
 ## Events
 
+- `wb:dialog:open` — Dialog opened
+- `wb:dialog:close` — Dialog closed
+- `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop)
 - `wb:dialog:ok` — The dialog's confirm button is clicked
 
 ## Methods

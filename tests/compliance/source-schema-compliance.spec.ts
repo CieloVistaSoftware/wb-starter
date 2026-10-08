@@ -233,6 +233,38 @@ test.describe('Source-Schema: Event Compliance', () => {
       }
     }
     expect(issues, 'Dispatch the event, or remove it from the schema (and its docs/behaviors page)').toEqual([]);
+
+    // Fired SOMEWHERE is not enough: carddraggable declared x-draggable's
+    // wb:drag:* while card.js fired wb:carddraggable:dragstart/drag/dragend
+    // from its own copy of the drag code, and the check above passed it. So
+    // each event must also be fired by the module that defines the behavior,
+    // or a module it imports (card.js now drags through draggable.js;
+    // overlay.js's openDialog() fires confirm's and prompt's).
+    const modules = getJsFiles(PATHS.behaviorsJs);
+    const sourceOf = (rel: string) => readFile(path.join(PATHS.behaviorsJs, rel));
+    const importsOf = (rel: string): string[] =>
+      [...sourceOf(rel).matchAll(/^\s*import\b[^'"]*['"](\.{1,2}\/[^'"]+\.js)['"]/gm)]
+        .map((m) => path.relative(PATHS.behaviorsJs, path.resolve(path.dirname(path.join(PATHS.behaviorsJs, rel)), m[1])))
+        .filter((f) => modules.includes(f));
+    const firedBy = (src: string) => new Set([
+      ...[...src.matchAll(/['`](wb:[A-Za-z0-9:_-]+)['`]/g)].map((m) => m[1]),
+      ...Object.entries(TEMPLATES).filter(([tpl]) => src.includes('`' + tpl + '`')).flatMap(([, names]) => names),
+    ]);
+    const misplaced: string[] = [];
+    for (const file of getSchemaFiles()) {
+      const schema = loadSchema(file) as any;
+      if (!schema?.behavior || !schema.events) continue;
+      const fn = FUNCTION_NAME_MAP[schema.behavior] || schema.behavior;
+      const defining = modules.filter((f) => extractFunction(sourceOf(f), fn) !== null);
+      if (!defining.length) continue;
+      const own = firedBy([...new Set(defining.flatMap((f) => [f, ...importsOf(f)]))].map(sourceOf).join('\n'));
+      for (const eventName of Object.keys(schema.events)) {
+        if (eventName.startsWith('wb:') && !own.has(eventName)) {
+          misplaced.push(`${file}: declares "${eventName}", which ${schema.behavior}'s own module never fires`);
+        }
+      }
+    }
+    expect(misplaced, 'Declare the name the behavior itself fires').toEqual([]);
   });
 });
 
