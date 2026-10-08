@@ -85,12 +85,100 @@ function parseArgs(argv) {
   return out;
 }
 
+/** An error that carries the HTTP status the add-page endpoint answers with. */
+class AddPageError extends Error {
+  /** @param {number} status @param {string} message */
+  constructor(status, message) { super(message); this.status = status; }
+}
+
+const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+/** "Contact Us" -> "contact-us". The file name and menu id of a page. */
+export function pageSlug(name) {
+  return String(name).normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/**
+ * #1231: add a page to a site -- what its About page used to tell the owner to
+ * do by hand. Writes pages/<slug>.html from a starter page and appends the
+ * matching entry to navigationMenu in config/site.json, so the menu shows it
+ * on the next load. Refuses a name with a path in it, a name that slugs to
+ * nothing, and a page or menu entry that already exists.
+ *
+ * @param {string} siteDir
+ * @param {string} name   what the menu shows, e.g. "Contact Us"
+ * @returns {{ slug: string, page: string }}
+ */
+export function addPage(siteDir, name) {
+  const text = String(name ?? '').trim();
+  if (!text) throw new AddPageError(400, 'Give the page a name.');
+  if (text.length > 60) throw new AddPageError(400, 'Keep the name to 60 characters or fewer.');
+  if (/[/\\]|\.\./.test(text)) throw new AddPageError(400, 'A page name cannot contain a path.');
+  const slug = pageSlug(text);
+  if (!slug) throw new AddPageError(400, 'Use at least one letter or number in the name.');
+
+  const configFile = path.join(siteDir, 'config', 'site.json');
+  let config;
+  try {
+    config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+  } catch (err) {
+    throw new AddPageError(500, `config/site.json could not be read: ${err.message}`);
+  }
+  const menu = Array.isArray(config.navigationMenu) ? config.navigationMenu : (config.navigationMenu = []);
+  const pageFile = path.join(siteDir, 'pages', `${slug}.html`);
+  if (fs.existsSync(pageFile) || menu.some((m) => m && (m.menuItemId === slug || m.pageToLoad === slug))) {
+    throw new AddPageError(409, `There is already a page called "${slug}".`);
+  }
+
+  fs.mkdirSync(path.dirname(pageFile), { recursive: true });
+  fs.writeFileSync(pageFile, [
+    `<section id="${slug}-hero" class="page__hero">`,
+    `  <h1>${escapeHtml(text)}</h1>`,
+    `  <p>Edit <code>pages/${slug}.html</code> to change this page.</p>`,
+    '</section>',
+    '',
+  ].join('\n'), { flag: 'wx' });
+  menu.push({ menuItemId: slug, menuItemText: text, pageToLoad: slug });
+  fs.writeFileSync(configFile, JSON.stringify(config, null, 2) + '\n');
+  return { slug, page: `pages/${slug}.html` };
+}
+
+/**
+ * The add-page endpoint writes files, and serve listens on every interface, so
+ * it answers only a JSON request from a page this server served. JSON makes a
+ * browser preflight a cross-site request, which this server never approves,
+ * and the Origin check refuses one sent from anywhere else.
+ */
+function handleAddPage(req, res, siteDir) {
+  const send = (status, body) => res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }).end(JSON.stringify(body));
+  if (req.method === 'GET') { send(200, { available: true }); return; }
+  const origin = req.headers.origin;
+  if (origin && origin.replace(/^https?:\/\//, '') !== req.headers.host) { req.resume(); send(403, { error: 'Pages can only be added from this site.' }); return; }
+  if (!String(req.headers['content-type'] || '').startsWith('application/json')) { req.resume(); send(415, { error: 'Send JSON: { "name": "Contact" }.' }); return; }
+  let raw = '';
+  req.setEncoding('utf8');
+  req.on('data', (chunk) => { raw += chunk; if (raw.length > 4096) req.destroy(); });
+  req.on('end', () => {
+    try {
+      let name;
+      try { ({ name } = JSON.parse(raw || '{}')); } catch { throw new AddPageError(400, 'The request was not valid JSON.'); }
+      const added = addPage(siteDir, name);
+      console.log(`  wb-starter: added ${added.page} and its menu item`);
+      send(201, added);
+    } catch (err) {
+      send(err.status || 500, { error: err.message });
+    }
+  });
+}
+
 function serve(siteDir, port) {
   if (!fs.existsSync(path.join(siteDir, 'index.html'))) {
     console.error(`\n✖ ${siteDir} has no index.html -- run this from your site's folder.\n`);
     process.exit(1);
   }
   const server = http.createServer((req, res) => {
+    if (req.url.split('?')[0] === '/api/add-page') { handleAddPage(req, res, siteDir); return; }
     // The runtime reports client errors to this route when it is served
     // locally. A site server has nowhere to keep them, so it accepts and
     // drops them rather than answering 404 on every page load.
