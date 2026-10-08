@@ -11,7 +11,7 @@
  * scripts/generate-other-page.mjs generates from those folders.
  *
  * This checks it where visitors see it: on the test server, and again under
- * /wb-starter/ the way GitHub Pages serves the site, where a link that starts
+ * the Pages project base the way GitHub Pages serves the site, where a link that starts
  * at the domain root would 404. Every listed link must answer 200 from the
  * address the browser resolves it to.
  *
@@ -97,16 +97,16 @@ test('?page=other lists every generated link, and each one answers 200 (#1738)',
   expect(await notOk(page.request, links.flatMap((l) => urlsFor(l.resolved)))).toEqual([]);
 });
 
-test('under /wb-starter/, as GitHub Pages serves it, every link stays on the site and answers 200 (#1738)', async ({ page, baseURL }) => {
+test('under the Pages project base, as GitHub Pages serves it, every link stays on the site and answers 200 (#1738)', async ({ page, baseURL }) => {
   const mount = await mountUnderSubPath(baseURL!);
   try {
     await openOther(page, `${mount.base}?page=other`);
     const item = page.locator(`#siteNav .x-sidebar__item[href="${PREFIX}/other"]`);
-    await expect(item, 'the nav item links to /wb-starter/other').toHaveCount(1);
+    await expect(item, 'the nav item links to other/ under the project base').toHaveCount(1);
 
     const links = await readLinks(page);
     const offSite = links.filter((l) => !new URL(l.resolved).pathname.startsWith(`${PREFIX}/`));
-    expect(offSite.map((l) => l.resolved), 'links that leave /wb-starter/').toEqual([]);
+    expect(offSite.map((l) => l.resolved), 'links that leave the project base').toEqual([]);
     expect(await notOk(page.request, [`${mount.base}other`, ...links.flatMap((l) => urlsFor(l.resolved))])).toEqual([]);
 
     // A page card is an in-site navigation, not a reload to the domain root.

@@ -25,7 +25,7 @@
  * catches a change to what is skipped.
  *
  * Links are root-relative (no leading /) so they resolve under the
- * /wb-starter/ GitHub Pages base, exactly like pages/demos.html: a page is
+ * GitHub Pages project base (/<repo>/), exactly like pages/demos.html: a page is
  * linked as ?page=<id> (the shell routes it), a file by its path.
  *
  * Usage:
@@ -155,7 +155,7 @@ export function titleOf(file, root = ROOT) {
     return m ? decode(m[1].replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim() : '';
   };
   let t = pick(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || pick(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
-  t = t.replace(/\s+[|\-–—]\s+(WB[- ]?Starter|WB|WB Demo|wb-starter|Cielo Vista Software)\b.*$/i, '').trim();
+  t = t.replace(/\s+[|\-–—]\s+(WB[- ]?Starter|WB|WB Demo|Cielo Vista Software)\b.*$/i, '').trim();
   t = t.replace(/^[^\p{L}\p{N}]+/u, '').trim();
   return t || path.basename(file, '.html').replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
