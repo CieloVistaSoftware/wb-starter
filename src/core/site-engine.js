@@ -5,6 +5,7 @@ import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
 import { versionNumber } from './version-number.js';
 import { setRule } from './dynamic-style.js';
+import { latestWins } from './latest-wins.js';
 import { pageFromUrl, pageHref, isPageLink } from './routes.js';
 // Sets window.WBTime for the classic <script>s in pages/*.html (#1553).
 import './central-time.js';
@@ -593,8 +594,10 @@ export default class WBSite {
     // await below can resolve after a newer navigation has started (a slow
     // fragment, its CSS, the scan); the last to FINISH used to win the screen,
     // painting a page the reader had already moved on from.
-    const navSeq = this._navSeq = (this._navSeq || 0) + 1;
-    const superseded = () => navSeq !== this._navSeq;
+    // latest-wins.js is that guard, shared with the Behaviors page.
+    this._navigations = this._navigations || latestWins();
+    const navigation = this._navigations.begin();
+    const superseded = () => !navigation.isCurrent();
     const main = document.getElementById('main');
     if (main_notFound) {
       main.innerHTML = this.render404(pageId);
