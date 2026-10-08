@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-08T03:48:00.415Z",
-  "count": 160,
+  "generatedAt": "2026-10-08T20:02:38.185Z",
+  "count": 161,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -7031,6 +7031,71 @@
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
       }
+    },
+    {
+      "file": "sidebar.schema.json",
+      "name": "sidebar",
+      "title": "Sidebar",
+      "description": "Vertical navigation list with an active item, an icon-only collapsed mode, drag-resize, and a block or pill item style. The site's left nav is one (#829).",
+      "tag": "x-sidebar",
+      "baseClass": "x-sidebar",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "Items as a JSON array of {id, label, href, icon, target}, or comma-separated label#href pairs",
+          "default": ""
+        },
+        "active": {
+          "type": "string",
+          "description": "The id or label of the item to highlight; it also gets aria-current=\"page\"",
+          "default": ""
+        },
+        "collapsed": {
+          "type": "boolean",
+          "description": "Icon-only mode: each item's label becomes its aria-label and tooltip",
+          "default": false,
+          "appliesClass": "x-sidebar--collapsed"
+        },
+        "resizable": {
+          "type": "boolean",
+          "description": "Adds a drag handle on the right edge (arrow keys resize it too)",
+          "default": false,
+          "appliesClass": "x-sidebar--resizable"
+        },
+        "width": {
+          "type": "string",
+          "description": "Width in px (a bare number) or any CSS length",
+          "default": ""
+        },
+        "resizeMin": {
+          "type": "number",
+          "description": "Smallest width the handle allows, in px",
+          "default": 60
+        },
+        "resizeMax": {
+          "type": "number",
+          "description": "Largest width the handle allows, in px",
+          "default": 600
+        },
+        "itemstyle": {
+          "type": "string",
+          "enum": [
+            "block",
+            "pill"
+          ],
+          "description": "block: the full-width fill. pill: the active fill inset from both walls and fully rounded (#828)",
+          "default": "block"
+        }
+      },
+      "matrix": [
+        {
+          "itemstyle": "block"
+        },
+        {
+          "itemstyle": "pill"
+        }
+      ],
+      "_metadata": {}
     },
     {
       "file": "sidebarlayout.schema.json",

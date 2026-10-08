@@ -467,13 +467,23 @@ body > button[x-copy] {
 
 :where(.site__nav) .x-sidebar__item--active {
   background: var(--primary);
-  color: white;
+  color: var(--text-on-accent);
   font-weight: inherit;
 }
 
 :where(.site__nav) .x-sidebar__item--active:hover {
   background: var(--primary-dark);
-  color: white;
+  color: var(--text-on-accent);
+}
+
+/* #828: navigationItemStyle "pill". What reads as square is the active fill
+   running wall to wall, so the pill insets it from both walls and rounds it.
+   The inline padding gives back the margin, so every label stays where it is
+   in the block style. */
+:where(.site__nav.x-sidebar--pill) .x-sidebar__item {
+  margin-inline: 0.5rem;
+  padding-inline: 0.5rem;
+  border-radius: 999px;
 }
 
 :where(.site__nav) .x-sidebar__icon {

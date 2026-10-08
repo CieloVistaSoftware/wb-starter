@@ -280,10 +280,17 @@ export function sidebar(element, options = {}) {
     resizable: options.resizable ?? readFlag(element, 'resizable'),
   };
 
+  // #828: itemstyle="pill" -- the active fill inset from both walls and fully
+  // rounded (navigation.css). "block", the default, is the full-width fill.
+  const applyItemStyle = (value) => {
+    element.classList.toggle('x-sidebar--pill', String(value || '').trim() === 'pill');
+  };
+
   // #779: the panel, its collapsed width and the items (with their active
   // and :hover states) are .x-sidebar* rules in navigation.css -- they were
   // inline styles and onmouseenter/onmouseleave attribute handlers.
   element.classList.add('x-sidebar');
+  applyItemStyle(options.itemstyle ?? readAttr(element, 'itemstyle'));
 
   const list = document.createElement('div');
   list.className = 'x-sidebar__items';
@@ -343,17 +350,21 @@ export function sidebar(element, options = {}) {
   // ── width and drag-resize ────────────────────────────────────────────────
   // The width travels as --x-sidebar-width through a generated rule, never a
   // style attribute (#779), so a stylesheet can still decide what to do with it.
-  const bound = (name, fallback) => {
-    const n = Number(readAttr(element, name, ''));
+  // Read on each use, so a changed bound applies to the next drag. Each read
+  // names its attribute, so the attribute audit can see it is consumed (#828).
+  const positive = (raw, fallback) => {
+    const n = Number(raw);
     return Number.isFinite(n) && n > 0 ? n : fallback;
   };
+  const minWidth = () => positive(readAttr(element, 'resize-min', ''), 60);
+  const maxWidth = () => positive(readAttr(element, 'resize-max', ''), 600);
   let width = null;
   let handle = null;
   const setWidth = (value) => {
     if (value === '' || value == null) return;
     if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(String(value))) {
-      const min = bound('resize-min', 60);
-      const max = bound('resize-max', 600);
+      const min = minWidth();
+      const max = maxWidth();
       width = Math.round(Math.min(max, Math.max(min, Number(value))));
       setRule(element, 'width', { '--x-sidebar-width': `${width}px` });
       handle?.setAttribute('aria-valuenow', String(width));
@@ -372,8 +383,8 @@ export function sidebar(element, options = {}) {
     handle.setAttribute('role', 'separator');
     handle.setAttribute('aria-orientation', 'vertical');
     handle.setAttribute('aria-label', 'Resize navigation');
-    handle.setAttribute('aria-valuemin', String(bound('resize-min', 60)));
-    handle.setAttribute('aria-valuemax', String(bound('resize-max', 600)));
+    handle.setAttribute('aria-valuemin', String(minWidth()));
+    handle.setAttribute('aria-valuemax', String(maxWidth()));
     handle.tabIndex = 0;
     element.append(handle);
 
@@ -401,8 +412,8 @@ export function sidebar(element, options = {}) {
       const to = {
         ArrowLeft: () => current() - step,
         ArrowRight: () => current() + step,
-        Home: () => bound('resize-min', 60),
-        End: () => bound('resize-max', 600),
+        Home: () => minWidth(),
+        End: () => maxWidth(),
       }[e.key];
       if (!to) return;
       e.preventDefault();
@@ -417,6 +428,7 @@ export function sidebar(element, options = {}) {
   const observer = new MutationObserver((mutations) => {
     const changed = new Set(mutations.map((m) => String(m.attributeName).replace(/^data-/, '')));
     if (changed.has('width')) setWidth(readAttr(element, 'width'));
+    if (changed.has('itemstyle')) applyItemStyle(readAttr(element, 'itemstyle'));
     config.active = readAttr(element, 'active');
     if (changed.has('items') || changed.has('collapsed')) {
       config.collapsed = readFlag(element, 'collapsed');
@@ -429,14 +441,14 @@ export function sidebar(element, options = {}) {
 
   observer.observe(element, {
     attributes: true,
-    attributeFilter: ['collapsed', 'items', 'active', 'width', 'data-collapsed', 'data-items', 'data-active', 'data-width'],
+    attributeFilter: ['collapsed', 'items', 'active', 'width', 'itemstyle', 'data-collapsed', 'data-items', 'data-active', 'data-width', 'data-itemstyle'],
   });
 
   return () => {
     observer.disconnect();
     handle?.remove();
     clearRulesIn(element);
-    element.classList.remove('x-sidebar', 'x-sidebar--collapsed', 'x-sidebar--resizable');
+    element.classList.remove('x-sidebar', 'x-sidebar--collapsed', 'x-sidebar--resizable', 'x-sidebar--pill');
   };
 }
 

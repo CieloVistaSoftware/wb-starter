@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sidebar.schema.json",
+  "title": "Sidebar",
+  "description": "Vertical navigation list with an active item, an icon-only collapsed mode, drag-resize, and a block or pill item style. The site's left nav is one (#829).",
+  "schemaFor": "sidebar",
+  "baseClass": "x-sidebar",
+  "semanticElement": {
+    "tagName": "nav",
+    "implicitRole": "navigation"
+  },
+  "compliance": {
+    "baseClass": "x-sidebar",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "Items as a JSON array of {id, label, href, icon, target}, or comma-separated label#href pairs",
+      "default": ""
+    },
+    "active": {
+      "type": "string",
+      "description": "The id or label of the item to highlight; it also gets aria-current=\"page\"",
+      "default": ""
+    },
+    "collapsed": {
+      "type": "boolean",
+      "description": "Icon-only mode: each item's label becomes its aria-label and tooltip",
+      "default": false,
+      "appliesClass": "x-sidebar--collapsed"
+    },
+    "resizable": {
+      "type": "boolean",
+      "description": "Adds a drag handle on the right edge (arrow keys resize it too)",
+      "default": false,
+      "appliesClass": "x-sidebar--resizable"
+    },
+    "width": {
+      "type": "string",
+      "description": "Width in px (a bare number) or any CSS length",
+      "default": ""
+    },
+    "resizeMin": {
+      "type": "number",
+      "description": "Smallest width the handle allows, in px",
+      "default": 60
+    },
+    "resizeMax": {
+      "type": "number",
+      "description": "Largest width the handle allows, in px",
+      "default": 600
+    },
+    "itemstyle": {
+      "type": "string",
+      "enum": [
+        "block",
+        "pill"
+      ],
+      "description": "block: the full-width fill. pill: the active fill inset from both walls and fully rounded (#828)",
+      "default": "block"
+    }
+  },
+  "$view": [
+    {
+      "name": "items",
+      "tag": "div",
+      "public": true,
+      "required": true,
+      "description": "The list of item links"
+    },
+    {
+      "name": "resizer",
+      "tag": "div",
+      "public": true,
+      "createdWhen": "resizable",
+      "description": "Drag handle (role=separator)"
+    }
+  ],
+  "$methods": {},
+  "$cssAPI": {
+    "--x-sidebar-width": {
+      "default": "100%",
+      "description": "Width, set by the width attribute and by dragging the handle"
+    }
+  },
+  "events": {
+    "wb:sidebar:resize": {
+      "description": "The width changed to a px value",
+      "detail": {
+        "width": "number"
+      }
+    }
+  },
+  "test": {
+    "setup": [
+      "<nav x-sidebar items=\"Home#/,About#/about\" active=\"Home\"></nav>",
+      "<nav x-sidebar items=\"Home#/,About#/about\" active=\"Home\" itemstyle=\"pill\"></nav>",
+      "<nav x-sidebar items=\"Home#/,About#/about\" collapsed></nav>",
+      "<nav x-sidebar items=\"Home#/,About#/about\" resizable></nav>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "itemstyle": "block"
+        },
+        {
+          "itemstyle": "pill"
+        }
+      ]
+    }
+  }
+}
