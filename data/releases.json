@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.422",
+      "date": "2026-10-07",
+      "summary": "Link-card titles on the Demos page were dark blue on the dark card background, at 1.49:1 contrast, and barely readable. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1747\" target=\"_blank\" rel=\"noopener\">#1747</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1749\" target=\"_blank\" rel=\"noopener\">#1749</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardlink titles use the theme text colour inside the site shell</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1747\" target=\"_blank\" rel=\"noopener\">#1747</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1749\" target=\"_blank\" rel=\"noopener\">#1749</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ddf3d553c3926ce1377d81480e62f70f59fe79a5\" target=\"_blank\" rel=\"noopener\"><code>ddf3d55</code></a>",
+          "issues": [
+            1747,
+            1749
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a> in the dark theme and expand a category. Before: each card title is dark blue on the dark card. Now: the title is the theme&#39;s light text colour, at 11.81:1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ddf3d553c3926ce1377d81480e62f70f59fe79a5\" target=\"_blank\" rel=\"noopener\"><code>ddf3d55</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.421",
       "date": "2026-10-07",
       "summary": "Readiness was already one idea -- a once-only wb:ready moment from markReady() plus WB.isReady() -- but waiting on it was not. A listener alone hangs when the moment already passed and a check alone misses one still to come, so callers wrote the pair by hand or watched the x-ready attribute, which exists only under automation. ready-signal.js now has whenReady(el, { timeout }): resolves at once if the element is built, else on its own wb:ready (a descendant&#39;s does not count), and rejects naming the element on timeout. It is WB.whenReady() on both runtimes, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a> elementReady()/buildInView() use it (attribute only on pages without WB). The Behaviors page stops writing x-ready onto its workspace -- a second, stateful copy of its wb:layout-settled event that shipped to every visitor; the three specs that read it now wait on the live panel&#39;s render (aria-busy). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1754\" target=\"_blank\" rel=\"noopener\">PR 1754</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
