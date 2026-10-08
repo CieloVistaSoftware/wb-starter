@@ -1537,6 +1537,11 @@
       }
     }
 
+    // Only the newest selection's doc may land (#1488); the shared guard from
+    // src/core/latest-wins.js, created on first use.
+    let docRenderGuard = null;
+    const docRenders = () => (docRenderGuard = docRenderGuard || window.WB.latestWins());
+
     async function showDoc(behavior) {
       // Hidden only when there is nothing to document. It used to be hidden
       // for every selection and unhidden after the .md fetch, so for the
@@ -1547,7 +1552,10 @@
       // the runtime reports idle, and a fetch is not an injection, so idle
       // cannot cover it. The body below is replaced with an empty host first,
       // so a stale doc is never shown under the new behavior's name.
-      if (!behavior) { liveDoc.hidden = true; return; }
+      if (!behavior) { docRenders().cancel(); liveDoc.hidden = true; return; }
+      // Taken before the first await (latest-wins.js): a newer selection makes
+      // this run stale and aborts its fetch.
+      const run = docRenders().begin();
 
       // A FRESH host element per behavior. WB.inject() will not re-apply a
       // behavior to an element that already carries it, so reusing one div
@@ -1563,17 +1571,20 @@
       let md = docCache.get(behavior);
       if (md === undefined) {
         try {
-          const res = await fetch(`${siteRoot()}docs/behaviors/${behavior}.md`);
+          const res = await fetch(`${siteRoot()}docs/behaviors/${behavior}.md`, { signal: run.signal || undefined });
           md = res.ok ? await res.text() : null;
         } catch (err) {
+          // Aborted because a newer selection began: not "this behavior has no
+          // doc", so nothing is cached and the newer run owns the panel.
+          if (!run.isCurrent()) return;
           md = null;
         }
         docCache.set(behavior, md);
       }
       // #1488: the fetch above is async. If the reader picked another behavior
-      // meanwhile, that selection replaced the panel and owns it now -- writing
-      // here would put THIS doc under THAT behavior's name. Drop the render.
-      if (liveDocBody !== fresh) return;
+      // meanwhile, that selection owns the panel now -- writing here would put
+      // THIS doc under THAT behavior's name. Drop the render.
+      if (!run.isCurrent() || liveDocBody !== fresh) return;
       liveDoc.hidden = false;
       // #774: the qualified label ("Button Documentation") was right when
       // this panel sat alone at the BOTTOM of the column, far from anything
@@ -2412,10 +2423,14 @@
     //
     // Each render takes a ticket; after every await it checks whether a newer
     // render has been asked for and, if so, drops what it was about to paint.
-    let renderSeq = 0;
-    const stale = (seq) => seq !== renderSeq;
+    //
+    // The ticket comes from WB.latestWins() (src/core/latest-wins.js), the
+    // guard the router uses for #1519 too, rather than a counter kept here.
+    // Created on first use: the runtime has loaded by the first render.
+    let liveRenderGuard = null;
+    const liveRenders = () => (liveRenderGuard = liveRenderGuard || window.WB.latestWins());
 
-    async function renderSource(src, seq) {
+    async function renderSource(src, run) {
       let pretty = src;
       try {
         const demoMod = await import(siteRoot() + 'src/wb-viewmodels/demo.js');
@@ -2423,7 +2438,7 @@
       } catch (err) {
         console.warn('[behaviors] could not format source', err);
       }
-      if (seq !== undefined && stale(seq)) return;   // a newer selection owns the panel
+      if (run && !run.isCurrent()) return;   // a newer selection owns the panel
       liveCode.innerHTML = '';
 
       // Copy button. It copies `pretty` -- the exact source we just formatted --
@@ -2502,7 +2517,7 @@
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
-        if (seq !== undefined && stale(seq)) return;
+        if (run && !run.isCurrent()) return;
         if (WB && WB.scan) {
           await WB.scan(liveStage, { eager: true });
           await WB.scan(liveCode, { eager: true });
@@ -2892,7 +2907,7 @@
     // aria-busy on the live region is the signal. It is also what the region
     // should say anyway: it is aria-live="polite", and busy asks assistive tech
     // to wait for the finished example instead of announcing each stage. It is
-    // cleared only by the NEWEST render (see renderSeq) -- a superseded render
+    // cleared only by the NEWEST render (see liveRenders) -- a superseded render
     // returning early must not report "done" while the one that replaced it is
     // still painting.
     /**
@@ -2921,12 +2936,12 @@
       liveEl.setAttribute('aria-busy', 'true');
       const done = renderLive(...args);
       // renderLive() takes its ticket synchronously, before its first await,
-      // so renderSeq already names this render here.
-      const mine = renderSeq;
+      // so the guard's current run is this render here.
+      const mine = liveRenders().current();
       try {
         await done;
       } finally {
-        if (!stale(mine)) liveEl.removeAttribute('aria-busy');
+        if (mine && mine.isCurrent()) liveEl.removeAttribute('aria-busy');
       }
     }
 
@@ -2973,8 +2988,8 @@
       // path cannot be missed again.
       liveStage.style.minHeight = '';
       // This render's ticket. Everything below the first await is only painted
-      // while this is still the newest selection -- see renderSeq above.
-      const seq = ++renderSeq;
+      // while this is still the newest selection -- see liveRenders above.
+      const run = liveRenders().begin();
       const { source: src, authored } = exampleSourceFor(token, form, prop, variant, isBool, exampleIndex);
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
@@ -3010,8 +3025,8 @@
         maybeWarnServerRequired(generated);
         const genRootId = assignExampleIds(token, optionText);
         resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
-        await renderSource(withRootId(generatedShown, genRootId), seq);
-        if (stale(seq)) return;
+        await renderSource(withRootId(generatedShown, genRootId), run);
+        if (!run.isCurrent()) return;
         assignExampleIds(token, optionText); // #675: catch behavior-injected children
         const genDescribed = optionDescription(token, prop);
         const genSummary = genDescribed || summarise(liveExample.firstElementChild);
@@ -3060,8 +3075,8 @@
       maybeWarnServerRequired(src);
       const rootId = assignExampleIds(token, optionText);
       resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
-      await renderSource(withRootId(srcShown, rootId), seq);
-      if (stale(seq)) return;
+      await renderSource(withRootId(srcShown, rootId), run);
+      if (!run.isCurrent()) return;
       assignExampleIds(token, optionText); // #675: catch behavior-injected children
       // After the upgrade, so the summary describes the UPGRADED element rather
       // than the bare markup it was built from.
