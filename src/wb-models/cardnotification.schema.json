@@ -192,8 +192,8 @@
     "dismissAriaLabel": "Dismiss notification"
   },
   "events": {
-    "wb:notification:dismiss": {
-      "description": "Fired when notification is dismissed",
+    "wb:cardnotification:dismiss": {
+      "description": "The notification card is dismissed",
       "detail": {
         "variant": "string",
         "title": "string"

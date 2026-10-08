@@ -191,14 +191,6 @@
       "description": "Z-index"
     }
   },
-  "events": {
-    "wb:drawer:open": {
-      "description": "Drawer opened"
-    },
-    "wb:drawer:close": {
-      "description": "Drawer closed"
-    }
-  },
   "test": {
     "functional": true,
     "setup": [

@@ -276,10 +276,10 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 
 ### Thresholds
 
-Every check above is exact: zero violations (#344). One counted ceiling is
-left, in `tests/compliance/source-schema-compliance.spec.ts`: schema events
-no function dispatches. It is pinned at its count; lower it as you fix, never
-raise it.
+Every check above is exact: zero violations (#344). That includes
+`tests/compliance/source-schema-compliance.spec.ts`: every `wb:` event a
+schema declares must be fired somewhere in `src/`. Declare only what the code
+dispatches; when you add or remove one, update `docs/behaviors/<name>.md` too.
 
 ---
 
