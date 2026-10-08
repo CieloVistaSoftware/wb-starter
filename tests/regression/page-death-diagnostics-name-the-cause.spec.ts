@@ -8,7 +8,7 @@ import { failureAttachments } from '../../scripts/tools/test-reporter';
 /**
  * A "PROMISE WAS COLLECTED" FAILURE NAMES ITS CAUSE (#961)
  * ========================================================
- * On CI, page.evaluate fails with "Runtime.callFunctionOn: Promise was
+ * On CI, an evaluate() call fails with "Runtime.callFunctionOn: Promise was
  * collected" even for promises a live timer holds. The DOM survives and the
  * page's JavaScript has stopped. A failing test now carries:
  *
