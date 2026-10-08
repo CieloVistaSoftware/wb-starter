@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #285: pre.js used to write ~15 inline style properties per code block via
  * Object.assign(element.style, …)/style.cssText — repetitive, unthemeable,
@@ -18,20 +19,20 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     // The page is built once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
   });
 
-  test('.x-pre and .x-pre-wrapper have no style attribute at all', async ({ page }) => {
+  test('.x-pre and .x-pre__wrapper have no style attribute at all', async ({ page }) => {
     const pre = page.locator('.x-pre').first();
     await expect(pre).toBeVisible();
     await expect(pre).not.toHaveAttribute('style', /.+/);
 
-    const wrapper = page.locator('.x-pre-wrapper').first();
+    const wrapper = page.locator('.x-pre__wrapper').first();
     await expect(wrapper).not.toHaveAttribute('style', /.+/);
   });
 
   test('header controls are placed by a generated rule, not an inline `right`', async ({ page }) => {
-    const wrapper = page.locator('.x-pre-wrapper').filter({
+    const wrapper = page.locator('.x-pre__wrapper').filter({
       has: page.locator('.x-pre__copy, .x-pre__language, .x-pre__toggle'),
     }).first();
     await expect(wrapper).toBeVisible();
@@ -54,7 +55,7 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
   });
 
   test('code block still renders correctly: real background, monospace font, correct text', async ({ page }) => {
-    const wrapper = page.locator('.x-pre-wrapper').first();
+    const wrapper = page.locator('.x-pre__wrapper').first();
     const bg = await wrapper.evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(bg).not.toBe('rgba(0, 0, 0, 0)');
 

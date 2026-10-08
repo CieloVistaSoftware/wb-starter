@@ -6,6 +6,7 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 for (const route of ['/?page=behaviors', '/?page=home']) {
   test(`no "schema not registered yet" warnings on ${route}`, async ({ page }) => {
     const warns: string[] = [];
@@ -15,7 +16,7 @@ for (const route of ['/?page=behaviors', '/?page=home']) {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
     // Everything that could warn or fail has run once WB settles (#1516: no fixed sleep).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
     expect(warns, 'unexpected schema warnings:\n' + warns.join('\n')).toHaveLength(0);
   });
 }

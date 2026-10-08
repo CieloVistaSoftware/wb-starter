@@ -3,14 +3,51 @@ import { readFlag, readAttr, authoredAttr, hasAuthoredAttr } from '../../core/re
 import { writeToClipboard } from '../copy.js';
 
 /**
+ * Line-number measurement, batched across every <pre> on the page (#961).
+ *
+ * Each code block measured its own lines in its own animation-frame callback
+ * (and synchronously in its ResizeObserver callback), and each one then wrote
+ * the positions it found. With dozens of code panels in one frame, every block
+ * after the first measured a layout the previous block had just invalidated:
+ * one forced layout per block, all in the same task (measureAndPosition was
+ * 144ms of the card matrix fixture's long task). Now every block that needs a
+ * measurement is queued, and one frame callback runs ALL the reads, then ALL
+ * the writes, so layout is computed once per batch.
+ *
+ * @type {Set<() => (void | (() => void))>}
+ */
+const measureQueue = new Set();
+let measureFrame = 0;
+function flushMeasures() {
+  measureFrame = 0;
+  const jobs = [...measureQueue];
+  measureQueue.clear();
+  const commits = [];
+  for (const read of jobs) {
+    try {
+      const commit = read();
+      if (commit) commits.push(commit);
+    } catch (e) {
+      console.warn('[pre] line-number measurement failed', e);
+    }
+  }
+  for (const commit of commits) commit();
+}
+/** Measure in the next frame, together with every other queued block. */
+function scheduleMeasure(read) {
+  measureQueue.add(read);
+  if (!measureFrame) measureFrame = requestAnimationFrame(flushMeasures);
+}
+
+/**
  * Pre - Enhanced <pre> element (Preformatted Text)
  * Adds line numbers, copy button, scrollability, code block features
  * Helper Attribute: [x-pre]
  *
  * The copy control below is a header row item positioned alongside the
  * language badge and hide/show toggle inside this behavior's OWN
- * .x-pre-wrapper (see the "Header controls" measurement block) -- it is not
- * built via x-copybutton's separate .x-copybutton-wrapper, since that would
+ * .x-pre__wrapper (see the "Header controls" measurement block) -- it is not
+ * built via x-copybutton's separate .x-copybutton__wrapper, since that would
  * nest a second relative/absolute positioning context inside this one and
  * break the sequential right-offset measurement every other header control
  * here depends on. It DOES reuse x-copybutton's/x-copy's shared
@@ -29,7 +66,7 @@ export function pre(element, options = {}) {
   if (element.tagName !== 'PRE') {
     let inner = element.querySelector(':scope > pre');
     if (!inner) {
-      if (element.querySelector(':scope > .x-pre-wrapper')) return () => {};
+      if (element.querySelector(':scope > .x-pre__wrapper')) return () => {};
       inner = document.createElement('pre');
       while (element.firstChild) inner.appendChild(element.firstChild);
       element.appendChild(inner);
@@ -50,7 +87,7 @@ export function pre(element, options = {}) {
   }
 
   // Idempotency check
-  if (element.classList.contains('x-pre') || element.closest('.x-pre-wrapper')) {
+  if (element.classList.contains('x-pre') || element.closest('.x-pre__wrapper')) {
     return () => {};
   }
 
@@ -106,7 +143,7 @@ export function pre(element, options = {}) {
 
   // Always wrap to provide the container look
   wrapper = document.createElement('div');
-  wrapper.className = 'x-pre-wrapper';
+  wrapper.className = 'x-pre__wrapper';
 
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
@@ -203,7 +240,7 @@ export function pre(element, options = {}) {
     toggleButton.textContent = '⏷';
     toggleButton.title = 'Hide code';
     // right offset is genuinely per-instance (see copy button comment above).
-    // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
+    // min-height for the collapsed state lives on .x-pre__wrapper in pre.css.
     setRule(toggleButton, 'right', { right: `${nextControlRightPx}px` });
     toggleButton.addEventListener('click', () => {
       collapsed = !collapsed;
@@ -292,13 +329,16 @@ export function pre(element, options = {}) {
     const commitPlacements = (placements) => {
       const tops = new Set(placements.map(([, top]) => Math.round(top)));
       if (placements.length > 1 && tops.size === 1) {
-        if (layoutRetries++ < 60) requestAnimationFrame(measureAndPosition);
+        if (layoutRetries++ < 60) measureAndPosition();
         return;
       }
       placements.forEach(([el, top]) => placeLineNumber(el, top));
     };
 
-    const measureAndPosition = () => {
+    // Reads only; returns the writes, which flushMeasures() runs after every
+    // queued block has been read.
+    const measureLines = () => {
+      if (!element.isConnected) return undefined;
       const placements = [];
       const target = codeChild || element;
       // Container top is the <pre>'s OWN border-box edge, which INCLUDES its
@@ -397,9 +437,13 @@ export function pre(element, options = {}) {
           searchFrom = nlAt + 1;
         }
       }
-      commitPlacements(placements);
+      return () => commitPlacements(placements);
     };
-    requestAnimationFrame(() => requestAnimationFrame(measureAndPosition));
+    // Every pass measures in the NEXT frame's batch: after the browser has laid
+    // out any wrapped text and after the child <code>'s own behavior (syntax
+    // highlighting) has run, as the double-rAF this replaced did.
+    const measureAndPosition = () => scheduleMeasure(measureLines);
+    requestAnimationFrame(measureAndPosition);
 
     // Wrapping (and therefore each line's height) depends on the container's
     // width — re-measure whenever it changes (responsive layout, sidebar
@@ -416,10 +460,10 @@ export function pre(element, options = {}) {
     // same `top`, all 8 stacked on line 1 (demos/frameworks.html). Measure
     // again once both have settled.
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => requestAnimationFrame(measureAndPosition));
+      document.fonts.ready.then(() => measureAndPosition());
     }
     if (document.readyState !== 'complete') {
-      window.addEventListener('load', () => requestAnimationFrame(measureAndPosition), { once: true });
+      window.addEventListener('load', () => measureAndPosition(), { once: true });
     }
   }
 

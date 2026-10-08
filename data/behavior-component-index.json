@@ -567,8 +567,8 @@
     "x-range": {
       "js": "src/wb-viewmodels/semantics/range.js",
       "variants": [
-        "x-range-value",
-        "x-range-wrapper"
+        "x-range__value",
+        "x-range__wrapper"
       ]
     },
     "x-rating": {
@@ -702,7 +702,7 @@
     "x-textarea": {
       "js": "src/wb-viewmodels/semantics/textarea.js",
       "variants": [
-        "x-textarea-wrapper"
+        "x-textarea__wrapper"
       ],
       "schema": "src/wb-models/textarea.schema.json"
     },

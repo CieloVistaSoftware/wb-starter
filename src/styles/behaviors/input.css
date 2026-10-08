@@ -266,7 +266,7 @@ input[type="radio"] {
   font: inherit;
 }
 
-.x-select-clearable {
+.x-select__clearable {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -361,8 +361,9 @@ input[type="radio"] {
 .x-input__wrapper--native > .x-input__field.x-input--lg { padding: 0.75rem 1rem; }
 .x-input__wrapper--native > .x-input__field.x-input--xl { padding: 1rem 1.25rem; }
 
-.x-input__wrapper--native > .x-input__prefix,
-.x-input__wrapper--native > .x-input__suffix {
+/* #879: both hosts -- <div x-input prefix="$"> builds the same parts. */
+.x-input__wrapper > .x-input__prefix,
+.x-input__wrapper > .x-input__suffix {
   padding: 0 0.5rem;
   color: var(--text-secondary);
 }
@@ -393,7 +394,7 @@ input[type="radio"] {
   overflow-y: hidden;
 }
 
-.x-textarea-wrapper {
+.x-textarea__wrapper {
   position: relative;
   width: 100%;
 }
@@ -420,19 +421,19 @@ input[type="radio"] {
 /* =============================================================================
    #779 — range(): the show-value / show-labels wrapper, formerly inline.
 ============================================================================= */
-.x-range-wrapper {
+.x-range__wrapper {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.x-range-wrapper > .x-range-value {
+.x-range__wrapper > .x-range__value {
   text-align: center;
   font-weight: 500;
   color: var(--text-primary, #f9fafb);
 }
 
-.x-range-wrapper > .x-range-labels {
+.x-range__wrapper > .x-range__labels {
   display: flex;
   justify-content: space-between;
   font-size: 0.75rem;

@@ -43,6 +43,9 @@ export function ripple(element, options = {}) {
       y = e.clientY - rect.top;
     }
 
+    // #344: ripple.schema.json declares wb:ripple:show; nothing fired it.
+    element.dispatchEvent(new CustomEvent('wb:ripple:show', { bubbles: true, detail: { x, y } }));
+
     // Create ripple element
     const rippleEl = document.createElement('span');
     rippleEl.className = 'x-ripple__wave';

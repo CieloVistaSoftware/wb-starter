@@ -30,6 +30,7 @@
  */
 import { test, expect, Page } from '../fixtures/offline';
 import { readFileSync } from 'node:fs';
+import { settlePage } from '../base';
 
 const SCHEMA_PATH = 'src/wb-models/range.schema.json';
 
@@ -115,19 +116,19 @@ async function render(page: Page, markup: string[]): Promise<Observed[]> {
   await page.evaluate(async () => {
     const el = document.getElementById('range-area');
     if ((window as any).WB?.scan) await (window as any).WB.scan(el, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 
   return page.evaluate(() => {
     const out: Observed[] = [];
     for (const input of Array.from(document.querySelectorAll('#range-area input[type="range"]'))) {
-      const wrapper = input.closest('.x-range-wrapper');
-      const valueEl = wrapper?.querySelector('.x-range-value') || null;
+      const wrapper = input.closest('.x-range__wrapper');
+      const valueEl = wrapper?.querySelector('.x-range__value') || null;
       out.push({
         id: input.id,
         hasValue: !!valueEl,
-        hasLabels: !!wrapper?.querySelector('.x-range-labels'),
+        hasLabels: !!wrapper?.querySelector('.x-range__labels'),
         valueText: valueEl ? (valueEl.textContent || '') : '',
       });
     }

@@ -41,8 +41,6 @@ write a `<select>` with `<option>` children
 ## Events
 
 - `wb:select:change` — Selection changed
-- `wb:select:open` — Dropdown opened
-- `wb:select:close` — Dropdown closed
 
 ## Methods
 

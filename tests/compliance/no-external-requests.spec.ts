@@ -85,9 +85,12 @@ const ROUTES: RouteCase[] = [
     name: 'doc viewer',
     path: '/public/doc-viewer.html',
     ready: async (page) => {
-      // marked is loaded on demand from jsdelivr -- wait for real rendered markdown.
+      // marked ships with the site (src/lib/marked.esm.js, #1742) and is
+      // imported on demand -- wait for real rendered markdown, then prove it
+      // came from the site itself, not a CDN.
       await expect(page.locator('#content h1, #content h2').first()).toBeVisible({ timeout: 30000 });
-      expect(await page.evaluate(() => typeof (window as any).marked), 'marked must load (from the cache)').toBe('object');
+      const markedUrls = await page.evaluate(() => performance.getEntriesByType('resource').map((e) => e.name).filter((u) => /marked/.test(u)));
+      expect(markedUrls.some((u) => new URL(u).pathname.endsWith('/src/lib/marked.esm.js')), `marked must load from src/lib (got ${JSON.stringify(markedUrls)})`).toBe(true);
     },
   },
   {

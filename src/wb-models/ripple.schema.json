@@ -54,15 +54,6 @@
       "description": "Animation duration"
     }
   },
-  "events": {
-    "wb:ripple:show": {
-      "description": "Ripple started",
-      "detail": {
-        "x": "number",
-        "y": "number"
-      }
-    }
-  },
   "test": {
     "setup": [
       "<div x-ripple>Basic ripple content</div>",
@@ -98,5 +89,14 @@
     "icon": "💧",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:ripple:show": {
+      "description": "Ripple started",
+      "detail": {
+        "x": "number",
+        "y": "number"
+      }
+    }
   }
 }

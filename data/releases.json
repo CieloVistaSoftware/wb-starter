@@ -6,6 +6,724 @@
   ],
   "releases": [
     {
+      "version": "1.0.440",
+      "date": "2026-10-08",
+      "summary": "Two PRs fixed #1759 in parallel (#1767 and #1769) and both merged; git combined them without a conflict, so main&#39;s demo.js declares `let committed` twice in one block, fails to parse, and no x-demo on the site builds. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1770\" target=\"_blank\" rel=\"noopener\">PR 1770</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Demo.js does not parse on main -- drop the second fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ca6f9f4191742df034d3dff3b73f945651525952\" target=\"_blank\" rel=\"noopener\"><code>ca6f9f4</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run node --check on <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-viewmodels/demo.js\" target=\"_blank\" rel=\"noopener\">src/wb-viewmodels/demo.js</a> copied to a .mjs file. Before: &quot;SyntaxError: Identifier &#39;committed&#39; has already been declared&quot; at line 1230. Now: it parses, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-remeasures-a-control-built-late.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-remeasures-a-control-built-late.spec.ts</a> passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1d4fbec736551b7bec66bb79229cb5cd01a5a739\" target=\"_blank\" rel=\"noopener\"><code>1d4fbec</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.439",
+      "date": "2026-10-08",
+      "summary": "The new spec holds card.js with page.route(), but with the service worker live sw.js can answer that request first and the hold never applies, so the compliance gate from #1349 failed the PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1769\" target=\"_blank\" rel=\"noopener\">PR 1769</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Block the service worker in the late-control demo spec</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a655b5061f1b69ff1eaf0eb250e39083968ab063\" target=\"_blank\" rel=\"noopener\"><code>a655b50</code></a>",
+          "issues": [
+            1759
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-demo grows to fit a control that builds after it committed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/80c09070089ec4c54c11b845aedd7d5fbae58bfb\" target=\"_blank\" rel=\"noopener\"><code>80c0907</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/mocked-specs-block-the-service-worker.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/mocked-specs-block-the-service-worker.spec.ts</a> --project=compliance. Before: it failed naming regression/demo-grows-for-late-built-control.spec.ts. Now: 5 passed, and the spec still fails on main&#39;s demo.js with the card 49px past the demo and passes with the fix.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/faef76b0dfc762ff453170d157430320b1997559\" target=\"_blank\" rel=\"noopener\"><code>faef76b</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.438",
+      "date": "2026-10-08",
+      "summary": "The new spec holds card.js with page.route(), and the compliance gate (#1349) requires such a spec to block the service worker: sw.js can answer that fetch itself, out of Playwright&#39;s reach, and the hold would silently not apply. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1767\" target=\"_blank\" rel=\"noopener\">PR 1767</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The late-control spec blocks the service worker</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/003f86ecfb87f03d79eab0d310e3f7b47a45133d\" target=\"_blank\" rel=\"noopener\"><code>003f86e</code></a>",
+          "issues": [
+            1759
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A demo measures again when its control finishes building</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1759\" target=\"_blank\" rel=\"noopener\">#1759</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e6cd7b4d36d6599120b2754004952c588bcb6e15\" target=\"_blank\" rel=\"noopener\"><code>e6cd7b4</code></a>",
+          "issues": [
+            1759
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/mocked-specs-block-the-service-worker.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/mocked-specs-block-the-service-worker.spec.ts</a>. Before: 1 failed, naming regression/demo-remeasures-a-control-built-late.spec.ts. Now: passed. The spec itself still fails on main&#39;s demo.js (card 65px past the demo&#39;s edge) and passes with the fix.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/52c78a832177390fccd37663f766700655e55012\" target=\"_blank\" rel=\"noopener\"><code>52c78a8</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.437",
+      "date": "2026-10-08",
+      "summary": "The cards showcase test &quot;notification cards render all variants&quot; could not fail. It counted [x-cardnotification][variant=...] and checked the first was visible, which is true of the authored markup whether or not the behavior ever ran. x-ready did not help either: the runtime stamps it once the behavior returns, built or not. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1766\" target=\"_blank\" rel=\"noopener\">PR 1766</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1763\" target=\"_blank\" rel=\"noopener\">#1763</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Notification cards must be built, not just authored</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1763\" target=\"_blank\" rel=\"noopener\">#1763</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/18ef2f27c8b3ee082b775605bf98d30b085a6708\" target=\"_blank\" rel=\"noopener\"><code>18ef2f2</code></a>",
+          "issues": [
+            1763
+          ]
+        }
+      ],
+      "seeIt": "Serve card.js with cardnotification() turned into a no-op and run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/cards/cards-showcase.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/cards/cards-showcase.spec.ts</a> -g &quot;render all variants&quot;. Before: passed. Now: fails with &#39;variant=&quot;info&quot; was never built&#39;. On the real page it passes (15/15 over three repeats).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab42a3833d84f88ce7a91ca0367b686a814c0086\" target=\"_blank\" rel=\"noopener\"><code>ab42a38</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.436",
+      "date": "2026-10-08",
+      "summary": "The main nav had no way to reach the standalone demos, the component library, pages such as Contact and Features, or the schema and fix viewers. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1738\" target=\"_blank\" rel=\"noopener\">#1738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1744\" target=\"_blank\" rel=\"noopener\">#1744</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Add an Other menu item listing the demos, pages and tools the nav does not reach</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1738\" target=\"_blank\" rel=\"noopener\">#1738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1744\" target=\"_blank\" rel=\"noopener\">#1744</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3d9946cb050f8f7d08010c9305e278067a0beeac\" target=\"_blank\" rel=\"noopener\"><code>3d9946c</code></a>",
+          "issues": [
+            1738,
+            1744
+          ]
+        }
+      ],
+      "seeIt": "Open the site and click Other in the left nav. Before: there was no Other item, and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=other\" target=\"_blank\" rel=\"noopener\">?page=other</a> showed the not-found page. Now: the Other page lists Demos, Pages, Tools and Articles as cards that open each page.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3d9946cb050f8f7d08010c9305e278067a0beeac\" target=\"_blank\" rel=\"noopener\"><code>3d9946c</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.435",
+      "date": "2026-10-08",
+      "summary": "Card-spacing-standard-13&#39;s footer check read `.x-card__footer` with .first(), whichever card had built its footer first; since #1760 builds lazy pages in slices that was sometimes an x-cardexpandable, whose 0.75rem vertical padding is deliberate, so the check failed about 1 run in 6 on main (&quot;Received: 12&quot;) and on PRs that touch no card code. It now builds the plain Default Card in #card-card in view and measures that card&#39;s footer. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The card footer spacing check measures the standard card&#39;s own footer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/469\" target=\"_blank\" rel=\"noopener\">#469</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1764\" target=\"_blank\" rel=\"noopener\">#1764</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d562d3f867214a8a24b4c6738c62c160cda4b4f0\" target=\"_blank\" rel=\"noopener\"><code>d562d3f</code></a>",
+          "issues": [
+            469,
+            1764
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/card-spacing-standard-13.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/card-spacing-standard-13.spec.ts</a> --grep &quot;footer has&quot; --project=regression --repeat-each=30 --workers=6</code>. Before: 5 of 30 failed on main with &quot;card footer padding-top must be ≥16px (1rem)&quot;, Received 12. Now: 30 passed, and lowering .x-card__footer&#39;s padding still fails it (Received 8).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d562d3f867214a8a24b4c6738c62c160cda4b4f0\" target=\"_blank\" rel=\"noopener\"><code>d562d3f</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.434",
+      "date": "2026-10-08",
+      "summary": "On GitHub Pages every page that logged an error also POSTed to api/error-log/append, got 405, and printed a &quot;Failed to load resource&quot; console error next to the error it was logging. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1732\" target=\"_blank\" rel=\"noopener\">#1732</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1739\" target=\"_blank\" rel=\"noopener\">#1739</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Keep the log in localStorage on a static host and never POST</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1732\" target=\"_blank\" rel=\"noopener\">#1732</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1739\" target=\"_blank\" rel=\"noopener\">#1739</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/73e121df0c53927d65245032e7cf1cda336e183d\" target=\"_blank\" rel=\"noopener\"><code>73e121d</code></a>",
+          "issues": [
+            1732,
+            1739
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a> with the devtools Network tab open and run throw new Error(&#39;probe&#39;) in the console. Before: a POST to api/error-log/append answered 405 and the console showed &quot;Failed to load resource&quot;. Now: no request is made and the entry is in localStorage under wb:error-log.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/73e121df0c53927d65245032e7cf1cda336e183d\" target=\"_blank\" rel=\"noopener\"><code>73e121d</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.433",
+      "date": "2026-10-08",
+      "summary": "On <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> a single-item demo&#39;s code panel was painted before its demo committed its width and then grew with a control that finished building late (Windows CI: card-card 407 -&gt; 418 -&gt; 420); a measuring demo&#39;s whole code panel is now kept unseen with opacity: 0 until the single width commit, so its first visible frame is its final width. (A first version used visibility: hidden, which started a never-finishing visibility transition on every copy button inside closed &lt;details&gt; on <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a> and hung the layout specs; opacity starts none.) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1757\" target=\"_blank\" rel=\"noopener\">#1757</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1758\" target=\"_blank\" rel=\"noopener\">#1758</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A measuring demo&#39;s code panel stays unseen until its width commits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1757\" target=\"_blank\" rel=\"noopener\">#1757</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1758\" target=\"_blank\" rel=\"noopener\">#1758</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8607e95e29a71c9ce45d22d60c6b82fc2e60db7a\" target=\"_blank\" rel=\"noopener\"><code>8607e95</code></a>",
+          "issues": [
+            1757,
+            1758
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/code-panels-paint-at-final-width.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/code-panels-paint-at-final-width.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/demo-reveal-starts-no-transitions.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/demo-reveal-starts-no-transitions.spec.ts</a> --project=regression</code>. Before: the panel-width spec failed 20/20 at --repeat-each=10 (&quot;code panels painted before their demo committed its width&quot;). Now: both pass, the reveal starts no transition, and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a>&#39;s layout specs settle.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8607e95e29a71c9ce45d22d60c6b82fc2e60db7a\" target=\"_blank\" rel=\"noopener\"><code>8607e95</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.432",
+      "date": "2026-10-08",
+      "summary": "The reflow guard for #1319 sometimes failed with &quot;the stranding reflow never fired&quot;, and its &quot;card was built&quot; check could never fail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Strand the card synchronously after its scroll, and assert it built</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1761\" target=\"_blank\" rel=\"noopener\">#1761</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1762\" target=\"_blank\" rel=\"noopener\">#1762</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd77d2e8c06f84a1e11bf5ba6921bb93b36e4d8a\" target=\"_blank\" rel=\"noopener\"><code>cd77d2e</code></a>",
+          "issues": [
+            1761,
+            1762
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/cards/cards-showcase.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/cards/cards-showcase.spec.ts</a> --grep &quot;strands it after the scroll&quot; --project=behaviors --repeat-each=200 --workers=8. Before: 1-2 of 200 failed with &quot;the stranding reflow never fired&quot;. Now: 200 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd77d2e8c06f84a1e11bf5ba6921bb93b36e4d8a\" target=\"_blank\" rel=\"noopener\"><code>cd77d2e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.431",
+      "date": "2026-10-08",
+      "summary": "A failing test now carries the page&#39;s CDP lifecycle log (page-lifecycle) and, when its errors say &quot;Promise was collected&quot; or &quot;context was destroyed&quot;, a page-death verdict read from an isolated world: main world dead, page frozen, or main world alive (an app-level hang); failures.json and the live log keep both. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A &quot;Promise was collected&quot; failure says whether the page&#39;s JavaScript died</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1753\" target=\"_blank\" rel=\"noopener\">#1753</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d0f6bfbab74b8f725d43d411d82ee6bde0479f6\" target=\"_blank\" rel=\"noopener\"><code>0d0f6bf</code></a>",
+          "issues": [
+            961,
+            1753
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/page-death-diagnostics-name-the-cause.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/page-death-diagnostics-name-the-cause.spec.ts</a> --project=regression</code>. Before: 1 of 3 fail (the failing inner tests carry no page-lifecycle or page-death attachment). Now: 3 of 3 pass, and the deliberately killed page reads &quot;main world dead (heartbeat stopped at +157ms)&quot; while the orphaned promise reads &quot;main world alive (heartbeat running) — app-level hang&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d0f6bfbab74b8f725d43d411d82ee6bde0479f6\" target=\"_blank\" rel=\"noopener\"><code>0d0f6bf</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.430",
+      "date": "2026-10-08",
+      "summary": "The lazy runtime built every card, demo and code panel near the viewport in one main-thread task of 1.4-4.5s, so the page could not paint or answer anything meanwhile. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Build lazy pages in budgeted slices, not one long task</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1752\" target=\"_blank\" rel=\"noopener\">#1752</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1760\" target=\"_blank\" rel=\"noopener\">#1760</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee5f328b3f5abe7770a4f4b246d004ef724555fd\" target=\"_blank\" rel=\"noopener\"><code>ee5f328</code></a>",
+          "issues": [
+            1752,
+            961,
+            1760
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/lazy-build-has-no-long-task.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/lazy-build-has-no-long-task.spec.ts</a> --project=regression</code>. Before: cards-permutation-matrix.html had a single 1359-3248ms task and failed 5 of 5. Now: the longest task is under 700ms and all 4 pages pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee5f328b3f5abe7770a4f4b246d004ef724555fd\" target=\"_blank\" rel=\"noopener\"><code>ee5f328</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.429",
+      "date": "2026-10-08",
+      "summary": "Sixteen classes that code, pre, range, textarea, copybutton, audio, label, select, timeline and accordion put on the DOM they build used single-dash compounds the naming convention has no slot for (x-pre-wrapper, x-range-value, x-accordion-head and 13 more); they are now parts, x-pre__wrapper, x-range__value, x-accordion__head, and the audio host is the modifier x-audio--host. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Name the parts semantic elements build x-{behavior}__{part} (, batch 4)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1726\" target=\"_blank\" rel=\"noopener\">#1726</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/428b6e44b49ab655ef0ee4761f769f0f911b7a6a\" target=\"_blank\" rel=\"noopener\"><code>428b6e4</code></a>",
+          "issues": [
+            1096,
+            1726
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page, pick x-accordion and inspect an item&#39;s clickable row. Before: class=&quot;x-accordion-head&quot;. Now: class=&quot;x-accordion__head&quot;, with the same flex row and pointer cursor, and clicking it opens the same panel; the naming compliance spec printed 66 non-conforming classes before and prints 50 now.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/428b6e44b49ab655ef0ee4761f769f0f911b7a6a\" target=\"_blank\" rel=\"noopener\"><code>428b6e4</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.428",
+      "date": "2026-10-08",
+      "summary": "Demos/site/forms.html showed two buttons with target=&quot;_self&quot; and target=&quot;_blank&quot; but no href, so neither did anything and button.js warned &quot;has no effect without an href&quot; for each. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Target demos get an href, so forms.html buttons open somewhere</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1736\" target=\"_blank\" rel=\"noopener\">#1736</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1750\" target=\"_blank\" rel=\"noopener\">#1750</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5bd2fe9f57a2661dbc367ca39fe28ceaf47b3f5b\" target=\"_blank\" rel=\"noopener\"><code>5bd2fe9</code></a>",
+          "issues": [
+            1736,
+            1750
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/forms.html\" target=\"_blank\" rel=\"noopener\">demos/site/forms.html</a> with the devtools console open and scroll to &quot;target variants&quot;. Before: two &quot;[x-button] target=... has no effect without an href&quot; warnings, and the buttons did nothing. Now: no warning, and each button opens the section it sits in (the _blank one in a new tab).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5bd2fe9f57a2661dbc367ca39fe28ceaf47b3f5b\" target=\"_blank\" rel=\"noopener\"><code>5bd2fe9</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.427",
+      "date": "2026-10-08",
+      "summary": "The Themes page logged &quot;One of your code blocks includes unescaped HTML. This is a potentially serious security risk&quot; three times, because its three &quot;How to Use Themes&quot; listings sat inside a second, live &lt;code&gt; element. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1735\" target=\"_blank\" rel=\"noopener\">#1735</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1748\" target=\"_blank\" rel=\"noopener\">#1748</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Usage code listings are plain text, so highlight.js stops warning</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1735\" target=\"_blank\" rel=\"noopener\">#1735</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1748\" target=\"_blank\" rel=\"noopener\">#1748</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab9983fe4177f6b321864b1afa1ba14e78409c3c\" target=\"_blank\" rel=\"noopener\"><code>ab9983f</code></a>",
+          "issues": [
+            1735,
+            1748
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=themes\" target=\"_blank\" rel=\"noopener\">?page=themes</a> with the devtools console open and scroll to &quot;How to Use Themes&quot;. Before: three highlight.js &quot;unescaped HTML&quot; warnings from <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/lib/highlight.js\" target=\"_blank\" rel=\"noopener\">src/lib/highlight.js</a>. Now: no warning, and the three listings are still highlighted.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab9983fe4177f6b321864b1afa1ba14e78409c3c\" target=\"_blank\" rel=\"noopener\"><code>ab9983f</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.426",
+      "date": "2026-10-08",
+      "summary": "Markdown blocks failed with &quot;Failed to load marked.js from CDN&quot; for any visitor who could not reach cdn.jsdelivr.net, and the live site ran whatever marked was newest; marked 17.0.1, the version package.json declares, now ships in src/lib and loads on first use. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1742\" target=\"_blank\" rel=\"noopener\">#1742</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1743\" target=\"_blank\" rel=\"noopener\">#1743</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Marked ships with the site instead of an unpinned CDN</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1742\" target=\"_blank\" rel=\"noopener\">#1742</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1743\" target=\"_blank\" rel=\"noopener\">#1743</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/180bc5de4090358b6746e25262cacc9bc3990fe3\" target=\"_blank\" rel=\"noopener\"><code>180bc5d</code></a>",
+          "issues": [
+            1742,
+            1743
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=themes\" target=\"_blank\" rel=\"noopener\">?page=themes</a> with cdn.jsdelivr.net blocked in DevTools. Before: the markdown sections stay empty and the error viewer logs &quot;mdhtml Unexpected Error&quot;. Now: they render.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/180bc5de4090358b6746e25262cacc9bc3990fe3\" target=\"_blank\" rel=\"noopener\"><code>180bc5d</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.425",
+      "date": "2026-10-08",
+      "summary": "Opening a page file such as <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">pages/demos.html</a> directly on GitHub Pages requested its stylesheet relative to /pages/ (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/src/styles/pages/demos.css\" target=\"_blank\" rel=\"noopener\">pages/src/styles/pages/demos.css</a>), which returned 404 with a console error before the page redirected to <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a>; all 16 guarded fragments did this. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1734\" target=\"_blank\" rel=\"noopener\">#1734</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1746\" target=\"_blank\" rel=\"noopener\">#1746</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Fragment guards stop the document before redirecting, so no CSS 404s under /pages/</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1734\" target=\"_blank\" rel=\"noopener\">#1734</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1746\" target=\"_blank\" rel=\"noopener\">#1746</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4e337c17b206f737ab0b500dbb60ef311fa1ad3d\" target=\"_blank\" rel=\"noopener\"><code>4e337c1</code></a>",
+          "issues": [
+            1734,
+            1746
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/pages/demos.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/pages/demos.html</a> with the devtools Network tab open. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/src/styles/pages/demos.css\" target=\"_blank\" rel=\"noopener\">pages/src/styles/pages/demos.css</a>?v=... answered 404 and the console showed &quot;Failed to load resource&quot;, then the page moved to <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a>. Now: the page moves to <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a> with no 404 and no console error.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4e337c17b206f737ab0b500dbb60ef311fa1ad3d\" target=\"_blank\" rel=\"noopener\"><code>4e337c1</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.424",
+      "date": "2026-10-08",
+      "summary": "On GitHub Pages the Issues page fetched root-absolute /api/issues and /api/activity, which 404 at the domain root and put two &quot;Failed to load resource&quot; errors on the console of every visit, and the Work completed button opened nothing. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1733\" target=\"_blank\" rel=\"noopener\">#1733</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1745\" target=\"_blank\" rel=\"noopener\">#1745</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No api/ requests on the static site; say Work completed needs the dev server</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1733\" target=\"_blank\" rel=\"noopener\">#1733</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1745\" target=\"_blank\" rel=\"noopener\">#1745</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d7077abaf25b023feaaf167cf282e407b937772a\" target=\"_blank\" rel=\"noopener\"><code>d7077ab</code></a>",
+          "issues": [
+            1733,
+            1745
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=issues\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=issues</a> with the devtools Network tab open and press Work completed. Before: /api/issues and /api/activity?hours=672 answered 404 and the panel stayed shut. Now: no api/ request is made, the list loads from the GitHub API, and the panel says Work completed is not available on the static site.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d7077abaf25b023feaaf167cf282e407b937772a\" target=\"_blank\" rel=\"noopener\"><code>d7077ab</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.423",
+      "date": "2026-10-07",
+      "summary": "Behaviors-live-examples-layout timed out at 180 s on main and on every PR (rows 1/6 and 2/6, 2 of 2 locally on 547989c5): it was sized in 6 slices for 585 rows, and #1723&#39;s newly declared options grew the Behaviors list to about 1,360 rows at about 650 ms a click; every row is still measured, now in 16 slices, and a per-slice limit names the cause the next time the list grows. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Live-examples layout runs in 16 slices, and says so when the rows outgrow them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d513fcfd6e47969905a632b3ae0d74bea84ea005\" target=\"_blank\" rel=\"noopener\"><code>d513fcf</code></a>",
+          "issues": [
+            961,
+            1751
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/behaviors-live-examples-layout.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/behaviors-live-examples-layout.spec.ts</a> --project=compliance</code>. Before: slices 1/6 and 2/6 hit &quot;Test timeout of 180000ms exceeded&quot; inside measureRow. Now: 16 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d513fcfd6e47969905a632b3ae0d74bea84ea005\" target=\"_blank\" rel=\"noopener\"><code>d513fcf</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.422",
+      "date": "2026-10-07",
+      "summary": "Link-card titles on the Demos page were dark blue on the dark card background, at 1.49:1 contrast, and barely readable. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1747\" target=\"_blank\" rel=\"noopener\">#1747</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1749\" target=\"_blank\" rel=\"noopener\">#1749</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardlink titles use the theme text colour inside the site shell</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1747\" target=\"_blank\" rel=\"noopener\">#1747</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1749\" target=\"_blank\" rel=\"noopener\">#1749</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ddf3d553c3926ce1377d81480e62f70f59fe79a5\" target=\"_blank\" rel=\"noopener\"><code>ddf3d55</code></a>",
+          "issues": [
+            1747,
+            1749
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=demos\" target=\"_blank\" rel=\"noopener\">?page=demos</a> in the dark theme and expand a category. Before: each card title is dark blue on the dark card. Now: the title is the theme&#39;s light text colour, at 11.81:1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ddf3d553c3926ce1377d81480e62f70f59fe79a5\" target=\"_blank\" rel=\"noopener\"><code>ddf3d55</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.421",
+      "date": "2026-10-07",
+      "summary": "Readiness was already one idea -- a once-only wb:ready moment from markReady() plus WB.isReady() -- but waiting on it was not. A listener alone hangs when the moment already passed and a check alone misses one still to come, so callers wrote the pair by hand or watched the x-ready attribute, which exists only under automation. ready-signal.js now has whenReady(el, { timeout }): resolves at once if the element is built, else on its own wb:ready (a descendant&#39;s does not count), and rejects naming the element on timeout. It is WB.whenReady() on both runtimes, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/base.ts\" target=\"_blank\" rel=\"noopener\">tests/base.ts</a> elementReady()/buildInView() use it (attribute only on pages without WB). The Behaviors page stops writing x-ready onto its workspace -- a second, stateful copy of its wb:layout-settled event that shipped to every visitor; the three specs that read it now wait on the live panel&#39;s render (aria-busy). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1754\" target=\"_blank\" rel=\"noopener\">PR 1754</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>WB.whenReady(el) — one race-free way to wait for an element to be built</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4c5e68d9d722693d71972511221df2cd41365003\" target=\"_blank\" rel=\"noopener\"><code>4c5e68d</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/when-ready-signal.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/when-ready-signal.spec.ts</a></code>. Before: no shared wait existed, and #behaviors-workspace carried x-ready in production markup. Now: 4/4 pass (built element resolves at once, unbuilt one on wb:ready, a descendant does not count, a timeout names the element), and the workspace no longer carries the attribute.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c1f6772286c6c9b116d8adbc9e0ec3ac311bce2a\" target=\"_blank\" rel=\"noopener\"><code>c1f6772</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (x-ready internal only)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1094\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1094</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.420",
+      "date": "2026-10-07",
+      "summary": "The search index lagged two lines behind the docs once main&#39;s mdhtml fix was merged in. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1755\" target=\"_blank\" rel=\"noopener\">PR 1755</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate the search index after merging main</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5114a1d5ee1515d327ab2c9f5245dffa766a841c\" target=\"_blank\" rel=\"noopener\"><code>5114a1d</code></a>",
+          "issues": [
+            344
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Behaviors fire the events their docs promise; x-carddraggable drags through x-draggable</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7af8dd45c93bf00a7d856d22dd4f8d23ebb7b896\" target=\"_blank\" rel=\"noopener\"><code>7af8dd4</code></a>",
+          "issues": [
+            344
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/generate-search-index.js\" target=\"_blank\" rel=\"noopener\">scripts/generate-search-index.js</a></code> and <code>git diff <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/search.json\" target=\"_blank\" rel=\"noopener\">data/search.json</a></code>. Before: two entries differed. Now: it regenerates identically.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9b0df88ae833e74435de1a93b1e0b6de80c7b47b\" target=\"_blank\" rel=\"noopener\"><code>9b0df88</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.419",
+      "date": "2026-10-07",
+      "summary": "Main&#39;s regression check was red on every run: &quot;x-mdhtml (attribute): autoLiveRender=false = sanitize=false render identically&quot;. Both options change behaviour, not appearance, so on the showcase&#39;s sample Markdown (no html fence, no unsafe HTML) they look the same. This is #1751&#39;s fix, ported here so this PR&#39;s CI can go green; it no-ops once #1751 lands. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1741\" target=\"_blank\" rel=\"noopener\">PR 1741</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1231\" target=\"_blank\" rel=\"noopener\">#1231</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Port -- mdhtml autoLiveRender and sanitize are non-visual</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1231\" target=\"_blank\" rel=\"noopener\">#1231</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1751\" target=\"_blank\" rel=\"noopener\">#1751</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d0d91dfdb36a9e831ab63d506de69ac4a13ebbca\" target=\"_blank\" rel=\"noopener\"><code>d0d91df</code></a>",
+          "issues": [
+            1231,
+            1751
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>An Add page button on a new site&#39;s About page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1231\" target=\"_blank\" rel=\"noopener\">#1231</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a20f6f7f134791cdd5d6926191f5f21bf9824d0b\" target=\"_blank\" rel=\"noopener\"><code>a20f6f7</code></a>",
+          "issues": [
+            1231
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/variants-render-differently.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/variants-render-differently.spec.ts</a> -g x-mdhtml. Before: 1 failed, &quot;autoLiveRender=false = sanitize=false render identically&quot;. Now: passed (3 of 3).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd6c2d21ceadc517592c752bf40c7cbaa9d27235\" target=\"_blank\" rel=\"noopener\"><code>cd6c2d2</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.418",
+      "date": "2026-10-07",
+      "summary": "Three places guarded &quot;a slower, older run must not paint over a newer one&quot; with their own hand-rolled counter -- site-engine&#39;s _navSeq for navigation (#1519), behaviors.html&#39;s renderSeq for the live panel (#950/#771) and a node-identity check for its doc panel (#1488). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/latest-wins.js\" target=\"_blank\" rel=\"noopener\">src/core/latest-wins.js</a> is now the one implementation: begin() takes a ticket before the first await, run.isCurrent() says whether a newer run has started, and starting a run aborts the previous run&#39;s signal so a superseded fetch is cancelled instead of finishing for nobody. All three use it; the doc panel now aborts its stale fetch and no longer caches an aborted one as &quot;no doc&quot;. It is also exposed as WB.latestWins() on both runtimes, so a page&#39;s classic script can use it without an import. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1729\" target=\"_blank\" rel=\"noopener\">PR 1729</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>One shared latest-wins guard for async jobs a reader can restart</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/30da2cb5f4110ae6bf4c1cf9bb2570dd11262f82\" target=\"_blank\" rel=\"noopener\"><code>30da2cb</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/latest-wins-guard.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/latest-wins-guard.spec.ts</a></code>. Before: no shared guard existed; each feature rolled its own. Now: 5/5 pass (older run made stale and aborted, slower older run does not win, cancel(), both runtimes expose it), and navigation-latest-wins, doc-panel-never-shows-a-stale-doc and behaviors-live-selector still pass on the shared guard.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1d2ef50d42cf0f181dcad6e9156affb7caa3339d\" target=\"_blank\" rel=\"noopener\"><code>1d2ef50</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (stale navigation)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1519\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1519</a>"
+        },
+        {
+          "label": "Related (stale doc)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1488\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1488</a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.417",
+      "date": "2026-10-07",
+      "summary": "The 41.89px gaps under the site header, the behaviors panel strip and card headers were not browser defaults. They came from a leftover `header { margin-bottom: var(--space-xl) }` rule in the behaviors page&#39;s stylesheet, which stays loaded after the SPA moves to another page, so it styled every &lt;header&gt; on the site. Its `footer` rule did the same to the site footer. Each gap had been &quot;fixed&quot; by zeroing that one element. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1737\" target=\"_blank\" rel=\"noopener\">PR 1737</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/780\" target=\"_blank\" rel=\"noopener\">#780</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Page stylesheets stop styling every page&#39;s headers, footers and inputs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/780\" target=\"_blank\" rel=\"noopener\">#780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8c703b5bbf8106ed41a0096cab5bd8229f34269b\" target=\"_blank\" rel=\"noopener\"><code>8c703b5</code></a>",
+          "issues": [
+            780
+          ]
+        }
+      ],
+      "seeIt": "Open the Behaviors page and scroll to the bottom. Before: the site footer has a 42px gap above it, centered text and rounded corners. Now: it matches every other page. Then open Components. Before: the default card&#39;s header had a 42px gap under it after visiting Behaviors. Now: 0.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2f1c3769631d29cb04ad7735668aee9363ec5372\" target=\"_blank\" rel=\"noopener\"><code>2f1c376</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.416",
+      "date": "2026-10-07",
+      "summary": "19 behavior schemas, and the docs pages generated from them, promised 47 events that nothing fires (dialog open/close/cancel, tooltip show/hide, audio play/pause, table sort/filter/page, ...), and three named an event the code fires under another name; the check counted them under a ceiling of 56. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1731\" target=\"_blank\" rel=\"noopener\">PR 1731</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Schemas declare only the events their behaviors fire</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/344\" target=\"_blank\" rel=\"noopener\">#344</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c4bf51cad13a78efa0301fa25034fb30353218b9\" target=\"_blank\" rel=\"noopener\"><code>c4bf51c</code></a>",
+          "issues": [
+            344
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fdialog.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/dialog.md</a>, then run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/source-schema-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/source-schema-compliance.spec.ts</a> --project=compliance. Before: the page listed wb:dialog:open, wb:dialog:close and wb:dialog:cancel, none of which a listener would ever receive, and the check allowed 56 such events. Now: it lists wb:dialog:ok, the event the dialog really fires, and the check allows 0.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/564d6bfefd568835c0b01ec7d3d48e889e80e630\" target=\"_blank\" rel=\"noopener\"><code>564d6bf</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.415",
+      "date": "2026-10-07",
+      "summary": "On 85c5a367 the &quot;Builder del() guard&quot; job waited on an Ubuntu package mirror inside `playwright install --with-deps` for six hours, until GitHub cancelled it, and the PR could not go green. docs-safety.yml was the only workflow whose jobs had no time limit. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1702\" target=\"_blank\" rel=\"noopener\">PR 1702</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>: docs-safety jobs get a time limit, so a hung apt mirror fails in 20 minutes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d200f36cfc8c21b36ef99bc1c1d7f9fb57b9e0ee\" target=\"_blank\" rel=\"noopener\"><code>d200f36</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: two more load races from the gate runs, x-sticky and the sub-path proxy</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/eb7aa68c2dc8b759b88e9e46b77e4227f57b37c2\" target=\"_blank\" rel=\"noopener\"><code>eb7aa68</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: the behaviors list says when it is final; doc coverage waits for it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ff7475f7655521c6b6c859ebc69fefb9a1d7c1d1\" target=\"_blank\" rel=\"noopener\"><code>ff7475f</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: behavior-doc-coverage re-reads a panel that missed its 10s window</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6ffc1eb870b2ef1e937c6946b6bfbc2805f4778c\" target=\"_blank\" rel=\"noopener\"><code>6ffc1eb</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: stop tracking test screenshots; no-element-overlap skips pages with no WB</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a7b8f2898f68f759b544e0374ed200f7442c1ae2\" target=\"_blank\" rel=\"noopener\"><code>a7b8f28</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>SettlePage({ ifPresent }): a page with no WB is skipped, as WB?.settled?.() did</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c178e6f1fdc086eec63229be4fa63dc7a5e1d14f\" target=\"_blank\" rel=\"noopener\"><code>c178e6f</code></a>",
+          "issues": [
+            961
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>: one shared settle helper for every spec; two load races fixed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/45f1c766f1d9181559e334d19d80f44c184a7d7c\" target=\"_blank\" rel=\"noopener\"><code>45f1c76</code></a>",
+          "issues": [
+            961
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/.github/workflows/docs-safety.yml\" target=\"_blank\" rel=\"noopener\">.github/workflows/docs-safety.yml</a>. Before: no timeout-minutes, and the job&#39;s log shows apt-get stopping at 19:02 and &quot;The operation was canceled&quot; at 01:02. Now: 10 minutes for the two quick jobs and 20 for the builder guard, which normally takes about five.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/52586565163edd26c8789b404026769adcec9657\" target=\"_blank\" rel=\"noopener\"><code>5258656</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.414",
+      "date": "2026-10-07",
+      "summary": "90 attributes were read by behavior code but declared by no schema, so options like x-draggable bounds, x-textarea minRows, x-switch themeControl and x-codetheme persist worked but were invisible to the docs, the showcase and autocomplete. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1723\" target=\"_blank\" rel=\"noopener\">#1723</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Declare 31 attributes behaviors read in secret, drop 9 dead reads</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1723\" target=\"_blank\" rel=\"noopener\">#1723</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e309c861b11419f1a793c6cab078a097d73313b6\" target=\"_blank\" rel=\"noopener\"><code>e309c86</code></a>",
+          "issues": [
+            1723
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node -e &quot;import(&#39;./scripts/lib/attribute-audit.mjs&#39;).then(m=&gt;console.log(m.auditAll().totals.byRule.R4))&quot;</code>, then open /demos/test-harness.html and add &lt;div x-input prefix=&quot;$&quot;&gt;&lt;/div&gt;. Before: the audit printed 90 and the field showed no &quot;$&quot;. Now: it prints 37 and the &quot;$&quot; sits inside the field.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e309c861b11419f1a793c6cab078a097d73313b6\" target=\"_blank\" rel=\"noopener\"><code>e309c86</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.413",
+      "date": "2026-10-07",
+      "summary": "Nothing counted visits to the live site, so there was no way to know how many people opened index.html. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1704\" target=\"_blank\" rel=\"noopener\">#1704</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1245\" target=\"_blank\" rel=\"noopener\">#1245</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Count every load of the live site and show it in the footer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1704\" target=\"_blank\" rel=\"noopener\">#1704</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1245\" target=\"_blank\" rel=\"noopener\">#1245</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/848d3e08900e4c7b9589f588bd2902a25a3ad38a\" target=\"_blank\" rel=\"noopener\"><code>848d3e0</code></a>",
+          "issues": [
+            1704,
+            1245
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a> and look at the footer, then reload. Before: the footer showed only the copyright line and links. Now: it ends with a visit total such as &quot;1,234 visits&quot; that goes up by one on each load (localhost shows no count and calls no counter).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/848d3e08900e4c7b9589f588bd2902a25a3ad38a\" target=\"_blank\" rel=\"noopener\"><code>848d3e0</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.412",
+      "date": "2026-10-07",
+      "summary": "The class-naming gate failed on main because the version-stamp bot regenerated <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/search.json\" target=\"_blank\" rel=\"noopener\">data/search.json</a> from <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fschema-test-value.md\" target=\"_blank\" rel=\"noopener\">docs/schema-test-value.md</a>, a history doc the scan leaves alone on purpose, which put x-dropdown-trigger back in a scanned file. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1725\" target=\"_blank\" rel=\"noopener\">#1725</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The retired-class scan skips <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/search.json\" target=\"_blank\" rel=\"noopener\">data/search.json</a>, a generated copy of history</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1725\" target=\"_blank\" rel=\"noopener\">#1725</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3040b605f84f13491d77af3aa7a7cef817df0986\" target=\"_blank\" rel=\"noopener\"><code>3040b60</code></a>",
+          "issues": [
+            1096,
+            1725
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/behavior-classes-follow-naming-convention.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/behavior-classes-follow-naming-convention.spec.ts</a> --project=compliance</code>. Before: 1 failed, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/search.json\" target=\"_blank\" rel=\"noopener\">data/search.json</a>:3524 x-dropdown-trigger. Now: 5 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3040b605f84f13491d77af3aa7a7cef817df0986\" target=\"_blank\" rel=\"noopener\"><code>3040b60</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.411",
       "date": "2026-10-07",
       "summary": "Sixteen behaviors marked their host as the trigger with a class the naming convention has no slot for, x-{behavior}-trigger (x-dialog-trigger, x-popover-trigger, x-toast-trigger and 13 more), plus x-confetti-trigger--button and its fireworks and snow twins. The host is the behavior&#39;s block, so these are now modifiers of it: x-{behavior}--trigger and x-{behavior}--trigger-button. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1719\" target=\"_blank\" rel=\"noopener\">#1719</a>",

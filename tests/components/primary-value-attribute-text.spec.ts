@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function inject(page: Page, html: string) {
   await page.goto('/demos/test-harness.html');
@@ -12,9 +13,9 @@ async function inject(page: Page, html: string) {
     container.innerHTML = markup;
     document.body.appendChild(container);
     await (window as any).WB.scan(container);
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   }, html);
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('x-* primary values', () => {
@@ -49,7 +50,7 @@ test.describe('x-* primary values', () => {
   test('supports timeline items attributes and authored text', async ({ page }) => {
     await inject(page, '<div x-timeline id="attribute" items="One,Two"></div><div x-timeline id="text">Three,Four</div>');
 
-    await expect(page.locator('#attribute .x-timeline-item')).toHaveText(['One', 'Two']);
-    await expect(page.locator('#text .x-timeline-item')).toHaveText(['Three', 'Four']);
+    await expect(page.locator('#attribute .x-timeline__item')).toHaveText(['One', 'Two']);
+    await expect(page.locator('#text .x-timeline__item')).toHaveText(['Three', 'Four']);
   });
 });

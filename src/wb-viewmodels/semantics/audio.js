@@ -231,6 +231,15 @@ export function audio(element, options = {}) {
   // just early; handle it now.
   if (audioEl.error) onMediaError();
 
+  // #344: audio.schema.json declares these events; nothing fired them. Each
+  // one relays the native media event onto the host, so a page listens on the
+  // element it authored whichever path built audioEl.
+  audioEl.addEventListener('play', () => element.dispatchEvent(new CustomEvent('wb:audio:play', { bubbles: true })));
+  audioEl.addEventListener('pause', () => element.dispatchEvent(new CustomEvent('wb:audio:pause', { bubbles: true })));
+  audioEl.addEventListener('ended', () => element.dispatchEvent(new CustomEvent('wb:audio:ended', { bubbles: true })));
+  audioEl.addEventListener('volumechange', () => element.dispatchEvent(
+    new CustomEvent('wb:audio:volumechange', { bubbles: true, detail: { volume: audioEl.volume } })));
+
   // Only replace with the custom Marantz transport when the author actually
   // asked for the enhanced UI: the <audio> custom tag (which has nothing
   // native to fall back to), or show-eq (which needs the custom UI to expose
@@ -316,6 +325,14 @@ export function audio(element, options = {}) {
     }
   };
 
+  // #344: the one place a band's gain changes -- the slider, a preset and
+  // setBand() all come through here, so wb:audio:eqchange fires for each.
+  const setGain = (index, gain) => {
+    if (!filters[index]) return;
+    filters[index].gain.value = gain;
+    element.dispatchEvent(new CustomEvent('wb:audio:eqchange', { bubbles: true, detail: { band: index, gain } }));
+  };
+
   // Build transport bar (play button + Marantz display) — only for the
   // custom-UI case (see needsCustomUI above); a plain native <audio controls>
   // keeps its own native controls untouched.
@@ -325,7 +342,7 @@ export function audio(element, options = {}) {
 
   // Build EQ UI if enabled
   if (config.showEq) {
-    buildEqUI(element, audioEl, config, initAudioContext, filters);
+    buildEqUI(element, audioEl, config, initAudioContext, setGain);
     // Only initialize Web Audio if EQ is enabled
     audioEl.addEventListener('play', initAudioContext, { once: true });
   }
@@ -338,7 +355,7 @@ export function audio(element, options = {}) {
     setVolume: (v) => { audioEl.volume = Math.max(0, Math.min(1, v)); },
     setBand: (index, gain) => {
       initAudioContext();
-      if (filters[index]) filters[index].gain.value = gain;
+      setGain(index, gain);
     },
     getFilters: () => filters,
     getAudioContext: () => audioContext
@@ -366,9 +383,9 @@ export function audio(element, options = {}) {
 function uiHost(element) {
   if (element.tagName !== 'AUDIO') return element;
   const existing = element.parentElement;
-  if (existing && existing.classList.contains('x-audio-host')) return existing;
+  if (existing && existing.classList.contains('x-audio--host')) return existing;
   const wrapper = element.ownerDocument.createElement('div');
-  wrapper.className = 'x-audio-host x-audio';
+  wrapper.className = 'x-audio x-audio--host';
   element.replaceWith(wrapper);
   wrapper.appendChild(element);
   return wrapper;
@@ -502,7 +519,7 @@ function buildTransportUI(element, audioEl, config) {
   uiHost(element).appendChild(transport);
 }
 
-function buildEqUI(element, audioEl, config, initAudioContext, filters) {
+function buildEqUI(element, audioEl, config, initAudioContext, setGain) {
   const sliders = [];
   const sliderVisuals = [];
 
@@ -558,7 +575,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
     btn.onclick = () => {
       initAudioContext();
       values.forEach((val, i) => {
-        if (filters[i]) filters[i].gain.value = val;
+        setGain(i, val);
         if (sliders[i] && sliderVisuals[i]) {
           sliders[i].value = val;
           updateSliderVisual(sliders[i], val, sliderVisuals[i].activeTrack, sliderVisuals[i].dbDisplay);
@@ -574,7 +591,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   eqPanel.className = 'x-audio__eq-panel';
 
   EQ_BANDS.forEach((band, index) => {
-    const { bandContainer, slider, activeTrack, dbDisplay } = createBandSlider(band, index, initAudioContext, filters, updateSliderVisual);
+    const { bandContainer, slider, activeTrack, dbDisplay } = createBandSlider(band, index, initAudioContext, setGain, updateSliderVisual);
     const start = (config.initialGains && config.initialGains[index]) || 0;
     if (start) {
       slider.value = start;
@@ -601,7 +618,7 @@ function createPresetButton(text) {
   return btn;
 }
 
-function createBandSlider(band, index, initAudioContext, filters, updateSliderVisual) {
+function createBandSlider(band, index, initAudioContext, setGain, updateSliderVisual) {
   // A band starts un-adjusted: no state class yet, so the initial fill
   // gradient and readout colour are the base rules (audio.css), exactly as
   // before the first updateSliderVisual().
@@ -634,7 +651,7 @@ function createBandSlider(band, index, initAudioContext, filters, updateSliderVi
   slider.oninput = (e) => {
     initAudioContext();
     const val = parseFloat(e.target.value);
-    if (filters[index]) filters[index].gain.value = val;
+    setGain(index, val);
     updateSliderVisual(slider, val, activeTrack, dbDisplay);
   };
 

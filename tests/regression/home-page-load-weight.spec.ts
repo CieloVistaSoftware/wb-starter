@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * #390: the home page's initial load was measured firing 150+ individual
  * network requests. Traced (not guessed) to src/core/wb-views.js's
@@ -36,7 +37,7 @@ test.describe('home page load weight (#390)', () => {
     await page.goto('/');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
     // Every load the page starts has called back once WB settles (#1516: not 500ms).
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     expect(partialRequests).toEqual([]);
   });
@@ -56,7 +57,7 @@ test.describe('home page load weight (#390)', () => {
     await page.goto('/');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
     // Every load the page starts has called back once WB settles (#1516: not 500ms).
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     expect(offPageRequests).toEqual([]);
   });
@@ -68,7 +69,7 @@ test.describe('home page load weight (#390)', () => {
     await page.goto('/');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
     // Every load the page starts has called back once WB settles (#1516: not 500ms).
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
 
     // Measured after the fix: ~82. 100 leaves headroom for incidental
     // variance (image/schema counts) without masking a real regression --

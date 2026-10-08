@@ -109,6 +109,16 @@
         "5",
         "6"
       ]
+    },
+    "ctaTooltip": {
+      "type": "string",
+      "description": "Tooltip shown when hovering the primary call-to-action button. Shows only when `cta` is set.",
+      "default": ""
+    },
+    "ctaSecondaryTooltip": {
+      "type": "string",
+      "description": "Tooltip shown when hovering the secondary call-to-action button. Shows only when `ctaSecondary` is set.",
+      "default": ""
     }
   },
   "$view": [

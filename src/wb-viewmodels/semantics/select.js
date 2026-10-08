@@ -55,9 +55,9 @@ export function select(element, options = {}) {
     element.parentNode.insertBefore(searchBoxFor(element, element.getAttribute('aria-label') || ''), element);
   }
 
-  if (clearable && !element.parentElement?.classList.contains('x-select-clearable')) {
+  if (clearable && !element.parentElement?.classList.contains('x-select__clearable')) {
     const wrapper = document.createElement('div');
-    wrapper.className = 'x-select-clearable';
+    wrapper.className = 'x-select__clearable';
     moveKeepingFocus(element, () => {   // #961
       if (element.parentNode) {
         element.parentNode.insertBefore(wrapper, element);
@@ -87,6 +87,14 @@ export function select(element, options = {}) {
     wrapper.appendChild(clearBtn);
   }
 
+  // #344: select.schema.json declares wb:select:change; nothing fired it. A
+  // multiple select reports every chosen value, a single one its value.
+  const onChange = () => element.dispatchEvent(new CustomEvent('wb:select:change', {
+    bubbles: true,
+    detail: { value: element.multiple ? Array.from(element.selectedOptions, (o) => o.value) : element.value },
+  }));
+  element.addEventListener('change', onChange);
+
   element.wbSelect = {
     getValue: () => element.value,
     setValue: (v) => { element.value = v; },
@@ -94,7 +102,7 @@ export function select(element, options = {}) {
     reset: () => { element.selectedIndex = -1; }
   };
 
-  return () => {};
+  return () => element.removeEventListener('change', onChange);
 }
 
 /**

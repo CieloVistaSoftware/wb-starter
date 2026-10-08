@@ -74,14 +74,6 @@
       "description": "Z-index"
     }
   },
-  "events": {
-    "wb:confetti:start": {
-      "description": "Animation started"
-    },
-    "wb:confetti:end": {
-      "description": "Animation ended"
-    }
-  },
   "test": {
     "setup": [
       "<div x-confetti>Basic confetti content</div>",
@@ -116,5 +108,13 @@
     "icon": "🎉",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:confetti:start": {
+      "description": "Animation started"
+    },
+    "wb:confetti:end": {
+      "description": "Animation ended"
+    }
   }
 }

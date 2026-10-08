@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { globSync } from 'glob';
 
+import { settlePage } from '../base';
 /**
  * DOC-VIEWER CODE PANEL AUDIT — "show all the code, no blank lines, no text
  * wrapping" (John, originally live on /public/doc-viewer.html?file=docs%2F
@@ -240,10 +241,7 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   // so under load a doc whose panels had not been created read as "no panels"
   // and was skipped (7 skips one run, 10 the next). Wait for the runtime to
   // report every injection settled before deciding what exists.
-  await page.evaluate(async (budget) => {
-    const WB = (window as any).WB;
-    if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: budget });
-  }, Math.min(30000, 5000 + demoCount * 100));
+  await settlePage(page, { timeout: Math.min(30000, 5000 + demoCount * 100) });
   // whenIdle() alone was not enough (skips still drifted 11 / 8 / 4 across
   // three runs): demo.js builds deferred blocks outside the injection tracker.
   // Its own markers say when a block is done -- it adds the `x-demo` class when
@@ -294,7 +292,7 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           const lines = text.split('\n');
           if (lines.length && lines[lines.length - 1] === '') lines.pop();
 
-          const wrapper = panel.closest('.x-pre-wrapper');
+          const wrapper = panel.closest('.x-pre__wrapper');
           if (!wrapper) return false;
           const nums = Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[];
           if (nums.length !== lines.length) return false; // gutter still being built
@@ -342,7 +340,7 @@ function readPanels(page: import('@playwright/test').Page): Promise<PanelReport[
         const rawLines = text.split('\n');
         if (rawLines.length && rawLines[rawLines.length - 1] === '') rawLines.pop();
 
-        const wrapper = panel.closest('.x-pre-wrapper');
+        const wrapper = panel.closest('.x-pre__wrapper');
         const gutterEls = wrapper
           ? (Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[])
           : [];

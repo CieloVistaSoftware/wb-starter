@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 
+import { settlePage } from '../base';
 /**
  * pages/themes.html previously had no code-theme control at all -- the
  * only existing one, <div x-codetheme> (src/wb-viewmodels/codetheme.js,
@@ -20,7 +21,7 @@ test.describe('[x-codetheme] on the Themes page swaps real highlight.js syntax t
     await page.waitForSelector('[x-codetheme]', { timeout: 20000 });
     // The control is built once WB settles (#1516: not 500ms).
     await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
-    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
+    await settlePage(page, { timeout: 15000 });
   });
 
   test('the dropdown lists all 49 themes grouped into the 4 documented categories', async ({ page }) => {

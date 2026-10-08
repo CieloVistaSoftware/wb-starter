@@ -394,12 +394,16 @@ export function drawer(element, options = {}) {
         if (builtBackdrop && !isPush) builtBackdrop.classList.add('x-drawer__backdrop--open');
         if (isPush) pushed = pushPageAside(builtPanel, config.position, [builtPanel, builtBackdrop]);
         document.body.classList.add('x-scroll-lock');
+        // #344: drawer.schema.json declares open and close; nothing fired them.
+        element.dispatchEvent(new CustomEvent('wb:drawer:open', { bubbles: true }));
       };
       const hide = () => {
+        const wasOpen = isOpen();
         builtPanel.classList.remove('x-drawer__panel--open');
         if (builtBackdrop) builtBackdrop.classList.remove('x-drawer__backdrop--open');
         if (pushed) { releasePushedPage(pushed); pushed = null; }
         document.body.classList.remove('x-scroll-lock');
+        if (wasOpen) element.dispatchEvent(new CustomEvent('wb:drawer:close', { bubbles: true }));
       };
       const toggle = () => (isOpen() ? hide() : show());
 
@@ -508,6 +512,7 @@ export function drawer(element, options = {}) {
       // still yields a real pixel push amount for top/bottom.
       if (isPush) pushTarget = pushPageAside(panelEl, config.position, [panelEl, backdropEl]);
     });
+    element.dispatchEvent(new CustomEvent('wb:drawer:open', { bubbles: true }));
   };
 
   // PATH B had no Escape handling at all; close-on-escape (default true)
@@ -515,11 +520,14 @@ export function drawer(element, options = {}) {
   const onEscape = (e) => { if (e.key === 'Escape') hide(); };
 
   const hide = () => {
+    // cleanup calls hide() on a closed drawer too; only a real close is news.
+    const wasOpen = !!panelEl;
     document.removeEventListener('keydown', onEscape);
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { clearRules(panelEl); panelEl.remove(); panelEl = null; }
     if (pushTarget) { releasePushedPage(pushTarget); pushTarget = null; }
     document.body.classList.remove('x-scroll-lock');
+    if (wasOpen) element.dispatchEvent(new CustomEvent('wb:drawer:close', { bubbles: true }));
   };
 
   const toggle = () => panelEl ? hide() : show();

@@ -671,6 +671,15 @@ export async function elementReady(locator: Locator, timeoutMs = 15000): Promise
   await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
   await locator.first().evaluate(
     (el, ms) => new Promise<void>((resolve, reject) => {
+      // The runtime's own wait when the page has one (#1516): it reads the
+      // readiness WB keeps, not the x-ready attribute, which exists only as a
+      // bridge under automation. The attribute watch below is for pages
+      // without WB.
+      const WB = (window as any).WB;
+      if (WB && typeof WB.whenReady === 'function') {
+        WB.whenReady(el, { timeout: ms }).then(() => resolve(), (e: Error) => reject(new Error(`elementReady: ${e.message}`)));
+        return;
+      }
       if (el.hasAttribute('x-ready')) return resolve();
       const timer = setTimeout(() => {
         obs.disconnect();
@@ -724,7 +733,10 @@ export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<
   await el.waitFor({ state: 'attached', timeout: timeoutMs });
   await el.evaluate(async (node: Element, ms: number) => {
     const end = performance.now() + ms;
-    while (!node.hasAttribute('x-ready')) {
+    // WB.isReady() when the page has WB (#1516); the attribute otherwise.
+    const WB = (window as any).WB;
+    const built = () => (WB && typeof WB.isReady === 'function' ? WB.isReady(node) : node.hasAttribute('x-ready'));
+    while (!built()) {
       if (performance.now() > end) {
         throw new Error(
           `buildInView: <${node.tagName.toLowerCase()}${node.id ? ` id="${node.id}"` : ''}> ` +
@@ -834,12 +846,42 @@ export async function wbIdle(
   ).catch((err: Error) => {
     throw new Error(`wbIdle: the site shell never finished booting (window.WBSite was not published within ${timeout}ms) -- ${err.message}`);
   });
-  // #961: on some CI runs this evaluate dies with "Execution context was
-  // destroyed" although nothing visibly navigated -- #1442 (x-ignore) and
-  // schema-dependent-hosts-self-build (2026-10-07, forms.html, 735ms after
-  // goto); neither reproduces locally. Record what the page does while it
-  // settles, so a recurrence names its cause instead of leaving a guess.
-  // Evidence only: no retry, the failure still fails.
+  await settlePage(page, { timeout });
+}
+
+/**
+ * Wait for WB.settled() in the page -- the ONE way a spec waits for the page to
+ * settle (#961). John, 2026-10-07: "use the shared helper for all 81".
+ *
+ * 81 spec files awaited WB.settled()/WB.whenIdle() inside their own
+ * page.evaluate(). Under a full-suite load that evaluate sometimes died with
+ * "Execution context was destroyed" while the page did NOTHING: no navigation,
+ * load, navigation request or crash, same URL (CI run 37568992926; locally
+ * docs/behaviors/progress.md in the doc-viewer audit, 2026-10-07). The harness
+ * lost its handle on a document that is still there; only a helper can tell
+ * that apart from a real reload, so every spec goes through this one.
+ *
+ * Records every main-frame navigation, load, navigation request and renderer
+ * crash while it waits. When the handle is lost with nothing recorded and the
+ * URL unchanged, it asks the same document again, once. Anything recorded, a
+ * changed URL or a second failure fails, with that evidence in the message.
+ *
+ * Waits for `WB.settled` to exist first: a page whose runtime has not loaded
+ * yet has nothing to ask. With `{ ifPresent: true }` a page that has no WB at
+ * all returns at once instead. `whenIdle` is the same call (injection-tracker.js).
+ */
+export async function settlePage(page: Page, opts: { timeout?: number; ifPresent?: boolean } = {}): Promise<void> {
+  const timeout = opts.timeout ?? 15000;
+  // `ifPresent`: a page that never boots WB (demos/index.html, a plain doc) has
+  // nothing to settle. The specs that loop over every page used
+  // `WB?.settled?.()`, which skipped such a page at once; waiting 15s for a WB
+  // that never comes ate the whole test budget (#1702 CI, all-demos-smoke).
+  if (opts.ifPresent && !(await page.evaluate(() => typeof (window as any).WB?.settled === 'function'))) return;
+  await page.waitForFunction(
+    () => typeof (window as any).WB?.settled === 'function',
+    undefined,
+    { timeout }
+  );
   const t0 = Date.now();
   const seen: string[] = [];
   const onNav = (f: any) => { if (f === page.mainFrame()) seen.push(`+${Date.now() - t0}ms navigated ${f.url()}`); };
@@ -856,13 +898,6 @@ export async function wbIdle(
     try {
       await settle();
     } catch (err) {
-      // #961, measured: CI run 37568992926 (landing-page-showcase.html) lost
-      // the evaluate with "Execution context was destroyed" while the page did
-      // NOTHING -- no navigation, load, navigation request or crash recorded,
-      // same URL. Four instances, none a page defect: the harness lost its
-      // handle on a document that is still there. In exactly that case, ask
-      // the same document again, once. Any recorded event, a changed URL or a
-      // second failure still fails, with the evidence.
       const harnessOnly = /Execution context was destroyed/.test((err as Error).message)
         && seen.length === 0 && page.url() === urlBefore;
       if (!harnessOnly) throw err;

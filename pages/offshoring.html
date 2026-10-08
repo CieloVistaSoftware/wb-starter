@@ -9,11 +9,15 @@
     var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
     if (!m) return;                       // injected by the SPA: nothing to do
     var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
   })();
 </script>
 <!-- Page styles: src/styles/pages/offshoring.css -->
-<link rel="stylesheet" href="src/styles/pages/offshoring.css?v=1.0.411">
+<link rel="stylesheet" href="src/styles/pages/offshoring.css?v=1.0.440">
 
 <div class="page__hero">
   <h1>Offshoring</h1>

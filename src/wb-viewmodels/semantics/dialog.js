@@ -51,15 +51,16 @@ function addCloseButton(header, show) {
  * `modalTitle`/`modalContent`/`modalSize` are the legacy trigger names, kept
  * because docs/behaviors/modal.md and modal.schema.json still teach them; they
  * are read here under the camelCase spelling for the same reason.
+ *
+ * #879: `dialogTitle`/`dialogContent`/`dialogSize` were read as a third set of
+ * names. No schema declared them, no doc taught them and no markup in the repo
+ * used them, so they are no longer read.
  */
 function optionsFrom(element, options = {}) {
   const config = {
-    title: options.title || readAttr(element, 'title') || readAttr(element, 'modalTitle')
-      || readAttr(element, 'dialogTitle') || 'Dialog',
-    content: options.content || readAttr(element, 'content') || readAttr(element, 'modalContent')
-      || readAttr(element, 'dialogContent') || '',
-    size: options.size || readAttr(element, 'size') || readAttr(element, 'modalSize')
-      || readAttr(element, 'dialogSize') || 'md',
+    title: options.title || readAttr(element, 'title') || readAttr(element, 'modalTitle') || 'Dialog',
+    content: options.content || readAttr(element, 'content') || readAttr(element, 'modalContent') || '',
+    size: options.size || readAttr(element, 'size') || readAttr(element, 'modalSize') || 'md',
     // Schema declares variant: default/centered/fullscreen (appliesClass:
     // x-dialog--{{value}}), but this was never read anywhere -- every
     // variant produced an identical dialog (confirmed live: "Centered" and
@@ -167,6 +168,10 @@ export function dialog(element, options = {}) {
 
     // Show using native dialog API
     dialogEl.showModal();
+    // #344: dialog.schema.json declares open, close and cancel; nothing fired
+    // them. They go to the trigger element, as wb:dialog:ok always has.
+    element.dispatchEvent(new CustomEvent('wb:dialog:open', { bubbles: true, detail: { title: titleText } }));
+    const cancelled = () => element.dispatchEvent(new CustomEvent('wb:dialog:cancel', { bubbles: true, detail: {} }));
 
     // Close handlers
     const close = () => {
@@ -175,7 +180,7 @@ export function dialog(element, options = {}) {
     };
 
     if (closeBtn) closeBtn.onclick = close;
-    cancelBtn.onclick = close;
+    cancelBtn.onclick = () => { cancelled(); close(); };
     okBtn.onclick = () => {
       element.dispatchEvent(new CustomEvent('wb:dialog:ok', { bubbles: true }));
       close();
@@ -184,7 +189,7 @@ export function dialog(element, options = {}) {
     // Click outside to close (on backdrop)
     if (config.closeOnBackdrop) {
       dialogEl.addEventListener('click', (e) => {
-        if (e.target === dialogEl) close();
+        if (e.target === dialogEl) { cancelled(); close(); }
       });
     }
     
@@ -192,8 +197,11 @@ export function dialog(element, options = {}) {
     // cancels the native 'cancel' event so Escape leaves it open.
     if (!config.closeOnEscape) {
       dialogEl.addEventListener('cancel', (e) => e.preventDefault());
+    } else {
+      dialogEl.addEventListener('cancel', cancelled);
     }
     dialogEl.addEventListener('close', () => {
+      element.dispatchEvent(new CustomEvent('wb:dialog:close', { bubbles: true, detail: {} }));
       dialogEl.remove();
     });
   };
@@ -345,12 +353,29 @@ export function dialog(element, options = {}) {
     // while the default gets the documented backdrop-close. A click whose
     // target is the <dialog> itself landed on the ::backdrop, since every
     // child sits inside header/body.
-    const onBackdrop = (e) => { if (e.target === element) element.close(); };
+    // #344: the page opens an authored <dialog> itself (showModal(), show(),
+    // or the open attribute), so its open attribute is what says it opened or
+    // closed, however that happened.
+    const fire = (name) => element.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: {} }));
+    const cancelled = () => fire('wb:dialog:cancel');
+    const openWatch = new MutationObserver(() => {
+      if (element.open) {
+        element.dispatchEvent(new CustomEvent('wb:dialog:open', { bubbles: true, detail: { title: heading ? heading.textContent : '' } }));
+      } else {
+        fire('wb:dialog:close');
+      }
+    });
+    openWatch.observe(element, { attributes: true, attributeFilter: ['open'] });
+
+    const onBackdrop = (e) => { if (e.target === element) { cancelled(); element.close(); } };
     if (config.closeOnBackdrop) element.addEventListener('click', onBackdrop);
     const onCancel = (e) => e.preventDefault();
     if (!config.closeOnEscape) element.addEventListener('cancel', onCancel);
+    else element.addEventListener('cancel', cancelled);
 
     return () => {
+      openWatch.disconnect();
+      element.removeEventListener('cancel', cancelled);
       if (closeBtn) closeBtn.removeEventListener('click', closeDialog);
       element.removeEventListener('click', onBackdrop);
       element.removeEventListener('cancel', onCancel);

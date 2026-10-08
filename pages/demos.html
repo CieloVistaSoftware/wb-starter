@@ -9,10 +9,14 @@
     var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
     if (!m) return;                       // injected by the SPA: nothing to do
     var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
   })();
 </script>
-<link rel="stylesheet" href="src/styles/pages/demos.css?v=1.0.411">
+<link rel="stylesheet" href="src/styles/pages/demos.css?v=1.0.440">
 
 <div id="demos-hero" class="page__hero">
   <h1>🎮 Demos</h1>
@@ -35,7 +39,7 @@
   <details class="demos-category" category="Card Behaviors">
     <summary class="demos-category__title">🃏 Card Behaviors</summary>
     <div class="page__grid demos-card-grid">
-      <div x-cardlink title="Card Behaviors" description="18 card variants — from simple to portfolio, pricing to testimonials — 19 behaviors · 262 demos" href="demos/site/cards.html" target="_blank" icon="🃏"></div>
+      <div x-cardlink title="Card Behaviors" description="18 card variants — from simple to portfolio, pricing to testimonials — 19 behaviors · 264 demos" href="demos/site/cards.html" target="_blank" icon="🃏"></div>
     </div>
   </details>
   <details class="demos-category" category="Feedback & Status">
@@ -47,7 +51,7 @@
   <details class="demos-category" category="Form Controls">
     <summary class="demos-category__title">📝 Form Controls</summary>
     <div class="page__grid demos-card-grid">
-      <div x-cardlink title="Form Controls" description="Buttons, inputs, selects, checkboxes, switches, textareas — 9 behaviors · 154 demos" href="demos/site/forms.html" target="_blank" icon="📝"></div>
+      <div x-cardlink title="Form Controls" description="Buttons, inputs, selects, checkboxes, switches, textareas — 9 behaviors · 156 demos" href="demos/site/forms.html" target="_blank" icon="📝"></div>
     </div>
   </details>
   <details class="demos-category" category="Overlays & Popups">
@@ -65,7 +69,7 @@
   <details class="demos-category" category="Content & Media">
     <summary class="demos-category__title">📄 Content & Media</summary>
     <div class="page__grid demos-card-grid">
-      <div x-cardlink title="Content & Media" description="Articles, markdown rendering, audio, tables — 6 behaviors · 27 demos" href="demos/site/content.html" target="_blank" icon="📄"></div>
+      <div x-cardlink title="Content & Media" description="Articles, markdown rendering, audio, tables — 6 behaviors · 28 demos" href="demos/site/content.html" target="_blank" icon="📄"></div>
     </div>
   </details>
   <details class="demos-category" category="Visual Effects">
@@ -77,7 +81,7 @@
   <details class="demos-category" category="Interactive & Utility">
     <summary class="demos-category__title">🔧 Interactive & Utility</summary>
     <div class="page__grid demos-card-grid">
-      <div x-cardlink title="Interactive & Utility" description="Draggable, resizable, copy, dark mode, views — 8 behaviors · 13 demos" href="demos/site/interactive.html" target="_blank" icon="🔧"></div>
+      <div x-cardlink title="Interactive & Utility" description="Draggable, resizable, copy, dark mode, views — 8 behaviors · 14 demos" href="demos/site/interactive.html" target="_blank" icon="🔧"></div>
     </div>
   </details>
   <details class="demos-category" category="Cards & Layout">

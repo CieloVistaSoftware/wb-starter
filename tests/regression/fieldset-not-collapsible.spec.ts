@@ -34,7 +34,7 @@
 import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
-import { ROOT } from '../base';
+import { ROOT, settlePage } from '../base';
 
 test.describe('fieldset is not collapsible (#999)', () => {
   test('the schema declares no collapse attributes', () => {
@@ -98,7 +98,7 @@ test.describe('fieldset is not collapsible (#999)', () => {
     // exactly why an inert toggle passed as fixed twice.
     await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
 
-    const result = await page.evaluate(async () => {
+    await page.evaluate(async () => {
       const host = document.createElement('div');
       host.style.cssText = 'position:fixed;left:-9999px;top:0;width:400px';
       host.innerHTML =
@@ -106,9 +106,14 @@ test.describe('fieldset is not collapsible (#999)', () => {
         '<label><input type="checkbox"> One</label>' +
         '<label><input type="checkbox"> Two</label></fieldset>';
       document.body.appendChild(host);
-      // Auto-injection has run once WB settles (#1516: not 900ms).
       await new Promise((r) => requestAnimationFrame(r));
-      await (window as any).WB?.settled?.({ timeout: 10000 });
+      (window as any).__wb961Host = host;
+    });
+    // Auto-injection has run once WB settles (#1516: not 900ms).
+    await settlePage(page, { timeout: 10000 });
+
+    const result = await page.evaluate(async () => {
+      const host = (window as any).__wb961Host as HTMLElement;
       const fs = host.querySelector('fieldset')!;
       const legend = fs.querySelector('legend')! as HTMLElement;
       const rows = Array.from(fs.children).filter((c) => c.tagName !== 'LEGEND');

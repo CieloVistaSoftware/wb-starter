@@ -4,6 +4,7 @@ import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
 import { getNativeBehavior } from '../core/tag-map.js';
 import { centralTime } from '../core/central-time.js';
+import { sliceOverBudget, nextSlice } from '../core/main-thread-budget.js';
 
 /** Behaviors that fill their row by nature: a demo holding only one of them is full width (#1387). */
 const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero'];
@@ -540,6 +541,11 @@ export async function demo(element, options = {}) {
     } else {
         try {
             const pageSource = await getPageSource();
+            // #961: the page source is cached after the first block, so this
+            // await resumes as a microtask, and every demo on the page then
+            // parsed its source block in the same task. Hand the task back
+            // when the runtime's slice budget is used (main-thread-budget.js).
+            while (sliceOverBudget()) await nextSlice();
             // #934: `[x-demo]`, not `x-demo`. This searched for a TAG that
             // cannot exist since 4.0.0 removed custom elements, so BOTH the
             // live count and the source count came out 0 -- #580's mismatch
@@ -671,6 +677,9 @@ export async function demo(element, options = {}) {
             loadDocsManifest().catch(() => null),
             loadDocsIndex().catch(() => null),
         ]);
+        // #961: same as after getPageSource() above -- both are cached, so
+        // without this every demo's doc links were built in one task.
+        while (sliceOverBudget()) await nextSlice();
         const root = siteRoot();
 
         // John (reported repeatedly): pages/behaviors.html's demos are
@@ -865,6 +874,14 @@ export async function demo(element, options = {}) {
         // throw must never leave a permanently invisible code panel.
         pre.classList.remove('x-demo__code--pending');
     }
+    // #1757: demo.css now keeps a measuring block's whole code panel hidden
+    // until the width commit below swaps the class out. Every measuring path
+    // removes it itself; this is the floor under a throw in between, so the
+    // panel can never stay hidden for good. Well past MAX_MS on purpose: an
+    // early removal would show the uncommitted width.
+    if (element.classList.contains('x-demo--measuring')) {
+        setTimeout(() => element.classList.remove('x-demo--measuring'), 10000);
+    }
 
     // #486: measure the GRID's own rendered width and hand it to demo.css as
     // --x-demo-shrink-width, for single-item demos only (desktop rule in
@@ -1032,7 +1049,29 @@ export async function demo(element, options = {}) {
                 let pendingShrinkWidth = 0;
                 const POLL_MS = 200;
                 const MAX_MS = 5000;
-                const startedAt = Date.now();
+                let startedAt = Date.now();
+                let committed = false;
+                let polling = true;
+                // #1759: two equal readings say the CURRENT layout is steady, not
+                // that the control is finished. A control whose behavior builds
+                // after the commit -- <article size="lg"> before card.js has
+                // arrived -- is measured as plain markup, the commit locks that
+                // width in, and the built control (min-width 420px) then overflows
+                // the demo it no longer fits. A control finishing announces
+                // itself with a bubbling `wb:ready`. Before the commit, that
+                // invalidates the readings so far. After it, the committed width
+                // is dropped, so the demo is fit-content again and the grid holds
+                // the built control's width, and the next commit is that.
+                grid.addEventListener('wb:ready', () => {
+                    lastControlWidth = null;
+                    lastCodeWidth = null;
+                    stableCount = 0;
+                    if (!committed) return;
+                    committed = false;
+                    setRule(element, 'shrink', null);
+                    startedAt = Date.now();
+                    if (!polling) { polling = true; requestAnimationFrame(measure); }
+                });
                 const measure = () => {
                     const demoCs = getComputedStyle(element);
                     const hPad = (parseFloat(demoCs.paddingLeft) || 0) + (parseFloat(demoCs.paddingRight) || 0);
@@ -1074,7 +1113,7 @@ export async function demo(element, options = {}) {
                     const codeEls = element.querySelectorAll('.x-demo__code');
                     // +CODE_WIDTH_SAFETY_PX: a code panel with a header/copy-
                     // button (pre.css's .x-pre--has-header) sits inside an
-                    // `.x-pre-wrapper` with its own border -- chrome between
+                    // `.x-pre__wrapper` with its own border -- chrome between
                     // the <pre> being measured and the demo's own edge that
                     // this calculation has no way to see. Sizing to
                     // scrollWidth exactly left the box 1-2px too narrow for
@@ -1137,7 +1176,7 @@ export async function demo(element, options = {}) {
                     // doc-viewer-code-panel-audit.spec.ts waits for before it
                     // measures anything.
                     const guttersReady = Array.from(codeEls).every((panel) => {
-                        const wrapper = panel.closest('.x-pre-wrapper');
+                        const wrapper = panel.closest('.x-pre__wrapper');
                         if (!wrapper) return false;
                         const code = panel.querySelector('code');
                         const lines = ((code || panel).textContent || '').split('\n');
@@ -1159,6 +1198,8 @@ export async function demo(element, options = {}) {
                         // Lifts demo.css's pre-measure 50vw code cap -- see there.
                         element.classList.remove('x-demo--measuring');
                         element.classList.add('x-demo--measured');
+                        committed = true;
+                        polling = false;
                         return;
                     }
                     setTimeout(measure, POLL_MS);

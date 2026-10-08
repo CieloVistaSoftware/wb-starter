@@ -173,7 +173,7 @@ test.describe('#1095 batch 2: state classes are styled by stylesheet rules', () 
     // field past the wrapper, leaving the counter stranded at the old edge.
     await page.addStyleTag({ content: '#host .x-textarea { width: 3000px; }' });
     const field = await page.locator('#tc').boundingBox();
-    const counter = await page.locator('#host > .x-textarea-wrapper > .x-textarea__counter').boundingBox();
+    const counter = await page.locator('#host > .x-textarea__wrapper > .x-textarea__counter').boundingBox();
     expect(Math.abs((field!.x + field!.width) - (counter!.x + counter!.width))).toBeLessThanOrEqual(1);
   });
 });

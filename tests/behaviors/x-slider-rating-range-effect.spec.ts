@@ -15,6 +15,7 @@
  *   - precision= is not read anywhere in rating.js — it must have zero effect.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -33,9 +34,9 @@ async function setup(page: Page, html: string): Promise<void> {
     if ((window as any).WB?.scan) {
       await (window as any).WB.scan(document.getElementById('x-slider-rating-range-test-area'), { eager: true });
     }
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('<div x-slider> is currently a minimal stub (src/wb-viewmodels/slider.js)', () => {
@@ -127,7 +128,7 @@ test.describe('native <input type="range" show-value> — range.js value display
     // x-behavior="range" to work around autoInject being off on the test
     // harness; that form is deprecated (#1642) and no longer needed.
     await setup(page, '<input id="rng1" type="range" show-value min="0" max="100" value="50">');
-    const display = page.locator('#x-slider-rating-range-test-area .x-range-value').first();
+    const display = page.locator('#x-slider-rating-range-test-area .x-range__value').first();
     await expect(display).toHaveText('50');
 
     await page.evaluate(() => {
@@ -143,7 +144,7 @@ test.describe('native <input type="range" show-labels> — min/max labels', () =
   test('rendered min/max labels match the min/max attributes', async ({ page }) => {
     await setup(page, '<input id="rng2" type="range" show-value show-labels min="10" max="90" value="50">');
     const labels = page
-      .locator('#x-slider-rating-range-test-area .x-range-wrapper > div')
+      .locator('#x-slider-rating-range-test-area .x-range__wrapper > div')
       .last()
       .locator('span');
     await expect(labels).toHaveCount(2);
@@ -155,7 +156,7 @@ test.describe('native <input type="range" show-labels> — min/max labels', () =
 test.describe('native <input type="range" value-suffix="%">', () => {
   test('displayed value includes the suffix — "75%", not just "75"', async ({ page }) => {
     await setup(page, '<input id="rng3" type="range" show-value value-suffix="%" min="0" max="100" value="75">');
-    const display = page.locator('#x-slider-rating-range-test-area .x-range-value').first();
+    const display = page.locator('#x-slider-rating-range-test-area .x-range__value').first();
     await expect(display).toHaveText('75%');
   });
 });

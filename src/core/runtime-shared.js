@@ -13,7 +13,8 @@
  * duplicated blocks.
  */
 import { Events } from './events.js';
-import { isReady } from './ready-signal.js';
+import { isReady, whenReady } from './ready-signal.js';
+import { latestWins } from './latest-wins.js';
 
 /**
  * Record that `behaviorName` is being injected into `element`, so a second
@@ -114,6 +115,13 @@ export function installReadiness(runtime, tracker, settledCall) {
     whenIdle: { value: (options) => tracker.whenIdle(options), writable: true, enumerable: true, configurable: true },
     settled: { value: (cb, options) => settledCall(cb, options), writable: true, enumerable: true, configurable: true },
     isReady: { value: (element) => isReady(element), writable: true, enumerable: true, configurable: true },
+    // The race-free wait for one element (ready-signal.js): resolves at once if
+    // it is already built, else on its wb:ready moment.
+    whenReady: { value: (element, options) => whenReady(element, options), writable: true, enumerable: true, configurable: true },
+    // Only the newest run of an async job may write its result (latest-wins.js).
+    // On WB so a page's classic <script> (pages/behaviors.html) can use the
+    // same guard the router does, without an import.
+    latestWins: { value: () => latestWins(), writable: true, enumerable: true, configurable: true },
   });
 }
 

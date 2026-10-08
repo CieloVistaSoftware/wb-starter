@@ -61,6 +61,15 @@
         "glass"
       ],
       "default": "default"
+    },
+    "badgeVariant": {
+      "type": "string",
+      "description": "Style of the badge pill beside the title: glass (translucent tag) or gradient (filled gradient badge). Shows only when `badge` is set.",
+      "enum": [
+        "glass",
+        "gradient"
+      ],
+      "default": "glass"
     }
   },
   "$view": [
@@ -207,15 +216,6 @@
     "role": "link",
     "tabindex": "0"
   },
-  "events": {
-    "wb:cardlink:click": {
-      "description": "Fired when card is clicked",
-      "detail": {
-        "href": "string",
-        "title": "string"
-      }
-    }
-  },
   "test": {
     "setup": [
       "<div x-cardlink>Basic cardlink content</div>",
@@ -278,5 +278,14 @@
     "icon": "🔗",
     "since": "1.0.0",
     "status": "stable"
+  },
+  "events": {
+    "wb:cardlink:click": {
+      "description": "Fired when card is clicked",
+      "detail": {
+        "href": "string",
+        "title": "string"
+      }
+    }
   }
 }

@@ -16,6 +16,7 @@
  * synchronously before any interaction is dispatched.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { settlePage } from '../base';
 
 async function setup(page: Page, html: string, id = 'x-copybutton-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -28,16 +29,16 @@ async function setup(page: Page, html: string, id = 'x-copybutton-effect-area'):
   }, { h: html, containerId: id });
   await page.evaluate(async () => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true });
-    // Built once its work has called back (#1516: no fixed sleep).
-    await (window as any).WB?.settled?.({ timeout: 10000 });
   });
+  // Built once its work has called back (#1516: no fixed sleep).
+  await settlePage(page, { timeout: 10000 });
 }
 
 test.describe('x-copybutton -- renders a positioned overlay button, host element unchanged', () => {
   test('a top-right button is injected inside a wrapper, and the host <textarea> stays a real, typeable textarea', async ({ page }) => {
     await setup(page, `<textarea id="ta" x-copybutton rows="3">npm install wb-starter</textarea>`);
 
-    const wrapper = page.locator('#x-copybutton-effect-area .x-copybutton-wrapper');
+    const wrapper = page.locator('#x-copybutton-effect-area .x-copybutton__wrapper');
     await expect(wrapper).toHaveCount(1);
 
     const btn = wrapper.locator('.x-copybutton__btn');

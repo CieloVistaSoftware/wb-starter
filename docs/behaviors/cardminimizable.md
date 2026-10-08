@@ -20,7 +20,7 @@
 
 ## Events
 
-- `wb:minimizable:toggle` — Fired on minimize/expand
+- `wb:cardminimizable:toggle` — Fired on minimize/expand
 
 ## Methods
 

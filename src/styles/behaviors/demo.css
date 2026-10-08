@@ -268,10 +268,35 @@
   /* :not([data-code-width]) -- an authored width (§28 narrow/normal/wide) is
      the author's answer already; this provisional cap outranked it for the
      whole measurement, so a narrow panel painted at 50vw (640px at 1280). */
-  [x-demo].x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
+  [x-demo].x-demo--measuring:not([data-code-width]) > .x-pre__wrapper > .x-demo__code,
   [x-demo].x-demo--measuring:not([data-code-width]) > .x-demo__code {
     max-width: 50vw;
   }
+}
+
+/* #1757: a measuring block's whole code panel stays unseen until the single
+   width commit. .x-demo__code--pending hides only the <pre>; its
+   .x-pre__wrapper (dark background, border, line-number gutter, copy button,
+   language label) is built by the pre scan and painted at once, at the
+   fit-content width of a control that may not be built yet. Measured on
+   cards.html with the card behavior arriving after the panel: the visible
+   wrapper sat at the code's own 351px, then grew 351 -> 407 -> 417 -> 418
+   -> 420 as <article size="lg"> got .x-card--lg (min-width: 420px, through
+   the card's 0.2s `transition: all`) and the commit landed. Windows CI
+   recorded the same growth from mid-transition (407 -> 418 -> 420).
+   opacity, never display, so the panel still lays out and demo.js can
+   measure it. Never visibility either: it is inherited and interpolable, so
+   the reveal started a 0.2s visibility transition on every .x-pre__copy
+   (`transition: all`). In a closed <details> (pages/demos.html) Chromium
+   never services that transition, its `finished` promise never resolves,
+   and the layout specs' settle await hung on Windows CI. opacity is not
+   inherited, and neither element it is set on transitions it.
+   Every path that adds .x-demo--measuring removes it (the commit, the
+   MAX_MS budget, the media fallback, and a floor in demo.js), so a panel
+   never stays hidden. */
+[x-demo].x-demo--measuring > .x-pre__wrapper,
+[x-demo].x-demo--measuring > .x-demo__code {
+  opacity: 0;
 }
 
 /* Escape hatch for §7: a `full-width` demo (e.g. a page hero) is a single
@@ -361,7 +386,7 @@
   min-width: 0;
 }
 
-[x-demo] > .x-pre-wrapper{
+[x-demo] > .x-pre__wrapper{
   display: block;
   margin-top: 0.5rem;
 }

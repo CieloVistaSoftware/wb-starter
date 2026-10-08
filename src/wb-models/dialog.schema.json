@@ -258,6 +258,10 @@
     "wb:dialog:cancel": {
       "description": "Dialog cancelled (Escape/backdrop)",
       "detail": {}
+    },
+    "wb:dialog:ok": {
+      "description": "The dialog's confirm button is clicked",
+      "detail": {}
     }
   },
   "test": {

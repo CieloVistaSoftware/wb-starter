@@ -207,7 +207,7 @@ export function textarea(element, options = {}) {
     
     // Create wrapper to hold counter
     const counterWrapper = document.createElement('div');
-    counterWrapper.className = 'x-textarea-wrapper';
+    counterWrapper.className = 'x-textarea__wrapper';
     
     moveKeepingFocus(element, () => {   // #961
       if (element.parentNode) {

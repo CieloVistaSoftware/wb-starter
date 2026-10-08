@@ -142,14 +142,31 @@ interface FailureEntry {
 }
 
 const MAX_INLINE_ATTACHMENT = 4000;
+/**
+ * #961: the browser-side evidence for "Promise was collected" / "Execution
+ * context was destroyed". These are the whole point of a failure record, so
+ * they get more room, and past it they keep their END: the events closest to
+ * the failure are the ones that matter.
+ */
+const DIAGNOSTIC_ATTACHMENTS: Record<string, number> = { 'protocol-errors': 16000, 'page-lifecycle': 16000, 'page-death': 16000 };
 
-/** #961: the attachments of a failed result, small text ones inlined. */
-function failureAttachments(result: TestResult): FailureEntry['attachments'] {
+/** The text kept inline: whole when it fits, else its last lines with a count of the rest. */
+function inlineText(name: string, text: string): string | undefined {
+  const limit = DIAGNOSTIC_ATTACHMENTS[name];
+  if (text.length <= (limit ?? MAX_INLINE_ATTACHMENT)) return text;
+  if (!limit) return undefined;
+  const lines = text.split('\n');
+  const kept: string[] = [];
+  let size = 0;
+  for (let i = lines.length - 1; i >= 0 && size + lines[i].length + 1 <= limit - 80; i--) { kept.unshift(lines[i]); size += lines[i].length + 1; }
+  return `… ${lines.length - kept.length} earlier line(s) not kept\n` + kept.join('\n');
+}
+
+/** #961: the attachments of a failed result, small text ones (and the diagnostics) inlined. */
+export function failureAttachments(result: Pick<TestResult, 'attachments'>): FailureEntry['attachments'] {
   const list = (result.attachments || []).map((a) => {
     const textual = /^text\/|json/.test(a.contentType || '');
-    const body = a.body && textual && a.body.length <= MAX_INLINE_ATTACHMENT
-      ? stripAnsi(a.body.toString('utf8'))
-      : undefined;
+    const body = a.body && textual ? inlineText(a.name, stripAnsi(a.body.toString('utf8'))) : undefined;
     return { name: a.name, contentType: a.contentType, ...(a.path ? { path: a.path } : {}), ...(body ? { body } : {}) };
   });
   return list.length ? list : undefined;

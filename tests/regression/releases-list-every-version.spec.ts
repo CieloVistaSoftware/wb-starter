@@ -31,8 +31,26 @@ test('the generator reproduces the checked-in entries (nothing hand-edited, noth
   const out = run.stdout;
   const newest = JSON.parse(out.slice(0, out.indexOf('\n[release-versions]')));
   // HEAD may carry commits not yet stamped on main, so compare what both have.
+  // #961: on the Windows runner this failed twice with one version holding the
+  // whole history (1.0.401, 1,686 items) while the same merge passes locally,
+  // so a mismatch names what the generator counted from, not only that it differs.
+  const where = () => {
+    const git = (...a: string[]) => spawnSync('git', a, { encoding: 'utf8' }).stdout?.trim() || '(empty)';
+    return [
+      out.slice(out.indexOf('\n[release-versions]')).trim(),
+      `HEAD ${git('rev-parse', 'HEAD')} parents ${git('log', '-1', '--format=%P')}`,
+      `describe ${git('describe', '--tags', '--abbrev=0', '--match', 'v[0-9]*', 'HEAD')}`,
+      // As push-count.mjs releaseCommit() reads it: the newest SUBJECT that is a release.
+      `release commit ${git('log', '-E', '--grep=^release: [0-9]+\\.[0-9]+\\.[0-9]+', '--format=%h %s').split('\n').find((l) => / release: \d+\.\d+\.\d+/.test(l)) || '(none)'}`,
+      `shallow ${git('rev-parse', '--is-shallow-repository')}`,
+      `first-parent commits ${git('rev-list', '--count', '--first-parent', 'HEAD')}`,
+    ].join('\n');
+  };
   for (const g of newest) {
     const listed = data.releases.find((r: { version: string }) => r.version === g.version);
-    if (listed) expect(listed.items, `${g.version} items`).toEqual(g.items);
+    if (!listed) continue;
+    const same = JSON.stringify(listed.items) === JSON.stringify(g.items);
+    const why = same ? '' : ` (${g.items.length} generated, ${listed.items.length} listed)\n${where()}`;
+    expect(listed.items, `${g.version} items${why}`).toEqual(g.items);
   }
 });

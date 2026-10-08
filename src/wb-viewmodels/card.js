@@ -1,7 +1,6 @@
 import { readFlag, readAttr, readOption, authoredAttr } from '../core/read-attr.js';
 import { READY_ATTRIBUTE } from '../core/ready-signal.js';
-import { setRule, clearRules } from '../core/dynamic-style.js';
-import { dragStartPoint } from '../core/drag-start.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Card Behavior + Variants
  * -----------------------------------------------------------------------------
@@ -36,6 +35,7 @@ import { dragStartPoint } from '../core/drag-start.js';
 import { attachVideoLoadRetry, attachImageLoadRetry } from './media-load-retry.js';
 import { reportIfThirdPartyMedia } from './media-unreachable.js';
 import { tooltip as tooltipBehavior } from './tooltip.js';
+import { draggable } from './draggable.js';
 
 // Always-on, dedicated cardimage/cardvideo load tracing -- this exact failure
 // ("video/image cards not rendering") keeps recurring, especially on the
@@ -1174,6 +1174,13 @@ export function cardvideo(element, options = {}) {
     if (config.loop) video.loop = true;
     if (config.controls) video.controls = true;
     video.playsInline = true;
+    // #344: cardvideo.schema.json declares these events; nothing fired them.
+    // Each relays the native media event onto the card, where a page listens.
+    video.addEventListener('play', () => element.dispatchEvent(new CustomEvent('wb:video:play', { bubbles: true })));
+    video.addEventListener('pause', () => element.dispatchEvent(new CustomEvent('wb:video:pause', { bubbles: true })));
+    video.addEventListener('ended', () => element.dispatchEvent(new CustomEvent('wb:video:ended', { bubbles: true })));
+    video.addEventListener('timeupdate', () => element.dispatchEvent(
+      new CustomEvent('wb:video:timeupdate', { bubbles: true, detail: { currentTime: video.currentTime } })));
     retryCleanup = attachVideoLoadRetry(video);
     traceCardMedia('cardvideo', element, video, config.src);
 
@@ -2232,10 +2239,18 @@ export function cardlink(element, options = {}) {
     stretchedLink = appendLinkOverlay(element, config.href, base.config.title || config.href, config.target);
   }
 
+  // #344: cardlink.schema.json declares wb:cardlink:click; nothing fired it.
+  // A click anywhere on the card, the stretched link included, is the card's.
+  const onCardClick = () => element.dispatchEvent(new CustomEvent('wb:cardlink:click', {
+    bubbles: true, detail: { href: config.href, title: base.config.title || '' },
+  }));
+  element.addEventListener('click', onCardClick);
+
   // #678: show the author's own content -- see renderAuthoredContent().
   base.renderAuthoredContent();
   return () => {
     base.cleanup();
+    element.removeEventListener('click', onCardClick);
     if (stretchedLink) stretchedLink.remove();
   };
 }
@@ -2521,8 +2536,11 @@ export function cardexpandable(element, options = {}) {
       detail: { expanded: isExpanded }
     }));
     // A collapse that leaves the height unchanged fires no ResizeObserver
-    // callback, so re-measure once the new state has laid out (#1598).
-    requestAnimationFrame(updateNothingToExpand);
+    // callback, so re-measure once the new state has laid out (#1598) --
+    // but only once the content's transition has settled (#1727). Mid-
+    // collapse the box is still tall enough to hold everything, and measuring
+    // then hid the very button that had just been clicked.
+    remeasureWhenSettled();
   };
 
   btn.onclick = toggle;
@@ -2541,9 +2559,22 @@ export function cardexpandable(element, options = {}) {
   // ResizeObserver re-measures when the width or content changes, so the
   // toggle comes back once there is something to reveal. Expanded, the button
   // stays: it is how the card collapses again.
+  let settling = false;
   const updateNothingToExpand = () => {
-    if (isExpanded) return;
+    if (isExpanded || settling) return;
     element.classList.toggle('x-card--nothing-to-expand', contentWrap.scrollHeight <= contentWrap.clientHeight + 1);
+  };
+  // getAnimations() flushes style, so the transition the toggle just started
+  // is already listed. With none (reduced motion, no height change), the next
+  // frame is settled.
+  const remeasureWhenSettled = () => {
+    const running = contentWrap.getAnimations();
+    if (!running.length) { requestAnimationFrame(updateNothingToExpand); return; }
+    settling = true;
+    Promise.all(running.map((a) => a.finished.catch(() => {}))).then(() => {
+      settling = false;
+      updateNothingToExpand();
+    });
   };
   const overflowObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(updateNothingToExpand) : null;
   overflowObserver?.observe(contentWrap);
@@ -2712,164 +2743,42 @@ export function carddraggable(element, options = {}) {
     element.appendChild(base.createFooter());
   }
 
-  // Drag behavior
-  let isDragging = false;
-  let startX, startY, initialLeft, initialTop;
+  // Drag: x-draggable's implementation, with the header as its handle. #344:
+  // this was a second copy of draggable.js, and it fired its own
+  // wb:carddraggable:* events while the schema promised x-draggable's
+  // wb:drag:start/move/end. One implementation fires one set of events.
+  const cleanupDrag = draggable(element, {
+    handle: '.x-card__drag-handle',
+    axis: config.axis,
+    bounds: config.constrain === 'none' ? null : config.constrain,
+    grid: config.snapToGrid,
+  });
+  // The header's grabbing cursor is card.css's `.x-card--dragging` rule.
+  const onDragStart = () => element.classList.add('x-card--dragging');
+  const onDragEnd = () => element.classList.remove('x-card--dragging');
+  element.addEventListener('wb:drag:start', onDragStart);
+  element.addEventListener('wb:drag:end', onDragEnd);
 
-  // The applied left/top. #779: the position is a generated stylesheet rule
-  // now, not element.style, so it is tracked here rather than read back off
-  // the style attribute; place() is the one writer.
-  let posX = 0;
-  let posY = 0;
-  const getCurrentLeft = () => posX;
-  const getCurrentTop = () => posY;
-  const place = (x, y) => {
-    posX = x;
-    posY = y;
-    setRule(element, 'drag-position', { left: x + 'px', top: y + 'px' });
+  // API: the card's names over x-draggable's position.
+  const applied = () => {
+    const cs = window.getComputedStyle(element);
+    return { x: parseFloat(cs.left) || 0, y: parseFloat(cs.top) || 0 };
   };
-
-  const onMouseDown = (e) => {
-    const point = dragStartPoint(e);
-    if (!point) return;
-    isDragging = true;
-    ({ x: startX, y: startY } = point);
-// Read the current CSS left/top values, NOT offsetLeft/offsetTop
-    // offsetLeft includes the element's normal flow position which causes
-    // a massive jump when applied back as left/top on a relative element
-    initialLeft = getCurrentLeft();
-    initialTop = getCurrentTop();
-    
-    // Cursor, opacity and z-index while dragging: `.x-card--dragging` (#779).
-    element.classList.add('x-card--dragging');
-    
-    element.dispatchEvent(new CustomEvent('wb:carddraggable:dragstart', {
-      bubbles: true,
-      detail: { x: initialLeft, y: initialTop }
-    }));
-  };
-
-  headerEl.addEventListener('mousedown', onMouseDown);
-
-  // Touch support
-  const onTouchStart = (e) => {
-    const touch = e.touches[0];
-    onMouseDown({ clientX: touch.clientX, clientY: touch.clientY, button: 0, preventDefault: () => e.preventDefault() });
-  };
-  headerEl.addEventListener('touchstart', onTouchStart, { passive: false });
-
-  const onMouseMove = (e) => {
-    if (!isDragging) return;
-    
-    let deltaX = e.clientX - startX;
-    let deltaY = e.clientY - startY;
-    
-    // Axis constraint
-    if (config.axis === 'x') deltaY = 0;
-    if (config.axis === 'y') deltaX = 0;
-    
-    let newX = initialLeft + deltaX;
-    let newY = initialTop + deltaY;
-    
-    // Snap to grid
-    if (config.snapToGrid > 0) {
-      newX = Math.round(newX / config.snapToGrid) * config.snapToGrid;
-      newY = Math.round(newY / config.snapToGrid) * config.snapToGrid;
-    }
-    
-    // Parent constraint
-    if (config.constrain === 'parent' && element.parentElement) {
-      const parentRect = element.parentElement.getBoundingClientRect();
-      const elemRect = element.getBoundingClientRect();
-      // Calculate bounds relative to current CSS left/top
-      const currentLeft = getCurrentLeft();
-      const currentTop = getCurrentTop();
-      const minX = currentLeft - (elemRect.left - parentRect.left);
-      const minY = currentTop - (elemRect.top - parentRect.top);
-      const maxX = currentLeft + (parentRect.right - elemRect.right);
-      const maxY = currentTop + (parentRect.bottom - elemRect.bottom);
-      
-      newX = Math.max(minX, Math.min(maxX, newX));
-      newY = Math.max(minY, Math.min(maxY, newY));
-    }
-    
-    // Viewport constraint
-    if (config.constrain === 'viewport') {
-      const vpElemRect = element.getBoundingClientRect();
-      const vpCurrentLeft = getCurrentLeft();
-      const vpCurrentTop = getCurrentTop();
-      const vpMinX = vpCurrentLeft - vpElemRect.left;
-      const vpMinY = vpCurrentTop - vpElemRect.top;
-      const vpMaxX = vpCurrentLeft + (window.innerWidth - vpElemRect.right);
-      const vpMaxY = vpCurrentTop + (window.innerHeight - vpElemRect.bottom);
-
-      newX = Math.max(vpMinX, Math.min(vpMaxX, newX));
-      newY = Math.max(vpMinY, Math.min(vpMaxY, newY));
-    }
-    
-    place(newX, newY);
-
-    element.dispatchEvent(new CustomEvent('wb:carddraggable:drag', {
-      bubbles: true,
-      detail: { 
-        x: newX, 
-        y: newY,
-        deltaX: deltaX,
-        deltaY: deltaY
-      }
-    }));
-  };
-
-  const onTouchMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const moveTouch = e.touches[0];
-    onMouseMove({ clientX: moveTouch.clientX, clientY: moveTouch.clientY });
-  };
-
-  const onMouseUp = () => {
-    if (isDragging) {
-      isDragging = false;
-      element.classList.remove('x-card--dragging');
-      
-      element.dispatchEvent(new CustomEvent('wb:carddraggable:dragend', {
-        bubbles: true,
-        detail: { 
-          x: getCurrentLeft(), 
-          y: getCurrentTop() 
-        }
-      }));
-    }
-  };
-
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
-  document.addEventListener('touchmove', onTouchMove, { passive: false });
-  document.addEventListener('touchend', onMouseUp);
-
-  // API
   element.wbCardDraggable = {
-    setPosition: (x, y) => place(x, y),
-    getPosition: () => ({ x: posX, y: posY }),
-    reset: () => {
-      posX = 0;
-      posY = 0;
-      setRule(element, 'drag-position', null);
-    }
+    setPosition: (x, y) => element.wbDraggable.setPosition(x, y),
+    getPosition: applied,
+    reset: () => element.wbDraggable.setPosition(0, 0),
   };
 
   // Cleanup
   const originalCleanup = base.cleanup;
   return () => {
     originalCleanup();
-    clearRules(element);
-    element.classList.remove('x-card--draggable-positioned');
-    headerEl.removeEventListener('mousedown', onMouseDown);
-    headerEl.removeEventListener('touchstart', onTouchStart);
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-    document.removeEventListener('touchmove', onTouchMove);
-    document.removeEventListener('touchend', onMouseUp);
+    cleanupDrag();
+    element.removeEventListener('wb:drag:start', onDragStart);
+    element.removeEventListener('wb:drag:end', onDragEnd);
+    element.classList.remove('x-card--draggable-positioned', 'x-card--dragging');
+    delete element.wbCardDraggable;
   };
 }
 

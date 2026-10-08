@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { openGroup } from '../helpers/behaviors-page';
 
 /**
  * Picking a sample must bring its preview into view.
@@ -91,9 +92,7 @@ test.describe('behaviors browse: selecting a sample reveals its preview', () => 
       // are hidden inside a closed group and could never be scrolled to.
       // Expand the group the way a reader does -- its summary -- then pick.
       const group = row.locator('xpath=ancestor::details[1]');
-      if (await group.count() && !(await group.evaluate((d) => (d as HTMLDetailsElement).open))) {
-        await group.locator(':scope > summary').click();
-      }
+      await openGroup(group);
       await row.scrollIntoViewIfNeeded();
       await row.click();
       // highlight.js adds .hljs only once the panel's code is populated, so

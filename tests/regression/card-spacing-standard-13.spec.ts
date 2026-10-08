@@ -1,5 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
-import { elementReady } from '../base';
+import { elementReady, settlePage, buildInView } from '../base';
 
 /**
  * Card Spacing Standard §13 Compliance (#469)
@@ -39,7 +39,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     // Everything that could warn or fail has run once WB settles, where the page boots it (#1516: no fixed sleep).
-    await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 })).catch(() => {});
+    await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});
     expect(errors).toHaveLength(0);
   });
 
@@ -100,7 +100,15 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    const footerPadding = await page.locator('.x-card__footer').first().evaluate((el) => {
+    // The standard card's own footer, not whichever .x-card__footer exists
+    // first. Cards build lazily and, since #1760, in budgeted slices, so the
+    // first footer in the DOM was sometimes an x-cardexpandable's -- whose
+    // 0.75rem vertical padding is deliberate (card.css) -- and this failed
+    // about 1 run in 6 on main ("Received: 12"). The "Default Card" in
+    // #card-card is the plain card whose footer card.js builds from footer="".
+    const standardCard = page.locator('#card-card article[footer="Card footer"]').first();
+    await buildInView(standardCard);
+    const footerPadding = await standardCard.locator('.x-card__footer').evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         paddingTop: cs.paddingTop,
