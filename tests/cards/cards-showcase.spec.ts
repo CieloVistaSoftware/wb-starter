@@ -528,10 +528,15 @@ test.describe('Cards Showcase Page', () => {
         // buildInView re-scrolls EVERY FRAME until the host is x-ready, so a
         // reflow cannot strand it. Same mirror-image fix as #1304, which made
         // a click wait for readiness instead of assuming it.
-        await buildInView(page.locator(`[x-cardnotification][variant="${variant}"]`));
-        const card = page.locator(`[x-cardnotification][variant="${variant}"]`);
-        await expect(card, `variant="${variant}" should be demonstrated`).not.toHaveCount(0);
-        await expect(card.first()).toBeVisible();
+        const card = page.locator(`[x-cardnotification][variant="${variant}"]`).first();
+        await buildInView(card);
+        // #1763: the selector above matches the AUTHORED markup, built or not
+        // (#969 dropped .x-notification from it), so a count or a visibility
+        // check passes for a card that never rendered. Assert what only the
+        // build writes: the alert role and the variant's colour class.
+        await expect(card).toBeVisible();
+        await expect(card, `variant="${variant}" was never built as an alert`).toHaveAttribute('role', 'alert');
+        await expect(card, `variant="${variant}" never got its colour class`).toHaveClass(new RegExp(`\\bx-notification--${variant}\\b`));
       }
     });
 
