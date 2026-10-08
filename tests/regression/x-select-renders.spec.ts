@@ -41,7 +41,7 @@ test.describe('.x-select builds a real <select>, not a fake widget', () => {
       page,
       '<select clearable><option value="">Choose...</option><option value="1">One</option></select>'
     );
-    await expect(el).toHaveClass('x-select-clearable'); // the clearable wrapper div
+    await expect(el).toHaveClass('x-select__clearable'); // the clearable wrapper div
   });
 
   test('reapplying clearable enhancement does not nest duplicate wrappers', async ({ page }) => {
@@ -55,7 +55,7 @@ test.describe('.x-select builds a real <select>, not a fake widget', () => {
       (window as any).WB.behaviors.select(field, { clearable: true });
     }, await el.elementHandle());
 
-    await expect(el.locator('.x-select-clearable')).toHaveCount(1);
+    await expect(el.locator('.x-select__clearable')).toHaveCount(1);
     await expect(el.locator('.x-select__clear')).toHaveCount(1);
     await expect(el.locator('select')).toHaveCount(1);
   });

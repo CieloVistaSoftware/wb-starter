@@ -9,7 +9,7 @@ import { wbIdle } from '../base';
  * but one do (that one narrows 995 -> 877 when measured: #1579).
  *
  * This holds what #985 was about -- no panel GROWS visibly after it first
- * paints -- with a ResizeObserver on every .x-pre-wrapper from first paint.
+ * paints -- with a ResizeObserver on every .x-pre__wrapper from first paint.
  */
 test.describe.configure({ timeout: 90_000 });
 
@@ -28,8 +28,8 @@ for (const url of ['/demos/site/layout.html', '/demos/site/cards.html']) {
       }));
       new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach((n) => {
         if (!(n instanceof Element)) return;
-        if (n.classList.contains('x-pre-wrapper')) ro.observe(n);
-        n.querySelectorAll('.x-pre-wrapper').forEach((el) => ro.observe(el));
+        if (n.classList.contains('x-pre__wrapper')) ro.observe(n);
+        n.querySelectorAll('.x-pre__wrapper').forEach((el) => ro.observe(el));
       }))).observe(document, { childList: true, subtree: true });
     });
     await page.goto(url);

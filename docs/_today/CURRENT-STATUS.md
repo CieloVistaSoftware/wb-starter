@@ -16,6 +16,14 @@
 
 ---
 
+**Updated 2026-10-08.** Class naming convention, batch 4 (#1096).
+
+**Files touched:** `src/wb-viewmodels/semantics/code.js`, `pre.js`, `range.js`, `textarea.js`, `audio.js`, `select.js`, `timeline.js`; `src/wb-viewmodels/copy.js`, `label.js`, `collapse.js`, `demo.js`, `mdhtml.js` (comments); `src/styles/behaviors/accordion.css`, `code.css`, `copybutton.css`, `demo.css`, `fix-card.css`, `input.css`, `label.css`, `pre.css`, `timeline.css`, `src/styles/pages/showcase.css`; `pages/behaviors.html` (comment); `docs/behaviors/accordion.md`, `x-copybutton.md`, `docs/standards/CSS-CLASS-CONVENTION.md`, `docs/semantic-standard.md`, `docs/audits/HOST-CHILD-DISPATCH-AUDIT.md`; `data/behavior-component-index.json`, `data/search.json`; the naming compliance spec and 26 specs that selected the old classes.
+
+**Last action:** the single-dash parts semantic elements build are `__part`s: `x-code__wrapper`, `x-pre__wrapper`, `x-range__wrapper`/`__value`/`__labels`, `x-textarea__wrapper`, `x-copybutton__wrapper`, `x-label__group`, `x-select__clearable`, `x-timeline__item`, `x-accordion__item`/`__head`/`__title`/`__icon`/`__body`; the audio host is the modifier `x-audio--host`. Ratchet now 50 of 708.
+
+**Next step:** batch 5. What remains is mostly the card family (waits on other issues), the effect containers (`x-confetti-container` and friends), `x-drawer-push-target`, `x-notes-*` and a few state words (`x-pressed`, `x-resizing`, `x-scroll-lock`).
+
 **Updated 2026-10-07, night.** Class naming convention, batch 3 (#1096).
 
 **Files touched:** `src/wb-viewmodels/overlay.js`, `effects.js`, `semantics/dialog.js`, `dropdown.js`, `feedback.js`, `tooltip.js`; `src/styles/behaviors/dialog.css`, `drawer.css`, `dropdown.css`, `effects.css`, `layout.css`, `overlays.css`; `src/wb-models/toast.schema.json`, `tooltip.schema.json`; `docs/behaviors/dropdown.md`, `docs/standards/CSS-CLASS-CONVENTION.md`; the naming and has-a-rule compliance specs and 15 specs that selected trigger classes.

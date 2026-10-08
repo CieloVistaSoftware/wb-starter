@@ -22,17 +22,17 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
     await settlePage(page, { timeout: 15000 });
   });
 
-  test('.x-pre and .x-pre-wrapper have no style attribute at all', async ({ page }) => {
+  test('.x-pre and .x-pre__wrapper have no style attribute at all', async ({ page }) => {
     const pre = page.locator('.x-pre').first();
     await expect(pre).toBeVisible();
     await expect(pre).not.toHaveAttribute('style', /.+/);
 
-    const wrapper = page.locator('.x-pre-wrapper').first();
+    const wrapper = page.locator('.x-pre__wrapper').first();
     await expect(wrapper).not.toHaveAttribute('style', /.+/);
   });
 
   test('header controls are placed by a generated rule, not an inline `right`', async ({ page }) => {
-    const wrapper = page.locator('.x-pre-wrapper').filter({
+    const wrapper = page.locator('.x-pre__wrapper').filter({
       has: page.locator('.x-pre__copy, .x-pre__language, .x-pre__toggle'),
     }).first();
     await expect(wrapper).toBeVisible();
@@ -55,7 +55,7 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
   });
 
   test('code block still renders correctly: real background, monospace font, correct text', async ({ page }) => {
-    const wrapper = page.locator('.x-pre-wrapper').first();
+    const wrapper = page.locator('.x-pre__wrapper').first();
     const bg = await wrapper.evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(bg).not.toBe('rgba(0, 0, 0, 0)');
 

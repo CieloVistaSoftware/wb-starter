@@ -29,7 +29,7 @@ test.describe('#299 — pre.js collapse/expand toggle', () => {
     const toggle = page.locator('#test-container .x-pre__toggle').first();
     await expect(toggle).toBeVisible();
 
-    const wrapper = page.locator('#test-container .x-pre-wrapper').first();
+    const wrapper = page.locator('#test-container .x-pre__wrapper').first();
     const pre = wrapper.locator('pre.x-pre').first();
 
     const openHeight = await wrapper.evaluate((el) => el.getBoundingClientRect().height);

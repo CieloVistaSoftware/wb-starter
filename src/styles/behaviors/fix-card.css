@@ -98,8 +98,8 @@
         }
         
         /* Reset the wrapper injected by code/pre behavior */
-        .x-card.fix-card .x-code-wrapper,
-        .x-card.fix-card .x-pre-wrapper {
+        .x-card.fix-card .x-code__wrapper,
+        .x-card.fix-card .x-pre__wrapper {
           margin: 0;
           padding: 0;
           background: transparent;

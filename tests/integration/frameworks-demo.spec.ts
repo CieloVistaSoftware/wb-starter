@@ -43,13 +43,13 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
     ).toBeGreaterThan(2);
 
     // A copy button on every block (#449: the global system's own button,
-    // `.x-pre__copy`). It lives in the `.x-pre-wrapper` pre.js wraps each
+    // `.x-pre__copy`). It lives in the `.x-pre__wrapper` pre.js wraps each
     // block in, as a SIBLING of <pre> (not a child of it like the removed
     // `.code-copy-btn` was) -- select via the wrapper, not a `pre[language]`
     // descendant. The page's own script eager-scans each block sequentially,
     // so poll (like the hljs checks above) instead of a one-shot `.count()`
     // that could catch it mid-loop.
-    await expect(page.locator('.x-pre-wrapper:has(pre[language]) .x-pre__copy')).toHaveCount(n, { timeout: 15000 });
+    await expect(page.locator('.x-pre__wrapper:has(pre[language]) .x-pre__copy')).toHaveCount(n, { timeout: 15000 });
 
     // Wrap-vs-scroll behavior for these blocks is covered by its own dedicated
     // regression test (tests/regression/frameworks-code-block-no-wrap.spec.ts)

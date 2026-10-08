@@ -306,7 +306,7 @@ export function code(element, options = {}) {
     // which builds its own)
     else if (!isInsidePre) {
       wrapper = document.createElement('div');
-      wrapper.className = 'x-code-wrapper';
+      wrapper.className = 'x-code__wrapper';
 
       element.parentNode.insertBefore(wrapper, element);
       wrapper.appendChild(element);
@@ -336,7 +336,7 @@ export function code(element, options = {}) {
   if (config.language && !isInsidePre) { // Only add badge if not inside PRE (PRE handles its own badge)
     if (!wrapper) {
       wrapper = document.createElement('div');
-      wrapper.className = 'x-code-wrapper';
+      wrapper.className = 'x-code__wrapper';
       element.parentNode.insertBefore(wrapper, element);
       wrapper.appendChild(element);
     }

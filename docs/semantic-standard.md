@@ -142,7 +142,7 @@
 ### Accordion/Expandable
 
 Use the native `<details>`: it is the expandable, and it gets the `details`
-behavior from its tag. There is no `x-accordion-item`; a group of panels is
+behavior from its tag. There is no item-level accordion attribute; a group of panels is
 `x-accordion` (see [accordion](./behaviors/accordion.md)).
 
 <div x-demo>

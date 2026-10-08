@@ -383,9 +383,9 @@ export function audio(element, options = {}) {
 function uiHost(element) {
   if (element.tagName !== 'AUDIO') return element;
   const existing = element.parentElement;
-  if (existing && existing.classList.contains('x-audio-host')) return existing;
+  if (existing && existing.classList.contains('x-audio--host')) return existing;
   const wrapper = element.ownerDocument.createElement('div');
-  wrapper.className = 'x-audio-host x-audio';
+  wrapper.className = 'x-audio x-audio--host';
   element.replaceWith(wrapper);
   wrapper.appendChild(element);
   return wrapper;

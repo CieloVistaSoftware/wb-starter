@@ -127,7 +127,8 @@ export function collapse(element, options = {}) {
  * <summary> element (see src/wb-viewmodels/semantics/details.js). Retained
  * for back-compat; emits a one-time console warning. Ported from the
  * `extends HTMLElement` class removed in #279 — same DOM/class output
- * (.x-accordion-item/-head/-title/-icon/-body), so existing CSS and tests
+ * (.x-accordion__item/__head/__title/__icon/__body; single-dash parts until
+ * #1096 renamed them), so existing CSS and tests
  * keep working unchanged.
  *
  * CSS: src/styles/behaviors/accordion.css + collapse.css
@@ -136,20 +137,20 @@ export function collapse(element, options = {}) {
  */
 function buildAccordionItem(element, title, contentHtml, open) {
   const item = document.createElement('div');
-  item.className = 'x-accordion-item' + (open ? ' open' : '');
+  item.className = 'x-accordion__item' + (open ? ' open' : '');
 
   const head = document.createElement('div');
-  head.className = 'x-accordion-head';
+  head.className = 'x-accordion__head';
   head.setAttribute('role', 'button');
   head.setAttribute('tabindex', '0');
   head.setAttribute('aria-expanded', String(open));
 
   const label = document.createElement('span');
-  label.className = 'x-accordion-title';
+  label.className = 'x-accordion__title';
   label.textContent = title;
 
   const icon = document.createElement('span');
-  icon.className = 'x-accordion-icon';
+  icon.className = 'x-accordion__icon';
   icon.setAttribute('aria-hidden', 'true');
   icon.textContent = open ? '▾' : '▸';
 
@@ -157,7 +158,7 @@ function buildAccordionItem(element, title, contentHtml, open) {
   head.appendChild(icon);
 
   const body = document.createElement('div');
-  body.className = 'x-accordion-body';
+  body.className = 'x-accordion__body';
   body.innerHTML = contentHtml;
 
   item.appendChild(head);

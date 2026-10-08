@@ -24,7 +24,7 @@ body.feedback-page .x-demo__grid {
    changing it, so the card renders ~2.5% of its own height ABOVE and BELOW the
    space the demo reserved for it. Measured live on demos/site/cards.html: the
    featured "Pro" card's 2px border landed 3px onto the top edge of that same
-   demo's own <div class="x-pre-wrapper"> code panel, while the two
+   demo's own <div class="x-pre__wrapper"> code panel, while the two
    non-featured cards beside it — identical in every other way — sat clean.
    The scale IS what `featured` demonstrates, so reserve the growth as real
    layout space instead of un-scaling the card. Attribute-keyed because the

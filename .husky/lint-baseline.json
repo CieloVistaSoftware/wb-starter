@@ -8,7 +8,7 @@
     "Auto-lowered by 1 on 2026-10-08."
   ],
   "generated": "2026-10-08",
-  "totalProblems": 304,
+  "totalProblems": 303,
   "filesWithProblems": 137,
   "files": {
     "scripts/add-site-tests.mjs": 1,
@@ -88,7 +88,7 @@
     "src/wb-viewmodels/card.js": 2,
     "src/wb-viewmodels/colorpicker.js": 1,
     "src/wb-viewmodels/copy.js": 1,
-    "src/wb-viewmodels/demo.js": 4,
+    "src/wb-viewmodels/demo.js": 3,
     "src/wb-viewmodels/error.js": 1,
     "src/wb-viewmodels/file.js": 1,
     "src/wb-viewmodels/globe.js": 1,
