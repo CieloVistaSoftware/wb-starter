@@ -45,7 +45,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // values) with every element on /?page=themes computing the same at 16px.
 // 491: pages/behaviors.css converted (17 values: radii and two 600px caps),
 // the first 6,000 elements of /?page=behaviors computing the same at 16px.
-const BASELINE = 491;
+const BASELINE = 401;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
