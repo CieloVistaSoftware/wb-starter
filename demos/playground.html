@@ -66,6 +66,24 @@
       font-size: 0.9rem; line-height: 1.6; tab-size: 2; white-space: pre; }
     #pg-input:focus { outline: none; }
 
+    /* #265: completions for x-* behaviors and their options, under the caret.
+       src/lib/html-editor-assist.js builds the list and places it (a generated
+       rule sets left/top); everything else about it is here. */
+    .pg-assist-host { position: relative; overflow: visible; }
+    .pg-assist { position: absolute; z-index: 20; margin: 0.25rem 0 0; padding: 0.25rem 0;
+      list-style: none; min-width: 14rem; max-width: min(30rem, 90%);
+      background: var(--bg-secondary); color: var(--text-primary);
+      border: 1px solid var(--border-color); border-radius: 0.5rem;
+      box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 0.85rem; }
+    .pg-assist[hidden] { display: none; }
+    .pg-assist__item { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.3rem 0.75rem; cursor: pointer; }
+    .pg-assist__item--active { background: var(--primary); color: var(--text-on-accent); }
+    .pg-assist__label { font-weight: 600; white-space: nowrap; }
+    .pg-assist__detail { color: var(--text-secondary); font-family: system-ui, sans-serif; font-size: 0.78rem;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pg-assist__item--active .pg-assist__detail { color: inherit; opacity: 0.85; }
+
     /* John, screenshot: "Why does playground come up looking like this?" --
        the default-loaded example uses x-stagelight variant="spotlight",
        whose ::after overlay is `position: fixed` (stagelight.js, by design
@@ -265,7 +283,10 @@
     // use (src/wb-viewmodels/copy.js), so the Playground's copy actions
     // below don't hand-roll their own navigator.clipboard try/catch.
     import { writeToClipboard } from '../src/wb-viewmodels/copy.js';
-    import { getExtensionBehavior } from '../src/core/tag-map.js';
+    import { getExtensionBehavior, extensionMap } from '../src/core/tag-map.js';
+    import { WB_LAZY_ONLY_ATTRIBUTES } from '../src/core/wb-lazy.js';
+    import { loadSchemaIndex } from '../src/core/schema-index.js';
+    import { attachEditorAssist } from '../src/lib/html-editor-assist.js';
     import { oneTwentyHeroes } from '../src/lib/hero-permutations.js';
 
     const input = document.getElementById('pg-input');
@@ -1031,6 +1052,14 @@
       e.preventDefault();
       document.execCommand('insertText', false, '\n' + indent);
     });
+
+    // #265: Tab indents, and typing offers x-* behaviors and their options.
+    // Every registered attribute, from the same two registries the runtime
+    // reads; each behavior's options from the schema index.
+    attachEditorAssist(input, async () => ({
+      behaviors: { ...WB_LAZY_ONLY_ATTRIBUTES, ...extensionMap },
+      schemas: await loadSchemaIndex(),
+    }), { popupClass: 'pg-assist' });
 
     let debounce;
     input.addEventListener('input', () => {
