@@ -58,7 +58,12 @@ const PLAIN = `
 
 async function mount(page, html) {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => !!(window as any).WB, undefined, { timeout: 20_000 });
+  // WBSite, not WB: src/main.js sets window.WB before site.init() and
+  // navigateTo() have finished, and window.WBSite only after both. Replacing
+  // the body while the site is still booting pulls #app out from under it,
+  // and a boot that fails there falls back to alert(); a JavaScript dialog
+  // during this test is what failed it on a loaded CI runner (#1790).
+  await page.waitForFunction(() => !!(window as any).WBSite, undefined, { timeout: 20_000 });
   await page.evaluate((markup) => { document.body.innerHTML = markup; }, html);
   await page.evaluate(async () => { await (window as any).WB.scan(document.body); });
   await page.waitForFunction(

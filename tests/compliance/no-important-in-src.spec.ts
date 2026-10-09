@@ -22,7 +22,8 @@ const root = process.cwd();
 
 /** !important declarations still in src/ on 2026-10-07, by file. Shrink only. */
 const REGISTER: Record<string, number> = {
-  'src/styles/normalize.css': 5,   // prefers-reduced-motion and [hidden]: both must beat every component's own value, by design
+  // Empty since 2026-10-09: normalize.css's reduced-motion and [hidden]
+  // resets win by specificity now. Nothing may be added.
 };
 
 /** Remove comments. CSS has only block comments; JS also has line comments. */
