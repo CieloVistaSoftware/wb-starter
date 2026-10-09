@@ -537,8 +537,12 @@
     // Share the page's existing search box rather than adding a second one.
     const search = document.getElementById('docs-search');
     if (search) {
-      const applyFilter = function () {
-        const term = search.value.trim().toLowerCase();
+      const applyFilter = function (initial) {
+        // The first pass can run before loadDocs() above has put ?q= into the
+        // box (it does so only after the manifest arrives), so it reads the
+        // URL too. Typing always reads the box alone.
+        const raw = search.value || (initial === true ? new URLSearchParams(window.location.search).get('q') || '' : '');
+        const term = raw.trim().toLowerCase();
         for (const list of [semanticList, extensionList]) {
           let shown = 0;
           for (const li of list.children) {
@@ -549,11 +553,11 @@
           list.closest('.behaviors-section').hidden = shown === 0;
         }
       };
-      search.addEventListener('input', applyFilter);
+      search.addEventListener('input', () => applyFilter(false));
       // #1184: a filter already in the box (?q=, or Back to Docs) applies to
       // these sections too. They only listened for typing, so returning to a
       // filtered list showed every behavior chip unfiltered above it.
-      applyFilter();
+      applyFilter(true);
     }
     wrap.dataset.built = '1';
   })();
