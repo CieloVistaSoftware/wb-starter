@@ -168,12 +168,19 @@ test.describe('x-tooltip — variant (4 declared values)', () => {
 
 test.describe('x-tooltip — delay and hideDelay', () => {
   test('delay="0" shows immediately', async ({ page }) => {
+    // On the page's own timers, like the delay="800" test below. This used to
+    // time hover() plus visibility polling with Date.now() against a 400ms
+    // budget, which measured the runner: under a full parallel run it read
+    // 407ms with the tooltip doing nothing wrong. The question is only "does
+    // delay=0 skip the 200ms default", so step the clock to 150ms, short of
+    // that default, and the tip must already be there.
+    await page.clock.install();
     await harness(page);
     const t = await trigger(page, 'content="d" delay="0"');
-    const started = Date.now();
-    await t.hover();
-    await expect(page.locator(TIP).first()).toBeVisible({ timeout: 3000 });
-    expect(Date.now() - started, 'delay=0 must not wait the 200ms default').toBeLessThan(400);
+    await freezeClock(page);
+    await pointerTo(page, t);
+    await page.clock.runFor(150);
+    await expect(page.locator(TIP).first(), 'delay=0 waited for the 200ms default').toBeVisible({ timeout: 3000 });
   });
 
   test('delay="800" does NOT show before its time', async ({ page }) => {
