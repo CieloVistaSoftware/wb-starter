@@ -51,6 +51,13 @@ export const ATTRIBUTE_ALIASES = Object.freeze({
   ripple: { color: ['ripple-color'], duration: ['ripple-duration'], centered: ['ripple-centered'] },
   sticky: { animated: ['animate'] },
   tabs: { tabTitle: ['tab'] },
+  // #879: feedback.js reads toast-message/-title/-variant because `title` and
+  // `variant` are also the host element's own attributes (a native tooltip, a
+  // button's look): <button x-toast toast-title="Saved" title="Save the form">
+  // keeps both. tooltip.js reads tooltip-position/-delay/-hide-delay for the
+  // markup already written with them (docs/behaviors/tooltip.md).
+  toast: { message: ['toast-message'], title: ['toast-title'], variant: ['toast-variant'] },
+  tooltip: { position: ['tooltip-position'], delay: ['tooltip-delay'], hideDelay: ['tooltip-hide-delay'] },
 });
 
 /**

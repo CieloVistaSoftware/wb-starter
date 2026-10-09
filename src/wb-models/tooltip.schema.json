@@ -82,6 +82,13 @@
       "type": "string",
       "description": "Maximum tooltip width",
       "default": "200px"
+    },
+    "tooltipClass": {
+      "type": "string",
+      "description": "Extra class names (space-separated) added to the tooltip bubble, for the author's own CSS to style it",
+      "default": "",
+      "visual": false,
+      "visualReason": "Only adds class names to the bubble; it looks the same until the author's own stylesheet targets them."
     }
   },
   "$view": [],

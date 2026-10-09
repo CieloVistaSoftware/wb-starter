@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sheet.schema.json",
+  "title": "Sheet",
+  "description": "Makes its host a trigger for a notes panel: a click opens a resizable sheet from the left edge with a title and either the given content or a notes textarea, and drag on its edge resizes it between its minimum and maximum width. It applies to any clickable element, so it names no host.",
+  "schemaFor": "sheet",
+  "properties": {
+    "sheetTitle": {
+      "type": "string",
+      "description": "The sheet's heading. Named sheet-title, not title, so the trigger keeps its own native title tooltip; heading= is read too.",
+      "default": "Notes"
+    },
+    "sheetContent": {
+      "type": "string",
+      "description": "The sheet's body (HTML). Empty gives a notes textarea. description= is read too.",
+      "default": ""
+    },
+    "width": {
+      "type": "string",
+      "description": "The sheet's opening width (any CSS length).",
+      "default": "320px"
+    },
+    "minWidth": {
+      "type": "string",
+      "description": "The narrowest a drag can make the sheet.",
+      "default": "200px",
+      "visual": false,
+      "visualReason": "Only bounds a drag on the resize edge; the sheet opens at width either way."
+    },
+    "maxWidth": {
+      "type": "string",
+      "description": "The widest a drag can make the sheet.",
+      "default": "600px",
+      "visual": false,
+      "visualReason": "Only bounds a drag on the resize edge; the sheet opens at width either way."
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-sheet"
+  },
+  "test": {
+    "setup": [
+      "<button x-sheet sheet-title=\"Notes\">Open notes</button>",
+      "<button x-sheet sheet-title=\"Wide notes\" width=\"420px\">Open wide notes</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/overlay.js sheet() — every property here is one the behavior reads"
+  }
+}

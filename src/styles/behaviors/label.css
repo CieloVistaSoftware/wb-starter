@@ -23,9 +23,18 @@
    label-beside-its-control pattern): that label is always a flex item
    inside .x-label__group (inline-flex), and a flex item's own display
    value doesn't affect its position — the flex container's layout wins
-   regardless. */
-.x-label {
+   regardless.
+   #1795: display sits in :where() (0,0,0) so a component's own class on the
+   same <label> decides the layout wherever its stylesheet loads. radio.js
+   wraps a labelled radio in <label class="x-radio__wrapper">, which the label
+   behavior also marks x-label; at (0,1,0) and later in the cascade this rule
+   turned the wrapper's inline-flex into block, its 0.5rem gap did nothing,
+   and the text touched the radio. */
+:where(.x-label) {
   display: block;
+}
+
+.x-label {
   color: var(--text-primary);
   font-size: var(--text-sm);
 }

@@ -104,7 +104,7 @@
   backdrop-filter: var(--x-glass-blur);
   -webkit-backdrop-filter: var(--x-glass-blur);
   border: 1px solid var(--x-glass-border);
-  border-radius: 16px;
+  border-radius: 1rem;
   transition: all var(--x-transition-base);
 }
 
@@ -119,7 +119,7 @@
 .x-gradient-border {
   position: relative;
   background: var(--bg-primary);
-  border-radius: 16px;
+  border-radius: 1rem;
   padding: 1px;
 }
 
@@ -127,7 +127,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 1rem;
   padding: 1px;
   background: var(--x-gradient-primary);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -150,7 +150,7 @@
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--x-transition-base);
@@ -189,7 +189,7 @@
   color: var(--text-primary);
   border: 1px solid var(--x-glass-border);
   padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   font-weight: 500;
   cursor: pointer;
   transition: all var(--x-transition-base);
@@ -207,7 +207,7 @@
   backdrop-filter: var(--x-glass-blur);
   -webkit-backdrop-filter: var(--x-glass-blur);
   border: 1px solid var(--x-glass-border);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   padding: 0.75rem 1rem;
   color: var(--text-primary);
   transition: all var(--x-transition-base);
@@ -230,7 +230,7 @@
   backdrop-filter: var(--x-glass-blur);
   -webkit-backdrop-filter: var(--x-glass-blur);
   border: 1px solid var(--x-glass-border);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   padding: 1.5rem;
   transition: all var(--x-transition-bounce);
 }
@@ -321,7 +321,7 @@
   padding: 0.25rem 0.75rem;
   background: var(--x-gradient-primary);
   color: white;
-  border-radius: 999px;
+  border-radius: 999rem;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -330,16 +330,16 @@
 
 /* Progress with gradient */
 .x-progress-gradient {
-  height: 8px;
+  height: 0.5rem;
   background: var(--x-glass-bg);
-  border-radius: 999px;
+  border-radius: 999rem;
   overflow: hidden;
 }
 
 .x-progress-gradient__bar {
   height: 100%;
   background: var(--x-gradient-primary);
-  border-radius: 999px;
+  border-radius: 999rem;
   transition: width var(--x-transition-slow);
   box-shadow: var(--x-glow-primary);
 }
@@ -347,10 +347,10 @@
 /* Avatar with gradient ring */
 .x-avatar-gradient {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  padding: 3px;
+  padding: 0.1875rem;
   background: var(--x-gradient-primary);
 }
 
@@ -363,8 +363,8 @@
 
 /* Notification Dot */
 .x-dot-pulse {
-  width: 10px;
-  height: 10px;
+  width: 0.625rem;
+  height: 0.625rem;
   border-radius: 50%;
   background: var(--x-gradient-primary);
   position: relative;
@@ -408,7 +408,7 @@
   background: var(--x-glass-bg);
   backdrop-filter: var(--x-glass-blur);
   border: 1px solid var(--x-glass-border);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-size: 0.8125rem;
   transition: all var(--x-transition-fast);
 }
@@ -424,7 +424,7 @@
   backdrop-filter: var(--x-glass-blur);
   -webkit-backdrop-filter: var(--x-glass-blur);
   border: 1px solid var(--x-glass-border);
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 /* Modal glass overlay */
@@ -438,7 +438,7 @@
   backdrop-filter: var(--x-glass-blur-heavy);
   -webkit-backdrop-filter: var(--x-glass-blur-heavy);
   border: 1px solid var(--x-glass-border);
-  border-radius: 24px;
+  border-radius: 1.5rem;
   box-shadow: var(--x-shadow-elevated);
 }
 
@@ -464,7 +464,7 @@
 .x-hero__content {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -480,7 +480,7 @@
   font-size: 1.25rem;
   color: var(--text-secondary);
   margin-bottom: 2rem;
-  max-width: 600px;
+  max-width: 37.5rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -517,7 +517,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  max-width: 1200px;
+  max-width: 75rem;
   text-align: left;
   align-items: center;
 }
@@ -534,7 +534,7 @@
 .x-hero--split .x-hero__visual img {
   width: 100%;
   height: auto;
-  border-radius: 24px;
+  border-radius: 1.5rem;
   box-shadow: var(--x-shadow-elevated);
 }
 
@@ -614,7 +614,7 @@
 
 .x-hero__shooting-star {
   position: absolute;
-  width: 100px;
+  width: 6.25rem;
   height: 2px;
   background: linear-gradient(90deg, white, transparent);
   animation: x-shooting-star 3s ease-in-out infinite;
@@ -650,7 +650,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 12.5rem;
   background: linear-gradient(to top, var(--bg-secondary), transparent);
   pointer-events: none;
 }
@@ -668,7 +668,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 150px;
+  height: 9.375rem;
   overflow: hidden;
 }
 
@@ -688,14 +688,14 @@
 }
 
 .x-hero__wave:nth-child(2) {
-  bottom: 10px;
+  bottom: 0.625rem;
   opacity: 0.5;
   animation-delay: -5s;
   animation-duration: 20s;
 }
 
 .x-hero__wave:nth-child(3) {
-  bottom: 20px;
+  bottom: 1.25rem;
   opacity: 0.3;
   animation-delay: -10s;
   animation-duration: 25s;
@@ -872,7 +872,7 @@
   backdrop-filter: var(--x-glass-blur-heavy);
   -webkit-backdrop-filter: var(--x-glass-blur-heavy);
   border: 1px solid var(--x-glass-border);
-  border-radius: 32px;
+  border-radius: 2rem;
   padding: 4rem;
   box-shadow: var(--x-shadow-elevated);
 }

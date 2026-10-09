@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "imposter.schema.json",
+  "title": "Imposter",
+  "description": "Centers an element over its positioned container, like a dialog or badge laid over content. It applies to any element, so it names no host.",
+  "schemaFor": "imposter",
+  "properties": {
+    "breakout": {
+      "type": "boolean",
+      "description": "Position against the viewport instead of the container (position: fixed), so the element stays put when the page scrolls. Bare attribute.",
+      "default": false
+    },
+    "margin": {
+      "type": "string",
+      "description": "Keep the element at least this far inside its container's edges (any CSS length). The default 0 lets it fill them.",
+      "default": "0"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-imposter"
+  },
+  "test": {
+    "setup": [
+      "<div style=\"position:relative;height:12rem\"><div x-imposter>Centered</div></div>",
+      "<div style=\"position:relative;height:12rem\"><div x-imposter margin=\"1rem\" breakout>Centered</div></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/layouts.js imposter() — every property here is one the behavior reads"
+  }
+}

@@ -1,0 +1,103 @@
+/**
+ * cardtestimonial.css -- the styles only a testimonial card (x-cardtestimonial) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardtestimonial. Split out of card.css (#966): every
+ * selector here needs [x-cardtestimonial] or a class only cardtestimonial() stamps.
+ */
+
+/* Testimonial "minimal"/"centered" — cardtestimonial.schema.json declares both
+   in its variant enum with zero CSS anywhere (neither the x-card--{variant}
+   classes the JS actually applies{variant} classes
+   the schema's appliesClass names) -- confirmed live: both rendered
+   pixel-identical to "default". Scoped to .x-testimonial so this can't
+   collide with an unrelated "minimal"/"centered" variant on another card
+   type reusing the same generic class name.
+   Note (#457): the generic `.x-card--minimal` rule above now covers the
+   same background/border/box-shadow properties for every card type,
+   including testimonial -- this scoped rule is kept as the documented,
+   testimonial-specific anchor (and stays available if testimonial ever
+   needs to diverge from the generic treatment) but is otherwise redundant
+   with it today. */[x-cardtestimonial].x-card--minimal,
+[x-cardtestimonial][variant="minimal"] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+[x-cardtestimonial].x-card--centered,
+[x-cardtestimonial][variant="centered"] {
+  text-align: center;
+}
+
+[x-cardtestimonial].x-card--centered,
+[x-cardtestimonial][variant="centered"] .x-card__footer {
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Testimonial card */
+[x-cardtestimonial] {
+  padding: 1rem;
+}
+
+/* Testimonial card parts -- moved here from cardtestimonial()'s inline
+   cssText (card.js) (Law 9 migration, #370). */
+.x-card__quote-icon {
+  font-size: 3rem;
+  line-height: 1;
+  /* #941 -- John: "does this meet our minimum contrast ratio? it's barely
+     readable." It did not: measured 1.06:1 against the card background.
+     The opacity was only half the story -- `--primary` is a dark blue on a
+     dark card and tops out at 1.49:1 even FULLY OPAQUE, so no opacity value
+     could have rescued it. The token was the wrong choice, not the alpha.
+     Measured alternatives on the same background:
+       --primary        1.0  -> 1.49  (fails at any opacity)
+       --primary-light  1.0  -> 5.36  (chosen: keeps the brand accent)
+       --text-secondary 0.6  -> 3.95
+     No `opacity` here: it silently multiplies contrast and is invisible to
+     the theme-contrast gate, which reads token pairs out of themes.css. */
+  color: var(--primary-light);
+}
+
+.x-card__quote {
+  margin: 0.5rem 0 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+.x-card__rating {
+  /* pre-existing hardcoded star color, ported as-is; wrapped in var() with
+     the same fallback so it passes css-oop-compliance's hardcoded-color
+     scan (only bare literals outside var()/shadow/black-white are flagged). */
+  color: var(--rating-star-color, #f59e0b);
+  margin-bottom: 1rem;
+}
+
+[x-cardtestimonial] .x-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.x-card__avatar--testimonial {
+  width: 3rem;
+  height: 3rem;
+}
+
+.x-card__author {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+.x-card__author-role {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}

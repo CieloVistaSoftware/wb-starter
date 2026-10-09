@@ -217,21 +217,28 @@ select {
   font: inherit;
 }
 
-/* Remove animations for reduced motion */
+/* Remove animations for reduced motion.
+   #1014: wins by specificity, not !important. :is(*, #_#_) matches every
+   element and carries the specificity of its strongest argument, two IDs
+   (2,0,0), so it beats every class, attribute and single-ID rule in the
+   library wherever they sit in the cascade. Inline styles still win, which
+   is how an author opts one element back in.
+   tests/compliance/reduced-motion-without-important.spec.ts holds it. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  :is(*, #_#_),
+  :is(*, #_#_)::before,
+  :is(*, #_#_)::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
   }
 }
 
-/* Hidden attribute support */
-[hidden] {
-  display: none !important;
+/* Hidden attribute support. #1014: (2,1,0) by the same :is() as above, so
+   a component's own display value cannot show a hidden element. */
+[hidden]:is(*, #_#_) {
+  display: none;
 }
 
 /* Screen reader only utility */

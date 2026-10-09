@@ -61,11 +61,19 @@ test.describe('.x-card variant surface (cards demo page)', () => {
     const bordered = cardFor(page, 'bordered');
     await buildInView(bordered);
 
+    // buildInView waits until the card is built, and a card is not built
+    // before card.css has arrived (the style loader holds it), so the border
+    // is final here: read it once rather than poll it. On a loaded CI runner
+    // one evaluate on this 56-card page took 6.4s, longer than expect.poll's
+    // 5s default, so the poll timed out without ever getting an answer while
+    // the border was already 2px (run 37870844099).
     const border = () => bordered.evaluate((el) => getComputedStyle(el).border);
-    await expect.poll(border).toContain('2px');
     const before = await border();
+    expect(before).toContain('2px');
     await bordered.hover();
     await page.mouse.move(0, 0); // move away to fire mouseleave
-    await expect.poll(border).toBe(before);
+    // mouseleave re-styles the card asynchronously, so this one does poll --
+    // with the same budget buildInView gets, not the 5s default.
+    await expect.poll(border, { timeout: 15000 }).toBe(before);
   });
 });

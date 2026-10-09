@@ -1,0 +1,52 @@
+/**
+ * cardminimizable.css -- the styles only a minimizable card (x-cardminimizable) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardminimizable. Split out of card.css (#966): every
+ * selector here needs [x-cardminimizable] or a class only cardminimizable() stamps.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════ MINIMIZABLE CARD — cardminimizable(), card.js. Moved here from inline styles (Law 9 migration, #370). ═══════════════════════════════════════════════════════════════════════════ */ /* Scoped (0,0,2,0) -- overrides the shared `.x-card__header` padding/ align-items for this component specifically. */ [x-cardminimizable] .x-card__header { padding: 1rem; align-items: center; gap: 0.75rem; }
+
+[x-cardminimizable] .x-card__title { margin: 0; color: var(--text-primary); }
+
+[x-cardminimizable] .x-card__subtitle { font-size: 0.85rem; }
+
+/* Scoped `.x-card-minimizable .x-card__minimize-btn` (0,0,2,0), not a bare class: themes.css's `[data-theme] button` reset (0,0,1,1) otherwise wins the specificity tie-break -- same trap fixed for cardbutton()/ cardproduct()/cardexpandable() above. */ [x-cardminimizable] .x-card__minimize-btn { width: 2rem; height: 2rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.375rem; color: var(--text-primary); font-size: 1.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+.x-card__minimizable-content { padding: 1rem; overflow: hidden; transition: all 0.3s ease; }
+
+/* Driven by the `x-card--minimized` class (already toggled in cardminimizable()'s toggle(), card.js) -- replaces the old inline max-height/padding/opacity/display sets. */ .x-card--minimized .x-card__minimizable-content { max-height: 0; padding: 0 1rem; opacity: 0; }
+
+.x-card--minimized .x-card__footer { display: none; }
+
+/* Minimizable card: header row and title/subtitle. The <header> carries no
+   class (card.css names card parts by tag), so these are scoped by the host's
+   attribute, twice, to outrank `article > header` / `:is([x-card…]) > header`
+   (the weight of the two injected classes it replaced, #969). */
+[x-cardminimizable][x-cardminimizable] > header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+[x-cardminimizable][x-cardminimizable] > header > .x-card__title-wrap > h3 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+[x-cardminimizable][x-cardminimizable] > header > .x-card__title-wrap > div {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* After the first toggle an open body is capped at 1000px, so max-height has
+   an end value to transition to; `.x-card--minimized ...` (0,2,0) still wins
+   while collapsed. */
+.x-card__minimizable-content--toggled {
+  max-height: 62.5rem;
+}

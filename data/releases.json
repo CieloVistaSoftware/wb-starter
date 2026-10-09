@@ -6,6 +6,268 @@
   ],
   "releases": [
     {
+      "version": "1.0.470",
+      "date": "2026-10-08",
+      "summary": "Test-coverage-compliance caps enum properties with no permutation (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1803\" target=\"_blank\" rel=\"noopener\">PR 1803</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Offcanvas&#39;s position enum gets permutation coverage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fc950d10440b09c9c6a54fc6e3cfd2529a0b8f5c\" target=\"_blank\" rel=\"noopener\"><code>fc950d1</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Offcanvas and sheet get schemas</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4eb83d943f0cc86c0cbfd1b148d70c561f503bc8\" target=\"_blank\" rel=\"noopener\"><code>4eb83d9</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/test-coverage-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/test-coverage-compliance.spec.ts</a> -g &quot;enum properties&quot;</code>. Before: failed with 50 uncovered enum properties (cap: under 50). Now: offcanvas.position is covered and it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e39a88493995db19d9a96d7368a1a60363ae8cba\" target=\"_blank\" rel=\"noopener\"><code>e39a884</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.469",
+      "date": "2026-10-08",
+      "summary": "The spec replaced document.body as soon as window.WB existed, but (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1790\" target=\"_blank\" rel=\"noopener\">PR 1790</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>X-table-sort-value mounts only after the site has finished booting</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fffc79205587e0d14170a3e372637b9893e9fbba\" target=\"_blank\" rel=\"noopener\"><code>fffc792</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Card-variant-surface reads the built card&#39;s border instead of polling it for 5s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/01bde339fd06ea13b2ffdd190b4ce9905b341845\" target=\"_blank\" rel=\"noopener\"><code>01bde33</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The last 5 !important in src/ win by specificity instead</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3e78e9f283d3b33acd5671e9e20275a8b5aff78d\" target=\"_blank\" rel=\"noopener\"><code>3e78e9f</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/x-table-sort-value.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/x-table-sort-value.spec.ts</a> --repeat-each=3</code>. Before: mount() waited for window.WB, which exists while the site is still booting. Now: it waits for window.WBSite, set only once boot has finished (9 of 9 passed locally).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3d01add7e79da29883e959f7e364e02243d196ec\" target=\"_blank\" rel=\"noopener\"><code>3d01add</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.468",
+      "date": "2026-10-08",
+      "summary": "The new Introduction page had no file at its own address, so opening /wb-starter/introduction on GitHub Pages directly would have answered 404. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1796\" target=\"_blank\" rel=\"noopener\">PR 1796</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Introduction gets its own address, introduction/index.html</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/48d012427a29725f3338221bdaa3b3bd1c17a279\" target=\"_blank\" rel=\"noopener\"><code>48d0124</code></a>",
+          "issues": [
+            1244
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Leave <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/md-link-audit.json\" target=\"_blank\" rel=\"noopener\">data/md-link-audit.json</a> as main has it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c53c404b4b484a71c77407d27b65fc77c8c9becb\" target=\"_blank\" rel=\"noopener\"><code>c53c404</code></a>",
+          "issues": [
+            1244
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>An Introduction page, pinned on the Documentation page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/131eff50ee82b8fe7eef1662a4672243435c22b2\" target=\"_blank\" rel=\"noopener\"><code>131eff5</code></a>",
+          "issues": [
+            1244
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/introduction\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/introduction</a> after the merge. Before: GitHub Pages served its 404 page with a 404 status. Now: it answers 200 and shows the Introduction.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2240ab49ff859ee42f112afa4d2502401ff6de28\" target=\"_blank\" rel=\"noopener\"><code>2240ab4</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.467",
+      "date": "2026-10-08",
+      "summary": "Feedback.js reads toast-message, toast-title and toast-variant, and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1802\" target=\"_blank\" rel=\"noopener\">PR 1802</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Toast and tooltip alternate spellings are registered synonyms; tooltip declares tooltipClass</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/149a2428162778fb411c2b90f741d7741ccd5a7b\" target=\"_blank\" rel=\"noopener\"><code>149a242</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node -e &quot;import(&#39;./scripts/lib/attribute-audit.mjs&#39;).then(m=&gt;console.log(m.auditAll().totals.byRule.R4))&quot;</code>. Before: 16, listing toast-message, toast-title, toast-variant and the four tooltip-* names. Now: 9, and none of them is listed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/399582e22abbd233f247bac1eb60569c55f791c3\" target=\"_blank\" rel=\"noopener\"><code>399582e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.466",
+      "date": "2026-10-08",
+      "summary": "A radio with a label (input type=&quot;radio&quot; label=&quot;Monthly billing&quot;) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1801\" target=\"_blank\" rel=\"noopener\">PR 1801</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1795\" target=\"_blank\" rel=\"noopener\">#1795</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A labelled radio has a gap between the button and its text</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1795\" target=\"_blank\" rel=\"noopener\">#1795</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/10c15f20dab937596048ad05ad84ccd4a25bf097\" target=\"_blank\" rel=\"noopener\"><code>10c15f2</code></a>",
+          "issues": [
+            1795
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, expand input[type=&quot;radio&quot;] and pick &quot;checked with label&quot;. Before: the radio circle overlaps the &quot;M&quot; of &quot;Monthly billing&quot;. Now: the text starts 0.5rem after the circle, and fieldset &quot;radio choice&quot; still stacks Free, Team and Enterprise one per line.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/057ecb565d7fd50bb614fc249a29ebe927546e4d\" target=\"_blank\" rel=\"noopener\"><code>057ecb5</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.465",
+      "date": "2026-10-08",
+      "summary": "X-imposter had no schema, and drawerLayout&#39;s schema left out saveState, toggleSelector and handleSelector, so five options that work (breakout, margin and those three) appeared in no docs table, showcase or autocomplete. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1792\" target=\"_blank\" rel=\"noopener\">PR 1792</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate the demos list for the 45th layout demo</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3f1c0d15eaac3c868ce1f3ef9f55e2b04d89509b\" target=\"_blank\" rel=\"noopener\"><code>3f1c0d1</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate demos/site for drawerLayout&#39;s declared saveState</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1fbb32e7732eb299dd4c019d75c58206bd2bae76\" target=\"_blank\" rel=\"noopener\"><code>1fbb32e</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Imposter gets a schema; drawerLayout declares its three missing options</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/599ce242103d002074a01c153783a32a8fa82d73\" target=\"_blank\" rel=\"noopener\"><code>599ce24</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run node -e &quot;import(&#39;./scripts/lib/attribute-audit.mjs&#39;).then(m=&gt;console.log(m.auditAll().totals.byRule.R4))&quot;. Before: 21. Now: 16, and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/attributes-comply.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/attributes-comply.spec.ts</a> holds the ceiling at 16.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b6d6ee5771a7c19dc68e14c39e650dc61440e775\" target=\"_blank\" rel=\"noopener\"><code>b6d6ee5</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.464",
+      "date": "2026-10-08",
+      "summary": "Each card variant now has its own stylesheet, so a page with one card variant stops downloading the other variants&#39; CSS; card.css drops from 147KB to 78KB. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/966\" target=\"_blank\" rel=\"noopener\">#966</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1799\" target=\"_blank\" rel=\"noopener\">#1799</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One stylesheet per card variant; card.css keeps the shared base</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/966\" target=\"_blank\" rel=\"noopener\">#966</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1799\" target=\"_blank\" rel=\"noopener\">#1799</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/bdcf8e0d0b72aec14de839df9dd3b03c806a56f6\" target=\"_blank\" rel=\"noopener\"><code>bdcf8e0</code></a>",
+          "issues": [
+            966,
+            1799
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/test-harness.html\" target=\"_blank\" rel=\"noopener\">demos/test-harness.html</a>, add &lt;article x-cardlink title=&quot;Docs&quot; href=&quot;#a&quot;&gt;&lt;/article&gt; and run WB.scan on it, then list link[data-x-behavior-css]. Before: card.css only, all 147KB of every variant. Now: card.css (78KB) and cardlink.css (2.6KB), with no other variant&#39;s file requested.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/bdcf8e0d0b72aec14de839df9dd3b03c806a56f6\" target=\"_blank\" rel=\"noopener\"><code>bdcf8e0</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.463",
+      "date": "2026-10-08",
+      "summary": "The registry audit&#39;s last three unreachable findings are fixed: three non-behavior schemas now say what they are. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1797\" target=\"_blank\" rel=\"noopener\">#1797</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Behavior, x-effects and x-enhancements carry a schemaType that exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1797\" target=\"_blank\" rel=\"noopener\">#1797</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf9eed97b636481f5ded7ae957f1359049b5545\" target=\"_blank\" rel=\"noopener\"><code>0cf9eed</code></a>",
+          "issues": [
+            831,
+            1797
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 3 hard errors (behavior, x-effects, x-enhancements unreachable). Now: 0 hard errors.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf9eed97b636481f5ded7ae957f1359049b5545\" target=\"_blank\" rel=\"noopener\"><code>0cf9eed</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.462",
+      "date": "2026-10-08",
+      "summary": "The delay=&quot;0&quot; tooltip test no longer fails when the test runner is busy. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1798\" target=\"_blank\" rel=\"noopener\">#1798</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delay=&quot;0&quot; tooltip test reads the page clock, not the runner&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1798\" target=\"_blank\" rel=\"noopener\">#1798</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0fcaa7e99b4c416e21d3bbf154f3f956cafc6725\" target=\"_blank\" rel=\"noopener\"><code>0fcaa7e</code></a>",
+          "issues": [
+            1516,
+            1798
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/tooltip-every-permutation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/tooltip-every-permutation.spec.ts</a> -g &#39;delay=&quot;0&quot;&#39; --repeat-each=20 --workers=8</code>. Before: wall-clock budget, 407ms read under load failed it. Now: 20/20, on the page&#39;s own clock.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0fcaa7e99b4c416e21d3bbf154f3f956cafc6725\" target=\"_blank\" rel=\"noopener\"><code>0fcaa7e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.461",
+      "date": "2026-10-08",
+      "summary": "Src/styles/x-signature.css, which styles the signature heroes and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1794\" target=\"_blank\" rel=\"noopener\">PR 1794</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The signature hero and card styles size in rem, and the px gate holds 315</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d2f6a40dbd3941c6df46e9f8ea56cf707bb27980\" target=\"_blank\" rel=\"noopener\"><code>d2f6a40</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=hero-variants\" target=\"_blank\" rel=\"noopener\">pages/hero-variants.html</a> and set the browser&#39;s default font size to 20px. Before: the hero corners, dots and avatars stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1f5c4e98f3ffae568715f2c919cb82f4380ae72b\" target=\"_blank\" rel=\"noopener\"><code>1f5c4e9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.460",
       "date": "2026-10-08",
       "summary": "The card hero&#39;s eyebrow pill painted its own background and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1791\" target=\"_blank\" rel=\"noopener\">PR 1791</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a>",
