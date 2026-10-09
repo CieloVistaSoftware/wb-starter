@@ -1,0 +1,9 @@
+/**
+ * cardvideo.css -- the styles only a video card (x-cardvideo) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardvideo. Split out of card.css (#966): every
+ * selector here needs [x-cardvideo] or a class only cardvideo() stamps.
+ */
+
+/* Hidden but present for tests/SR -- see media-load-retry captions-missing warning in cardvideo() (card.js). */ .x-card__video-warning { display: none; }
