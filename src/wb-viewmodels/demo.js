@@ -623,7 +623,7 @@ export async function demo(element, options = {}) {
     // Wrap children in a grid FIRST, so the doc links added below stay outside
     // the grid instead of being swept in as a grid item and floating inline (#211).
     const grid = document.createElement('div');
-    grid.className = 'x-demo__grid x-demo__grid--cols-' + cols;
+    grid.className = `x-demo__grid x-demo__grid--cols-${cols}`;
     while (element.firstChild) {
         grid.appendChild(element.firstChild);
     }

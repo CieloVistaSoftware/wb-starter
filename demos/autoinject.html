@@ -4,8 +4,8 @@
   <meta id="autoinject-meta-3" charset="UTF-8">
   <meta id="autoinject-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="autoinject-title-5">WB Auto-Inject Demo</title>
-  <link id="autoinject-link-6" rel="stylesheet" href="../src/styles/themes.css?v=1.0.475">
-  <link id="autoinject-link-7" rel="stylesheet" href="../src/styles/site.css?v=1.0.475">
+  <link id="autoinject-link-6" rel="stylesheet" href="../src/styles/themes.css?v=1.0.476">
+  <link id="autoinject-link-7" rel="stylesheet" href="../src/styles/site.css?v=1.0.476">
   <style id="autoinject-style-9">
     body {
       padding: 2rem;
@@ -1515,7 +1515,7 @@ document.body.appendChild(div);
     // Global click handler for demo purposes
     document.addEventListener('click', (e) => {
       // Ignore if clicking on the toast itself or its container
-      if (e.target.closest('.x-toast-container')) return;
+      if (e.target.closest('.x-toast__container')) return;
 
       const target = e.target.closest('button, a, input, select, textarea, summary');
       

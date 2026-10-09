@@ -157,7 +157,7 @@ export function code(element, options = {}) {
   const sizeKey = sizeMap[config.size] ? config.size : 'normal';
 
   element.classList.add('x-code');
-  element.classList.add('x-code--size-' + sizeKey);
+  element.classList.add(`x-code--size-${sizeKey}`);
 
   const isInsidePre = element.parentElement && element.parentElement.tagName === 'PRE';
 

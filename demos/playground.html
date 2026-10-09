@@ -10,8 +10,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.475">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.475">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.476">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.476">
   <style>
     /* 1200px is a prose measure, and this page is a tool, not an article.
        Capped there, the preview pane was 562px on a 1280px window -- half a
@@ -93,11 +93,13 @@
     /* Space stacked top-level previewed elements (e.g. the 50 cards) so they
        don't sit flush on top of each other. */
     #pg-preview > * + * { margin-top: 1rem; }
-    /* The shared card classes (x-card--md, x-card__…, x-card-file--…), not a
-       variant's own: since #1096 a notification's class is
-       x-cardnotification--warning, and the bare substring "x-card" would
-       turn its flex row into a block. */
-    #pg-preview > :is([class*="x-card-"], [class*="x-card_"]) { display: block; }
+    /* The shared card classes (x-card--md, x-card__…), not a variant's own:
+       since #1096 a notification's class is x-cardnotification--warning, and
+       the bare substring "x-card" would turn its flex row into a block. Until
+       batch 6 of #1096 the file, horizontal and image cards' classes started
+       with "x-card-" too, so this rule matched them; it names their new stems
+       (x-cardfile, x-cardhorizontal, x-cardimage) to keep matching them. */
+    #pg-preview > :is([class*="x-card-"], [class*="x-card_"], [class*="x-cardfile-"], [class*="x-cardhorizontal-"], [class*="x-cardimage-"]) { display: block; }
     /* Sample form example (SAMPLE, below): a bare <label>Text <input></label>
        with no wrapper div stayed on one line -- <label> is inline by default
        and neither its text node nor an <input>/<select>/<textarea> child

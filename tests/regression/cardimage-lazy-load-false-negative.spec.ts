@@ -66,7 +66,7 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // scrolling. The fix gates the retry clock on real intersection, so
     // this must NOT have given up yet.
     await page.clock.runFor(28000);
-    await expect(firstCard.locator('.x-media-load-failed'), 'must not give up while still off-screen').toHaveCount(0);
+    await expect(firstCard.locator('.x-img__load-failed'), 'must not give up while still off-screen').toHaveCount(0);
 
     // Now scroll to it — a real user looking at this section, which the
     // reported screenshot proves happens well within any reasonable
@@ -82,7 +82,7 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
       })
       .toBe(true);
 
-    const failedSibling = firstCard.locator('.x-media-load-failed');
+    const failedSibling = firstCard.locator('.x-img__load-failed');
     await expect(failedSibling, 'a valid, loadable image must never trigger the "unavailable" fallback').toHaveCount(0);
     await expect(img).not.toHaveClass(/x-img--load-failed/);
   });

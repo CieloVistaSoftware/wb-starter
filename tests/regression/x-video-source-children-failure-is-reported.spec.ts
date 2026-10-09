@@ -117,5 +117,5 @@ test('a <video x-video> with <source> children reports its failure', async ({ pa
     })
     .toBeTruthy();
 
-  await expect(page.locator('.x-media-load-failed')).toHaveCount(1);
+  await expect(page.locator('.x-video__load-failed')).toHaveCount(1);
 });

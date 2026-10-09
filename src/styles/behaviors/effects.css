@@ -65,7 +65,7 @@
   position: relative;
 }
 
-.x-confetti-piece {
+.x-confetti__piece {
   will-change: transform, opacity;
 }
 
@@ -463,7 +463,7 @@ MARQUEE & RIPPLE
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
 }
-.x-confetti-container {
+.x-confetti__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -473,7 +473,7 @@ MARQUEE & RIPPLE
   z-index: 9999;
   overflow: hidden;
 }
-.x-confetti-piece {
+.x-confetti__piece {
   position: absolute;
   top: -1.25rem;
   animation-name: x-confetti-fall;
@@ -579,7 +579,7 @@ MARQUEE & RIPPLE
   align-items: center;
   gap: 0.5rem;
 }
-.x-fireworks-container {
+.x-fireworks__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -608,7 +608,7 @@ MARQUEE & RIPPLE
   align-items: center;
   gap: 0.5rem;
 }
-.x-snow-container {
+.x-snow__overlay {
   position: fixed;
   top: 0;
   left: 0;

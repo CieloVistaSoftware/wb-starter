@@ -42,7 +42,7 @@ test.describe('media-load-retry', () => {
     await networkBarrier(page);
     const result = await page.evaluate(() => ({
       failed: (window as any).__retryProbe.failed,
-      fallback: !!document.querySelector('.x-media-load-failed'),
+      fallback: !!document.querySelector('.x-img__load-failed'),
     }));
     expect(result.failed, 'a removed image was retried until it reported a load failure').toBe(false);
     expect(result.fallback).toBe(false);

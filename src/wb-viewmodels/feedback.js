@@ -14,9 +14,9 @@ import { setRule } from '../core/dynamic-style.js';
 /**
  * The six values toast.schema.json's `position` enum declares. #1109: the
  * attribute was declared and never read -- every toast went into the ONE
- * `.x-toast-container` whose CSS pins it top-right, so all six documented
+ * `.x-toast__container` whose CSS pins it top-right, so all six documented
  * positions rendered in the same corner. Each position now gets its own
- * container element carrying its own `x-toast-container--{position}`
+ * container element carrying its own `x-toast__container--{position}`
  * modifier (toast.css), because a container is a positioned stack: two
  * toasts asking for opposite corners cannot share one box.
  */
@@ -38,22 +38,22 @@ const DEFAULT_TOAST_POSITION = 'top-right';
  */
 function toastContainer(position) {
   const pos = TOAST_POSITIONS.includes(position) ? position : DEFAULT_TOAST_POSITION;
-  const modifier = `x-toast-container--${pos}`;
+  const modifier = `x-toast__container--${pos}`;
   let container = document.querySelector(`.${modifier}`);
   if (!container) {
     // A container built before #1109 has no modifier class at all. Adopt it
     // for the default position rather than stacking a second box on top of
-    // it -- click-confirm.js and the specs both reach for `.x-toast-container`
+    // it -- click-confirm.js and the specs both reach for `.x-toast__container`
     // unqualified and must keep finding exactly one for the default corner.
     if (pos === DEFAULT_TOAST_POSITION) {
-      container = Array.from(document.querySelectorAll('.x-toast-container'))
-        .find((el) => !TOAST_POSITIONS.some((p) => el.classList.contains(`x-toast-container--${p}`))) || null;
+      container = Array.from(document.querySelectorAll('.x-toast__container'))
+        .find((el) => !TOAST_POSITIONS.some((p) => el.classList.contains(`x-toast__container--${p}`))) || null;
     }
     if (!container) {
       container = document.createElement('div');
       document.body.appendChild(container);
     }
-    container.classList.add('x-toast-container', modifier);
+    container.classList.add('x-toast__container', modifier);
   }
   return container;
 }

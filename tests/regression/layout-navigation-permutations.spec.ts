@@ -66,7 +66,7 @@ test.describe('.x-header', () => {
     const withBadge = headers.nth(2);
     await expect(withBadge.locator('.x-header__icon')).toHaveText('🚀');
     await expect(withBadge.locator('.x-header__title')).toHaveText('App');
-    await expect(withBadge.locator('.x-tag-glass')).toHaveText('v1.0');
+    await expect(withBadge.locator('.x-header__badge--glass')).toHaveText('v1.0');
   });
 
   test('bare `sticky` attribute (not just data-sticky) applies position:sticky', async ({ page }) => {

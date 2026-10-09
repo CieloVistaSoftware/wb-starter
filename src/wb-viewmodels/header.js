@@ -88,8 +88,8 @@ export function header(element) {
       const right = document.createElement('div');
       right.className = 'x-header__right';
       const b = document.createElement('span');
-      // .x-tag-glass is the badge vocabulary setBadge() already looks for.
-      b.className = 'x-tag-glass x-header__badge';
+      // The glass look is the badge part's own modifier (#1096).
+      b.className = 'x-header__badge x-header__badge--glass';
       b.textContent = badge;
       right.appendChild(b);
       element.appendChild(right);
@@ -108,12 +108,11 @@ export function header(element) {
     },
     setBadge: (text) => {
       // #824: look for the badge the schema actually built first. This used
-      // to query only .x-tag-glass -- a class from card.js's styling
-      // vocabulary that nothing in the header path ever applied -- so the
-      // lookup always missed and the else branch below APPENDED a second
-      // badge instead of updating the first. Two calls, three badges.
-      const badgeEl = element.querySelector('.x-header__badge')
-        || element.querySelector('.x-header__right .x-tag-glass');
+      // to query only the glass look class -- one card.js shared, which
+      // nothing in the header path ever applied -- so the lookup always
+      // missed and the else branch below APPENDED a second badge instead of
+      // updating the first. Two calls, three badges.
+      const badgeEl = element.querySelector('.x-header__badge');
       if (badgeEl) {
         badgeEl.textContent = text;
       } else {
@@ -122,10 +121,10 @@ export function header(element) {
         const right = element.querySelector('.x-header__right');
         if (right) {
            // Check if we already have a badge
-           let badge = right.querySelector('.x-tag-glass');
+           let badge = right.querySelector('.x-header__badge');
            if (!badge) {
                badge = document.createElement('span');
-               badge.className = 'x-tag-glass';
+               badge.className = 'x-header__badge x-header__badge--glass';
                right.prepend(badge);
            }
            badge.textContent = text;

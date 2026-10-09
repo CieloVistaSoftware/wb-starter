@@ -38,8 +38,8 @@ export async function writeToClipboard(text) {
 
     const textarea = document.createElement('textarea');
     textarea.value = text;
-    // Off-screen via .x-copy-buffer (ui-utils.css), not element.style (#779).
-    textarea.className = 'x-copy-buffer';
+    // Off-screen via .x-copy__buffer (ui-utils.css), not element.style (#779).
+    textarea.className = 'x-copy__buffer';
     document.body.appendChild(textarea);
     textarea.select();
 

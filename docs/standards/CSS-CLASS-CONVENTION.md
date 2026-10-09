@@ -60,11 +60,11 @@ link.
 **Single-dash compounds.** They are ambiguous by construction:
 
 ```
-x-card-image     the `cardimage` behavior? or the `image` part of a `card`?
+x-card-video     the `cardvideo` behavior? or the `video` part of a `card`?
 ```
 
 Those are different elements with different rules, and the name cannot
-distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can.
+distinguish them. `x-cardvideo` (a behavior) and `x-card__video` (a part) can.
 
 Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is
 not a behavior name; 72 use the wrong shape. See #1096.
@@ -88,7 +88,11 @@ semantic elements build (code, pre, range, textarea, copybutton, audio, label,
 select, timeline and the accordion items), took it to 50. Batch 5, the bases
 that named a concept rather than a behavior (the portfolio, notification,
 pricing and stats card classes, the press feedback, the sheet's drag class and
-the showcase's copy anchor), took it to 28. The count may only go down,
+the showcase's copy anchor), took it to 28. Batch 6, the single-dash
+compounds (the cardfile, cardhorizontal and cardimage stems, the effect layers,
+the drawer's push target, the notes picker, the confirm and prompt dialog, the
+scroll lock, the media fallback message, the glass badge and the toast
+container), took it to 6. The count may only go down,
 and a renamed class is retired: no source, stylesheet, test, doc, page, demo or
 data file may use the old name again.
 
@@ -123,6 +127,18 @@ feedback, and the class is `x-glow--pressed`, `x-rainbow--pressed` or
 `x-particle--pressed`, not one class shared by all three. A class a behavior puts
 somewhere other than its host is still its modifier: while a sheet is dragged
 wider, `<body>` carries `x-sheet--resizing`.
+
+**What a behavior builds outside its host is still its part.** The
+full-screen layer confetti, fireworks and snow drop their pieces into is
+`x-confetti__overlay` (not `__container`, which each of them already builds),
+and the pieces are `x-confetti__piece`. The page content a push drawer shifts is
+`x-drawer__push-target`, the textarea copy() selects is `x-copy__buffer`, the
+image lightbox is `x-img__lightbox`, and the "unavailable" message beside a
+failed `<img>` or `<video>` is `x-img__load-failed` or `x-video__load-failed`.
+The dialog confirm() and prompt() open is `x-confirm__dialog` or
+`x-prompt__dialog`, with `__box`, `__title`, `__message`, `__actions`,
+`__cancel` and `__ok` under the same behavior. The drawer, offcanvas and sheet
+each lock page scroll with their own `x-{behavior}--scroll-lock` on `<body>`.
 
 **A class is not an attribute.** `<aside x-drawer-layout>` is still how an
 author applies drawerLayout; only the class the behavior adds changed, to

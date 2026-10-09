@@ -37,9 +37,9 @@ const root = process.cwd();
  * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96,
  * batch 2 (the layout compounds) to 85, batch 3 (the -trigger family) to 66,
  * batch 4 (the parts semantic elements build) to 50, batch 5 (bases that were
- * not a behavior name) to 28.
+ * not a behavior name) to 28, batch 6 (the single-dash compounds) to 6.
  */
-const NON_CONFORMING_MAX = 28;
+const NON_CONFORMING_MAX = 6;
 
 /**
  * Old name -> the name that replaced it. Each old name is gone for good.
@@ -130,6 +130,37 @@ const RETIRED: Record<string, string> = {
   'x-pressed': 'x-glow--pressed',
   'x-resizing': 'x-sheet--resizing',
   'x-showcase__copy-host': 'x-mdhtml--copy-host',
+  // Batch 6, 2026-10-09: single-dash compounds. A card variant's classes take
+  // the variant's name, so the whole x-card-file, x-card-horizontal and
+  // x-card-image stems go, schema baseClass included. A layer, piece, buffer,
+  // overlay or target a behavior builds is its part; the full-screen layer the
+  // effects drop their pieces into is `__overlay`, because confetti, fireworks
+  // and snow already build a `__container` of their own. A class a behavior
+  // puts on <body> is its modifier. Where one helper served several behaviors
+  // the class is each one's own: drawer, offcanvas and sheet lock scroll with
+  // x-{behavior}--scroll-lock (site-engine.js's mobile nav, not a behavior,
+  // with site--scroll-lock), the confirm and prompt dialog's parts are
+  // x-confirm__* and x-prompt__*, the media fallback message is
+  // x-img__load-failed or x-video__load-failed, and the glass badge is
+  // x-header__badge--glass or x-card__link-badge--glass.
+  'x-card-file': 'x-cardfile',
+  'x-card-horizontal': 'x-cardhorizontal',
+  'x-card-image': 'x-cardimage',
+  'x-confetti-container': 'x-confetti__overlay',
+  'x-confetti-piece': 'x-confetti__piece',
+  'x-fireworks-container': 'x-fireworks__overlay',
+  'x-snow-container': 'x-snow__overlay',
+  'x-copy-buffer': 'x-copy__buffer',
+  'x-drawer-push-target': 'x-drawer__push-target',
+  'x-img-lightbox': 'x-img__lightbox',
+  'x-media-load-failed': 'x-img__load-failed',
+  'x-modal-definition': 'x-modal--definition',
+  'x-notes-pick-target': 'x-notes__pick-target',
+  'x-notes-picking': 'x-notes--picking',
+  'x-overlay-dialog': 'x-confirm__dialog',
+  'x-scroll-lock': 'x-drawer--scroll-lock',
+  'x-tag-glass': 'x-header__badge--glass',
+  'x-toast-container': 'x-toast__container',
 };
 
 /**

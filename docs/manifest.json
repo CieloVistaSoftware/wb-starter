@@ -1144,7 +1144,7 @@
           "file": "behaviors/toast.md",
           "title": "toast",
           "description": "Turns any element into a click trigger that pops a real, auto-dismissing toast notification in the corner of the screen.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-09"
         },
         {
           "file": "behaviors/toggle.md",
@@ -1396,7 +1396,7 @@
           "file": "standards/CSS-CLASS-CONVENTION.md",
           "title": "CSS class convention — you can name the class without reading the code",
           "description": "Convention over configuration.",
-          "modified": "2026-10-08"
+          "modified": "2026-10-09"
         },
         {
           "file": "standards/ERROR-LOG-RETENTION.md",

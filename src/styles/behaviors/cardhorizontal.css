@@ -10,7 +10,7 @@
 
 /* A flex item's default `min-width: auto` refuses to shrink below its own min-content width, so the text column pushed 20px past the card and was silently CLIPPED by the card's overflow:hidden -- visible as a cut-off word rather than as a layout error (§15a). min-width:0 lets it shrink to the space the row actually has. */ [x-cardhorizontal] > * { min-width: 0; }
 
-.x-card-horizontal--reverse { flex-direction: row-reverse; }
+.x-cardhorizontal--reverse { flex-direction: row-reverse; }
 
 .x-card__horizontal-figure { /* --horizontal-image-width set inline by cardhorizontal() -- genuinely per-instance dynamic (user `image-width` attribute). */ width: var(--horizontal-image-width, 40%); flex-shrink: 0; min-height: 12.5rem; align-self: stretch; }
 

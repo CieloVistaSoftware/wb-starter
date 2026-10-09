@@ -16,6 +16,16 @@
 
 ---
 
+**Updated 2026-10-09, later.** Class naming convention, batch 6 (#1096).
+
+**Files touched:** `src/wb-viewmodels/card.js`, `copy.js`, `demo.js`, `effects.js`, `feedback.js`, `header.js`, `media-load-retry.js`, `notes.js`, `overlay.js`, `semantics/code.js`, `semantics/dialog.js`, `semantics/img.js`; `src/core/site-engine.js`, `click-confirm.js`, `component-landmark.js` (comment); `src/styles/site.css`, `x-signature.css` and the behavior sheets card, cardfile, cardhorizontal, cardimage, cardlink, dialog, drawer, effects, image, notes, overlays, toast, ui-utils; `src/wb-models/cardfile`, `cardhorizontal`, `cardimage`, `header`, `toast` schemas; `data/schema-index.json` (regenerated), `data/behavior-component-index.json`, `data/bug-registry.json`; `docs/standards/CSS-CLASS-CONVENTION.md`, `docs/behaviors/toast.md`; the naming spec and the specs that selected the old classes.
+
+**Last action:** the single-dash compounds follow the convention: the `x-card-file`, `x-card-horizontal` and `x-card-image` stems are `x-cardfile`, `x-cardhorizontal`, `x-cardimage`; the effect layers are `x-confetti__overlay`/`__piece`, `x-fireworks__overlay`, `x-snow__overlay`; `x-copy__buffer`, `x-drawer__push-target`, `x-img__lightbox`, `x-modal--definition`, `x-notes__pick-target`, `x-notes--picking`, `x-toast__container`; the confirm/prompt dialog is `x-confirm__*`/`x-prompt__*`; scroll lock is each owner's (`x-drawer--scroll-lock`, `x-offcanvas--scroll-lock`, `x-sheet--scroll-lock`, `site--scroll-lock`); the media fallback is `x-img__load-failed`/`x-video__load-failed`; the glass badge is `x-header__badge--glass`/`x-card__link-badge--glass`. Ratchet now 6 of 711.
+
+**Next step:** the 6 left. `x-behavior` and `x-v` as before; `x-behaviors-showcase` (behaviorsShowcase is not a registered behavior); `x-fix-card`, `x-fix-card__main`, `x-fix-card-scroll-container` (the behavior is registered as `fix-card`, and the convention's {behavior} has no hyphen; needs a decision on registering `fixcard`).
+
+---
+
 **Updated 2026-10-09.** Class naming convention, batch 5 (#1096).
 
 **Files touched:** `src/wb-viewmodels/card.js`, `effects.js`, `overlay.js`, `behaviors-showcase.js`; `src/styles/behaviors/card.css`, `cardnotification.css`, `cardportfolio.css`, `cardpricing.css`, `cardstats.css`, `notification.css`, `effects.css`, `ui-utils.css`, `src/styles/site.css`, `src/styles/pages/showcase.css`, `src/styles/behavior-css-manifest.js` (comment); `src/wb-models/cardnotification.schema.json`, `cardportfolio.schema.json`, `cardpricing.schema.json`, `cardstats.schema.json`; `demos/playground.html`; `docs/standards/CSS-CLASS-CONVENTION.md`; `data/behavior-component-index.json`, `data/schema-index.json`; the naming compliance spec and 9 specs that selected or named the old classes.

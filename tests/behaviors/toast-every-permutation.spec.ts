@@ -56,7 +56,7 @@ const model: any = JSON.parse(
 
 const P: any = schema.params;
 const TOAST = '.x-toast';
-const CONTAINER = '.x-toast-container';
+const CONTAINER = '.x-toast__container';
 
 /** 1rem of edge inset (toast.css) plus room for a --site-header-height offset. */
 const EDGE_GAP = 48;
@@ -91,7 +91,7 @@ async function trigger(
         // Containers are created once per position and never removed by the
         // behavior — clearing them is what keeps one test's corner out of the
         // next test's measurements. Removing a container removes its toasts.
-        document.querySelectorAll('.x-toast-container').forEach((el) => el.remove());
+        document.querySelectorAll('.x-toast__container').forEach((el) => el.remove());
         document.getElementById('toast-host')?.remove();
       }
       let host = document.getElementById('toast-host');
@@ -174,7 +174,7 @@ function shows(page: Page): Promise<number> {
 /** The measured gaps between a position's container and the four viewport edges. */
 async function containerGaps(page: Page, position: string) {
   const box = await page.locator(`${CONTAINER}--${position}`).boundingBox();
-  expect(box, `position="${position}" built no .x-toast-container--${position}`).not.toBeNull();
+  expect(box, `position="${position}" built no .x-toast__container--${position}`).not.toBeNull();
   // clientWidth/Height, not innerWidth/Height: fixed positioning resolves
   // against the viewport MINUS scrollbars, which is what these report.
   const vp = await page.evaluate(() => ({
@@ -200,7 +200,7 @@ test.describe('x-toast — the simple working case', () => {
     expect(await partText(toast, '.x-toast__message')).toBe('Saved');
     expect(await toast.locator('.x-toast__close').count(),
       'dismissible defaults to true in the schema').toBe(1);
-    expect(await toast.evaluate((el) => el.parentElement?.classList.contains('x-toast-container')),
+    expect(await toast.evaluate((el) => el.parentElement?.classList.contains('x-toast__container')),
       'the toast lives in the container, not in the trigger').toBe(true);
     expect(await page.locator('#toast-trigger').evaluate((el) => el.classList.contains('x-toast--trigger')),
       'the host is the TRIGGER; .x-toast is the popup').toBe(true);
@@ -325,7 +325,7 @@ test.describe('x-toast — position (6 declared values, declared and never read 
       await expect(page.locator(`${CONTAINER}--${pos}`),
         'one container per position, created on first use').toHaveCount(1);
       expect(await toast.evaluate((el) => el.parentElement?.className),
-        `the toast must go into the ${pos} stack`).toContain(`x-toast-container--${pos}`);
+        `the toast must go into the ${pos} stack`).toContain(`x-toast__container--${pos}`);
 
       const g = await containerGaps(page, pos);
       const where = `position="${pos}" must put the container in the ${pos} corner, measured gaps ` +
@@ -405,7 +405,7 @@ test.describe('x-toast — position (6 declared values, declared and never read 
     const bad = (P.position.edges as string[]).find((e) => !(P.position.values as string[]).includes(e))!;
     const toast = await show(page, { message: 'x', position: bad, duration: '0' });
     expect(await toast.evaluate((el) => el.parentElement?.className))
-      .toContain(`x-toast-container--${P.position.default}`);
+      .toContain(`x-toast__container--${P.position.default}`);
     await expect(page.locator(CONTAINER)).toHaveCount(1);
   });
 

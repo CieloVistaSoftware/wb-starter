@@ -150,7 +150,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             'x-dropdown-menu',
             'x-modal', 'x-modal-content', 'x-modal-glass-overlay', 'x-modal-glass-content',
             '.x-dialog', 'x-dialog--trigger',
-            'x-toast', 'x-toast-container',
+            'x-toast', 'x-toast__container',
             'x-lightbox',
             'x-drawer__panel', 'x-drawer__backdrop',
             'x-offcanvas',

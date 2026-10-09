@@ -1110,7 +1110,7 @@ export function cardimage(element, options = {}) {
   // keeps native link semantics. Positioning lives in card.css.
   let stretchedLink = null;
   if (config.href && config.href !== '#') {
-    element.classList.add('x-card-image--linked');
+    element.classList.add('x-cardimage--linked');
     stretchedLink = appendLinkOverlay(element, config.href, config.title || config.alt || config.href);
   }
 
@@ -1118,7 +1118,7 @@ export function cardimage(element, options = {}) {
     base.cleanup();
     retryCleanups.forEach(fn => fn());
     if (stretchedLink) stretchedLink.remove();
-    element.classList.remove('x-card-image--linked');
+    element.classList.remove('x-cardimage--linked');
   };
 }
 
@@ -2124,8 +2124,8 @@ export function cardfile(element, options = {}) {
   if (config.downloadable && downloadUrl) {
     cardPart(element, 'span', 'x-card__file-download', '⬇️');
 
-    // The whole card is the click target: .x-card-file--downloadable (#779).
-    element.classList.add('x-card-file--downloadable');
+    // The whole card is the click target: .x-cardfile--downloadable (#779).
+    element.classList.add('x-cardfile--downloadable');
     element.setAttribute('role', 'button');
     element.setAttribute('tabindex', '0');
     element.setAttribute('aria-label', `Download ${config.filename || 'file'}`);
@@ -2224,7 +2224,9 @@ export function cardlink(element, options = {}) {
 
   // Badge
   if (config.badge) {
-    cardPart(titleGroup, 'span', `${config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-tag-glass'} x-card__link-badge`, config.badge);
+    // The part class first: stampCardPartIds() names the id after the first
+    // x-…__part class, and the --glass modifier would make it link-badge--glass.
+    cardPart(titleGroup, 'span', `x-card__link-badge ${config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-card__link-badge--glass'}`, config.badge);
   }
 
   headerRow.appendChild(titleGroup);
@@ -2304,13 +2306,13 @@ export function cardhorizontal(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
   element.innerHTML = '';
   // The Law 9 migration (#370) moved every one of these declarations into
-  // card.css -- `[x-cardhorizontal]`, `.x-card-horizontal--reverse`, `.x-card__horizontal-figure`,
+  // card.css -- `[x-cardhorizontal]`, `.x-cardhorizontal--reverse`, `.x-card__horizontal-figure`,
   // `.x-card__horizontal-image`, `.x-card__horizontal-content` -- but left the
   // inline writes here AND never emitted the classes those rules select. The
   // stylesheet was dead and the card unthemeable: an inline declaration beats
   // any rule. Now the classes carry the layout, and the one per-instance value
   // (image-width) arrives as the custom property card.css already reads.
-  element.classList.toggle('x-card-horizontal--reverse', config.imagePosition === 'right');
+  element.classList.toggle('x-cardhorizontal--reverse', config.imagePosition === 'right');
 
   // Image
   if (config.image) {

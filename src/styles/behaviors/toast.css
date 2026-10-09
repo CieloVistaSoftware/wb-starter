@@ -1,6 +1,6 @@
 /**
  * Toast Notification Styles
- * CSS targets .x-toast-container and .x-toast classes.
+ * CSS targets .x-toast__container and .x-toast classes.
  * Toast auto-dismisses — close button is optional.
  */
 
@@ -11,7 +11,7 @@
   cursor: pointer;
 }
 
-.x-toast-container {
+.x-toast__container {
   position: fixed;
   /* Anchored below the site header (--site-header-height, site.css) rather
    * than the viewport top, so toasts don't cover the nav/logo. Falls back
@@ -42,28 +42,28 @@
  * corner in every position, not only the top ones.
  *
  * There is deliberately no `--top-right` rule: that is the schema's default
- * and the base `.x-toast-container` block above already places it. The class
+ * and the base `.x-toast__container` block above already places it. The class
  * is still on the element so feedback.js can find that stack by class alone.
  */
-.x-toast-container--top-left {
+.x-toast__container--top-left {
   right: auto;
   left: 1rem;
 }
 
-.x-toast-container--top-center {
+.x-toast__container--top-center {
   right: auto;
   left: 50%;
   transform: translateX(-50%);
   align-items: center;
 }
 
-.x-toast-container--bottom-right {
+.x-toast__container--bottom-right {
   top: auto;
   bottom: 1rem;
   flex-direction: column-reverse;
 }
 
-.x-toast-container--bottom-left {
+.x-toast__container--bottom-left {
   top: auto;
   bottom: 1rem;
   right: auto;
@@ -71,7 +71,7 @@
   flex-direction: column-reverse;
 }
 
-.x-toast-container--bottom-center {
+.x-toast__container--bottom-center {
   top: auto;
   bottom: 1rem;
   right: auto;
@@ -188,16 +188,16 @@
  * corners sliding in from the right edge reads as an animation bug. Higher
  * specificity than the .x-toast / .x-toast--exiting shorthands above, so only
  * the animation-name is replaced and the timing stays shared. */
-.x-toast-container--top-left .x-toast,
-.x-toast-container--bottom-left .x-toast { animation-name: x-toast-in-left; }
-.x-toast-container--top-left .x-toast--exiting,
-.x-toast-container--bottom-left .x-toast--exiting { animation-name: x-toast-out-left; }
+.x-toast__container--top-left .x-toast,
+.x-toast__container--bottom-left .x-toast { animation-name: x-toast-in-left; }
+.x-toast__container--top-left .x-toast--exiting,
+.x-toast__container--bottom-left .x-toast--exiting { animation-name: x-toast-out-left; }
 
-.x-toast-container--top-center .x-toast { animation-name: x-toast-in-top; }
-.x-toast-container--top-center .x-toast--exiting { animation-name: x-toast-out-top; }
+.x-toast__container--top-center .x-toast { animation-name: x-toast-in-top; }
+.x-toast__container--top-center .x-toast--exiting { animation-name: x-toast-out-top; }
 
-.x-toast-container--bottom-center .x-toast { animation-name: x-toast-in-bottom; }
-.x-toast-container--bottom-center .x-toast--exiting { animation-name: x-toast-out-bottom; }
+.x-toast__container--bottom-center .x-toast { animation-name: x-toast-in-bottom; }
+.x-toast__container--bottom-center .x-toast--exiting { animation-name: x-toast-out-bottom; }
 
 @keyframes x-toast-in {
   from { transform: translateX(100%); opacity: 0; }

@@ -243,7 +243,7 @@ test.describe('[x-cardvideo] aspect-ratio parity with [x-cardimage] (#482)', () 
     const video = page.locator('#dead video');
     await expect(video, 'media-load-retry must exhaust its attempts and mark the video failed')
       .toHaveClass(/x-video--load-failed/, { timeout: 40000 });
-    await expect(page.locator('#dead .x-media-load-failed'), 'the "unavailable" fallback replaces the video')
+    await expect(page.locator('#dead .x-video__load-failed'), 'the "unavailable" fallback replaces the video')
       .toHaveCount(1);
 
     const after = (await figure.boundingBox())!;

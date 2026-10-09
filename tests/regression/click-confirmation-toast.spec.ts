@@ -3,7 +3,7 @@ import { test, expect, Page } from '../fixtures/offline';
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => Boolean((window as any).WB));
-  await page.evaluate(() => document.querySelector('.x-toast-container')?.remove());
+  await page.evaluate(() => document.querySelector('.x-toast__container')?.remove());
 }
 
 test.describe('site-wide click confirmation (#456)', () => {
