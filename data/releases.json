@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.481",
+      "date": "2026-10-09",
+      "summary": "&lt;div x-nav&gt; now builds the same navigation bar &lt;nav&gt; does; it was an unknown attribute. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1815\" target=\"_blank\" rel=\"noopener\">#1815</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-nav applies the navbar behavior to any host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1815\" target=\"_blank\" rel=\"noopener\">#1815</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f292b862a766fa6fe71203784bee8b899b055d13\" target=\"_blank\" rel=\"noopener\"><code>f292b86</code></a>",
+          "issues": [
+            830,
+            1815
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/x-nav-is-navbar-anywhere.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/x-nav-is-navbar-anywhere.spec.ts</a> --project=regression</code>. Before: &quot;&lt;div x-nav&gt; was not built as a navbar&quot;. Now: it gets the same classes &lt;nav&gt; gets.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f292b862a766fa6fe71203784bee8b899b055d13\" target=\"_blank\" rel=\"noopener\"><code>f292b86</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.480",
       "date": "2026-10-09",
       "summary": "Pages/docs.html puts ?q= into the search box only after (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1811\" target=\"_blank\" rel=\"noopener\">PR 1811</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
