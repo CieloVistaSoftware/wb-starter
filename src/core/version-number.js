@@ -19,3 +19,20 @@ export function versionNumber(stamp) {
   const [maj = 0, min = 0, pat = 0] = String(release).split('.').map((n) => Number(n) || 0);
   return { number: `${maj}.${min}.${pat + since}`, release, since };
 }
+
+/**
+ * Order two version numbers ("1.0.448") numerically, segment by segment:
+ * negative when `a` is older, positive when newer, 0 when equal (#1773).
+ * A missing version sorts before every recorded one -- entries logged before
+ * versions were recorded are older than any site that records them.
+ */
+export function compareVersions(a, b) {
+  if (!a || !b) return (a ? 1 : 0) - (b ? 1 : 0);
+  const pa = String(a).split('.').map((n) => Number(n) || 0);
+  const pb = String(b).split('.').map((n) => Number(n) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const d = (pa[i] || 0) - (pb[i] || 0);
+    if (d) return d;
+  }
+  return 0;
+}
