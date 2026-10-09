@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "offcanvas.schema.json",
+  "title": "Offcanvas",
+  "description": "Makes its host a trigger: a click slides a panel with a title and body in from the left or right edge over a backdrop, and a second click, the backdrop or the close button takes it away. It applies to any clickable element, so it names no host.",
+  "schemaFor": "offcanvas",
+  "properties": {
+    "offcanvasTitle": {
+      "type": "string",
+      "description": "The panel's heading. Named offcanvas-title, not title, so the trigger keeps its own native title tooltip; heading= is read too.",
+      "default": "Panel"
+    },
+    "offcanvasContent": {
+      "type": "string",
+      "description": "The panel's body (HTML). description= is read too.",
+      "default": "Panel content"
+    },
+    "position": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right",
+        "start",
+        "end"
+      ],
+      "description": "The edge the panel slides in from; start is left, end is right.",
+      "default": "left"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-offcanvas"
+  },
+  "test": {
+    "setup": [
+      "<button x-offcanvas offcanvas-title=\"Menu\" offcanvas-content=\"Panel content\">Open panel</button>",
+      "<button x-offcanvas offcanvas-title=\"Filters\" position=\"right\">Open from the right</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/overlay.js offcanvas() — every property here is one the behavior reads"
+  }
+}
