@@ -66,8 +66,10 @@ async function openAtPhoneWidth(page: Page, doc: string, attrs: string[]): Promi
   }, undefined, { timeout: 15_000 });
   // Highlighting is the last step of the render; mdhtml.css loads on demand,
   // so a code block measured before it lands has no scroll box yet.
+  // The largest docs (the two reference tables) hold hundreds of blocks; on a
+  // loaded runner highlighting them took longer than 15s.
   await page.waitForFunction(() => [...document.querySelectorAll('#content pre code')]
-    .every((b) => b.classList.contains('hljs')), undefined, { timeout: 15_000 });
+    .every((b) => b.classList.contains('hljs')), undefined, { timeout: 30_000 });
   await page.evaluate(() => document.fonts.ready);
   // Live examples build as they come into view. A viewport as tall as the
   // doc puts every one of them in view at once -- no scrolling, no sleeps --

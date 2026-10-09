@@ -31,7 +31,7 @@
 
 ## Events
 
-- `wb:cardproduct:addtocart` — Fired when add to cart is clicked
+- `wb:cardproduct:addtocart` — Fired when add to cart is clicked. An [`x-cart`](cart.md) on the page collects these clicks.
 
 ## Methods
 

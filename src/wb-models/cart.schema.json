@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cart.schema.json",
+  "title": "Cart",
+  "description": "A shopping cart that remembers what Add to Cart added: shows how many items it holds and opens to list them with remove buttons, the total and Clear. Kept in localStorage, so it survives a reload",
+  "schemaFor": "cart",
+  "baseClass": "x-cart",
+  "semanticElement": {
+    "tagName": "div",
+    "genericHost": "a control and the panel it opens (a count button, an item list, a total), so a block; HTML has no cart element"
+  },
+  "compliance": {
+    "baseClass": "x-cart",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "The localStorage key the cart is kept under. Carts with the same key show the same contents; give two carts different keys to keep them apart.",
+      "default": "wb-cart"
+    }
+  },
+  "$view": [],
+  "$methods": {
+    "addItem": {
+      "description": "Add an item ({ title, price, id }); adding the same product again raises its quantity",
+      "params": [
+        "item"
+      ]
+    },
+    "removeItem": {
+      "description": "Remove an item by its id (or its title when it has no id)",
+      "params": [
+        "id"
+      ]
+    },
+    "reset": {
+      "description": "Empty the cart",
+      "params": []
+    },
+    "getItems": {
+      "description": "The items in the cart, each { id, title, price, qty }",
+      "params": []
+    },
+    "getCount": {
+      "description": "How many items the cart holds, counting quantities",
+      "params": []
+    }
+  },
+  "events": {
+    "wb:cart:change": {
+      "description": "Fired whenever the cart's contents change",
+      "detail": {
+        "items": "array",
+        "count": "number",
+        "total": "number"
+      }
+    }
+  },
+  "test": {
+    "setup": [
+      "<div x-cart></div>",
+      "<div x-cart key=\"demo-cart\"></div>"
+    ]
+  },
+  "_metadata": {
+    "category": "commerce",
+    "icon": "🛒",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

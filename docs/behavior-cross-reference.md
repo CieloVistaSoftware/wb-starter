@@ -6,7 +6,7 @@ What each WB behavior adds to the element it decorates. The **inventory** below 
 
 ## Inventory: every behavior
 
-Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
+Rows: **162**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 162 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
 
 | Behavior | Written as | Reference | Detailed below |
 |---|---|---|---|
@@ -40,6 +40,7 @@ Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 ha
 | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — |
 | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — |
 | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — |
+| `cart` | `x-cart` | [behaviors/cart.md](behaviors/cart.md) | — |
 | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes |
 | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes |
 | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — |

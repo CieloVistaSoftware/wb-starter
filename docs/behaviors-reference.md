@@ -402,6 +402,7 @@ Tools for arranging content.
 | `scrollable` | `<div>` | - | Scrollable area |
 | [`fill`](behaviors/fill.md) | `[x-fill]` | - | As wide as the container allows — picks flex/grid/block sizing from the parent |
 | [`glass`](behaviors/glass.md) | `[x-glass]` | - | The element carries the background scene: a see-through fill the scene passes through |
+| [`cart`](behaviors/cart.md) | `<div x-cart>` | - | A shopping cart that remembers what Add to Cart added: a count, and a list you can open and change |
 | [`drawerLayout`](behaviors/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
 | `sidebarlayout` | `<div x-sidebarlayout>` | - | Sidebar layout |
 | `switcher` | `<div x-switcher>` | - | Responsive switcher |

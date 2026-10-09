@@ -90,6 +90,7 @@ const behaviorModules = {
   collapse: 'collapse',
   fill: 'fill',
   glass: 'glass',
+  cart: 'cart',
   tabs: 'tabs',
   details: 'semantics/details',
   mdhtml: 'mdhtml',
