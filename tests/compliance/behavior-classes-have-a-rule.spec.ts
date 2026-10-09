@@ -36,10 +36,7 @@ import { behaviorSourceFiles, styledClasses } from '../helpers/styled-classes';
  *     empties by styling. A class that needs no rule of its own leaves it for
  *     NEEDS_NO_RULE below, with the reason, which is a reviewed decision.
  */
-const UNSTYLED: Record<string, string> = {
-  // Left for the card-family batch: it composes card() and its look is card.css.
-  'x-fix-card': 'fix-card.js',
-};
+const UNSTYLED: Record<string, string> = {};
 
 /**
  * DECIDED: NO RULE (#1095 batch 3). Kept apart from UNSTYLED, which is debt;
@@ -86,9 +83,11 @@ const NEEDS_NO_RULE: Record<string, string> = {
  * Only ever lowered. 64 when this gate was written; 54 after batch 1; 46 after
  * batch 2; 3 after batch 3, which styled 19 and recorded 24 as NEEDS_NO_RULE;
  * 1 after batch 4, which styled x-demo (demo.css host rules match the class)
- * and recorded x-accordion as NEEDS_NO_RULE.
+ * and recorded x-accordion as NEEDS_NO_RULE; 0 after batch 5, which keyed
+ * fix-card.css on x-fix-card (its .x-card.fix-card rules had matched nothing
+ * since card hosts stopped carrying x-card).
  */
-const CEILING = 1;
+const CEILING = 0;
 
 test('every class a behavior adds has a stylesheet rule, or is on the shrinking list (#1095)', () => {
   const root = process.cwd();
