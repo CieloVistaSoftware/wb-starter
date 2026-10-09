@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.450",
+      "date": "2026-10-08",
+      "summary": "Site.css styles every page, and 90 of its sizes were px: header (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1784\" target=\"_blank\" rel=\"noopener\">PR 1784</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site.css sizes in rem, and the px gate holds 401</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/57c8ad935f09ddba6da5138c1142fea560dbfa02\" target=\"_blank\" rel=\"noopener\"><code>57c8ad9</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open any page and set the browser&#39;s default font size to 20px. Before: the header, nav and spinners stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/76bf776ebd5405f08a0325c4b9d0785110e5063e\" target=\"_blank\" rel=\"noopener\"><code>76bf776</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.449",
       "date": "2026-10-08",
       "summary": "The glass card no longer carries a GPU-layer workaround that was added blind and did not fix the phone report. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1781\" target=\"_blank\" rel=\"noopener\">PR 1781</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
