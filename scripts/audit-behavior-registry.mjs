@@ -197,8 +197,6 @@ const REVIEWED = {
     'x-article': '9f85773ce removed x-article on purpose (John: "an article is a card in this system"). '
       + 'x-card is the attribute form; an unregistered x-article is reported by the unknown-attribute check '
       + 'instead of silently applying a different behavior, the failure #834 was about.',
-    'x-nav': '<nav> -> navbar came with #958; the attribute form is x-navbar. Whether x-nav should be a second '
-      + 'spelling is the same call 9f85773ce made against x-article, and nobody has made it for nav.',
   },
   unreachable: {},
   splitRegistration: {

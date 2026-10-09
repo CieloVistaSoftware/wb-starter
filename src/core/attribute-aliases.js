@@ -78,6 +78,10 @@ export const BEHAVIOR_ALIASES = Object.freeze({
   // #1105: status-coloured text and window dots; "span" named an HTML
   // element no native element maps to.
   span: 'status',
+  // #830: John -- "an equivalent x-nav for injecting anywhere". <nav> gets
+  // navbar natively; x-nav is that same behavior on any other host. x-navbar
+  // stays the listed name, so the behaviors page shows navbar once.
+  nav: 'navbar',
 });
 
 /**
