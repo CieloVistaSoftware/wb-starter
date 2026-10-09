@@ -6,6 +6,31 @@
   ],
   "releases": [
     {
+      "version": "1.0.480",
+      "date": "2026-10-09",
+      "summary": "Pages/docs.html puts ?q= into the search box only after (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1811\" target=\"_blank\" rel=\"noopener\">PR 1811</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The behavior chips apply ?q= even when built before the docs manifest</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/159bce2883ddafcaddd3289226a950ecf78937ba\" target=\"_blank\" rel=\"noopener\"><code>159bce2</code></a>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The error panel&#39;s styles size in rem, and the px gate holds 296</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0a9e10b3725812f8baed368b27d9c70cb441e446\" target=\"_blank\" rel=\"noopener\"><code>0a9e10b</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm run test:async -- <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/docs-chips-honor-q-before-manifest.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/docs-chips-honor-q-before-manifest.spec.ts</a></code>. Before: with the manifest held, every behavior chip showed under ?q=behavior. Now: only the matching chips show.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/da1ac746bc5f89031c55340bb121e19209c3d1f4\" target=\"_blank\" rel=\"noopener\"><code>da1ac74</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.479",
       "date": "2026-10-09",
       "summary": "Stepper, password and OTP schemas are checked by the same rules as every other behavior; the test no longer accepts a schema tier the schema spec does not define. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1813\" target=\"_blank\" rel=\"noopener\">#1813</a>",
