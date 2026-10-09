@@ -20,7 +20,7 @@ import {
 // HELPERS — Schema Type Resolution
 // ═══════════════════════════════════════════════════════════════════════════
 
-type SchemaType = 'component' | 'base' | 'definition' | 'behavior' | 'page';
+type SchemaType = 'component' | 'base' | 'definition' | 'page';
 
 /**
  * Get all schema files recursively (including subdirs like semantic/, _base/)
@@ -109,7 +109,8 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
   test('schemaType field is valid when present', () => {
     const files = getAllSchemaFiles();
-    const valid = ['component', 'base', 'definition', 'behavior', 'page'];
+    // schema.schema.json's _schemaTypes is the one list (#831).
+    const valid = ['component', 'base', 'definition', 'page'];
     const issues: string[] = [];
     for (const file of files) {
       const schema = loadSchemaFull(file);
@@ -252,9 +253,8 @@ test.describe('Schema Validation: Property Definitions', () => {
       const schema = loadSchemaFull(file);
       if (!schema?.properties) continue;
       const tier = getSchemaType(schema);
-      // Behaviors/modifiers describe attributes, not stateful component props —
-      // a "default" is not meaningful for them (same exemption as definitions).
-      if (tier === 'definition' || tier === 'behavior') continue;
+      // Definitions describe rules or contracts, not props a page sets.
+      if (tier === 'definition') continue;
 
       for (const [propName, propDef] of Object.entries(schema.properties)) {
         if (propName.startsWith('$') || propName.startsWith('_')) continue;
