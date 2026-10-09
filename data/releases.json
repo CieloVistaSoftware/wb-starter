@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.473",
+      "date": "2026-10-08",
+      "summary": "Empty x-sheet, x-offcanvas and five more behaviors show a teaching example again; their schemas were missing from the stale schema index. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1806\" target=\"_blank\" rel=\"noopener\">#1806</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Regenerate the stale schema index; a gate keeps it current</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1806\" target=\"_blank\" rel=\"noopener\">#1806</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5c395e4ad3cb0189e1e13c485cd4fbcb7f10e19d\" target=\"_blank\" rel=\"noopener\"><code>5c395e4</code></a>",
+          "issues": [
+            1806
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/empty-schema-only-behaviors-teach.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/empty-schema-only-behaviors-teach.spec.ts</a> --project=regression</code>. Before: &quot;empty &lt;div x-sheet&gt; was not taught from its schema&quot;. Now: passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5c395e4ad3cb0189e1e13c485cd4fbcb7f10e19d\" target=\"_blank\" rel=\"noopener\"><code>5c395e4</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.472",
       "date": "2026-10-08",
       "summary": "Test-coverage-compliance caps enum properties with no permutation (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1805\" target=\"_blank\" rel=\"noopener\">PR 1805</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
