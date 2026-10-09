@@ -58,3 +58,12 @@
   padding: 1rem;
   margin: 0;
 }
+
+/* #295: a <figure> keeps the browser's 40px side margins. On a phone those
+   80px pushed a 320px figure 12px past the screen edge; the indent is a
+   desktop nicety, so it goes where the width is short. */
+@media (max-width: 40rem) {
+  .x-figure {
+    margin-inline: 0;
+  }
+}
