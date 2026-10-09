@@ -42,6 +42,7 @@ export default [
       'archive/**',
       // Vendored Highlight.js 11.11.1 build (BSD-3), not our code.
       'src/lib/highlight.js',
+      'src/lib/highlight-powershell.js', // its PowerShell grammar, copied unchanged from the same release
       'src/lib/marked.esm.js', // vendored marked v17.0.1 (bundled-marked-matches-package.spec.ts keeps it current)
     ],
   },
