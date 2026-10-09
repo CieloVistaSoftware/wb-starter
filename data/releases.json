@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.475",
+      "date": "2026-10-09",
+      "summary": "#1806 added a gate that <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> matches what (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1807\" target=\"_blank\" rel=\"noopener\">PR 1807</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Keep main&#39;s schema index (identical apart from its timestamp)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d86608084e06fdc73f8ab2d7d7e010a802d2cccd\" target=\"_blank\" rel=\"noopener\"><code>d866080</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> for animate and countup</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a977a2489a7253e11ecb616414e94b89358f18d8\" target=\"_blank\" rel=\"noopener\"><code>a977a24</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Move.js finds its item by class only; R4 reaches 0</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/41d954a3223a850327c11edca43585f34f85a8d7\" target=\"_blank\" rel=\"noopener\"><code>41d954a</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/schema-index-stays-current.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/schema-index-stays-current.spec.ts</a></code>. Before: &quot;<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> is stale ... missing from the index: animate, countup&quot;. Now: it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0d15655e985e7d9567bf19951ef6c65a9c30144e\" target=\"_blank\" rel=\"noopener\"><code>0d15655</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.474",
       "date": "2026-10-09",
       "summary": "Schema-index-stays-current.spec.ts, new on main, fails on main (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1800\" target=\"_blank\" rel=\"noopener\">PR 1800</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/295\" target=\"_blank\" rel=\"noopener\">#295</a>",
