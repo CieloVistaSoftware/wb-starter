@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.449",
+      "date": "2026-10-08",
+      "summary": "The glass card no longer carries a GPU-layer workaround that was added blind and did not fix the phone report. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1781\" target=\"_blank\" rel=\"noopener\">PR 1781</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop the unverified translateZ(0) / will-change from the glass card</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1cf33db59c8360927664d9129b6b8d2bc0e7d914\" target=\"_blank\" rel=\"noopener\"><code>1cf33db</code></a>",
+          "issues": [
+            832
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> at &quot;Glass Card&quot; and inspect the card in devtools. Before: its computed transform is matrix(1, 0, 0, 1, 0, 0) from translateZ(0) and will-change is backdrop-filter. Now: transform is none and will-change is auto; the card still looks frosted over the coloured discs.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1b8c3a35b689ed8634f233e95884767bcb9ced23\" target=\"_blank\" rel=\"noopener\"><code>1b8c3a3</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.448",
       "date": "2026-10-08",
       "summary": "Glass cards now visibly look like frosted glass in their demos, including on phones with animations turned off. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1778\" target=\"_blank\" rel=\"noopener\">PR 1778</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
