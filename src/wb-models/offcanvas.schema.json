@@ -37,7 +37,27 @@
     "setup": [
       "<button x-offcanvas offcanvas-title=\"Menu\" offcanvas-content=\"Panel content\">Open panel</button>",
       "<button x-offcanvas offcanvas-title=\"Filters\" position=\"right\">Open from the right</button>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "position": "left",
+          "offcanvasTitle": "Menu"
+        },
+        {
+          "position": "right",
+          "offcanvasTitle": "Menu"
+        },
+        {
+          "position": "start",
+          "offcanvasTitle": "Menu"
+        },
+        {
+          "position": "end",
+          "offcanvasTitle": "Menu"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#879)",
