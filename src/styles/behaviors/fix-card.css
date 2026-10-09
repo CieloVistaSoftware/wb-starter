@@ -12,47 +12,51 @@
  * a tie decided by load order, which is why each declaration was escalated to
  * `!important` to make it stop mattering.
  *
- * The rules key on .x-fix-card, the class fixCard() puts on its host. They
+ * The rules key on .x-fixcard, the class fixCard() puts on its host. They
  * keyed on `.x-card.fix-card` until #1095 batch 5, but the host stopped
  * carrying x-card when a8a7362e moved card.css to attribute selectors, so
  * every rule here matched nothing and the fix card was drawn unstyled.
- * `.x-fix-card X` still outranks card.css's part rules on specificity.
+ * The class is x-fixcard, the function name fixCard lowercased (#1096): the
+ * convention's {behavior} has no hyphen. Authors still write <div x-fix-card>
+ * or <x-fix-card>; what fixCard() adds is x-fixcard, x-fixcard__main and
+ * x-fixcard__scroll-container, as <aside x-drawer-layout> gets x-drawerlayout.
+ * `.x-fixcard X` still outranks card.css's part rules on specificity.
  * Nothing here needs to override anything by force, and a page
  * can now override any of it without escalating in turn -- which is the actual
  * cost of `!important`: it does not just win, it removes the next author's
  * ability to disagree.
  * -----------------------------------------------------------------------------
  */
-.x-fix-card-scroll-container::-webkit-scrollbar {
+.x-fixcard__scroll-container::-webkit-scrollbar {
           display: none;
         }
-        .x-fix-card-scroll-container {
+        .x-fixcard__scroll-container {
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */
         }
         /* Ensure text wraps nicely */
-        .x-fix-card .detail-content, 
-        .x-fix-card .fix-title,
-        .x-fix-card .fix-id,
-        .x-fix-card .detail-label {
+        .x-fixcard .detail-content, 
+        .x-fixcard .fix-title,
+        .x-fixcard .fix-id,
+        .x-fixcard .detail-label {
           white-space: pre-wrap;
           word-break: break-word;
           overflow-wrap: anywhere;
         }
         
         /* MDHTML / Code Block Overrides - NO SCROLLBARS, NO GAPS, FIT PARENT */
-        .x-fix-card .fix-code-block,
-        .x-fix-card .fix-code-block * {
+        .x-fixcard .fix-code-block,
+        .x-fixcard .fix-code-block * {
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-        .x-fix-card .fix-code-block *::-webkit-scrollbar {
+        .x-fixcard .fix-code-block *::-webkit-scrollbar {
             display: none;
             width: 0;
             height: 0;
         }
 
-        .x-fix-card .fix-code-block pre {
+        .x-fixcard .fix-code-block pre {
           margin: 0;
           padding: 0.5rem;
           background: rgba(0,0,0,0.2);
@@ -68,7 +72,7 @@
           box-sizing: border-box;
         }
         
-        .x-fix-card .fix-code-block code {
+        .x-fixcard .fix-code-block code {
           padding: 0;
           margin: 0;
           background: transparent;
@@ -81,7 +85,7 @@
           display: block;
         }
 
-        .x-fix-card .x-code {
+        .x-fixcard .x-code {
             white-space: pre-wrap;
             word-break: break-word;
             overflow-wrap: anywhere;
@@ -92,18 +96,18 @@
         }
 
         /* Hide the WB Code Behavior chrome (language badge, copy button) */
-        .x-fix-card .x-code__header,
-        .x-fix-card .x-code__language,
-        .x-fix-card .x-code__copy,
-        .x-fix-card .x-pre__copy,
-        .x-fix-card .x-pre__language,
-        .x-fix-card .x-pre__line-numbers {
+        .x-fixcard .x-code__header,
+        .x-fixcard .x-code__language,
+        .x-fixcard .x-code__copy,
+        .x-fixcard .x-pre__copy,
+        .x-fixcard .x-pre__language,
+        .x-fixcard .x-pre__line-numbers {
           display: none;
         }
         
         /* Reset the wrapper injected by code/pre behavior */
-        .x-fix-card .x-code__wrapper,
-        .x-fix-card .x-pre__wrapper {
+        .x-fixcard .x-code__wrapper,
+        .x-fixcard .x-pre__wrapper {
           margin: 0;
           padding: 0;
           background: transparent;
@@ -115,8 +119,8 @@
           max-height: none;
         }
         
-        .x-fix-card .signature-block,
-        .x-fix-card .stack-trace {
+        .x-fixcard .signature-block,
+        .x-fixcard .stack-trace {
           font-family: monospace;
           background: rgba(0,0,0,0.2);
           padding: 0.5rem;
@@ -129,7 +133,7 @@
         }
         
         /* Constrain overall card height to prevent massive cards */
-        .x-fix-card {
+        .x-fixcard {
           max-height: 46.875rem;
           overflow-y: auto;
         }
@@ -153,31 +157,31 @@
    scroll container and main does the same against .signature-block/
    .stack-trace (max-height 150px) and card.css's own main rules.
 ============================================================================= */
-.x-fix-card .x-fix-card__main.x-fix-card__main {
+.x-fixcard .x-fixcard__main.x-fixcard__main {
   overflow-y: visible;
   flex: 1 1 auto;
 }
 
-.x-fix-card .x-fix-card-scroll-container.x-fix-card-scroll-container {
+.x-fixcard .x-fixcard__scroll-container.x-fixcard__scroll-container {
   max-height: 6.25rem;
   overflow-y: auto;
   display: block;
 }
 
-.x-fix-card .card-header.card-header {
+.x-fixcard .card-header.card-header {
   border: none;
   padding: 0;
   margin: 0;
 }
 
-.x-fix-card .header-top {
+.x-fixcard .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
 }
 
-.x-fix-card .fix-id.fix-id {
+.x-fixcard .fix-id.fix-id {
   font-family: monospace;
   color: var(--text-secondary);
   background: rgba(0,0,0,0.3);
@@ -185,7 +189,7 @@
   border-radius: 0.25rem;
 }
 
-.x-fix-card .fix-status.fix-status {
+.x-fixcard .fix-status.fix-status {
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   font-size: 0.75rem;
@@ -193,13 +197,13 @@
   text-transform: uppercase;
 }
 
-.x-fix-card .fix-title.fix-title {
+.x-fixcard .fix-title.fix-title {
   margin: 0;
   font-size: 1.1rem;
   color: var(--text-primary);
 }
 
-.x-fix-card .fix-meta {
+.x-fixcard .fix-meta {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
@@ -207,7 +211,7 @@
   border-bottom: 1px solid var(--border-color);
 }
 
-.x-fix-card .meta-item {
+.x-fixcard .meta-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -215,13 +219,13 @@
   color: var(--text-secondary);
 }
 
-.x-fix-card .fix-details {
+.x-fixcard .fix-details {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.x-fix-card .detail-label.detail-label {
+.x-fixcard .detail-label.detail-label {
   display: block;
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -230,23 +234,23 @@
   margin-bottom: 0.25rem;
 }
 
-.x-fix-card .detail-label.detail-label--spaced {
+.x-fixcard .detail-label.detail-label--spaced {
   margin-bottom: 1rem;
 }
 
-.x-fix-card .detail-content.violation {
+.x-fixcard .detail-content.violation {
   color: var(--danger);
   border: 1px dashed var(--danger);
   background: var(--violation-bg, rgba(239, 68, 68, 0.1));
 }
 
-.x-fix-card .fix-enhancement-link {
+.x-fixcard .fix-enhancement-link {
   color: var(--primary);
   text-decoration: none;
   border-bottom: 1px dashed var(--primary);
 }
 
-.x-fix-card code.fix-file.fix-file {
+.x-fixcard code.fix-file.fix-file {
   background: rgba(0,0,0,0.2);
   padding: 0.2rem 0.4rem;
   border-radius: 0.1875rem;
@@ -255,42 +259,42 @@
   overflow-y: auto;
 }
 
-.x-fix-card .fix-none {
+.x-fixcard .fix-none {
   color: var(--text-muted);
   font-style: italic;
   font-size: 0.8rem;
 }
 
-.x-fix-card .detail-content.fix-test-status {
+.x-fixcard .detail-content.fix-test-status {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.x-fix-card .fix-test-row {
+.x-fixcard .fix-test-row {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.x-fix-card .fix-test-key {
+.x-fixcard .fix-test-key {
   color: var(--text-muted);
   font-size: 0.8rem;
 }
 
-.x-fix-card .fix-test-key--fixed {
+.x-fixcard .fix-test-key--fixed {
   flex-shrink: 0;
 }
 
-.x-fix-card .fix-test-run.fix-test-run {
+.x-fixcard .fix-test-run.fix-test-run {
   font-family: monospace;
   font-size: 0.8rem;
 }
 
-.x-fix-card .fix-test-run.fix-test-run--yes { color: var(--success); }
-.x-fix-card .fix-test-run.fix-test-run--no { color: var(--warning); }
+.x-fixcard .fix-test-run.fix-test-run--yes { color: var(--success); }
+.x-fixcard .fix-test-run.fix-test-run--no { color: var(--warning); }
 
-.x-fix-card code.fix-test-name.fix-test-name {
+.x-fixcard code.fix-test-name.fix-test-name {
   background: rgba(0,0,0,0.2);
   padding: 0.2rem 0.4rem;
   border-radius: 0.1875rem;

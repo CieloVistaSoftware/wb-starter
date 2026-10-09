@@ -4,8 +4,8 @@
  * #1061. These 28 tests (with fix-viewer-grouping.spec.ts) blocked in
  * `beforeEach` on `waitForSelector('.fix-card', { timeout: 30000 })` — an
  * element the page stopped producing. Both render paths build a
- * `<table class="fix-table">`; `grep -c "x-fix-card" public/fix-viewer.html`
- * is 0. Measured on clean main: 0/28 passed, all as 30-second timeouts.
+ * `<table class="fix-table">`, and
+ * `grep -c "x-fix-card" public/fix-viewer.html` is 0. Measured on clean main: 0/28 passed, all as 30-second timeouts.
  *
  * The card view was not lost by accident. John, on the card grid: "i don't like
  * this format", "it tells me nothing. I need to be able to track fixes back to
