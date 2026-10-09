@@ -7,8 +7,8 @@
     "errors": 0,
     "skipped": 0,
     "totalComponents": 69,
-    "totalSections": 212,
-    "totalDemos": 763
+    "totalSections": 213,
+    "totalDemos": 764
   },
   "pages": [
     {
@@ -317,8 +317,8 @@
       "status": "ok",
       "filename": "layout.html",
       "componentCount": 9,
-      "sectionCount": 18,
-      "totalDemos": 44,
+      "sectionCount": 19,
+      "totalDemos": 45,
       "components": [
         {
           "name": "header",
@@ -354,7 +354,7 @@
           "name": "drawerLayout",
           "status": "ok",
           "sections": 3,
-          "demos": 6
+          "demos": 7
         },
         {
           "name": "scrollalong",
