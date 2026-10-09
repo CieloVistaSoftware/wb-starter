@@ -145,7 +145,7 @@ li:last-child { margin-bottom: 0; }
    HEADER
    ============================================================================= */
 /* Exposed so other fixed-position UI (toast.css's .x-toast-container) can
- * anchor itself below the header instead of duplicating the 64px value.
+ * anchor itself below the header instead of duplicating the 4rem value.
  * Defaults to 0 so standalone pages with no .site__header aren't pushed
  * down for a header that doesn't exist. */
 :root {
@@ -170,10 +170,10 @@ body:has(.site__header) {
 }
 
 /* #390: transform alone slides the header out of VIEW but not out of the
-   flex column's LAYOUT -- .site__header keeps its flex-shrink:0, 64px-tall
+   flex column's LAYOUT -- .site__header keeps its flex-shrink:0, 4rem-tall
    box either way, so .site__body (flex:1, fills whatever the header/footer
    don't use) never actually grew into the vacated space; the header hiding
-   used to just leave a blank 64px gap where it had been. margin-bottom
+   used to just leave a blank 4rem gap where it had been. margin-bottom
    equal to the header's own height, animated in step with the transform,
    collapses that layout contribution to 0 in sync with the slide -- .site__
    body's flex-basis genuinely grows, which is the whole point ("maximize
@@ -557,7 +557,7 @@ body > button[x-copy] {
    would slide the footer out of VIEW but not out of the flex column's LAYOUT
    -- .site__footer keeps its flex-shrink:0 box either way, so .site__body
    (flex:1) never actually grows into the vacated space; same bug #390 fixed
-   for the header. Unlike the header's fixed 64px, the footer's height isn't
+   for the header. Unlike the header's fixed 4rem, the footer's height isn't
    a build-time constant (renderFooter()'s social/footer links are optional
    per-site config), so initStickyFooter() (src/core/site-engine.js) measures
    the real height at runtime and sets --site-footer-collapse-height instead
@@ -1819,10 +1819,10 @@ a.x-btn-glass {
   color: var(--text-primary);
   border-color: var(--primary);
 }
-/* Clear the 64px sticky header when jumping to a section, otherwise the heading
+/* Clear the 4rem sticky header when jumping to a section, otherwise the heading
    lands hidden behind the header and the link appears not to work. */
 section[id] {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 5rem;
 }
 
 /* =============================================================================
@@ -1940,7 +1940,7 @@ pre { max-width: 100%; overflow-x: auto; }
   .site__body { flex-direction: column; }
 
   /* Header stacks/wraps instead of overflowing off the right edge — must size to
-     its content (base sets a fixed 64px height as a flex item). */
+     its content (base sets a fixed 4rem height as a flex item). */
   .site__header {
     flex-wrap: wrap;
     height: auto;

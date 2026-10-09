@@ -1062,6 +1062,9 @@ export async function demo(element, options = {}) {
                 // invalidates the readings so far. After it, the committed width
                 // is dropped, so the demo is fit-content again and the grid holds
                 // the built control's width, and the next commit is that.
+                // #1780: a control still building holds the first commit (see
+                // `building` in measure()), so the after-commit branch is only
+                // the fallback for one that builds after MAX_MS.
                 grid.addEventListener('wb:ready', () => {
                     lastControlWidth = null;
                     lastCodeWidth = null;
@@ -1188,6 +1191,19 @@ export async function demo(element, options = {}) {
                         return Array.from(nums).every((n) => n.classList.contains('x-pre__line-number--placed'));
                     });
                     if (!guttersReady) stableCount = 0;
+                    // #1780: steady is not finished while the control still has
+                    // a behavior injection in flight -- <article size="lg"> with
+                    // card.js on its way is steady at its plain width. Committing
+                    // then reveals the panel, and #1767's re-measure below widens
+                    // it in front of the reader (355 -> 422px). So hold the
+                    // commit, and with it the reveal, until the runtime says
+                    // nothing inside the grid is still building; the control's
+                    // wb:ready then restarts the readings at its built width. A
+                    // plain element has nothing in flight and never waits, and
+                    // MAX_MS still bounds the wait.
+                    const building = typeof window.WB?.pendingWithin === 'function'
+                        && window.WB.pendingWithin(grid) > 0;
+                    if (building) stableCount = 0;
                     if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) {
                         // #985: the single commit. Settled, or out of budget --
                         // either way this is the best value available, and it is

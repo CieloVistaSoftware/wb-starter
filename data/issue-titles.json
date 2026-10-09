@@ -1246,5 +1246,6 @@
   "1761": "cards-showcase \"stranding reflow\" guard fails ~1 in 20: the card can be built before the strand ever fires",
   "1763": "cards-showcase \"notification cards render all variants\" can never fail: its selector matches the unbuilt cards since #969",
   "1773": "Errors viewer can't tell a fixed error from a current one: entries don't record the site version they happened on",
-  "1780": "x-demo's re-measure for a late-built control (#1767) resizes a code panel that is already visible"
+  "1780": "x-demo's re-measure for a late-built control (#1767) resizes a code panel that is already visible",
+  "1795": "A labelled radio has no space between the button and its text: .x-label's display:block overrides the wrapper's inline-flex"
 }

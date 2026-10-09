@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "clipboard.schema.json",
+  "title": "Clipboard button",
+  "description": "A button that copies text to the clipboard and confirms it. The text is its clipboardText, or the text of the element its target selector names.",
+  "schemaFor": "clipboard",
+  "semanticElement": {
+    "tagName": "button"
+  },
+  "properties": {
+    "clipboardText": {
+      "type": "string",
+      "description": "The text to copy. `text` is accepted as well.",
+      "default": ""
+    },
+    "target": {
+      "type": "string",
+      "description": "CSS selector of an element whose text is copied when clipboardText is empty.",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "description": "The button's text when it has none of its own.",
+      "default": "📋 Copy to Clipboard"
+    },
+    "feedback": {
+      "type": "string",
+      "description": "Shown on the button for 2 seconds after a successful copy.",
+      "default": "✓ Copied!",
+      "visual": false,
+      "visualReason": "Shown only after a click copies text; a button at rest looks the same either way."
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-clipboard"
+  },
+  "test": {
+    "setup": [
+      "<button x-clipboard clipboardText=\"npm i wb-starter\"></button>",
+      "<button x-clipboard target=\"#code\" label=\"Copy code\" feedback=\"Done!\"></button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "scroll.schema.json",
+  "title": "Scroll button",
+  "description": "A button or link that scrolls the page to an element, the top or the bottom.",
+  "schemaFor": "scroll",
+  "semanticElement": {
+    "tagName": "button"
+  },
+  "properties": {
+    "scrollTo": {
+      "type": "string",
+      "description": "Where to scroll: a CSS selector, `top` or `bottom`. `target` is accepted as well; a link with neither uses its href.",
+      "default": ""
+    },
+    "behavior": {
+      "type": "string",
+      "enum": [
+        "smooth",
+        "auto"
+      ],
+      "description": "Scroll animation.",
+      "default": "smooth",
+      "visual": false,
+      "visualReason": "How the page moves on click; the button at rest looks the same."
+    },
+    "offset": {
+      "type": "number",
+      "description": "Pixels to stop above the target, for a fixed header.",
+      "default": 0,
+      "visual": false,
+      "visualReason": "Changes only where a click scrolls to."
+    },
+    "label": {
+      "type": "string",
+      "description": "The button's text when it has none of its own.",
+      "default": "↓ Scroll"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-scroll"
+  },
+  "test": {
+    "setup": [
+      "<button x-scroll scrollTo=\"top\"></button>",
+      "<button x-scroll scrollTo=\"#features\" offset=\"64\" label=\"See features\"></button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+  }
+}

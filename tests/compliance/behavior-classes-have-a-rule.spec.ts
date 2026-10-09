@@ -36,16 +36,7 @@ import { behaviorSourceFiles, styledClasses } from '../helpers/styled-classes';
  *     empties by styling. A class that needs no rule of its own leaves it for
  *     NEEDS_NO_RULE below, with the reason, which is a reviewed decision.
  */
-const UNSTYLED: Record<string, string> = {
-  // Held for #1096 batch 4 (#1726, merged), which renamed the x-accordion-*
-  // parts in accordion.css and the pre wrapper (now x-pre__wrapper) on the
-  // same demo.css lines that select [x-demo]. Batch 4 has landed; these two
-  // are next to be styled.
-  'x-accordion': 'collapse.js',
-  'x-demo': 'demo.js',
-  // Left for the card-family batch: it composes card() and its look is card.css.
-  'x-fix-card': 'fix-card.js',
-};
+const UNSTYLED: Record<string, string> = {};
 
 /**
  * DECIDED: NO RULE (#1095 batch 3). Kept apart from UNSTYLED, which is debt;
@@ -80,6 +71,7 @@ const NEEDS_NO_RULE: Record<string, string> = {
   'x-move': 'a container whose children move; the motion is x-move__item--animated and x-move--offset, styled in move.css',
   'x-external': 'the host is the author\'s <a>; the mark external() adds is x-external__icon, styled in helpers.css',
   'x-darkmode': 'the host is the author\'s button (button.css); the visible effect is the data-theme it sets on the page',
+  'x-accordion': 'a plain container; its look is its parts: x-accordion__item/__head/__body in accordion.css for titled panels, and x-details for the <details> form, where accordion() adds only exclusivity. Measured (#1095 batch 4): a <span> host lays its panels out exactly as a <div> host does, so a host rule would have nothing to change',
   'x-tooltip--trigger': 'the trigger is whatever element the tooltip describes, often a button or link with its own cursor; the visible feedback is the .x-tooltip panel',
   // The visible change is made another way; the class is a signal for JS or tests.
   'x-parallax': 'its look is the per-scroll transform dynamic-style.js generates; a static rule has nothing to add',
@@ -89,9 +81,13 @@ const NEEDS_NO_RULE: Record<string, string> = {
 
 /**
  * Only ever lowered. 64 when this gate was written; 54 after batch 1; 46 after
- * batch 2; 3 after batch 3, which styled 19 and recorded 24 as NEEDS_NO_RULE.
+ * batch 2; 3 after batch 3, which styled 19 and recorded 24 as NEEDS_NO_RULE;
+ * 1 after batch 4, which styled x-demo (demo.css host rules match the class)
+ * and recorded x-accordion as NEEDS_NO_RULE; 0 after batch 5, which keyed
+ * fix-card.css on x-fix-card (its .x-card.fix-card rules had matched nothing
+ * since card hosts stopped carrying x-card).
  */
-const CEILING = 3;
+const CEILING = 0;
 
 test('every class a behavior adds has a stylesheet rule, or is on the shrinking list (#1095)', () => {
   const root = process.cwd();
