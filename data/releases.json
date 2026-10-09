@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.463",
+      "date": "2026-10-08",
+      "summary": "The registry audit&#39;s last three unreachable findings are fixed: three non-behavior schemas now say what they are. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1797\" target=\"_blank\" rel=\"noopener\">#1797</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Behavior, x-effects and x-enhancements carry a schemaType that exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1797\" target=\"_blank\" rel=\"noopener\">#1797</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf9eed97b636481f5ded7ae957f1359049b5545\" target=\"_blank\" rel=\"noopener\"><code>0cf9eed</code></a>",
+          "issues": [
+            831,
+            1797
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 3 hard errors (behavior, x-effects, x-enhancements unreachable). Now: 0 hard errors.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf9eed97b636481f5ded7ae957f1359049b5545\" target=\"_blank\" rel=\"noopener\"><code>0cf9eed</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.462",
+      "date": "2026-10-08",
+      "summary": "The delay=&quot;0&quot; tooltip test no longer fails when the test runner is busy. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1798\" target=\"_blank\" rel=\"noopener\">#1798</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delay=&quot;0&quot; tooltip test reads the page clock, not the runner&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1798\" target=\"_blank\" rel=\"noopener\">#1798</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0fcaa7e99b4c416e21d3bbf154f3f956cafc6725\" target=\"_blank\" rel=\"noopener\"><code>0fcaa7e</code></a>",
+          "issues": [
+            1516,
+            1798
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/tooltip-every-permutation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/tooltip-every-permutation.spec.ts</a> -g &#39;delay=&quot;0&quot;&#39; --repeat-each=20 --workers=8</code>. Before: wall-clock budget, 407ms read under load failed it. Now: 20/20, on the page&#39;s own clock.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0fcaa7e99b4c416e21d3bbf154f3f956cafc6725\" target=\"_blank\" rel=\"noopener\"><code>0fcaa7e</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.461",
       "date": "2026-10-08",
       "summary": "Src/styles/x-signature.css, which styles the signature heroes and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1794\" target=\"_blank\" rel=\"noopener\">PR 1794</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
