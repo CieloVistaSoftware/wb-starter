@@ -13,3 +13,11 @@
 /* Compound `.x-card__btn.x-card__btn--*` (0,0,2,0), not a bare `.x-card__btn--*` single class -- themes.css has a global `[data-theme] button { background-color: var(--bg-secondary); ... }` reset at (0,0,1,1), which otherwise wins the specificity tie-break over a single class selector (0,0,1,0) since its class-count ties (1=1) and its extra element-type component then decides it. This is exactly why the old inline `style.cssText` (always wins regardless of specificity) was the only reason these buttons ever showed their primary/secondary colors correctly (Law 9 migration, #370) -- markup always carries both classes together (`x-card__btn x-card__btn--primary`), so the compound selector costs nothing. */ .x-card__btn.x-card__btn--secondary { border: 1px solid var(--border-color); background: transparent; color: var(--text-primary); }
 
 .x-card__btn.x-card__btn--primary { border: none; background: var(--primary); color: white; font-weight: 500; }
+
+/* #295: the two buttons sit side by side and each keeps its label on one line
+   (#938), so "Compare plans" + "Start free trial" made the card 386px wide in
+   a 321px phone column, past the screen edge. When they do not fit side by
+   side they now stack, each still on one line and at the same height. */
+.x-card__btn-footer {
+  flex-wrap: wrap;
+}

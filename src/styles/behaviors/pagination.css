@@ -12,6 +12,9 @@
 
 [x-pagination] {
   display: flex;
+  /* #295: ten page buttons and two arrows are 482px; on a 375px phone the
+     last four ran off the screen. They wrap onto a second row instead. */
+  flex-wrap: wrap;
   gap: 0.25rem;
   align-items: center;
 }

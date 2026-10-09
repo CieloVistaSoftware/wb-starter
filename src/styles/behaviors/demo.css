@@ -408,6 +408,11 @@
    should lose to any item that does. */
 :where(.x-demo__grid) > * {
   min-width: 0;
+  /* #295: and a ceiling, so an example never reaches past its demo box. On a
+     375px phone a 640px <video>, a 482px pagination bar and a 468px reel all
+     ran off the screen edge, where the doc viewer clips them. Same zero
+     specificity: an item that sets its own max-width keeps it. */
+  max-width: 100%;
 }
 
 :is([x-demo], .x-demo) > .x-pre__wrapper{

@@ -72,4 +72,11 @@
   .x-articles--grid {
     grid-template-columns: 1fr;
   }
+
+  /* #295: the grid layout went to one column on a phone and masonry did not.
+     Three columns of a 321px phone column are 75px each, and the articles in
+     them (315px) spilled 700px past the screen edge. */
+  .x-articles--masonry {
+    columns: 1;
+  }
 }

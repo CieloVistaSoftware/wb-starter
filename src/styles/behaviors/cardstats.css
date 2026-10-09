@@ -150,3 +150,10 @@ article[x-cardstats] > header,
   color: var(--danger-color);
   font-size: 0.875rem;
 }
+
+/* #295: the icon sits beside the value, and a value like $52,340.50 does not
+   break, so on a 375px phone the pair needed 334px of a 285px card and ran
+   past the screen edge. When they do not fit, the value moves under the icon. */
+[x-cardstats] {
+  flex-wrap: wrap;
+}
