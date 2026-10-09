@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.478",
+      "date": "2026-10-09",
+      "summary": "The playground&#39;s source box handled Enter and had Format, but Tab (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1812\" target=\"_blank\" rel=\"noopener\">PR 1812</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/265\" target=\"_blank\" rel=\"noopener\">#265</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Playground editor: Tab indents, and typing offers x-* completions</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/265\" target=\"_blank\" rel=\"noopener\">#265</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/776ceab275a645e8dbdf95bd801f81e14e3f4499\" target=\"_blank\" rel=\"noopener\"><code>776ceab</code></a>",
+          "issues": [
+            265
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/playground.html, click into the source and type &lt;div x-car. Before: nothing, and Tab left the editor. Now: a list under the caret offers x-card, Enter inserts it, and Tab indents.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d1af3d5b96745a5f5b8e4e4cfd3b7fc02860af55\" target=\"_blank\" rel=\"noopener\"><code>d1af3d5</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.477",
       "date": "2026-10-09",
       "summary": "CI&#39;s regression run found three things on #1808. The cart&#39;s API (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1808\" target=\"_blank\" rel=\"noopener\">PR 1808</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/463\" target=\"_blank\" rel=\"noopener\">#463</a>",
