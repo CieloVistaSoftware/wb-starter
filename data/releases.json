@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.479",
+      "date": "2026-10-09",
+      "summary": "Stepper, password and OTP schemas are checked by the same rules as every other behavior; the test no longer accepts a schema tier the schema spec does not define. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1813\" target=\"_blank\" rel=\"noopener\">#1813</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One list of schema tiers; stepper, password and otp are components</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1813\" target=\"_blank\" rel=\"noopener\">#1813</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/621ff595ce9738cd1c015c7e41e83f1472db4b59\" target=\"_blank\" rel=\"noopener\"><code>621ff59</code></a>",
+          "issues": [
+            831,
+            1813
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/schema-validation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/schema-validation.spec.ts</a> --project=compliance-schema</code>. Before: &quot;behavior&quot; was a valid tier for three schemas. Now: only component, base, definition and page are, and all schemas pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/621ff595ce9738cd1c015c7e41e83f1472db4b59\" target=\"_blank\" rel=\"noopener\"><code>621ff59</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.478",
       "date": "2026-10-09",
       "summary": "The playground&#39;s source box handled Enter and had Format, but Tab (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1812\" target=\"_blank\" rel=\"noopener\">PR 1812</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/265\" target=\"_blank\" rel=\"noopener\">#265</a>",
