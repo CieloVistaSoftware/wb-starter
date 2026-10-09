@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.466",
+      "date": "2026-10-08",
+      "summary": "A radio with a label (input type=&quot;radio&quot; label=&quot;Monthly billing&quot;) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1801\" target=\"_blank\" rel=\"noopener\">PR 1801</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1795\" target=\"_blank\" rel=\"noopener\">#1795</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A labelled radio has a gap between the button and its text</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1795\" target=\"_blank\" rel=\"noopener\">#1795</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/10c15f20dab937596048ad05ad84ccd4a25bf097\" target=\"_blank\" rel=\"noopener\"><code>10c15f2</code></a>",
+          "issues": [
+            1795
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, expand input[type=&quot;radio&quot;] and pick &quot;checked with label&quot;. Before: the radio circle overlaps the &quot;M&quot; of &quot;Monthly billing&quot;. Now: the text starts 0.5rem after the circle, and fieldset &quot;radio choice&quot; still stacks Free, Team and Enterprise one per line.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/057ecb565d7fd50bb614fc249a29ebe927546e4d\" target=\"_blank\" rel=\"noopener\"><code>057ecb5</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.465",
       "date": "2026-10-08",
       "summary": "X-imposter had no schema, and drawerLayout&#39;s schema left out saveState, toggleSelector and handleSelector, so five options that work (breakout, margin and those three) appeared in no docs table, showcase or autocomplete. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1792\" target=\"_blank\" rel=\"noopener\">PR 1792</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
