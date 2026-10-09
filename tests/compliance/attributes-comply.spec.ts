@@ -31,7 +31,7 @@ const CEILING = {
   R3: 0,   // CONSUMED   — declared, documented, inert (the #861 residue). #1526: was 11;
            //              8 of them were read via readAttr, which the audit could not see.
            //              #879, 2026-10-07: 0 measured, so the ceiling is 0.
-  R4: 16,  // DECLARED   — read by code, declared by no schema. #879, 2026-10-07: 90 measured;
+  R4: 9,   // DECLARED   — read by code, declared by no schema. #879, 2026-10-07: 90 measured;
            //              then 37: 31 declared (25 as schema properties, 6 as registered
            //              synonyms), 7 dead reads removed, 2 moved off attributes, and 13 that
            //              are not options (written only, or platform attributes) no longer
@@ -45,6 +45,9 @@ const CEILING = {
            //              (helpers.js) got schemas.
            //              2026-10-09: 16. imposter got a schema; drawerLayout declares
            //              saveState, toggleSelector and handleSelector.
+           //              2026-10-09: 9. toast-message/-title/-variant and tooltip-position/
+           //              -delay/-hide-delay are registered synonyms (attribute-aliases.js);
+           //              tooltip.schema.json declares tooltipClass.
   R5: 0,   // CENTRAL    — aliases live in the registry, never inline
   R6: 0,   // DISTINCT   — one behavior defined by two schema files. #879, 2026-10-07: 0 measured.
 };
