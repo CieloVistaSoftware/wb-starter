@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.456",
+      "date": "2026-10-08",
+      "summary": "Generic-host-is-argued.spec.ts (#918) requires a schema that names a div or span host to say why HTML has no better element, and the new debug.schema.json did not. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1779\" target=\"_blank\" rel=\"noopener\">PR 1779</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Debug&#39;s &lt;div&gt; host says why no element fits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6557a4f3b5bd71a499b2b1e67160fe55420bb918\" target=\"_blank\" rel=\"noopener\"><code>6557a4f</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Schemas for clipboard, scroll, highlight, external and debug</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14f2dda7da362327376397a274e6326d0f49fb85\" target=\"_blank\" rel=\"noopener\"><code>14f2dda</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/generic-host-is-argued.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/generic-host-is-argued.spec.ts</a> --project=compliance. Before: it failed naming debug.schema.json. Now: it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b7a73c23de63bdedf81bf6215649d890ad5e598e\" target=\"_blank\" rel=\"noopener\"><code>b7a73c2</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.455",
       "date": "2026-10-08",
       "summary": "Demo.css styled only the [x-demo] attribute, so a demo applied with WB.inject() lost its padded, clipped box; every host rule now matches the .x-demo class too, and x-accordion is recorded as needing no rule of its own. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1788\" target=\"_blank\" rel=\"noopener\">#1788</a>",
