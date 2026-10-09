@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "x-enhancements Attributes",
-  "schemaType": "behavior",
+  "schemaType": "base",
   "type": "object",
   "description": "Shared attributes of the form-control behaviors (x-form, x-password, x-tags, x-file).",
   "properties": {
