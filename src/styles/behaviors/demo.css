@@ -36,6 +36,25 @@
   overflow: visible;
 }
 
+/* #832: backdrop-filter blurs what is painted behind the element, and a demo
+   stage is a flat colour -- blurring it returns the same colour, so a glass
+   card's blur could not show on any device, and a report that glass "does
+   not work" could not be told apart from a glass card working. A demo that
+   holds a glass card stands it on bands of the theme's own colours, so the
+   blur, the tint and the edge are all visible at a glance. The bands are the
+   theme's own backgrounds with a wash of --primary, so the card's text keeps
+   its contrast in light and dark themes; the discs sit in the corners, where
+   the card's edge crosses them, not behind its text. */
+.x-demo__grid:has(> :is(.x-card--glass, [variant="glass"])) {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background:
+    radial-gradient(circle at 6% 10%, var(--accent) 0 14%, transparent 15%),
+    radial-gradient(circle at 96% 96%, var(--secondary) 0 16%, transparent 17%),
+    radial-gradient(circle at 94% 6%, var(--primary) 0 10%, transparent 11%),
+    linear-gradient(120deg, var(--bg-secondary), color-mix(in srgb, var(--primary) 30%, var(--bg-secondary)) 50%, var(--bg-tertiary));
+}
+
 .x-demo__grid {
   display: grid;
   gap: 1rem;
