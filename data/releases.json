@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.470",
+      "date": "2026-10-08",
+      "summary": "Test-coverage-compliance caps enum properties with no permutation (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1803\" target=\"_blank\" rel=\"noopener\">PR 1803</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Offcanvas&#39;s position enum gets permutation coverage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fc950d10440b09c9c6a54fc6e3cfd2529a0b8f5c\" target=\"_blank\" rel=\"noopener\"><code>fc950d1</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Offcanvas and sheet get schemas</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4eb83d943f0cc86c0cbfd1b148d70c561f503bc8\" target=\"_blank\" rel=\"noopener\"><code>4eb83d9</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/test-coverage-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/test-coverage-compliance.spec.ts</a> -g &quot;enum properties&quot;</code>. Before: failed with 50 uncovered enum properties (cap: under 50). Now: offcanvas.position is covered and it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e39a88493995db19d9a96d7368a1a60363ae8cba\" target=\"_blank\" rel=\"noopener\"><code>e39a884</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.469",
       "date": "2026-10-08",
       "summary": "The spec replaced document.body as soon as window.WB existed, but (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1790\" target=\"_blank\" rel=\"noopener\">PR 1790</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
