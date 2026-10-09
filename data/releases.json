@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.468",
+      "date": "2026-10-08",
+      "summary": "The new Introduction page had no file at its own address, so opening /wb-starter/introduction on GitHub Pages directly would have answered 404. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1796\" target=\"_blank\" rel=\"noopener\">PR 1796</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Introduction gets its own address, introduction/index.html</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/48d012427a29725f3338221bdaa3b3bd1c17a279\" target=\"_blank\" rel=\"noopener\"><code>48d0124</code></a>",
+          "issues": [
+            1244
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Leave <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/md-link-audit.json\" target=\"_blank\" rel=\"noopener\">data/md-link-audit.json</a> as main has it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c53c404b4b484a71c77407d27b65fc77c8c9becb\" target=\"_blank\" rel=\"noopener\"><code>c53c404</code></a>",
+          "issues": [
+            1244
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>An Introduction page, pinned on the Documentation page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/131eff50ee82b8fe7eef1662a4672243435c22b2\" target=\"_blank\" rel=\"noopener\"><code>131eff5</code></a>",
+          "issues": [
+            1244
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/introduction\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/introduction</a> after the merge. Before: GitHub Pages served its 404 page with a 404 status. Now: it answers 200 and shows the Introduction.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2240ab49ff859ee42f112afa4d2502401ff6de28\" target=\"_blank\" rel=\"noopener\"><code>2240ab4</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.467",
       "date": "2026-10-08",
       "summary": "Feedback.js reads toast-message, toast-title and toast-variant, and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1802\" target=\"_blank\" rel=\"noopener\">PR 1802</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",

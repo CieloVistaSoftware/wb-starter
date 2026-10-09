@@ -2,12 +2,12 @@
   "$version": "1.0.0",
   "$stats": {
     "sources": {
-      "pages": 21,
+      "pages": 22,
       "docs": 255,
       "demos": 29
     },
-    "totalDocuments": 305,
-    "totalWords": 5958
+    "totalDocuments": 306,
+    "totalWords": 5967
   },
   "documents": [
     {
@@ -195,14 +195,18 @@
           "text": "📖 Documentation"
         },
         {
+          "level": 2,
+          "text": "👋 New here? Start with the Introduction"
+        },
+        {
           "level": 3,
           "text": "' + escapeText(entry.title) + '"
         }
       ],
-      "content": "📖 Documentation Browse all documentation, guides, and research papers. 🔍 Sort documents Newest first By date created (every doc) By category Loading documentation...",
+      "content": "📖 Documentation Browse all documentation, guides, and research papers. 🔍 Sort documents Newest first By date created (every doc) By category 👋 New here? Start with the Introduction What wb-starter is, why it ends the traditional framework, and where to go next. Loading documentation...",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-08"
     },
     {
       "id": "pages/features",
@@ -315,7 +319,87 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.467\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.467\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.468\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.468\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "keywords": [],
+      "type": "page",
+      "modified": "2026-10-08"
+    },
+    {
+      "id": "pages/introduction",
+      "url": "?page=introduction",
+      "title": "Introduction to wb-starter",
+      "description": null,
+      "headings": [
+        {
+          "level": 1,
+          "text": "Introduction to wb-starter"
+        },
+        {
+          "level": 2,
+          "text": "What it is"
+        },
+        {
+          "level": 2,
+          "text": "Why it ends the traditional framework"
+        },
+        {
+          "level": 2,
+          "text": "Where to go next"
+        },
+        {
+          "level": 3,
+          "text": "🧩 Try it"
+        },
+        {
+          "level": 3,
+          "text": "🛝 Playground"
+        },
+        {
+          "level": 3,
+          "text": "🚀 Build a site"
+        },
+        {
+          "level": 3,
+          "text": "📚 Behaviors reference"
+        },
+        {
+          "level": 3,
+          "text": "📖 The complete guide"
+        },
+        {
+          "level": 3,
+          "text": "⚙️ How it works"
+        },
+        {
+          "level": 3,
+          "text": "🏷️ Auto injection"
+        },
+        {
+          "level": 3,
+          "text": "🗂️ Schema first"
+        },
+        {
+          "level": 3,
+          "text": "🔌 With your framework"
+        },
+        {
+          "level": 3,
+          "text": "🪝 Escape hatches"
+        },
+        {
+          "level": 3,
+          "text": "🎨 Theming"
+        },
+        {
+          "level": 3,
+          "text": "⚡ Performance"
+        },
+        {
+          "level": 3,
+          "text": "🐙 The source"
+        }
+      ],
+      "content": "Introduction to wb-starter A zero-build website framework. You write HTML5. That is the whole API. What it is wb-starter adds behavior to the HTML you already write. A behavior attaches either to a semantic element itself (an article becomes a card, a dialog a modal, a details an accordion) or to any element through an x-* attribute ( x-ripple , x-tooltip , x-draggable ). There is no build step, no bundler, no JSX and no custom-element vocabulary, and everything renders in the light DOM, where your CSS and your devtools reach it. article x-draggable x-ripple h3 Hello /h3 p A card you can drag, with a ripple on press. /p /article The article is still an article . Inspect it and you see the element you wrote, with classes on it: HTML5 in, HTML5 out. Why it ends the traditional framework Every popular framework makes the same trade: to get components, you give up HTML. React turns markup into JSX and a build pipeline, Vue and Angular add template languages and compilers, and Web Components hide your markup behind shadow roots your CSS cannot reach. wb-starter makes the opposite trade. The browser already has the components; wb-starter adds what they are missing. Here is what a team pays for with each, and where to see it for yourself. What you pay for Typical framework wb-starter See it Build toolchain A compiler, a bundler and their configuration, before anything runs None. The files you write are the files the browser runs This page's own source , and a site in five minutes Vocabulary to learn Components, props, hooks or directives, and a template syntax HTML5 elements and x-* attributes Auto injection and every behavior, live Lock-in and upgrade churn Breaking releases and migrations; components only run inside that framework Your markup is HTML and does not go out of date; the same attributes work inside React, Vue or Svelte Escape hatches and the framework demos Styling walls Scoped styles, CSS-in-JS, or shadow roots your stylesheet cannot reach Light DOM only: one stylesheet and CSS variables reach every element The themes and how theming works Bundle size and first paint The framework runtime ships, and runs, before your page appears No framework library; each behavior is a small ES module, loaded when its element nears the viewport How it works internally (§7) and the performance work When the framework is abandoned The site depends on code nobody maintains, and a rewrite The page is still an HTML document; without the script it loses behavior, not content Portability and the behavior system Where to go next Everything an evaluator needs, one link each. 🧩 Try it Every behavior with a live example and its attributes, on the Behaviors page. 🛝 Playground Write HTML with behaviors on it and see the result as you type. 🚀 Build a site From nothing to a published website in about five minutes. 📚 Behaviors reference What exists, by category, with a page per behavior. 📖 The complete guide How to use it and how it works internally, in one document. ⚙️ How it works Behaviors as plain functions on native elements: composition, not inheritance. 🏷️ Auto injection Which semantic elements upgrade on their own, and how to opt one out. 🗂️ Schema first Each behavior is described by a JSON schema: the data contract its markup and code follow. 🔌 With your framework The same behavior attributes, live inside React, Vue and Svelte. 🪝 Escape hatches Override or customize any behavior when its defaults don't fit. 🎨 Theming Variable-based themes, dark and light, nested and forced per section. ⚡ Performance Lazy loading, shared observers and the rest of the performance work. 🐙 The source Every behavior, schema, stylesheet and test, on GitHub.",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-08"
@@ -3399,10 +3483,10 @@
       "title": "index",
       "description": null,
       "headings": [],
-      "content": "# WB-Starter Documentation > A comprehensive behavior library featuring 41+ custom behaviors, Harmonic Color System, and Light DOM architecture. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - [Schema-First Architecture](./schema-first-architecture.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Schema-First Audit Report](./schema-first-audit-report.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
+      "content": "# WB-Starter Documentation > A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture. **New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - [Schema-First Architecture](./schema-first-architecture.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Schema-First Audit Report](./schema-first-audit-report.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-28"
+      "modified": "2026-10-08"
     },
     {
       "id": "docs/inline-editing",
@@ -5948,7 +6032,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/claude/TOOLING-INVENTORY",
-      "docs/index",
       "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard",
       "docs/themes"
@@ -6617,7 +6700,7 @@
     "465": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD"
     ],
-    "467": [
+    "468": [
       "pages/home"
     ],
     "472": [
@@ -7065,6 +7148,7 @@
     ],
     "about": [
       "pages/about",
+      "pages/introduction",
       "pages/privacy",
       "pages/terms",
       "docs/NOTES-V3-GUIDE",
@@ -7105,6 +7189,7 @@
     ],
     "team": [
       "pages/about",
+      "pages/introduction",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/behaviors/dl",
       "docs/schema.migration",
@@ -7113,6 +7198,7 @@
     "behind": [
       "pages/about",
       "pages/hero-variants",
+      "pages/introduction",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behavior-cross-reference",
       "docs/behaviors/card",
@@ -7128,10 +7214,12 @@
       "pages/about",
       "pages/ai-docs",
       "pages/ai-permutation-test",
+      "pages/docs",
       "pages/features",
       "pages/hero-gallery",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/releases",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -7384,8 +7472,10 @@
       "pages/about",
       "pages/ai-docs",
       "pages/ai-permutation-test",
+      "pages/docs",
       "pages/features",
       "pages/hero-gallery",
+      "pages/introduction",
       "pages/releases",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -7522,6 +7612,7 @@
     "web": [
       "pages/about",
       "pages/home",
+      "pages/introduction",
       "pages/services",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -7547,6 +7638,7 @@
     ],
     "write": [
       "pages/about",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -7617,6 +7709,7 @@
       "pages/about",
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
@@ -7627,6 +7720,7 @@
       "docs/behaviors/glass",
       "docs/behaviors/typewriter",
       "docs/home-page",
+      "docs/index",
       "docs/linkedin-update-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/autoinject",
@@ -7641,6 +7735,7 @@
       "pages/features",
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
@@ -7664,6 +7759,7 @@
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
+      "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/linkedin-update-article",
@@ -7682,6 +7778,7 @@
     "schema": [
       "pages/about",
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -7883,6 +7980,7 @@
     "first": [
       "pages/about",
       "pages/docs",
+      "pages/introduction",
       "pages/issues",
       "docs/AI",
       "docs/MVVM-MIGRATION",
@@ -7943,6 +8041,7 @@
       "pages/features",
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -8054,7 +8153,6 @@
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
-      "docs/index",
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-update-article",
@@ -8099,6 +8197,8 @@
     ],
     "framework": [
       "pages/about",
+      "pages/docs",
+      "pages/introduction",
       "pages/issues",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/V3-GUIDE",
@@ -8178,6 +8278,7 @@
       "pages/features",
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "pages/newpage",
       "pages/themes",
       "docs/IMPROVEMENTS",
@@ -8287,6 +8388,7 @@
     ],
     "plain": [
       "pages/about",
+      "pages/introduction",
       "pages/other",
       "docs/AI",
       "docs/V3-GUIDE",
@@ -8345,6 +8447,7 @@
       "docs/escape-hatches",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
+      "docs/index",
       "docs/linkedin-update-article",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -8359,6 +8462,7 @@
       "pages/about",
       "pages/ai-permutation-test",
       "pages/features",
+      "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -8461,6 +8565,7 @@
     "bundler": [
       "pages/about",
       "pages/home",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/solidjscomparison",
       "demos/frameworks",
@@ -8472,6 +8577,7 @@
       "pages/features",
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "docs/AI",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -8495,6 +8601,7 @@
     ],
     "lock": [
       "pages/about",
+      "pages/introduction",
       "docs/behaviors/x-draggable",
       "docs/behaviors/x-resizable",
       "docs/claude/TIER1-LAWS",
@@ -8612,6 +8719,7 @@
     "works": [
       "pages/about",
       "pages/features",
+      "pages/introduction",
       "pages/terms",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
@@ -8655,6 +8763,7 @@
     ],
     "composition": [
       "pages/about",
+      "pages/introduction",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/cardexpandable",
@@ -8719,6 +8828,7 @@
     ],
     "inheritance": [
       "pages/about",
+      "pages/introduction",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/tabs",
@@ -8753,6 +8863,7 @@
       "pages/features",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/privacy",
       "pages/terms",
       "pages/themes",
@@ -8842,6 +8953,7 @@
       "pages/ai-permutation-test",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -9010,6 +9122,7 @@
       "pages/about",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
@@ -9043,6 +9156,7 @@
       "pages/about",
       "pages/ai-permutation-test",
       "pages/features",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
@@ -9092,6 +9206,7 @@
     "shadow": [
       "pages/about",
       "pages/features",
+      "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
@@ -9113,6 +9228,7 @@
     "inspect": [
       "pages/about",
       "pages/features",
+      "pages/introduction",
       "docs/V3-GUIDE"
     ],
     "theme": [
@@ -9158,6 +9274,7 @@
       "pages/about",
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "pages/other",
       "pages/services",
       "docs/V3-GUIDE",
@@ -9175,6 +9292,7 @@
     ],
     "described": [
       "pages/about",
+      "pages/introduction",
       "docs/audio",
       "docs/behaviors/accordion",
       "docs/linkedin-update-article",
@@ -9185,6 +9303,7 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "pages/privacy",
       "docs/AI",
@@ -9349,6 +9468,7 @@
       "pages/features",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION",
@@ -9359,6 +9479,7 @@
       "docs/behaviors/x-darkmode",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/index",
       "docs/linkedin-standards-article",
       "docs/performance",
       "docs/styles",
@@ -9445,6 +9566,7 @@
     "work": [
       "pages/ai-docs",
       "pages/features",
+      "pages/introduction",
       "pages/issues",
       "pages/services",
       "docs/AI",
@@ -9628,6 +9750,7 @@
     ],
     "test": [
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/NOTES-V3-GUIDE",
@@ -9683,6 +9806,7 @@
     ],
     "missing": [
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -9704,6 +9828,7 @@
       "pages/ai-permutation-test",
       "pages/behaviors",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -9966,6 +10091,7 @@
     "use": [
       "pages/ai-permutation-test",
       "pages/home",
+      "pages/introduction",
       "pages/privacy",
       "pages/terms",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -10462,6 +10588,7 @@
     ],
     "becomes": [
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/audits/X-USAGE-AUDIT",
       "docs/auto-injection",
       "docs/behaviors/accordion",
@@ -10700,6 +10827,7 @@
       "pages/ai-permutation-test",
       "pages/behaviors",
       "pages/features",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -10934,6 +11062,7 @@
     "live": [
       "pages/ai-permutation-test",
       "pages/behaviors",
+      "pages/introduction",
       "pages/issues",
       "pages/themes",
       "docs/V3-GUIDE",
@@ -11649,6 +11778,7 @@
     "type": [
       "pages/ai-permutation-test",
       "pages/home",
+      "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -11930,6 +12060,7 @@
       "pages/behaviors",
       "pages/contact",
       "pages/hero-gallery",
+      "pages/introduction",
       "pages/themes",
       "docs/BRANCH_PROTECTION",
       "docs/MVVM-MIGRATION-PLAN",
@@ -12375,6 +12506,7 @@
     "already": [
       "pages/ai-permutation-test",
       "pages/home",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -12425,6 +12557,7 @@
       "pages/features",
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "pages/releases",
       "docs/AI",
       "docs/V3-GUIDE",
@@ -12794,6 +12927,7 @@
     "appears": [
       "pages/ai-permutation-test",
       "pages/behaviors",
+      "pages/introduction",
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
@@ -13154,6 +13288,7 @@
     ],
     "small": [
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/AI",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -13396,6 +13531,7 @@
       "pages/ai-permutation-test",
       "pages/behaviors",
       "pages/home",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -13447,6 +13583,7 @@
       "pages/ai-permutation-test",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "docs/AI",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -13629,6 +13766,7 @@
     "api": [
       "pages/ai-permutation-test",
       "pages/behaviors",
+      "pages/introduction",
       "docs/BRANCH_PROTECTION",
       "docs/NOTES-V3-GUIDE",
       "docs/V3-GUIDE",
@@ -13721,6 +13859,7 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "pages/newpage",
       "docs/IMPROVEMENTS",
@@ -13781,6 +13920,7 @@
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
+      "docs/index",
       "docs/linkedin-update-article",
       "docs/pce-candidates",
       "docs/performance",
@@ -13809,6 +13949,7 @@
     "auto": [
       "pages/ai-permutation-test",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -13922,6 +14063,7 @@
     "run": [
       "pages/ai-permutation-test",
       "pages/hero-gallery",
+      "pages/introduction",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
@@ -14053,6 +14195,7 @@
     "browser": [
       "pages/ai-permutation-test",
       "pages/features",
+      "pages/introduction",
       "pages/privacy",
       "docs/NOTES-V3-GUIDE",
       "docs/V3-GUIDE",
@@ -14150,6 +14293,7 @@
     "attributes": [
       "pages/ai-permutation-test",
       "pages/home",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -14369,6 +14513,7 @@
     ],
     "exists": [
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -14441,6 +14586,7 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -15064,6 +15210,7 @@
     ],
     "start": [
       "pages/ai-permutation-test",
+      "pages/docs",
       "pages/features",
       "pages/home",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -15103,6 +15250,7 @@
       "docs/committing-fixes",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
+      "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/mcp",
@@ -15161,6 +15309,7 @@
     "source": [
       "pages/ai-permutation-test",
       "pages/home",
+      "pages/introduction",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION",
@@ -15423,6 +15572,7 @@
     ],
     "details": [
       "pages/ai-permutation-test",
+      "pages/introduction",
       "docs/AI",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
@@ -15766,6 +15916,7 @@
     "nothing": [
       "pages/behaviors",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -15810,6 +15961,7 @@
     ],
     "document": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/MVVM-MIGRATION",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -15893,6 +16045,7 @@
     ],
     "semantic": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
@@ -15987,6 +16140,7 @@
     "section": [
       "pages/behaviors",
       "pages/hero-variants",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -16058,6 +16212,7 @@
     "up": [
       "pages/behaviors",
       "pages/hero-variants",
+      "pages/introduction",
       "docs/AI",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
@@ -16279,6 +16434,7 @@
     ],
     "none": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -16369,6 +16525,7 @@
     ],
     "inside": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
@@ -17257,6 +17414,7 @@
     ],
     "classes": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -17314,6 +17472,7 @@
     ],
     "before": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
       "docs/NOTES-V3-GUIDE",
@@ -17531,6 +17690,7 @@
     ],
     "still": [
       "pages/behaviors",
+      "pages/introduction",
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/NOTES-V3-GUIDE",
@@ -17619,6 +17779,7 @@
       "pages/behaviors",
       "pages/contact",
       "pages/hero-variants",
+      "pages/introduction",
       "pages/other",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -17655,6 +17816,7 @@
     "there": [
       "pages/behaviors",
       "pages/home",
+      "pages/introduction",
       "docs/NOTES-V3-GUIDE",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -17766,6 +17928,7 @@
       "pages/contact",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/services",
       "docs/NOTES-V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -17916,6 +18079,7 @@
     "hello": [
       "pages/contact",
       "pages/home",
+      "pages/introduction",
       "pages/privacy",
       "pages/terms",
       "docs/MVVM-MIGRATION",
@@ -17967,6 +18131,7 @@
     ],
     "demos": [
       "pages/demos",
+      "pages/introduction",
       "pages/other",
       "docs/IMPROVEMENTS",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -18019,6 +18184,7 @@
       "pages/demos",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/links",
       "pages/offshoring",
       "pages/terms",
@@ -18148,6 +18314,7 @@
       "pages/hero-gallery",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -18613,6 +18780,7 @@
     ],
     "styling": [
       "pages/demos",
+      "pages/introduction",
       "pages/themes",
       "docs/NOTES-V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -18696,6 +18864,7 @@
     ],
     "forced": [
       "pages/demos",
+      "pages/introduction",
       "docs/behaviors/x-darkmode",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/themes",
@@ -18704,6 +18873,7 @@
     "dark": [
       "pages/demos",
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -18823,6 +18993,7 @@
     ],
     "date": [
       "pages/docs",
+      "pages/introduction",
       "docs/BRANCH_PROTECTION",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -18871,6 +19042,7 @@
     ],
     "category": [
       "pages/docs",
+      "pages/introduction",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/articles",
@@ -18906,8 +19078,144 @@
       "demos/index",
       "demos/site/index"
     ],
+    "new": [
+      "pages/docs",
+      "pages/links",
+      "pages/newpage",
+      "pages/releases",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/BRANCH_PROTECTION",
+      "docs/IMPROVEMENTS",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/MVVM-MIGRATION",
+      "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/architecture/solidjscomparison",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors-reference",
+      "docs/behaviors/accordion",
+      "docs/behaviors/badge",
+      "docs/behaviors/card",
+      "docs/behaviors/cardproduct",
+      "docs/behaviors/clock",
+      "docs/behaviors/cluster",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/collapse",
+      "docs/behaviors/move",
+      "docs/behaviors/rating",
+      "docs/behaviors/status",
+      "docs/behaviors/time",
+      "docs/card",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/code-examples-standard",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/guides/search-index",
+      "docs/index",
+      "docs/mcp",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/pricecard",
+      "docs/schema-first-architecture",
+      "docs/schema-first-audit-report",
+      "docs/schema.migration",
+      "docs/search",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/test-schema-standard",
+      "docs/testing-runbook",
+      "docs/themes",
+      "docs/wbservices",
+      "demos/layout-test",
+      "demos/schema-first-architecture"
+    ],
+    "introduction": [
+      "pages/docs",
+      "pages/introduction",
+      "docs/index",
+      "demos/schema-first-architecture",
+      "demos/site/content"
+    ],
+    "ends": [
+      "pages/docs",
+      "pages/introduction",
+      "docs/behaviors/cardbutton",
+      "docs/behaviors/cardvideo",
+      "docs/behaviors/range",
+      "docs/behaviors/video",
+      "docs/behaviors/vimeo",
+      "docs/behaviors/youtube",
+      "docs/index",
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "traditional": [
+      "pages/docs",
+      "pages/introduction",
+      "docs/index",
+      "docs/linkedin-framework-agnostic"
+    ],
+    "go": [
+      "pages/docs",
+      "pages/hero-gallery",
+      "pages/introduction",
+      "docs/AI",
+      "docs/behaviors-reference",
+      "docs/behaviors/alert",
+      "docs/index",
+      "docs/linkedin-framework-agnostic",
+      "docs/schema-first-audit-report",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/REPO-LAYOUT",
+      "demos/charity-food",
+      "demos/standalone"
+    ],
+    "next": [
+      "pages/docs",
+      "pages/introduction",
+      "docs/AI",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audio",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/articles",
+      "docs/behaviors/badge",
+      "docs/behaviors/error",
+      "docs/behaviors/icon",
+      "docs/behaviors/move",
+      "docs/behaviors/otp",
+      "docs/behaviors/pagination",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/tabs",
+      "docs/behaviors/tags",
+      "docs/behaviors/toast",
+      "docs/behaviors/toggle",
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/create-a-website",
+      "docs/index",
+      "docs/linkedin-framework-agnostic",
+      "docs/linkedin-update-article",
+      "docs/properties",
+      "docs/schema-first-audit-report",
+      "docs/semantic-audit",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/styles",
+      "demos/site/content"
+    ],
     "loading": [
       "pages/docs",
+      "pages/introduction",
       "pages/issues",
       "pages/releases",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -19076,6 +19384,7 @@
     "site": [
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "pages/other",
       "pages/privacy",
@@ -19224,6 +19533,7 @@
     "variable": [
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "docs/behaviors/container",
       "docs/escape-hatches",
       "docs/linkedin-standards-article",
@@ -19277,6 +19587,7 @@
     "without": [
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "pages/terms",
       "pages/themes",
       "docs/AI",
@@ -19344,6 +19655,7 @@
     ],
     "size": [
       "pages/features",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/NOTES-V3-GUIDE",
@@ -19473,6 +19785,7 @@
     "elements": [
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -19527,6 +19840,7 @@
     ],
     "custom": [
       "pages/features",
+      "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -19592,6 +19906,7 @@
     ],
     "devtools": [
       "pages/features",
+      "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
       "docs/linkedin-update-article",
@@ -19622,6 +19937,7 @@
       "pages/features",
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -19921,6 +20237,7 @@
     ],
     "modal": [
       "pages/features",
+      "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -19939,6 +20256,7 @@
     "tooltip": [
       "pages/features",
       "pages/home",
+      "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -19963,6 +20281,7 @@
     ],
     "accordion": [
       "pages/features",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/behavior-cross-reference",
       "docs/behaviors/accordion",
@@ -20266,6 +20585,7 @@
     "code": [
       "pages/features",
       "pages/hero-variants",
+      "pages/introduction",
       "pages/issues",
       "docs/AI",
       "docs/IMPROVEMENTS",
@@ -20954,6 +21274,7 @@
     ],
     "playground": [
       "pages/hero-gallery",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/glass",
@@ -20994,20 +21315,6 @@
       "demos/index",
       "demos/site/forms",
       "demos/site/index"
-    ],
-    "go": [
-      "pages/hero-gallery",
-      "docs/AI",
-      "docs/behaviors-reference",
-      "docs/behaviors/alert",
-      "docs/linkedin-framework-agnostic",
-      "docs/schema-first-audit-report",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/REPO-LAYOUT",
-      "demos/charity-food",
-      "demos/standalone"
     ],
     "button": [
       "pages/hero-gallery",
@@ -21123,6 +21430,7 @@
     "js": [
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -21333,6 +21641,7 @@
     ],
     "don": [
       "pages/hero-gallery",
+      "pages/introduction",
       "docs/AI",
       "docs/IMPROVEMENTS",
       "docs/V3-GUIDE",
@@ -21432,6 +21741,7 @@
     "own": [
       "pages/hero-gallery",
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -21550,6 +21860,7 @@
     ],
     "jsx": [
       "pages/hero-gallery",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/solidjscomparison",
       "docs/linkedin-framework-agnostic",
@@ -21640,6 +21951,7 @@
     ],
     "see": [
       "pages/hero-variants",
+      "pages/introduction",
       "pages/releases",
       "pages/themes",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -21871,6 +22183,7 @@
     ],
     "learn": [
       "pages/hero-variants",
+      "pages/introduction",
       "docs/AI",
       "docs/architecture/solidjscomparison",
       "docs/standards/RELEASE-PROCESS",
@@ -21921,6 +22234,7 @@
     ],
     "try": [
       "pages/hero-variants",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/behaviors/glass",
       "docs/behaviors/shake",
@@ -22467,6 +22781,7 @@
     ],
     "reference": [
       "pages/hero-variants",
+      "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -22590,6 +22905,7 @@
     "add": [
       "pages/hero-variants",
       "pages/home",
+      "pages/introduction",
       "pages/links",
       "docs/NOTES-V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -22989,6 +23305,7 @@
     ],
     "fit": [
       "pages/home",
+      "pages/introduction",
       "docs/AI",
       "docs/behaviors/articles",
       "docs/behaviors/autosize",
@@ -23006,6 +23323,7 @@
     ],
     "opt": [
       "pages/home",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors-reference",
@@ -23015,6 +23333,7 @@
     ],
     "out": [
       "pages/home",
+      "pages/introduction",
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/V3-GUIDE",
@@ -23144,6 +23463,7 @@
     ],
     "renders": [
       "pages/home",
+      "pages/introduction",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
       "docs/audio",
@@ -23313,6 +23633,7 @@
     ],
     "itself": [
       "pages/home",
+      "pages/introduction",
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
@@ -23443,6 +23764,7 @@
     ],
     "h3": [
       "pages/home",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/behaviors/card",
@@ -23495,6 +23817,7 @@
     ],
     "contract": [
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/linkedin-framework-agnostic",
@@ -23577,6 +23900,7 @@
     ],
     "ripple": [
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -23598,6 +23922,7 @@
     ],
     "library": [
       "pages/home",
+      "pages/introduction",
       "pages/other",
       "docs/IMPROVEMENTS",
       "docs/V3-GUIDE",
@@ -23606,7 +23931,6 @@
       "docs/auto-injection",
       "docs/behaviors/button",
       "docs/home-page",
-      "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/styles",
       "docs/themes",
@@ -23647,6 +23971,7 @@
     ],
     "system": [
       "pages/home",
+      "pages/introduction",
       "pages/themes",
       "docs/MVVM-MIGRATION",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -23662,7 +23987,6 @@
       "docs/code-examples-standard",
       "docs/compliance/iso-42001-alignment",
       "docs/home-page",
-      "docs/index",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
@@ -23870,6 +24194,7 @@
     ],
     "performance": [
       "pages/home",
+      "pages/introduction",
       "pages/services",
       "docs/IMPROVEMENTS",
       "docs/behaviors/articles",
@@ -23885,6 +24210,7 @@
     ],
     "runtime": [
       "pages/home",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -23975,6 +24301,7 @@
     ],
     "script": [
       "pages/home",
+      "pages/introduction",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
@@ -23994,6 +24321,7 @@
     ],
     "whole": [
       "pages/home",
+      "pages/introduction",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/card",
@@ -24024,6 +24352,7 @@
     ],
     "module": [
       "pages/home",
+      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -24038,6 +24367,7 @@
     ],
     "link": [
       "pages/home",
+      "pages/introduction",
       "pages/links",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -24070,6 +24400,7 @@
     ],
     "stylesheet": [
       "pages/home",
+      "pages/introduction",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
       "docs/behaviors/codetheme",
@@ -24145,6 +24476,7 @@
     ],
     "article": [
       "pages/home",
+      "pages/introduction",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/address",
@@ -24241,6 +24573,7 @@
     ],
     "github": [
       "pages/home",
+      "pages/introduction",
       "pages/issues",
       "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
@@ -24257,6 +24590,1214 @@
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/testing-runbook"
+    ],
+    "website": [
+      "pages/introduction",
+      "pages/privacy",
+      "pages/terms",
+      "docs/behaviors/accordion",
+      "docs/behaviors/address",
+      "docs/behaviors/cardportfolio",
+      "docs/guides/create-a-website",
+      "docs/index"
+    ],
+    "html5": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/solidjscomparison",
+      "docs/auto-injection",
+      "docs/behaviors-reference",
+      "docs/index",
+      "docs/linkedin-framework-agnostic",
+      "docs/linkedin-standards-article",
+      "docs/semantic-audit",
+      "docs/semantic-standard",
+      "docs/styles",
+      "demos/schema-first-architecture"
+    ],
+    "adds": [
+      "pages/introduction",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/audits/X-USAGE-AUDIT",
+      "docs/auto-injection",
+      "docs/behavior-cross-reference",
+      "docs/behaviors-reference",
+      "docs/behaviors/audio",
+      "docs/behaviors/autocomplete",
+      "docs/behaviors/avatar",
+      "docs/behaviors/button",
+      "docs/behaviors/chip",
+      "docs/behaviors/container",
+      "docs/behaviors/control",
+      "docs/behaviors/error",
+      "docs/behaviors/file",
+      "docs/behaviors/fix-card",
+      "docs/behaviors/globe",
+      "docs/behaviors/help",
+      "docs/behaviors/input",
+      "docs/behaviors/list",
+      "docs/behaviors/move",
+      "docs/behaviors/notes",
+      "docs/behaviors/repeater",
+      "docs/behaviors/resizable",
+      "docs/behaviors/ripple",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/skeleton",
+      "docs/behaviors/slider",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/status",
+      "docs/behaviors/sticky",
+      "docs/behaviors/table",
+      "docs/behaviors/tags",
+      "docs/behaviors/time",
+      "docs/behaviors/truncate",
+      "docs/behaviors/x-resizable",
+      "docs/card",
+      "docs/claude/PAGE-GENERATION",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/wbservices",
+      "demos/autoinject"
+    ],
+    "attaches": [
+      "pages/introduction",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/container",
+      "docs/behaviors/popover",
+      "docs/behaviors/range",
+      "docs/behaviors/ripple",
+      "docs/behaviors/stagelight",
+      "docs/schema-first-architecture"
+    ],
+    "either": [
+      "pages/introduction",
+      "docs/V3-GUIDE",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/accordion",
+      "docs/behaviors/center",
+      "docs/behaviors/dialog",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/fieldset",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/notes",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/pce-candidates",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
+      "demos/landing-page-showcase",
+      "demos/site/cards"
+    ],
+    "dialog": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/auto-injection",
+      "docs/behaviors-reference",
+      "docs/behaviors/confirm",
+      "docs/behaviors/dialog",
+      "docs/behaviors/modal",
+      "docs/behaviors/prompt",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/semantic-audit",
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS",
+      "demos/playground",
+      "demos/schema-first-architecture",
+      "demos/site/overlays"
+    ],
+    "through": [
+      "pages/introduction",
+      "pages/privacy",
+      "pages/terms",
+      "docs/MVVM-MIGRATION",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/solidjscomparison",
+      "docs/audio",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardproduct",
+      "docs/behaviors/dl",
+      "docs/behaviors/gallery",
+      "docs/behaviors/glass",
+      "docs/behaviors/notify",
+      "docs/behaviors/range",
+      "docs/behaviors/truncate",
+      "docs/behaviors/x-darkmode",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/schema-first-audit-report",
+      "docs/standards/V3-STANDARDS",
+      "docs/wbservices",
+      "demos/schema-first-architecture",
+      "demos/site/cards",
+      "demos/site/interactive"
+    ],
+    "draggable": [
+      "pages/introduction",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/carddraggable",
+      "docs/behaviors/draggable",
+      "docs/behaviors/x-copybutton",
+      "docs/behaviors/x-draggable",
+      "docs/card",
+      "docs/home-page",
+      "docs/pce-candidates",
+      "demos/index",
+      "demos/site/cards",
+      "demos/site/index",
+      "demos/site/interactive"
+    ],
+    "vocabulary": [
+      "pages/introduction",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD"
+    ],
+    "drag": [
+      "pages/introduction",
+      "pages/newpage",
+      "docs/IMPROVEMENTS",
+      "docs/NOTES-V3-GUIDE",
+      "docs/behaviors/carddraggable",
+      "docs/behaviors/container",
+      "docs/behaviors/draggable",
+      "docs/behaviors/reel",
+      "docs/behaviors/resizable",
+      "docs/behaviors/x-draggable",
+      "docs/behaviors/x-resizable",
+      "docs/container-pattern",
+      "docs/property-viewer",
+      "docs/test-schema-standard"
+    ],
+    "press": [
+      "pages/introduction",
+      "docs/NOTES-V3-GUIDE",
+      "docs/behaviors/kbd",
+      "docs/behaviors/pulse",
+      "docs/behaviors/ripple",
+      "docs/behaviors/tags",
+      "docs/behaviors/x-enhancements"
+    ],
+    "wrote": [
+      "pages/introduction",
+      "docs/behaviors/card",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "popular": [
+      "pages/introduction"
+    ],
+    "makes": [
+      "pages/introduction",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/bounce",
+      "docs/behaviors/button",
+      "docs/behaviors/card",
+      "docs/behaviors/cardimage",
+      "docs/behaviors/copybutton",
+      "docs/behaviors/details",
+      "docs/behaviors/drawerLayout",
+      "docs/behaviors/fill",
+      "docs/behaviors/flex",
+      "docs/behaviors/frame",
+      "docs/behaviors/fullscreen",
+      "docs/behaviors/glass",
+      "docs/behaviors/lightbox",
+      "docs/behaviors/modal",
+      "docs/behaviors/notify",
+      "docs/behaviors/print",
+      "docs/behaviors/prompt",
+      "docs/behaviors/range",
+      "docs/behaviors/ratio",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/share",
+      "docs/behaviors/snow",
+      "docs/behaviors/x-collapse",
+      "docs/behaviors/x-copybutton",
+      "docs/behaviors/x-resizable",
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/create-a-website",
+      "docs/linkedin-standards-article",
+      "docs/linkedin-update-article",
+      "docs/properties",
+      "docs/schema.migration",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/styles"
+    ],
+    "trade": [
+      "pages/introduction",
+      "pages/privacy",
+      "docs/architecture/solidjscomparison"
+    ],
+    "components": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/solidjscomparison",
+      "docs/audits/X-USAGE-AUDIT",
+      "docs/schema.migration",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "give": [
+      "pages/introduction",
+      "docs/BRANCH_PROTECTION",
+      "docs/behaviors-reference",
+      "docs/behaviors/card",
+      "docs/behaviors/container",
+      "docs/behaviors/figure",
+      "docs/behaviors/fill",
+      "docs/behaviors/icon",
+      "docs/behaviors/img",
+      "docs/behaviors/navbar",
+      "docs/guides/create-a-website",
+      "docs/linkedin-framework-agnostic",
+      "docs/standards/RELEASE-PROCESS"
+    ],
+    "react": [
+      "pages/introduction",
+      "docs/behaviors/articles",
+      "docs/linkedin-framework-agnostic",
+      "demos/frameworks",
+      "demos/landing-page-showcase"
+    ],
+    "turns": [
+      "pages/introduction",
+      "docs/audio",
+      "docs/behaviors/accordion",
+      "docs/behaviors/badge",
+      "docs/behaviors/button",
+      "docs/behaviors/colorpicker",
+      "docs/behaviors/counter",
+      "docs/behaviors/drawer",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/search",
+      "docs/behaviors/switch",
+      "docs/behaviors/tabs",
+      "docs/behaviors/toast",
+      "docs/behaviors/typewriter",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/PAGE-GENERATION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "pipeline": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/solidjscomparison",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/committing-fixes",
+      "docs/testing-runbook"
+    ],
+    "vue": [
+      "pages/introduction",
+      "docs/linkedin-framework-agnostic",
+      "demos/frameworks",
+      "demos/landing-page-showcase"
+    ],
+    "angular": [
+      "pages/introduction",
+      "docs/linkedin-framework-agnostic",
+      "demos/frameworks"
+    ],
+    "template": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/behaviors/dl",
+      "docs/behaviors/grid",
+      "docs/behaviors/move",
+      "docs/behaviors/release",
+      "docs/behaviors/repeater",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/schema-first-architecture",
+      "demos/frameworks"
+    ],
+    "languages": [
+      "pages/introduction",
+      "docs/behaviors/cardportfolio"
+    ],
+    "compilers": [
+      "pages/introduction"
+    ],
+    "hide": [
+      "pages/introduction",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/audio",
+      "docs/behaviors/alert",
+      "docs/behaviors/badge",
+      "docs/behaviors/card",
+      "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
+      "docs/behaviors/cardhorizontal",
+      "docs/behaviors/cardimage",
+      "docs/behaviors/cardlink",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardoverlay",
+      "docs/behaviors/cardportfolio",
+      "docs/behaviors/cardpricing",
+      "docs/behaviors/cardproduct",
+      "docs/behaviors/cardprofile",
+      "docs/behaviors/cardstats",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/notes",
+      "docs/behaviors/password",
+      "docs/behaviors/searchfield",
+      "docs/behaviors/spinner",
+      "docs/behaviors/timeline",
+      "docs/behaviors/toggle",
+      "docs/behaviors/x-copybutton",
+      "docs/behaviors/x-enhancements",
+      "docs/guides/create-a-website",
+      "docs/property-viewer",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "roots": [
+      "pages/introduction",
+      "docs/behaviors/hero"
+    ],
+    "cannot": [
+      "pages/introduction",
+      "docs/BRANCH_PROTECTION",
+      "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ERROR-MESSAGE",
+      "docs/behavior-cross-reference",
+      "docs/behaviors/breadcrumb",
+      "docs/behaviors/dialog",
+      "docs/behaviors/fill",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/container-pattern",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "demos/frameworks",
+      "demos/schema-first-architecture"
+    ],
+    "opposite": [
+      "pages/introduction",
+      "pages/themes",
+      "docs/behaviors/range",
+      "docs/behaviors/table"
+    ],
+    "pays": [
+      "pages/introduction",
+      "docs/behaviors/cardexpandable"
+    ],
+    "yourself": [
+      "pages/introduction",
+      "docs/behaviors/modal",
+      "docs/claude/TIER1-LAWS",
+      "demos/autoinject"
+    ],
+    "pay": [
+      "pages/introduction"
+    ],
+    "typical": [
+      "pages/introduction"
+    ],
+    "toolchain": [
+      "pages/introduction",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/hero",
+      "docs/linkedin-update-article"
+    ],
+    "compiler": [
+      "pages/introduction",
+      "demos/frameworks"
+    ],
+    "configuration": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/behaviors-reference",
+      "docs/behaviors/dl",
+      "docs/behaviors/inputgroup",
+      "docs/behaviors/move",
+      "docs/behaviors/ol",
+      "docs/behaviors/radio",
+      "docs/behaviors/range",
+      "docs/behaviors/ul",
+      "docs/code-examples-standard",
+      "docs/container-pattern",
+      "docs/guides/search-index",
+      "docs/linkedin-framework-agnostic",
+      "docs/mcp",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/properties",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/REPO-LAYOUT",
+      "demos/schema-first-architecture"
+    ],
+    "anything": [
+      "pages/introduction",
+      "docs/IMPROVEMENTS",
+      "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/articles",
+      "docs/behaviors/button",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhorizontal",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/fieldset",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/toast",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "runs": [
+      "pages/introduction",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/solidjscomparison",
+      "docs/audio",
+      "docs/behaviors/accordion",
+      "docs/behaviors/cluster",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/darkmode",
+      "docs/behaviors/drawerLayout",
+      "docs/behaviors/glass",
+      "docs/behaviors/ripple",
+      "docs/behaviors/skeleton",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/guides/search-index",
+      "docs/mcp",
+      "docs/npx-commands",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/REPO-LAYOUT",
+      "docs/testing-runbook",
+      "docs/testing-strategy",
+      "demos/site/learn-more"
+    ],
+    "files": [
+      "pages/introduction",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/file",
+      "docs/claude/README",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/code-examples-standard",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/guides/search-index",
+      "docs/home-page",
+      "docs/linkedin-framework-agnostic",
+      "docs/properties",
+      "docs/schema.migration",
+      "docs/semantic-audit",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/REPO-LAYOUT",
+      "docs/styles",
+      "docs/testing-runbook",
+      "docs/testing-strategy",
+      "docs/wbservices",
+      "demos/landing-page-showcase"
+    ],
+    "five": [
+      "pages/introduction",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/shake",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/create-a-website",
+      "docs/linkedin-framework-agnostic",
+      "docs/linkedin-update-article"
+    ],
+    "minutes": [
+      "pages/introduction",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/schema-test-value"
+    ],
+    "props": [
+      "pages/introduction",
+      "docs/claude/PAGE-GENERATION",
+      "docs/property-viewer",
+      "docs/test-schema-standard",
+      "demos/frameworks"
+    ],
+    "hooks": [
+      "pages/introduction",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/behaviors-reference",
+      "docs/behaviors/articles",
+      "docs/schema",
+      "docs/semantic-standard",
+      "demos/site/content"
+    ],
+    "directives": [
+      "pages/introduction"
+    ],
+    "syntax": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors-reference",
+      "docs/behaviors/code",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/pre",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/wbservices",
+      "demos/legacy-syntax-check"
+    ],
+    "injection": [
+      "pages/introduction",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/auto-injection",
+      "docs/behaviors-reference",
+      "docs/behaviors/fill",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/escape-hatches",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS",
+      "docs/wbservices",
+      "demos/autoinject",
+      "demos/pre-debug",
+      "demos/site/content"
+    ],
+    "upgrade": [
+      "pages/introduction",
+      "docs/V3-GUIDE",
+      "docs/behaviors/fill"
+    ],
+    "churn": [
+      "pages/introduction",
+      "docs/architecture/WB-PREFIX-AUDIT"
+    ],
+    "breaking": [
+      "pages/introduction",
+      "docs/styles"
+    ],
+    "releases": [
+      "pages/introduction",
+      "pages/releases",
+      "docs/guides/create-a-website",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook",
+      "demos/site/cards"
+    ],
+    "migrations": [
+      "pages/introduction"
+    ],
+    "svelte": [
+      "pages/introduction",
+      "docs/IMPROVEMENTS",
+      "demos/frameworks",
+      "demos/landing-page-showcase"
+    ],
+    "escape": [
+      "pages/introduction",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/audio",
+      "docs/behaviors/button",
+      "docs/behaviors/code",
+      "docs/behaviors/details",
+      "docs/behaviors/dialog",
+      "docs/behaviors/drawer",
+      "docs/behaviors/figure",
+      "docs/behaviors/footer",
+      "docs/behaviors/form",
+      "docs/behaviors/header",
+      "docs/behaviors/img",
+      "docs/behaviors/input",
+      "docs/behaviors/mark",
+      "docs/behaviors/modal",
+      "docs/behaviors/pre",
+      "docs/behaviors/progress",
+      "docs/behaviors/select",
+      "docs/behaviors/table",
+      "docs/behaviors/textarea",
+      "docs/behaviors/video",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/escape-hatches",
+      "docs/inline-editing",
+      "docs/npx-commands",
+      "docs/property-viewer",
+      "docs/search",
+      "docs/standards/V3-STANDARDS",
+      "docs/test-schema-standard"
+    ],
+    "hatches": [
+      "pages/introduction",
+      "docs/behaviors/audio",
+      "docs/behaviors/button",
+      "docs/behaviors/code",
+      "docs/behaviors/details",
+      "docs/behaviors/dialog",
+      "docs/behaviors/figure",
+      "docs/behaviors/footer",
+      "docs/behaviors/form",
+      "docs/behaviors/header",
+      "docs/behaviors/img",
+      "docs/behaviors/input",
+      "docs/behaviors/mark",
+      "docs/behaviors/pre",
+      "docs/behaviors/progress",
+      "docs/behaviors/select",
+      "docs/behaviors/table",
+      "docs/behaviors/textarea",
+      "docs/behaviors/video",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/escape-hatches",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "walls": [
+      "pages/introduction",
+      "docs/behaviors/masonry"
+    ],
+    "scoped": [
+      "pages/introduction",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/address",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
+    ],
+    "variables": [
+      "pages/introduction",
+      "docs/IMPROVEMENTS",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/container",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/escape-hatches",
+      "docs/schema",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/styles",
+      "docs/themes",
+      "docs/wbservices",
+      "demos/landing-page-showcase"
+    ],
+    "theming": [
+      "pages/introduction",
+      "docs/V3-GUIDE",
+      "docs/themes",
+      "demos/autoinject"
+    ],
+    "bundle": [
+      "pages/introduction"
+    ],
+    "paint": [
+      "pages/introduction",
+      "docs/performance"
+    ],
+    "ships": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/behaviors/error",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/V3-STANDARDS",
+      "demos/landing-page-showcase"
+    ],
+    "es": [
+      "pages/introduction",
+      "docs/claude/TIER1-LAWS",
+      "docs/committing-fixes",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/wbservices",
+      "demos/landing-page-showcase"
+    ],
+    "loaded": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/property-viewer",
+      "docs/standards/REPO-LAYOUT",
+      "docs/styles",
+      "demos/frameworks",
+      "demos/site/content"
+    ],
+    "nears": [
+      "pages/introduction",
+      "docs/behaviors/img"
+    ],
+    "viewport": [
+      "pages/introduction",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/behaviors/carddraggable",
+      "docs/behaviors/cardhero",
+      "docs/behaviors/center",
+      "docs/behaviors/code",
+      "docs/behaviors/footer",
+      "docs/behaviors/img",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/toast",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/test-schema-standard"
+    ],
+    "internally": [
+      "pages/introduction",
+      "docs/V3-GUIDE",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/address",
+      "docs/behaviors/scrollable"
+    ],
+    "abandoned": [
+      "pages/introduction"
+    ],
+    "depends": [
+      "pages/introduction",
+      "docs/behaviors/fill",
+      "docs/behaviors/sidebarlayout",
+      "docs/guides/create-a-website"
+    ],
+    "nobody": [
+      "pages/introduction",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "maintains": [
+      "pages/introduction",
+      "demos/autoinject"
+    ],
+    "rewrite": [
+      "pages/introduction",
+      "demos/frameworks"
+    ],
+    "loses": [
+      "pages/introduction",
+      "docs/behaviors/fill",
+      "docs/behaviors/glass",
+      "docs/behaviors/input",
+      "docs/behaviors/search",
+      "docs/behaviors/searchfield"
+    ],
+    "portability": [
+      "pages/introduction",
+      "docs/auto-injection"
+    ],
+    "evaluator": [
+      "pages/introduction"
+    ],
+    "needs": [
+      "pages/introduction",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/solidjscomparison",
+      "docs/audio",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardvideo",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/collapse",
+      "docs/behaviors/fieldset",
+      "docs/behaviors/flex",
+      "docs/behaviors/glass",
+      "docs/behaviors/inputgroup",
+      "docs/behaviors/move",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/toast",
+      "docs/behaviors/video",
+      "docs/behaviors/vimeo",
+      "docs/behaviors/x-behavior",
+      "docs/behaviors/youtube",
+      "docs/card",
+      "docs/code-examples-standard",
+      "docs/escape-hatches",
+      "docs/guides/create-a-website",
+      "docs/semantic-audit",
+      "docs/semantic-standard",
+      "docs/standards/V3-STANDARDS",
+      "docs/themes",
+      "demos/charity-food",
+      "demos/landing-page-showcase"
+    ],
+    "result": [
+      "pages/introduction",
+      "pages/themes",
+      "docs/AI",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors-reference",
+      "docs/claude/PAGE-GENERATION",
+      "docs/home-page",
+      "docs/linkedin-update-article",
+      "docs/schema-first-architecture",
+      "docs/search",
+      "docs/semantic-standard",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS",
+      "demos/standalone"
+    ],
+    "published": [
+      "pages/introduction",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/create-a-website"
+    ],
+    "per": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors-reference",
+      "docs/behaviors/articles",
+      "docs/behaviors/cardfile",
+      "docs/behaviors/code",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/pagination",
+      "docs/behaviors/ripple",
+      "docs/behaviors/table",
+      "docs/behaviors/tags",
+      "docs/behaviors/timeline",
+      "docs/behaviors/x-behavior",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/code-examples-standard",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/home-page",
+      "docs/linkedin-standards-article",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/schema.migration",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook",
+      "docs/themes",
+      "demos/frameworks",
+      "demos/site/cards"
+    ],
+    "complete": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/behaviors/countdown",
+      "docs/behaviors/ol",
+      "docs/behaviors/progress",
+      "docs/behaviors/searchfield",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/guides/create-a-website",
+      "docs/guides/search-index",
+      "docs/properties",
+      "docs/search",
+      "docs/semantic-audit",
+      "demos/autoinject",
+      "demos/site/index"
+    ],
+    "guide": [
+      "pages/introduction",
+      "docs/NOTES-V3-GUIDE",
+      "docs/V3-GUIDE",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/behaviors/dl",
+      "docs/behaviors/glass",
+      "docs/behaviors/ol",
+      "docs/behaviors/radio",
+      "docs/behaviors/range",
+      "docs/behaviors/ul",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/create-a-website",
+      "docs/schema",
+      "demos/site/content",
+      "demos/site/learn-more"
+    ],
+    "functions": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/claude/TIER1-LAWS",
+      "docs/pce-candidates",
+      "docs/schema-test-value",
+      "docs/schema",
+      "docs/wbservices",
+      "demos/site/content"
+    ],
+    "native": [
+      "pages/introduction",
+      "docs/V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/accordion",
+      "docs/behaviors/audio",
+      "docs/behaviors/card",
+      "docs/behaviors/cardfile",
+      "docs/behaviors/cardportfolio",
+      "docs/behaviors/cardprofile",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/colorpicker",
+      "docs/behaviors/counter",
+      "docs/behaviors/details",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/img",
+      "docs/behaviors/masked",
+      "docs/behaviors/ol",
+      "docs/behaviors/radio",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/slider",
+      "docs/behaviors/status",
+      "docs/behaviors/video",
+      "docs/linkedin-framework-agnostic",
+      "docs/semantic-audit",
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/V3-STANDARDS",
+      "docs/testing-strategy",
+      "docs/wbservices",
+      "demos/landing-page-showcase",
+      "demos/playground",
+      "demos/site/cards"
+    ],
+    "follow": [
+      "pages/introduction",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/committing-fixes",
+      "docs/npx-commands",
+      "docs/schema.migration",
+      "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/REPO-LAYOUT"
+    ],
+    "override": [
+      "pages/introduction",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/address",
+      "docs/behaviors/data",
+      "docs/behaviors/radio",
+      "docs/behaviors/time",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/code-examples-standard",
+      "docs/escape-hatches",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/themes",
+      "demos/site/interactive"
+    ],
+    "customize": [
+      "pages/introduction",
+      "docs/escape-hatches"
+    ],
+    "defaults": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/behaviors/breadcrumb",
+      "docs/behaviors/cluster",
+      "docs/behaviors/code",
+      "docs/behaviors/confirm",
+      "docs/behaviors/container",
+      "docs/behaviors/copybutton",
+      "docs/behaviors/flex",
+      "docs/behaviors/fullscreen",
+      "docs/behaviors/gallery",
+      "docs/behaviors/glow",
+      "docs/behaviors/masonry",
+      "docs/behaviors/notify",
+      "docs/behaviors/pagination",
+      "docs/behaviors/pre",
+      "docs/behaviors/print",
+      "docs/behaviors/prompt",
+      "docs/behaviors/radio",
+      "docs/behaviors/relativetime",
+      "docs/behaviors/share",
+      "docs/behaviors/steps",
+      "docs/behaviors/truncate",
+      "docs/behaviors/typewriter",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/escape-hatches",
+      "docs/home-page",
+      "docs/properties",
+      "docs/schema-first-architecture",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "demos/multi-behavior-demo-generated"
+    ],
+    "based": [
+      "pages/introduction",
+      "pages/themes",
+      "docs/AI",
+      "docs/IMPROVEMENTS",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/NOTES-V3-GUIDE",
+      "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/address",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/grid",
+      "docs/behaviors/help",
+      "docs/behaviors/switcher",
+      "docs/behaviors/tooltip",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/committing-fixes",
+      "docs/home-page",
+      "docs/inline-editing",
+      "docs/linkedin-update-article",
+      "docs/performance",
+      "docs/schema-first-audit-report",
+      "docs/schema",
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/themes",
+      "demos/landing-page-showcase",
+      "demos/schema-first-architecture",
+      "demos/site/cards"
+    ],
+    "nested": [
+      "pages/introduction",
+      "docs/AI",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/move",
+      "docs/behaviors/x-darkmode",
+      "docs/container-pattern",
+      "docs/linkedin-standards-article",
+      "docs/pricecard",
+      "docs/property-viewer",
+      "docs/themes",
+      "demos/site/interactive"
+    ],
+    "lazy": [
+      "pages/introduction",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/solidjscomparison",
+      "docs/audits/X-USAGE-AUDIT",
+      "docs/auto-injection",
+      "docs/behavior-cross-reference",
+      "docs/behaviors-reference",
+      "docs/behaviors/card",
+      "docs/behaviors/cardimage",
+      "docs/behaviors/img",
+      "docs/behaviors/x-behavior",
+      "docs/claude/PAGE-GENERATION",
+      "docs/escape-hatches",
+      "docs/guides/search-index",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/pricecard",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "demos/frameworks",
+      "demos/site/content"
+    ],
+    "shared": [
+      "pages/introduction",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/architecture/solidjscomparison",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors-reference",
+      "docs/behaviors/cardbutton",
+      "docs/behaviors/cluster",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/toast",
+      "docs/behaviors/x-copybutton",
+      "docs/behaviors/x-effects",
+      "docs/behaviors/x-enhancements",
+      "docs/card",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER1-LAWS",
+      "docs/linkedin-update-article",
+      "docs/pce-candidates",
+      "docs/performance",
+      "docs/schema.migration",
+      "docs/themes",
+      "docs/wbservices",
+      "demos/site/cards",
+      "demos/standalone"
+    ],
+    "observers": [
+      "pages/introduction",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "rest": [
+      "pages/introduction",
+      "docs/behaviors/audio",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/dialog",
+      "docs/behaviors/flex",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/truncate",
+      "docs/claude/README",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/linkedin-update-article",
+      "docs/performance",
+      "demos/layout-test",
+      "demos/site/cards",
+      "demos/site/content"
     ],
     "issues": [
       "pages/issues",
@@ -24766,65 +26307,6 @@
     "resources": [
       "pages/links"
     ],
-    "new": [
-      "pages/links",
-      "pages/newpage",
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/BRANCH_PROTECTION",
-      "docs/IMPROVEMENTS",
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/MVVM-MIGRATION",
-      "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/architecture/solidjscomparison",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors-reference",
-      "docs/behaviors/accordion",
-      "docs/behaviors/badge",
-      "docs/behaviors/card",
-      "docs/behaviors/cardproduct",
-      "docs/behaviors/clock",
-      "docs/behaviors/cluster",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/collapse",
-      "docs/behaviors/move",
-      "docs/behaviors/rating",
-      "docs/behaviors/status",
-      "docs/behaviors/time",
-      "docs/card",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/code-examples-standard",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/guides/search-index",
-      "docs/mcp",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
-      "docs/schema.migration",
-      "docs/search",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/test-schema-standard",
-      "docs/testing-runbook",
-      "docs/themes",
-      "docs/wbservices",
-      "demos/layout-test",
-      "demos/schema-first-architecture"
-    ],
     "builder": [
       "pages/newpage",
       "docs/IMPROVEMENTS",
@@ -24885,21 +26367,6 @@
       "docs/behaviors/cover",
       "docs/behaviors/inputgroup",
       "docs/behaviors/x-copybutton"
-    ],
-    "drag": [
-      "pages/newpage",
-      "docs/IMPROVEMENTS",
-      "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/carddraggable",
-      "docs/behaviors/container",
-      "docs/behaviors/draggable",
-      "docs/behaviors/reel",
-      "docs/behaviors/resizable",
-      "docs/behaviors/x-draggable",
-      "docs/behaviors/x-resizable",
-      "docs/container-pattern",
-      "docs/property-viewer",
-      "docs/test-schema-standard"
     ],
     "drop": [
       "pages/newpage",
@@ -25199,10 +26666,6 @@
     "sell": [
       "pages/privacy"
     ],
-    "trade": [
-      "pages/privacy",
-      "docs/architecture/solidjscomparison"
-    ],
     "otherwise": [
       "pages/privacy",
       "docs/behaviors/cardhorizontal",
@@ -25253,14 +26716,6 @@
     "operating": [
       "pages/privacy",
       "docs/claude/TIER1-LAWS"
-    ],
-    "website": [
-      "pages/privacy",
-      "pages/terms",
-      "docs/behaviors/accordion",
-      "docs/behaviors/address",
-      "docs/behaviors/cardportfolio",
-      "docs/guides/create-a-website"
     ],
     "servicing": [
       "pages/privacy"
@@ -25381,33 +26836,6 @@
       "docs/escape-hatches",
       "docs/guides/search-index",
       "docs/search"
-    ],
-    "through": [
-      "pages/privacy",
-      "pages/terms",
-      "docs/MVVM-MIGRATION",
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/solidjscomparison",
-      "docs/audio",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/card",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/cardproduct",
-      "docs/behaviors/dl",
-      "docs/behaviors/gallery",
-      "docs/behaviors/glass",
-      "docs/behaviors/notify",
-      "docs/behaviors/range",
-      "docs/behaviors/truncate",
-      "docs/behaviors/x-darkmode",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/schema-first-audit-report",
-      "docs/standards/V3-STANDARDS",
-      "docs/wbservices",
-      "demos/schema-first-architecture",
-      "demos/site/cards",
-      "demos/site/interactive"
     ],
     "settings": [
       "pages/privacy",
@@ -25601,14 +27029,6 @@
     "acmeco": [
       "pages/privacy",
       "pages/terms"
-    ],
-    "releases": [
-      "pages/releases",
-      "docs/guides/create-a-website",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook",
-      "demos/site/cards"
     ],
     "release": [
       "pages/releases",
@@ -25952,7 +27372,6 @@
     ],
     "comprehensive": [
       "pages/services",
-      "docs/index",
       "docs/schema-test-value",
       "docs/test-schema-standard"
     ],
@@ -26371,8 +27790,7 @@
       "docs/wbservices"
     ],
     "harmonic": [
-      "pages/themes",
-      "docs/index"
+      "pages/themes"
     ],
     "color": [
       "pages/themes",
@@ -26398,7 +27816,6 @@
       "docs/behaviors/time",
       "docs/behaviors/toast",
       "docs/escape-hatches",
-      "docs/index",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
       "docs/properties",
@@ -26464,39 +27881,6 @@
       "docs/styles",
       "docs/testing-runbook",
       "docs/themes"
-    ],
-    "based": [
-      "pages/themes",
-      "docs/AI",
-      "docs/IMPROVEMENTS",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/NOTES-V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/address",
-      "docs/behaviors/cardnotification",
-      "docs/behaviors/grid",
-      "docs/behaviors/help",
-      "docs/behaviors/switcher",
-      "docs/behaviors/tooltip",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/committing-fixes",
-      "docs/home-page",
-      "docs/inline-editing",
-      "docs/linkedin-update-article",
-      "docs/performance",
-      "docs/schema-first-audit-report",
-      "docs/schema",
-      "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/themes",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
-      "demos/site/cards"
     ],
     "mathematics": [
       "pages/themes"
@@ -26567,11 +27951,6 @@
     "complementary": [
       "pages/themes",
       "docs/behaviors/aside"
-    ],
-    "opposite": [
-      "pages/themes",
-      "docs/behaviors/range",
-      "docs/behaviors/table"
     ],
     "wheel": [
       "pages/themes"
@@ -26917,22 +28296,6 @@
     ],
     "oceanpalette": [
       "pages/themes"
-    ],
-    "result": [
-      "pages/themes",
-      "docs/AI",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors-reference",
-      "docs/claude/PAGE-GENERATION",
-      "docs/home-page",
-      "docs/linkedin-update-article",
-      "docs/schema-first-architecture",
-      "docs/search",
-      "docs/semantic-standard",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/standalone"
     ],
     "aa": [
       "pages/themes",
@@ -27669,35 +29032,6 @@
     "predict": [
       "docs/AI"
     ],
-    "next": [
-      "docs/AI",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audio",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/articles",
-      "docs/behaviors/badge",
-      "docs/behaviors/error",
-      "docs/behaviors/icon",
-      "docs/behaviors/move",
-      "docs/behaviors/otp",
-      "docs/behaviors/pagination",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/tabs",
-      "docs/behaviors/tags",
-      "docs/behaviors/toast",
-      "docs/behaviors/toggle",
-      "docs/claude/TIER1-LAWS",
-      "docs/guides/create-a-website",
-      "docs/linkedin-framework-agnostic",
-      "docs/linkedin-update-article",
-      "docs/properties",
-      "docs/schema-first-audit-report",
-      "docs/semantic-audit",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/styles",
-      "demos/site/content"
-    ],
     "likely": [
       "docs/AI",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -28133,19 +29467,6 @@
     ],
     "jargon": [
       "docs/AI"
-    ],
-    "nested": [
-      "docs/AI",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/move",
-      "docs/behaviors/x-darkmode",
-      "docs/container-pattern",
-      "docs/linkedin-standards-article",
-      "docs/pricecard",
-      "docs/property-viewer",
-      "docs/themes",
-      "demos/site/interactive"
     ],
     "logic": [
       "docs/AI",
@@ -29127,34 +30448,6 @@
       "docs/linkedin-standards-article",
       "demos/schema-first-architecture"
     ],
-    "runs": [
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/solidjscomparison",
-      "docs/audio",
-      "docs/behaviors/accordion",
-      "docs/behaviors/cluster",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/darkmode",
-      "docs/behaviors/drawerLayout",
-      "docs/behaviors/glass",
-      "docs/behaviors/ripple",
-      "docs/behaviors/skeleton",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/guides/search-index",
-      "docs/mcp",
-      "docs/npx-commands",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/REPO-LAYOUT",
-      "docs/testing-runbook",
-      "docs/testing-strategy",
-      "demos/site/learn-more"
-    ],
     "tier": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
@@ -29184,42 +30477,6 @@
     ],
     "labeled": [
       "docs/ANNOUNCE_TEST_POLICY"
-    ],
-    "needs": [
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/solidjscomparison",
-      "docs/audio",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/accordion",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/cardvideo",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/collapse",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/flex",
-      "docs/behaviors/glass",
-      "docs/behaviors/inputgroup",
-      "docs/behaviors/move",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/toast",
-      "docs/behaviors/video",
-      "docs/behaviors/vimeo",
-      "docs/behaviors/x-behavior",
-      "docs/behaviors/youtube",
-      "docs/card",
-      "docs/code-examples-standard",
-      "docs/escape-hatches",
-      "docs/guides/create-a-website",
-      "docs/semantic-audit",
-      "docs/semantic-standard",
-      "docs/standards/V3-STANDARDS",
-      "docs/themes",
-      "demos/charity-food",
-      "demos/landing-page-showcase"
     ],
     "maintainers": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -29409,14 +30666,6 @@
     "installs": [
       "docs/ANNOUNCE_TEST_POLICY"
     ],
-    "hooks": [
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/behaviors-reference",
-      "docs/behaviors/articles",
-      "docs/schema",
-      "docs/semantic-standard",
-      "demos/site/content"
-    ],
     "short": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/IMPROVEMENTS",
@@ -29479,19 +30728,6 @@
     "channel": [
       "docs/ANNOUNCE_TEST_POLICY"
     ],
-    "follow": [
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/committing-fixes",
-      "docs/npx-commands",
-      "docs/schema.migration",
-      "docs/semantic-audit",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/REPO-LAYOUT"
-    ],
     "track": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/audio",
@@ -29540,22 +30776,6 @@
     "branches": [
       "docs/BRANCH_PROTECTION",
       "docs/standards/RELEASE-PROCESS"
-    ],
-    "cannot": [
-      "docs/BRANCH_PROTECTION",
-      "docs/architecture/solidjscomparison",
-      "docs/architecture/standards/ERROR-MESSAGE",
-      "docs/behavior-cross-reference",
-      "docs/behaviors/breadcrumb",
-      "docs/behaviors/dialog",
-      "docs/behaviors/fill",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/container-pattern",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
     ],
     "merged": [
       "docs/BRANCH_PROTECTION",
@@ -29871,20 +31091,6 @@
       "docs/BRANCH_PROTECTION",
       "docs/compliance/iso-42001-alignment",
       "docs/styles"
-    ],
-    "give": [
-      "docs/BRANCH_PROTECTION",
-      "docs/behaviors-reference",
-      "docs/behaviors/card",
-      "docs/behaviors/container",
-      "docs/behaviors/figure",
-      "docs/behaviors/fill",
-      "docs/behaviors/icon",
-      "docs/behaviors/img",
-      "docs/behaviors/navbar",
-      "docs/guides/create-a-website",
-      "docs/linkedin-framework-agnostic",
-      "docs/standards/RELEASE-PROCESS"
     ],
     "hour": [
       "docs/BRANCH_PROTECTION",
@@ -30274,35 +31480,8 @@
     "codepen": [
       "docs/IMPROVEMENTS"
     ],
-    "svelte": [
-      "docs/IMPROVEMENTS",
-      "demos/frameworks",
-      "demos/landing-page-showcase"
-    ],
     "downloading": [
       "docs/IMPROVEMENTS"
-    ],
-    "anything": [
-      "docs/IMPROVEMENTS",
-      "docs/architecture/solidjscomparison",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/articles",
-      "docs/behaviors/button",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/cardhorizontal",
-      "docs/behaviors/dropdown",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/toast",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS"
     ],
     "tutorials": [
       "docs/IMPROVEMENTS"
@@ -30381,21 +31560,6 @@
     "contributions": [
       "docs/IMPROVEMENTS"
     ],
-    "variables": [
-      "docs/IMPROVEMENTS",
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/container",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/escape-hatches",
-      "docs/schema",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/styles",
-      "docs/themes",
-      "docs/wbservices",
-      "demos/landing-page-showcase"
-    ],
     "beyond": [
       "docs/IMPROVEMENTS",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -30410,8 +31574,7 @@
       "docs/IMPROVEMENTS"
     ],
     "featuring": [
-      "docs/IMPROVEMENTS",
-      "docs/index"
+      "docs/IMPROVEMENTS"
     ],
     "templates": [
       "docs/IMPROVEMENTS",
@@ -31459,43 +32622,6 @@
       "docs/search",
       "demos/schema-first-architecture"
     ],
-    "hide": [
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/audio",
-      "docs/behaviors/alert",
-      "docs/behaviors/badge",
-      "docs/behaviors/card",
-      "docs/behaviors/cardbutton",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/cardfile",
-      "docs/behaviors/cardhero",
-      "docs/behaviors/cardhorizontal",
-      "docs/behaviors/cardimage",
-      "docs/behaviors/cardlink",
-      "docs/behaviors/cardnotification",
-      "docs/behaviors/cardoverlay",
-      "docs/behaviors/cardportfolio",
-      "docs/behaviors/cardpricing",
-      "docs/behaviors/cardproduct",
-      "docs/behaviors/cardprofile",
-      "docs/behaviors/cardstats",
-      "docs/behaviors/cardtestimonial",
-      "docs/behaviors/notes",
-      "docs/behaviors/password",
-      "docs/behaviors/searchfield",
-      "docs/behaviors/spinner",
-      "docs/behaviors/timeline",
-      "docs/behaviors/toggle",
-      "docs/behaviors/x-copybutton",
-      "docs/behaviors/x-enhancements",
-      "docs/guides/create-a-website",
-      "docs/property-viewer",
-      "docs/standards/V3-STANDARDS"
-    ],
     "subtitle": [
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -31538,50 +32664,6 @@
       "docs/claude/PAGE-GENERATION",
       "demos/landing-page-showcase",
       "demos/schema-first-architecture"
-    ],
-    "adds": [
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/audits/X-USAGE-AUDIT",
-      "docs/auto-injection",
-      "docs/behavior-cross-reference",
-      "docs/behaviors-reference",
-      "docs/behaviors/audio",
-      "docs/behaviors/autocomplete",
-      "docs/behaviors/avatar",
-      "docs/behaviors/button",
-      "docs/behaviors/chip",
-      "docs/behaviors/container",
-      "docs/behaviors/control",
-      "docs/behaviors/error",
-      "docs/behaviors/file",
-      "docs/behaviors/fix-card",
-      "docs/behaviors/globe",
-      "docs/behaviors/help",
-      "docs/behaviors/input",
-      "docs/behaviors/list",
-      "docs/behaviors/move",
-      "docs/behaviors/notes",
-      "docs/behaviors/repeater",
-      "docs/behaviors/resizable",
-      "docs/behaviors/ripple",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/skeleton",
-      "docs/behaviors/slider",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/status",
-      "docs/behaviors/sticky",
-      "docs/behaviors/table",
-      "docs/behaviors/tags",
-      "docs/behaviors/time",
-      "docs/behaviors/truncate",
-      "docs/behaviors/x-resizable",
-      "docs/card",
-      "docs/claude/PAGE-GENERATION",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/wbservices",
-      "demos/autoinject"
     ],
     "depth": [
       "docs/INTELLISENSE-TOOLTIPS"
@@ -31664,59 +32746,6 @@
       "docs/behaviors/dropdown",
       "docs/behaviors/release",
       "docs/inline-editing"
-    ],
-    "draggable": [
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/audits/X-USAGE-AUDIT",
-      "docs/behaviors/carddraggable",
-      "docs/behaviors/draggable",
-      "docs/behaviors/x-copybutton",
-      "docs/behaviors/x-draggable",
-      "docs/card",
-      "docs/home-page",
-      "docs/pce-candidates",
-      "demos/index",
-      "demos/site/cards",
-      "demos/site/index",
-      "demos/site/interactive"
-    ],
-    "makes": [
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/bounce",
-      "docs/behaviors/button",
-      "docs/behaviors/card",
-      "docs/behaviors/cardimage",
-      "docs/behaviors/copybutton",
-      "docs/behaviors/details",
-      "docs/behaviors/drawerLayout",
-      "docs/behaviors/fill",
-      "docs/behaviors/flex",
-      "docs/behaviors/frame",
-      "docs/behaviors/fullscreen",
-      "docs/behaviors/glass",
-      "docs/behaviors/lightbox",
-      "docs/behaviors/modal",
-      "docs/behaviors/notify",
-      "docs/behaviors/print",
-      "docs/behaviors/prompt",
-      "docs/behaviors/range",
-      "docs/behaviors/ratio",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/share",
-      "docs/behaviors/snow",
-      "docs/behaviors/x-collapse",
-      "docs/behaviors/x-copybutton",
-      "docs/behaviors/x-resizable",
-      "docs/claude/TIER1-LAWS",
-      "docs/guides/create-a-website",
-      "docs/linkedin-standards-article",
-      "docs/linkedin-update-article",
-      "docs/properties",
-      "docs/schema.migration",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/styles"
     ],
     "attachment": [
       "docs/INTELLISENSE-TOOLTIPS"
@@ -31846,22 +32875,6 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/behaviors/cardhero"
     ],
-    "viewport": [
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/behaviors/carddraggable",
-      "docs/behaviors/cardhero",
-      "docs/behaviors/center",
-      "docs/behaviors/code",
-      "docs/behaviors/footer",
-      "docs/behaviors/img",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/toast",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/test-schema-standard"
-    ],
     "vari": [
       "docs/INTELLISENSE-TOOLTIPS"
     ],
@@ -31895,25 +32908,6 @@
       "docs/schema-first-architecture",
       "docs/schema.migration"
     ],
-    "complete": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors/countdown",
-      "docs/behaviors/ol",
-      "docs/behaviors/progress",
-      "docs/behaviors/searchfield",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/guides/create-a-website",
-      "docs/guides/search-index",
-      "docs/properties",
-      "docs/search",
-      "docs/semantic-audit",
-      "demos/autoinject",
-      "demos/site/index"
-    ],
     "06": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/x-behavior",
@@ -31932,13 +32926,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
-    ],
-    "ships": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/behaviors/error",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/V3-STANDARDS",
-      "demos/landing-page-showcase"
     ],
     "v3": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -32054,15 +33041,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/fill"
     ],
-    "components": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/solidjscomparison",
-      "docs/audits/X-USAGE-AUDIT",
-      "docs/schema.migration",
-      "docs/standards/V3-STANDARDS"
-    ],
     "exempt": [
       "docs/MVVM-MIGRATION-PLAN"
     ],
@@ -32137,19 +33115,6 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/container-pattern",
       "docs/linkedin-framework-agnostic"
-    ],
-    "syntax": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors-reference",
-      "docs/behaviors/code",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/pre",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/code-examples-standard",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/wbservices",
-      "demos/legacy-syntax-check"
     ],
     "target": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -32423,18 +33388,6 @@
       "docs/MVVM-MIGRATION",
       "docs/schema"
     ],
-    "functions": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/claude/TIER1-LAWS",
-      "docs/pce-candidates",
-      "docs/schema-test-value",
-      "docs/schema",
-      "docs/wbservices",
-      "demos/site/content"
-    ],
     "baseclass": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -32625,19 +33578,6 @@
       "docs/MVVM-MIGRATION",
       "docs/claude/SCHEMAS-GUIDE"
     ],
-    "html5": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/solidjscomparison",
-      "docs/auto-injection",
-      "docs/behaviors-reference",
-      "docs/linkedin-framework-agnostic",
-      "docs/linkedin-standards-article",
-      "docs/semantic-audit",
-      "docs/semantic-standard",
-      "docs/styles",
-      "demos/schema-first-architecture"
-    ],
     "div": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/audits/X-USAGE-AUDIT",
@@ -32680,18 +33620,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/behaviors/x-copybutton"
-    ],
-    "template": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/behaviors/dl",
-      "docs/behaviors/grid",
-      "docs/behaviors/move",
-      "docs/behaviors/release",
-      "docs/behaviors/repeater",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/schema-first-architecture",
-      "demos/frameworks"
     ],
     "prop": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -32750,14 +33678,6 @@
     "diagram": [
       "docs/MVVM-MIGRATION",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
-    ],
-    "pipeline": [
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/solidjscomparison",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/committing-fixes",
-      "docs/testing-runbook"
     ],
     "load": [
       "docs/MVVM-MIGRATION",
@@ -32874,40 +33794,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/themes",
       "demos/schema-first-architecture"
-    ],
-    "defaults": [
-      "docs/MVVM-MIGRATION",
-      "docs/behaviors/breadcrumb",
-      "docs/behaviors/cluster",
-      "docs/behaviors/code",
-      "docs/behaviors/confirm",
-      "docs/behaviors/container",
-      "docs/behaviors/copybutton",
-      "docs/behaviors/flex",
-      "docs/behaviors/fullscreen",
-      "docs/behaviors/gallery",
-      "docs/behaviors/glow",
-      "docs/behaviors/masonry",
-      "docs/behaviors/notify",
-      "docs/behaviors/pagination",
-      "docs/behaviors/pre",
-      "docs/behaviors/print",
-      "docs/behaviors/prompt",
-      "docs/behaviors/radio",
-      "docs/behaviors/relativetime",
-      "docs/behaviors/share",
-      "docs/behaviors/steps",
-      "docs/behaviors/truncate",
-      "docs/behaviors/typewriter",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/escape-hatches",
-      "docs/home-page",
-      "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/multi-behavior-demo-generated"
     ],
     "enums": [
       "docs/MVVM-MIGRATION"
@@ -33159,30 +34045,6 @@
       "docs/wbservices",
       "demos/autoinject"
     ],
-    "configuration": [
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors-reference",
-      "docs/behaviors/dl",
-      "docs/behaviors/inputgroup",
-      "docs/behaviors/move",
-      "docs/behaviors/ol",
-      "docs/behaviors/radio",
-      "docs/behaviors/range",
-      "docs/behaviors/ul",
-      "docs/code-examples-standard",
-      "docs/container-pattern",
-      "docs/guides/search-index",
-      "docs/linkedin-framework-agnostic",
-      "docs/mcp",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/properties",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/REPO-LAYOUT",
-      "demos/schema-first-architecture"
-    ],
     "pubsub": [
       "docs/MVVM-MIGRATION"
     ],
@@ -33190,29 +34052,6 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/linkedin-standards-article"
-    ],
-    "lazy": [
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/solidjscomparison",
-      "docs/audits/X-USAGE-AUDIT",
-      "docs/auto-injection",
-      "docs/behavior-cross-reference",
-      "docs/behaviors-reference",
-      "docs/behaviors/card",
-      "docs/behaviors/cardimage",
-      "docs/behaviors/img",
-      "docs/behaviors/x-behavior",
-      "docs/claude/PAGE-GENERATION",
-      "docs/escape-hatches",
-      "docs/guides/search-index",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/pricecard",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "demos/frameworks",
-      "demos/site/content"
     ],
     "registry": [
       "docs/MVVM-MIGRATION",
@@ -33268,75 +34107,6 @@
       "docs/behaviors/range",
       "docs/code-examples-standard"
     ],
-    "per": [
-      "docs/MVVM-MIGRATION",
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors-reference",
-      "docs/behaviors/articles",
-      "docs/behaviors/cardfile",
-      "docs/behaviors/code",
-      "docs/behaviors/fireworks",
-      "docs/behaviors/pagination",
-      "docs/behaviors/ripple",
-      "docs/behaviors/table",
-      "docs/behaviors/tags",
-      "docs/behaviors/timeline",
-      "docs/behaviors/x-behavior",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/code-examples-standard",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/home-page",
-      "docs/linkedin-standards-article",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/schema.migration",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook",
-      "docs/themes",
-      "demos/frameworks",
-      "demos/site/cards"
-    ],
-    "loaded": [
-      "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/property-viewer",
-      "docs/standards/REPO-LAYOUT",
-      "docs/styles",
-      "demos/frameworks",
-      "demos/site/content"
-    ],
-    "dialog": [
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/auto-injection",
-      "docs/behaviors-reference",
-      "docs/behaviors/confirm",
-      "docs/behaviors/dialog",
-      "docs/behaviors/modal",
-      "docs/behaviors/prompt",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/code-examples-standard",
-      "docs/semantic-audit",
-      "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/V3-STANDARDS",
-      "demos/playground",
-      "demos/schema-first-architecture",
-      "demos/site/overlays"
-    ],
     "additional": [
       "docs/MVVM-MIGRATION",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -33345,24 +34115,6 @@
     ],
     "cl": [
       "docs/MVVM-MIGRATION"
-    ],
-    "guide": [
-      "docs/NOTES-V3-GUIDE",
-      "docs/V3-GUIDE",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors/dl",
-      "docs/behaviors/glass",
-      "docs/behaviors/ol",
-      "docs/behaviors/radio",
-      "docs/behaviors/range",
-      "docs/behaviors/ul",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/guides/create-a-website",
-      "docs/schema",
-      "demos/site/content",
-      "demos/site/learn-more"
     ],
     "todo": [
       "docs/NOTES-V3-GUIDE",
@@ -33411,14 +34163,6 @@
       "docs/semantic-standard",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/site/content"
-    ],
-    "press": [
-      "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/kbd",
-      "docs/behaviors/pulse",
-      "docs/behaviors/ripple",
-      "docs/behaviors/tags",
-      "docs/behaviors/x-enhancements"
     ],
     "uncheck": [
       "docs/NOTES-V3-GUIDE",
@@ -33635,36 +34379,6 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "demos/autoinject",
       "demos/playground"
-    ],
-    "files": [
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/file",
-      "docs/claude/README",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/code-examples-standard",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/guides/search-index",
-      "docs/home-page",
-      "docs/linkedin-framework-agnostic",
-      "docs/properties",
-      "docs/schema.migration",
-      "docs/semantic-audit",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/REPO-LAYOUT",
-      "docs/styles",
-      "docs/testing-runbook",
-      "docs/testing-strategy",
-      "docs/wbservices",
-      "demos/landing-page-showcase"
     ],
     "claude": [
       "docs/NOTES-V3-GUIDE",
@@ -34099,21 +34813,11 @@
       "demos/autoinject",
       "demos/schema-first-architecture"
     ],
-    "upgrade": [
-      "docs/V3-GUIDE",
-      "docs/behaviors/fill"
-    ],
     "themselves": [
       "docs/V3-GUIDE",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/inputgroup",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
-    ],
-    "internally": [
-      "docs/V3-GUIDE",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/address",
-      "docs/behaviors/scrollable"
     ],
     "contents": [
       "docs/V3-GUIDE",
@@ -34132,11 +34836,6 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/range",
       "docs/styles"
-    ],
-    "theming": [
-      "docs/V3-GUIDE",
-      "docs/themes",
-      "demos/autoinject"
     ],
     "recipe": [
       "docs/V3-GUIDE"
@@ -34190,44 +34889,6 @@
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS"
-    ],
-    "native": [
-      "docs/V3-GUIDE",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/accordion",
-      "docs/behaviors/audio",
-      "docs/behaviors/card",
-      "docs/behaviors/cardfile",
-      "docs/behaviors/cardportfolio",
-      "docs/behaviors/cardprofile",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/colorpicker",
-      "docs/behaviors/counter",
-      "docs/behaviors/details",
-      "docs/behaviors/floatinglabel",
-      "docs/behaviors/img",
-      "docs/behaviors/masked",
-      "docs/behaviors/ol",
-      "docs/behaviors/radio",
-      "docs/behaviors/scrollable",
-      "docs/behaviors/slider",
-      "docs/behaviors/status",
-      "docs/behaviors/video",
-      "docs/linkedin-framework-agnostic",
-      "docs/semantic-audit",
-      "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/V3-STANDARDS",
-      "docs/testing-strategy",
-      "docs/wbservices",
-      "demos/landing-page-showcase",
-      "demos/playground",
-      "demos/site/cards"
     ],
     "gains": [
       "docs/V3-GUIDE",
@@ -34297,25 +34958,6 @@
       "docs/V3-GUIDE",
       "docs/behaviors/sticky",
       "docs/standards/V3-STANDARDS"
-    ],
-    "either": [
-      "docs/V3-GUIDE",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/accordion",
-      "docs/behaviors/center",
-      "docs/behaviors/dialog",
-      "docs/behaviors/dropdown",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/floatinglabel",
-      "docs/behaviors/notes",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/pce-candidates",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/V3-STANDARDS",
-      "demos/landing-page-showcase",
-      "demos/site/cards"
     ],
     "maps": [
       "docs/V3-GUIDE",
@@ -35689,9 +36331,6 @@
       "docs/behaviors/fill",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
-    "churn": [
-      "docs/architecture/WB-PREFIX-AUDIT"
-    ],
     "package": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
@@ -35790,16 +36429,6 @@
     "unstyled": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "attaches": [
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/container",
-      "docs/behaviors/popover",
-      "docs/behaviors/range",
-      "docs/behaviors/ripple",
-      "docs/behaviors/stagelight",
-      "docs/schema-first-architecture"
-    ],
     "throws": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/audio"
@@ -35857,10 +36486,6 @@
     ],
     "teaches": [
       "docs/architecture/WB-PREFIX-AUDIT"
-    ],
-    "vocabulary": [
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD"
     ],
     "artifacts": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -36050,12 +36675,6 @@
     "authors": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "nobody": [
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
     "renaming": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/standards/REPO-LAYOUT"
@@ -36195,25 +36814,6 @@
     ],
     "refactors": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
-    ],
-    "injection": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/auto-injection",
-      "docs/behaviors-reference",
-      "docs/behaviors/fill",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/code-examples-standard",
-      "docs/escape-hatches",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/V3-STANDARDS",
-      "docs/wbservices",
-      "demos/autoinject",
-      "demos/pre-debug",
-      "demos/site/content"
     ],
     "extract": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -37955,30 +38555,6 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/standards/V3-STANDARDS"
     ],
-    "shared": [
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/architecture/solidjscomparison",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors-reference",
-      "docs/behaviors/cardbutton",
-      "docs/behaviors/cluster",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/toast",
-      "docs/behaviors/x-copybutton",
-      "docs/behaviors/x-effects",
-      "docs/behaviors/x-enhancements",
-      "docs/card",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS",
-      "docs/linkedin-update-article",
-      "docs/pce-candidates",
-      "docs/performance",
-      "docs/schema.migration",
-      "docs/themes",
-      "docs/wbservices",
-      "demos/site/cards",
-      "demos/standalone"
-    ],
     "math": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/time"
@@ -38498,37 +39074,6 @@
     "richer": [
       "docs/architecture/solidjscomparison"
     ],
-    "escape": [
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors/audio",
-      "docs/behaviors/button",
-      "docs/behaviors/code",
-      "docs/behaviors/details",
-      "docs/behaviors/dialog",
-      "docs/behaviors/drawer",
-      "docs/behaviors/figure",
-      "docs/behaviors/footer",
-      "docs/behaviors/form",
-      "docs/behaviors/header",
-      "docs/behaviors/img",
-      "docs/behaviors/input",
-      "docs/behaviors/mark",
-      "docs/behaviors/modal",
-      "docs/behaviors/pre",
-      "docs/behaviors/progress",
-      "docs/behaviors/select",
-      "docs/behaviors/table",
-      "docs/behaviors/textarea",
-      "docs/behaviors/video",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/escape-hatches",
-      "docs/inline-editing",
-      "docs/npx-commands",
-      "docs/property-viewer",
-      "docs/search",
-      "docs/standards/V3-STANDARDS",
-      "docs/test-schema-standard"
-    ],
     "hatch": [
       "docs/architecture/solidjscomparison"
     ],
@@ -38539,11 +39084,6 @@
       "docs/behaviors/radio",
       "docs/semantic-audit",
       "demos/autoinject"
-    ],
-    "toolchain": [
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors/hero",
-      "docs/linkedin-update-article"
     ],
     "degrades": [
       "docs/architecture/solidjscomparison"
@@ -39138,21 +39678,6 @@
       "demos/autoinject",
       "demos/multi-behavior-demo-generated"
     ],
-    "override": [
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/address",
-      "docs/behaviors/data",
-      "docs/behaviors/radio",
-      "docs/behaviors/time",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/code-examples-standard",
-      "docs/escape-hatches",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/themes",
-      "demos/site/interactive"
-    ],
     "stacks": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/home-page"
@@ -39274,26 +39799,6 @@
     "viewports": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/grid"
-    ],
-    "turns": [
-      "docs/audio",
-      "docs/behaviors/accordion",
-      "docs/behaviors/badge",
-      "docs/behaviors/button",
-      "docs/behaviors/colorpicker",
-      "docs/behaviors/counter",
-      "docs/behaviors/drawer",
-      "docs/behaviors/floatinglabel",
-      "docs/behaviors/scrollable",
-      "docs/behaviors/search",
-      "docs/behaviors/switch",
-      "docs/behaviors/tabs",
-      "docs/behaviors/toast",
-      "docs/behaviors/typewriter",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/PAGE-GENERATION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/V3-STANDARDS"
     ],
     "transport": [
       "docs/audio",
@@ -39948,11 +40453,6 @@
       "docs/inline-editing",
       "docs/properties"
     ],
-    "scoped": [
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/address",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
-    ],
     "effort": [
       "docs/audits/INLINE-STYLES-AUDIT"
     ],
@@ -40322,9 +40822,6 @@
       "docs/auto-injection"
     ],
     "inherently": [
-      "docs/auto-injection"
-    ],
-    "portability": [
       "docs/auto-injection"
     ],
     "remains": [
@@ -41126,12 +41623,6 @@
       "docs/behaviors/articles",
       "demos/site/content"
     ],
-    "react": [
-      "docs/behaviors/articles",
-      "docs/linkedin-framework-agnostic",
-      "demos/frameworks",
-      "demos/landing-page-showcase"
-    ],
     "usestate": [
       "docs/behaviors/articles",
       "demos/frameworks",
@@ -41349,46 +41840,6 @@
     ],
     "equaliser": [
       "docs/behaviors/audio"
-    ],
-    "rest": [
-      "docs/behaviors/audio",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/dialog",
-      "docs/behaviors/flex",
-      "docs/behaviors/floatinglabel",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/truncate",
-      "docs/claude/README",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/linkedin-update-article",
-      "docs/performance",
-      "demos/layout-test",
-      "demos/site/cards",
-      "demos/site/content"
-    ],
-    "hatches": [
-      "docs/behaviors/audio",
-      "docs/behaviors/button",
-      "docs/behaviors/code",
-      "docs/behaviors/details",
-      "docs/behaviors/dialog",
-      "docs/behaviors/figure",
-      "docs/behaviors/footer",
-      "docs/behaviors/form",
-      "docs/behaviors/header",
-      "docs/behaviors/img",
-      "docs/behaviors/input",
-      "docs/behaviors/mark",
-      "docs/behaviors/pre",
-      "docs/behaviors/progress",
-      "docs/behaviors/select",
-      "docs/behaviors/table",
-      "docs/behaviors/textarea",
-      "docs/behaviors/video",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/escape-hatches",
-      "docs/standards/V3-STANDARDS"
     ],
     "archive": [
       "docs/behaviors/audio",
@@ -42075,11 +42526,6 @@
     "news": [
       "docs/behaviors/card"
     ],
-    "wrote": [
-      "docs/behaviors/card",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
     "weaves": [
       "docs/behaviors/card"
     ],
@@ -42164,15 +42610,6 @@
     ],
     "offer": [
       "docs/behaviors/cardbutton"
-    ],
-    "ends": [
-      "docs/behaviors/cardbutton",
-      "docs/behaviors/cardvideo",
-      "docs/behaviors/range",
-      "docs/behaviors/video",
-      "docs/behaviors/vimeo",
-      "docs/behaviors/youtube",
-      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "fire": [
       "docs/behaviors/cardbutton",
@@ -42267,9 +42704,6 @@
       "docs/linkedin-update-article",
       "docs/test-schema-standard",
       "docs/testing-strategy"
-    ],
-    "pays": [
-      "docs/behaviors/cardexpandable"
     ],
     "recolors": [
       "docs/behaviors/cardexpandable"
@@ -42712,9 +43146,6 @@
       "docs/behaviors/time"
     ],
     "certifications": [
-      "docs/behaviors/cardportfolio"
-    ],
-    "languages": [
       "docs/behaviors/cardportfolio"
     ],
     "english": [
@@ -44377,11 +44808,6 @@
     "stretches": [
       "docs/behaviors/fill"
     ],
-    "depends": [
-      "docs/behaviors/fill",
-      "docs/behaviors/sidebarlayout",
-      "docs/guides/create-a-website"
-    ],
     "lands": [
       "docs/behaviors/fill"
     ],
@@ -44394,13 +44820,6 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/switcher",
       "docs/property-viewer"
-    ],
-    "loses": [
-      "docs/behaviors/fill",
-      "docs/behaviors/glass",
-      "docs/behaviors/input",
-      "docs/behaviors/search",
-      "docs/behaviors/searchfield"
     ],
     "governs": [
       "docs/behaviors/fill"
@@ -44780,9 +45199,6 @@
       "docs/behaviors/hero",
       "docs/linkedin-update-article"
     ],
-    "roots": [
-      "docs/behaviors/hero"
-    ],
     "helper": [
       "docs/behaviors/icon",
       "docs/behaviors/input",
@@ -44879,9 +45295,6 @@
     "fetching": [
       "docs/behaviors/img",
       "docs/performance"
-    ],
-    "nears": [
-      "docs/behaviors/img"
     ],
     "empties": [
       "docs/behaviors/input"
@@ -45070,9 +45483,6 @@
     "pack": [
       "docs/behaviors/masonry"
     ],
-    "walls": [
-      "docs/behaviors/masonry"
-    ],
     "uneven": [
       "docs/behaviors/masonry"
     ],
@@ -45096,11 +45506,6 @@
     ],
     "modalcontent": [
       "docs/behaviors/modal"
-    ],
-    "yourself": [
-      "docs/behaviors/modal",
-      "docs/claude/TIER1-LAWS",
-      "demos/autoinject"
     ],
     "reorders": [
       "docs/behaviors/move"
@@ -45743,15 +46148,6 @@
     ],
     "activation": [
       "docs/behaviors/ripple"
-    ],
-    "five": [
-      "docs/behaviors/scrollable",
-      "docs/behaviors/shake",
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/guides/create-a-website",
-      "docs/linkedin-framework-agnostic",
-      "docs/linkedin-update-article"
     ],
     "120px": [
       "docs/behaviors/scrollable"
@@ -46649,12 +47045,6 @@
     "attrs": [
       "docs/claude/PAGE-GENERATION"
     ],
-    "props": [
-      "docs/claude/PAGE-GENERATION",
-      "docs/property-viewer",
-      "docs/test-schema-standard",
-      "demos/frameworks"
-    ],
     "my": [
       "docs/claude/PAGE-GENERATION",
       "docs/escape-hatches",
@@ -46865,13 +47255,6 @@
       "docs/claude/TIER1-LAWS",
       "docs/schema-test-value",
       "docs/wbservices"
-    ],
-    "es": [
-      "docs/claude/TIER1-LAWS",
-      "docs/committing-fixes",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/wbservices",
-      "demos/landing-page-showcase"
     ],
     "commonjs": [
       "docs/claude/TIER1-LAWS",
@@ -47115,10 +47498,6 @@
     "publishing": [
       "docs/claude/TIER3-REFERENCE",
       "docs/testing-runbook"
-    ],
-    "published": [
-      "docs/claude/TIER3-REFERENCE",
-      "docs/guides/create-a-website"
     ],
     "resilience": [
       "docs/claude/TIER3-REFERENCE"
@@ -47516,11 +47895,6 @@
     "investigations": [
       "docs/committing-fixes"
     ],
-    "minutes": [
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/schema-test-value"
-    ],
     "iec": [
       "docs/compliance/iso-42001-alignment"
     ],
@@ -47788,9 +48162,6 @@
     ],
     "appendimagetocontainer": [
       "docs/container-pattern"
-    ],
-    "customize": [
-      "docs/escape-hatches"
     ],
     "999px": [
       "docs/escape-hatches"
@@ -48304,15 +48675,6 @@
     "furniture": [
       "docs/linkedin-framework-agnostic"
     ],
-    "vue": [
-      "docs/linkedin-framework-agnostic",
-      "demos/frameworks",
-      "demos/landing-page-showcase"
-    ],
-    "angular": [
-      "docs/linkedin-framework-agnostic",
-      "demos/frameworks"
-    ],
     "thrive": [
       "docs/linkedin-framework-agnostic"
     ],
@@ -48356,9 +48718,6 @@
       "docs/pricecard",
       "docs/schema-first-audit-report",
       "docs/schema.migration"
-    ],
-    "traditional": [
-      "docs/linkedin-framework-agnostic"
     ],
     "tightly": [
       "docs/linkedin-framework-agnostic"
@@ -48978,9 +49337,6 @@
       "docs/performance"
     ],
     "payload": [
-      "docs/performance"
-    ],
-    "paint": [
       "docs/performance"
     ],
     "informs": [
@@ -50188,9 +50544,6 @@
     "authority": [
       "docs/standards/V3-STANDARDS"
     ],
-    "observers": [
-      "docs/standards/V3-STANDARDS"
-    ],
     "outlives": [
       "docs/standards/V3-STANDARDS"
     ],
@@ -50287,9 +50640,6 @@
       "docs/testing-strategy"
     ],
     "incompatible": [
-      "docs/styles"
-    ],
-    "breaking": [
       "docs/styles"
     ],
     "typography": [
@@ -50608,9 +50958,6 @@
     "checkmark": [
       "demos/autoinject"
     ],
-    "maintains": [
-      "demos/autoinject"
-    ],
     "grp": [
       "demos/autoinject"
     ],
@@ -50787,9 +51134,6 @@
     "compatibility": [
       "demos/frameworks"
     ],
-    "rewrite": [
-      "demos/frameworks"
-    ],
     "tiny": [
       "demos/frameworks"
     ],
@@ -50837,9 +51181,6 @@
       "demos/frameworks"
     ],
     "bindings": [
-      "demos/frameworks"
-    ],
-    "compiler": [
       "demos/frameworks"
     ],
     "compiled": [
@@ -50982,10 +51323,6 @@
     ],
     "efficacy": [
       "demos/schema-first-architecture"
-    ],
-    "introduction": [
-      "demos/schema-first-architecture",
-      "demos/site/content"
     ],
     "advent": [
       "demos/schema-first-architecture"
