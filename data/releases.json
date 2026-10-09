@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.467",
+      "date": "2026-10-08",
+      "summary": "Feedback.js reads toast-message, toast-title and toast-variant, and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1802\" target=\"_blank\" rel=\"noopener\">PR 1802</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Toast and tooltip alternate spellings are registered synonyms; tooltip declares tooltipClass</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/149a2428162778fb411c2b90f741d7741ccd5a7b\" target=\"_blank\" rel=\"noopener\"><code>149a242</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node -e &quot;import(&#39;./scripts/lib/attribute-audit.mjs&#39;).then(m=&gt;console.log(m.auditAll().totals.byRule.R4))&quot;</code>. Before: 16, listing toast-message, toast-title, toast-variant and the four tooltip-* names. Now: 9, and none of them is listed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/399582e22abbd233f247bac1eb60569c55f791c3\" target=\"_blank\" rel=\"noopener\"><code>399582e</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.466",
       "date": "2026-10-08",
       "summary": "A radio with a label (input type=&quot;radio&quot; label=&quot;Monthly billing&quot;) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1801\" target=\"_blank\" rel=\"noopener\">PR 1801</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1795\" target=\"_blank\" rel=\"noopener\">#1795</a>",
