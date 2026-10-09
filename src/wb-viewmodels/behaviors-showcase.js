@@ -136,7 +136,7 @@ function initCodeCopy(container) {
     });
     
     // position:relative anchors the copy button; a class, not style (#779).
-    mdhtml.classList.add('x-showcase__copy-host');
+    mdhtml.classList.add('x-mdhtml--copy-host');
     mdhtml.appendChild(copyBtn);
   });
 }

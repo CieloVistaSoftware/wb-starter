@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 /* Base notification layout. Keyed on the attribute that applies the behavior:
-   the .x-notification class it used to be keyed on only restated it (#969). */
+   the host class it used to be keyed on only restated it (#969). */
 [x-cardnotification] {
   display: flex;
   align-items: flex-start;
@@ -20,7 +20,7 @@
 }
 
 /* Icon */
-.x-notification__icon {
+.x-cardnotification__icon {
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -34,20 +34,20 @@
 }
 
 /* Content area */
-.x-notification__content {
+.x-cardnotification__content {
   flex: 1;
   min-width: 0;
 }
 
 /* Title */
-.x-notification__title {
+.x-cardnotification__title {
   display: block;
   font-weight: var(--x-notification-title-weight, 600);
   margin-bottom: 0.25rem;
 }
 
 /* Message */
-.x-notification__message {
+.x-cardnotification__message {
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -55,7 +55,7 @@
 }
 
 /* Dismiss button */
-.x-notification__dismiss {
+.x-cardnotification__dismiss {
   flex-shrink: 0;
   width: 28px;
   height: 28px;
@@ -72,13 +72,13 @@
   transition: opacity 0.2s, background 0.2s;
 }
 
-.x-notification__dismiss:hover {
+.x-cardnotification__dismiss:hover {
   opacity: 1;
   background: rgba(255, 255, 255, 0.1);
 }
 
 /* Elevated */
-.x-notification--elevated {
+.x-cardnotification--elevated {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -87,53 +87,53 @@
    use the semantic state colors, and icon text uses --text-primary. */
 
 /* ── INFO ── */
-.x-notification--info {
+.x-cardnotification--info {
   background: var(--notification-info-dark-bg);
   border-left-color: var(--info-color);
   color: var(--notification-info-dark-color);
 }
 
-.x-notification--info .x-notification__icon {
+.x-cardnotification--info .x-cardnotification__icon {
   background: var(--info-color);
   color: var(--text-primary);
 }
 
 /* ── SUCCESS ── */
-.x-notification--success {
+.x-cardnotification--success {
   background: var(--notification-success-dark-bg);
   border-left-color: var(--success-color);
   color: var(--notification-success-dark-color);
 }
 
-.x-notification--success .x-notification__icon {
+.x-cardnotification--success .x-cardnotification__icon {
   background: var(--success-color);
   color: var(--text-primary);
 }
 
 /* ── WARNING ── */
-.x-notification--warning {
+.x-cardnotification--warning {
   background: var(--notification-warning-dark-bg);
   border-left-color: var(--warning-color);
   color: var(--notification-warning-dark-color);
 }
 
-.x-notification--warning .x-notification__icon {
+.x-cardnotification--warning .x-cardnotification__icon {
   background: var(--warning-color);
   color: var(--text-primary);
 }
 
 /* ── ERROR (danger) ── */
-.x-notification--error {
+.x-cardnotification--error {
   background: var(--notification-danger-dark-bg);
   border-left-color: var(--danger-color);
   color: var(--notification-danger-dark-color);
 }
 
-.x-notification--error .x-notification__icon {
+.x-cardnotification--error .x-cardnotification__icon {
   background: var(--danger-color);
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .x-notification__icon {
+[data-theme="dark"] .x-cardnotification__icon {
   opacity: 0.9;
 }

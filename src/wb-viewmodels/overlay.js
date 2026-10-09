@@ -713,7 +713,9 @@ export function sheet(element, options = {}) {
     const resizeHandle = sheetEl.querySelector('.x-sheet__resize');
     resizeHandle.onmousedown = (e) => {
       isResizing = true;
-      document.body.classList.add('x-resizing');
+      // The sheet's own modifier (#1096), on <body> so the drag cursor and
+      // no-select hold wherever the pointer goes during the drag.
+      document.body.classList.add('x-sheet--resizing');
     };
     
     document.addEventListener('mousemove', (e) => {
@@ -728,7 +730,7 @@ export function sheet(element, options = {}) {
     
     document.addEventListener('mouseup', () => {
       isResizing = false;
-      document.body.classList.remove('x-resizing');
+      document.body.classList.remove('x-sheet--resizing');
     });
     
     document.body.appendChild(sheetEl);

@@ -148,7 +148,7 @@ Extract component styles from site.css, leaving only pure site layout (grid, sid
 | `layouts.css` | x-divider-gradient, x-glass, x-gradient-shift, x-gradient-text, x-orb, x-orb-float |
 | `data.css` | x-table (merge with Phase 1 consolidation) |
 | `navigation.css` | (already in navbar.css, header.css, footer.css) |
-| Keep in site.css | x-grid, x-row, x-sidebar, x-reel, x-scroll-lock, x-resizing, x-content-auto |
+| Keep in site.css | x-grid, x-row, x-sidebar, x-reel, x-scroll-lock, x-sheet--resizing, x-content-auto |
 
 ---
 

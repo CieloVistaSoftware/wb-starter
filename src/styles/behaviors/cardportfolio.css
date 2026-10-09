@@ -23,7 +23,7 @@
      cardimage overlay-badge rule above) turned both the initials and the
      status dot into absolutely-positioned pills. The wrap is a <div> now.
    - size=*: this section's size rules read
-       `.x-portfolio.x-card--sm, .x-portfolio[variant="sm"] .x-portfolio__avatar`
+       `<host>.x-card--sm, <host>[variant="sm"] <avatar>` (host and avatar by class)
      -- the comma made the CARD ITSELF the target, so size="sm" shrank the
      whole card to a 72px-wide 4.5rem box and size="full" to 176px, the
      text crushed one word per line. They are descendant selectors again.
@@ -49,29 +49,29 @@
 
 /* Full-bleed parts. The "cards WITHOUT header/main need padding" fallback
    near the top of this file matches (it looks for .x-card__header, and the
-   portfolio's header is .x-portfolio__header) at 0,3,0 and put a 1rem inset
+   portfolio's header is .x-cardportfolio__header) at 0,3,0 and put a 1rem inset
    around everything -- the banner floated inside a frame instead of running
    edge to edge. The header/main carry their own padding. Same 0,3,0 here,
    later in the file, so it wins on source order. */
-[x-cardportfolio][x-cardportfolio]:has(> .x-portfolio__header) {
+[x-cardportfolio][x-cardportfolio]:has(> .x-cardportfolio__header) {
   padding: 0;
 }
 
-[x-cardportfolio] > .x-portfolio__cover {
+[x-cardportfolio] > .x-cardportfolio__cover {
   margin: 0;
   height: var(--x-portfolio-cover-height, 9.375rem);
   flex: 0 0 auto;
   overflow: hidden;
 }
 
-[x-cardportfolio] .x-portfolio__cover-img {
+[x-cardportfolio] .x-cardportfolio__cover-img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-[x-cardportfolio] > .x-portfolio__header {
+[x-cardportfolio] > .x-cardportfolio__header {
   display: block;
   text-align: center;
   padding: 1.5rem 1.5rem 1.25rem;
@@ -83,7 +83,7 @@
   font-size: 1rem;
 }
 
-[x-cardportfolio] .x-portfolio__avatar-wrap {
+[x-cardportfolio] .x-cardportfolio__avatar-wrap {
   position: relative;
   display: inline-block;
   vertical-align: top;
@@ -91,7 +91,7 @@
   line-height: 0;
 }
 
-[x-cardportfolio] .x-portfolio__avatar {
+[x-cardportfolio] .x-cardportfolio__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -106,14 +106,14 @@
   line-height: 1;
 }
 
-[x-cardportfolio] .x-portfolio__avatar-placeholder {
+[x-cardportfolio] .x-cardportfolio__avatar-placeholder {
   background: var(--bg-tertiary, #374151);
   color: var(--text-primary, #f9fafb);
 }
 
 /* Sized as a fraction of the avatar (the wrap hugs it), so every variant and
    size keeps the dot in proportion without restating it. */
-[x-cardportfolio] .x-portfolio__availability {
+[x-cardportfolio] .x-cardportfolio__availability {
   position: absolute;
   right: 4%;
   bottom: 4%;
@@ -128,21 +128,21 @@
 }
 
 /* One custom property per status, read by both the dot and the label. */
-.x-portfolio__availability--available,
-.x-portfolio__status--available { --x-portfolio-status: var(--success-color, #22c55e); }
+.x-cardportfolio__availability--available,
+.x-cardportfolio__status--available { --x-portfolio-status: var(--success-color, #22c55e); }
 
-.x-portfolio__availability--busy,
-.x-portfolio__status--busy { --x-portfolio-status: var(--warning-color, #f59e0b); }
+.x-cardportfolio__availability--busy,
+.x-cardportfolio__status--busy { --x-portfolio-status: var(--warning-color, #f59e0b); }
 
-.x-portfolio__availability--not-available,
-.x-portfolio__status--not-available { --x-portfolio-status: var(--danger-color, #ef4444); }
+.x-cardportfolio__availability--not-available,
+.x-cardportfolio__status--not-available { --x-portfolio-status: var(--danger-color, #ef4444); }
 
-.x-portfolio__availability--open-to-opportunities,
-.x-portfolio__status--open-to-opportunities { --x-portfolio-status: var(--info-color, #3b82f6); }
+.x-cardportfolio__availability--open-to-opportunities,
+.x-cardportfolio__status--open-to-opportunities { --x-portfolio-status: var(--info-color, #3b82f6); }
 
 /* Wraps, never ellipsises: a card that shows "Ada Lovel..." is missing the
    one thing it exists to show. */
-[x-cardportfolio] .x-portfolio__name {
+[x-cardportfolio] .x-cardportfolio__name {
   margin: 0.75rem 0 0;
   font-size: 1.6rem;
   font-weight: 700;
@@ -152,7 +152,7 @@
   overflow-wrap: break-word;
 }
 
-[x-cardportfolio] .x-portfolio__title {
+[x-cardportfolio] .x-cardportfolio__title {
   margin: 0.35rem 0 0;
   font-size: 1rem;
   font-weight: 600;
@@ -161,21 +161,21 @@
   text-wrap: balance;
 }
 
-[x-cardportfolio] .x-portfolio__company,
-[x-cardportfolio] .x-portfolio__location {
+[x-cardportfolio] .x-cardportfolio__company,
+[x-cardportfolio] .x-cardportfolio__location {
   margin: 0.35rem 0 0;
   font-size: 0.9rem;
   color: var(--text-secondary, #9ca3af);
 }
 
-[x-cardportfolio] .x-portfolio__tagline {
+[x-cardportfolio] .x-cardportfolio__tagline {
   margin: 0.75rem 0 0;
   font-size: 0.95rem;
   font-style: italic;
   color: var(--text-secondary, #9ca3af);
 }
 
-[x-cardportfolio] .x-portfolio__status {
+[x-cardportfolio] .x-cardportfolio__status {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -189,7 +189,7 @@
   color: var(--text-primary, #f9fafb);
 }
 
-[x-cardportfolio] .x-portfolio__status::before {
+[x-cardportfolio] .x-cardportfolio__status::before {
   content: '';
   flex: 0 0 auto;
   width: 0.55rem;
@@ -198,12 +198,12 @@
   background: var(--x-portfolio-status);
 }
 
-[x-cardportfolio] > .x-portfolio__main {
+[x-cardportfolio] > .x-cardportfolio__main {
   padding: 0 1.5rem 1.5rem;
 }
 
 /* No bio/skills/stats: an empty <main> would only add a padded blank band. */
-[x-cardportfolio] > .x-portfolio__main:empty {
+[x-cardportfolio] > .x-cardportfolio__main:empty {
   display: none;
 }
 
@@ -211,7 +211,7 @@
    inline style.cssText (padding 0.875rem, below the §13 1rem minimum) it
    used to carry. card.js keeps only the JS-driven hover background/transform
    inline. */
-.x-portfolio__cta {
+.x-cardportfolio__cta {
   display: block;
   text-align: center;
   padding: 1rem;
@@ -224,52 +224,52 @@
 }
 
 /* ── Variant: Compact — narrower, shorter banner, smaller everything ── */
-[x-cardportfolio].x-portfolio--compact {
+[x-cardportfolio].x-cardportfolio--compact {
   max-width: 17.5rem;
 }
 
-.x-portfolio--compact > .x-portfolio__cover {
+.x-cardportfolio--compact > .x-cardportfolio__cover {
   height: 4.5rem;
 }
 
-.x-portfolio--compact > .x-portfolio__header {
+.x-cardportfolio--compact > .x-cardportfolio__header {
   padding: 0.75rem 0.75rem 0.875rem;
 }
 
-.x-portfolio--compact .x-portfolio__avatar {
+.x-cardportfolio--compact .x-cardportfolio__avatar {
   width: 4rem;
   height: 4rem;
   border-width: 3px;
   font-size: 1.25rem;
 }
 
-.x-portfolio--compact .x-portfolio__availability {
+.x-cardportfolio--compact .x-cardportfolio__availability {
   border-width: 2px;
 }
 
-.x-portfolio--compact .x-portfolio__name {
+.x-cardportfolio--compact .x-cardportfolio__name {
   margin-top: 0.4rem;
   font-size: 1.1rem;
 }
 
-.x-portfolio--compact .x-portfolio__title {
+.x-cardportfolio--compact .x-cardportfolio__title {
   margin-top: 0.2rem;
   font-size: 0.85rem;
 }
 
-.x-portfolio--compact .x-portfolio__company,
-.x-portfolio--compact .x-portfolio__location {
+.x-cardportfolio--compact .x-cardportfolio__company,
+.x-cardportfolio--compact .x-cardportfolio__location {
   margin-top: 0.2rem;
   font-size: 0.8rem;
 }
 
-.x-portfolio--compact .x-portfolio__status {
+.x-cardportfolio--compact .x-cardportfolio__status {
   margin-top: 0.5rem;
   padding: 0.125rem 0.5rem;
   font-size: 0.7rem;
 }
 
-.x-portfolio--compact > .x-portfolio__main {
+.x-cardportfolio--compact > .x-cardportfolio__main {
   padding: 0 0.75rem 0.75rem;
 }
 
@@ -279,19 +279,19 @@
    row underneath instead of being squeezed into a third column. Inside the
    identity block the avatar sits beside the name/title too, so a horizontal
    card with no cover still reads as image-beside-text. */
-[x-cardportfolio].x-portfolio--horizontal {
+[x-cardportfolio].x-cardportfolio--horizontal {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
   max-width: 37.5rem;
 }
 
-[x-cardportfolio].x-portfolio--horizontal > * {
+[x-cardportfolio].x-cardportfolio--horizontal > * {
   flex: 1 1 100%;
   min-width: 0;
 }
 
-[x-cardportfolio].x-portfolio--horizontal > .x-portfolio__cover {
+[x-cardportfolio].x-cardportfolio--horizontal > .x-cardportfolio__cover {
   flex: 0 0 36%;
   display: flex;
   height: auto;
@@ -301,13 +301,13 @@
 /* The column's height comes from stretch, which a percentage height does not
    resolve against -- `height: 100%` fell back to the image's own aspect and
    left a blank band under it. As a stretched flex item it fills the column. */
-.x-portfolio--horizontal .x-portfolio__cover-img {
+.x-cardportfolio--horizontal .x-cardportfolio__cover-img {
   flex: 1 1 auto;
   min-width: 0;
   height: auto;
 }
 
-[x-cardportfolio].x-portfolio--horizontal > .x-portfolio__header {
+[x-cardportfolio].x-cardportfolio--horizontal > .x-cardportfolio__header {
   flex: 1 1 0;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -318,63 +318,63 @@
   padding: 1.25rem;
 }
 
-.x-portfolio--horizontal > .x-portfolio__header > .x-portfolio__avatar-wrap {
+.x-cardportfolio--horizontal > .x-cardportfolio__header > .x-cardportfolio__avatar-wrap {
   grid-column: 1;
   grid-row: 1 / span 6;
   align-self: center;
 }
 
-.x-portfolio--horizontal > .x-portfolio__header > :not(.x-portfolio__avatar-wrap) {
+.x-cardportfolio--horizontal > .x-cardportfolio__header > :not(.x-cardportfolio__avatar-wrap) {
   grid-column: 2;
 }
 
-.x-portfolio--horizontal .x-portfolio__avatar {
+.x-cardportfolio--horizontal .x-cardportfolio__avatar {
   width: 4.5rem;
   height: 4.5rem;
   font-size: 1.4rem;
 }
 
-.x-portfolio--horizontal .x-portfolio__name {
+.x-cardportfolio--horizontal .x-cardportfolio__name {
   margin-top: 0;
   font-size: 1.35rem;
 }
 
-.x-portfolio--horizontal .x-portfolio__status {
+.x-cardportfolio--horizontal .x-cardportfolio__status {
   justify-self: start;
 }
 
 /* ── Variant: Full — full width, taller banner, larger identity block ── */
-[x-cardportfolio].x-portfolio--full {
+[x-cardportfolio].x-cardportfolio--full {
   max-width: 50rem;
 }
 
-.x-portfolio--full > .x-portfolio__cover {
+.x-cardportfolio--full > .x-cardportfolio__cover {
   height: 12rem;
 }
 
-.x-portfolio--full > .x-portfolio__header {
+.x-cardportfolio--full > .x-cardportfolio__header {
   padding: 2.25rem 2.25rem 1.75rem;
 }
 
-.x-portfolio--full .x-portfolio__avatar {
+.x-cardportfolio--full .x-cardportfolio__avatar {
   width: 10rem;
   height: 10rem;
   font-size: 2.5rem;
 }
 
-.x-portfolio--full .x-portfolio__name {
+.x-cardportfolio--full .x-cardportfolio__name {
   font-size: 2.1rem;
 }
 
-.x-portfolio--full .x-portfolio__title {
+.x-cardportfolio--full .x-cardportfolio__title {
   font-size: 1.2rem;
 }
 
-.x-portfolio--full .x-portfolio__location {
+.x-cardportfolio--full .x-cardportfolio__location {
   font-size: 1rem;
 }
 
-.x-portfolio--full > .x-portfolio__main {
+.x-cardportfolio--full > .x-cardportfolio__main {
   padding: 0 2.25rem 2.25rem;
 }
 
@@ -382,80 +382,80 @@
    above; the banner, avatar, name and header padding scale with it so the
    difference reads even where a grid column caps the rendered width.
    Descendant selectors (0,3,0): the target is the PART, never the card. ── */
-[x-cardportfolio].x-card--xs > .x-portfolio__cover { height: 4rem; }
+[x-cardportfolio].x-card--xs > .x-cardportfolio__cover { height: 4rem; }
 
-[x-cardportfolio].x-card--xs .x-portfolio__avatar { width: 3.5rem; height: 3.5rem; border-width: 2px; font-size: 1.1rem; }
+[x-cardportfolio].x-card--xs .x-cardportfolio__avatar { width: 3.5rem; height: 3.5rem; border-width: 2px; font-size: 1.1rem; }
 
-[x-cardportfolio].x-card--xs .x-portfolio__name { font-size: 1rem; }
+[x-cardportfolio].x-card--xs .x-cardportfolio__name { font-size: 1rem; }
 
-[x-cardportfolio].x-card--xs .x-portfolio__title { font-size: 0.8rem; }
+[x-cardportfolio].x-card--xs .x-cardportfolio__title { font-size: 0.8rem; }
 
-[x-cardportfolio].x-card--xs > .x-portfolio__header { padding: 0.75rem; }
+[x-cardportfolio].x-card--xs > .x-cardportfolio__header { padding: 0.75rem; }
 
-[x-cardportfolio].x-card--sm > .x-portfolio__cover { height: 5.5rem; }
+[x-cardportfolio].x-card--sm > .x-cardportfolio__cover { height: 5.5rem; }
 
-[x-cardportfolio].x-card--sm .x-portfolio__avatar { width: 4.5rem; height: 4.5rem; border-width: 3px; font-size: 1.4rem; }
+[x-cardportfolio].x-card--sm .x-cardportfolio__avatar { width: 4.5rem; height: 4.5rem; border-width: 3px; font-size: 1.4rem; }
 
-[x-cardportfolio].x-card--sm .x-portfolio__name { font-size: 1.2rem; }
+[x-cardportfolio].x-card--sm .x-cardportfolio__name { font-size: 1.2rem; }
 
-[x-cardportfolio].x-card--sm .x-portfolio__title { font-size: 0.875rem; }
+[x-cardportfolio].x-card--sm .x-cardportfolio__title { font-size: 0.875rem; }
 
-[x-cardportfolio].x-card--sm > .x-portfolio__header { padding: 1rem; }
+[x-cardportfolio].x-card--sm > .x-cardportfolio__header { padding: 1rem; }
 
-[x-cardportfolio].x-card--md > .x-portfolio__cover { height: 7rem; }
+[x-cardportfolio].x-card--md > .x-cardportfolio__cover { height: 7rem; }
 
-[x-cardportfolio].x-card--md .x-portfolio__avatar { width: 6rem; height: 6rem; font-size: 1.7rem; }
+[x-cardportfolio].x-card--md .x-cardportfolio__avatar { width: 6rem; height: 6rem; font-size: 1.7rem; }
 
-[x-cardportfolio].x-card--md .x-portfolio__name { font-size: 1.4rem; }
+[x-cardportfolio].x-card--md .x-cardportfolio__name { font-size: 1.4rem; }
 
-[x-cardportfolio].x-card--md .x-portfolio__title { font-size: 0.95rem; }
+[x-cardportfolio].x-card--md .x-cardportfolio__title { font-size: 0.95rem; }
 
-[x-cardportfolio].x-card--lg > .x-portfolio__cover { height: 9rem; }
+[x-cardportfolio].x-card--lg > .x-cardportfolio__cover { height: 9rem; }
 
-[x-cardportfolio].x-card--lg .x-portfolio__avatar { width: 8rem; height: 8rem; font-size: 2rem; }
+[x-cardportfolio].x-card--lg .x-cardportfolio__avatar { width: 8rem; height: 8rem; font-size: 2rem; }
 
-[x-cardportfolio].x-card--lg .x-portfolio__name { font-size: 1.75rem; }
+[x-cardportfolio].x-card--lg .x-cardportfolio__name { font-size: 1.75rem; }
 
-[x-cardportfolio].x-card--lg .x-portfolio__title { font-size: 1.05rem; }
+[x-cardportfolio].x-card--lg .x-cardportfolio__title { font-size: 1.05rem; }
 
-[x-cardportfolio].x-card--lg > .x-portfolio__header { padding: 1.75rem; }
+[x-cardportfolio].x-card--lg > .x-cardportfolio__header { padding: 1.75rem; }
 
-[x-cardportfolio].x-card--xl > .x-portfolio__cover { height: 10.5rem; }
+[x-cardportfolio].x-card--xl > .x-cardportfolio__cover { height: 10.5rem; }
 
-[x-cardportfolio].x-card--xl .x-portfolio__avatar { width: 9.5rem; height: 9.5rem; font-size: 2.25rem; }
+[x-cardportfolio].x-card--xl .x-cardportfolio__avatar { width: 9.5rem; height: 9.5rem; font-size: 2.25rem; }
 
-[x-cardportfolio].x-card--xl .x-portfolio__name { font-size: 1.95rem; }
+[x-cardportfolio].x-card--xl .x-cardportfolio__name { font-size: 1.95rem; }
 
-[x-cardportfolio].x-card--xl .x-portfolio__title { font-size: 1.15rem; }
+[x-cardportfolio].x-card--xl .x-cardportfolio__title { font-size: 1.15rem; }
 
-[x-cardportfolio].x-card--xl > .x-portfolio__header { padding: 2rem; }
+[x-cardportfolio].x-card--xl > .x-cardportfolio__header { padding: 2rem; }
 
-[x-cardportfolio].x-card--full > .x-portfolio__cover { height: 12rem; }
+[x-cardportfolio].x-card--full > .x-cardportfolio__cover { height: 12rem; }
 
-[x-cardportfolio].x-card--full .x-portfolio__avatar { width: 11rem; height: 11rem; font-size: 2.5rem; }
+[x-cardportfolio].x-card--full .x-cardportfolio__avatar { width: 11rem; height: 11rem; font-size: 2.5rem; }
 
-[x-cardportfolio].x-card--full .x-portfolio__name { font-size: 2.2rem; }
+[x-cardportfolio].x-card--full .x-cardportfolio__name { font-size: 2.2rem; }
 
-[x-cardportfolio].x-card--full .x-portfolio__title { font-size: 1.25rem; }
+[x-cardportfolio].x-card--full .x-cardportfolio__title { font-size: 1.25rem; }
 
-[x-cardportfolio].x-card--full > .x-portfolio__header { padding: 2.25rem; }
+[x-cardportfolio].x-card--full > .x-cardportfolio__header { padding: 2.25rem; }
 
 /* Portfolio card (cardportfolio()): every section and part below was a
  cssText block in card.js (#779). Scoped under [x-cardportfolio] (0,2,0), which
  already outranks the page's bare heading/list/link rules these elements
  also match. */
-[x-cardportfolio] .x-portfolio__bio {
+[x-cardportfolio] .x-cardportfolio__bio {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__bio-text {
+[x-cardportfolio] .x-cardportfolio__bio-text {
   margin:0;
   color:var(--text-primary);
   font-size:0.95rem;
   line-height:1.7;
 }
 
-[x-cardportfolio] .x-portfolio__stats {
+[x-cardportfolio] .x-cardportfolio__stats {
   display:flex;
   flex-direction:column;
   gap:0.5rem;
@@ -465,28 +465,28 @@
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__stat {
+[x-cardportfolio] .x-cardportfolio__stat {
   display:flex;
   align-items:baseline;
   gap:0.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__stat-value {
+[x-cardportfolio] .x-cardportfolio__stat-value {
   font-size:1.25rem;
   font-weight:700;
   color:var(--primary);
 }
 
-[x-cardportfolio] .x-portfolio__stat-label {
+[x-cardportfolio] .x-cardportfolio__stat-label {
   font-size:0.85rem;
   color:var(--text-secondary);
 }
 
-[x-cardportfolio] .x-portfolio__skills {
+[x-cardportfolio] .x-cardportfolio__skills {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__section-title {
+[x-cardportfolio] .x-cardportfolio__section-title {
   margin:0 0 0.75rem;
   font-size:0.9rem;
   font-weight:600;
@@ -495,13 +495,13 @@
   letter-spacing:0.05em;
 }
 
-[x-cardportfolio] .x-portfolio__pills {
+[x-cardportfolio] .x-cardportfolio__pills {
   display:flex;
   flex-wrap:wrap;
   gap:0.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__pill {
+[x-cardportfolio] .x-cardportfolio__pill {
   padding:0.35rem 0.75rem;
   background:var(--bg-tertiary);
   color:var(--text-primary);
@@ -509,33 +509,33 @@
   font-size:0.85rem;
 }
 
-[x-cardportfolio] .x-portfolio__skill-bars {
+[x-cardportfolio] .x-cardportfolio__skill-bars {
   margin-top:0.75rem;
 }
 
-[x-cardportfolio] .x-portfolio__skill-row {
+[x-cardportfolio] .x-cardportfolio__skill-row {
   margin-bottom:0.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__skill-header {
+[x-cardportfolio] .x-cardportfolio__skill-header {
   display:flex;
   justify-content:space-between;
   margin-bottom:0.25rem;
   font-size:0.85rem;
 }
 
-[x-cardportfolio] .x-portfolio__skill-bar {
+[x-cardportfolio] .x-cardportfolio__skill-bar {
   height:0.375rem;
   background:var(--bg-tertiary);
   border-radius:0.1875rem;
   overflow:hidden;
 }
 
-[x-cardportfolio] .x-portfolio__experience {
+[x-cardportfolio] .x-cardportfolio__experience {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__exp-header {
+[x-cardportfolio] .x-cardportfolio__exp-header {
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
@@ -543,57 +543,57 @@
   flex-wrap:wrap;
 }
 
-[x-cardportfolio] .x-portfolio__exp-role {
+[x-cardportfolio] .x-cardportfolio__exp-role {
   color:var(--text-primary);
 }
 
-[x-cardportfolio] .x-portfolio__exp-period {
+[x-cardportfolio] .x-cardportfolio__exp-period {
   color:var(--text-secondary);
   font-size:0.85rem;
 }
 
-[x-cardportfolio] .x-portfolio__exp-company {
+[x-cardportfolio] .x-cardportfolio__exp-company {
   color:var(--primary);
   font-size:0.9rem;
   margin-top:0.25rem;
 }
 
-[x-cardportfolio] .x-portfolio__exp-desc {
+[x-cardportfolio] .x-cardportfolio__exp-desc {
   margin:0.5rem 0 0;
   color:var(--text-secondary);
   font-size:0.9rem;
   line-height:1.5;
 }
 
-[x-cardportfolio] .x-portfolio__education {
+[x-cardportfolio] .x-cardportfolio__education {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__edu-item {
+[x-cardportfolio] .x-cardportfolio__edu-item {
   padding:0.5rem 0;
 }
 
-[x-cardportfolio] .x-portfolio__edu-degree {
+[x-cardportfolio] .x-cardportfolio__edu-degree {
   color:var(--text-primary);
   display:block;
 }
 
-[x-cardportfolio] .x-portfolio__edu-school {
+[x-cardportfolio] .x-cardportfolio__edu-school {
   color:var(--text-secondary);
   font-size:0.9rem;
 }
 
-[x-cardportfolio] .x-portfolio__projects {
+[x-cardportfolio] .x-cardportfolio__projects {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__project-grid {
+[x-cardportfolio] .x-cardportfolio__project-grid {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
   gap:1rem;
 }
 
-[x-cardportfolio] .x-portfolio__project {
+[x-cardportfolio] .x-cardportfolio__project {
   display:block;
   background:var(--bg-tertiary);
   border-radius:0.5rem;
@@ -602,47 +602,47 @@
   transition:transform 0.2s,box-shadow 0.2s;
 }
 
-[x-cardportfolio] .x-portfolio__project-image {
+[x-cardportfolio] .x-cardportfolio__project-image {
   width:100%;
   height:6.25rem;
   object-fit:cover;
 }
 
-[x-cardportfolio] .x-portfolio__project-info {
+[x-cardportfolio] .x-cardportfolio__project-info {
   padding:0.75rem;
 }
 
-[x-cardportfolio] .x-portfolio__project-name {
+[x-cardportfolio] .x-cardportfolio__project-name {
   color:var(--text-primary);
   display:block;
   margin-bottom:0.25rem;
 }
 
-[x-cardportfolio] .x-portfolio__project-desc {
+[x-cardportfolio] .x-cardportfolio__project-desc {
   color:var(--text-secondary);
   font-size:0.8rem;
 }
 
-[x-cardportfolio] .x-portfolio__certifications {
+[x-cardportfolio] .x-cardportfolio__certifications {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__cert-list {
+[x-cardportfolio] .x-cardportfolio__cert-list {
   margin:0;
   padding-left:1.25rem;
   color:var(--text-primary);
   font-size:0.9rem;
 }
 
-[x-cardportfolio] .x-portfolio__cert {
+[x-cardportfolio] .x-cardportfolio__cert {
   margin-bottom:0.25rem;
 }
 
-[x-cardportfolio] .x-portfolio__languages {
+[x-cardportfolio] .x-cardportfolio__languages {
   margin-bottom:1.5rem;
 }
 
-[x-cardportfolio] .x-portfolio__contact {
+[x-cardportfolio] .x-cardportfolio__contact {
   padding:1rem 1.5rem;
   border-top:1px solid var(--border-color);
   font-style:normal;
@@ -652,7 +652,7 @@
   justify-content:center;
 }
 
-[x-cardportfolio] .x-portfolio__contact-link {
+[x-cardportfolio] .x-cardportfolio__contact-link {
   color:var(--text-primary);
   text-decoration:none;
   font-size:0.9rem;
@@ -661,7 +661,7 @@
   gap:0.25rem;
 }
 
-[x-cardportfolio] .x-portfolio__social {
+[x-cardportfolio] .x-cardportfolio__social {
   padding:1rem 1.5rem;
   border-top:1px solid var(--border-color);
   display:flex;
@@ -669,7 +669,7 @@
   gap:0.75rem;
 }
 
-[x-cardportfolio] .x-portfolio__social-link {
+[x-cardportfolio] .x-cardportfolio__social-link {
   width:2.75rem;
   height:2.75rem;
   display:flex;
@@ -682,29 +682,29 @@
   transition:transform 0.2s,background 0.2s;
 }
 
-[x-cardportfolio] .x-portfolio__footer {
+[x-cardportfolio] .x-cardportfolio__footer {
   padding:1rem 1.5rem;
   border-top:1px solid var(--border-color);
 }
 
-[x-cardportfolio] .x-portfolio__exp-item {
+[x-cardportfolio] .x-cardportfolio__exp-item {
   padding: 0.75rem 0;
 }
 
-[x-cardportfolio] .x-portfolio__exp-item--divided {
+[x-cardportfolio] .x-cardportfolio__exp-item--divided {
   border-top: 1px solid var(--border-color);
 }
 
-[x-cardportfolio] .x-portfolio__skill-name {
+[x-cardportfolio] .x-cardportfolio__skill-name {
   color: var(--text-primary);
 }
 
-[x-cardportfolio] .x-portfolio__skill-level {
+[x-cardportfolio] .x-cardportfolio__skill-level {
   color: var(--text-secondary);
 }
 
 /* The fill's width is the skill's level, a generated rule per bar. */
-[x-cardportfolio] .x-portfolio__skill-fill {
+[x-cardportfolio] .x-cardportfolio__skill-fill {
   height: 100%;
   background: var(--primary);
   border-radius: 0.1875rem;
@@ -713,17 +713,17 @@
 
 /* Hover states that were onmouseenter/onmouseleave handlers writing
    element.style. */
-[x-cardportfolio] .x-portfolio__project:hover {
+[x-cardportfolio] .x-cardportfolio__project:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-[x-cardportfolio] .x-portfolio__social-link:hover {
+[x-cardportfolio] .x-cardportfolio__social-link:hover {
   transform: scale(1.1);
   background: var(--primary);
 }
 
-[x-cardportfolio] .x-portfolio__cta:hover {
+[x-cardportfolio] .x-cardportfolio__cta:hover {
   background: var(--primary-hover, #4f46e5);
   transform: translateY(-1px);
 }

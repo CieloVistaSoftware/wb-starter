@@ -146,7 +146,7 @@ function cardHtmlPart(parent, tag, className, html) {
 // John: "the main context should fit without needing a main tag."
 //
 // One element, one class, every card: <div class="x-card__body">. A typed card
-// whose body has its own part class (x-notification__content, ...) keeps it as
+// whose body has its own part class (x-cardnotification__content, ...) keeps it as
 // a second class; the body is still the same element everywhere.
 const CARD_BODY_CLASS = 'x-card__body';
 
@@ -445,7 +445,7 @@ export function composeCard(element, options = {}) {
   //
   // #969: no variant class either. `x-card--${behavior}` was stamped here on
   // every typed card, and each typed function added a second spelling of the
-  // same fact (x-card-expandable, x-stats, x-portfolio, ...). John:
+  // same fact (x-card-expandable, x-stats, a portfolio class, ...). John:
   // "`x-cardexpandable` -- shouldn't this be enough to get rid of class
   // assignments?" It is: the attribute that applied the behavior is on the
   // element, and card.css / notification.css select [x-cardexpandable] etc.
@@ -1583,13 +1583,13 @@ export function cardpricing(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardpricing' });
   // #779: text-align / container-type / padding:0 (and background-size/
   // position) are the `[x-cardpricing]` rule in card.css, and `featured` is its
-  // `.x-pricing--featured` modifier -- every one of these used to be written
+  // `.x-cardpricing--featured` modifier -- every one of these used to be written
   // inline as well. Only the author's background image travels, as a
   // generated rule (weight 3: card.css sets the card surface through
   // compound selectors the inline style always outranked).
   element.innerHTML = '';
 
-  if (config.featured) element.classList.add('x-pricing--featured');
+  if (config.featured) element.classList.add('x-cardpricing--featured');
 
   if (config.background) {
     setRule(element, 'pricing-background', { backgroundImage: `url(${config.background})` }, { weight: 3 });
@@ -1665,10 +1665,10 @@ export function cardstats(element, options = {}) {
     element.innerHTML = '';
     // Accent color: an author-supplied, per-instance value, so it travels as a
     // custom property (same convention as --card-image-aspect); what it
-    // colors is card.css's .x-stats--accent rule. #779: set by a generated
+    // colors is card.css's .x-cardstats--accent rule. #779: set by a generated
     // rule, not written onto the style attribute.
     if (config.color) {
-      element.classList.add('x-stats--accent');
+      element.classList.add('x-cardstats--accent');
       setRule(element, 'accent', { '--x-stats-accent': config.color });
     }
     // Layout, container-query sizing, and default padding all live in
@@ -1940,11 +1940,11 @@ export function cardnotification(element, options = {}) {
   const iconText = customIcon || defaultIcons[variant] || 'i';
 
   // Variant class: both paths below need it. Only the modifier: the base
-  // `x-notification` restated [x-cardnotification], which notification.css
+  // host class restated [x-cardnotification], which notification.css
   // and card.css select directly (#969).
   const applyVariantClass = () => {
     if (variant !== 'default') {
-      element.classList.add(`x-notification--${variant}`);
+      element.classList.add(`x-cardnotification--${variant}`);
     }
   };
 
@@ -1973,13 +1973,13 @@ export function cardnotification(element, options = {}) {
     applyVariantClass();
 
     // Fill in default icon text if schema left it empty
-    const iconEl = element.querySelector('.x-notification__icon');
+    const iconEl = element.querySelector('.x-cardnotification__icon');
     if (iconEl && !iconEl.textContent.trim()) {
       iconEl.textContent = iconText;
     }
 
     // Wire up dismiss button
-    const dismissBtn = element.querySelector('.x-notification__dismiss');
+    const dismissBtn = element.querySelector('.x-cardnotification__dismiss');
     if (dismissBtn) {
       dismissBtn.setAttribute('aria-label', 'Dismiss notification');
       dismissBtn.addEventListener('click', dismiss);
@@ -2005,18 +2005,18 @@ export function cardnotification(element, options = {}) {
   element.innerHTML = '';
 
   // Icon
-  cardPart(element, 'span', 'x-notification__icon', iconText);
+  cardPart(element, 'span', 'x-cardnotification__icon', iconText);
 
   // Content
-  const content = cardBody(null, 'x-notification__content');
-  if (title) cardPart(content, 'strong', 'x-notification__title', title);
-  if (message) cardPart(content, 'div', 'x-notification__message', message);
+  const content = cardBody(null, 'x-cardnotification__content');
+  if (title) cardPart(content, 'strong', 'x-cardnotification__title', title);
+  if (message) cardPart(content, 'div', 'x-cardnotification__message', message);
   element.appendChild(content);
 
   // Dismiss button
   if (dismissible) {
     const closeBtn = document.createElement('button');
-    closeBtn.className = 'x-notification__dismiss';
+    closeBtn.className = 'x-cardnotification__dismiss';
     closeBtn.textContent = '\u2715';
     closeBtn.setAttribute('aria-label', 'Dismiss notification');
     closeBtn.addEventListener('click', dismiss);
@@ -2850,7 +2850,7 @@ export function cardportfolio(element, options = {}) {
 
   const base = composeCard(element, { ...config, behavior: 'cardportfolio', hoverable: false });
   if (config.variant !== 'default') {
-    element.classList.add(`x-portfolio--${config.variant}`);
+    element.classList.add(`x-cardportfolio--${config.variant}`);
   }
   element.innerHTML = '';
   
@@ -2859,10 +2859,10 @@ export function cardportfolio(element, options = {}) {
   // inline declaration outranks every stylesheet rule -- so size="sm"/"lg"/...
   // (composeCard's `.x-card--{size}` classes) could never change the width of
   // a default-variant card. The defaults now live in card.css's
-  // `[x-cardportfolio]` / `.x-portfolio--full` rules, which the size classes beat.
+  // `[x-cardportfolio]` / `.x-cardportfolio--full` rules, which the size classes beat.
 
   // Availability. The colour of each status is a THEME value (card.css maps
-  // `x-portfolio__availability--{status}` onto --success-color etc.), not a
+  // `x-cardportfolio__availability--{status}` onto --success-color etc.), not a
   // hex baked in here -- the dot used to carry `style="background:#22c55e"`,
   // which no theme could restyle. The label is shown as visible text next to
   // the name, not only as a hover title on a 24px dot: "busy" vs
@@ -2894,20 +2894,20 @@ export function cardportfolio(element, options = {}) {
   // card.css so compact/horizontal/full can reshape it.
   if (config.cover) {
     const coverFigure = document.createElement('figure');
-    coverFigure.className = 'x-portfolio__cover';
+    coverFigure.className = 'x-cardportfolio__cover';
     coverFigure.setAttribute('lightbox', 'false');
     // Decorative (empty alt): the card's name/title already say who this is.
-    cardImg(coverFigure, 'x-portfolio__cover-img', config.cover, '');
+    cardImg(coverFigure, 'x-cardportfolio__cover-img', config.cover, '');
     element.appendChild(coverFigure);
   }
 
   // ==================== HEADER ====================
   const header = document.createElement('header');
-  header.className = 'x-portfolio__header';
+  header.className = 'x-cardportfolio__header';
   // No inline styles. The header also picks up the generic card header rule
   // (`article > header`: grid, tinted background, border-bottom) and, via
   // tag-map.js, the page navbar's `.x-header` (flex, 60px height). card.css's
-  // `[x-cardportfolio] > .x-portfolio__header` (0,2,0) outranks both, so the
+  // `[x-cardportfolio] > .x-cardportfolio__header` (0,2,0) outranks both, so the
   // resets that used to be forced inline here live there -- where the
   // compact/horizontal/full/size rules can still override them.
 
@@ -2923,16 +2923,16 @@ export function cardportfolio(element, options = {}) {
   // vanished behind the cover. It holds an image and a status dot -- a
   // layout wrapper, not a self-contained figure.
   if (config.avatar || hasAvailability) {
-    const avatarWrap = cardPart(null, 'div', 'x-portfolio__avatar-wrap');
+    const avatarWrap = cardPart(null, 'div', 'x-cardportfolio__avatar-wrap');
 
     if (config.avatar) {
-      cardImg(avatarWrap, 'x-portfolio__avatar', config.avatar, config.name || 'Avatar');
+      cardImg(avatarWrap, 'x-cardportfolio__avatar', config.avatar, config.name || 'Avatar');
     } else {
       // No avatar image supplied -- render initials in a themed circle
-      // (card.css: .x-portfolio__avatar-placeholder) so the availability dot
+      // (card.css: .x-cardportfolio__avatar-placeholder) so the availability dot
       // still has a visible anchor.
       const placeholder = document.createElement('span');
-      placeholder.className = 'x-portfolio__avatar x-portfolio__avatar-placeholder';
+      placeholder.className = 'x-cardportfolio__avatar x-cardportfolio__avatar-placeholder';
       const initials = (config.name || '')
         .split(/\s+/)
         .filter(Boolean)
@@ -2946,7 +2946,7 @@ export function cardportfolio(element, options = {}) {
 
     if (hasAvailability) {
       const availDot = document.createElement('span');
-      availDot.className = `x-portfolio__availability x-portfolio__availability--${config.availability}`;
+      availDot.className = `x-cardportfolio__availability x-cardportfolio__availability--${config.availability}`;
       availDot.title = availabilityConfig[config.availability].label;
       // The visible label below says the same thing in words.
       availDot.setAttribute('aria-hidden', 'true');
@@ -2958,62 +2958,62 @@ export function cardportfolio(element, options = {}) {
 
   // Name
   // margin/font-size/color/white-space/overflow/max-width live in card.css's
-  // `.x-portfolio__name` base rule -- see the avatarWrap comment above; lets
+  // `.x-cardportfolio__name` base rule -- see the avatarWrap comment above; lets
   // compact/horizontal/full/size-scaling CSS resize or rewrap the name
   // without !important.
-  if (config.name) cardPart(header, 'h2', 'x-portfolio__name', config.name);
+  if (config.name) cardPart(header, 'h2', 'x-cardportfolio__name', config.name);
 
   // Title & Company
   if (config.title) {
-    // Styled by card.css `.x-portfolio__title`. The inline
+    // Styled by card.css `.x-cardportfolio__title`. The inline
     // `color: var(--primary)` it replaced measured rgb(38,38,217) on the
     // card's dark surface -- the same unreadable accent-on-dark #887 fixed
     // for card titles.
-    cardPart(header, 'div', 'x-portfolio__title', config.title + (config.company ? ` at ${config.company}` : ''));
+    cardPart(header, 'div', 'x-cardportfolio__title', config.title + (config.company ? ` at ${config.company}` : ''));
   } else if (config.company) {
-    cardPart(header, 'div', 'x-portfolio__company', config.company);
+    cardPart(header, 'div', 'x-cardportfolio__company', config.company);
   }
 
   // Location
-  if (config.location) cardPart(header, 'div', 'x-portfolio__location', `📍 ${config.location}`);
+  if (config.location) cardPart(header, 'div', 'x-cardportfolio__location', `📍 ${config.location}`);
 
   // Availability, in words. Same modifier class as the dot, so one theme
   // rule colours both.
   if (hasAvailability) {
-    cardPart(header, 'div', `x-portfolio__status x-portfolio__status--${config.availability}`, availabilityConfig[config.availability].label);
+    cardPart(header, 'div', `x-cardportfolio__status x-cardportfolio__status--${config.availability}`, availabilityConfig[config.availability].label);
   }
 
   // Tagline
-  if (config.tagline) cardPart(header, 'div', 'x-portfolio__tagline', `"${config.tagline}"`);
+  if (config.tagline) cardPart(header, 'div', 'x-cardportfolio__tagline', `"${config.tagline}"`);
 
   element.appendChild(header);
 
   // ==================== MAIN CONTENT ====================
-  const main = cardBody(null, 'x-portfolio__main');
-  // padding now lives in card.css's `.x-portfolio__main` base rule -- see
+  const main = cardBody(null, 'x-cardportfolio__main');
+  // padding now lives in card.css's `.x-cardportfolio__main` base rule -- see
   // the avatarWrap comment above; lets the compact variant's own padding
   // override win without !important.
 
-  // Every section below is a <section class="x-portfolio__{name}">, most
-  // with an <h3 class="x-portfolio__section-title"> heading. Each is
+  // Every section below is a <section class="x-cardportfolio__{name}">, most
+  // with an <h3 class="x-cardportfolio__section-title"> heading. Each is
   // appended to main by its caller once it is filled.
   const portfolioSection = (name, heading) => {
-    const section = cardPart(null, 'section', `x-portfolio__${name}`);
-    if (heading) cardPart(section, 'h3', 'x-portfolio__section-title', heading);
+    const section = cardPart(null, 'section', `x-cardportfolio__${name}`);
+    if (heading) cardPart(section, 'h3', 'x-cardportfolio__section-title', heading);
     return section;
   };
 
   // Pills from a comma-separated string (skills, languages).
   const appendPills = (parent, csv) => {
-    const pills = cardPart(null, 'div', 'x-portfolio__pills');
-    csv.split(',').forEach(item => cardPart(pills, 'span', 'x-portfolio__pill', item.trim()));
+    const pills = cardPart(null, 'div', 'x-cardportfolio__pills');
+    csv.split(',').forEach(item => cardPart(pills, 'span', 'x-cardportfolio__pill', item.trim()));
     parent.appendChild(pills);
   };
 
   // Bio Section
   if (config.bio) {
     const bioSection = portfolioSection('bio');
-    cardPart(bioSection, 'div', 'x-portfolio__bio-text', config.bio);
+    cardPart(bioSection, 'div', 'x-cardportfolio__bio-text', config.bio);
     main.appendChild(bioSection);
   }
 
@@ -3021,9 +3021,9 @@ export function cardportfolio(element, options = {}) {
   if (config.stats && config.stats.length > 0) {
     const statsSection = portfolioSection('stats');
     config.stats.forEach(stat => {
-      const statItem = cardPart(null, 'div', 'x-portfolio__stat');
-      cardPart(statItem, 'span', 'x-portfolio__stat-value', stat.value);
-      cardPart(statItem, 'span', 'x-portfolio__stat-label', stat.label);
+      const statItem = cardPart(null, 'div', 'x-cardportfolio__stat');
+      cardPart(statItem, 'span', 'x-cardportfolio__stat-value', stat.value);
+      cardPart(statItem, 'span', 'x-cardportfolio__stat-label', stat.label);
       statsSection.appendChild(statItem);
     });
     main.appendChild(statsSection);
@@ -3038,15 +3038,15 @@ export function cardportfolio(element, options = {}) {
 
     // Skill bars (from JSON array)
     if (config.skillLevels && config.skillLevels.length > 0) {
-      const skillBars = cardPart(null, 'div', 'x-portfolio__skill-bars');
+      const skillBars = cardPart(null, 'div', 'x-cardportfolio__skill-bars');
 
       config.skillLevels.forEach(skill => {
-        const skillRow = cardPart(null, 'div', 'x-portfolio__skill-row');
-        cardHtmlPart(skillRow, 'div', 'x-portfolio__skill-header',
-          `<span class="x-portfolio__skill-name">${skill.name}</span><span class="x-portfolio__skill-level">${skill.level}%</span>`);
+        const skillRow = cardPart(null, 'div', 'x-cardportfolio__skill-row');
+        cardHtmlPart(skillRow, 'div', 'x-cardportfolio__skill-header',
+          `<span class="x-cardportfolio__skill-name">${skill.name}</span><span class="x-cardportfolio__skill-level">${skill.level}%</span>`);
 
-        const barBg = cardPart(null, 'div', 'x-portfolio__skill-bar');
-        const barFill = cardPart(null, 'div', 'x-portfolio__skill-fill');
+        const barBg = cardPart(null, 'div', 'x-cardportfolio__skill-bar');
+        const barFill = cardPart(null, 'div', 'x-cardportfolio__skill-fill');
         // The level is per-skill data: a generated rule, not the style attribute.
         setRule(barFill, 'level', { width: `${skill.level}%` });
         barBg.appendChild(barFill);
@@ -3065,17 +3065,17 @@ export function cardportfolio(element, options = {}) {
     const expSection = portfolioSection('experience', '💼 Experience');
 
     config.experience.forEach((exp, i) => {
-      const expItem = cardPart(null, 'div', 'x-portfolio__exp-item');
+      const expItem = cardPart(null, 'div', 'x-cardportfolio__exp-item');
       // Every entry after the first is divided from the one above it.
-      if (i > 0) expItem.classList.add('x-portfolio__exp-item--divided');
+      if (i > 0) expItem.classList.add('x-cardportfolio__exp-item--divided');
 
-      const expHeader = cardPart(null, 'div', 'x-portfolio__exp-header');
-      cardPart(expHeader, 'strong', 'x-portfolio__exp-role', exp.role || exp.title);
-      if (exp.period) cardPart(expHeader, 'span', 'x-portfolio__exp-period', exp.period);
+      const expHeader = cardPart(null, 'div', 'x-cardportfolio__exp-header');
+      cardPart(expHeader, 'strong', 'x-cardportfolio__exp-role', exp.role || exp.title);
+      if (exp.period) cardPart(expHeader, 'span', 'x-cardportfolio__exp-period', exp.period);
       expItem.appendChild(expHeader);
 
-      if (exp.company) cardPart(expItem, 'div', 'x-portfolio__exp-company', exp.company);
-      if (exp.description) cardPart(expItem, 'div', 'x-portfolio__exp-desc', exp.description);
+      if (exp.company) cardPart(expItem, 'div', 'x-cardportfolio__exp-company', exp.company);
+      if (exp.description) cardPart(expItem, 'div', 'x-cardportfolio__exp-desc', exp.description);
 
       expSection.appendChild(expItem);
     });
@@ -3087,9 +3087,9 @@ export function cardportfolio(element, options = {}) {
     const eduSection = portfolioSection('education', '🎓 Education');
 
     config.education.forEach(edu => {
-      const eduItem = cardPart(null, 'div', 'x-portfolio__edu-item');
-      cardPart(eduItem, 'strong', 'x-portfolio__edu-degree', edu.degree);
-      cardPart(eduItem, 'span', 'x-portfolio__edu-school', edu.school + (edu.year ? ` • ${edu.year}` : ''));
+      const eduItem = cardPart(null, 'div', 'x-cardportfolio__edu-item');
+      cardPart(eduItem, 'strong', 'x-cardportfolio__edu-degree', edu.degree);
+      cardPart(eduItem, 'span', 'x-cardportfolio__edu-school', edu.school + (edu.year ? ` • ${edu.year}` : ''));
       eduSection.appendChild(eduItem);
     });
     main.appendChild(eduSection);
@@ -3098,26 +3098,26 @@ export function cardportfolio(element, options = {}) {
   // Projects Section
   if (config.projects && config.projects.length > 0) {
     const projSection = portfolioSection('projects', '🚀 Projects');
-    const projGrid = cardPart(null, 'div', 'x-portfolio__project-grid');
+    const projGrid = cardPart(null, 'div', 'x-cardportfolio__project-grid');
 
     config.projects.forEach(proj => {
       const projCard = document.createElement('a');
       projCard.href = proj.url || '#';
       projCard.target = proj.url ? '_blank' : '_self';
-      projCard.classList.add('x-portfolio__project');
-      // Hover lift: `.x-portfolio__project:hover` in card.css (#779).
+      projCard.classList.add('x-cardportfolio__project');
+      // Hover lift: `.x-cardportfolio__project:hover` in card.css (#779).
 
       if (proj.image) {
         const projImg = document.createElement('img');
         projImg.src = proj.image;
         projImg.alt = proj.name;
-        projImg.classList.add('x-portfolio__project-image');
+        projImg.classList.add('x-cardportfolio__project-image');
         projCard.appendChild(projImg);
       }
 
-      const projInfo = cardPart(null, 'div', 'x-portfolio__project-info');
-      cardPart(projInfo, 'strong', 'x-portfolio__project-name', proj.name);
-      if (proj.description) cardPart(projInfo, 'span', 'x-portfolio__project-desc', proj.description);
+      const projInfo = cardPart(null, 'div', 'x-cardportfolio__project-info');
+      cardPart(projInfo, 'strong', 'x-cardportfolio__project-name', proj.name);
+      if (proj.description) cardPart(projInfo, 'span', 'x-cardportfolio__project-desc', proj.description);
 
       projCard.appendChild(projInfo);
       projGrid.appendChild(projCard);
@@ -3130,8 +3130,8 @@ export function cardportfolio(element, options = {}) {
   // Certifications
   if (config.certifications) {
     const certSection = portfolioSection('certifications', '🏆 Certifications');
-    const certList = cardPart(null, 'ul', 'x-portfolio__cert-list');
-    config.certifications.split(',').forEach(cert => cardPart(certList, 'li', 'x-portfolio__cert', cert.trim()));
+    const certList = cardPart(null, 'ul', 'x-cardportfolio__cert-list');
+    config.certifications.split(',').forEach(cert => cardPart(certList, 'li', 'x-cardportfolio__cert', cert.trim()));
     certSection.appendChild(certList);
     main.appendChild(certSection);
   }
@@ -3148,7 +3148,7 @@ export function cardportfolio(element, options = {}) {
   // ==================== CONTACT ====================
   if (config.email || config.phone || config.website) {
     const contact = document.createElement('address');
-    contact.className = 'x-portfolio__contact';
+    contact.className = 'x-cardportfolio__contact';
 
     const contactItems = [
       { value: config.email, href: `mailto:${config.email}`, icon: '📧' },
@@ -3161,7 +3161,7 @@ export function cardportfolio(element, options = {}) {
         const contactLink = document.createElement('a');
         contactLink.href = item.href;
         if (item.external) contactLink.target = '_blank';
-        contactLink.classList.add('x-portfolio__contact-link');
+        contactLink.classList.add('x-cardportfolio__contact-link');
         contactLink.innerHTML = `${item.icon} <span>${item.value}</span>`;
         contact.appendChild(contactLink);
       }
@@ -3180,7 +3180,7 @@ export function cardportfolio(element, options = {}) {
 
   if (socialLinks.length > 0) {
     const social = document.createElement('nav');
-    social.className = 'x-portfolio__social';
+    social.className = 'x-cardportfolio__social';
     social.setAttribute('aria-label', 'Social links');
 
     socialLinks.forEach(({ url, icon, label }) => {
@@ -3189,8 +3189,8 @@ export function cardportfolio(element, options = {}) {
       socialLink.target = '_blank';
       socialLink.title = label;
       socialLink.setAttribute('aria-label', label);
-      socialLink.classList.add('x-portfolio__social-link');
-      // Hover: `.x-portfolio__social-link:hover` in card.css (#779).
+      socialLink.classList.add('x-cardportfolio__social-link');
+      // Hover: `.x-cardportfolio__social-link:hover` in card.css (#779).
       socialLink.textContent = icon;
       social.appendChild(socialLink);
     });
@@ -3200,12 +3200,12 @@ export function cardportfolio(element, options = {}) {
 
   // ==================== CTA FOOTER ====================
   if (config.cta) {
-    const footer = cardPart(null, 'footer', 'x-portfolio__footer');
-    // #561: static layout/padding lives in card.css's `.x-portfolio__cta`
+    const footer = cardPart(null, 'footer', 'x-cardportfolio__footer');
+    // #561: static layout/padding lives in card.css's `.x-cardportfolio__cta`
     // rule (padding:1rem, was inline at 0.875rem/14px -- below the §13
     // minimum). #779: the hover state is a :hover rule there too, not a pair
     // of pointer handlers writing element.style.
-    appendCtaLink(footer, 'x-portfolio__cta', config.ctaHref || '#', config.cta);
+    appendCtaLink(footer, 'x-cardportfolio__cta', config.ctaHref || '#', config.cta);
     element.appendChild(footer);
   }
 
@@ -3215,18 +3215,18 @@ export function cardportfolio(element, options = {}) {
     // from card.css, so there is no inline background to rewrite.
     setAvailability: (status) => {
       if (!availabilityConfig[status]) return;
-      const dot = element.querySelector('.x-portfolio__availability');
-      const label = element.querySelector('.x-portfolio__status');
+      const dot = element.querySelector('.x-cardportfolio__availability');
+      const label = element.querySelector('.x-cardportfolio__status');
       for (const state of AVAILABILITY_STATES) {
-        dot?.classList.remove(`x-portfolio__availability--${state}`);
-        label?.classList.remove(`x-portfolio__status--${state}`);
+        dot?.classList.remove(`x-cardportfolio__availability--${state}`);
+        label?.classList.remove(`x-cardportfolio__status--${state}`);
       }
       if (dot) {
-        dot.classList.add(`x-portfolio__availability--${status}`);
+        dot.classList.add(`x-cardportfolio__availability--${status}`);
         dot.title = availabilityConfig[status].label;
       }
       if (label) {
-        label.classList.add(`x-portfolio__status--${status}`);
+        label.classList.add(`x-cardportfolio__status--${status}`);
         label.textContent = availabilityConfig[status].label;
       }
     }

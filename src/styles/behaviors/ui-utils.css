@@ -117,7 +117,8 @@
 }
 
 /* behaviors-showcase.js (#779): anchors the copy button it adds to each
-   mdhtml block. Was mdhtml.style.position. */
-.x-showcase__copy-host {
+   mdhtml block. Was mdhtml.style.position. A modifier of the mdhtml block it
+   marks (#1096). */
+.x-mdhtml--copy-host {
   position: relative;
 }

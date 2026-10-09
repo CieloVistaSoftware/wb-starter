@@ -398,7 +398,7 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
           const rect = el.getBoundingClientRect();
           if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
           // #561: the SIZE-based atom exclusion above (width/height < 120px)
-          // doesn't catch x-portfolio__avatar-placeholder (card.js's
+          // doesn't catch x-cardportfolio__avatar-placeholder (card.js's
           // initials-fallback avatar circle) -- its default diameter is
           // exactly 7.5rem/120px, and its lg/xl/full size variants exceed
           // it, so this check treated it as a full content panel needing

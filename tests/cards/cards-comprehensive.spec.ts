@@ -594,7 +594,7 @@ test.describe('Notification Cards', () => {
       `);
       
       const card = page.locator('[x-cardnotification]');
-      const closeBtn = card.locator('.x-notification__dismiss, button[aria-label*="Dismiss"]');
+      const closeBtn = card.locator('.x-cardnotification__dismiss, button[aria-label*="Dismiss"]');
       
       await expect(closeBtn).toBeVisible();
       

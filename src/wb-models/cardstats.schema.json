@@ -4,13 +4,13 @@
   "title": "Stats Card",
   "description": "Statistics display card with value, label, icon, and trend indicator",
   "schemaFor": "cardstats",
-  "baseClass": "x-stats",
+  "baseClass": "x-cardstats",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "x-stats",
+    "baseClass": "x-cardstats",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -285,8 +285,8 @@
         "Users"
       ],
       "checkClasses": [
-        "x-stats--trend-up",
-        "x-stats--compact"
+        "x-cardstats--trend-up",
+        "x-cardstats--compact"
       ],
       "checkAttributes": [
         "value"

@@ -75,7 +75,8 @@ li:last-child { margin-bottom: 0; }
   overflow: hidden;
 }
 
-.x-resizing {
+/* overlay.js puts it on <body> while a sheet is dragged wider or narrower. */
+.x-sheet--resizing {
   cursor: ew-resize;
   user-select: none;
 }

@@ -49,6 +49,7 @@
     "behavior-registry-validation.spec.ts",
     "behavior-registry.spec.ts",
     "behavior-registry-audit-gate.spec.ts",
+    "schema-index-stays-current.spec.ts",
     "registry-integrity.spec.ts",
     "fragment-registration.spec.ts",
     "fix-data-integrity.spec.ts",
@@ -86,7 +87,8 @@
     "no-observer-referror.spec.ts",
     "no-duplicate-specs.spec.ts",
     "strict-mode-runtime.spec.ts",
-    "es-modules.spec.ts",
+    "es-modules.spec.ts",
+
     "error-log-empty.spec.ts",
     "cross-browser-support.spec.ts",
     "playwright-if-tests.spec.ts",

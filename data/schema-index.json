@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-08T23:04:02.981Z",
-  "count": 166,
+  "generatedAt": "2026-10-09T04:14:28.567Z",
+  "count": 174,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -1598,6 +1598,43 @@
       }
     },
     {
+      "file": "clipboard.schema.json",
+      "name": "clipboard",
+      "title": "Clipboard button",
+      "description": "A button that copies text to the clipboard and confirms it. The text is its clipboardText, or the text of the element its target selector names.",
+      "tag": "x-clipboard",
+      "baseClass": "x-clipboard",
+      "properties": {
+        "clipboardText": {
+          "type": "string",
+          "description": "The text to copy. `text` is accepted as well.",
+          "default": ""
+        },
+        "target": {
+          "type": "string",
+          "description": "CSS selector of an element whose text is copied when clipboardText is empty.",
+          "default": ""
+        },
+        "label": {
+          "type": "string",
+          "description": "The button's text when it has none of its own.",
+          "default": "📋 Copy to Clipboard"
+        },
+        "feedback": {
+          "type": "string",
+          "description": "Shown on the button for 2 seconds after a successful copy.",
+          "default": "✓ Copied!",
+          "visual": false,
+          "visualReason": "Shown only after a click copies text; a button at rest looks the same either way."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "clock.schema.json",
       "name": "clock",
       "title": "Clock",
@@ -2182,6 +2219,60 @@
       "_metadata": {}
     },
     {
+      "file": "debug.schema.json",
+      "name": "debug",
+      "title": "Debug console",
+      "description": "An on-page panel that shows console errors, warnings and (optionally) logs, for debugging where devtools are not available.",
+      "tag": "x-debug",
+      "baseClass": "x-debug",
+      "properties": {
+        "showErrors": {
+          "type": "boolean",
+          "description": "Show console errors. On by default; `showErrors=\"false\"` hides them.",
+          "default": true,
+          "visual": false,
+          "visualReason": "Filters which console messages appear; an empty panel looks the same."
+        },
+        "showWarnings": {
+          "type": "boolean",
+          "description": "Show console warnings. On by default; `showWarnings=\"false\"` hides them.",
+          "default": true,
+          "visual": false,
+          "visualReason": "Filters which console messages appear; an empty panel looks the same."
+        },
+        "showLogs": {
+          "type": "boolean",
+          "description": "Also show console.log messages. Bare attribute.",
+          "default": false,
+          "visual": false,
+          "visualReason": "Filters which console messages appear; an empty panel looks the same."
+        },
+        "maxMessages": {
+          "type": "number",
+          "description": "Messages kept before the oldest is dropped.",
+          "default": 50,
+          "visual": false,
+          "visualReason": "Only matters once the panel holds that many messages."
+        },
+        "position": {
+          "type": "string",
+          "enum": [
+            "bottom-right",
+            "bottom-left",
+            "top-right",
+            "top-left"
+          ],
+          "description": "Corner of the viewport the panel sits in.",
+          "default": "bottom-right"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "demo.schema.json",
       "name": "demo",
       "title": "Demo Container",
@@ -2663,6 +2754,25 @@
           "type": "boolean",
           "description": "Initial collapsed state",
           "default": false
+        },
+        "saveState": {
+          "type": "boolean",
+          "description": "Remember the drawer's width and collapsed state in localStorage, keyed by the element's id.",
+          "default": false,
+          "visual": false,
+          "visualReason": "Only changes what the drawer restores on the next page load."
+        },
+        "toggleSelector": {
+          "type": "string",
+          "description": "CSS selector of an existing button to use as the toggle, instead of the one the drawer builds.",
+          "default": ""
+        },
+        "handleSelector": {
+          "type": "string",
+          "description": "CSS selector of an existing element to use as the resize handle. Applies with resizable.",
+          "default": "",
+          "visual": false,
+          "visualReason": "Used only when resizable is on, and only on drag."
         }
       },
       "matrix": [
@@ -2828,6 +2938,31 @@
         "icon": "➕",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "external.schema.json",
+      "name": "external",
+      "title": "External link",
+      "description": "Marks a link as external: opens it in a new tab with rel=\"noopener noreferrer\" and adds a ↗ icon.",
+      "tag": "x-external",
+      "baseClass": "x-external",
+      "properties": {
+        "newTab": {
+          "type": "boolean",
+          "description": "Open in a new tab. On by default; `newTab=\"false\"` keeps the link in the same tab.",
+          "default": true
+        },
+        "icon": {
+          "type": "boolean",
+          "description": "Append the ↗ icon. On by default; `icon=\"false\"` leaves it off.",
+          "default": true
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
       }
     },
     {
@@ -3844,6 +3979,31 @@
       }
     },
     {
+      "file": "highlight.schema.json",
+      "name": "highlight",
+      "title": "Highlight",
+      "description": "Marks text with a highlight background. Without color it uses the theme's highlight colours.",
+      "tag": "x-highlight",
+      "baseClass": "x-highlight",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Highlight background (any CSS colour).",
+          "default": ""
+        },
+        "textColor": {
+          "type": "string",
+          "description": "Text colour over the highlight (any CSS colour).",
+          "default": ""
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "home-page.schema.json",
       "name": "home-page",
       "title": "Home Page",
@@ -4455,6 +4615,31 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "imposter.schema.json",
+      "name": "imposter",
+      "title": "Imposter",
+      "description": "Centers an element over its positioned container, like a dialog or badge laid over content. It applies to any element, so it names no host.",
+      "tag": "x-imposter",
+      "baseClass": "x-imposter",
+      "properties": {
+        "breakout": {
+          "type": "boolean",
+          "description": "Position against the viewport instead of the container (position: fixed), so the element stays put when the page scrolls. Bare attribute.",
+          "default": false
+        },
+        "margin": {
+          "type": "string",
+          "description": "Keep the element at least this far inside its container's edges (any CSS length). The default 0 lets it fill them.",
+          "default": "0"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/layouts.js imposter() — every property here is one the behavior reads"
       }
     },
     {
@@ -5288,7 +5473,7 @@
       "title": "Notification Card",
       "description": "Dismissible notification card with variant-based styling",
       "tag": "x-cardnotification",
-      "baseClass": "x-notification",
+      "baseClass": "x-cardnotification",
       "properties": {
         "variant": {
           "type": "string",
@@ -5300,7 +5485,7 @@
             "error"
           ],
           "default": "info",
-          "appliesClass": "x-notification--{{value}}"
+          "appliesClass": "x-cardnotification--{{value}}"
         },
         "title": {
           "type": "string",
@@ -5327,7 +5512,7 @@
           "type": "boolean",
           "description": "Add shadow elevation",
           "default": false,
-          "appliesClass": "x-notification--elevated"
+          "appliesClass": "x-cardnotification--elevated"
         }
       },
       "matrix": [
@@ -5386,6 +5571,59 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "offcanvas.schema.json",
+      "name": "offcanvas",
+      "title": "Offcanvas",
+      "description": "Makes its host a trigger: a click slides a panel with a title and body in from the left or right edge over a backdrop, and a second click, the backdrop or the close button takes it away. It applies to any clickable element, so it names no host.",
+      "tag": "x-offcanvas",
+      "baseClass": "x-offcanvas",
+      "properties": {
+        "offcanvasTitle": {
+          "type": "string",
+          "description": "The panel's heading. Named offcanvas-title, not title, so the trigger keeps its own native title tooltip; heading= is read too.",
+          "default": "Panel"
+        },
+        "offcanvasContent": {
+          "type": "string",
+          "description": "The panel's body (HTML). description= is read too.",
+          "default": "Panel content"
+        },
+        "position": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right",
+            "start",
+            "end"
+          ],
+          "description": "The edge the panel slides in from; start is left, end is right.",
+          "default": "left"
+        }
+      },
+      "matrix": [
+        {
+          "position": "left",
+          "offcanvasTitle": "Menu"
+        },
+        {
+          "position": "right",
+          "offcanvasTitle": "Menu"
+        },
+        {
+          "position": "start",
+          "offcanvasTitle": "Menu"
+        },
+        {
+          "position": "end",
+          "offcanvasTitle": "Menu"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/overlay.js offcanvas() — every property here is one the behavior reads"
       }
     },
     {
@@ -5673,7 +5911,7 @@
       "title": "Portfolio Card",
       "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
       "tag": "x-cardportfolio",
-      "baseClass": "x-portfolio",
+      "baseClass": "x-cardportfolio",
       "properties": {
         "name": {
           "type": "string",
@@ -5821,7 +6059,7 @@
             "full"
           ],
           "default": "default",
-          "appliesClass": "x-portfolio--{{value}}"
+          "appliesClass": "x-cardportfolio--{{value}}"
         },
         "size": {
           "type": "string",
@@ -5944,7 +6182,7 @@
       "title": "Pricing Card",
       "description": "Pricing tier card with plan name, price, features list, and CTA",
       "tag": "x-cardpricing",
-      "baseClass": "x-pricing",
+      "baseClass": "x-cardpricing",
       "properties": {
         "plan": {
           "type": "string",
@@ -5987,7 +6225,7 @@
           "type": "boolean",
           "description": "Highlight as featured/recommended plan",
           "default": false,
-          "appliesClass": "x-pricing--featured"
+          "appliesClass": "x-cardpricing--featured"
         },
         "variant": {
           "type": "string",
@@ -6806,6 +7044,49 @@
       }
     },
     {
+      "file": "scroll.schema.json",
+      "name": "scroll",
+      "title": "Scroll button",
+      "description": "A button or link that scrolls the page to an element, the top or the bottom.",
+      "tag": "x-scroll",
+      "baseClass": "x-scroll",
+      "properties": {
+        "scrollTo": {
+          "type": "string",
+          "description": "Where to scroll: a CSS selector, `top` or `bottom`. `target` is accepted as well; a link with neither uses its href.",
+          "default": ""
+        },
+        "behavior": {
+          "type": "string",
+          "enum": [
+            "smooth",
+            "auto"
+          ],
+          "description": "Scroll animation.",
+          "default": "smooth",
+          "visual": false,
+          "visualReason": "How the page moves on click; the button at rest looks the same."
+        },
+        "offset": {
+          "type": "number",
+          "description": "Pixels to stop above the target, for a fixed header.",
+          "default": 0,
+          "visual": false,
+          "visualReason": "Changes only where a click scrolls to."
+        },
+        "label": {
+          "type": "string",
+          "description": "The button's text when it has none of its own.",
+          "default": "↓ Scroll"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "scrollalong.schema.json",
       "name": "scrollalong",
       "title": "ScrollAlong",
@@ -7164,6 +7445,50 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "sheet.schema.json",
+      "name": "sheet",
+      "title": "Sheet",
+      "description": "Makes its host a trigger for a notes panel: a click opens a resizable sheet from the left edge with a title and either the given content or a notes textarea, and drag on its edge resizes it between its minimum and maximum width. It applies to any clickable element, so it names no host.",
+      "tag": "x-sheet",
+      "baseClass": "x-sheet",
+      "properties": {
+        "sheetTitle": {
+          "type": "string",
+          "description": "The sheet's heading. Named sheet-title, not title, so the trigger keeps its own native title tooltip; heading= is read too.",
+          "default": "Notes"
+        },
+        "sheetContent": {
+          "type": "string",
+          "description": "The sheet's body (HTML). Empty gives a notes textarea. description= is read too.",
+          "default": ""
+        },
+        "width": {
+          "type": "string",
+          "description": "The sheet's opening width (any CSS length).",
+          "default": "320px"
+        },
+        "minWidth": {
+          "type": "string",
+          "description": "The narrowest a drag can make the sheet.",
+          "default": "200px",
+          "visual": false,
+          "visualReason": "Only bounds a drag on the resize edge; the sheet opens at width either way."
+        },
+        "maxWidth": {
+          "type": "string",
+          "description": "The widest a drag can make the sheet.",
+          "default": "600px",
+          "visual": false,
+          "visualReason": "Only bounds a drag on the resize edge; the sheet opens at width either way."
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/overlay.js sheet() — every property here is one the behavior reads"
       }
     },
     {
@@ -7690,7 +8015,7 @@
       "title": "Stats Card",
       "description": "Statistics display card with value, label, icon, and trend indicator",
       "tag": "x-cardstats",
-      "baseClass": "x-stats",
+      "baseClass": "x-cardstats",
       "properties": {
         "value": {
           "type": "string",
@@ -8801,6 +9126,13 @@
           "type": "string",
           "description": "Maximum tooltip width",
           "default": "200px"
+        },
+        "tooltipClass": {
+          "type": "string",
+          "description": "Extra class names (space-separated) added to the tooltip bubble, for the author's own CSS to style it",
+          "default": "",
+          "visual": false,
+          "visualReason": "Only adds class names to the bubble; it looks the same until the author's own stylesheet targets them."
         }
       },
       "matrix": [

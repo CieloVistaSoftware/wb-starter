@@ -209,7 +209,7 @@ test.describe('Behaviors page — full coverage', () => {
   });
 
   test('notifications: render with content', async ({ page }) => {
-    const n = await show(page, { token: 'x-cardnotification', prop: 'variant', value: 'warning', ready: '.x-notification__content' });
+    const n = await show(page, { token: 'x-cardnotification', prop: 'variant', value: 'warning', ready: '.x-cardnotification__content' });
     const r = await n.evaluate((el) => ({
       h: Math.round((el as HTMLElement).getBoundingClientRect().height),
       text: (el.textContent || '').trim().length,
