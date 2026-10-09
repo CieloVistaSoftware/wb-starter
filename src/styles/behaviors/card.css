@@ -623,18 +623,13 @@ article[featured] > header > h4,
   border: 1px solid var(--card-glass-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  /* John: "the glass effect is not working on my cell phone." A handful of
-     mobile browsers (some mobile Safari/Chrome versions) report
-     backdrop-filter as SUPPORTED (so @supports below correctly leaves this
-     rule active) but still fail to actually render the blur unless the
-     element is forced onto its own GPU compositing layer first --
-     transform/will-change is the standard trigger for that. Harmless no-op
-     everywhere backdrop-filter already renders correctly; can't be
-     confirmed fixed without a real device (I don't have access to test on
-     one), so this is the well-known fix for the symptom, not a live-verified
-     one -- flag if it's still not showing after this. */
-  will-change: backdrop-filter;
-  transform: translateZ(0);
+  /* #832: no transform: translateZ(0) / will-change here. They were added,
+     unverified, for "the glass effect is not working on my cell phone", and
+     the report came back with them in place. The real causes were the flat
+     demo stage (nothing to blur) and reduced motion freezing the sheen; both
+     are fixed (demo.css, and the reduced-motion rule below). A transform on
+     the filtered element itself is the one change here that can stop a
+     backdrop-filter in some engines, so it is not kept on speculation. */
 }.x-card--glass::before,
 [variant="glass"]::before {
   content: '';
