@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.457",
+      "date": "2026-10-08",
+      "summary": "The behavior registry audit now counts the x-{name} route #1642 added, so it reports 3 unreachable behaviors instead of 60, and CI fails on any new disagreement. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1789\" target=\"_blank\" rel=\"noopener\">#1789</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The registry audit sees the computed x-{name} route, and CI gates it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1789\" target=\"_blank\" rel=\"noopener\">#1789</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/caeb5032dcdaec583e81200a8745e858a8f61e07\" target=\"_blank\" rel=\"noopener\"><code>caeb503</code></a>",
+          "issues": [
+            831,
+            1789
+          ]
+        }
+      ],
+      "seeIt": "Run node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate. Before: 60 UNREACHABLE (sidebar, list, divider, hotkey...) and exit 1, with nothing running it. Now: 3 UNREACHABLE, every remaining finding reviewed with a reason, exit 0, and the compliance project runs it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/caeb5032dcdaec583e81200a8745e858a8f61e07\" target=\"_blank\" rel=\"noopener\"><code>caeb503</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.456",
       "date": "2026-10-08",
       "summary": "Generic-host-is-argued.spec.ts (#918) requires a schema that names a div or span host to say why HTML has no better element, and the new debug.schema.json did not. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1779\" target=\"_blank\" rel=\"noopener\">PR 1779</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
