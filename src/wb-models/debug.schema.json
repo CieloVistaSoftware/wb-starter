@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "debug.schema.json",
+  "title": "Debug console",
+  "description": "An on-page panel that shows console errors, warnings and (optionally) logs, for debugging where devtools are not available.",
+  "schemaFor": "debug",
+  "semanticElement": {
+    "tagName": "div"
+  },
+  "properties": {
+    "showErrors": {
+      "type": "boolean",
+      "description": "Show console errors. On by default; `showErrors=\"false\"` hides them.",
+      "default": true,
+      "visual": false,
+      "visualReason": "Filters which console messages appear; an empty panel looks the same."
+    },
+    "showWarnings": {
+      "type": "boolean",
+      "description": "Show console warnings. On by default; `showWarnings=\"false\"` hides them.",
+      "default": true,
+      "visual": false,
+      "visualReason": "Filters which console messages appear; an empty panel looks the same."
+    },
+    "showLogs": {
+      "type": "boolean",
+      "description": "Also show console.log messages. Bare attribute.",
+      "default": false,
+      "visual": false,
+      "visualReason": "Filters which console messages appear; an empty panel looks the same."
+    },
+    "maxMessages": {
+      "type": "number",
+      "description": "Messages kept before the oldest is dropped.",
+      "default": 50,
+      "visual": false,
+      "visualReason": "Only matters once the panel holds that many messages."
+    },
+    "position": {
+      "type": "string",
+      "enum": [
+        "bottom-right",
+        "bottom-left",
+        "top-right",
+        "top-left"
+      ],
+      "description": "Corner of the viewport the panel sits in.",
+      "default": "bottom-right"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-debug"
+  },
+  "test": {
+    "setup": [
+      "<div x-debug></div>",
+      "<div x-debug position=\"top-left\" showLogs maxMessages=\"20\"></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+  }
+}
