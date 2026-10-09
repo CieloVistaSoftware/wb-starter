@@ -142,7 +142,7 @@
           "file": "behaviors/move.md",
           "title": "Move",
           "description": "Reorder grid/flex items with direction buttons",
-          "modified": "2026-09-27"
+          "modified": "2026-10-08"
         },
         {
           "file": "behaviors/release.md",
