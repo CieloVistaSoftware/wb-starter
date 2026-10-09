@@ -35,40 +35,40 @@ const ERROR_DISPLAY_CSS = `
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  width: 420px;
-  max-height: 300px;
+  width: 26.25rem;
+  max-height: 18.75rem;
   overflow-y: auto;
   background: rgba(20, 20, 20, 0.95);
   color: var(--x-error-display-text);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   border: 1px solid var(--x-error-display-accent);
   z-index: 99999;
 }
 #x-error-display[hidden] { display: none; }
 #x-error-display .x-error-display__bar {
-  padding: 10px 12px; background: var(--x-error-display-head-bg); border-bottom: 1px solid var(--x-error-display-rule);
+  padding: 0.625rem 0.75rem; background: var(--x-error-display-head-bg); border-bottom: 1px solid var(--x-error-display-rule);
   display: flex; justify-content: space-between; align-items: center;
-  border-radius: 8px 8px 0 0; position: sticky; top: 0;
+  border-radius: 0.5rem 0.5rem 0 0; position: sticky; top: 0;
 }
 #x-error-display .x-error-display__heading { font-weight: bold; color: var(--x-error-display-accent); }
 #x-error-display .x-error-display__btn {
-  border: none; color: var(--x-error-display-text); padding: 4px 10px; border-radius: 4px;
-  cursor: pointer; font-size: 0.6875rem; margin-right: 4px;
+  border: none; color: var(--x-error-display-text); padding: 0.25rem 0.625rem; border-radius: 0.25rem;
+  cursor: pointer; font-size: 0.6875rem; margin-right: 0.25rem;
 }
 #x-error-display .x-error-display__btn--copy { background: var(--x-error-display-link); }
 #x-error-display .x-error-display__btn--clear { background: var(--x-error-display-rule); }
 #x-error-display .x-error-display__btn--close { background: var(--x-error-display-accent); margin-right: 0; }
 #x-error-display .x-error-display__btn--ok { background: var(--x-error-display-ok); }
 #x-error-display .x-error-display__btn--blocked { background: var(--x-error-display-accent); }
-#x-error-display .x-error-display__list { padding: 8px; }
+#x-error-display .x-error-display__list { padding: 0.5rem; }
 #x-error-display .x-error-display__item {
-  padding: 8px 10px; margin-bottom: 6px; background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid var(--x-error-display-accent); border-radius: 0 4px 4px 0; word-break: break-word;
+  padding: 0.5rem 0.625rem; margin-bottom: 0.375rem; background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid var(--x-error-display-accent); border-radius: 0 0.25rem 0.25rem 0; word-break: break-word;
 }
-#x-error-display .x-error-display__item-head { display: flex; justify-content: space-between; margin-bottom: 4px; }
+#x-error-display .x-error-display__item-head { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
 #x-error-display .x-error-display__item-title { color: var(--x-error-display-accent); }
 #x-error-display .x-error-display__source { color: var(--x-error-display-muted); font-weight: normal; }
 #x-error-display .x-error-display__time { color: var(--x-error-display-dim); font-size: 0.625rem; }
@@ -79,11 +79,11 @@ const ERROR_DISPLAY_CSS = `
 #x-error-display .x-error-display__meta--response { color: var(--x-error-display-response); }
 #x-error-display .x-error-display__meta--src { color: var(--x-error-display-src); }
 #x-error-display .x-error-display__stack {
-  color: var(--x-error-display-dim); font-size: 0.625rem; margin-top: 4px; max-height: 60px; overflow: auto;
+  color: var(--x-error-display-dim); font-size: 0.625rem; margin-top: 0.25rem; max-height: 3.75rem; overflow: auto;
 }
 #x-error-display .x-error-display__fallback {
-  width: 100%; height: 8rem; margin-top: 6px; font: 0.6875rem/1.4 monospace;
-  background: var(--x-error-display-code-bg); color: var(--x-error-display-code-text); border: 1px solid var(--x-error-display-accent); border-radius: 4px; padding: 6px;
+  width: 100%; height: 8rem; margin-top: 0.375rem; font: 0.6875rem/1.4 monospace;
+  background: var(--x-error-display-code-bg); color: var(--x-error-display-code-text); border: 1px solid var(--x-error-display-accent); border-radius: 0.25rem; padding: 0.375rem;
 }
 .x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; }
 `;
