@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-09T04:14:28.567Z",
-  "count": 174,
+  "generatedAt": "2026-10-09T04:51:44.713Z",
+  "count": 176,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -116,6 +116,56 @@
         "icon": "🔔",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "animate.schema.json",
+      "name": "animate",
+      "title": "Animate",
+      "description": "Plays one of the library's keyframe animations on its host, when it is clicked or as soon as it loads. A button always plays it on click. It applies to any element, so it names no host.",
+      "tag": "x-animate",
+      "baseClass": "x-animate",
+      "properties": {
+        "animation": {
+          "type": "string",
+          "description": "The keyframe to play, by name: fade-in, fade-out, slide-in, zoom-in, bounce, shake, pulse, flip, rotate and the rest of effects.css's x-* keyframes.",
+          "default": "fade-in"
+        },
+        "duration": {
+          "type": "string",
+          "description": "How long one play lasts (any CSS time).",
+          "default": "0.5s"
+        },
+        "easing": {
+          "type": "string",
+          "description": "The timing function (any CSS easing).",
+          "default": "ease"
+        },
+        "trigger": {
+          "type": "string",
+          "enum": [
+            "click",
+            "load"
+          ],
+          "description": "click plays it on each click; load plays it once when the behavior attaches. A button always uses click.",
+          "default": "click",
+          "visual": false,
+          "visualReason": "Chooses when the animation plays, not how it looks."
+        }
+      },
+      "matrix": [
+        {
+          "trigger": "click",
+          "animation": "bounce"
+        },
+        {
+          "trigger": "load",
+          "animation": "fade-in"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/effects.js animate() — every property here is one the behavior reads and uses; delay is read but never applied, so it is not declared"
       }
     },
     {
@@ -2169,6 +2219,51 @@
       },
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "countup.schema.json",
+      "name": "countup",
+      "title": "Countup",
+      "description": "Counts its host's number up from a start value to an end value, easing out, the first time it scrolls into view. It applies to any element, so it names no host.",
+      "tag": "x-countup",
+      "baseClass": "x-countup",
+      "properties": {
+        "from": {
+          "type": "number",
+          "description": "The number the count starts at.",
+          "default": 0
+        },
+        "to": {
+          "type": "number",
+          "description": "The number the count ends at. Without it the host's own text is the target, and 100 when that is empty.",
+          "default": 100
+        },
+        "duration": {
+          "type": "number",
+          "description": "How long the count takes, in milliseconds.",
+          "default": 2000
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Text written before the number, such as $.",
+          "default": ""
+        },
+        "suffix": {
+          "type": "string",
+          "description": "Text written after the number, such as % or +.",
+          "default": ""
+        },
+        "decimals": {
+          "type": "number",
+          "description": "Digits shown after the decimal point.",
+          "default": 0
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#879)",
+        "derivedFrom": "src/wb-viewmodels/effects.js countup() — every property here is one the behavior reads"
+      }
     },
     {
       "file": "cover.schema.json",
