@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "countup.schema.json",
+  "title": "Countup",
+  "description": "Counts its host's number up from a start value to an end value, easing out, the first time it scrolls into view. It applies to any element, so it names no host.",
+  "schemaFor": "countup",
+  "properties": {
+    "from": {
+      "type": "number",
+      "description": "The number the count starts at.",
+      "default": 0
+    },
+    "to": {
+      "type": "number",
+      "description": "The number the count ends at. Without it the host's own text is the target, and 100 when that is empty.",
+      "default": 100
+    },
+    "duration": {
+      "type": "number",
+      "description": "How long the count takes, in milliseconds.",
+      "default": 2000
+    },
+    "prefix": {
+      "type": "string",
+      "description": "Text written before the number, such as $.",
+      "default": ""
+    },
+    "suffix": {
+      "type": "string",
+      "description": "Text written after the number, such as % or +.",
+      "default": ""
+    },
+    "decimals": {
+      "type": "number",
+      "description": "Digits shown after the decimal point.",
+      "default": 0
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-countup"
+  },
+  "test": {
+    "setup": [
+      "<span x-countup to=\"250\" suffix=\"+\">250</span>",
+      "<span x-countup from=\"0\" to=\"99.5\" decimals=\"1\" prefix=\"$\">99.5</span>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/effects.js countup() — every property here is one the behavior reads"
+  }
+}
