@@ -6,6 +6,55 @@
   ],
   "releases": [
     {
+      "version": "1.0.473",
+      "date": "2026-10-08",
+      "summary": "Empty x-sheet, x-offcanvas and five more behaviors show a teaching example again; their schemas were missing from the stale schema index. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1806\" target=\"_blank\" rel=\"noopener\">#1806</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Regenerate the stale schema index; a gate keeps it current</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1806\" target=\"_blank\" rel=\"noopener\">#1806</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5c395e4ad3cb0189e1e13c485cd4fbcb7f10e19d\" target=\"_blank\" rel=\"noopener\"><code>5c395e4</code></a>",
+          "issues": [
+            1806
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/empty-schema-only-behaviors-teach.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/empty-schema-only-behaviors-teach.spec.ts</a> --project=regression</code>. Before: &quot;empty &lt;div x-sheet&gt; was not taught from its schema&quot;. Now: passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5c395e4ad3cb0189e1e13c485cd4fbcb7f10e19d\" target=\"_blank\" rel=\"noopener\"><code>5c395e4</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.472",
+      "date": "2026-10-08",
+      "summary": "Test-coverage-compliance caps enum properties with no permutation (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1805\" target=\"_blank\" rel=\"noopener\">PR 1805</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Animate&#39;s trigger enum gets permutation coverage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/57fefb3910d5cab493f1280a62c0d00a4b1a79c8\" target=\"_blank\" rel=\"noopener\"><code>57fefb3</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Animate and countup get schemas</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f3d7b7e0317dfcbb08dc730cb95184cb00d58eb2\" target=\"_blank\" rel=\"noopener\"><code>f3d7b7e</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/test-coverage-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/test-coverage-compliance.spec.ts</a> -g &quot;enum properties&quot;</code>. Before: animate.trigger counted as uncovered. Now: it is covered by the matrix and the count stays under the cap.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/adabb65afa145033d35aea7f33c4262cfbd0feb2\" target=\"_blank\" rel=\"noopener\"><code>adabb65</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.471",
       "date": "2026-10-08",
       "summary": "22 behavior classes whose base named a concept now take the behavior&#39;s own name, so the naming ratchet drops from 50 to 28 with no visible change. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1804\" target=\"_blank\" rel=\"noopener\">#1804</a>",
