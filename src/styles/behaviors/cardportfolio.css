@@ -1,0 +1,729 @@
+/**
+ * cardportfolio.css -- the styles only a portfolio card (x-cardportfolio) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardportfolio. Split out of card.css (#966): every
+ * selector here needs [x-cardportfolio] or a class only cardportfolio() stamps.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PORTFOLIO CARD — layout, variants, sizes, availability
+   Schema: cardportfolio.schema.json  |  Behavior: card.js → cardportfolio()
+
+   John, on the behaviors page, of every x-cardportfolio option row: "none of
+   these are right". Measured live, each row was wrong for its own reason:
+
+   - default: the cover (an empty, position:relative <figure>) painted OVER
+     the header, which card.js pulled up 60px beneath it. The avatar was
+     invisible, the name half hidden -- "the image hides the rest of the
+     card" -- and teach-by-example had filled the empty figure with
+     caption="this is the caption", printed across the image. The cover is
+     now a banner strip ABOVE the identity block and never overlaps it.
+   - the avatar wrap was a <figure>, and `article figure > span` (the
+     cardimage overlay-badge rule above) turned both the initials and the
+     status dot into absolutely-positioned pills. The wrap is a <div> now.
+   - size=*: this section's size rules read
+       `.x-portfolio.x-card--sm, .x-portfolio[variant="sm"] .x-portfolio__avatar`
+     -- the comma made the CARD ITSELF the target, so size="sm" shrank the
+     whole card to a 72px-wide 4.5rem box and size="full" to 176px, the
+     text crushed one word per line. They are descendant selectors again.
+   - horizontal: a fixed 10rem identity column squeezed "Principal engineer
+     at Analytical Engines" to one word per line and the -60px cover offset
+     lifted the header out of the card.
+   - availability: the only signal was a 24px dot with a hover title, its
+     colour a hex written inline by card.js. Each status now also shows its
+     label as text, and the colour comes from the theme's status tokens.
+
+   SPECIFICITY. The generic card rules above reach these elements too:
+   `:is([x-cardportfolio], ...) > header` (0,1,1: grid, tinted background,
+   border) and `> header > h2` (0,1,2), plus the navbar's `.x-header` that
+   tag-map.js adds to a <header>. So the base rules here are 2-class
+   (0,2,0) and win on specificity, variants are 2-class and win on source
+   order (they come after the base), and sizes are 3-class (0,3,0) so a size
+   scales whatever variant it is combined with. No !important anywhere.
+   ═══════════════════════════════════════════════════════════════════════════ */
+/* ── Base ── */
+[x-cardportfolio] {
+  max-width: 25rem;
+}
+
+/* Full-bleed parts. The "cards WITHOUT header/main need padding" fallback
+   near the top of this file matches (it looks for .x-card__header, and the
+   portfolio's header is .x-portfolio__header) at 0,3,0 and put a 1rem inset
+   around everything -- the banner floated inside a frame instead of running
+   edge to edge. The header/main carry their own padding. Same 0,3,0 here,
+   later in the file, so it wins on source order. */
+[x-cardportfolio][x-cardportfolio]:has(> .x-portfolio__header) {
+  padding: 0;
+}
+
+[x-cardportfolio] > .x-portfolio__cover {
+  margin: 0;
+  height: var(--x-portfolio-cover-height, 9.375rem);
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+[x-cardportfolio] .x-portfolio__cover-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+[x-cardportfolio] > .x-portfolio__header {
+  display: block;
+  text-align: center;
+  padding: 1.5rem 1.5rem 1.25rem;
+  margin: 0;
+  height: auto;
+  min-height: 0;
+  background: transparent;
+  border-bottom: none;
+  font-size: 1rem;
+}
+
+[x-cardportfolio] .x-portfolio__avatar-wrap {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  line-height: 0;
+}
+
+[x-cardportfolio] .x-portfolio__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--x-portfolio-avatar-size, 7.5rem);
+  height: var(--x-portfolio-avatar-size, 7.5rem);
+  border-radius: 50%;
+  border: 4px solid var(--bg-secondary, #1f2937);
+  object-fit: cover;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+[x-cardportfolio] .x-portfolio__avatar-placeholder {
+  background: var(--bg-tertiary, #374151);
+  color: var(--text-primary, #f9fafb);
+}
+
+/* Sized as a fraction of the avatar (the wrap hugs it), so every variant and
+   size keeps the dot in proportion without restating it. */
+[x-cardportfolio] .x-portfolio__availability {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  width: 22%;
+  min-width: 0.75rem;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 3px solid var(--bg-secondary, #1f2937);
+  background: var(--x-portfolio-status, var(--text-secondary));
+  cursor: help;
+}
+
+/* One custom property per status, read by both the dot and the label. */
+.x-portfolio__availability--available,
+.x-portfolio__status--available { --x-portfolio-status: var(--success-color, #22c55e); }
+
+.x-portfolio__availability--busy,
+.x-portfolio__status--busy { --x-portfolio-status: var(--warning-color, #f59e0b); }
+
+.x-portfolio__availability--not-available,
+.x-portfolio__status--not-available { --x-portfolio-status: var(--danger-color, #ef4444); }
+
+.x-portfolio__availability--open-to-opportunities,
+.x-portfolio__status--open-to-opportunities { --x-portfolio-status: var(--info-color, #3b82f6); }
+
+/* Wraps, never ellipsises: a card that shows "Ada Lovel..." is missing the
+   one thing it exists to show. */
+[x-cardportfolio] .x-portfolio__name {
+  margin: 0.75rem 0 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary, #f9fafb);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+[x-cardportfolio] .x-portfolio__title {
+  margin: 0.35rem 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary, #f9fafb);
+  text-wrap: balance;
+}
+
+[x-cardportfolio] .x-portfolio__company,
+[x-cardportfolio] .x-portfolio__location {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+[x-cardportfolio] .x-portfolio__tagline {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-secondary, #9ca3af);
+}
+
+[x-cardportfolio] .x-portfolio__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.75rem 0 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 62.4375rem;
+  border: 1px solid var(--x-portfolio-status);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary, #f9fafb);
+}
+
+[x-cardportfolio] .x-portfolio__status::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--x-portfolio-status);
+}
+
+[x-cardportfolio] > .x-portfolio__main {
+  padding: 0 1.5rem 1.5rem;
+}
+
+/* No bio/skills/stats: an empty <main> would only add a padded blank band. */
+[x-cardportfolio] > .x-portfolio__main:empty {
+  display: none;
+}
+
+/* #561: cardportfolio()'s CTA footer button -- a real class instead of the
+   inline style.cssText (padding 0.875rem, below the §13 1rem minimum) it
+   used to carry. card.js keeps only the JS-driven hover background/transform
+   inline. */
+.x-portfolio__cta {
+  display: block;
+  text-align: center;
+  padding: 1rem;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+/* ── Variant: Compact — narrower, shorter banner, smaller everything ── */
+[x-cardportfolio].x-portfolio--compact {
+  max-width: 17.5rem;
+}
+
+.x-portfolio--compact > .x-portfolio__cover {
+  height: 4.5rem;
+}
+
+.x-portfolio--compact > .x-portfolio__header {
+  padding: 0.75rem 0.75rem 0.875rem;
+}
+
+.x-portfolio--compact .x-portfolio__avatar {
+  width: 4rem;
+  height: 4rem;
+  border-width: 3px;
+  font-size: 1.25rem;
+}
+
+.x-portfolio--compact .x-portfolio__availability {
+  border-width: 2px;
+}
+
+.x-portfolio--compact .x-portfolio__name {
+  margin-top: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.x-portfolio--compact .x-portfolio__title {
+  margin-top: 0.2rem;
+  font-size: 0.85rem;
+}
+
+.x-portfolio--compact .x-portfolio__company,
+.x-portfolio--compact .x-portfolio__location {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.x-portfolio--compact .x-portfolio__status {
+  margin-top: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.7rem;
+}
+
+.x-portfolio--compact > .x-portfolio__main {
+  padding: 0 0.75rem 0.75rem;
+}
+
+/* ── Variant: Horizontal — the image BESIDE the text ──
+   Row flex that wraps: the cover takes a left column and the identity block
+   sits beside it; anything else (bio, skills, contact, CTA) takes a full
+   row underneath instead of being squeezed into a third column. Inside the
+   identity block the avatar sits beside the name/title too, so a horizontal
+   card with no cover still reads as image-beside-text. */
+[x-cardportfolio].x-portfolio--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  max-width: 37.5rem;
+}
+
+[x-cardportfolio].x-portfolio--horizontal > * {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+[x-cardportfolio].x-portfolio--horizontal > .x-portfolio__cover {
+  flex: 0 0 36%;
+  display: flex;
+  height: auto;
+  min-height: 9rem;
+}
+
+/* The column's height comes from stretch, which a percentage height does not
+   resolve against -- `height: 100%` fell back to the image's own aspect and
+   left a blank band under it. As a stretched flex item it fills the column. */
+.x-portfolio--horizontal .x-portfolio__cover-img {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto;
+}
+
+[x-cardportfolio].x-portfolio--horizontal > .x-portfolio__header {
+  flex: 1 1 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 1rem;
+  align-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 1.25rem;
+}
+
+.x-portfolio--horizontal > .x-portfolio__header > .x-portfolio__avatar-wrap {
+  grid-column: 1;
+  grid-row: 1 / span 6;
+  align-self: center;
+}
+
+.x-portfolio--horizontal > .x-portfolio__header > :not(.x-portfolio__avatar-wrap) {
+  grid-column: 2;
+}
+
+.x-portfolio--horizontal .x-portfolio__avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  font-size: 1.4rem;
+}
+
+.x-portfolio--horizontal .x-portfolio__name {
+  margin-top: 0;
+  font-size: 1.35rem;
+}
+
+.x-portfolio--horizontal .x-portfolio__status {
+  justify-self: start;
+}
+
+/* ── Variant: Full — full width, taller banner, larger identity block ── */
+[x-cardportfolio].x-portfolio--full {
+  max-width: 50rem;
+}
+
+.x-portfolio--full > .x-portfolio__cover {
+  height: 12rem;
+}
+
+.x-portfolio--full > .x-portfolio__header {
+  padding: 2.25rem 2.25rem 1.75rem;
+}
+
+.x-portfolio--full .x-portfolio__avatar {
+  width: 10rem;
+  height: 10rem;
+  font-size: 2.5rem;
+}
+
+.x-portfolio--full .x-portfolio__name {
+  font-size: 2.1rem;
+}
+
+.x-portfolio--full .x-portfolio__title {
+  font-size: 1.2rem;
+}
+
+.x-portfolio--full .x-portfolio__location {
+  font-size: 1rem;
+}
+
+.x-portfolio--full > .x-portfolio__main {
+  padding: 0 2.25rem 2.25rem;
+}
+
+/* ── Size scaling — width comes from the shared `.x-card--{size}` rules
+   above; the banner, avatar, name and header padding scale with it so the
+   difference reads even where a grid column caps the rendered width.
+   Descendant selectors (0,3,0): the target is the PART, never the card. ── */
+[x-cardportfolio].x-card--xs > .x-portfolio__cover { height: 4rem; }
+
+[x-cardportfolio].x-card--xs .x-portfolio__avatar { width: 3.5rem; height: 3.5rem; border-width: 2px; font-size: 1.1rem; }
+
+[x-cardportfolio].x-card--xs .x-portfolio__name { font-size: 1rem; }
+
+[x-cardportfolio].x-card--xs .x-portfolio__title { font-size: 0.8rem; }
+
+[x-cardportfolio].x-card--xs > .x-portfolio__header { padding: 0.75rem; }
+
+[x-cardportfolio].x-card--sm > .x-portfolio__cover { height: 5.5rem; }
+
+[x-cardportfolio].x-card--sm .x-portfolio__avatar { width: 4.5rem; height: 4.5rem; border-width: 3px; font-size: 1.4rem; }
+
+[x-cardportfolio].x-card--sm .x-portfolio__name { font-size: 1.2rem; }
+
+[x-cardportfolio].x-card--sm .x-portfolio__title { font-size: 0.875rem; }
+
+[x-cardportfolio].x-card--sm > .x-portfolio__header { padding: 1rem; }
+
+[x-cardportfolio].x-card--md > .x-portfolio__cover { height: 7rem; }
+
+[x-cardportfolio].x-card--md .x-portfolio__avatar { width: 6rem; height: 6rem; font-size: 1.7rem; }
+
+[x-cardportfolio].x-card--md .x-portfolio__name { font-size: 1.4rem; }
+
+[x-cardportfolio].x-card--md .x-portfolio__title { font-size: 0.95rem; }
+
+[x-cardportfolio].x-card--lg > .x-portfolio__cover { height: 9rem; }
+
+[x-cardportfolio].x-card--lg .x-portfolio__avatar { width: 8rem; height: 8rem; font-size: 2rem; }
+
+[x-cardportfolio].x-card--lg .x-portfolio__name { font-size: 1.75rem; }
+
+[x-cardportfolio].x-card--lg .x-portfolio__title { font-size: 1.05rem; }
+
+[x-cardportfolio].x-card--lg > .x-portfolio__header { padding: 1.75rem; }
+
+[x-cardportfolio].x-card--xl > .x-portfolio__cover { height: 10.5rem; }
+
+[x-cardportfolio].x-card--xl .x-portfolio__avatar { width: 9.5rem; height: 9.5rem; font-size: 2.25rem; }
+
+[x-cardportfolio].x-card--xl .x-portfolio__name { font-size: 1.95rem; }
+
+[x-cardportfolio].x-card--xl .x-portfolio__title { font-size: 1.15rem; }
+
+[x-cardportfolio].x-card--xl > .x-portfolio__header { padding: 2rem; }
+
+[x-cardportfolio].x-card--full > .x-portfolio__cover { height: 12rem; }
+
+[x-cardportfolio].x-card--full .x-portfolio__avatar { width: 11rem; height: 11rem; font-size: 2.5rem; }
+
+[x-cardportfolio].x-card--full .x-portfolio__name { font-size: 2.2rem; }
+
+[x-cardportfolio].x-card--full .x-portfolio__title { font-size: 1.25rem; }
+
+[x-cardportfolio].x-card--full > .x-portfolio__header { padding: 2.25rem; }
+
+/* Portfolio card (cardportfolio()): every section and part below was a
+ cssText block in card.js (#779). Scoped under [x-cardportfolio] (0,2,0), which
+ already outranks the page's bare heading/list/link rules these elements
+ also match. */
+[x-cardportfolio] .x-portfolio__bio {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__bio-text {
+  margin:0;
+  color:var(--text-primary);
+  font-size:0.95rem;
+  line-height:1.7;
+}
+
+[x-cardportfolio] .x-portfolio__stats {
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+  padding:1rem;
+  background:var(--bg-tertiary);
+  border-radius:0.5rem;
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__stat {
+  display:flex;
+  align-items:baseline;
+  gap:0.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__stat-value {
+  font-size:1.25rem;
+  font-weight:700;
+  color:var(--primary);
+}
+
+[x-cardportfolio] .x-portfolio__stat-label {
+  font-size:0.85rem;
+  color:var(--text-secondary);
+}
+
+[x-cardportfolio] .x-portfolio__skills {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__section-title {
+  margin:0 0 0.75rem;
+  font-size:0.9rem;
+  font-weight:600;
+  color:var(--text-secondary);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+}
+
+[x-cardportfolio] .x-portfolio__pills {
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__pill {
+  padding:0.35rem 0.75rem;
+  background:var(--bg-tertiary);
+  color:var(--text-primary);
+  border-radius:62.4375rem;
+  font-size:0.85rem;
+}
+
+[x-cardportfolio] .x-portfolio__skill-bars {
+  margin-top:0.75rem;
+}
+
+[x-cardportfolio] .x-portfolio__skill-row {
+  margin-bottom:0.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__skill-header {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:0.25rem;
+  font-size:0.85rem;
+}
+
+[x-cardportfolio] .x-portfolio__skill-bar {
+  height:0.375rem;
+  background:var(--bg-tertiary);
+  border-radius:0.1875rem;
+  overflow:hidden;
+}
+
+[x-cardportfolio] .x-portfolio__experience {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__exp-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:0.5rem;
+  flex-wrap:wrap;
+}
+
+[x-cardportfolio] .x-portfolio__exp-role {
+  color:var(--text-primary);
+}
+
+[x-cardportfolio] .x-portfolio__exp-period {
+  color:var(--text-secondary);
+  font-size:0.85rem;
+}
+
+[x-cardportfolio] .x-portfolio__exp-company {
+  color:var(--primary);
+  font-size:0.9rem;
+  margin-top:0.25rem;
+}
+
+[x-cardportfolio] .x-portfolio__exp-desc {
+  margin:0.5rem 0 0;
+  color:var(--text-secondary);
+  font-size:0.9rem;
+  line-height:1.5;
+}
+
+[x-cardportfolio] .x-portfolio__education {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__edu-item {
+  padding:0.5rem 0;
+}
+
+[x-cardportfolio] .x-portfolio__edu-degree {
+  color:var(--text-primary);
+  display:block;
+}
+
+[x-cardportfolio] .x-portfolio__edu-school {
+  color:var(--text-secondary);
+  font-size:0.9rem;
+}
+
+[x-cardportfolio] .x-portfolio__projects {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__project-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:1rem;
+}
+
+[x-cardportfolio] .x-portfolio__project {
+  display:block;
+  background:var(--bg-tertiary);
+  border-radius:0.5rem;
+  overflow:hidden;
+  text-decoration:none;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+
+[x-cardportfolio] .x-portfolio__project-image {
+  width:100%;
+  height:6.25rem;
+  object-fit:cover;
+}
+
+[x-cardportfolio] .x-portfolio__project-info {
+  padding:0.75rem;
+}
+
+[x-cardportfolio] .x-portfolio__project-name {
+  color:var(--text-primary);
+  display:block;
+  margin-bottom:0.25rem;
+}
+
+[x-cardportfolio] .x-portfolio__project-desc {
+  color:var(--text-secondary);
+  font-size:0.8rem;
+}
+
+[x-cardportfolio] .x-portfolio__certifications {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__cert-list {
+  margin:0;
+  padding-left:1.25rem;
+  color:var(--text-primary);
+  font-size:0.9rem;
+}
+
+[x-cardportfolio] .x-portfolio__cert {
+  margin-bottom:0.25rem;
+}
+
+[x-cardportfolio] .x-portfolio__languages {
+  margin-bottom:1.5rem;
+}
+
+[x-cardportfolio] .x-portfolio__contact {
+  padding:1rem 1.5rem;
+  border-top:1px solid var(--border-color);
+  font-style:normal;
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  justify-content:center;
+}
+
+[x-cardportfolio] .x-portfolio__contact-link {
+  color:var(--text-primary);
+  text-decoration:none;
+  font-size:0.9rem;
+  display:flex;
+  align-items:center;
+  gap:0.25rem;
+}
+
+[x-cardportfolio] .x-portfolio__social {
+  padding:1rem 1.5rem;
+  border-top:1px solid var(--border-color);
+  display:flex;
+  justify-content:center;
+  gap:0.75rem;
+}
+
+[x-cardportfolio] .x-portfolio__social-link {
+  width:2.75rem;
+  height:2.75rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--bg-tertiary);
+  border-radius:50%;
+  text-decoration:none;
+  font-size:1.25rem;
+  transition:transform 0.2s,background 0.2s;
+}
+
+[x-cardportfolio] .x-portfolio__footer {
+  padding:1rem 1.5rem;
+  border-top:1px solid var(--border-color);
+}
+
+[x-cardportfolio] .x-portfolio__exp-item {
+  padding: 0.75rem 0;
+}
+
+[x-cardportfolio] .x-portfolio__exp-item--divided {
+  border-top: 1px solid var(--border-color);
+}
+
+[x-cardportfolio] .x-portfolio__skill-name {
+  color: var(--text-primary);
+}
+
+[x-cardportfolio] .x-portfolio__skill-level {
+  color: var(--text-secondary);
+}
+
+/* The fill's width is the skill's level, a generated rule per bar. */
+[x-cardportfolio] .x-portfolio__skill-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 0.1875rem;
+  transition: width 0.5s ease;
+}
+
+/* Hover states that were onmouseenter/onmouseleave handlers writing
+   element.style. */
+[x-cardportfolio] .x-portfolio__project:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+[x-cardportfolio] .x-portfolio__social-link:hover {
+  transform: scale(1.1);
+  background: var(--primary);
+}
+
+[x-cardportfolio] .x-portfolio__cta:hover {
+  background: var(--primary-hover, #4f46e5);
+  transform: translateY(-1px);
+}

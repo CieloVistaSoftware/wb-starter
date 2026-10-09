@@ -14,11 +14,12 @@
  * every dispatch path (wb-* tag, native auto-inject, x-* attribute
  * morph) already funnels down to before calling the behavior function.
  *
- * A behavior can map to more than one file — e.g. `cardhero` needs both
- * card.css (shared card structure) and hero.css (the hero-specific bits it
- * also styles). card.css and notification.css both independently style
- * `.x-notification*` for the `cardnotification` behavior (verified: real
- * duplication, not a mistake to fix here) — both must load together.
+ * A behavior can map to more than one file — e.g. `cardhero` needs
+ * card.css (shared card structure), cardhero.css (its own rules, #966) and
+ * hero.css (the hero-specific bits it also styles). cardnotification.css and
+ * notification.css both independently style `.x-notification*` for the
+ * `cardnotification` behavior (verified: real duplication, not a mistake to
+ * fix here) — both must load together.
  *
  * Intentionally NOT in this manifest:
  *   - layout.css, ui-utils.css: kept as unconditional imports in site.css
@@ -29,26 +30,30 @@
  */
 
 export const BEHAVIOR_CSS_MAP = {
-  // Cards — all 19 x-card* behaviors share card.css's base structure.
+  // Cards — all 19 x-card* behaviors share card.css's base structure, and
+  // each variant's own rules live in <variant>.css, loaded right after it
+  // (#966) -- a page with one card variant no longer downloads the other 17.
+  // The variant file comes before hero.css / notification.css so the
+  // cascade order is the one these rules had inside card.css.
   card: ['card.css'],
-  cardbutton: ['card.css'],
-  carddraggable: ['card.css'],
-  cardexpandable: ['card.css'],
-  cardfile: ['card.css'],
-  cardhero: ['card.css', 'hero.css'],
-  cardhorizontal: ['card.css'],
-  cardimage: ['card.css'],
-  cardlink: ['card.css'],
-  cardminimizable: ['card.css'],
-  cardnotification: ['card.css', 'notification.css'],
-  cardoverlay: ['card.css'],
-  cardportfolio: ['card.css'],
-  cardpricing: ['card.css'],
-  cardproduct: ['card.css'],
-  cardprofile: ['card.css'],
-  cardstats: ['card.css'],
-  cardtestimonial: ['card.css'],
-  cardvideo: ['card.css'],
+  cardbutton: ['card.css', 'cardbutton.css'],
+  carddraggable: ['card.css', 'carddraggable.css'],
+  cardexpandable: ['card.css', 'cardexpandable.css'],
+  cardfile: ['card.css', 'cardfile.css'],
+  cardhero: ['card.css', 'cardhero.css', 'hero.css'],
+  cardhorizontal: ['card.css', 'cardhorizontal.css'],
+  cardimage: ['card.css', 'cardimage.css'],
+  cardlink: ['card.css', 'cardlink.css'],
+  cardminimizable: ['card.css', 'cardminimizable.css'],
+  cardnotification: ['card.css', 'cardnotification.css', 'notification.css'],
+  cardoverlay: ['card.css', 'cardoverlay.css'],
+  cardportfolio: ['card.css', 'cardportfolio.css'],
+  cardpricing: ['card.css', 'cardpricing.css'],
+  cardproduct: ['card.css', 'cardproduct.css'],
+  cardprofile: ['card.css', 'cardprofile.css'],
+  cardstats: ['card.css', 'cardstats.css'],
+  cardtestimonial: ['card.css', 'cardtestimonial.css'],
+  cardvideo: ['card.css', 'cardvideo.css'],
   // An <article> IS a card: index.js routes the `article` behavior to card.js,
   // so the element gets card markup and needs card.css. Mapping it to
   // article.css alone meant an auto-injected <article> ran card() while

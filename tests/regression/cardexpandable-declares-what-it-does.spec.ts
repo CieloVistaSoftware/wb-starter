@@ -15,7 +15,11 @@ import path from 'path';
  */
 const ROOT = process.cwd();
 const schema = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/wb-models/cardexpandable.schema.json'), 'utf8'));
-const cardCss = fs.readFileSync(path.join(ROOT, 'src/styles/behaviors/card.css'), 'utf8');
+// Every stylesheet x-cardexpandable loads: the card base and, since #966, its
+// own cardexpandable.css, where its rules now live.
+const cardCss = ['card.css', 'cardexpandable.css']
+  .map((f) => fs.readFileSync(path.join(ROOT, 'src/styles/behaviors', f), 'utf8'))
+  .join('\n');
 
 const EVENTS = Object.keys(schema.events || {});
 const METHODS = Object.keys(schema.$methods || {});
@@ -27,11 +31,11 @@ test('the schema declares an event, methods and CSS variables, so the checks bel
   expect(CSS_VARS.length).toBeGreaterThan(0);
 });
 
-test('every declared CSS variable is read by card.css, and card.css reads no undeclared one', () => {
+test('every declared CSS variable is read by its stylesheets, and they read no undeclared one', () => {
   const unread = CSS_VARS.filter((name) => !cardCss.includes(`var(${name}`));
   expect(unread, 'declared in $cssAPI, read by no rule').toEqual([]);
   const read = [...new Set(cardCss.match(/var\(--x-card-expandable-[a-z-]+/g) || [])].map((v) => v.slice(4));
-  expect(read.filter((name) => !CSS_VARS.includes(name)), 'read by card.css, missing from $cssAPI').toEqual([]);
+  expect(read.filter((name) => !CSS_VARS.includes(name)), 'read by card.css/cardexpandable.css, missing from $cssAPI').toEqual([]);
 });
 
 test('the declared event fires, and the declared methods drive the card', async ({ page }) => {

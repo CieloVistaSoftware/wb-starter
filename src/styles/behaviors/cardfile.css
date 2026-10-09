@@ -1,0 +1,75 @@
+/**
+ * cardfile.css -- the styles only a file card (x-cardfile) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardfile. Split out of card.css (#966): every
+ * selector here needs [x-cardfile] or a class only cardfile() stamps.
+ */
+
+/* File card */
+[x-cardfile] {
+  padding: 1rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* A downloadable file card is one click target (cardfile() gives it
+   role="button" only when it has an href to download). */
+[x-cardfile][role="button"] {
+  cursor: pointer;
+}
+
+/* variant="compact" -- cardfile.schema.json has declared it all along; nothing
+   styled it, so it rendered exactly like the default (#773). A compact file
+   row is a list entry: tighter padding and gap, a smaller icon. Three classes
+   and an attribute so it outranks the card fallback padding rule's
+   :is([x-cardfile]):not(:has(header)):not(:has(div:where(.x-card__body)))
+   (0,1,2; it was :not(:has(main)) before #945, same weight). */
+[x-cardfile][x-cardfile][variant="compact"] {
+  padding: 0.5rem 0.75rem;
+  gap: 0.5rem;
+}
+
+[x-cardfile][x-cardfile][variant="compact"] .x-card__file-icon {
+  font-size: 1.5rem;
+}
+
+[x-cardfile][x-cardfile][variant="compact"] .x-card__file-download {
+  font-size: 1rem;
+}
+
+/* File card parts -- moved here from cardfile()'s inline cssText (card.js)
+   (Law 9 migration, #370). */
+.x-card__file-icon {
+  font-size: 2.5rem;
+}
+
+.x-card__file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.x-card__filename {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+  white-space: normal;
+  word-break: break-word;
+}
+
+.x-card__file-meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.x-card__file-download {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* File card: the whole card downloads, so it must look clickable. */
+[x-cardfile].x-card-file--downloadable {
+  cursor: pointer;
+}
