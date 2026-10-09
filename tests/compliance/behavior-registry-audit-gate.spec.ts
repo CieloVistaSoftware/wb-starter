@@ -26,7 +26,7 @@ const AUDIT = path.join(ROOT, 'scripts/audit-behavior-registry.mjs');
 
 function runAudit(args: string[]) {
   const r = spawnSync(process.execPath, [AUDIT, ...args], { cwd: ROOT, encoding: 'utf8' });
-  return { status: r.status, out: `${r.stdout}${r.stderr}` };
+  return { status: r.status, stdout: r.stdout, out: `${r.stdout}${r.stderr}` };
 }
 
 test('the registry audit passes --gate: every finding is reviewed and none is stale', () => {
@@ -35,9 +35,12 @@ test('the registry audit passes --gate: every finding is reviewed and none is st
 });
 
 test('the audit reads every source, including the computed x-{name} route', () => {
-  const { status, out } = runAudit(['--json']);
-  expect(status).toBe(0);
-  const result = JSON.parse(out);
+  // Parse stdout alone: a CI runner that sets an inspector flag makes every
+  // child node print "Debugger listening on ws://..." to stderr, and that
+  // text after the JSON made JSON.parse throw at the JSON's last byte.
+  const { status, stdout, out } = runAudit(['--json']);
+  expect(status, out).toBe(0);
+  const result = JSON.parse(stdout);
   expect(result.missingMaps, 'a map was renamed or moved, so the audit is blind to it').toEqual([]);
   // If the computed route stopped being read, these behaviors would fall back
   // to UNREACHABLE and the gate would fail on them by name. This states the
