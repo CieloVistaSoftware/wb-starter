@@ -200,14 +200,7 @@ const REVIEWED = {
     'x-nav': '<nav> -> navbar came with #958; the attribute form is x-navbar. Whether x-nav should be a second '
       + 'spelling is the same call 9f85773ce made against x-article, and nobody has made it for nav.',
   },
-  unreachable: {
-    behavior: 'behavior.schema.json is the master metadata schema, not a behavior, and x-behavior is a '
-      + 'DIRECTIVE. Its schemaType "behavior" is not one of schema.schema.json\'s _schemaTypes.',
-    'x-effects': 'Shared attributes of the animation behaviors, not a behavior. schemaType says "behavior", '
-      + 'which is not one of schema.schema.json\'s _schemaTypes; "base" is what it describes.',
-    'x-enhancements': 'Shared attributes of the form-control behaviors, not a behavior. Same schemaType '
-      + 'mislabel as x-effects.',
-  },
+  unreachable: {},
   splitRegistration: {
     code: NATIVE_PAIR_REASON,
     img: NATIVE_PAIR_REASON,
