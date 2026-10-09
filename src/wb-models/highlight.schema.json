@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "highlight.schema.json",
+  "title": "Highlight",
+  "description": "Marks text with a highlight background. Without color it uses the theme's highlight colours.",
+  "schemaFor": "highlight",
+  "semanticElement": {
+    "tagName": "mark"
+  },
+  "properties": {
+    "color": {
+      "type": "string",
+      "description": "Highlight background (any CSS colour).",
+      "default": ""
+    },
+    "textColor": {
+      "type": "string",
+      "description": "Text colour over the highlight (any CSS colour).",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-highlight"
+  },
+  "test": {
+    "setup": [
+      "<mark x-highlight>important</mark>",
+      "<mark x-highlight color=\"#bfdbfe\" textColor=\"#1e3a8a\">noted</mark>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#879)",
+    "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+  }
+}

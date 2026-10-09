@@ -20,7 +20,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.449">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.456">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -449,6 +449,28 @@
     // enum-valued property now produces rows, SUMMED per axis (not a cartesian
     // product -- that would explode 143 entries into thousands).
     //   variant-only: 272 rows.  all enum properties: 484.
+    /**
+     * #286: what a behavior does, in one line -- its schema's description.
+     * Every schema has one; a behavior with no schema has none, and shows
+     * none rather than a made-up line.
+     */
+    function describe(attr) {
+      const sc = schemaByName.get(extensionMap[attr]);
+      return String((sc && sc.description) || '').trim();
+    }
+
+    /** The one-line description element for a row or a group; null when there is none. */
+    function descriptionLine(attr) {
+      const text = describe(attr);
+      if (!text) return null;
+      const d = document.createElement('span');
+      d.className = 'behaviors-search-results__desc';
+      d.textContent = text;
+      // One line, ellipsised (behaviors.css); the whole sentence on hover.
+      d.title = text;
+      return d;
+    }
+
     function variantsFor(attr, form) {
       const sc = schemaByName.get(extensionMap[attr]);
       const props = (sc && sc.properties) || {};
@@ -880,8 +902,15 @@
 
         if (!built.length) return;
 
+        // #286 -- "a reference table of every x-* behavior and what it does,
+        // so a developer can scan the full vocabulary at a glance". The list is
+        // that reference now: every behavior's line carries its schema's
+        // description, under the name, without opening anything.
+        const desc = descriptionLine(entry.attr);
+
         if (built.length === 1) {
           const li = document.createElement('li');
+          if (desc) built[0].appendChild(desc);
           li.appendChild(built[0]);
           frag.appendChild(li);
           return;
@@ -909,6 +938,14 @@
         });
         details.appendChild(inner);
         li.appendChild(details);
+        // Under the group's name while it is collapsed. x-details rebuilds its
+        // <summary> from the summary attribute as plain text, so the line
+        // cannot live inside it; open, the options and the API panel take over
+        // and the line steps aside (behaviors.css).
+        if (desc) {
+          desc.classList.add('behaviors-search-results__desc--group');
+          li.appendChild(desc);
+        }
         frag.appendChild(li);
       });
       if (!q) totalRowCount = rendered;

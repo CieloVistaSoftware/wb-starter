@@ -6,6 +6,14 @@
 import { computeSignature, firstMeaningfulFrame, isTestOrigin, isTestServer, isSameOccurrence } from './error-signature.js';
 import { centralDateTime, centralTime } from './central-time.js';
 import { isDevelopmentOrigin } from './service-worker.js';
+import { VERSION } from './version.js';
+import { versionNumber } from './version-number.js';
+
+// #1773 -- the site version every entry is stamped with, the same number the
+// header badge shows. An entry stored in the browser outlives the code that
+// raised it; without this the viewer could not tell an error fixed three
+// releases ago from one happening now.
+const SITE_VERSION = versionNumber(VERSION).number;
 
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
@@ -328,6 +336,11 @@ export async function logError(message, details = {}) {
   const error = {
     id: Date.now(),
     timestamp: new Date().toISOString(),
+    // #1773: `version` is the site version it was first logged on, `lastVersion`
+    // the newest one it has happened on -- a repeat on a later release moves it.
+    version: SITE_VERSION,
+    lastVersion: SITE_VERSION,
+    commit: VERSION.commit,
     signature,
     analysis: known ? known.analysis : null,
     solution: known ? known.solution : null,
@@ -375,6 +388,7 @@ export async function logError(message, details = {}) {
   if (existing) {
     existing.count = (existing.count || 1) + 1;
     existing.lastSeen = error.timestamp;
+    existing.lastVersion = SITE_VERSION;
     updateErrorCount();
     // Persisted through the same path a new error takes, so the stored copy
     // carries the updated count rather than the count living only in memory and
