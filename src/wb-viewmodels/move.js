@@ -1,4 +1,3 @@
-import { readFlag } from '../core/read-attr.js';
 import { setRule } from '../core/dynamic-style.js';
 /**
  * Move Behaviors
@@ -30,10 +29,11 @@ import { setRule } from '../core/dynamic-style.js';
 function findMoveableParent(element) {
   let parent = element.parentElement;
   while (parent) {
-    // Check for grid item markers
-    if (readFlag(parent, 'grid-item') || 
-        readFlag(parent, 'moveable') ||
-        parent.classList.contains('grid-item') ||
+    // The item markers are the classes grid-item / moveable. #879: the
+    // data-grid-item / data-moveable attribute spellings were read too, but no
+    // schema could declare them (they sit on an item, not on any behavior's
+    // host) and no page in the repo wrote them; the class does the same job.
+    if (parent.classList.contains('grid-item') ||
         parent.classList.contains('moveable')) {
       return parent;
     }
@@ -56,9 +56,9 @@ function findMoveableParent(element) {
 function getGridInfo(container) {
   const style = getComputedStyle(container);
   const columns = style.gridTemplateColumns.split(' ').length;
-  const items = Array.from(container.children).filter(el => 
-    readFlag(el, 'grid-item') || !el.matches('style, script, template')
-  );
+  // Every child but a style/script/template is an item (the grid-item marker
+  // could only ever have re-admitted one of those, which no page does).
+  const items = Array.from(container.children).filter(el => !el.matches('style, script, template'));
   return { columns, items, total: items.length };
 }
 

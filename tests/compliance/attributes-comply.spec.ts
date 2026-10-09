@@ -31,7 +31,7 @@ const CEILING = {
   R3: 0,   // CONSUMED   — declared, documented, inert (the #861 residue). #1526: was 11;
            //              8 of them were read via readAttr, which the audit could not see.
            //              #879, 2026-10-07: 0 measured, so the ceiling is 0.
-  R4: 2,   // DECLARED   — read by code, declared by no schema. #879, 2026-10-07: 90 measured;
+  R4: 0,   // DECLARED   — read by code, declared by no schema. #879, 2026-10-07: 90 measured;
            //              then 37: 31 declared (25 as schema properties, 6 as registered
            //              synonyms), 7 dead reads removed, 2 moved off attributes, and 13 that
            //              are not options (written only, or platform attributes) no longer
@@ -52,6 +52,8 @@ const CEILING = {
            //              2026-10-09: 2. animate and countup (effects.js) got schemas. The
            //              2 left, grid-item and moveable, are marker flags move.js reads on
            //              a parent, not options of any behavior.
+           //              2026-10-09: 0. move.js no longer reads data-grid-item/data-moveable;
+           //              the grid-item/moveable classes it also read do the same job.
   R5: 0,   // CENTRAL    — aliases live in the registry, never inline
   R6: 0,   // DISTINCT   — one behavior defined by two schema files. #879, 2026-10-07: 0 measured.
 };

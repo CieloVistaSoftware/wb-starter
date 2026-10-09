@@ -21,9 +21,8 @@ an `x-move` container swap their item with the adjacent one when clicked.
 wires up any descendant element carrying one of the four direction attributes below.
 Each direction attribute works stand-alone too (a button anywhere with `x-moveup`
 etc. wires itself), but needs an ancestor whose own parent is `display: grid` or
-`display: flex` (or that carries the marker attribute `data-grid-item`/
-`data-moveable`, or class `grid-item`/`moveable`) to know which element is "the
-item" to move.
+`display: flex` (or that carries the marker class `grid-item` or `moveable`) to
+know which element is "the item" to move.
 
 ## Properties
 
