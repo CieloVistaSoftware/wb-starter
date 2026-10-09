@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.461",
+      "date": "2026-10-08",
+      "summary": "Src/styles/x-signature.css, which styles the signature heroes and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1794\" target=\"_blank\" rel=\"noopener\">PR 1794</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The signature hero and card styles size in rem, and the px gate holds 315</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d2f6a40dbd3941c6df46e9f8ea56cf707bb27980\" target=\"_blank\" rel=\"noopener\"><code>d2f6a40</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=hero-variants\" target=\"_blank\" rel=\"noopener\">pages/hero-variants.html</a> and set the browser&#39;s default font size to 20px. Before: the hero corners, dots and avatars stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1f5c4e98f3ffae568715f2c919cb82f4380ae72b\" target=\"_blank\" rel=\"noopener\"><code>1f5c4e9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.460",
       "date": "2026-10-08",
       "summary": "The card hero&#39;s eyebrow pill painted its own background and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1791\" target=\"_blank\" rel=\"noopener\">PR 1791</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a>",
