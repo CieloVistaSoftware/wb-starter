@@ -161,7 +161,13 @@ test.describe('Links resolve to real files (#refs-render-properly audit)', () =>
       const isMd = rel.endsWith('.md');
       const raw = fs.readFileSync(path.join(ROOT, rel), 'utf8');
       const live = liveTextOnly(raw, isMd);
-      const srcDir = path.posix.dirname(rel);
+      // #1244: a page fragment (pages/*.html with the ?page= redirect guard) is
+      // injected into index.html by the SPA shell, so its relative links resolve
+      // against the SITE ROOT, not pages/ -- `demos/frameworks.html` written in
+      // a fragment opens /demos/frameworks.html. Resolving it against pages/
+      // failed a link that works and passed one (`about.html`) that 404s.
+      const isFragment = rel.startsWith('pages/') && /location\.replace\(root/.test(raw);
+      const srcDir = isFragment ? '.' : path.posix.dirname(rel);
 
       const hardOffenders: string[] = [];
       const softFragmentNotes: string[] = [];
