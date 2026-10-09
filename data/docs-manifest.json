@@ -1,5 +1,5 @@
 {
-  "totalFiles": 273,
+  "totalFiles": 274,
   "categories": [
     "_today",
     "architecture",
@@ -790,6 +790,12 @@
         "name": "cardvideo",
         "category": "behaviors",
         "created": "2026-08-20"
+      },
+      {
+        "path": "docs/behaviors/cart.md",
+        "title": "Cart",
+        "name": "cart",
+        "category": "behaviors"
       },
       {
         "path": "docs/behaviors/center.md",
@@ -2432,6 +2438,12 @@
       "name": "cardvideo",
       "category": "behaviors",
       "created": "2026-08-20"
+    },
+    {
+      "path": "docs/behaviors/cart.md",
+      "title": "Cart",
+      "name": "cart",
+      "category": "behaviors"
     },
     {
       "path": "docs/behaviors/center.md",

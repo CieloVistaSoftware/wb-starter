@@ -439,6 +439,12 @@
           "modified": "2026-10-07"
         },
         {
+          "file": "behaviors/cart.md",
+          "title": "Cart",
+          "description": "x-cart is a shopping cart that remembers what Add to Cart added: a count, and a list you can open, check and change. Kept in localStorage.",
+          "modified": "2026-10-09"
+        },
+        {
           "file": "behaviors/center.md",
           "title": "Center - wb-starter v3.0",
           "description": "Horizontally centers an element's content, either by constraining and centering the box itself (default) or by centering its children with flexbox (intrinsic).",

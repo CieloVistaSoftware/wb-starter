@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-09T04:51:44.713Z",
-  "count": 176,
+  "generatedAt": "2026-10-09T05:19:58.606Z",
+  "count": 177,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -1422,6 +1422,28 @@
         }
       ],
       "_metadata": {}
+    },
+    {
+      "file": "cart.schema.json",
+      "name": "cart",
+      "title": "Cart",
+      "description": "A shopping cart that remembers what Add to Cart added: shows how many items it holds and opens to list them with remove buttons, the total and Clear. Kept in localStorage, so it survives a reload",
+      "tag": "x-cart",
+      "baseClass": "x-cart",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The localStorage key the cart is kept under. Carts with the same key show the same contents; give two carts different keys to keep them apart.",
+          "default": "wb-cart"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "commerce",
+        "icon": "🛒",
+        "since": "1.0.0",
+        "status": "stable"
+      }
     },
     {
       "file": "center.schema.json",

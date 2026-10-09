@@ -1,0 +1,116 @@
+/**
+ * Cart Behavior Styles
+ * -----------------------------------------------------------------------------
+ * Works with src/wb-viewmodels/cart.js (#463).
+ * A cart button with its item count; opens (native <details>) to a panel
+ * listing the items, the total and Clear.
+ * -----------------------------------------------------------------------------
+ */
+
+.x-cart {
+  display: inline-block;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.x-cart .x-cart__summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.x-cart .x-cart__summary::-webkit-details-marker {
+  display: none;
+}
+
+.x-cart .x-cart__summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.x-cart .x-cart__count {
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  border-radius: 999rem;
+  background: var(--primary);
+  color: var(--text-on-accent);
+  font-weight: 700;
+  text-align: center;
+}
+
+.x-cart.x-cart--empty .x-cart__count {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.x-cart .x-cart__panel {
+  margin-top: 0.5rem;
+  min-width: min(18rem, 100%);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.x-cart .x-cart__empty {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.x-cart .x-cart__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.x-cart .x-cart__item {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.x-cart .x-cart__item-qty,
+.x-cart .x-cart__item-price {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.x-cart .x-cart__remove,
+.x-cart .x-cart__clear {
+  border: 1px solid var(--border-color);
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.2rem 0.55rem;
+}
+
+.x-cart .x-cart__remove:hover,
+.x-cart .x-cart__clear:hover {
+  background: var(--bg-tertiary);
+}
+
+.x-cart .x-cart__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.6rem;
+}
+
+.x-cart .x-cart__footer[hidden],
+.x-cart .x-cart__empty[hidden] {
+  display: none;
+}

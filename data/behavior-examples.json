@@ -2418,6 +2418,18 @@
         }
       ]
     },
+    "x-cart": {
+      "source": "<div x-cart></div>\n<article x-cardproduct\n  image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg\"\n  title=\"Field headphones\"\n  price=\"$149\"></article>",
+      "alternates": [
+        "<div x-cart key=\"wishlist\"></div>"
+      ],
+      "examples": [
+        {
+          "label": "two carts kept apart",
+          "source": "<div x-cart key=\"cart-a\"></div>\n<div x-cart key=\"cart-b\"></div>"
+        }
+      ]
+    },
     "x-fill": {
       "source": "<div id=\"fill-demo-row\" x-cluster gap=\"0.5rem\">\n  <button id=\"fill-demo-target\" x-fill>Fills the rest of the row</button>\n  <button id=\"fill-demo-sibling\">Natural width</button>\n</div>",
       "alternates": [],

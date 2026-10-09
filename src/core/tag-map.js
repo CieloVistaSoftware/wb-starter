@@ -127,6 +127,8 @@ export const extensionMap = {
   // width is a layout decision, not something an element IS.
   'x-fill': 'fill',
   'x-glass': 'glass',
+  // #463 -- a cart that remembers what Add to Cart added.
+  'x-cart': 'cart',
   'x-release': 'release',
   // x-progress on any host; <progress> injects it on its own. x-progressbar
   // was a second spelling of the same behavior and has been removed -- one
