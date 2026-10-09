@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.455",
+      "date": "2026-10-08",
+      "summary": "Demo.css styled only the [x-demo] attribute, so a demo applied with WB.inject() lost its padded, clipped box; every host rule now matches the .x-demo class too, and x-accordion is recorded as needing no rule of its own. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1788\" target=\"_blank\" rel=\"noopener\">#1788</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-demo gets its look by class; x-accordion recorded as needing no rule</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1788\" target=\"_blank\" rel=\"noopener\">#1788</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/25837df22f653c4f288271285cce890c84a57401\" target=\"_blank\" rel=\"noopener\"><code>25837df</code></a>",
+          "issues": [
+            1095,
+            1788
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and run WB.inject(el, &#39;demo&#39;) on a new &lt;div&gt; holding a button. Before: padding 0, margin-bottom 0, overflow visible. Now: the 16px padded, clipped demo box a &lt;div x-demo&gt; has.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/25837df22f653c4f288271285cce890c84a57401\" target=\"_blank\" rel=\"noopener\"><code>25837df</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.454",
       "date": "2026-10-08",
       "summary": "Every line in the Behaviors page&#39;s browse list now carries the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1787\" target=\"_blank\" rel=\"noopener\">PR 1787</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/286\" target=\"_blank\" rel=\"noopener\">#286</a>",
