@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.469",
+      "date": "2026-10-08",
+      "summary": "The spec replaced document.body as soon as window.WB existed, but (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1790\" target=\"_blank\" rel=\"noopener\">PR 1790</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>X-table-sort-value mounts only after the site has finished booting</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fffc79205587e0d14170a3e372637b9893e9fbba\" target=\"_blank\" rel=\"noopener\"><code>fffc792</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Card-variant-surface reads the built card&#39;s border instead of polling it for 5s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/01bde339fd06ea13b2ffdd190b4ce9905b341845\" target=\"_blank\" rel=\"noopener\"><code>01bde33</code></a>",
+          "issues": [
+            1014
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The last 5 !important in src/ win by specificity instead</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1014\" target=\"_blank\" rel=\"noopener\">#1014</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3e78e9f283d3b33acd5671e9e20275a8b5aff78d\" target=\"_blank\" rel=\"noopener\"><code>3e78e9f</code></a>",
+          "issues": [
+            1014
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/x-table-sort-value.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/x-table-sort-value.spec.ts</a> --repeat-each=3</code>. Before: mount() waited for window.WB, which exists while the site is still booting. Now: it waits for window.WBSite, set only once boot has finished (9 of 9 passed locally).",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3d01add7e79da29883e959f7e364e02243d196ec\" target=\"_blank\" rel=\"noopener\"><code>3d01add</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.468",
       "date": "2026-10-08",
       "summary": "The new Introduction page had no file at its own address, so opening /wb-starter/introduction on GitHub Pages directly would have answered 404. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1796\" target=\"_blank\" rel=\"noopener\">PR 1796</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1244\" target=\"_blank\" rel=\"noopener\">#1244</a>",
