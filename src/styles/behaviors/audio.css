@@ -560,7 +560,9 @@
   padding: 1.25rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  min-width: 20rem;
+  /* #295: never wider than its container -- a flat 20rem (360px at the
+     site's 18px root) ran past a 375px phone's content column. */
+  min-width: min(20rem, 100%);
   /* Padding is part of the declared size now, so a height set by a consumer
      means the height they asked for rather than height + 2.5rem. */
   box-sizing: border-box;

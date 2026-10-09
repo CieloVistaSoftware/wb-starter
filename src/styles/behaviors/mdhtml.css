@@ -110,6 +110,20 @@
   white-space: nowrap;
 }
 
+/* #295: "overflows" used to mean cut off. The doc viewer clips the page
+   sideways (html overflow-x: hidden), so a path like
+   `docs/standards/DEMOS-AND-DOCS-STANDARDS.md` on a 375px phone ran past the
+   screen edge and its end could not be read at all. Now an inline span too
+   long for its line scrolls inside itself, as a code block does; one that
+   fits is unchanged. Code inside <pre> is not inline and is left alone. */
+[x-mdhtml] :not(pre) > code,
+.x-mdhtml :not(pre) > code {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  vertical-align: bottom;
+}
+
 /* Standard §6, updated (#583/#589 session): code NEVER wraps, anywhere --
    horizontal scroll instead. This supersedes #248's earlier "code WRAPS in
    prose docs" rule: John's direct, repeated instruction this session

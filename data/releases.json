@@ -6,6 +6,45 @@
   ],
   "releases": [
     {
+      "version": "1.0.474",
+      "date": "2026-10-09",
+      "summary": "Schema-index-stays-current.spec.ts, new on main, fails on main (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1800\" target=\"_blank\" rel=\"noopener\">PR 1800</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/295\" target=\"_blank\" rel=\"noopener\">#295</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a> (main&#39;s is 2 schemas behind)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/57c04f5c3e722de15082ef11dc2bd11d6d11f467\" target=\"_blank\" rel=\"noopener\"><code>57c04f5</code></a>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Phone sweep waits on conditions, not sleeps</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/295\" target=\"_blank\" rel=\"noopener\">#295</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d13be987fc1b5935a7f3424c31dc7445cbc0caa2\" target=\"_blank\" rel=\"noopener\"><code>d13be98</code></a>",
+          "issues": [
+            295
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Phone sweep waits for every example to build; two cards fit a phone</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/295\" target=\"_blank\" rel=\"noopener\">#295</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5a118db4f4ed00e25a10bf4c7f79cfd125447d5c\" target=\"_blank\" rel=\"noopener\"><code>5a118db</code></a>",
+          "issues": [
+            295
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Every .md doc fits a phone screen, checked on all 273</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/295\" target=\"_blank\" rel=\"noopener\">#295</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a7ebabd8c47de4e3fa5cbdde9b328357e9f48835\" target=\"_blank\" rel=\"noopener\"><code>a7ebabd</code></a>",
+          "issues": [
+            295
+          ]
+        }
+      ],
+      "seeIt": "Run node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/build-schema-index.mjs\" target=\"_blank\" rel=\"noopener\">scripts/build-schema-index.mjs</a> and git diff <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a>. Before: the index gained 2 schemas. Now: no change.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/be79cdf2934a1055d209db643f71fdfb35d27079\" target=\"_blank\" rel=\"noopener\"><code>be79cdf</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.473",
       "date": "2026-10-08",
       "summary": "Empty x-sheet, x-offcanvas and five more behaviors show a teaching example again; their schemas were missing from the stale schema index. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1806\" target=\"_blank\" rel=\"noopener\">#1806</a>",
