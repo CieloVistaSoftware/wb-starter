@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.460",
+      "date": "2026-10-08",
+      "summary": "The card hero&#39;s eyebrow pill painted its own background and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1791\" target=\"_blank\" rel=\"noopener\">PR 1791</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Hero eyebrow pill uses real x-glass, and its text is checked for contrast</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b788934e0a5d07c85d3956bad55c58d5001bd681\" target=\"_blank\" rel=\"noopener\"><code>b788934</code></a>",
+          "issues": [
+            1236
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/hero.html and look at the eyebrow pill and the secondary button on each hero. Before: the pill was a hand-rolled blur, the secondary button&#39;s x-glass never attached, and hero 4&#39;s glass text read at 2.3:1. Now: both are x-glass, and all glass text reads at 4.5:1 or better.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/76abf500a3fb375e479fd0c806ef52cec537ba28\" target=\"_blank\" rel=\"noopener\"><code>76abf50</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.459",
       "date": "2026-10-08",
       "summary": "The site shell (header, menu button, drawer, spinners, panels) was sized in fixed px, so it ignored the phone font bump and a reader&#39;s own text-size setting while the text around it scaled. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1786\" target=\"_blank\" rel=\"noopener\">PR 1786</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
