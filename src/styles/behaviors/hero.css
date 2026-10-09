@@ -136,8 +136,8 @@
   margin-bottom: 0.75rem;
   padding: 0.3rem 0.9rem;
   border-radius: 999px;
-  background: hsl(var(--overlay-light-hsl) / 0.16);
-  backdrop-filter: blur(6px);
+  /* The frosted surface is x-glass (#1236); its tint, blur and edge for this
+     pill are set in themes.css. */
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.12em;

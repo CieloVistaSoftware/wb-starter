@@ -1,0 +1,45 @@
+/**
+ * cardnotification.css -- the styles only a notification card (x-cardnotification) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardnotification. Split out of card.css (#966): every
+ * selector here needs [x-cardnotification] or a class only cardnotification() stamps.
+ */
+
+/* Notification card */
+[x-cardnotification] {
+  padding: 1rem; /* Fixed 1rem all sides */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ NOTIFICATION CARD - Variant colors via CSS (not inline styles) Schema: cardnotification.schema.json  |  Behavior: card.js → cardnotification() ═══════════════════════════════════════════════════════════════════════════ */[x-cardnotification]{ display: flex; flex-direction: row; align-items: flex-start; gap: 0.75rem; padding: 0.875rem 1rem; border-left: 4px solid var(--border-color); border-radius: var(--radius-lg, 0.5rem); background: var(--bg-secondary); overflow: visible; }
+
+/* Icon: colored circle with letter */ .x-notification__icon { display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; flex-shrink: 0; font-weight: 700; font-size: 0.9rem; font-style: italic; color: var(--text-primary); background: var(--text-secondary); }
+
+/* Content container */ .x-notification__content { flex: 1; min-width: 0; }
+
+.x-notification__title { display: block; color: var(--text-primary); font-weight: 600; }
+
+.x-notification__message { margin: 0.25rem 0 0; color: var(--text-primary); opacity: 0.9; }
+
+/* Dismiss button */ .x-notification__dismiss { background: none; border: none; font-size: 1.25rem; cursor: pointer; opacity: 0.5; padding: 0; color: var(--text-primary); line-height: 1; }
+
+.x-notification__dismiss:hover { opacity: 1; background: rgba(0,0,0,0.1); border-radius: 0.25rem; }
+
+/* ── Variant: Info ── */ .x-notification--info { border-left-color: var(--info, #3b82f6); background: var(--bg-info-subtle, rgba(59,130,246,0.15)); }
+
+.x-notification--info > .x-notification__icon { background: var(--info, #3b82f6); }
+
+/* ── Variant: Success ── */ .x-notification--success { border-left-color: var(--success, #22c55e); background: var(--bg-success-subtle, rgba(34,197,94,0.15)); }
+
+.x-notification--success > .x-notification__icon { background: var(--success, #22c55e); }
+
+/* ── Variant: Warning ── */ .x-notification--warning { border-left-color: var(--warning, #f59e0b); background: var(--bg-warning-subtle, rgba(245,158,11,0.15)); }
+
+.x-notification--warning > .x-notification__icon { background: var(--warning, #f59e0b); }
+
+/* ── Variant: Error ── */ .x-notification--error { border-left-color: var(--error, #ef4444); background: var(--bg-error-subtle, rgba(239,68,68,0.15)); }
+
+.x-notification--error > .x-notification__icon { background: var(--error, #ef4444); }

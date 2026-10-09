@@ -37,6 +37,25 @@
       "type": "boolean",
       "description": "Initial collapsed state",
       "default": false
+    },
+    "saveState": {
+      "type": "boolean",
+      "description": "Remember the drawer's width and collapsed state in localStorage, keyed by the element's id.",
+      "default": false,
+      "visual": false,
+      "visualReason": "Only changes what the drawer restores on the next page load."
+    },
+    "toggleSelector": {
+      "type": "string",
+      "description": "CSS selector of an existing button to use as the toggle, instead of the one the drawer builds.",
+      "default": ""
+    },
+    "handleSelector": {
+      "type": "string",
+      "description": "CSS selector of an existing element to use as the resize handle. Applies with resizable.",
+      "default": "",
+      "visual": false,
+      "visualReason": "Used only when resizable is on, and only on drag."
     }
   },
   "$view": [

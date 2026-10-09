@@ -247,7 +247,7 @@ function loadSchemas(): Map<string, Schema> {
       // which already tiers on it: 'component' [default] vs 'base' /
       // 'definition' / 'behavior' / 'page'). This runner used to test EVERY
       // schema with a behavior/schemaFor as if it were a live <wb-*> custom
-      // element -- but behavior.schema.json (schemaType 'behavior': the
+      // element -- but behavior.schema.json (schemaType 'definition': the
       // master metadata catalog for ALL behaviors), home-page.schema.json
       // (schemaType 'page': a page-layout composition), search-index.schema.json
       // and views.schema.json (schemaType 'definition': data-file formats for

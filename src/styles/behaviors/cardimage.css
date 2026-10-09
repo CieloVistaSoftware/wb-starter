@@ -1,0 +1,45 @@
+/**
+ * cardimage.css -- the styles only an image card (x-cardimage) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardimage. Split out of card.css (#966): every
+ * selector here needs [x-cardimage] or a class only cardimage() stamps.
+ */
+
+.x-card__caption {
+  padding: 0.5rem 1rem 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* cardimage `href` — the whole card is the link; .x-card__link-overlay is the
+   stretched <a> (position:absolute; inset:0) and needs a positioned card. */
+.x-card-image--linked { position: relative; cursor: pointer; }
+
+/* Image beside the content: cardimage.schema.json position="left|right".
+   The figure takes its own column for the card's full height; header, body
+   and footer stack in the other. Selected by the attribute, not a class
+   (a8a7362e: cards carry no x-card* modifier classes). */
+[x-cardimage]:is([position="left"], [position="right"]) {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  grid-auto-flow: dense;
+  align-content: start;
+}
+
+[x-cardimage][position="right"] { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+
+[x-cardimage]:is([position="left"], [position="right"]) > .x-card__figure {
+  grid-row: 1 / span 3;
+  margin: 0;
+  align-self: stretch;
+}
+
+[x-cardimage][position="left"]  > .x-card__figure { grid-column: 1; }
+
+[x-cardimage][position="right"] > .x-card__figure { grid-column: 2; }
+
+[x-cardimage][position="left"]  > :not(.x-card__figure) { grid-column: 2; }
+
+[x-cardimage][position="right"] > :not(.x-card__figure) { grid-column: 1; }

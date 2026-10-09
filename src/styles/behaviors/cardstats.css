@@ -1,0 +1,152 @@
+/**
+ * cardstats.css -- the styles only a stats card (x-cardstats) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardstats. Split out of card.css (#966): every
+ * selector here needs [x-cardstats] or a class only cardstats() stamps.
+ */
+
+/* cardstats compact/large (#479) -- the fallback rule directly above has
+   specificity 0,3,0 (root class + two :not(:has(.class))); a plain 2-class
+   compound (.x-stats.x-card--compact, 0,2,0) loses to it regardless of
+   source order, which is why "compact"/"large" rendered pixel-identical to
+   default despite the class being present. Matching its specificity with a
+   3rd class here, placed after it, wins on source order. */.x-card[x-cardstats].x-card--compact,
+[x-cardstats][variant="compact"],
+article[x-cardstats].x-card--compact,
+[x-cardstats][x-cardstats].x-card--compact {
+  padding: 0.5rem 0.75rem;
+}
+
+.x-card[x-cardstats].x-card--compact,
+[x-cardstats][variant="compact"] .x-card__stats-value,
+article[x-cardstats].x-card--compact,
+[x-cardstats][x-cardstats].x-card--compact {
+  font-size: 1.1rem;
+}
+
+.x-card[x-cardstats].x-card--large,
+[x-cardstats][variant="large"],
+article[x-cardstats].x-card--large,
+[x-cardstats][x-cardstats].x-card--large {
+  padding: 2rem;
+}
+
+.x-card[x-cardstats].x-card--large,
+[x-cardstats][variant="large"] .x-card__stats-value,
+article[x-cardstats].x-card--large,
+[x-cardstats][x-cardstats].x-card--large {
+  font-size: 2.5rem;
+}
+
+/* CARDSTATS VARIANTS BY ATTRIBUTE (#1106). Append after the existing
+   cardstats compact/large rules (~card.css:289), so these win on source order.
+
+   Traced 2026-09-11 on the test harness: every cardstats host -- default,
+   compact, large, minimal -- carries only `x-card--stats x-stats`. No variant
+   class is ever applied (a8a7362e, "specificity replaces class injection",
+   stopped injecting them), so every rule above keyed on `.x-card--compact`,
+   `.x-card--large` or `.x-card--minimal` matches nothing. The one branch that
+   keys on the attribute, `.x-stats[variant="compact"]`, is (0,2,0) and loses
+   to the no-header fallback at (0,3,0) -- `:is([x-cardstats])` plus two
+   `:not(:has(.class))`. Result: all four variants rendered at the fallback's
+   16px, pixel-identical, and card-typed-variants-no-op caught it.
+
+   Keyed on the authored attribute, at (0,3,0): two host classes the behavior
+   DOES apply (`x-card--stats`, `x-stats`) plus `[variant]`. Placed after the
+   fallback, equal specificity, so source order decides and these win. */
+[x-cardstats][x-cardstats][variant="compact"] {
+  padding: 0.5rem 0.75rem;
+}
+
+[x-cardstats][x-cardstats][variant="large"] {
+  padding: 2rem;
+}
+
+[x-cardstats][x-cardstats][variant="minimal"] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Stats card - horizontal layout with padding */
+[x-cardstats] {
+  padding: 1rem; /* Force 1rem padding */
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* #946: a stats card's header holds ONLY the icon. The shared card header is a
+   grid with `justify-content: space-between` and `align-items: start`, which is
+   right when it carries a title AND a badge, but leaves a lone icon pinned to
+   the start -- measured 8px left of the header's own centre. Centre the single
+   child here rather than weakening the shared rule. */
+[x-cardstats] > header,
+article[x-cardstats] > header,
+:is([x-cardstats]) > header {
+  /* Measured, not guessed (#946). The shared card header is a TWO-column grid
+     -- the second column is reserved for the badge (`grid-column: 2`) -- and its
+     padding is `16px 16px 0px`. For a stats card whose header holds only an
+     icon that produced `grid-template-columns: 43.9375px 0px`: the icon's cell
+     is exactly the icon's width, so `place-items: center` had nothing to centre
+     within, and the zero bottom padding pinned it to the tile's bottom edge.
+     Bottom-left, 8px off the header's centre.
+
+     One column that FILLS the content box, and symmetric padding, so the glyph
+     centres on both axes. A stats card carries no badge; if one is ever added
+     here this needs the two-column form back. */
+  grid-template-columns: 1fr;
+  padding: 1rem;
+  place-items: center;
+  place-content: center;
+}
+
+/* #946: the three stat lines sat in CENTRED boxes but were themselves
+   `text-align: start`, so value, label and trend were left-aligned against a
+   centred column and read as ragged. Align the stack, once, on the block that
+   owns all three rather than repeating it on each. */
+[x-cardstats] > div:where(.x-card__body) {
+  text-align: center;
+}
+
+.x-card__stats-value {
+  font-size: clamp(1.25rem, 15cqi, 1.75rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  display: block;
+  white-space: nowrap;
+}
+
+.x-card__stats-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.x-card__stats-trend {
+  font-size: 0.8rem;
+  margin: 0.25rem 0 0 0;
+  font-weight: 500;
+}
+
+/* cardstats `color` — accent stripe + icon tint. The value itself arrives as
+   the --x-stats-accent custom property set by cardstats() (card.js). */
+[x-cardstats].x-stats--accent { border-top: 3px solid var(--x-stats-accent); }
+
+[x-cardstats].x-stats--accent .x-card__icon { color: var(--x-stats-accent); }
+
+/* #1095: cardstats() could not build (it catches the error, sets the message
+   on x-error and adds this class). It used to render exactly like a healthy
+   card. Same accent as variant="danger", plus the message itself. */
+[x-cardstats].x-cardstats--error {
+  border-left: 4px solid var(--danger-color);
+}
+
+[x-cardstats].x-cardstats--error::after {
+  content: attr(x-error);
+  padding: 1rem;
+  color: var(--danger-color);
+  font-size: 0.875rem;
+}

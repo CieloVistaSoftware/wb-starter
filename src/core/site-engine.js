@@ -429,7 +429,7 @@ export default class WBSite {
     const footer = document.getElementById('siteFooter');
     if (!body || !footer) return;
 
-// Unlike the header's fixed 64px (site.css `.site__header { height: 64px }`),
+// Unlike the header's fixed 4rem (site.css `.site__header { height: 4rem }`),
     // the footer's height is NOT a constant -- renderFooter() makes the social
     // links and additional footer links optional per-site config, so its real
     // height varies. Measure it and hand the value to CSS as a custom property

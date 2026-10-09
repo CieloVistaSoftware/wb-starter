@@ -214,7 +214,7 @@ function renderFixCard(host, card, fix) {
 // happens to an element whose TAG is x-fix-card. A <div> cannot be upgraded
 // to a custom element class, so on the canonical 4.0.0 form -- the one the
 // schema's examples and tests/regression/schema-tags-render-audit.spec.ts use --
-// nothing added .fix-card, no card was composed, and `.data = fix` created a
+// nothing added .x-fix-card, no card was composed, and `.data = fix` created a
 // plain property that rendered nothing. The behavior was inert while its
 // comments said it was live.
 //
@@ -232,7 +232,6 @@ export default function fixCard(element) {
   if (attached.has(element)) return () => {};
   attached.add(element);
 
-  element.classList.add('fix-card');
   ensureBehaviorCss('fix-card');
   const base = composeCard(element, {
     ...element.dataset,
@@ -259,7 +258,7 @@ export default function fixCard(element) {
     attached.delete(element);
     delete element.data;
     if (base && typeof base.cleanup === 'function') base.cleanup();
-    element.classList.remove('fix-card');
+    element.classList.remove('x-fix-card');
   };
 }
 

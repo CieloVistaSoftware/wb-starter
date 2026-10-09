@@ -1,0 +1,53 @@
+/**
+ * cardlink.css -- the styles only a link card (x-cardlink) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardlink. Split out of card.css (#966): every
+ * selector here needs [x-cardlink] or a class only cardlink() stamps.
+ */
+
+/* Link card -- cursor/position/padding moved here from cardlink()'s inline
+   styles (card.js); padding updated to 1.25rem to match what the inline
+   override actually rendered (not the old 1rem here) (Law 9 migration, #370).
+   Three-class compound `.x-card[x-cardlink][x-cardlink]` (0,0,3,0), not
+   a single class: cardlink() builds its own plain-<div> header (not a real
+   <header>/<main>), so it always also matches card.css's
+   `.x-card:not(:has(.x-card__header)):not(:has(.x-card__main))` fallback
+   rule (0,0,3,0 too), which would otherwise win the padding tie by coming
+   first in the file. This compound ties on specificity and wins on source
+   order instead (it's declared later), so no forced-priority flag is
+   needed here. */.x-card[x-cardlink],
+article[x-cardlink][x-cardlink],
+[x-cardlink][x-cardlink][x-cardlink] { padding: 1.25rem; cursor: pointer; position: relative; }
+
+/* Link card parts -- moved here from cardlink()'s inline cssText (card.js) (Law 9 migration, #370). */ .x-card__link-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+
+.x-card__link-title-group { flex: 1; }
+
+.x-card__link-title-row { display: flex; align-items: center; gap: 0.5rem; }
+
+.x-card__link-icon { font-size: 1.25rem; line-height: 1; }
+
+.x-card__link-badge { margin-top: 0.75rem; display: inline-block; }
+
+.x-card__link-external { opacity: 0.5; font-size: 1rem; flex-shrink: 0; }
+
+/* Link card badge: it also carries .x-tag-glass / .x-badge-gradient, whose
+   `display: inline-flex` otherwise wins the single-class tie with
+   .x-card__link-badge. */
+.x-card__link-title-group > .x-card__link-badge {
+  margin-top: 0.75rem;
+  display: inline-block;
+}
+
+/* Link card title by tag (cardlink() emits no class on it). #887 gave it
+   (0,1,1) to beat site.css's bare `h3` page-heading rule, which rendered the
+   title --primary blue with 1.5rem above it. But site.css also has
+   `.page h3 { color: var(--primary) }`, the same (0,1,1), and site.css loads
+   after the behavior sheets (style-loader.js), so inside the site shell the
+   tie went to site.css: --primary on the dark card, 1.49:1 (#1747).
+   The [x-cardlink] scope makes it (0,2,1), which outranks both. */
+[x-cardlink] .x-card__link-title-row > h3 {
+  margin: 0;
+  color: var(--text-primary);
+}

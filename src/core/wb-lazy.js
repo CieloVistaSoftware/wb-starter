@@ -246,7 +246,6 @@ export const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-typewriter': 'typewriter',
   'x-bounce': 'bounce',
   'x-pulse': 'pulse',
-  'x-rainbow': 'rainbow',
   // x-copy (#645): moved to tag-map.js's extensionMap (shared with wb.js) --
   // see the comment there for the x-copybutton distinction.
   // x-copybutton (#291) — overlays a separate positioned copy button on ANY
@@ -263,11 +262,12 @@ export const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-tada': 'tada',
   'x-jello': 'jello',
   'x-heartbeat': 'heartbeat',
-  'x-glow': 'glow',
-  'x-sparkle': 'sparkle',
   'x-flip': 'flip',
   'x-flash': 'flash',
   'x-relativetime': 'relativetime',
+  // x-glow, x-rainbow, x-sparkle: removed (#831). extensionMap in tag-map.js
+  // already declares each with the same selector and behavior, so every
+  // x-glow element matched two mappings and was queued twice.
   'x-password': 'password',
   // #1185: documented from 4.0.0, never wired here (wb.js resolves x-{name}).
   'x-ul': 'ul',

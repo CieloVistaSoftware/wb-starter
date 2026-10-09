@@ -1,0 +1,11 @@
+/**
+ * cardhero.css -- the styles only a hero card (x-cardhero) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardhero. Split out of card.css (#966): every
+ * selector here needs [x-cardhero] or a class only cardhero() stamps.
+ */
+
+/* Hero card content */ .x-card__hero-content { padding: 1rem; /* Fixed 1rem all sides */ }
+
+/* ═══════════════════════════════════════════════════════════════════════════ COMPONENT SPECIFICS ═══════════════════════════════════════════════════════════════════════════ */ .x-card__hero-title { font-size: 2.5rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
