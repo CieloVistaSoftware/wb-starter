@@ -42,7 +42,19 @@
     "setup": [
       "<div x-animate animation=\"bounce\">Click to bounce</div>",
       "<div x-animate animation=\"fade-in\" duration=\"1s\" trigger=\"load\">Fades in on load</div>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "trigger": "click",
+          "animation": "bounce"
+        },
+        {
+          "trigger": "load",
+          "animation": "fade-in"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#879)",
