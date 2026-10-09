@@ -135,6 +135,26 @@ export function createInjectionTracker() {
     return parts.length ? parts.join(', ') : 'nothing';
   }
 
+  /**
+   * Injections in flight on `root` or anything inside it (#1780). A container
+   * that sizes itself to its content (x-demo) asks this to tell "a behavior is
+   * still building in here" apart from "nothing here will build": a plain
+   * element never gets wb:ready, so waiting for that event alone would hang.
+   * Only injections name their element; other tracked work is not counted.
+   * @param {any} root
+   * @returns {number}
+   */
+  function countWithin(root) {
+    if (!root) return 0;
+    let n = 0;
+    for (const rec of inFlight) {
+      if (!rec.ref || !isLive(rec)) continue;
+      const el = canWeakRef ? rec.ref.deref() : rec.ref;
+      if (el === root || (typeof root.contains === 'function' && root.contains(el))) n++;
+    }
+    return n;
+  }
+
   /** @param {InjectionRecord} rec */
   function end(rec) {
     if (rec) inFlight.delete(rec);
@@ -224,7 +244,7 @@ export function createInjectionTracker() {
     return () => settledHooks.delete(hook);
   }
 
-  return { start, end, track, count, describe, whenIdle, settled, onSettled };
+  return { start, end, track, count, countWithin, describe, whenIdle, settled, onSettled };
 }
 
 /**

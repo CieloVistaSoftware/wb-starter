@@ -95,6 +95,8 @@ export function removeApplied(applied, element, behaviorName, onRemoved = () => 
  *   on a later task. Use whenIdle(), which requires the zero to hold.
  * - `pendingBehaviors`: which behaviors are in flight, e.g. "card x3, table".
  *   A stuck readiness signal has to say what it is stuck on.
+ * - `pendingWithin(element)`: injections in flight on `element` or inside it
+ *   (#1780), so a container can wait for its own subtree, not the whole page.
  * - `whenIdle({ timeout, quiet })`: resolves once nothing has been in flight
  *   for `quiet` ms; rejects on timeout rather than resolving, because a
  *   readiness signal that gives up quietly turns a hung build into a green test.
@@ -105,13 +107,15 @@ export function removeApplied(applied, element, behaviorName, onRemoved = () => 
  *   on the eager runtime only, so a page run by wb-lazy.js could not ask.
  *
  * @param {object} runtime - the WB object
- * @param {{ count(): number, describe(): string, whenIdle(o?: object): Promise<void> }} tracker
+ * @param {{ count(): number, countWithin(root: any): number, describe(): string, whenIdle(o?: object): Promise<void> }} tracker
  * @param {(cb?: unknown, o?: unknown) => Promise<void>} settledCall
  */
 export function installReadiness(runtime, tracker, settledCall) {
   Object.defineProperties(runtime, {
     pendingCount: { get: () => tracker.count(), enumerable: true, configurable: true },
     pendingBehaviors: { get: () => tracker.describe(), enumerable: true, configurable: true },
+    // #1780: injections in flight on an element or inside it.
+    pendingWithin: { value: (element) => tracker.countWithin(element), writable: true, enumerable: true, configurable: true },
     whenIdle: { value: (options) => tracker.whenIdle(options), writable: true, enumerable: true, configurable: true },
     settled: { value: (cb, options) => settledCall(cb, options), writable: true, enumerable: true, configurable: true },
     isReady: { value: (element) => isReady(element), writable: true, enumerable: true, configurable: true },
