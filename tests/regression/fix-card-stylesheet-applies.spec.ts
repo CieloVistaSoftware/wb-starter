@@ -5,7 +5,8 @@
  * carrying the x-card class when a8a7362e moved card.css to attribute
  * selectors, so none of those rules matched: the stylesheet loaded and a
  * rendered <div x-fix-card> came out with block headers and no height cap.
- * The rules now key on .x-fix-card, the class fixCard() itself adds. This
+ * The rules now key on .x-fixcard, the class fixCard() itself adds (named
+ * x-fixcard, fixCard lowercased, since #1096; the attribute stays x-fix-card). This
  * reads the computed values the stylesheet sets, so a selector that stops
  * matching again fails here by name.
  */
@@ -41,6 +42,10 @@ async function renderFixCard(page: Page, html: string, importFirst: boolean) {
     el.data = { errorId: 'TEST-1095', issue: 'Stylesheet check', file: 'src/a.js', status: 'fixed' };
   });
   await page.locator('#fc .header-top').waitFor({ timeout: 5000 });
+  // Let the runtime finish whatever the new card DOM set off (the observer
+  // reaching the card's <header>), so the landmark check below sees the end
+  // state rather than a moment before injection.
+  await page.evaluate(async () => { await (window as any).WB.settled?.(); });
 }
 
 for (const [form, html, importFirst] of [
@@ -59,13 +64,19 @@ for (const [form, html, importFirst] of [
         hostMaxHeight: getComputedStyle(host).maxHeight,
         headerTopDisplay: css('.header-top', 'display'),
         fixMetaDisplay: css('.fix-meta', 'display'),
+        // The card's own <header> is card chrome, not the page header. It was
+        // kept from the page header() behavior only because the old class
+        // x-fix-card contains "x-card"; component-landmark.js names the fix
+        // card itself since #1096 renamed the class x-fixcard.
+        headerTakesPageBehavior: [...host.querySelectorAll(':scope > header')].some((h) => h.classList.contains('x-header') || h.hasAttribute('x-ready')),
       };
     });
     const why = `fix-card.css did not reach the card: ${JSON.stringify(seen)}`;
-    expect(seen.hostClass, why).toContain('x-fix-card');
-    // .x-fix-card { max-height: 46.875rem } is 750px at the default 16px root.
+    expect(seen.hostClass.split(/\s+/), why).toContain('x-fixcard');
+    // .x-fixcard { max-height: 46.875rem } is 750px at the default 16px root.
     expect(seen.hostMaxHeight, why).toBe('750px');
     expect(seen.headerTopDisplay, why).toBe('flex');
     expect(seen.fixMetaDisplay, why).not.toBe('block');
+    expect(seen.headerTakesPageBehavior, `the fix card's header took the page header behavior: ${JSON.stringify(seen)}`).toBe(false);
   });
 }

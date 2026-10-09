@@ -41,17 +41,18 @@ import fs from 'fs';
 import path from 'path';
 
 /**
- * Effects that clickAnim() drives: attaching adds a kebab-cased x-* class and
- * el.wbAnim, and clicking sets style.animation to the matching keyframe.
+ * Effects that clickAnim() drives: attaching adds the behavior's own class,
+ * x-{behavior} (#1096: `x-fadein`, not the keyframe's name `x-fade-in`), and
+ * el.wbAnim, and clicking plays the matching kebab-cased keyframe.
  * `cls` is asserted, not merely waited on — it is the exact surface #847 broke.
  */
 const CLICK_EFFECTS: { token: string; cls: string }[] = [
   // The first x-slidein row is `direction="left"` (#997 added authored rows
   // for the other directions too); every direction is also covered by the
   // scan-driven test below.
-  { token: 'x-slidein', cls: 'x-slide-in-left' },
-  { token: 'x-fadein', cls: 'x-fade-in' },
-  { token: 'x-zoomin', cls: 'x-zoom-in' },
+  { token: 'x-slidein', cls: 'x-slidein--left' },
+  { token: 'x-fadein', cls: 'x-fadein' },
+  { token: 'x-zoomin', cls: 'x-zoomin' },
   { token: 'x-flip', cls: 'x-flip' },
   { token: 'x-bounce', cls: 'x-bounce' },
   { token: 'x-shake', cls: 'x-shake' },
@@ -222,7 +223,7 @@ test.describe('Behaviors page — Effects', () => {
       await loadBehaviors(page);
       const target = await showEffect(page, e.token, e.cls);
 
-      // clickAnim() attached: the kebab-cased class and the wbAnim handle.
+      // clickAnim() attached: the behavior's class and the wbAnim handle.
       const injected = await target.evaluate((el) => ({
         wbAnim: !!(el as any).wbAnim,
         classes: el.className,
@@ -246,8 +247,10 @@ test.describe('Behaviors page — Effects', () => {
     );
     for (const d of ['left', 'right', 'up', 'down']) {
       const el = page.locator(`#slidein-${d}`);
-      await expect(el, `x-slidein direction=${d} adds .x-slide-in-${d}`).toHaveClass(
-        new RegExp(`\\bx-slide-in-${d}\\b`)
+      // #1096: the direction is a modifier of the slidein block; the keyframe
+      // it plays keeps its own name, x-slide-in-{d}.
+      await expect(el, `x-slidein direction=${d} adds .x-slidein--${d}`).toHaveClass(
+        new RegExp(`(^|\\s)x-slidein--${d}(\\s|$)`)
       );
       await expectAnimates(el, `x-slidein direction=${d}`);
     }
@@ -263,8 +266,8 @@ test.describe('Behaviors page — Effects', () => {
     );
     for (const d of ['left', 'right', 'up', 'down']) {
       const el = page.locator(`#slideout-${d}`);
-      await expect(el, `x-slideout direction=${d} adds .x-slide-out-${d}`).toHaveClass(
-        new RegExp(`\\bx-slide-out-${d}\\b`)
+      await expect(el, `x-slideout direction=${d} adds .x-slideout--${d}`).toHaveClass(
+        new RegExp(`(^|\\s)x-slideout--${d}(\\s|$)`)
       );
       await expectAnimates(el, `x-slideout direction=${d}`);
     }

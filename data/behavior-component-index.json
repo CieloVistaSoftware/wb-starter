@@ -504,7 +504,7 @@
       "js": "src/wb-viewmodels/layouts.js"
     },
     "x-mdhtml": {
-      "js": "src/wb-viewmodels/behaviors-showcase.js",
+      "js": "src/wb-viewmodels/mdhtml.js",
       "css": "src/styles/behaviors/mdhtml.css",
       "schema": "src/wb-models/mdhtml.schema.json"
     },
@@ -608,9 +608,6 @@
     },
     "x-sheet": {
       "js": "src/wb-viewmodels/overlay.js"
-    },
-    "x-showcase": {
-      "js": "src/wb-viewmodels/behaviors-showcase.js"
     },
     "x-sidebar": {
       "js": "src/wb-viewmodels/layouts.js",

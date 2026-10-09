@@ -652,7 +652,7 @@
           "file": "behaviors/fix-card.md",
           "title": "Fix Card",
           "description": "x-fix-card displays one entry from the project's fix log — status, cause, file and code change — when a fix object is assigned to the element's data…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-09"
         },
         {
           "file": "behaviors/flash.md",
