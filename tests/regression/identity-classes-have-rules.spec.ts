@@ -2,7 +2,7 @@ import { test, expect, type Page } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
 
 /**
- * #1095 batch 3: identity classes behaviors add that no stylesheet defined.
+ * #1095 batches 3 and 4: identity classes behaviors add that no stylesheet defined.
  * Each class here now has a rule that changes what the reader sees; the ones
  * that need no rule are recorded, with the reason, in NEEDS_NO_RULE in
  * tests/compliance/behavior-classes-have-a-rule.spec.ts.
@@ -96,6 +96,27 @@ test.describe('#1095 batch 3: identity classes are styled by stylesheet rules', 
       expect(await ruleNames(page, 'x-themecontrol')).toBe(true);
       expect(await hasStyleAttr(page, '#tc')).toEqual([]);
       expect(await css(page, '#tc', 'display')).toBe('inline-block');
+    });
+
+    // #1095 batch 4: demo.css styled only [x-demo], so a demo applied by
+    // WB.inject() got none of its box: content flush to the edge, nothing
+    // clipping a wide code sample.
+    test('x-demo: a demo applied by WB.inject() keeps its padded, clipped box', async ({ page }) => {
+      await injectAndScan(page, '');
+      await page.evaluate(async () => {
+        const el = document.createElement('div');
+        el.id = 'dm';
+        el.innerHTML = '<button>Hi</button>';
+        document.getElementById('test-container')!.appendChild(el);
+        await (window as any).WB.inject(el, 'demo');
+      });
+      await expect(page.locator('#dm')).toHaveClass(/(^|\s)x-demo(\s|$)/);
+      expect(await page.locator('#dm').getAttribute('x-demo')).toBeNull();
+      expect(await ruleNames(page, 'x-demo')).toBe(true);
+      expect(await hasStyleAttr(page, '#dm')).toEqual([]);
+      expect(await css(page, '#dm', 'padding-left')).toBe('16px');
+      expect(await css(page, '#dm', 'margin-bottom')).toBe('16px');
+      expect(await css(page, '#dm', 'overflow-x')).toBe('hidden');
     });
   });
 
