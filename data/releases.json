@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.477",
+      "date": "2026-10-09",
+      "summary": "CI&#39;s regression run found three things on #1808. The cart&#39;s API (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1808\" target=\"_blank\" rel=\"noopener\">PR 1808</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/463\" target=\"_blank\" rel=\"noopener\">#463</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>X-cart: canonical API verbs, five examples, manifests regenerated</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/463\" target=\"_blank\" rel=\"noopener\">#463</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e14f7ebbaa91be9eb5fc29b0ba70c15e116af545\" target=\"_blank\" rel=\"noopener\"><code>e14f7eb</code></a>",
+          "issues": [
+            463
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>X-cart: Add to Cart clicks are remembered, counted and listed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/463\" target=\"_blank\" rel=\"noopener\">#463</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/55b96192cbf88ac681ae2e6dae05d1d43428cfdb\" target=\"_blank\" rel=\"noopener\"><code>55b9619</code></a>",
+          "issues": [
+            463
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors and pick x-cart. Before: one row. Now: five rows, each rendering a different example.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b12847a1cd839ad1d5faebd3c7be62ee37746813\" target=\"_blank\" rel=\"noopener\"><code>b12847a</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.476",
       "date": "2026-10-09",
       "summary": "20 of the 26 wrong-shape behavior classes now follow x-{behavior}[__part][--modifier], so the naming ratchet drops from 28 to 6 with no visible change. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1809\" target=\"_blank\" rel=\"noopener\">#1809</a>",
