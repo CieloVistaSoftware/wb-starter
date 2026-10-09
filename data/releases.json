@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.448",
+      "date": "2026-10-08",
+      "summary": "Glass cards now visibly look like frosted glass in their demos, including on phones with animations turned off. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1778\" target=\"_blank\" rel=\"noopener\">PR 1778</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A glass card&#39;s demo shows the blur, and glass still reads as glass with reduced motion</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e4768155b9ca9d92e4dbbfa2916405c7097c50e6\" target=\"_blank\" rel=\"noopener\"><code>e476815</code></a>",
+          "issues": [
+            832
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> at &quot;Glass Card&quot;. Before: a faint box on the plain demo background. Now: a frosted card over coloured corner discs, which blur where the card covers them. With the OS set to reduce motion, the card keeps a bright top edge and a stronger tint instead of turning into a flat tinted rectangle.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5f6074f2064cb935fab470edd125a9be143cfc37\" target=\"_blank\" rel=\"noopener\"><code>5f6074f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.447",
       "date": "2026-10-08",
       "summary": "A description list with striped now shades every other term and description whether it is laid out vertically or horizontally. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1777\" target=\"_blank\" rel=\"noopener\">PR 1777</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/828\" target=\"_blank\" rel=\"noopener\">#828</a>",
