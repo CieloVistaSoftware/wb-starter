@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.459",
+      "date": "2026-10-08",
+      "summary": "The site shell (header, menu button, drawer, spinners, panels) was sized in fixed px, so it ignored the phone font bump and a reader&#39;s own text-size setting while the text around it scaled. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1786\" target=\"_blank\" rel=\"noopener\">PR 1786</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site.css sizes in rem -- 92 px values converted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d9436d9565d0c4b425d8801222e73dcd3d9e6d94\" target=\"_blank\" rel=\"noopener\"><code>d9436d9</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open the site on a phone, or at 390px wide in devtools. Before: the menu button was 44px and the header chrome stayed the same while the text grew 12.5%. Now: the button is 49.5px and the header, drawer and icons grow with the text; at desktop width nothing moves.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8039ed96c62c916deaa06a702d2a4fb5ef9c59d9\" target=\"_blank\" rel=\"noopener\"><code>8039ed9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.458",
       "date": "2026-10-08",
       "summary": "Fix cards get their stylesheet again; it had matched nothing since card hosts lost the x-card class. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1793\" target=\"_blank\" rel=\"noopener\">#1793</a>",
