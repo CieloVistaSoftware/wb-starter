@@ -3,6 +3,7 @@
   (c) 2006-2024 Josh Goebel <hello@joshgoebel.com> and other contributors
   License: BSD-3-Clause
  */
+import powershell from './highlight-powershell.js';
 var hljs = (function(){
 function e(n){return n instanceof Map?n.clear=n.delete=n.set=()=>{
 throw Error("map is read-only")}:n instanceof Set&&(n.add=n.clear=n.delete=()=>{
@@ -1242,4 +1243,6 @@ aliases:["yml"],contains:l}}});const Pe=ne;for(const e of Object.keys(Ue)){
 const n=e.replace("grmr_","").replace("_","-");Pe.registerLanguage(n,Ue[e])}
 return Pe;
 })();
+// Not in this bundle's language set; the docs write commands as PowerShell.
+hljs.registerLanguage('powershell', powershell);
 export default hljs;
