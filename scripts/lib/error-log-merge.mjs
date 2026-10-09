@@ -14,6 +14,7 @@
  * (isSameOccurrence: everything a reader would compare is equal).
  */
 import { isSameOccurrence } from '../../src/core/error-signature.js';
+import { compareVersions } from '../../src/core/version-number.js';
 
 const sameRow = (e, incoming) =>
   e && ((e.id === incoming.id && e.message === incoming.message && e.source === incoming.source)
@@ -22,6 +23,7 @@ const sameRow = (e, incoming) =>
 
 const earliest = (...ts) => ts.filter(Boolean).sort()[0];
 const latest = (...ts) => ts.filter(Boolean).sort().pop();
+const newestVersion = (...vs) => vs.filter(Boolean).sort(compareVersions).pop();
 
 /** @returns {object[]} the new list (the input is not modified) */
 export function mergeIntoLog(errors, incoming) {
@@ -38,6 +40,11 @@ export function mergeIntoLog(errors, incoming) {
     count: Object.values(counts).reduce((a, b) => a + b, 0),
     firstSeen: earliest(prev.firstSeen, prev.timestamp, incoming.firstSeen, incoming.timestamp),
     lastSeen: latest(prev.lastSeen, prev.timestamp, incoming.lastSeen, incoming.timestamp),
+    // #1773: first version stays the first; the newest one it happened on wins.
+    version: prev.version || incoming.version,
+    lastVersion: newestVersion(prev.lastVersion, prev.version, incoming.lastVersion, incoming.version),
   };
+  if (!merged.version) delete merged.version;
+  if (!merged.lastVersion) delete merged.lastVersion;
   return errors.map((e, i) => (i === at ? merged : e));
 }

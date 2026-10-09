@@ -207,9 +207,18 @@
     .error-agent { font-size: 0.8rem; color: var(--text-muted); }
     /* Copy's fallback textarea (#1678): selectable, never seen. */
     .copy-scratch { position: fixed; top: 0; left: 0; opacity: 0; }
+    /* #1773: logged on an older site version than the one running now. */
+    .error-card--older { opacity: 0.6; }
+    .source-badge.source-badge--older { background: var(--bg-tertiary); color: var(--text-secondary); }
   </style>
   <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
   <script type="module" src="../src/core/central-time.js"></script>
+  <!-- #1773: the version this site is running, to mark entries logged on an older one. -->
+  <script type="module">
+    import { VERSION } from '../src/core/version.js';
+    import { versionNumber, compareVersions } from '../src/core/version-number.js';
+    window.WBSiteVersion = Object.freeze({ number: versionNumber(VERSION).number, compare: compareVersions });
+  </script>
 </head>
 <body id="errors-body">
 
@@ -237,6 +246,10 @@
     <div class="stat-card" id="stat-sources">
       <div class="stat-value" id="unique-sources">0</div>
       <div class="stat-label">Unique Sources</div>
+    </div>
+    <div class="stat-card" id="stat-current">
+      <div class="stat-value" id="current-count">0</div>
+      <div class="stat-label" id="current-label">On This Version</div>
     </div>
   </div>
 
@@ -342,11 +355,33 @@
       empty.appendChild(note);
     }
 
+    /**
+     * #1773: true when an entry last happened on an older site version than the
+     * one running now -- so it may well be fixed. An entry with no version was
+     * logged before versions were recorded, which is older than any that are.
+     * Unknown when this page could not read its own version: then nothing is
+     * marked, rather than everything.
+     */
+    function isOlder(error) {
+      const site = window.WBSiteVersion;
+      if (!site) return false;
+      return site.compare(error.lastVersion || error.version, site.number) < 0;
+    }
+
+    function versionText(error) {
+      const first = error.version, last = error.lastVersion || error.version;
+      if (!first) return 'not recorded (logged before #1773)';
+      return first === last ? `v${first}` : `first v${first}, last v${last}`;
+    }
+
     function renderErrors(data) {
       const container = document.getElementById('error-container');
       const errors = (data.errors || []).filter(error =>
         !error.url?.includes('legacy-syntax-check.html')
       );
+      const site = window.WBSiteVersion;
+      document.getElementById('current-count').textContent = errors.filter(e => !isOlder(e)).length;
+      document.getElementById('current-label').textContent = site ? `On This Version (v${site.number})` : 'On This Version';
       
       // Update stats
       document.getElementById('total-count').textContent = errors.length;
@@ -365,18 +400,19 @@
         return;
       }
 
-      // Sort by timestamp desc
-      errors.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      // Errors still happening on this version first (#1773), newest first within each.
+      errors.sort((a, b) => (isOlder(a) - isOlder(b)) || (new Date(b.lastSeen || b.timestamp) - new Date(a.lastSeen || a.timestamp)));
       shownErrors = errors;
 
       container.innerHTML = errors.map((error, index) => `
-        <div class="error-card">
+        <div class="error-card${isOlder(error) ? ' error-card--older' : ''}">
           <div class="error-header" onclick="toggleDetails(${index})">
             <div class="error-title">
               <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
               <span class="source-badge">${escapeHtml(error.source || error.to || error.module || 'unattributed')}</span>
               ${error.testOrigin ? '<span class="source-badge" title="raised by a test fixture, not by the app">test fixture</span>' : (error.testServer ? '<span class="source-badge" title="logged while a test server was serving the page; not caused by a fixture, so it is a real error">during test run</span>' : '')}
               ${error.fixable ? '<span class="source-badge source-badge--fixable" title="a known mechanical remedy exists">fixable</span>' : ''}
+              ${isOlder(error) ? `<span class="source-badge source-badge--older" title="Last logged on ${escapeHtml(error.lastVersion || error.version ? 'v' + (error.lastVersion || error.version) : 'a version before versions were recorded')}; this site is v${escapeHtml(window.WBSiteVersion.number)}. Probably fixed since, unless it happens again here.">older version</span>` : ''}
               <span>${escapeHtml(error.message)}</span>
             </div>
             <div class="error-meta">
@@ -387,6 +423,12 @@
             <div class="detail-row">
               <div class="detail-label">Error ID</div>
               <code>${error.id}</code>
+            </div>
+
+            <div class="detail-row">
+              <div class="detail-label">Site Version</div>
+              <code>${escapeHtml(versionText(error))}</code>${error.commit ? ` <span class="error-secondary">(commit <code>${escapeHtml(error.commit)}</code>)</span>` : ''}
+              ${isOlder(error) ? `<p class="error-note">Older than this site (v${escapeHtml(window.WBSiteVersion.number)}). If it still happens, it will be logged again on this version.</p>` : ''}
             </div>
 
             <div class="detail-row">
@@ -527,8 +569,10 @@
         : '';
       const page = error.url ? ` — ${error.url}` : '';
       const when = error.timestamp ? ` — ${WBTime.dateTime(error.timestamp)}` : '';
+      const last = error.lastVersion || error.version;
+      const version = last ? ` — v${last}` : '';
       const message = String(error.message || '').replace(/\s+/g, ' ').trim();
-      return `[${level}] ${source}: ${message}${repeats}${where}${page}${when}`;
+      return `[${level}] ${source}: ${message}${repeats}${where}${page}${when}${version}`;
     }
 
     async function writeClipboard(text) {

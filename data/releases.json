@@ -6,6 +6,69 @@
   ],
   "releases": [
     {
+      "version": "1.0.451",
+      "date": "2026-10-08",
+      "summary": "The errors viewer showed errors fixed days ago exactly like ones happening now, because no entry said which site version raised it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1782\" target=\"_blank\" rel=\"noopener\">PR 1782</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1773\" target=\"_blank\" rel=\"noopener\">#1773</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Errors record the site version; the viewer marks older ones</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1773\" target=\"_blank\" rel=\"noopener\">#1773</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/35df261bb73c965620661cfec06ab9d9c016a0f8\" target=\"_blank\" rel=\"noopener\"><code>35df261</code></a>",
+          "issues": [
+            1773
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html\" target=\"_blank\" rel=\"noopener\">public/errors-viewer.html</a> in a browser that visited the site before this change. Before: Sep 28-29 errors such as <a href=\"https://cielovistasoftware.github.io/wb-starter/images/placeholder.svg\" target=\"_blank\" rel=\"noopener\">images/placeholder.svg</a> looked current. Now: they show an &quot;older version&quot; badge, are dimmed and listed last, and &quot;On This Version (v1.0.N)&quot; counts only the live ones.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7caed5a8a8bbc89eccf93e11961aa04a6ad1dd3e\" target=\"_blank\" rel=\"noopener\"><code>7caed5a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.450",
+      "date": "2026-10-08",
+      "summary": "Site.css styles every page, and 90 of its sizes were px: header (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1784\" target=\"_blank\" rel=\"noopener\">PR 1784</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site.css sizes in rem, and the px gate holds 401</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/57c8ad935f09ddba6da5138c1142fea560dbfa02\" target=\"_blank\" rel=\"noopener\"><code>57c8ad9</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open any page and set the browser&#39;s default font size to 20px. Before: the header, nav and spinners stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/76bf776ebd5405f08a0325c4b9d0785110e5063e\" target=\"_blank\" rel=\"noopener\"><code>76bf776</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.449",
+      "date": "2026-10-08",
+      "summary": "The glass card no longer carries a GPU-layer workaround that was added blind and did not fix the phone report. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1781\" target=\"_blank\" rel=\"noopener\">PR 1781</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop the unverified translateZ(0) / will-change from the glass card</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1cf33db59c8360927664d9129b6b8d2bc0e7d914\" target=\"_blank\" rel=\"noopener\"><code>1cf33db</code></a>",
+          "issues": [
+            832
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> at &quot;Glass Card&quot; and inspect the card in devtools. Before: its computed transform is matrix(1, 0, 0, 1, 0, 0) from translateZ(0) and will-change is backdrop-filter. Now: transform is none and will-change is auto; the card still looks frosted over the coloured discs.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1b8c3a35b689ed8634f233e95884767bcb9ced23\" target=\"_blank\" rel=\"noopener\"><code>1b8c3a3</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.448",
       "date": "2026-10-08",
       "summary": "Glass cards now visibly look like frosted glass in their demos, including on phones with animations turned off. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1778\" target=\"_blank\" rel=\"noopener\">PR 1778</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
