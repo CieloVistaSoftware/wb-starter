@@ -69,18 +69,12 @@ async function openAtPhoneWidth(page: Page, doc: string, attrs: string[]): Promi
   await page.waitForFunction(() => [...document.querySelectorAll('#content pre code')]
     .every((b) => b.classList.contains('hljs')), undefined, { timeout: 15_000 });
   await page.evaluate(() => document.fonts.ready);
-  // Live examples build as they near the viewport: scroll through, then wait.
-  // Timed steps, not animation frames: a busy headless page can stop
-  // delivering frames, and one doc then waited out the whole test.
-  await page.evaluate(async () => {
-    const pause = () => new Promise((r) => setTimeout(r, 40));
-    const step = window.innerHeight / 2;
-    for (let i = 0, y = 0; i < 400 && y < document.documentElement.scrollHeight; i++, y += step) {
-      window.scrollTo(0, y);
-      await pause();
-    }
-    window.scrollTo(0, 0);
-  });
+  // Live examples build as they come into view. A viewport as tall as the
+  // doc puts every one of them in view at once -- no scrolling, no sleeps --
+  // and the phone height comes back after. Widths, which are all this
+  // measures, do not depend on the height.
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  await page.setViewportSize({ width: 375, height: Math.min(Math.max(height, 800), 30_000) });
   // Then wait for every behavior host in the doc to report it has built.
   // One that never does (a decorator with nothing to build) does not block
   // the measurement past the timeout.
@@ -90,6 +84,7 @@ async function openAtPhoneWidth(page: Page, doc: string, attrs: string[]): Promi
       .filter((el) => !el.closest('[x-ignore]') && !el.closest('pre'))
       .every((el) => el.hasAttribute('x-ready'));
   }, attrs, { timeout: 15_000 }).catch(() => {});
+  await page.setViewportSize({ width: 375, height: 800 });
 }
 
 /** What spills past the screen edge on the open doc, or [] if nothing does. */
@@ -146,12 +141,8 @@ test.describe('every .md doc fits a 375px screen (#295)', () => {
         // A behavior can finish upgrading after the scroll-through (x-scrollable
         // gives its box a scroll only once it runs). A spill that is still
         // there after 5 seconds is real.
-        let found = await spills(page);
-        const until = Date.now() + 5_000;
-        while (found.length && Date.now() < until) {
-          await page.waitForTimeout(250);
-          found = await spills(page);
-        }
+        let found: string[] = [];
+        await expect.poll(async () => (found = await spills(page)), { timeout: 5_000 }).toEqual([]).catch(() => {});
         if (found.length) failures.push(`${doc}: ${found.join('; ')}`);
       }
       expect(failures, 'docs that spill past a 375px screen').toEqual([]);
