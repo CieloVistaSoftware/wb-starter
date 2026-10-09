@@ -177,9 +177,14 @@ input.x-radio.x-radio--info { accent-color: var(--info-color); }
 input.x-radio.x-radio--sm { width: 0.9em; height: 0.9em; }
 input.x-radio.x-radio--lg { width: 1.5em; height: 1.5em; }
 
-/* The <label> radio.js wraps a radio in when it is given label text. */
+/* The <label> radio.js wraps a radio in when it is given label text.
+   #1795: flex, one option per line, sized to its content. A radio group
+   (fieldset, formsurvey) has always stacked its options, because .x-label
+   made this label a block; inline-flex never applied until that rule
+   stopped outranking it, and then the options ran together in one row. */
 .x-radio__wrapper {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;

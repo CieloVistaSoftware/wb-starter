@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 305,
-    "totalWords": 5959
+    "totalWords": 5958
   },
   "documents": [
     {
@@ -315,7 +315,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.463\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.463\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.466\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.466\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-08"
@@ -3723,7 +3723,7 @@
       "content": "# Class Naming & Semantics ## Prime Directive: Generic, Reusable, Semantic - **Only use generic, reusable class names** for all layout and behavior styling. Examples: `.hero`, `.section`, `.features`, `.feature-grid`. - **HTML5 semantic elements** (e.g., ` `, ` `, ` `, ` `, ` `) must be used for all page structure. Avoid generic ` ` for major page regions. - **Prohibited:** - Page-specific, BEM, or context-coupled class names (e.g., `home-hero`, `page__feature`, `about-section`, `main-content--dark`). - A behavior's own `.x-*` classes (e.g. `.x-demo__grid`) in page markup or global CSS. They belong to the behavior that applies them; a page that styles them couples itself to that behavior's internals. - **No BEM or OOCSS prefixes**: Do not use double underscores, double hyphens, or page/behavior prefixes in class names. - **Behavior classes**: a behavior (e.g. `x-demo`) may use internal classes prefixed with its name (e.g. `.x-demo__grid`), but these must not leak into global or page-level markup or CSS. - **Rationale:** This ensures maximum reusability, maintainability, and clarity across all pages and behaviors. **Example (Correct):** ```html ... ``` **Example (Incorrect):** ```html ... ``` **Schema Enforcement:** ...existing code... **Example (Correct):** ```html ... ``` **Example (Incorrect):** ```html ... ``` **Schema Enforcement:** - All schemas (e.g., `home-page.schema.json`) must require only generic, reusable class names and HTML5 semantic elements for page structure. - Validation will fail if any page-specific, BEM, or context-coupled class is used. --- # WB Style Constitution & Golden Rules > **\"One Time, One Place for All Style Rules\"** This document serves as the supreme law for styling in the WB-Starter library. It consolidates rules from `css-standards.md` and `themes.md` while establishing strict behavioral integrity guidelines. --- ## 🚨 The Prime Directive: The Isolation Rule **Behaviors must NEVER modify global layout containers or styles outside their direct scope.** * **Violation Example:** The `scrollalong` behavior modified `.site__body` (a global container) to enable sticky positioning, which broke the entire app shell layout. * **Correct Approach:** A behavior should only modify the specific element it is attached to. If a behavior requires a specific global layout to function, it is likely incompatible with the current architecture or requires a dedicated layout behavior, not a side-effect. **Rule:** If your style or behavior touches `body`, `html`, `.site`, `.site__body`, or `.site__main`, **STOP**. You are likely breaking the architecture. --- ## 🏛️ The Three Pillars of WB Styling ### 1. Object-Oriented CSS (OOCSS) * **Principle:** Styles are layered, inherited, and never duplicated. * **Reference:** See CSS Standards for the detailed architectural layers. * **Rule:** Never import CSS in content pages (`pages/*.html`). They inherit everything from `index.html`. ### 2. The Theme System * **Principle:** All colors, spacing, and typography are defined as CSS variables in `themes.css`. * **Reference:** See [Themes Documentation](themes.md). * **Rule:** **NEVER hardcode a hex code.** Always use `var(--primary)`, `var(--bg-color)`, etc. * **Rule:** **NO ALIASES.** Do not create `--x-bg-primary` when `--bg-primary` exists. ### 3. Behavioral Integrity * **Principle:** Styles exist to *support* behavior, not wreck it. * **Rule:** A behavior's style must be self-contained. It should not rely on or affect the positioning of its siblings or parents (unless it is explicitly a Layout behavior). --- ## 📜 The Strict Rules List ### 1. No Global Side Effects (The \"Scrollalong\" Rule) As stated in the Prime Directive, behaviors and behaviors are strictly forbidden from modifying the global DOM structure or styles of parent containers (`.site__body`, etc.). ### 2. The \"Two-File\" Foundation The `index.html` head must only load **TWO** CSS files for the foundation: 1. `src/styles/themes.css` (Variables) 2. `styles/site.css` (Layout) *All other styles are loaded on-demand by behaviors or are optional layers.* ### 3. Variable Purity * **Do:** Use `var(--text-primary)` * **Don't:** `color: #333;` (Breaks themes) * **Don't:** `:root { --my-text: var(--text-primary); }` (Creates useless aliases) ### 4. No `!important`. No inline styles. No exceptions. * **Rule:** Never use `!important`. If a rule is losing, fix its specificity, or fix the rule beating it. * **Rule:** Never write styles inline — not from JS, not in a ` ` block, not \"just this once\". * **John: \"those are both signs of weakness.\"** They are the two ways of overruling the cascade instead of repairing it, and each one makes the next necessary. * The former exception for utility classes and debug tools is **withdrawn**. Debt as of 2026-09-01: 831 inline declarations across 56 behaviors, 140 `!important` in CSS, 60 written from JS (#943). See TIER1 Law 16. ### 5. File Responsibility > **John: \"each stylesheet should have only one reason to exist.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-08"
     },
     {
       "id": "docs/test-schema-standard",
@@ -4097,7 +4097,7 @@
           "text": "🎮 Demos"
         }
       ],
-      "content": "Demos Index — wb-starter 🎮 Demos Every demo, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file. 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials — 19 behaviors · 264 demos Open Card Behaviors → 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 behaviors · 210 demos Open Feedback & Status → 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas — 9 behaviors · 156 demos Open Form Controls → 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content — 3 behaviors · 28 demos Open Overlays & Popups → 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 behaviors · 44 demos Open Layout & Navigation → 📄 Content & Media Articles, markdown rendering, audio, tables — 6 behaviors · 28 demos Open Content & Media → ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff — 5 behaviors · 19 demos Open Visual Effects → 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views — 8 behaviors · 14 demos Open Interactive & Utility → 🃏 Cards & Layout Hero 🏗️ Narrative & Tools Autoinject Uganda Community Food Bank Framework Integration Demo wb-starter — Zero-build behaviors for developers Playground Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development Standalone Preview 🎮 More Demos 🧩 Multi-Behavior Demo",
+      "content": "Demos Index — wb-starter 🎮 Demos Every demo, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file. 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials — 19 behaviors · 264 demos Open Card Behaviors → 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 behaviors · 210 demos Open Feedback & Status → 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas — 9 behaviors · 156 demos Open Form Controls → 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content — 3 behaviors · 28 demos Open Overlays & Popups → 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 behaviors · 45 demos Open Layout & Navigation → 📄 Content & Media Articles, markdown rendering, audio, tables — 6 behaviors · 28 demos Open Content & Media → ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff — 5 behaviors · 19 demos Open Visual Effects → 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views — 8 behaviors · 14 demos Open Interactive & Utility → 🃏 Cards & Layout Hero 🏗️ Narrative & Tools Autoinject Uganda Community Food Bank Framework Integration Demo wb-starter — Zero-build behaviors for developers Playground Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development Standalone Preview 🎮 More Demos 🧩 Multi-Behavior Demo",
       "keywords": [],
       "type": "demo",
       "modified": "2026-10-08"
@@ -5358,10 +5358,10 @@
           "text": "🔧 Interactive & Utility"
         }
       ],
-      "content": "WB Behavior Library — Index WB Behavior Library Complete showcase of all WB-Starter behaviors, organized by category 8 pages · 69 behaviors · 763 demos 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials 19 behaviors · 68 sections · 264 demos 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips 10 behaviors · 40 sections · 210 demos 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 9 behaviors · 43 sections · 156 demos 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content 3 behaviors · 9 sections · 28 demos 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong 9 behaviors · 18 sections · 44 demos 📄 Content & Media Articles, markdown rendering, audio, tables 6 behaviors · 15 sections · 28 demos ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff 5 behaviors · 7 sections · 19 demos 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views 8 behaviors · 12 sections · 14 demos",
+      "content": "WB Behavior Library — Index WB Behavior Library Complete showcase of all WB-Starter behaviors, organized by category 8 pages · 69 behaviors · 764 demos 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials 19 behaviors · 68 sections · 264 demos 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips 10 behaviors · 40 sections · 210 demos 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 9 behaviors · 43 sections · 156 demos 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content 3 behaviors · 9 sections · 28 demos 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong 9 behaviors · 19 sections · 45 demos 📄 Content & Media Articles, markdown rendering, audio, tables 6 behaviors · 15 sections · 28 demos ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff 5 behaviors · 7 sections · 19 demos 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views 8 behaviors · 12 sections · 14 demos",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-07"
+      "modified": "2026-10-08"
     },
     {
       "id": "demos/site/interactive",
@@ -5520,6 +5520,10 @@
         },
         {
           "level": 2,
+          "text": "Toggles"
+        },
+        {
+          "level": 2,
           "text": "📜 ScrollAlong"
         },
         {
@@ -5531,10 +5535,10 @@
           "text": "📅 Timeline"
         }
       ],
-      "content": "Layout & Navigation ← Back to Index 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong 📰 Header This is example header content. This is example header content. This is example header content. This is example header content. Toggles This is example header content. 📄 Footer This is example footer content. This is example footer content. This is example footer content. Toggles This is example footer content. 🧭 Navbar Home Docs Pricing Home Docs Pricing Home Docs Pricing Variants Home Docs Pricing Home Docs Pricing Home Docs Pricing Toggles Home Docs Pricing 📑 Tabs This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. size variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Toggles This is the overview panel. This is the details panel. This is the settings panel. 📂 Details This is example details content. This is example details content. This is example details content. Variants This is example details content. This is example details content. This is example details content. Toggles This is example details content. 📐 Drawer Layout This is example drawer layout content. This is example drawer layout content. This is example drawer layout content. 📜 ScrollAlong This is example scrollalong content. 📌 Sticky Home Docs Pricing Home Docs Pricing Home Docs Pricing 📅 Timeline This is example timeline content. This is example timeline content. This is example timeline content.",
+      "content": "Layout & Navigation ← Back to Index 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong 📰 Header This is example header content. This is example header content. This is example header content. This is example header content. Toggles This is example header content. 📄 Footer This is example footer content. This is example footer content. This is example footer content. Toggles This is example footer content. 🧭 Navbar Home Docs Pricing Home Docs Pricing Home Docs Pricing Variants Home Docs Pricing Home Docs Pricing Home Docs Pricing Toggles Home Docs Pricing 📑 Tabs This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. size variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Toggles This is the overview panel. This is the details panel. This is the settings panel. 📂 Details This is example details content. This is example details content. This is example details content. Variants This is example details content. This is example details content. This is example details content. Toggles This is example details content. 📐 Drawer Layout This is example drawer layout content. This is example drawer layout content. This is example drawer layout content. Toggles This is example drawer layout content. 📜 ScrollAlong This is example scrollalong content. 📌 Sticky Home Docs Pricing Home Docs Pricing Home Docs Pricing 📅 Timeline This is example timeline content. This is example timeline content. This is example timeline content.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-08"
     },
     {
       "id": "demos/site/learn-more",
@@ -5963,13 +5967,13 @@
     ],
     "44": [
       "pages/hero-gallery",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/index",
-      "demos/site/index"
+      "docs/standards/RELEASE-PROCESS"
     ],
     "45": [
       "pages/hero-gallery",
-      "demos/site/cards"
+      "demos/index",
+      "demos/site/cards",
+      "demos/site/index"
     ],
     "46": [
       "pages/hero-gallery"
@@ -6610,11 +6614,11 @@
     "456": [
       "demos/charity-food"
     ],
-    "463": [
-      "pages/home"
-    ],
     "465": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD"
+    ],
+    "466": [
+      "pages/home"
     ],
     "472": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
@@ -6729,11 +6733,9 @@
       "docs/behaviors/vimeo",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
-    "763": [
-      "demos/site/index"
-    ],
     "764": [
-      "docs/behaviors/fill"
+      "docs/behaviors/fill",
+      "demos/site/index"
     ],
     "768": [
       "docs/architecture/WB-PREFIX-AUDIT"
