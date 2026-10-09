@@ -4,13 +4,13 @@
   "title": "File Card",
   "description": "File display card with icon, name, size, and download",
   "schemaFor": "cardfile",
-  "baseClass": "x-card-file",
+  "baseClass": "x-cardfile",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "x-card-file",
+    "baseClass": "x-cardfile",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -211,7 +211,7 @@
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [
-        "x-card-file--compact"
+        "x-cardfile--compact"
       ],
       "checkAttributes": [
         "filename"

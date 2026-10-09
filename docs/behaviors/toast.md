@@ -20,7 +20,7 @@ notification in the corner of the screen. Implemented by `toast()` (and the
 **Important:** unlike most behaviors, `toast()` doesn't render anything into the
 host element itself — the host is only ever a **click trigger**. The actual
 toast notification is a separate element `createToast()` appends to a shared
-`.x-toast-container` fixed to the corner of the viewport, and it auto-removes
+`.x-toast__container` fixed to the corner of the viewport, and it auto-removes
 itself after `duration` milliseconds.
 
 ## Properties
@@ -65,7 +65,7 @@ click):
 
 | Class | Applied to | Description |
 |-------|-----------|-------------|
-| `.x-toast-container` | a shared `<div>` appended to `document.body` (created once, reused by every toast) | Fixed position below the site header, top-right, stacked with a gap |
+| `.x-toast__container` | a shared `<div>` appended to `document.body` (created once, reused by every toast) | Fixed position below the site header, top-right, stacked with a gap |
 | `.x-toast` | each popped toast | Card styling |
 | `.x-toast--{variant}` | each popped toast | `info`/`success`/`warning`/`error`/`primary`/`secondary` background color |
 | `.x-toast--exiting` | a toast about to auto-remove | Plays the exit animation just before `remove()` |

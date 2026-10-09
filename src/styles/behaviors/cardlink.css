@@ -32,7 +32,7 @@ article[x-cardlink][x-cardlink],
 
 .x-card__link-external { opacity: 0.5; font-size: 1rem; flex-shrink: 0; }
 
-/* Link card badge: it also carries .x-tag-glass / .x-badge-gradient, whose
+/* Link card badge: it also carries .x-card__link-badge--glass / .x-badge-gradient, whose
    `display: inline-flex` otherwise wins the single-class tie with
    .x-card__link-badge. */
 .x-card__link-title-group > .x-card__link-badge {

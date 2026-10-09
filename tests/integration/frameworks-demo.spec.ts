@@ -168,7 +168,7 @@ test.describe('frameworks demo: [x-demo] / build-step exception (§25, #324, #46
     // same "reads the current attribute at click time, not a stale bind-time
     // snapshot" contract #458's fix guarantees. Two clicks already happened
     // above, so a toast should already be in the container.
-    await expect(page.locator('.x-toast-container .x-toast').last()).toBeVisible();
+    await expect(page.locator('.x-toast__container .x-toast').last()).toBeVisible();
 
     // Source: the section's own highlighted pre[language] block, still present.
     await expect(page.locator('#svelte-demo pre[language]')).toBeVisible();

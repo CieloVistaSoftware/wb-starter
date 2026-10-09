@@ -180,7 +180,8 @@
 }
 
 /* ── confirm + prompt ────────────────────────────────────────────────────── */
-.x-overlay-dialog {
+.x-confirm__dialog,
+.x-prompt__dialog {
   position: fixed;
   top: 0;
   left: 0;
@@ -194,7 +195,8 @@
   animation: x-fade-in 0.2s ease;
 }
 
-.x-overlay-dialog__box {
+.x-confirm__box,
+.x-prompt__box {
   background: var(--bg-primary, #1f2937);
   border-radius: 0.75rem;
   padding: 1.5rem;
@@ -207,26 +209,30 @@
   border: 1px solid var(--border-color, #374151);
 }
 
-.x-overlay-dialog__box > .x-overlay-dialog__title {
+.x-confirm__box > .x-confirm__title,
+.x-prompt__box > .x-prompt__title {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;
   color: var(--primary, #6366f1);
 }
 
-.x-overlay-dialog__message {
+.x-confirm__message,
+.x-prompt__message {
   margin: 0 0 1.5rem;
   color: var(--text-secondary);
 }
 
 /* prompt's message sits above an input, so it carries less space below. */
-.x-overlay-dialog__message--prompt {
+.x-prompt__message {
   margin: 0 0 1rem;
 }
 
-/* Not a BEM __element class on purpose: input.js leaves an x-block__part
-   field alone, and this one has always been wrapped and sized by input() --
-   it supplies the width and padding, so they are not restated here. */
-.x-overlay-dialog__box .x-overlay-dialog-input.x-overlay-dialog-input {
+/* A modifier, not an __element class, on purpose: input.js leaves an
+   x-block__part field alone, and this one has always been wrapped and sized by
+   input() -- it supplies the width and padding, so they are not restated here.
+   Like body.x-sheet--resizing, it is prompt's class on an element that is not
+   its host. */
+.x-prompt__box .x-prompt--input.x-prompt--input {
   border: 1px solid var(--border-color);
   background: var(--bg-tertiary);
   color: var(--text-primary);
@@ -235,13 +241,15 @@
   box-sizing: border-box;
 }
 
-.x-overlay-dialog__actions {
+.x-confirm__actions,
+.x-prompt__actions {
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
 }
 
-.x-overlay-dialog__actions .x-overlay-dialog__cancel.x-overlay-dialog__cancel {
+.x-confirm__actions .x-confirm__cancel.x-confirm__cancel,
+.x-prompt__actions .x-prompt__cancel.x-prompt__cancel {
   padding: 0.5rem 1rem;
   border: 1px solid var(--border-color);
   background: var(--bg-tertiary);
@@ -250,7 +258,8 @@
   cursor: pointer;
 }
 
-.x-overlay-dialog__actions .x-overlay-dialog__ok.x-overlay-dialog__ok {
+.x-confirm__actions .x-confirm__ok.x-confirm__ok,
+.x-prompt__actions .x-prompt__ok.x-prompt__ok {
   padding: 0.5rem 1rem;
   border: none;
   background: var(--primary, #6366f1);

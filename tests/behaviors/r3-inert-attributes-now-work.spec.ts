@@ -152,7 +152,7 @@ test.describe('R3: attributes that were declared and inert', () => {
     const host = await mount(page, `<div id="cf" x-confetti colors='["rgb(1, 2, 3)"]' count="8">go</div>`);
     await host.locator('#cf').click();
     const colors = await page.evaluate(() => {
-      const pieces = Array.from(document.querySelectorAll('[class*="confetti"] div, .x-confetti-container div'));
+      const pieces = Array.from(document.querySelectorAll('[class*="confetti"] div, .x-confetti__overlay div'));
       return Array.from(new Set(pieces.map((p) => getComputedStyle(p as HTMLElement).backgroundColor))).filter(Boolean);
     });
     expect(

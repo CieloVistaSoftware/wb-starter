@@ -44,13 +44,13 @@ test.describe('Toast variant coloring (Behaviors page)', () => {
       await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10000 });
       // Picking the row raised its own site-wide click confirmation (#456);
       // clear it so the only toast left is the one the trigger fires.
-      await page.evaluate(() => document.querySelectorAll('.x-toast-container .x-toast').forEach((el) => el.remove()));
+      await page.evaluate(() => document.querySelectorAll('.x-toast__container .x-toast').forEach((el) => el.remove()));
 
       await trigger.click();
-      const toasts = page.locator('.x-toast-container .x-toast');
+      const toasts = page.locator('.x-toast__container .x-toast');
       await expect(toasts).toHaveCount(1);
       await expect(toasts.first()).toHaveClass(new RegExp(`x-toast--${variant}\\b`));
-      await page.evaluate(() => document.querySelectorAll('.x-toast-container .x-toast').forEach((el) => el.remove()));
+      await page.evaluate(() => document.querySelectorAll('.x-toast__container .x-toast').forEach((el) => el.remove()));
     }
   });
 });

@@ -260,7 +260,7 @@ test.describe('x-toast -- click fires a real toast notification', () => {
     expect(detail.message).toBe('Saved!');
     expect(detail.variant).toBe('success');
 
-    const toast = page.locator('.x-toast-container .x-toast--success');
+    const toast = page.locator('.x-toast__container .x-toast--success');
     await expect(toast).toHaveCount(1);
     await expect(toast).toHaveText('Saved!');
   });

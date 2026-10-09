@@ -256,8 +256,8 @@ export function dialog(element, options = {}) {
 
     // DEFINITION mode: no trigger attributes — the children are the modal content,
     // the element is hidden, and a caller invokes element.open() (or .showModal()).
-    // Hidden by .x-modal-definition in dialog.css, not element.style (#779).
-    element.classList.add('x-modal-definition');
+    // Hidden by .x-modal--definition in dialog.css, not element.style (#779).
+    element.classList.add('x-modal--definition');
     const slots = {};
     const titleSlot = element.querySelector('[slot="title"]');
     slots.title = titleSlot ? titleSlot.textContent : config.title;

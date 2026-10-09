@@ -277,7 +277,7 @@ export function confetti(element, options = {}) {
   const fire = () => {
     // Create container
     const container = document.createElement('div');
-    container.className = 'x-confetti-container';
+    container.className = 'x-confetti__overlay';
     
     // Create particles
     const colors = parseColorList(
@@ -293,9 +293,9 @@ export function confetti(element, options = {}) {
       const rotation = Math.random() * 720;
       const duration = 2 + Math.random() * 2;
       
-      // Shared declarations are .x-confetti-piece in effects.css; only the
+      // Shared declarations are .x-confetti__piece in effects.css; only the
       // random per-piece values travel, as a generated rule (#779).
-      particle.className = 'x-confetti-piece';
+      particle.className = 'x-confetti__piece';
       setRule(particle, 'piece', {
         width: `${size}px`,
         height: `${size}px`,
@@ -704,7 +704,7 @@ export function fireworks(element, options = {}) {
     
     // Fix: create container
     const animContainer = document.createElement('div');
-    animContainer.className = 'x-fireworks-container';
+    animContainer.className = 'x-fireworks__overlay';
     
     const colors = parseColorList(colorSpec, ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff']);
     
@@ -790,7 +790,7 @@ export function snow(element, options = {}) {
   const fire = () => {
     // Fix: create container
     const container = document.createElement('div');
-    container.className = 'x-snow-container';
+    container.className = 'x-snow__overlay';
     
     for (let i = 0; i < count; i++) {
       const flake = document.createElement('span');

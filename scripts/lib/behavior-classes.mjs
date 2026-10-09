@@ -129,7 +129,7 @@ export function allCss(readdirSync, root = 'src/styles') {
  * where {behavior} is a REGISTERED behavior name. A class that breaks it fails
  * one of two ways: its base names a concept rather than a behavior
  * (`x-pricing` for `cardpricing`), or it has a shape the rule has no slot for
- * (`x-card-image`: the `cardimage` behavior, or the `image` part of `card`?).
+ * (`x-card-video`: the `cardvideo` behavior, or the `video` part of `card`?).
  */
 
 /** {behavior}, then an optional __part, then an optional --modifier. Words inside a part or modifier may be hyphenated. */

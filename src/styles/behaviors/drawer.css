@@ -156,11 +156,11 @@
    body would break the panel's own fixed-to-viewport positioning). --x-drawer-push-x/-y are set per-open by
    JS to the panel's actual measured width/height (signed by edge), not a
    fixed value, so this works for any configured width/height/position. */
-.x-drawer-push-target {
+.x-drawer__push-target {
   transition: transform 0.3s ease;
 }
 
-.x-drawer-push-target.x-drawer-push-target--open {
+.x-drawer__push-target.x-drawer__push-target--open {
   transform: translate(var(--x-drawer-push-x, 0), var(--x-drawer-push-y, 0));
 }
 

@@ -171,6 +171,6 @@
 
 /* DEFINITION mode: the element only holds the modal's content, which is
    cloned into a real dialog on open() -- the element itself never shows. */
-.x-modal-definition {
+.x-modal--definition {
   display: none;
 }

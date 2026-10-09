@@ -49,7 +49,7 @@ test.describe('Header Behavior', () => {
       if (window.WB) await window.WB.scan(document.body);
     });
     
-    const badge = page.locator('#testHeader .x-header__right .x-tag-glass');
+    const badge = page.locator('#testHeader .x-header__right .x-header__badge--glass');
     await expect(badge).toHaveText('v1.0');
   });
 
@@ -144,7 +144,7 @@ test.describe('Header Behavior', () => {
       document.getElementById('testHeader').wbHeader.setBadge('v2.0');
     });
     
-    const badge = page.locator('#testHeader .x-header__right .x-tag-glass');
+    const badge = page.locator('#testHeader .x-header__right .x-header__badge--glass');
     await expect(badge).toHaveText('v2.0');
   });
 

@@ -107,7 +107,7 @@ if (typeof document !== 'undefined') {
     // showcase x-toast itself) -- don't stack a second, redundant one.
     if (target.hasAttribute('x-toast') || target._wbToastInit) return;
     // Never confirm a click that landed on the toast UI itself.
-    if (target.closest('.x-toast, .x-toast-container')) return;
+    if (target.closest('.x-toast, .x-toast__container')) return;
     // Demo TOOLING chrome, not the content being demonstrated -- a "Docs:"
     // link / theme switcher isn't a demo "action" a confirmation is
     // meaningful for.

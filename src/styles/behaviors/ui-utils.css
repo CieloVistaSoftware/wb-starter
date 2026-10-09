@@ -94,7 +94,7 @@
 
 /* The execCommand fallback's scratch textarea: in the document so it can be
    selected, never on screen. */
-.x-copy-buffer {
+.x-copy__buffer {
   position: fixed;
   left: -624.9375rem;
 }

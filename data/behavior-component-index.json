@@ -263,13 +263,13 @@
     "x-card-expandable": {
       "js": "src/wb-viewmodels/card.js"
     },
-    "x-card-file": {
+    "x-cardfile": {
       "js": "src/wb-viewmodels/card.js"
     },
-    "x-card-horizontal": {
+    "x-cardhorizontal": {
       "js": "src/wb-viewmodels/card.js"
     },
-    "x-card-image": {
+    "x-cardimage": {
       "js": "src/wb-viewmodels/card.js"
     },
     "x-card-link": {

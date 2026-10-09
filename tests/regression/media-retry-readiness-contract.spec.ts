@@ -18,7 +18,7 @@ test('media retry keeps real failure reporting independent of demo readiness', a
     return {
       attempts: event.detail.attempts,
       failedClass: image.classList.contains('x-img--load-failed'),
-      fallbackVisible: Boolean(image.nextElementSibling?.classList.contains('x-media-load-failed')),
+      fallbackVisible: Boolean(image.nextElementSibling?.classList.contains('x-img__load-failed')),
     };
   });
 

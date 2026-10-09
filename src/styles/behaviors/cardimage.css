@@ -15,7 +15,7 @@
 
 /* cardimage `href` — the whole card is the link; .x-card__link-overlay is the
    stretched <a> (position:absolute; inset:0) and needs a positioned card. */
-.x-card-image--linked { position: relative; cursor: pointer; }
+.x-cardimage--linked { position: relative; cursor: pointer; }
 
 /* Image beside the content: cardimage.schema.json position="left|right".
    The figure takes its own column for the card's full height; header, body

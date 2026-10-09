@@ -139,7 +139,7 @@ test.describe('Card Behavior (integration)', () => {
   test('the classes a8a7362e removed are not injected again', async ({ page }) => {
     // The lock on a8a7362e -- but only over the set that commit actually
     // removed. x-card--{size} (card.js:313) and the per-variant classes like
-    // x-card-image / x-cardhero--{variant} were never in its list and are
+    // x-cardimage / x-cardhero--{variant} were never in its list and are
     // still emitted on purpose, so asserting "no x-card* at all" would fail on
     // working code. Naming the exact set is the difference between a lock and
     // a nuisance.
