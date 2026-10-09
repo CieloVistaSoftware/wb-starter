@@ -241,7 +241,7 @@ article[variant="success"],
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--success { --x-card-accent: var(--success-color); --x-card-accent-width: 4px; border-left: 4px solid var(--x-card-accent); }
 /* #942 (follow-up): compound host+variant rules get an ATTRIBUTE twin.
    `.x-stats.x-card--compact` requires BOTH classes, and while the host class
-   (.x-stats, .x-product, .x-portfolio, .x-testimonial) is still applied by the
+   (.x-stats, .x-product, the portfolio class, .x-testimonial) is still applied by the
    behavior, `.x-card--{variant}` is not -- class injection went in a8a7362e.
    Measured: cardstats compact/large kept default 16px padding and cardproduct
    horizontal stayed `flex-direction: column`, i.e. the typed variants named in

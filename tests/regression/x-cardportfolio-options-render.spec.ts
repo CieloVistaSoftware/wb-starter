@@ -13,8 +13,8 @@ import { test, expect } from '../fixtures/offline';
  * - the avatar wrap was a <figure>, so card.css's `article figure > span`
  *   overlay-badge rule made the initials and status dot absolute pills; the
  *   wrap collapsed to 0x0.
- * - size=*: the size rules were written `.x-portfolio.x-card--sm,
- *   .x-portfolio[variant="sm"] .x-portfolio__avatar {width:4.5rem...}`, so
+ * - size=*: the size rules were written `<host>.x-card--sm,
+ *   <host>[variant="sm"] <avatar> {width:4.5rem...}` (both by class), so
  *   the comma sized the CARD: size="sm" rendered 220x72 with the title one
  *   word per line, size="full" 176px wide. The avatar never scaled.
  * - horizontal: a fixed 10rem identity column wrapped the title one word
@@ -74,9 +74,9 @@ test.describe('x-cardportfolio option rows on the behaviors page', () => {
         const el = root.querySelector('[x-cardportfolio]') as HTMLElement | null;
         if (!el) return { found: false } as Shot;
         const q = (s: string) => el.querySelector(s);
-        const dot = q('.x-portfolio__availability');
-        const status = q('.x-portfolio__status');
-        const texts = ['.x-portfolio__name', '.x-portfolio__title', '.x-portfolio__location', '.x-portfolio__status']
+        const dot = q('.x-cardportfolio__availability');
+        const status = q('.x-cardportfolio__status');
+        const texts = ['.x-cardportfolio__name', '.x-cardportfolio__title', '.x-cardportfolio__location', '.x-cardportfolio__status']
           .map((s) => q(s) as HTMLElement | null)
           .filter((n): n is HTMLElement => !!n)
           .map((n) => {
@@ -91,9 +91,9 @@ test.describe('x-cardportfolio option rows on the behaviors page', () => {
         return {
           found: true,
           card: box(el)!,
-          cover: box(q('.x-portfolio__cover')),
-          header: box(q('.x-portfolio__header'))!,
-          avatar: box(q('.x-portfolio__avatar')),
+          cover: box(q('.x-cardportfolio__cover')),
+          header: box(q('.x-cardportfolio__header'))!,
+          avatar: box(q('.x-cardportfolio__avatar')),
           dot: box(dot),
           dotColor: dot ? getComputedStyle(dot).backgroundColor : null,
           status: box(status),

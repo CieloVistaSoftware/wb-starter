@@ -85,7 +85,10 @@ took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout
 hosts, and the toggle, handle and resize overlay drawerLayout builds), took it
 to 85. Batch 3, the trigger family, took it to 66. Batch 4, the parts that
 semantic elements build (code, pre, range, textarea, copybutton, audio, label,
-select, timeline and the accordion items), took it to 50. The count may only go down,
+select, timeline and the accordion items), took it to 50. Batch 5, the bases
+that named a concept rather than a behavior (the portfolio, notification,
+pricing and stats card classes, the press feedback, the sheet's drag class and
+the showcase's copy anchor), took it to 28. The count may only go down,
 and a renamed class is retired: no source, stylesheet, test, doc, page, demo or
 data file may use the old name again.
 
@@ -107,6 +110,19 @@ inside its element is `x-{behavior}__{part}`: `x-pre__wrapper`, `x-code__wrapper
 that already carries the block class: the div audio.js builds around a native
 `<audio>` is `x-audio`, so "this is the built host" is the modifier
 `x-audio--host` on it.
+
+**A card variant's classes take the variant's name.** The cardportfolio
+behavior builds `x-cardportfolio__header` and `x-cardportfolio__avatar`, and its
+full variant is `x-cardportfolio--full`; cardnotification's are
+`x-cardnotification__icon` and `x-cardnotification--warning`. The same holds for
+`x-cardpricing--featured` and `x-cardstats--accent`.
+
+**A state that one helper sets for several behaviors is each behavior's own
+modifier.** effects.js gives glow, rainbow and particle the same press
+feedback, and the class is `x-glow--pressed`, `x-rainbow--pressed` or
+`x-particle--pressed`, not one class shared by all three. A class a behavior puts
+somewhere other than its host is still its modifier: while a sheet is dragged
+wider, `<body>` carries `x-sheet--resizing`.
 
 **A class is not an attribute.** `<aside x-drawer-layout>` is still how an
 author applies drawerLayout; only the class the behavior adds changed, to

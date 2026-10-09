@@ -4,13 +4,13 @@
   "title": "Notification Card",
   "description": "Dismissible notification card with variant-based styling",
   "schemaFor": "cardnotification",
-  "baseClass": "x-notification",
+  "baseClass": "x-cardnotification",
   "semanticElement": {
     "tagName": "aside",
     "implicitRole": "alert"
   },
   "compliance": {
-    "baseClass": "x-notification",
+    "baseClass": "x-cardnotification",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -25,7 +25,7 @@
         "error"
       ],
       "default": "info",
-      "appliesClass": "x-notification--{{value}}"
+      "appliesClass": "x-cardnotification--{{value}}"
     },
     "title": {
       "type": "string",
@@ -52,7 +52,7 @@
       "type": "boolean",
       "description": "Add shadow elevation",
       "default": false,
-      "appliesClass": "x-notification--elevated"
+      "appliesClass": "x-cardnotification--elevated"
     }
   },
   "$view": [
@@ -253,7 +253,7 @@
         "Error!"
       ],
       "checkClasses": [
-        "x-notification--success"
+        "x-cardnotification--success"
       ],
       "checkAttributes": [
         "message"

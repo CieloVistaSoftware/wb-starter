@@ -16,6 +16,16 @@
 
 ---
 
+**Updated 2026-10-09.** Class naming convention, batch 5 (#1096).
+
+**Files touched:** `src/wb-viewmodels/card.js`, `effects.js`, `overlay.js`, `behaviors-showcase.js`; `src/styles/behaviors/card.css`, `cardnotification.css`, `cardportfolio.css`, `cardpricing.css`, `cardstats.css`, `notification.css`, `effects.css`, `ui-utils.css`, `src/styles/site.css`, `src/styles/pages/showcase.css`, `src/styles/behavior-css-manifest.js` (comment); `src/wb-models/cardnotification.schema.json`, `cardportfolio.schema.json`, `cardpricing.schema.json`, `cardstats.schema.json`; `demos/playground.html`; `docs/standards/CSS-CLASS-CONVENTION.md`; `data/behavior-component-index.json`, `data/schema-index.json`; the naming compliance spec and 9 specs that selected or named the old classes.
+
+**Last action:** the bases that were not a behavior name are now the behavior's: every `x-portfolio*` class is `x-cardportfolio*`, every `x-notification*` class is `x-cardnotification*`, `x-pricing--featured` is `x-cardpricing--featured`, `x-stats--accent` is `x-cardstats--accent`. The press feedback is each behavior's own modifier (`x-glow--pressed`, `x-rainbow--pressed`, `x-particle--pressed`), the sheet's drag class on `<body>` is `x-sheet--resizing`, and the copy anchor is `x-mdhtml--copy-host`. Ratchet now 28 of 711.
+
+**Next step:** batch 6, the 26 wrong-shape classes (`x-card-file--downloadable` and the other card compounds, the effect containers such as `x-confetti-container`, `x-drawer-push-target`, `x-notes-*`, `x-scroll-lock`). Two "base is not a behavior" classes are left on purpose: `x-behavior` (behavior.js; `behavior` is not a registered name) and `x-v` (the detector's reading of effects.js's `x-${animName}`, a runtime name).
+
+---
+
 **Updated 2026-10-08.** Class naming convention, batch 4 (#1096).
 
 **Files touched:** `src/wb-viewmodels/semantics/code.js`, `pre.js`, `range.js`, `textarea.js`, `audio.js`, `select.js`, `timeline.js`; `src/wb-viewmodels/copy.js`, `label.js`, `collapse.js`, `demo.js`, `mdhtml.js` (comments); `src/styles/behaviors/accordion.css`, `code.css`, `copybutton.css`, `demo.css`, `fix-card.css`, `input.css`, `label.css`, `pre.css`, `timeline.css`, `src/styles/pages/showcase.css`; `pages/behaviors.html` (comment); `docs/behaviors/accordion.md`, `x-copybutton.md`, `docs/standards/CSS-CLASS-CONVENTION.md`, `docs/semantic-standard.md`, `docs/audits/HOST-CHILD-DISPATCH-AUDIT.md`; `data/behavior-component-index.json`, `data/search.json`; the naming compliance spec and 26 specs that selected the old classes.

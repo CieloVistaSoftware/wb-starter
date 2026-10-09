@@ -359,8 +359,11 @@ MARQUEE & RIPPLE
    This restores the physical response only. The behavior still does nothing
    on click, and pretending otherwise would be the same lie as a button
    labelled "Download report" that downloads nothing.
+   #1096: each behavior's own modifier, x-{behavior}--pressed.
    ───────────────────────────────────────────────────────────────────────── */
-.x-pressed {
+.x-glow--pressed,
+.x-rainbow--pressed,
+.x-particle--pressed {
   /* translate + scale, not a box-shadow change: these elements already own
      their box-shadow (that IS the glow), and overriding it would fight the
      effect rather than sit on top of it. */
@@ -376,14 +379,18 @@ MARQUEE & RIPPLE
   transition: transform 140ms ease-out, filter 140ms ease-out;
 }
 
-.x-pressed {
+.x-glow--pressed,
+.x-rainbow--pressed,
+.x-particle--pressed {
   transition: transform 40ms ease-in, filter 40ms ease-in;
 }
 
 /* Respect a reader who has asked for less motion: keep the brightness cue,
    drop the movement. */
 @media (prefers-reduced-motion: reduce) {
-  .x-pressed {
+  .x-glow--pressed,
+  .x-rainbow--pressed,
+  .x-particle--pressed {
     transform: none;
   }
 }

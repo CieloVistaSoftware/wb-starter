@@ -17,7 +17,7 @@
  * A behavior can map to more than one file — e.g. `cardhero` needs
  * card.css (shared card structure), cardhero.css (its own rules, #966) and
  * hero.css (the hero-specific bits it also styles). cardnotification.css and
- * notification.css both independently style `.x-notification*` for the
+ * notification.css both independently style `.x-cardnotification*` for the
  * `cardnotification` behavior (verified: real duplication, not a mistake to
  * fix here) — both must load together.
  *

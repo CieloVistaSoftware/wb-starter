@@ -285,9 +285,21 @@
       "js": "src/wb-viewmodels/card.js",
       "schema": "src/wb-models/cardhero.schema.json"
     },
+    "x-cardnotification": {
+      "js": "src/wb-viewmodels/card.js",
+      "schema": "src/wb-models/cardnotification.schema.json"
+    },
     "x-cardportfolio": {
       "js": "src/wb-viewmodels/card.js",
       "schema": "src/wb-models/cardportfolio.schema.json"
+    },
+    "x-cardpricing": {
+      "js": "src/wb-viewmodels/card.js",
+      "schema": "src/wb-models/cardpricing.schema.json"
+    },
+    "x-cardstats": {
+      "js": "src/wb-viewmodels/card.js",
+      "schema": "src/wb-models/cardstats.schema.json"
     },
     "x-center": {
       "js": "src/wb-viewmodels/layouts.js"
@@ -519,9 +531,6 @@
       "css": "src/styles/behaviors/notes.css",
       "schema": "src/wb-models/notes.schema.json"
     },
-    "x-notification": {
-      "js": "src/wb-viewmodels/card.js"
-    },
     "x-offcanvas": {
       "js": "src/wb-viewmodels/overlay.js"
     },
@@ -539,12 +548,6 @@
     "x-popover": {
       "js": "src/wb-viewmodels/overlay.js",
       "css": "src/styles/behaviors/popover.css"
-    },
-    "x-portfolio": {
-      "js": "src/wb-viewmodels/card.js"
-    },
-    "x-pricing": {
-      "js": "src/wb-viewmodels/card.js"
     },
     "x-product": {
       "js": "src/wb-viewmodels/card.js"
@@ -660,9 +663,6 @@
     "x-stat": {
       "js": "src/wb-viewmodels/semantics/stat.js",
       "css": "src/styles/behaviors/stat.css"
-    },
-    "x-stats": {
-      "js": "src/wb-viewmodels/card.js"
     },
     "x-statusbar": {
       "js": "src/wb-viewmodels/navigation.js"
