@@ -1410,6 +1410,10 @@ export function cardhero(element, options = {}) {
 
   // Pretitle (eyebrow).
   placeHeroPart(slots.pretitle, 'x-card__hero-pretitle', base.config.pretitle, 'div', 'x-card__hero-pretitle');
+  // #1236: the eyebrow is a frosted pill over the hero's scene -- x-glass, the
+  // behavior, not a private copy of the recipe in hero.css. Set before the
+  // content is attached, so auto-injection picks it up like the CTA below.
+  content.querySelector('.x-card__hero-pretitle')?.setAttribute('x-glass', '');
 
   // Title.
   // A page hero is usually the page's main heading, but a hero can also sit
@@ -1435,10 +1439,10 @@ export function cardhero(element, options = {}) {
   if (base.config.cta || base.config.ctaSecondary) {
     const ctaGroup = cardPart(null, 'div', 'x-card__cta-group');
 
-    // Attributes are set BEFORE appending — the MutationObserver-driven
-    // auto-injection (wb-lazy.js) picks up new [x-tooltip] / [x-glass]
-    // elements as they're inserted, so that is enough for the real behaviors
-    // to attach on their own.
+    // Attributes are set BEFORE appending. wb.js's observer picks up new
+    // [x-tooltip] / [x-glass] elements as they are inserted; wb-lazy.js's does
+    // not (it watches x-behavior, custom elements and auto-inject tags only),
+    // so the hero also scans its own content once built -- see below.
     const addCta = (kind, label, href, tooltip, glass) => {
       if (!label) return;
       const btn = cardPart(null, 'a', `x-hero-cta x-hero-cta--${kind}`);
@@ -1458,6 +1462,12 @@ export function cardhero(element, options = {}) {
   }
 
   element.appendChild(content);
+  // #1236: the eyebrow and the secondary CTA are x-glass, and CTAs may carry
+  // x-tooltip. On a page booted through wb-lazy.js nothing else attaches them
+  // (demos/hero.html's "Read the guide" rendered opaque), so scan the content
+  // once, the way sidebar() scans its items. A behavior already applied is
+  // not applied twice.
+  if (window.WB && typeof window.WB.scan === 'function') window.WB.scan(content);
 
   // #678: show the author's own content -- see renderAuthoredContent().
   base.renderAuthoredContent();

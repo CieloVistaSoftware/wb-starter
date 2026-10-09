@@ -254,6 +254,13 @@
   --glass-tint: var(--text-on-accent);
   --x-glass-edge-width: 1.5px;
 }
+/* The hero's eyebrow pill is x-glass too: the same white, its old 6px blur,
+   and no edge, as it always had. */
+[x-cardhero] .x-card__hero-pretitle {
+  --glass-tint: var(--text-on-accent);
+  --x-glass-blur: 6px;
+  --x-glass-edge-width: 0;
+}
 
 /* =============================================================================
    DARK THEME (Default)

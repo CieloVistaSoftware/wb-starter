@@ -6,6 +6,185 @@
   ],
   "releases": [
     {
+      "version": "1.0.463",
+      "date": "2026-10-08",
+      "summary": "The registry audit&#39;s last three unreachable findings are fixed: three non-behavior schemas now say what they are. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1797\" target=\"_blank\" rel=\"noopener\">#1797</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Behavior, x-effects and x-enhancements carry a schemaType that exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1797\" target=\"_blank\" rel=\"noopener\">#1797</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf9eed97b636481f5ded7ae957f1359049b5545\" target=\"_blank\" rel=\"noopener\"><code>0cf9eed</code></a>",
+          "issues": [
+            831,
+            1797
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 3 hard errors (behavior, x-effects, x-enhancements unreachable). Now: 0 hard errors.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf9eed97b636481f5ded7ae957f1359049b5545\" target=\"_blank\" rel=\"noopener\"><code>0cf9eed</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.462",
+      "date": "2026-10-08",
+      "summary": "The delay=&quot;0&quot; tooltip test no longer fails when the test runner is busy. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1798\" target=\"_blank\" rel=\"noopener\">#1798</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delay=&quot;0&quot; tooltip test reads the page clock, not the runner&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1798\" target=\"_blank\" rel=\"noopener\">#1798</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0fcaa7e99b4c416e21d3bbf154f3f956cafc6725\" target=\"_blank\" rel=\"noopener\"><code>0fcaa7e</code></a>",
+          "issues": [
+            1516,
+            1798
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/tooltip-every-permutation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/tooltip-every-permutation.spec.ts</a> -g &#39;delay=&quot;0&quot;&#39; --repeat-each=20 --workers=8</code>. Before: wall-clock budget, 407ms read under load failed it. Now: 20/20, on the page&#39;s own clock.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0fcaa7e99b4c416e21d3bbf154f3f956cafc6725\" target=\"_blank\" rel=\"noopener\"><code>0fcaa7e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.461",
+      "date": "2026-10-08",
+      "summary": "Src/styles/x-signature.css, which styles the signature heroes and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1794\" target=\"_blank\" rel=\"noopener\">PR 1794</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The signature hero and card styles size in rem, and the px gate holds 315</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d2f6a40dbd3941c6df46e9f8ea56cf707bb27980\" target=\"_blank\" rel=\"noopener\"><code>d2f6a40</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=hero-variants\" target=\"_blank\" rel=\"noopener\">pages/hero-variants.html</a> and set the browser&#39;s default font size to 20px. Before: the hero corners, dots and avatars stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1f5c4e98f3ffae568715f2c919cb82f4380ae72b\" target=\"_blank\" rel=\"noopener\"><code>1f5c4e9</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.460",
+      "date": "2026-10-08",
+      "summary": "The card hero&#39;s eyebrow pill painted its own background and (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1791\" target=\"_blank\" rel=\"noopener\">PR 1791</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Hero eyebrow pill uses real x-glass, and its text is checked for contrast</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b788934e0a5d07c85d3956bad55c58d5001bd681\" target=\"_blank\" rel=\"noopener\"><code>b788934</code></a>",
+          "issues": [
+            1236
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/hero.html and look at the eyebrow pill and the secondary button on each hero. Before: the pill was a hand-rolled blur, the secondary button&#39;s x-glass never attached, and hero 4&#39;s glass text read at 2.3:1. Now: both are x-glass, and all glass text reads at 4.5:1 or better.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/76abf500a3fb375e479fd0c806ef52cec537ba28\" target=\"_blank\" rel=\"noopener\"><code>76abf50</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.459",
+      "date": "2026-10-08",
+      "summary": "The site shell (header, menu button, drawer, spinners, panels) was sized in fixed px, so it ignored the phone font bump and a reader&#39;s own text-size setting while the text around it scaled. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1786\" target=\"_blank\" rel=\"noopener\">PR 1786</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site.css sizes in rem -- 92 px values converted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d9436d9565d0c4b425d8801222e73dcd3d9e6d94\" target=\"_blank\" rel=\"noopener\"><code>d9436d9</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open the site on a phone, or at 390px wide in devtools. Before: the menu button was 44px and the header chrome stayed the same while the text grew 12.5%. Now: the button is 49.5px and the header, drawer and icons grow with the text; at desktop width nothing moves.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8039ed96c62c916deaa06a702d2a4fb5ef9c59d9\" target=\"_blank\" rel=\"noopener\"><code>8039ed9</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.458",
+      "date": "2026-10-08",
+      "summary": "Fix cards get their stylesheet again; it had matched nothing since card hosts lost the x-card class. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1793\" target=\"_blank\" rel=\"noopener\">#1793</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Fix-card.css keys on x-fix-card, so a fix card is styled again</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1793\" target=\"_blank\" rel=\"noopener\">#1793</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/448ce2f264c52943324f1928c17902a1a06ead34\" target=\"_blank\" rel=\"noopener\"><code>448ce2f</code></a>",
+          "issues": [
+            1095,
+            1793
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/fix-card-stylesheet-applies.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/fix-card-stylesheet-applies.spec.ts</a> --project=regression</code>. Before: no height cap, header rows stacked as blocks. Now: 750px cap, header and meta laid out in rows.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/448ce2f264c52943324f1928c17902a1a06ead34\" target=\"_blank\" rel=\"noopener\"><code>448ce2f</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.457",
+      "date": "2026-10-08",
+      "summary": "The behavior registry audit now counts the x-{name} route #1642 added, so it reports 3 unreachable behaviors instead of 60, and CI fails on any new disagreement. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1789\" target=\"_blank\" rel=\"noopener\">#1789</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The registry audit sees the computed x-{name} route, and CI gates it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1789\" target=\"_blank\" rel=\"noopener\">#1789</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/caeb5032dcdaec583e81200a8745e858a8f61e07\" target=\"_blank\" rel=\"noopener\"><code>caeb503</code></a>",
+          "issues": [
+            831,
+            1789
+          ]
+        }
+      ],
+      "seeIt": "Run node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate. Before: 60 UNREACHABLE (sidebar, list, divider, hotkey...) and exit 1, with nothing running it. Now: 3 UNREACHABLE, every remaining finding reviewed with a reason, exit 0, and the compliance project runs it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/caeb5032dcdaec583e81200a8745e858a8f61e07\" target=\"_blank\" rel=\"noopener\"><code>caeb503</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.456",
+      "date": "2026-10-08",
+      "summary": "Generic-host-is-argued.spec.ts (#918) requires a schema that names a div or span host to say why HTML has no better element, and the new debug.schema.json did not. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1779\" target=\"_blank\" rel=\"noopener\">PR 1779</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Debug&#39;s &lt;div&gt; host says why no element fits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6557a4f3b5bd71a499b2b1e67160fe55420bb918\" target=\"_blank\" rel=\"noopener\"><code>6557a4f</code></a>",
+          "issues": [
+            879
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Schemas for clipboard, scroll, highlight, external and debug</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/879\" target=\"_blank\" rel=\"noopener\">#879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14f2dda7da362327376397a274e6326d0f49fb85\" target=\"_blank\" rel=\"noopener\"><code>14f2dda</code></a>",
+          "issues": [
+            879
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/generic-host-is-argued.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/generic-host-is-argued.spec.ts</a> --project=compliance. Before: it failed naming debug.schema.json. Now: it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b7a73c23de63bdedf81bf6215649d890ad5e598e\" target=\"_blank\" rel=\"noopener\"><code>b7a73c2</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.455",
       "date": "2026-10-08",
       "summary": "Demo.css styled only the [x-demo] attribute, so a demo applied with WB.inject() lost its padded, clipped box; every host rule now matches the .x-demo class too, and x-accordion is recorded as needing no rule of its own. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1788\" target=\"_blank\" rel=\"noopener\">#1788</a>",

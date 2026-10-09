@@ -78,11 +78,11 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
   test('bare <div x-fix-card> upgrades to the real custom element class', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-upgrade"></div>`);
 
-    // 'fix-card' is only added by the fixCard() behavior -- it only runs if
+    // 'x-fix-card' is only added by the fixCard() behavior -- it only runs if
     // WB.scan() actually imported fix-card.js. Before the fix, this class
     // never appeared because fix-card.js was never imported.
     await page.waitForFunction(
-      () => document.getElementById('fc-upgrade')?.classList.contains('fix-card'),
+      () => document.getElementById('fc-upgrade')?.classList.contains('x-fix-card'),
       // waitForFunction(fn, ARG, options): the options object used to sit in
       // the ARG slot, so this 5s bound was never applied and a missing class
       // hung until the 30s test timeout instead of failing here.
@@ -114,7 +114,7 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
   test('setting .data on an upgraded <div x-fix-card> actually renders content', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-render"></div>`);
     await page.waitForFunction(
-      () => document.getElementById('fc-render')?.classList.contains('fix-card'),
+      () => document.getElementById('fc-render')?.classList.contains('x-fix-card'),
       undefined,   // see the note in the test above: options go third
       { timeout: 5000 }
     );

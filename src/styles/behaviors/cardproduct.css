@@ -1,0 +1,72 @@
+/**
+ * cardproduct.css -- the styles only a product card (x-cardproduct) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardproduct. Split out of card.css (#966): every
+ * selector here needs [x-cardproduct] or a class only cardproduct() stamps.
+ */
+
+/* cardproduct horizontal (#479) -- base .x-card/x-card sets
+   flex-direction:column; a 2-class compound safely outranks that 1-class/
+   tag-selector base rule. */[x-cardproduct][x-cardhorizontal],
+[x-cardproduct][variant="horizontal"] {
+  flex-direction: row;
+}
+
+[x-cardproduct][x-cardhorizontal],
+[x-cardproduct][variant="horizontal"] .x-card__figure {
+  width: 40%;
+  flex-shrink: 0;
+}
+
+/* cardproduct compact (#1465) -- declared in the schema, styled by nothing,
+   so "compact" rendered exactly like the default. Compact here means less
+   HEIGHT, never less padding (§13 keeps the 1rem floor): a shorter image, a
+   one-line description, a tighter price row. `.x-product--compact` is listed
+   too so the schema builder (which adds <base>--<value> only for a class a
+   stylesheet defines) puts it on the element, as the schema's site test
+   expects. */
+[x-cardproduct][variant="compact"] figure > img,
+[x-cardproduct].x-product--compact figure > img {
+  aspect-ratio: 2 / 1;
+}
+
+[x-cardproduct][variant="compact"] .x-card__product-desc,
+[x-cardproduct].x-product--compact .x-card__product-desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
+
+[x-cardproduct][variant="compact"] .x-card__price-wrap,
+[x-cardproduct].x-product--compact .x-card__price-wrap {
+  margin: 0.5rem 0;
+}
+
+/* Product info */ .x-card__product-info { padding: 1rem; }
+
+/* ═══════════════════════════════════════════════════════════════════════════ PRODUCT CARD — cardproduct(), card.js. Moved here from inline styles (Law 9 migration, #370). ═══════════════════════════════════════════════════════════════════════════ */ [x-cardproduct] .x-card__figure { position: relative; }
+
+/* The product image fills its figure at a fixed ratio -- static values that were inline in cardproduct. cardimage's ratio/fit stay in JS: they come from the aspect= and fit= attributes and are genuinely per-instance. */ [x-cardproduct] figure > img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+
+.x-card__title.x-card__product-title { margin: 0; font-size: 1rem; color: var(--text-primary); }
+
+.x-card__description.x-card__product-desc { margin: 0.25rem 0 0.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+
+.x-card__product-rating { margin: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; }
+
+.x-card__product-stars { color: var(--rating-star-color, #f59e0b); /* pre-existing hardcoded star color, ported as-is */ }
+
+.x-card__product-rating-text { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Scoped overrides for the shared `.x-card__price-wrap`/`.x-card__price-current` classes -- cardpricing() wants different values (see comment there); scoping under `.x-product` lets both call sites be correct at the same time. */ [x-cardproduct] .x-card__price-wrap { margin: 0.75rem 0; display: flex; align-items: center; gap: 0.5rem; }
+
+[x-cardproduct] .x-card__price-current { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+
+.x-card__price-original { text-decoration: line-through; color: var(--text-secondary, #6b7280); font-size: 0.9rem; }
+
+/* Compound + descendant-scoped (0,0,2,0) -- beats themes.css's `[data-theme] button` reset (0,0,1,1); same trap as cardbutton() above. */ [x-cardproduct] .x-card__product-cta { width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; }
+
+.x-card__price-current { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }

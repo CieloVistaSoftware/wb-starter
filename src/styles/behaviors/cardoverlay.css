@@ -1,0 +1,38 @@
+/**
+ * cardoverlay.css -- the styles only an overlay card (x-cardoverlay) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardoverlay. Split out of card.css (#966): every
+ * selector here needs [x-cardoverlay] or a class only cardoverlay() stamps.
+ */
+
+[x-cardoverlay].x-card--overlay-top { align-items: flex-start; }
+
+[x-cardoverlay].x-card--overlay-center { align-items: center; }
+
+/* Overlay card content */ .x-card__overlay-content { /* #947 -- John: "the overlays should cover the card's width." They did not. This was a STATIC block inside a card with `padding: 16px`, so `width: 100%` meant 100% of the PADDED CONTENT BOX: measured 416px inside a 450px card, inset 17px left and right, with the same gap below. An overlay is by definition laid over the media and anchored to the card's edges, so position it against the card (which is already `position: relative; overflow: hidden`) instead of fighting the padding with negative margins that would break the moment CARD_PADDING changed. */ position: absolute; inset-inline: 0; bottom: 0; padding: 1.5rem; /* matches what the old inline override actually rendered, not the previous 1rem here */ color: white; width: auto; text-align: var(--overlay-xalign, left); /* set inline by cardoverlay() -- genuinely per-instance dynamic */ }
+
+/* A top gradient means the panel belongs at the TOP; anchoring is part of the variant, not an afterthought. Vertical placement used to come from the host's `align-items: flex-end`, which an absolutely positioned child no longer participates in. */ /* #779: a `.x-card__overlay-content--gradient-top { top: 0; bottom: auto }`
+   rule stood here to pin a top-gradient panel to the top. It never applied --
+   cardoverlay() wrote the gradient inline and never emitted this class -- so
+   every position="top" overlay has always rendered its panel at the bottom.
+   Now that the class IS emitted, keeping that rule would move the panel, a
+   layout change this inline-style cleanup must not smuggle in. Removed; the
+   intended top anchoring is a separate decision. */ .x-card__overlay-content--gradient-top { background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); }
+
+.x-card__overlay-content--gradient-bottom { background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+
+/* Variant tints -- declared after the gradient modifiers above so a non-default variant's tint (or backdrop-filter, for blur) always wins over the plain gradient, same source-order-dependent intent the original inline `content.style.background = ...` (applied after the gradient block) encoded. */ .x-card__overlay-content--dark { background: rgba(0,0,0,0.65); }
+
+.x-card__overlay-content--light { background: rgba(255,255,255,0.85); color: var(--overlay-light-text, #111827); }
+
+.x-card__overlay-content--blur { background: rgba(0,0,0,0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+.x-card__title.x-card__overlay-title { margin: 0; font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+
+.x-card__subtitle.x-card__overlay-subtitle { margin: 0.5rem 0; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+
+/* Overlay card: #635's no-repeat, which cardoverlay() wrote inline. */
+[x-cardoverlay][x-cardoverlay] {
+  background-repeat: no-repeat;
+}

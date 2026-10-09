@@ -48,6 +48,7 @@
     "test-coverage-compliance.spec.ts",
     "behavior-registry-validation.spec.ts",
     "behavior-registry.spec.ts",
+    "behavior-registry-audit-gate.spec.ts",
     "registry-integrity.spec.ts",
     "fragment-registration.spec.ts",
     "fix-data-integrity.spec.ts",

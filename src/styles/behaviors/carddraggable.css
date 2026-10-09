@@ -1,0 +1,53 @@
+/**
+ * carddraggable.css -- the styles only a draggable card (x-carddraggable) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-carddraggable. Split out of card.css (#966): every
+ * selector here needs [x-carddraggable] or a class only carddraggable() stamps.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════ DRAGGABLE CARD — carddraggable(), card.js. Moved here from inline styles (Law 9 migration, #370). left/top stay inline in card.js -- genuinely dynamic, continuously updated during a real-time mouse/touch drag. ═══════════════════════════════════════════════════════════════════════════ */ .x-card__drag-handle { padding: 1rem; border-bottom: 1px solid var(--border-color); background: var(--bg-tertiary); cursor: grab; display: flex; align-items: center; gap: 0.5rem; }
+
+.x-card__drag-handle-icon { opacity: 0.5; }
+
+.x-card__drag-title { margin: 0; flex: 1; color: var(--text-primary); }
+
+/* Drag-in-progress visual feedback -- driven by the `x-card--dragging` class toggled in carddraggable()'s onMouseDown/onMouseUp (card.js); replaces the old inline cursor/opacity/z-index sets. */ .x-card--dragging { opacity: 0.8; z-index: 1000; }
+
+.x-card--dragging .x-card__drag-handle { cursor: grabbing; }
+
+/* Draggable card: only when the host computed `position: static` -- the drag
+   offsets (a generated left/top rule) need a positioned box to act on. */
+[x-carddraggable].x-card--draggable-positioned {
+  position: relative;
+}
+
+/* Draggable card header: `.x-card__drag-handle` above loses to the shared
+   card-header grid rules (`.x-card__header`, `:is([x-card…]) > header`), which
+   carddraggable()'s inline cssText used to override. Scoped by the host's
+   attribute, twice (the weight of the two injected classes it replaced, #969),
+   so the handle keeps its flex row, padding and title margin. */
+[x-carddraggable][x-carddraggable] > .x-card__drag-handle {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+[x-carddraggable].x-card--dragging > .x-card__drag-handle {
+  cursor: grabbing;
+}
+
+[x-carddraggable][x-carddraggable] > .x-card__drag-handle > .x-card__drag-title {
+  margin: 0;
+  flex: 1;
+}
+
+/* The title colour stands down for the five tinted variants, so the variant
+   tint near the top of this file applies without !important (#1014). */
+[x-carddraggable][x-carddraggable]:not([variant="success"], [variant="danger"], [variant="warning"], [variant="info"], [variant="primary"]) > .x-card__drag-handle > .x-card__drag-title {
+  color: var(--text-primary);
+}

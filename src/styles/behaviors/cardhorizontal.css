@@ -1,0 +1,25 @@
+/**
+ * cardhorizontal.css -- the styles only a horizontal card (x-cardhorizontal) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardhorizontal. Split out of card.css (#966): every
+ * selector here needs [x-cardhorizontal] or a class only cardhorizontal() stamps.
+ */
+
+/* Horizontal card -- moved here from cardhorizontal()'s inline styles (card.js) (Law 9 migration, #370). Default row direction; `--reverse` modifier for the `image-position="right"` attribute. */ [x-cardhorizontal] { flex-direction: row; }
+
+/* A flex item's default `min-width: auto` refuses to shrink below its own min-content width, so the text column pushed 20px past the card and was silently CLIPPED by the card's overflow:hidden -- visible as a cut-off word rather than as a layout error (§15a). min-width:0 lets it shrink to the space the row actually has. */ [x-cardhorizontal] > * { min-width: 0; }
+
+.x-card-horizontal--reverse { flex-direction: row-reverse; }
+
+.x-card__horizontal-figure { /* --horizontal-image-width set inline by cardhorizontal() -- genuinely per-instance dynamic (user `image-width` attribute). */ width: var(--horizontal-image-width, 40%); flex-shrink: 0; min-height: 12.5rem; align-self: stretch; }
+
+.x-card__horizontal-image { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 12.5rem; }
+
+/* Horizontal card content */ .x-card__horizontal-content { padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+/* Title and subtitle by tag (cardhorizontal() emits no class on either). (0,1,1) beats site.css's bare `h3`/`p` page-heading rules, the #887 leak. */ .x-card__horizontal-content > h3 { margin: 0; color: var(--text-primary); }
+
+.x-card__horizontal-content > p { margin: 0.25rem 0 0.5rem; color: var(--text-secondary); }
+
+.x-card__horiz-body { margin-top: 0.75rem; color: var(--text-primary); }
