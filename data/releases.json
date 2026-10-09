@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.451",
+      "date": "2026-10-08",
+      "summary": "The errors viewer showed errors fixed days ago exactly like ones happening now, because no entry said which site version raised it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1782\" target=\"_blank\" rel=\"noopener\">PR 1782</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1773\" target=\"_blank\" rel=\"noopener\">#1773</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Errors record the site version; the viewer marks older ones</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1773\" target=\"_blank\" rel=\"noopener\">#1773</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/35df261bb73c965620661cfec06ab9d9c016a0f8\" target=\"_blank\" rel=\"noopener\"><code>35df261</code></a>",
+          "issues": [
+            1773
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html\" target=\"_blank\" rel=\"noopener\">public/errors-viewer.html</a> in a browser that visited the site before this change. Before: Sep 28-29 errors such as <a href=\"https://cielovistasoftware.github.io/wb-starter/images/placeholder.svg\" target=\"_blank\" rel=\"noopener\">images/placeholder.svg</a> looked current. Now: they show an &quot;older version&quot; badge, are dimmed and listed last, and &quot;On This Version (v1.0.N)&quot; counts only the live ones.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7caed5a8a8bbc89eccf93e11961aa04a6ad1dd3e\" target=\"_blank\" rel=\"noopener\"><code>7caed5a</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.450",
       "date": "2026-10-08",
       "summary": "Site.css styles every page, and 90 of its sizes were px: header (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1784\" target=\"_blank\" rel=\"noopener\">PR 1784</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
