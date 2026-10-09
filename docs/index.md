@@ -1,6 +1,8 @@
 # WB-Starter Documentation
 
-> A comprehensive behavior library featuring 41+ custom behaviors, Harmonic Color System, and Light DOM architecture.
+> A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture.
+
+**New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next.
 
 ---
 

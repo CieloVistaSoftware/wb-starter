@@ -29,6 +29,18 @@
   </div>
 </div>
 
+<!-- #1244: the Introduction, pinned under search/sort and above the document
+     list. Outside #docs-container on purpose: sort and search re-render that
+     container's innerHTML, so nothing they do can move or hide this. -->
+<div id="docs-introduction" class="page__section">
+  <a href="?page=introduction" class="feature-card-link" aria-label="Introduction: what wb-starter is, why it replaces the traditional framework, and where to go next">
+    <article variant="float">
+      <h2>👋 New here? Start with the Introduction</h2>
+      <p>What wb-starter is, why it ends the traditional framework, and where to go next.</p>
+    </article>
+  </a>
+</div>
+
 <!-- #1098: every behavior, in two sections. Rendered from tag-map union
      wb-lazy -- the same union pages/behaviors.html reads since #1056, because
      tag-map ALONE omits 39 working behaviours (breadcrumb, notify, copybutton,

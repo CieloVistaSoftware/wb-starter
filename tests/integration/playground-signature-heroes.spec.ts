@@ -105,6 +105,6 @@ test.describe('Playground: 20 signature heroes example set', () => {
     const playground = ctas.filter(([label]) => label === 'Try the Playground').map(([, href]) => href);
     expect(new Set(playground)).toEqual(new Set([SITE + 'demos/playground.html']));
     const guide = ctas.filter(([label]) => /^Read the guide$/i.test(String(label))).map(([, href]) => href);
-    expect(new Set(guide)).toEqual(new Set([SITE + 'public/doc-viewer.html?file=docs%2FV3-GUIDE.md']));
+    expect(new Set(guide)).toEqual(new Set([SITE + '?page=introduction']));   // #1244
   });
 });
