@@ -2078,3 +2078,19 @@ article[x-cardlink][x-cardlink],
   background: var(--primary-hover, #4f46e5);
   transform: translateY(-1px);
 }
+
+/* #295: two cards that ran past a 375px phone screen.
+   A button card's two buttons sit side by side and each keeps its label on
+   one line (#938), so "Compare plans" + "Start free trial" made the card
+   386px wide in a 321px column. When they do not fit side by side they now
+   stack, each still on one line and at the same height.
+   A stats card puts its icon beside its value, and a value like $52,340.50
+   does not break, so the pair needed 334px of a 285px card. When they do not
+   fit, the value moves under the icon. */
+.x-card__btn-footer {
+  flex-wrap: wrap;
+}
+
+[x-cardstats] {
+  flex-wrap: wrap;
+}

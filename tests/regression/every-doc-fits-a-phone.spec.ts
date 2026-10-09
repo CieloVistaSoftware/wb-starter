@@ -33,13 +33,32 @@ function allDocs(): string[] {
   return out.sort();
 }
 
+/**
+ * Every behavior attribute the runtime knows (tag-map plus wb-lazy's
+ * attribute-only list), so the sweep can wait for each live example in a doc
+ * to finish building. A card measured before it builds is narrow and passes;
+ * the same card built is the one a reader sees.
+ */
+async function behaviorAttributes(): Promise<string[]> {
+  const tag = await import(new URL('../../src/core/tag-map.js', import.meta.url).href);
+  let lazy: Record<string, unknown> = {};
+  try {
+    lazy = await import(new URL('../../src/core/wb-lazy.js', import.meta.url).href);
+  } catch { /* the tag map alone still covers the elements */ }
+  const names = Object.keys({
+    ...((lazy as { WB_LAZY_ONLY_ATTRIBUTES?: Record<string, string> }).WB_LAZY_ONLY_ATTRIBUTES || {}),
+    ...tag.extensionMap,
+  });
+  return names.filter((n) => /^x-[a-z][a-z0-9-]*$/.test(n));
+}
+
 const DOCS = allDocs();
-const PER_TEST = 15;
+const PER_TEST = 5;
 const BATCHES: string[][] = [];
 for (let i = 0; i < DOCS.length; i += PER_TEST) BATCHES.push(DOCS.slice(i, i + PER_TEST));
 
 /** Open one doc at 375px and wait until it has finished rendering. */
-async function openAtPhoneWidth(page: Page, doc: string): Promise<void> {
+async function openAtPhoneWidth(page: Page, doc: string, attrs: string[]): Promise<void> {
   await page.goto(`/public/doc-viewer.html?file=${encodeURIComponent(doc)}`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => {
     const t = document.getElementById('content')?.innerText || '';
@@ -51,16 +70,26 @@ async function openAtPhoneWidth(page: Page, doc: string): Promise<void> {
     .every((b) => b.classList.contains('hljs')), undefined, { timeout: 15_000 });
   await page.evaluate(() => document.fonts.ready);
   // Live examples build as they near the viewport: scroll through, then wait.
+  // Timed steps, not animation frames: a busy headless page can stop
+  // delivering frames, and one doc then waited out the whole test.
   await page.evaluate(async () => {
-    const frame = () => new Promise((r) => requestAnimationFrame(r));
-    for (let y = 0; y < document.documentElement.scrollHeight; y += window.innerHeight) {
+    const pause = () => new Promise((r) => setTimeout(r, 40));
+    const step = window.innerHeight / 2;
+    for (let i = 0, y = 0; i < 400 && y < document.documentElement.scrollHeight; i++, y += step) {
       window.scrollTo(0, y);
-      await frame();
+      await pause();
     }
     window.scrollTo(0, 0);
   });
-  await page.waitForFunction(() => [...document.querySelectorAll('#content [class*="x-card--"], #content [x-demo]')]
-    .every((el) => el.hasAttribute('x-ready')), undefined, { timeout: 15_000 });
+  // Then wait for every behavior host in the doc to report it has built.
+  // One that never does (a decorator with nothing to build) does not block
+  // the measurement past the timeout.
+  await page.waitForFunction((names) => {
+    const sel = names.map((n) => `#content [${n}]`).join(', ');
+    return [...document.querySelectorAll(sel)]
+      .filter((el) => !el.closest('[x-ignore]') && !el.closest('pre'))
+      .every((el) => el.hasAttribute('x-ready'));
+  }, attrs, { timeout: 15_000 }).catch(() => {});
 }
 
 /** What spills past the screen edge on the open doc, or [] if nothing does. */
@@ -70,10 +99,20 @@ async function spills(page: Page): Promise<string[]> {
     const out: string[] = [];
     const pageScroll = document.documentElement.scrollWidth - vw;
     if (pageScroll > 2) out.push(`page scrolls ${pageScroll}px sideways`);
+    // Contained: inside a box that scrolls (a wide table, a code block), so
+    // all of it can still be reached. Clipping does not count for content: the
+    // doc viewer clips html and body sideways, and that is exactly what cut
+    // the ends off long paths. The one exception is decoration with nothing
+    // to read -- x-stagelight's beam swings inside its stage, which clips it.
+    const content = document.getElementById('content');
+    const media = 'img, video, audio, iframe, canvas, svg, input, select, textarea, button';
+    const decorative = (el: Element) => !(el.textContent || '').trim() && !el.matches(media) && !el.querySelector(media);
     const scrolls = (el: Element | null): boolean => {
-      for (let p = el?.parentElement; p; p = p.parentElement) {
+      const clipOk = !!el && decorative(el);
+      for (let p = el?.parentElement; p && p !== document.body; p = p.parentElement) {
         const x = getComputedStyle(p).overflowX;
         if (x === 'auto' || x === 'scroll') return true;
+        if (clipOk && (x === 'hidden' || x === 'clip') && content && content.contains(p) && p !== content) return true;
       }
       return false;
     };
@@ -97,12 +136,22 @@ test.describe('every .md doc fits a 375px screen (#295)', () => {
 
   BATCHES.forEach((batch, i) => {
     test(`docs ${i * PER_TEST + 1}-${i * PER_TEST + batch.length} of ${DOCS.length} have no sideways scroll at 375px`, async ({ page }) => {
-      test.slow();
+      // Up to five docs, each allowed 15s to render and 15s to build its examples.
+      test.setTimeout(240_000);
+      const attrs = await behaviorAttributes();
       await page.setViewportSize({ width: 375, height: 800 });
       const failures: string[] = [];
       for (const doc of batch) {
-        await openAtPhoneWidth(page, doc);
-        const found = await spills(page);
+        await openAtPhoneWidth(page, doc, attrs);
+        // A behavior can finish upgrading after the scroll-through (x-scrollable
+        // gives its box a scroll only once it runs). A spill that is still
+        // there after 5 seconds is real.
+        let found = await spills(page);
+        const until = Date.now() + 5_000;
+        while (found.length && Date.now() < until) {
+          await page.waitForTimeout(250);
+          found = await spills(page);
+        }
         if (found.length) failures.push(`${doc}: ${found.join('; ')}`);
       }
       expect(failures, 'docs that spill past a 375px screen').toEqual([]);
