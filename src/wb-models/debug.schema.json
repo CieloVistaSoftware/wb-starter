@@ -5,7 +5,8 @@
   "description": "An on-page panel that shows console errors, warnings and (optionally) logs, for debugging where devtools are not available.",
   "schemaFor": "debug",
   "semanticElement": {
-    "tagName": "div"
+    "tagName": "div",
+    "genericHost": "a floating panel the behavior builds its own header, clear button and message list into; HTML has no element for an on-page console"
   },
   "properties": {
     "showErrors": {
