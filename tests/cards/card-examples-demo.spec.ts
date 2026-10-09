@@ -227,9 +227,9 @@ test.describe('Card Rendering', () => {
   test('notification cards have variant classes', async ({ page }) => {
     const success = page.locator('#card-gallery [x-cardnotification][variant="success"]');
     await scrollTo(page, success);
-    await expect(success).toHaveClass(/x-notification--success/);
+    await expect(success).toHaveClass(/x-cardnotification--success/);
     const error = page.locator('#card-gallery [x-cardnotification][variant="error"]');
-    await expect(error).toHaveClass(/x-notification--error/);
+    await expect(error).toHaveClass(/x-cardnotification--error/);
   });
 
   test('file cards show filename and icon', async ({ page }) => {
@@ -267,12 +267,12 @@ test.describe('Card Rendering', () => {
   test('portfolio card renders name, skills, social links', async ({ page }) => {
     const card = page.locator('#card-gallery [x-cardportfolio]').first();
     await scrollTo(page, card);
-    await expect(card.locator('.x-portfolio__name')).toHaveText('Jane Doe', { timeout: 10000 });
+    await expect(card.locator('.x-cardportfolio__name')).toHaveText('Jane Doe', { timeout: 10000 });
     // Skills pills
-    const skills = card.locator('.x-portfolio__skills span');
+    const skills = card.locator('.x-cardportfolio__skills span');
     expect(await skills.count()).toBeGreaterThanOrEqual(4);
     // Social links
-    const social = card.locator('.x-portfolio__social a');
+    const social = card.locator('.x-cardportfolio__social a');
     expect(await social.count()).toBeGreaterThanOrEqual(2);
   });
 });
@@ -372,7 +372,7 @@ test.describe('Interactivity', () => {
   test('notification dismiss button removes element', async ({ page }) => {
     const success = page.locator('#card-gallery [x-cardnotification][variant="success"]');
     await scrollTo(page, success);
-    const dismissBtn = success.locator('.x-notification__dismiss');
+    const dismissBtn = success.locator('.x-cardnotification__dismiss');
     await expect(dismissBtn).toBeVisible({ timeout: 10000 });
     await dismissBtn.click();
     await expect(success).toHaveCount(0);
@@ -387,7 +387,7 @@ test.describe('Interactivity', () => {
         el.addEventListener('wb:cardnotification:dismiss', (e) => {
           resolve(e.detail);
         }, { once: true });
-        el.querySelector('.x-notification__dismiss').click();
+        el.querySelector('.x-cardnotification__dismiss').click();
       });
     });
     expect(eventFired.variant).toBe('error');
@@ -419,7 +419,7 @@ test.describe('Interactivity', () => {
   test('portfolio social links open in new tab', async ({ page }) => {
     const card = page.locator('#card-gallery [x-cardportfolio]').first();
     await scrollTo(page, card);
-    const socialLinks = card.locator('.x-portfolio__social a');
+    const socialLinks = card.locator('.x-cardportfolio__social a');
     const count = await socialLinks.count();
     for (let i = 0; i < count; i++) {
       await expect(socialLinks.nth(i)).toHaveAttribute('target', '_blank');
@@ -429,9 +429,9 @@ test.describe('Interactivity', () => {
   test('portfolio contact links are valid', async ({ page }) => {
     const card = page.locator('#card-gallery [x-cardportfolio]').first();
     await scrollTo(page, card);
-    const emailLink = card.locator('.x-portfolio__contact a[href^="mailto:"]');
+    const emailLink = card.locator('.x-cardportfolio__contact a[href^="mailto:"]');
     await expect(emailLink).toBeVisible();
-    const websiteLink = card.locator('.x-portfolio__contact a[target="_blank"]');
+    const websiteLink = card.locator('.x-cardportfolio__contact a[target="_blank"]');
     await expect(websiteLink).toBeVisible();
   });
 });
@@ -583,7 +583,7 @@ test.describe('Accessibility', () => {
   test('portfolio social links have aria-labels', async ({ page }) => {
     const card = page.locator('#card-gallery [x-cardportfolio]').first();
     await scrollTo(page, card);
-    const links = card.locator('.x-portfolio__social a');
+    const links = card.locator('.x-cardportfolio__social a');
     const count = await links.count();
     for (let i = 0; i < count; i++) {
       const label = await links.nth(i).getAttribute('aria-label');

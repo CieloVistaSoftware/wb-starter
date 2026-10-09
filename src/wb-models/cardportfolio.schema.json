@@ -4,13 +4,13 @@
   "title": "Portfolio Card",
   "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
   "schemaFor": "cardportfolio",
-  "baseClass": "x-portfolio",
+  "baseClass": "x-cardportfolio",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "x-portfolio",
+    "baseClass": "x-cardportfolio",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -161,7 +161,7 @@
         "full"
       ],
       "default": "default",
-      "appliesClass": "x-portfolio--{{value}}"
+      "appliesClass": "x-cardportfolio--{{value}}"
     },
     "size": {
       "type": "string",
@@ -377,7 +377,7 @@
         "Product Manager"
       ],
       "checkClasses": [
-        "x-portfolio--compact"
+        "x-cardportfolio--compact"
       ],
       "checkAttributes": [
         "name",

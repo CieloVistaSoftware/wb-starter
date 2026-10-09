@@ -133,9 +133,9 @@ article[x-cardstats] > header,
 
 /* cardstats `color` — accent stripe + icon tint. The value itself arrives as
    the --x-stats-accent custom property set by cardstats() (card.js). */
-[x-cardstats].x-stats--accent { border-top: 3px solid var(--x-stats-accent); }
+[x-cardstats].x-cardstats--accent { border-top: 3px solid var(--x-stats-accent); }
 
-[x-cardstats].x-stats--accent .x-card__icon { color: var(--x-stats-accent); }
+[x-cardstats].x-cardstats--accent .x-card__icon { color: var(--x-stats-accent); }
 
 /* #1095: cardstats() could not build (it catches the error, sets the message
    on x-error and adds this class). It used to render exactly like a healthy

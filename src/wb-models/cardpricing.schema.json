@@ -4,13 +4,13 @@
   "title": "Pricing Card",
   "description": "Pricing tier card with plan name, price, features list, and CTA",
   "schemaFor": "cardpricing",
-  "baseClass": "x-pricing",
+  "baseClass": "x-cardpricing",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "x-pricing",
+    "baseClass": "x-cardpricing",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -56,7 +56,7 @@
       "type": "boolean",
       "description": "Highlight as featured/recommended plan",
       "default": false,
-      "appliesClass": "x-pricing--featured"
+      "appliesClass": "x-cardpricing--featured"
     },
     "variant": {
       "type": "string",
@@ -329,7 +329,7 @@
       "minInstances": 6,
       "checkText": [],
       "checkClasses": [
-        "x-pricing--bordered"
+        "x-cardpricing--bordered"
       ],
       "checkAttributes": [
         "plan",

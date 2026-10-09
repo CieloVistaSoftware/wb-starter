@@ -27,7 +27,7 @@
  *      resolves instantly to a raw, un-upgraded element, and reading a
  *      computed style off it gets pre-upgrade values. Under --workers=8 that
  *      cost 9 failures that all passed in isolation.
- *      (cardnotification is the exception: it upgrades to `.x-notification`,
+ *      (cardnotification is the exception: it upgrades to its own `[x-cardnotification]` host,
  *      not `.x-card`.)
  *
  *   4. NO one-shot `await locator.count()` / `textContent()` in an assertion.
@@ -507,7 +507,7 @@ test.describe('Cards Showcase Page', () => {
 
   // ═══════════════════════════════════════════════════════════════════════
   // CARD TYPE: cardnotification
-  // NOTE: cardnotification upgrades to .x-notification, NOT .x-card.
+  // NOTE: cardnotification builds its own notification parts, NOT .x-card ones.
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Notification', () => {
     test('notification cards render all variants', async ({ page }) => {
@@ -533,12 +533,12 @@ test.describe('Cards Showcase Page', () => {
         await expect(card).toBeVisible();
         // #1763: what the behavior BUILT, not the authored host. The selector
         // above matches the markup whether or not cardnotification ever ran
-        // (#969 dropped .x-notification from it), and x-ready is stamped by the
+        // (#969 dropped the host class from it), and x-ready is stamped by the
         // runtime once the behavior returns, built or not -- measured: with
         // cardnotification() made a no-op, the old count-and-visible form passed.
         // role="alert" and the icon exist only once it has run.
         await expect(card, `variant="${variant}" was never built`).toHaveAttribute('role', 'alert');
-        await expect(card.locator('.x-notification__icon'), `variant="${variant}" has no icon`).toHaveCount(1);
+        await expect(card.locator('.x-cardnotification__icon'), `variant="${variant}" has no icon`).toHaveCount(1);
       }
     });
 
@@ -652,7 +652,7 @@ test.describe('Cards Showcase Page', () => {
 
       // The AUTHORED card itself, by its x-ready stamp. Not a count of
       // `[x-cardnotification][variant="info"]`: since #969 dropped the
-      // `.x-notification` class from that selector it matches the unbuilt host
+      // host class from that selector it matches the unbuilt host
       // too, so a count of it can never be 0 and the old one-scroll form
       // passed this guard (#1761, measured: stranded 12,897px below the fold,
       // never built, green).
@@ -680,10 +680,10 @@ test.describe('Cards Showcase Page', () => {
 
     test('dismissible notification has close button', async ({ page }) => {
       // cardnotification is dismissible by default (card.js:1735), and the
-      // rendered class is .x-notification__dismiss -- the spec's old
+      // rendered class is .x-cardnotification__dismiss -- the spec's old
       // .x-card__notification-dismiss exists nowhere in src/.
       const notification = page.locator('[x-cardnotification]').first();
-      const closeBtn = notification.locator('.x-notification__dismiss');
+      const closeBtn = notification.locator('.x-cardnotification__dismiss');
       await expect(closeBtn).toBeVisible();
     });
 
@@ -695,7 +695,7 @@ test.describe('Cards Showcase Page', () => {
       const notification = page.locator('[x-cardnotification][title="Changes Saved!"]');
       await expect(notification).toHaveCount(1);
 
-      const closeBtn = notification.locator('.x-notification__dismiss');
+      const closeBtn = notification.locator('.x-cardnotification__dismiss');
       await expect(closeBtn).toBeVisible();
 
       await closeBtn.click();

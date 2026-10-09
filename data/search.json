@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 306,
-    "totalWords": 5967
+    "totalWords": 5965
   },
   "documents": [
     {
@@ -3727,7 +3727,7 @@
       "title": "CSS-CLASS-CONVENTION",
       "description": null,
       "headings": [],
-      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout hosts, and the toggle, handle and resize overlay drawerLayout builds), took it to 85. Batch 3, the trigger family, took it to 66. Batch 4, the parts that semantic elements build (code, pre, range, textarea, copybutton, audio, label, select, timeline and the accordion items), took it to 50. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. **\"This element is the trigger\" is a modifier.** The element carrying the behavior is the block, so the class that marks it as the trigger is `x-{behavior}--trigger` (`x-dialog--trigger`, `x-popover--trigger`, `x-toast--trigger`). A look variant of the trigger is one modifier with a kebab-case value: `x-confetti--trigger-button`. Where `.x-{behavior}` already names the panel the behavior builds (`.x-popover`, `.x-sheet`, `.x-toast`, `.x-tooltip`, `.x-dialog`), the trigger carries only the modifier, so no panel rule can match it. **A wrapper the behavior builds is a part.** DOM a behavior creates around or inside its element is `x-{behavior}__{part}`: `x-pre__wrapper`, `x-code__wrapper`, `x-range__wrapper` with `x-range__value` and `x-range__labels`, `x-textarea__wrapper`, `x-copybutton__wrapper`, `x-label__group`, `x-select__clearable`, `x-timeline__item`, and the accordion's `x-accordion__item`, `__head`, `__title`, `__icon` and `__body`. The one exception is a built element that already carries the block class: the div audio.js builds around a native ` ` is `x-audio`, so \"this is the built host\" is the modifier `x-audio--host` on it. **A class is not an attribute.** ` ` is still how an author applies drawerLayout; only the class the behavior adds changed, to `x-drawerlayout`. Where a retired class name is also a live attribute, the gate counts it only where it is used as a class. --- ## Why inline styles are not an alternative Whatever is not in a class ends up in `element.style`, and that is worse in three specific ways: - **Unfindable.** `grep .x-card--expanded src/styles/` returns nothing, and nothing points the reader at `card.js` instead. - **Unoverridable.** A",
+      "content": "# CSS class convention — you can name the class without reading the code **Convention over configuration.** A behavior's classes are *derivable* from its name. No manifest, no lookup, no opening the JavaScript. John, 2026-09-08: *\"if we control how .js names classes then we can find them based on convention\"* — and *\"the user must easily be able to find the class for current element.\"* --- ## The rule ``` x-{behavior} the host element x-{behavior}__{part} DOM the behavior builds inside the host x-{behavior}--{modifier} a variant or state of the host ``` `{behavior}` is the behavior's **registered name** in `src/core/tag-map.js` — not a concept, not an abbreviation, not a related word. Observed on a real render, ` `: ``` host x-alert x-alert--info built x-alert__content x-alert__icon x-alert__message ``` So an author who wrote `x-alert` knows, without looking anything up, that `.x-alert__icon` is the icon and `.x-alert--info` is the informational variant. --- ## Why the convention and not a manifest A manifest is a second source of truth. It is correct on the day it is written and wrong the first time someone adds a class without updating it — and nothing notices, because a stale list looks exactly like a current one. A convention cannot go stale. It can only be *broken*, and a broken convention is detectable by a gate. --- ## What breaks it **A base that is not the behavior's name.** The class names a concept instead of the thing that applies it: ``` x-pricing the behavior is `cardpricing` x-stats the behavior is `cardstats` x-product the behavior is `cardproduct` ``` Nobody can derive `x-pricing` from `cardpricing`. The chain breaks at the first link. **Single-dash compounds.** They are ambiguous by construction: ``` x-card-image the `cardimage` behavior? or the `image` part of a `card`? ``` Those are different elements with different rules, and the name cannot distinguish them. `x-cardimage` (a behavior) and `x-card__image` (a part) can. Measured 2026-09-08: **184 of 333 classes conform (55%)**. 77 use a base that is not a behavior name; 72 use the wrong shape. See #1096. ### The gate `tests/compliance/behavior-classes-follow-naming-convention.spec.ts` reads every class a behavior module applies (`classList.add`, `classList.toggle`, and `className =`) and checks its base against the registered names: the values in `src/core/tag-map.js` plus the keys of `behaviorModules` in `src/wb-viewmodels/index.js`. tag-map.js alone lists only 124 names, so it reported real behaviors like `clipboard` and `lazy` as concepts. The classes are renamed in batches, so the gate is a ratchet. Measured 2026-10-07: 700 classes, 107 broke the rule. Batch 1, the form-control family (floatinglabel, formrow, inputgroup and the label and wrapper built by radio), took it to 96. Batch 2, the layout compounds (the sidebarlayout and drawerLayout hosts, and the toggle, handle and resize overlay drawerLayout builds), took it to 85. Batch 3, the trigger family, took it to 66. Batch 4, the parts that semantic elements build (code, pre, range, textarea, copybutton, audio, label, select, timeline and the accordion items), took it to 50. Batch 5, the bases that named a concept rather than a behavior (the portfolio, notification, pricing and stats card classes, the press feedback, the sheet's drag class and the showcase's copy anchor), took it to 28. The count may only go down, and a renamed class is retired: no source, stylesheet, test, doc, page, demo or data file may use the old name again. **\"This element is the trigger\" is a modifier.** The element carrying the behavior is the block, so the class that marks it as the trigger is `x-{behavior}--trigger` (`x-dialog--trigger`, `x-popover--trigger`, `x-toast--trigger`). A look variant of the trigger is one modifier with a kebab-case value: `x-confetti--trigger-button`. Where `.x-{behavior}` already names the panel the behavior builds (`.x-popover`, `.x-sheet`, `.x-toast`, `.x-tooltip`, `.x-dialog`), the trigger carries only the modifier, so no panel rule can match it. **A wrapper the behavior builds is a part.** DOM a behavior creates around or inside its element is `x-{behavior}__{part}`: `x-pre__wrapper`, `x-code__wrapper`, `x-range__wrapper` with `x-range__value` and `x-range__labels`, `x-textarea__wrapper`, `x-copybutton__wrapper`, `x-label__group`, `x-select__clearable`, `x-timeline__item`, and the accordion's `x-accordion__item`, `__head`, `__title`, `__icon` and `__body`. The one exception is a built element that already carries the block class: the div audio.js builds around a native ` ` is `x-audio`, so \"this is the built host\" is the modifier `x-audio--host` on it. **A card variant's classes take the variant's name.** The cardportfolio behavior builds `x-cardportfolio__header` and `x-cardportfolio__avatar`, and its full variant is `x-cardportfolio--full`; cardnotification's are `x-cardnotification__icon` and `x-cardnotification--warning`. The same holds for `x-cardpricing--featured` an",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-08"
@@ -5943,6 +5943,7 @@
     "28": [
       "pages/hero-gallery",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/index",
       "demos/site/index"
     ],
@@ -10010,7 +10011,6 @@
       "docs/schema-first-audit-report",
       "docs/search",
       "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
@@ -10814,6 +10814,7 @@
       "docs/guides/create-a-website",
       "docs/mcp",
       "docs/npx-commands",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
@@ -11091,7 +11092,6 @@
       "docs/linkedin-update-article",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -13263,6 +13263,7 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/schema",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/wbservices",
@@ -15077,7 +15078,6 @@
       "docs/pricecard",
       "docs/property-viewer",
       "docs/search",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -15757,7 +15757,6 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/switcher",
       "docs/behaviors/x-copybutton",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/autoinject",
       "demos/site/cards"
     ],
@@ -16267,6 +16266,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
       "docs/linkedin-update-article",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/cards"
     ],
     "injected": [
@@ -16616,6 +16616,7 @@
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
@@ -17724,7 +17725,6 @@
       "docs/pricecard",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
@@ -18022,7 +18022,6 @@
       "docs/audio",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/scrollable",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/styles"
     ],
@@ -18433,6 +18432,7 @@
       "docs/performance",
       "docs/properties",
       "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/testing-runbook",
       "demos/index",
       "demos/site/feedback",
@@ -19155,8 +19155,7 @@
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
       "docs/behaviors/youtube",
-      "docs/index",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/index"
     ],
     "traditional": [
       "pages/docs",
@@ -19973,7 +19972,6 @@
       "docs/performance",
       "docs/schema-test-value",
       "docs/search",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/test-schema-standard",
@@ -20139,7 +20137,8 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/schema-test-value",
-      "docs/semantic-audit"
+      "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "cardfile": [
       "pages/features",
@@ -20393,6 +20392,7 @@
       "docs/behaviors/skeleton",
       "docs/pce-candidates",
       "docs/schema-test-value",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/feedback"
     ],
     "chip": [
@@ -20511,6 +20511,7 @@
     "anchor": [
       "pages/features",
       "docs/AI",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "demos/schema-first-architecture"
     ],
@@ -23074,6 +23075,7 @@
       "docs/home-page",
       "docs/schema-test-value",
       "docs/schema",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/playground",
       "demos/site/index"
     ],
@@ -23201,7 +23203,6 @@
       "docs/schema",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles",
       "demos/frameworks",
@@ -23870,6 +23871,7 @@
       "docs/behaviors/x-darkmode",
       "docs/linkedin-framework-agnostic",
       "docs/schema-first-audit-report",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/wbservices",
       "demos/schema-first-architecture",
       "demos/site/cards",
@@ -24297,6 +24299,7 @@
       "docs/behaviors/toast",
       "docs/home-page",
       "docs/schema-test-value",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/cards"
     ],
     "script": [
@@ -24778,6 +24781,7 @@
       "docs/behaviors/x-resizable",
       "docs/container-pattern",
       "docs/property-viewer",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard"
     ],
     "press": [
@@ -24787,7 +24791,8 @@
       "docs/behaviors/pulse",
       "docs/behaviors/ripple",
       "docs/behaviors/tags",
-      "docs/behaviors/x-enhancements"
+      "docs/behaviors/x-enhancements",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "wrote": [
       "pages/introduction",
@@ -26216,7 +26221,6 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/card",
       "docs/behaviors/x-darkmode",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/standalone"
     ],
     "filtering": [
@@ -27203,7 +27207,6 @@
       "docs/behaviors/table",
       "docs/behaviors/tabs",
       "docs/behaviors/toast",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
@@ -27995,7 +27998,6 @@
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-standards-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -31877,6 +31879,7 @@
       "docs/home-page",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "demos/autoinject"
     ],
@@ -31949,7 +31952,6 @@
       "docs/property-viewer",
       "docs/schema-test-value",
       "docs/search",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/styles",
       "docs/test-schema-standard",
       "demos/frameworks",
@@ -32299,8 +32301,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/cardstats",
       "docs/behaviors/steps",
-      "docs/home-page",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/home-page"
     ],
     "radius": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -35714,7 +35715,6 @@
       "docs/behaviors/ul",
       "docs/claude/README",
       "docs/claude/TIER3-REFERENCE",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/REPO-LAYOUT"
     ],
     "parameter": [
@@ -35737,7 +35737,6 @@
       "docs/behaviors/switch",
       "docs/behaviors/tabs",
       "docs/claude/TOOLING-INVENTORY",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS"
     ],
     "composes": [
@@ -36420,7 +36419,6 @@
       "docs/properties",
       "docs/search",
       "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -36574,8 +36572,7 @@
     ],
     "worse": [
       "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "looks": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -38454,8 +38451,7 @@
       "docs/behaviors/stagelight",
       "docs/card",
       "docs/code-examples-standard",
-      "docs/pce-candidates",
-      "docs/standards/CSS-CLASS-CONVENTION"
+      "docs/pce-candidates"
     ],
     "evaluating": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
@@ -38719,6 +38715,7 @@
       "docs/behaviors/stagelight",
       "docs/escape-hatches",
       "docs/pce-candidates",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS"
     ],
@@ -39953,7 +39950,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/npx-commands",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "byte": [
@@ -40477,7 +40473,6 @@
       "docs/behaviors/collapse",
       "docs/behaviors/details",
       "docs/behaviors/drawerLayout",
-      "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "demos/site/cards"
     ],
@@ -40945,6 +40940,7 @@
       "docs/pce-candidates",
       "docs/schema-test-value",
       "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/multi-behavior-demo-generated"
     ],
     "clock": [
@@ -42502,6 +42498,7 @@
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardproduct",
       "docs/behaviors/container",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/content"
     ],
     "siblings": [
@@ -42963,6 +42960,7 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/fill",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/layout-test"
     ],
     "widest": [
@@ -43075,6 +43073,7 @@
     "portfolio": [
       "docs/behaviors/cardportfolio",
       "docs/pce-candidates",
+      "docs/standards/CSS-CLASS-CONVENTION",
       "demos/index",
       "demos/site/cards",
       "demos/site/index"
@@ -49704,7 +49703,8 @@
       "demos/schema-first-architecture"
     ],
     "bases": [
-      "docs/schema-test-value"
+      "docs/schema-test-value",
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "covered": [
       "docs/schema-test-value",
@@ -50148,12 +50148,6 @@
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "batches": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "unfindable": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "unoverridable": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "15a": [

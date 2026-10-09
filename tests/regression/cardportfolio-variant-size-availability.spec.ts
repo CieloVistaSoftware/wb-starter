@@ -6,8 +6,8 @@ import { buildInView } from '../base';
  * related bugs, all found live on demos/multi-component-demo-generated.html
  * (the auto-generated page that renders one <div x-demo> per enum value):
  *
- * 1. variant="compact"/"horizontal"/"full" added a `x-portfolio--{variant}`
- *    class (card.js) but card.css had ZERO `.x-portfolio--*` rules -- the
+ * 1. variant="compact"/"horizontal"/"full" added a `x-cardportfolio--{variant}`
+ *    class (card.js) but card.css had ZERO `.x-cardportfolio--*` rules -- the
  *    same "JS adds a modifier class, no matching CSS exists" pattern already
  *    fixed this session for x-switch/x-button/x-progress/x-chip/x-rating.
  *    compact/horizontal rendered pixel-identical to default.
@@ -21,7 +21,7 @@ import { buildInView } from '../base';
  *    portfolio's own avatar size / name font-size / header padding with the
  *    size class too, so diversity is visible independent of container width.
  *
- * 3. The availability dot (`.x-portfolio__availability`) was built ONLY
+ * 3. The availability dot (`.x-cardportfolio__availability`) was built ONLY
  *    inside `if (config.avatar) {...}` -- since the demo generator never
  *    sets `avatar` (not a required schema property) and `availability`
  *    defaults to 'available' (cardportfolio.schema.json), the dot never
@@ -44,8 +44,8 @@ test.describe('[x-cardportfolio] variant/size/availability (regression)', () => 
     const results = await section.evaluate((sectionEl) => {
       const cards = Array.from(sectionEl.querySelectorAll('[x-cardportfolio]'));
       return cards.map((c) => {
-        const dot = c.querySelector('.x-portfolio__availability');
-        const placeholder = c.querySelector('.x-portfolio__avatar-placeholder');
+        const dot = c.querySelector('.x-cardportfolio__availability');
+        const placeholder = c.querySelector('.x-cardportfolio__avatar-placeholder');
         return {
           availability: c.getAttribute('availability'),
           hasAvatarAttr: c.hasAttribute('avatar'),
@@ -84,12 +84,12 @@ test.describe('[x-cardportfolio] variant/size/availability (regression)', () => 
         ) as HTMLElement | undefined;
         if (!el) return null;
         const cs = getComputedStyle(el);
-        const avatar = el.querySelector('.x-portfolio__avatar');
+        const avatar = el.querySelector('.x-cardportfolio__avatar');
         return {
           width: el.getBoundingClientRect().width,
           flexDirection: cs.flexDirection,
           avatarWidth: avatar ? avatar.getBoundingClientRect().width : null,
-          hasVariantClass: el.classList.contains(`x-portfolio--${variant}`),
+          hasVariantClass: el.classList.contains(`x-cardportfolio--${variant}`),
         };
       };
       return {
@@ -142,8 +142,8 @@ test.describe('[x-cardportfolio] variant/size/availability (regression)', () => 
           (c) => c.getAttribute('size') === size,
         ) as HTMLElement | undefined;
         if (!el) return null;
-        const avatar = el.querySelector('.x-portfolio__avatar');
-        const name = el.querySelector('.x-portfolio__name');
+        const avatar = el.querySelector('.x-cardportfolio__avatar');
+        const name = el.querySelector('.x-cardportfolio__name');
         return {
           avatarWidth: avatar ? avatar.getBoundingClientRect().width : null,
           nameFontSize: name ? parseFloat(getComputedStyle(name).fontSize) : null,

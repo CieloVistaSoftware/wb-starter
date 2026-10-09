@@ -567,8 +567,16 @@ export function sparkle(element, options = {}) {
  * pointerdown and pointerup can land in the same frame, the class goes on and
  * off before a single paint, and nothing is seen. 120ms is long enough to
  * register and short enough not to feel laggy.
+ *
+ * #1096: the class is the calling behavior's own modifier, x-glow--pressed,
+ * x-rainbow--pressed or x-particle--pressed, so its name follows from the
+ * behavior. The caller passes `setPressed`, which toggles that class, so each
+ * name is written out where the behavior is.
+ *
+ * @param {HTMLElement} element
+ * @param {(down: boolean) => void} setPressed  puts the pressed class on or takes it off
  */
-function addPressFeedback(element) {
+function addPressFeedback(element, setPressed) {
   const PRESS_MS = 120;
   let pressedAt = 0;
   let releaseTimer = null;
@@ -576,14 +584,14 @@ function addPressFeedback(element) {
   const down = () => {
     pressedAt = Date.now();
     clearTimeout(releaseTimer);
-    element.classList.add('x-pressed');
+    setPressed(true);
   };
 
   const up = () => {
     const held = Date.now() - pressedAt;
     const wait = Math.max(0, PRESS_MS - held);
     clearTimeout(releaseTimer);
-    releaseTimer = setTimeout(() => element.classList.remove('x-pressed'), wait);
+    releaseTimer = setTimeout(() => setPressed(false), wait);
   };
 
   element.addEventListener('pointerdown', down);
@@ -598,7 +606,7 @@ function addPressFeedback(element) {
 
   return () => {
     clearTimeout(releaseTimer);
-    element.classList.remove('x-pressed');
+    setPressed(false);
     element.removeEventListener('pointerdown', down);
     element.removeEventListener('pointerup', up);
     element.removeEventListener('pointerleave', up);
@@ -626,7 +634,7 @@ export function glow(element, options = {}) {
   // cannot enumerate (#ff00aa, rgb(), hsl()) travels, as a generated rule.
   if (color && !isThemeColor(color)) setRule(element, 'glow', { '--glow-color': color });
 
-  const releasePress = addPressFeedback(element);
+  const releasePress = addPressFeedback(element, (down) => element.classList.toggle('x-glow--pressed', down));
 
   return () => { releasePress(); clearRules(element); element.classList.remove('x-glow', 'x-glow--text'); };
 }
@@ -642,7 +650,7 @@ export function rainbow(element, options = {}) {
   // only an author-supplied duration travels, as a generated rule.
   if (duration) setRule(element, 'rainbow', { '--x-rainbow-duration': duration });
 
-  const releasePress = addPressFeedback(element);
+  const releasePress = addPressFeedback(element, (down) => element.classList.toggle('x-rainbow--pressed', down));
   return () => {
     releasePress();
     clearRules(element);
@@ -856,7 +864,7 @@ export function particle(element, options = {}) {
     particles.push(p);
   }
 
-  const releasePress = addPressFeedback(element);
+  const releasePress = addPressFeedback(element, (down) => element.classList.toggle('x-particle--pressed', down));
   return () => {
     releasePress();
     particles.forEach(p => { clearRules(p); p.remove(); });

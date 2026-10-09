@@ -36,9 +36,10 @@ const root = process.cwd();
  * Classes applied by behaviors that do not follow the convention. Shrink only.
  * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96,
  * batch 2 (the layout compounds) to 85, batch 3 (the -trigger family) to 66,
- * batch 4 (the parts semantic elements build) to 50.
+ * batch 4 (the parts semantic elements build) to 50, batch 5 (bases that were
+ * not a behavior name) to 28.
  */
-const NON_CONFORMING_MAX = 50;
+const NON_CONFORMING_MAX = 28;
 
 /**
  * Old name -> the name that replaced it. Each old name is gone for good.
@@ -113,6 +114,22 @@ const RETIRED: Record<string, string> = {
   'x-accordion-body': 'x-accordion__body',
   'x-accordion-title': 'x-accordion__title',
   'x-accordion-icon': 'x-accordion__icon',
+  // Batch 5, 2026-10-09: a base that named a concept, not the behavior that
+  // applies it. A card variant's classes take the variant's name, so every
+  // x-portfolio* class is now x-cardportfolio* and every x-notification* class
+  // x-cardnotification*: the whole family, so the stem is what is retired. A
+  // state one helper puts on several behaviors is each behavior's own
+  // modifier: x-glow--pressed, x-rainbow--pressed and x-particle--pressed. The
+  // class sheet puts on <body> while it is dragged is the sheet's modifier,
+  // and the copy-button anchor behaviors-showcase.js puts on an x-mdhtml block
+  // is a modifier of that block.
+  'x-portfolio': 'x-cardportfolio',
+  'x-notification': 'x-cardnotification',
+  'x-pricing--featured': 'x-cardpricing--featured',
+  'x-stats--accent': 'x-cardstats--accent',
+  'x-pressed': 'x-glow--pressed',
+  'x-resizing': 'x-sheet--resizing',
+  'x-showcase__copy-host': 'x-mdhtml--copy-host',
 };
 
 /**

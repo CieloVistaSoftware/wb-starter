@@ -615,7 +615,7 @@ test.describe('Component Compliance', () => {
       // compliance.baseClass STAYS in the schemas: wb.js:374 and
       // schema-builder.js:207 derive generated class names from it, and 22
       // schemas declare a value that differs from the x-<name> default
-      // (x-hero, x-notification -- 50 and 20 CSS references respectively).
+      // (x-hero, and cardnotification before #1096 -- 50 and 20 CSS references respectively).
       // It is a class-name source, not a compliance rule.
       
       // ========== CHECK 2: Parent Class ==========

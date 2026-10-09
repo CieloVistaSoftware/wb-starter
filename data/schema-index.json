@@ -5288,7 +5288,7 @@
       "title": "Notification Card",
       "description": "Dismissible notification card with variant-based styling",
       "tag": "x-cardnotification",
-      "baseClass": "x-notification",
+      "baseClass": "x-cardnotification",
       "properties": {
         "variant": {
           "type": "string",
@@ -5300,7 +5300,7 @@
             "error"
           ],
           "default": "info",
-          "appliesClass": "x-notification--{{value}}"
+          "appliesClass": "x-cardnotification--{{value}}"
         },
         "title": {
           "type": "string",
@@ -5327,7 +5327,7 @@
           "type": "boolean",
           "description": "Add shadow elevation",
           "default": false,
-          "appliesClass": "x-notification--elevated"
+          "appliesClass": "x-cardnotification--elevated"
         }
       },
       "matrix": [
@@ -5673,7 +5673,7 @@
       "title": "Portfolio Card",
       "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
       "tag": "x-cardportfolio",
-      "baseClass": "x-portfolio",
+      "baseClass": "x-cardportfolio",
       "properties": {
         "name": {
           "type": "string",
@@ -5821,7 +5821,7 @@
             "full"
           ],
           "default": "default",
-          "appliesClass": "x-portfolio--{{value}}"
+          "appliesClass": "x-cardportfolio--{{value}}"
         },
         "size": {
           "type": "string",
@@ -5944,7 +5944,7 @@
       "title": "Pricing Card",
       "description": "Pricing tier card with plan name, price, features list, and CTA",
       "tag": "x-cardpricing",
-      "baseClass": "x-pricing",
+      "baseClass": "x-cardpricing",
       "properties": {
         "plan": {
           "type": "string",
@@ -5987,7 +5987,7 @@
           "type": "boolean",
           "description": "Highlight as featured/recommended plan",
           "default": false,
-          "appliesClass": "x-pricing--featured"
+          "appliesClass": "x-cardpricing--featured"
         },
         "variant": {
           "type": "string",
@@ -7690,7 +7690,7 @@
       "title": "Stats Card",
       "description": "Statistics display card with value, label, icon, and trend indicator",
       "tag": "x-cardstats",
-      "baseClass": "x-stats",
+      "baseClass": "x-cardstats",
       "properties": {
         "value": {
           "type": "string",
