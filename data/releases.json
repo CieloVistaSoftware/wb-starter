@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.458",
+      "date": "2026-10-08",
+      "summary": "Fix cards get their stylesheet again; it had matched nothing since card hosts lost the x-card class. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1793\" target=\"_blank\" rel=\"noopener\">#1793</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Fix-card.css keys on x-fix-card, so a fix card is styled again</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1793\" target=\"_blank\" rel=\"noopener\">#1793</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/448ce2f264c52943324f1928c17902a1a06ead34\" target=\"_blank\" rel=\"noopener\"><code>448ce2f</code></a>",
+          "issues": [
+            1095,
+            1793
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/fix-card-stylesheet-applies.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/fix-card-stylesheet-applies.spec.ts</a> --project=regression</code>. Before: no height cap, header rows stacked as blocks. Now: 750px cap, header and meta laid out in rows.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/448ce2f264c52943324f1928c17902a1a06ead34\" target=\"_blank\" rel=\"noopener\"><code>448ce2f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.457",
       "date": "2026-10-08",
       "summary": "The behavior registry audit now counts the x-{name} route #1642 added, so it reports 3 unreachable behaviors instead of 60, and CI fails on any new disagreement. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1789\" target=\"_blank\" rel=\"noopener\">#1789</a>",
