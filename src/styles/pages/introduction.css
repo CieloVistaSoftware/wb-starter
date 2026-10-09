@@ -1,0 +1,11 @@
+/* introduction.css -- page styles for pages/introduction.html (#1244). */
+
+/* The comparison table is four columns: on a phone it is wider than the page,
+   so it scrolls inside this box rather than being cut off. (site.css's phone
+   rule `.x-table { display: block; overflow-x: auto }` does not reach a table
+   that IS the x-table: data.css's `table.x-table { display: table }` is more
+   specific.) */
+:where(#mainPage-introduction) .intro-why__scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}

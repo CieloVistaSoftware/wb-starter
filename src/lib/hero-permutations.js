@@ -45,9 +45,11 @@ const BGS = [
 // would, not to a relative path that only works inside this repo.
 const SITE = 'https://cielovistasoftware.github.io/wb-starter/';
 const DV = (file) => SITE + 'public/doc-viewer.html?file=' + encodeURIComponent(file);
+const INTRO = SITE + '?page=introduction';
 const CTA_HREF = {
   'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
-  'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
+  // #1244: "Read the guide" opens the Introduction, the evaluator's entry point.
+  'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': INTRO, 'Read the Guide': INTRO,
   'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors-reference.md'),
   'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
   'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
@@ -57,17 +59,17 @@ const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
 
 /**
  * A CTA link as the gallery page writes it (#1597). The page is part of the
- * site, so a link to the live doc viewer is written relative: on the live site
+ * site, so a link into the site is written relative: on the live site
  * it opens the same .io page, and it doesn't repeat the site's URL 160+ times
  * (wb-prefix-cannot-return counts every "wb-starter", and the absolute links
  * pushed PACKAGE from ~780 to 1018). Links off the site stay absolute.
  */
 export function galleryHref(link) {
-  // Only the doc-viewer links: the page is served from the site root, and
-  // refs-resolve checks a relative href against pages/ unless it is the doc
-  // viewer, whose file= it resolves itself. The playground link stays absolute.
-  const DOC = SITE + 'public/doc-viewer.html?file=';
-  return link.startsWith(DOC) ? link.slice(SITE.length) : link;
+  // Every link into the site: the gallery is a page fragment, injected at the
+  // site root, so a root-relative href opens the same .io page. refs-resolve
+  // resolves a fragment's links against the site root since #1244 (it used to
+  // use pages/, which is why the playground link had to stay absolute).
+  return link.startsWith(SITE) ? link.slice(SITE.length) : link;
 }
 
 /**

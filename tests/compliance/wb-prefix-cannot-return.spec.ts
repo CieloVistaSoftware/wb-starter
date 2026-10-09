@@ -54,13 +54,17 @@ const ROOT = process.cwd();
  * data/ output. The numbers dropped (MODULE 2,542 -> 1,125) because thousands
  * of those hits were audit REPORTS about wb- strings, not wb- strings in
  * source. Same rule as before: lower these, never raise them.
+ *
+ * PACKAGE 900 -> 855 (#1244): the hero gallery's 60 playground links are
+ * root-relative now that refs-resolve reads a fragment's links from the site
+ * root; the new Introduction page names the project 15 times of that back.
  */
 const CEILING: Record<string, number> = {
   TAG: 0,
   CLASS: 200,
   MODULE: 1300,
   DATA: 60,
-  PACKAGE: 900,
+  PACKAGE: 855,
 };
 
 /**

@@ -1,0 +1,196 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<!-- Introduction (#1244) -- what wb-starter is, why it replaces the traditional
+     framework, and where an evaluator goes next. John: "make the introduction a
+     webpage then include link to it there" -- pinned on the Documentation page.
+     Every "why" claim links to the demo or doc that shows it. No counts are
+     written here: "41+ behaviors" in docs/index.md is what goes stale. -->
+<!-- pageRules: noInlineStyles=true, fragment=true, showcase=false -->
+<!-- Page styles: src/styles/pages/introduction.css -->
+<link rel="stylesheet" href="src/styles/pages/introduction.css?v=1.0.456">
+
+<div class="page__hero" id="intro-hero">
+  <h1>Introduction to wb-starter</h1>
+  <p>A zero-build website framework. You write HTML5. That is the whole API.</p>
+</div>
+
+<section class="page__section" id="intro-what">
+  <h2>What it is</h2>
+  <p>
+    wb-starter adds behavior to the HTML you already write. A behavior attaches
+    either to a semantic element itself (an <code>&lt;article&gt;</code> becomes a
+    card, a <code>&lt;dialog&gt;</code> a modal, a <code>&lt;details&gt;</code> an
+    accordion) or to any element through an <code>x-*</code> attribute
+    (<code>x-ripple</code>, <code>x-tooltip</code>, <code>x-draggable</code>).
+    There is no build step, no bundler, no JSX and no custom-element vocabulary,
+    and everything renders in the light DOM, where your CSS and your devtools
+    reach it.
+  </p>
+  <pre id="intro-what-code" language="html"><code>&lt;article x-draggable x-ripple&gt;
+  &lt;h3&gt;Hello&lt;/h3&gt;
+  &lt;p&gt;A card you can drag, with a ripple on press.&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+  <p>
+    The <code>&lt;article&gt;</code> is still an <code>&lt;article&gt;</code>.
+    Inspect it and you see the element you wrote, with classes on it: HTML5 in,
+    HTML5 out.
+  </p>
+</section>
+
+<section class="page__section" id="intro-why">
+  <h2>Why it ends the traditional framework</h2>
+  <p>
+    Every popular framework makes the same trade: to get components, you give up
+    HTML. React turns markup into JSX and a build pipeline, Vue and Angular add
+    template languages and compilers, and Web Components hide your markup behind
+    shadow roots your CSS cannot reach. wb-starter makes the opposite trade. The
+    browser already has the components; wb-starter adds what they are missing.
+    Here is what a team pays for with each, and where to see it for yourself.
+  </p>
+  <div class="intro-why__scroll" id="intro-why-scroll">
+  <table id="intro-why-table">
+    <thead>
+      <tr><th scope="col">What you pay for</th><th scope="col">Typical framework</th><th scope="col">wb-starter</th><th scope="col">See it</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Build toolchain</th>
+        <td>A compiler, a bundler and their configuration, before anything runs</td>
+        <td>None. The files you write are the files the browser runs</td>
+        <td><a href="https://github.com/CieloVistaSoftware/wb-starter/blob/main/pages/introduction.html">This page's own source</a>, and <a href="public/doc-viewer.html?file=docs%2Fguides%2Fcreate-a-website.md">a site in five minutes</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Vocabulary to learn</th>
+        <td>Components, props, hooks or directives, and a template syntax</td>
+        <td>HTML5 elements and <code>x-*</code> attributes</td>
+        <td><a href="public/doc-viewer.html?file=docs%2Fauto-injection.md">Auto injection</a> and <a href="?page=behaviors">every behavior, live</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Lock-in and upgrade churn</th>
+        <td>Breaking releases and migrations; components only run inside that framework</td>
+        <td>Your markup is HTML and does not go out of date; the same attributes work inside React, Vue or Svelte</td>
+        <td><a href="public/doc-viewer.html?file=docs%2Fescape-hatches.md">Escape hatches</a> and <a href="demos/frameworks.html">the framework demos</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Styling walls</th>
+        <td>Scoped styles, CSS-in-JS, or shadow roots your stylesheet cannot reach</td>
+        <td>Light DOM only: one stylesheet and CSS variables reach every element</td>
+        <td><a href="?page=themes">The themes</a> and <a href="public/doc-viewer.html?file=docs%2Fthemes.md">how theming works</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Bundle size and first paint</th>
+        <td>The framework runtime ships, and runs, before your page appears</td>
+        <td>No framework library; each behavior is a small ES module, loaded when its element nears the viewport</td>
+        <td><a href="public/doc-viewer.html?file=docs%2FV3-GUIDE.md">How it works internally (§7)</a> and <a href="public/doc-viewer.html?file=docs%2Fperformance.md">the performance work</a></td>
+      </tr>
+      <tr>
+        <th scope="row">When the framework is abandoned</th>
+        <td>The site depends on code nobody maintains, and a rewrite</td>
+        <td>The page is still an HTML document; without the script it loses behavior, not content</td>
+        <td><a href="public/doc-viewer.html?file=docs%2Fauto-injection.md">Portability</a> and <a href="public/doc-viewer.html?file=docs%2FWB_BEHAVIOR_SYSTEM.md">the behavior system</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="page__section" id="intro-next">
+  <h2>Where to go next</h2>
+  <p>Everything an evaluator needs, one link each.</p>
+  <div x-grid id="intro-next-grid">
+    <a href="?page=behaviors" class="feature-card-link" aria-label="Try it: every behavior, live">
+      <article variant="float">
+        <h3>🧩 Try it</h3>
+        <p>Every behavior with a live example and its attributes, on the Behaviors page.</p>
+      </article>
+    </a>
+    <a href="demos/playground.html" class="feature-card-link" aria-label="Edit HTML in the playground">
+      <article variant="float">
+        <h3>🛝 Playground</h3>
+        <p>Write HTML with behaviors on it and see the result as you type.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fguides%2Fcreate-a-website.md" class="feature-card-link" aria-label="Build a site in five minutes">
+      <article variant="float">
+        <h3>🚀 Build a site</h3>
+        <p>From nothing to a published website in about five minutes.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fbehaviors-reference.md" class="feature-card-link" aria-label="The behaviors reference">
+      <article variant="float">
+        <h3>📚 Behaviors reference</h3>
+        <p>What exists, by category, with a page per behavior.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2FV3-GUIDE.md" class="feature-card-link" aria-label="The complete guide">
+      <article variant="float">
+        <h3>📖 The complete guide</h3>
+        <p>How to use it and how it works internally, in one document.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2FWB_BEHAVIOR_SYSTEM.md" class="feature-card-link" aria-label="How the behavior system works">
+      <article variant="float">
+        <h3>⚙️ How it works</h3>
+        <p>Behaviors as plain functions on native elements: composition, not inheritance.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fauto-injection.md" class="feature-card-link" aria-label="Auto injection">
+      <article variant="float">
+        <h3>🏷️ Auto injection</h3>
+        <p>Which semantic elements upgrade on their own, and how to opt one out.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fschema-first-architecture.md" class="feature-card-link" aria-label="Schema-first architecture">
+      <article variant="float">
+        <h3>🗂️ Schema first</h3>
+        <p>Each behavior is described by a JSON schema: the data contract its markup and code follow.</p>
+      </article>
+    </a>
+    <a href="demos/frameworks.html" class="feature-card-link" aria-label="Use it with an existing framework">
+      <article variant="float">
+        <h3>🔌 With your framework</h3>
+        <p>The same behavior attributes, live inside React, Vue and Svelte.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fescape-hatches.md" class="feature-card-link" aria-label="Escape hatches">
+      <article variant="float">
+        <h3>🪝 Escape hatches</h3>
+        <p>Override or customize any behavior when its defaults don't fit.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fthemes.md" class="feature-card-link" aria-label="Theming">
+      <article variant="float">
+        <h3>🎨 Theming</h3>
+        <p>Variable-based themes, dark and light, nested and forced per section.</p>
+      </article>
+    </a>
+    <a href="public/doc-viewer.html?file=docs%2Fperformance.md" class="feature-card-link" aria-label="Performance">
+      <article variant="float">
+        <h3>⚡ Performance</h3>
+        <p>Lazy loading, shared observers and the rest of the performance work.</p>
+      </article>
+    </a>
+    <a href="https://github.com/CieloVistaSoftware/wb-starter" class="feature-card-link" aria-label="The source on GitHub">
+      <article variant="float">
+        <h3>🐙 The source</h3>
+        <p>Every behavior, schema, stylesheet and test, on GitHub.</p>
+      </article>
+    </a>
+  </div>
+</section>
