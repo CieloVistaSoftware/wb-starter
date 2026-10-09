@@ -4,13 +4,13 @@
   "title": "Horizontal Card",
   "description": "Card with horizontal layout - image on side, content on other",
   "schemaFor": "cardhorizontal",
-  "baseClass": "x-card-horizontal",
+  "baseClass": "x-cardhorizontal",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "x-card-horizontal",
+    "baseClass": "x-cardhorizontal",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -229,8 +229,8 @@
         "Subtitle"
       ],
       "checkClasses": [
-        "x-card-horizontal--image-right",
-        "x-card-horizontal--elevated"
+        "x-cardhorizontal--image-right",
+        "x-cardhorizontal--elevated"
       ],
       "checkAttributes": [
         "image",

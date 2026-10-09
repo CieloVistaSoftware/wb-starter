@@ -783,7 +783,7 @@ export default class WBSite {
       this.mobileNavOpen = !this.mobileNavOpen;
       nav?.classList.toggle('site__nav--mobile-open', this.mobileNavOpen);
       backdrop?.classList.toggle('visible', this.mobileNavOpen);
-      document.body.classList.toggle('x-scroll-lock', this.mobileNavOpen);
+      document.body.classList.toggle('site--scroll-lock', this.mobileNavOpen);
       // Opening while scrolled down the page would expand the in-flow fluent
       // nav (#293) above the current viewport, out of sight — bring it into
       // view so the menu is actually visible the moment it opens.
@@ -804,7 +804,7 @@ export default class WBSite {
     this.mobileNavOpen = false;
     nav?.classList.remove('site__nav--mobile-open');
     backdrop?.classList.remove('visible');
-    document.body.classList.remove('x-scroll-lock');
+    document.body.classList.remove('site--scroll-lock');
   }
 }
 

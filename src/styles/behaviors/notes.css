@@ -339,11 +339,11 @@
    --------------------------------------------------------------------------- */
 
 /* Element picker: the hovered candidate, and the crosshair while picking. */
-.x-notes-pick-target {
+.x-notes__pick-target {
   outline: 2px solid var(--primary);
 }
 
-body.x-notes-picking {
+body.x-notes--picking {
   cursor: crosshair;
 }
 

@@ -71,7 +71,14 @@ li:last-child { margin-bottom: 0; }
 /* =============================================================================
    SITE LAYOUT
    ============================================================================= */
-.x-scroll-lock {
+/* <body> while something that covers the page is open: the drawer, offcanvas
+   and sheet each put their own modifier there (overlay.js), and site-engine.js
+   its own while the mobile nav is open. Each removes only its own, so closing a
+   sheet no longer unlocks the page under an open drawer (#1096). */
+.x-drawer--scroll-lock,
+.x-offcanvas--scroll-lock,
+.x-sheet--scroll-lock,
+.site--scroll-lock {
   overflow: hidden;
 }
 
@@ -145,7 +152,7 @@ li:last-child { margin-bottom: 0; }
 /* =============================================================================
    HEADER
    ============================================================================= */
-/* Exposed so other fixed-position UI (toast.css's .x-toast-container) can
+/* Exposed so other fixed-position UI (toast.css's .x-toast__container) can
  * anchor itself below the header instead of duplicating the 4rem value.
  * Defaults to 0 so standalone pages with no .site__header aren't pushed
  * down for a header that doesn't exist. */
@@ -1340,7 +1347,9 @@ a.x-btn-glass {
   border-radius: 999rem;
 }
 
-.x-tag-glass {
+/* The glass badge: header's and the link card's (#1096). */
+.x-header__badge--glass,
+.x-card__link-badge--glass {
   display: inline-flex;
   align-items: center;
   padding: 0.375rem 0.75rem;

@@ -4,13 +4,13 @@
   "title": "Image Card",
   "description": "Card with featured image and optional title/subtitle",
   "schemaFor": "cardimage",
-  "baseClass": "x-card-image",
+  "baseClass": "x-cardimage",
   "semanticElement": {
     "tagName": "article",
     "implicitRole": "article"
   },
   "compliance": {
-    "baseClass": "x-card-image",
+    "baseClass": "x-cardimage",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -320,8 +320,8 @@
         "Subtitle"
       ],
       "checkClasses": [
-        "x-card-image--bottom",
-        "x-card-image--elevated"
+        "x-cardimage--bottom",
+        "x-cardimage--elevated"
       ],
       "checkAttributes": [
         "src"

@@ -399,8 +399,9 @@
   margin: 2rem 0;
 }
 
-/* Tag with glass */
-.x-tag-glass {
+/* Badge with glass: header's and the link card's (#1096) */
+.x-header__badge--glass,
+.x-card__link-badge--glass {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -413,7 +414,8 @@
   transition: all var(--x-transition-fast);
 }
 
-.x-tag-glass:hover {
+.x-header__badge--glass:hover,
+.x-card__link-badge--glass:hover {
   background: var(--x-glass-bg-hover);
   border-color: var(--x-glass-border-hover);
 }

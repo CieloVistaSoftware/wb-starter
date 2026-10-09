@@ -70,6 +70,6 @@
 }
 
 /* File card: the whole card downloads, so it must look clickable. */
-[x-cardfile].x-card-file--downloadable {
+[x-cardfile].x-cardfile--downloadable {
   cursor: pointer;
 }

@@ -231,7 +231,7 @@ export function notes(element, options = {}) {
   // Show status message
   const showStatus = (msg, type = 'info') => {
     statusEl.textContent = msg;
-    statusEl.className = 'x-notes__status x-notes__status--' + type;
+    statusEl.className = `x-notes__status x-notes__status--${type}`;
     setTimeout(() => {
       statusEl.textContent = '';
       statusEl.className = 'x-notes__status';
@@ -340,13 +340,13 @@ export function notes(element, options = {}) {
   };
 
   let pickerHighlight = null;
-  // The hover outline and the crosshair are .x-notes-pick-target and
-  // body.x-notes-picking in notes.css (#779) -- classes, not style writes on
+  // The hover outline and the crosshair are .x-notes__pick-target and
+  // body.x-notes--picking in notes.css (#779) -- classes, not style writes on
   // someone else's element.
   const onPickerMouseOver = (e) => {
-    if (pickerHighlight) pickerHighlight.classList.remove('x-notes-pick-target');
+    if (pickerHighlight) pickerHighlight.classList.remove('x-notes__pick-target');
     pickerHighlight = e.target;
-    pickerHighlight.classList.add('x-notes-pick-target');
+    pickerHighlight.classList.add('x-notes__pick-target');
   };
   const onPickerClick = (e) => {
     e.preventDefault();
@@ -362,10 +362,10 @@ export function notes(element, options = {}) {
   const stopPicking = () => {
     if (!isPicking) return;
     isPicking = false;
-    if (pickerHighlight) { pickerHighlight.classList.remove('x-notes-pick-target'); pickerHighlight = null; }
+    if (pickerHighlight) { pickerHighlight.classList.remove('x-notes__pick-target'); pickerHighlight = null; }
     document.removeEventListener('mouseover', onPickerMouseOver, true);
     document.removeEventListener('click', onPickerClick, true);
-    document.body.classList.remove('x-notes-picking');
+    document.body.classList.remove('x-notes--picking');
     element.querySelector('[data-action="pick"]')?.classList.remove('active');
   };
   const startPicking = () => {
@@ -373,7 +373,7 @@ export function notes(element, options = {}) {
     isPicking = true;
     document.addEventListener('mouseover', onPickerMouseOver, true);
     document.addEventListener('click', onPickerClick, true);
-    document.body.classList.add('x-notes-picking');
+    document.body.classList.add('x-notes--picking');
     element.querySelector('[data-action="pick"]')?.classList.add('active');
     showStatus('Click any element on the page to pick it...', 'info');
   };

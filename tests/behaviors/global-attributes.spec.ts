@@ -46,7 +46,7 @@ test.describe('Global Attributes', () => {
 
     await element.click();
 
-    const toastContainer = page.locator('.x-toast-container');
+    const toastContainer = page.locator('.x-toast__container');
     await expect(toastContainer).toBeVisible();
     await expect(toastContainer).toContainText('Global Toast');
   });

@@ -17,8 +17,8 @@ import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
  */
 
 // #779: the backdrop/dialog declarations confirm() and prompt() shared used to
-// live here as cssText strings; they are .x-overlay-dialog and
-// .x-overlay-dialog__box in src/styles/behaviors/overlays.css now.
+// live here as cssText strings; they are .x-confirm__dialog / .x-prompt__dialog
+// and their __box in src/styles/behaviors/overlays.css now.
 
 /**
  * Popover - Click-triggered popup
@@ -175,14 +175,14 @@ function pushPageAside(panel, position, overlayParts) {
     // A measured amount, so a generated rule rather than a custom property
     // on the element's style attribute (#779).
     setRule(el, 'drawer-push', { [vertical ? '--x-drawer-push-y' : '--x-drawer-push-x']: `${sign * amount}px` });
-    el.classList.add('x-drawer-push-target', 'x-drawer-push-target--open');
+    el.classList.add('x-drawer__push-target', 'x-drawer__push-target--open');
   }
   return targets;
 }
 
 function releasePushedPage(targets) {
   for (const el of targets) {
-    el.classList.remove('x-drawer-push-target--open');
+    el.classList.remove('x-drawer__push-target--open');
     setRule(el, 'drawer-push', null);
   }
 }
@@ -393,7 +393,7 @@ export function drawer(element, options = {}) {
         // push has no dimming backdrop -- see PATH B's show() for the pattern.
         if (builtBackdrop && !isPush) builtBackdrop.classList.add('x-drawer__backdrop--open');
         if (isPush) pushed = pushPageAside(builtPanel, config.position, [builtPanel, builtBackdrop]);
-        document.body.classList.add('x-scroll-lock');
+        document.body.classList.add('x-drawer--scroll-lock');
         // #344: drawer.schema.json declares open and close; nothing fired them.
         element.dispatchEvent(new CustomEvent('wb:drawer:open', { bubbles: true }));
       };
@@ -402,7 +402,7 @@ export function drawer(element, options = {}) {
         builtPanel.classList.remove('x-drawer__panel--open');
         if (builtBackdrop) builtBackdrop.classList.remove('x-drawer__backdrop--open');
         if (pushed) { releasePushedPage(pushed); pushed = null; }
-        document.body.classList.remove('x-scroll-lock');
+        document.body.classList.remove('x-drawer--scroll-lock');
         if (wasOpen) element.dispatchEvent(new CustomEvent('wb:drawer:close', { bubbles: true }));
       };
       const toggle = () => (isOpen() ? hide() : show());
@@ -500,7 +500,7 @@ export function drawer(element, options = {}) {
     if (closeBtn) closeBtn.onclick = hide;
     document.body.appendChild(panelEl);
     if (config.closeOnEscape) document.addEventListener('keydown', onEscape);
-    document.body.classList.add('x-scroll-lock');
+    document.body.classList.add('x-drawer--scroll-lock');
 
     // Panel/backdrop must exist in the DOM with their CLOSED transform for
     // at least one frame before `--open` is added, or the browser paints
@@ -526,7 +526,7 @@ export function drawer(element, options = {}) {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { clearRules(panelEl); panelEl.remove(); panelEl = null; }
     if (pushTarget) { releasePushedPage(pushTarget); pushTarget = null; }
-    document.body.classList.remove('x-scroll-lock');
+    document.body.classList.remove('x-drawer--scroll-lock');
     if (wasOpen) element.dispatchEvent(new CustomEvent('wb:drawer:close', { bubbles: true }));
   };
 
@@ -638,13 +638,13 @@ export function offcanvas(element, options = {}) {
     `;
     panelEl.querySelector('button').onclick = hide;
     document.body.appendChild(panelEl);
-    document.body.classList.add('x-scroll-lock');
+    document.body.classList.add('x-offcanvas--scroll-lock');
   };
 
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { panelEl.remove(); panelEl = null; }
-    document.body.classList.remove('x-scroll-lock');
+    document.body.classList.remove('x-offcanvas--scroll-lock');
   };
 
   element.onclick = () => panelEl ? hide() : show();
@@ -734,7 +734,7 @@ export function sheet(element, options = {}) {
     });
     
     document.body.appendChild(sheetEl);
-    document.body.classList.add('x-scroll-lock');
+    document.body.classList.add('x-sheet--scroll-lock');
     
     // Focus textarea if present
     const textarea = sheetEl.querySelector('textarea');
@@ -744,7 +744,7 @@ export function sheet(element, options = {}) {
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (sheetEl) { clearRules(sheetEl); sheetEl.remove(); sheetEl = null; }
-    document.body.classList.remove('x-scroll-lock');
+    document.body.classList.remove('x-sheet--scroll-lock');
   };
 
   const toggle = () => sheetEl ? hide() : show();
@@ -765,16 +765,20 @@ export function sheet(element, options = {}) {
  * is getDetail(), read before the dialog closes. A backdrop click just closes.
  */
 function openDialog(element, kind, { title, bodyHTML, cancelText, okText, getDetail }) {
+  // The dialog is a part of the behavior that opened it (#1096): `kind` is
+  // 'confirm' or 'prompt', so the classes are x-confirm__dialog, __box,
+  // __title, __actions, __cancel and __ok, or the same under x-prompt.
+  // overlays.css styles both -- formerly cssText + style="" (#779).
+  const part = (name) => `x-${kind}__${name}`;
   const overlay = document.createElement('div');
-  // .x-overlay-dialog* in overlays.css -- formerly cssText + style="" (#779).
-  overlay.className = 'x-overlay-dialog';
+  overlay.classList.add(part('dialog'));
   overlay.innerHTML = `
-      <div class="x-overlay-dialog__box">
-        <h3 class="x-overlay-dialog__title">${title}</h3>
+      <div class="${part('box')}">
+        <h3 class="${part('title')}">${title}</h3>
         ${bodyHTML}
-        <div class="x-overlay-dialog__actions">
-          <button class="cancel x-overlay-dialog__cancel">${cancelText}</button>
-          <button class="ok x-overlay-dialog__ok">${okText}</button>
+        <div class="${part('actions')}">
+          <button class="cancel ${part('cancel')}">${cancelText}</button>
+          <button class="ok ${part('ok')}">${okText}</button>
         </div>
       </div>
     `;
@@ -814,7 +818,7 @@ export function confirm(element, options = {}) {
     e.preventDefault();
     openDialog(element, 'confirm', {
       title: config.title,
-      bodyHTML: `<div class="x-overlay-dialog__message">${config.message}</div>`,
+      bodyHTML: `<div class="x-confirm__message">${config.message}</div>`,
       cancelText: config.cancelText,
       okText: config.confirmText
     });
@@ -844,8 +848,8 @@ export function prompt(element, options = {}) {
     let input;
     const overlay = openDialog(element, 'prompt', {
       title: config.title,
-      bodyHTML: `${config.message ? `<div class="x-overlay-dialog__message x-overlay-dialog__message--prompt">${config.message}</div>` : ''}
-        <input type="text" class="x-overlay-dialog-input" placeholder="${config.placeholder}" value="${config.defaultValue}">`,
+      bodyHTML: `${config.message ? `<div class="x-prompt__message">${config.message}</div>` : ''}
+        <input type="text" class="x-prompt--input" placeholder="${config.placeholder}" value="${config.defaultValue}">`,
       cancelText: 'Cancel',
       okText: 'OK',
       getDetail: () => ({ value: input.value })

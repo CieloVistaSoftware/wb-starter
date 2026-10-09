@@ -21,7 +21,7 @@
 }
 
 /* openLightbox() */
-.x-img-lightbox {
+.x-img__lightbox {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.9);
@@ -33,7 +33,7 @@
   padding: 2rem;
 }
 
-.x-img-lightbox > .x-lightbox__img {
+.x-img__lightbox > .x-lightbox__img {
   max-width: 90vw;
   max-height: 90vh;
   object-fit: contain;

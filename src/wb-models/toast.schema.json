@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "toast.schema.json",
   "title": "Toast",
-  "description": "Toast notification system for temporary messages. Container (.x-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
+  "description": "Toast notification system for temporary messages. Container (.x-toast__container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
   "schemaFor": "toast",
   "baseClass": "x-toast--trigger",
   "semanticElement": {
@@ -80,7 +80,7 @@
       "default": "#"
     }
   },
-  "_view_note": "#1109: EMPTY on purpose. A toast has TWO elements and this schema describes the wrong one. The host (<div x-toast>, baseClass x-toast--trigger) is the TRIGGER; the toast itself is a popup createToast() (src/wb-viewmodels/feedback.js) appends to .x-toast-container on document.body. This $view listed container > icon + content(title, message) + actions(action, close) -- the popup's structure -- and schema-builder built it INTO THE TRIGGER, before the behavior ran (wb-lazy.js buildSchemaIfNeeded). Three consequences, all confirmed by reading the source: the trigger's own authored label was wiped by buildStructure()'s innerHTML clear; the trigger was repainted as a static look-alike toast with an inert ✕; and getPartClass() named the parts off the trigger's baseClass, emitting x-toast--trigger__close where toast.css styles .x-toast__close, so not one of them was ever styled. createToast() now builds exactly this structure, on the popup, with x-toast__* classes -- one definition of a toast, in the behavior. Same fix, same reason, as 'alert' and 'card' (#202).",
+  "_view_note": "#1109: EMPTY on purpose. A toast has TWO elements and this schema describes the wrong one. The host (<div x-toast>, baseClass x-toast--trigger) is the TRIGGER; the toast itself is a popup createToast() (src/wb-viewmodels/feedback.js) appends to .x-toast__container on document.body. This $view listed container > icon + content(title, message) + actions(action, close) -- the popup's structure -- and schema-builder built it INTO THE TRIGGER, before the behavior ran (wb-lazy.js buildSchemaIfNeeded). Three consequences, all confirmed by reading the source: the trigger's own authored label was wiped by buildStructure()'s innerHTML clear; the trigger was repainted as a static look-alike toast with an inert ✕; and getPartClass() named the parts off the trigger's baseClass, emitting x-toast--trigger__close where toast.css styles .x-toast__close, so not one of them was ever styled. createToast() now builds exactly this structure, on the popup, with x-toast__* classes -- one definition of a toast, in the behavior. Same fix, same reason, as 'alert' and 'card' (#202).",
   "$view": [],
   "$methods": {
     "show": {

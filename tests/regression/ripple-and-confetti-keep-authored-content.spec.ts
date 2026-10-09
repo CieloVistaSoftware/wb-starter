@@ -87,19 +87,19 @@ test.describe('[x-confetti] keeps authored content and never fires unattended (#
       const el = host.querySelector('[x-confetti]') as HTMLElement & { wbConfetti?: any };
       await (window as any).WB.inject(el, 'confetti');
 
-      (window as any).__confetti = { host, el, base: document.querySelectorAll('.x-confetti-container').length };
+      (window as any).__confetti = { host, el, base: document.querySelectorAll('.x-confetti__overlay').length };
     });
     await page.clock.runFor(3500);
     const result = await page.evaluate(() => {
       const { host, el, base } = (window as any).__confetti;
-      const count = () => document.querySelectorAll('.x-confetti-container').length;
+      const count = () => document.querySelectorAll('.x-confetti__overlay').length;
       const unattended = count() - base;
       el.click();
       const afterClick = count() - base;
 
       const text = el.textContent?.trim() ?? '';
       host.remove();
-      document.querySelectorAll('.x-confetti-container').forEach((c) => c.remove());
+      document.querySelectorAll('.x-confetti__overlay').forEach((c) => c.remove());
       return { unattended, afterClick, text };
     });
 

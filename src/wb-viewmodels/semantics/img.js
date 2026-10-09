@@ -108,8 +108,8 @@ export function img(element, options = {}) {
 
 export function openLightbox(src, alt = '') {
   const overlay = document.createElement('div');
-  // .x-img-lightbox in image.css -- was Object.assign(overlay.style) (#779).
-  overlay.className = 'x-lightbox x-img-lightbox';
+  // .x-img__lightbox in image.css -- was Object.assign(overlay.style) (#779).
+  overlay.className = 'x-lightbox x-img__lightbox';
 
   const img = document.createElement('img');
   img.src = src;

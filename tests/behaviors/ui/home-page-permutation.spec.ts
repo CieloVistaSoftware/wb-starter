@@ -513,7 +513,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     const btn = page.locator('button[x-confetti]');
     await expect(btn).toHaveCount(1);
     await expect(btn).toHaveClass(/\bx-confetti--trigger\b/);
-    await expect(page.locator('.x-confetti-container')).toHaveCount(0);
+    await expect(page.locator('.x-confetti__overlay')).toHaveCount(0);
 
     // Armed on the document BEFORE the click: the particles do not exist yet,
     // and animationstart bubbles. Filtered to x-confetti-fall on purpose --
@@ -530,7 +530,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
     await btn.click();
 
-    const container = page.locator('.x-confetti-container');
+    const container = page.locator('.x-confetti__overlay');
     await expect(container).toHaveCount(1);
     // confetti() defaults to count=50 and the home page overrides nothing.
     // Asserting the COUNT is what proves the burst was built, rather than an

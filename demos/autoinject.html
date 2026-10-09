@@ -1515,7 +1515,7 @@ document.body.appendChild(div);
     // Global click handler for demo purposes
     document.addEventListener('click', (e) => {
       // Ignore if clicking on the toast itself or its container
-      if (e.target.closest('.x-toast-container')) return;
+      if (e.target.closest('.x-toast__container')) return;
 
       const target = e.target.closest('button, a, input, select, textarea, summary');
       

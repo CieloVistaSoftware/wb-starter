@@ -124,7 +124,7 @@
     {
       "name": "badge",
       "tag": "span",
-      "class": "x-tag-glass",
+      "class": "x-header__badge--glass",
       "parent": "right",
       "public": true,
       "content": "{{badge}}",

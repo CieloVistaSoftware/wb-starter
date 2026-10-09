@@ -39,7 +39,7 @@ const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
  *
  * #969: the typed cards used to be caught by `[class*="x-card"]` alone, through
  * the identity classes card.js stamped on them (`x-card--stats`,
- * `x-card-horizontal`). Those are gone -- the attribute already said it -- so
+ * the horizontal card's own). Those are gone -- the attribute already said it -- so
  * the attribute is what names the host here too. Without it a
  * <div x-cardstats>'s own <header> would take the page header behavior.
  *
