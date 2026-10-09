@@ -1,0 +1,21 @@
+/**
+ * cardprofile.css -- the styles only a profile card (x-cardprofile) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardprofile. Split out of card.css (#966): every
+ * selector here needs [x-cardprofile] or a class only cardprofile() stamps.
+ */
+
+/* Profile card content -- `--left` modifier added for the `align="left"` attribute (cardprofile(), card.js); default stays centered (Law 9, #370). */ .x-card__profile-content { padding: 1rem; text-align: center; }
+
+.x-card__profile-content--left { text-align: left; }
+
+/* Profile cover strip -- moved here from cardprofile()'s inline cssText (card.js); only background-image (the user's cover photo URL) stays inline, since it's genuinely per-instance (Law 9 migration, #370). */ .x-card__cover { position: relative; margin: 0; height: 2.75rem; background-size: cover; background-position: center; }
+
+/* Role badge overlaid on the cover strip. #406 originally used a fixed `top: 0.75rem` instead of true 50% centering, because centering the badge inside the strip's then-36px height clipped its rounded corner against the card's own 8px border-radius. The strip has since grown to 44px (unrelated later change) -- reported again (John, repeatedly) that the fixed offset visibly sits above center, not centered, on the taller strip. True vertical centering via top:50%/translateY(-50%) instead -- confirmed live it no longer clips at 44px. */ /* Scoped under the cover (0,2,0): the badge also carries .x-card__role, whose text-style rule comes LATER in this file and would otherwise win the tie -- its margin alone pushed the pill 4px below centre. */ .x-card__cover > .x-card__role--badge { margin: 0; position: absolute; top: 50%; transform: translateY(-50%); right: 0.75rem; padding: 0.15rem 0.6rem; border-radius: 62.4375rem; background: rgba(0,0,0,0.55); color: var(--text-on-accent, #fff); font-size: 0.7rem; }
+
+/* Role text (no cover present) -- moved here from cardprofile()'s inline cssText (card.js) (Law 9 migration, #370). */ .x-card__role { margin: 0.25rem 0 0.5rem; color: var(--primary); font-size: 0.9rem; }
+
+/* Profile name -- moved here from cardprofile()'s inline cssText (card.js) (Law 9 migration, #370). */ .x-card__name { margin: 0.75rem 0 0; font-size: 1.25rem; color: var(--text-primary); }
+
+/* Profile bio -- moved here from cardprofile()'s inline cssText (card.js) (Law 9 migration, #370). */ .x-card__bio { margin: 1rem 0 0; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; }

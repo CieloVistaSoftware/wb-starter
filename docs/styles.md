@@ -130,7 +130,9 @@ Grouping saves nothing and costs plenty. Because one file had to serve every var
 
 It also put the file beyond hand-editing — one line held 160 rules across 44,000 characters — so the only way to change it was a bulk script, and a bulk script silently corrupted 178 of its 264 rules (#965).
 
-Splitting is free: `ensureBehaviorCss()` already loads per behavior, and `behavior-css-manifest.js` already maps a behavior to an **array**, so `cardimage: ['card.css', 'cardimage.css']` needs no runtime change. A page using one card variant then stops loading the other eighteen.
+Splitting was free: `ensureBehaviorCss()` already loads per behavior, and `behavior-css-manifest.js` already maps a behavior to an **array**, so `cardimage: ['card.css', 'cardimage.css']` needed no runtime change.
+
+**Done (#966).** `card.css` is the shared card base; each variant's own rules live in `<variant>.css` (18 files, one per variant — `x-card` itself has none), loaded right after `card.css` by the manifest. A rule moved only when every selector in it needs that variant's attribute or a class only that variant's function in `card.js` stamps; a rule two variants share stays in `card.css`. A page using one card variant no longer loads the other variants' files.
 
 ---
 

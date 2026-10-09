@@ -1,0 +1,53 @@
+/**
+ * cardexpandable.css -- the styles only an expandable card (x-cardexpandable) needs.
+ *
+ * Loaded after card.css (the shared card base) by behavior-css-manifest.js,
+ * only on a page that uses x-cardexpandable. Split out of card.css (#966): every
+ * selector here needs [x-cardexpandable] or a class only cardexpandable() stamps.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════ EXPANDABLE CARD — cardexpandable(), card.js. Moved here from inline styles (Law 9 migration, #370). max-height stays inline in card.js (genuinely dynamic -- mutated again on every toggle()). ═══════════════════════════════════════════════════════════════════════════ */ .x-card__expandable-content { padding: 1rem; overflow: hidden; transition: max-height 0.3s ease; /* #943: cardexpandable() used to write the whole block inline, which meant this rule was shadowed and could never be edited alone. The three static declarations above were already identical (the audit measured them as COVERED). Only max-height is per-instance, so the behavior now sets `--x-card-expandable-max-height` and this consumes it. `none` keeps a card with no configured height uncapped, matching the lines-clamp path which sets no max-height at all. */ max-height: var(--x-card-expandable-max-height, none); }
+
+/* Scoped (0,0,2,0) -- overrides the shared `.x-card__footer` (0,0,1,0) padding/border-top for this component specifically. */ [x-cardexpandable] .x-card__footer { padding: 0.75rem 1rem; border-top: 1px solid var(--border-color); }
+
+/* Scoped `.x-card-expandable .x-card__expand-btn` (0,0,2,0), not a bare class: themes.css's `[data-theme] button` reset (0,0,1,1) otherwise wins the specificity tie-break -- same trap fixed for cardbutton()/ cardproduct() above. */ [x-cardexpandable] .x-card__expand-btn { width: 100%; padding: 0.5rem; background: var(--bg-tertiary); border: none; border-radius: 0.375rem; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+
+.x-card__expand-icon { display: inline-block; transition: transform 0.3s ease; }
+
+/* Compound (0,2,0), not the single modifier class (0,1,0). `.x-card__expand-icon { transform: rotate(-90deg) }` appears LATER in this file (see its comment: the glyph is a down-pointing triangle, so OPEN is its natural 0deg and CLOSED turns it -90deg to point right). At equal specificity the later rule wins, so a single-class modifier here lost and the icon never rotated when expanded. CORRECTION (#943): this rule originally said `rotate(0deg)` and that was RIGHT. It was briefly changed to 180deg by reading the old inline `style.transform = 'rotate(180deg)'` in cardexpandable() as the intent -- but that inline write predates the -90deg convention below and disagreed with it. 0deg is the open state. */ .x-card__expand-icon.x-card__expand-icon--expanded { transform: rotate(0deg); }
+
+/* #775 -- John: "show the arrows - 90 degress to indicate collapsed. then downward for expansion." This used to rotate 180deg when open, so CLOSED pointed down and OPEN pointed up: the arrow read as a direction to travel rather than as a state, and a stack of collapsed panels all pointed down as though already open. The glyph is a down-pointing triangle, so OPEN is its natural 0deg and CLOSED turns it -90deg to point right. */ .x-card__expand-icon { transform: rotate(-90deg); }
+
+/* Expandable card `lines=`: clamp the collapsed body to N whole lines. Two
+   classes, so `overflow` and `display` beat .x-card__expandable-content's own
+   overflow:hidden (released state) and any single-class display rule. */
+.x-card__expandable-content.x-card__expandable-content--clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--x-card-expandable-lines);
+  overflow: hidden;
+}
+
+.x-card__expandable-content.x-card__expandable-content--unclamped {
+  display: block;
+  overflow: visible;
+}
+
+/* #1598: collapsed content that already fits has nothing to reveal, so the
+   card offers no Show More. cardexpandable() sets x-card--nothing-to-expand
+   (and clears it when the content stops fitting). Only the footer holding the
+   expand button is hidden, never an author's own footer. */
+[x-cardexpandable].x-card--nothing-to-expand > .x-card__footer:has(> .x-card__expand-btn) {
+  display: none;
+}
+
+/* #1095: the open state. cardexpandable() toggles x-card--expanded and used to
+   write the open height into a generated rule as well; the height is the
+   state's, so it lives here and the behavior only generates the author's
+   collapsed max-height (via --x-card-expandable-max-height). This sets
+   max-height itself and outranks .x-card__expandable-content, so open always
+   wins while the class is on. A `lines=` card opens through --unclamped and
+   was never height-capped when open, so it is left out. */
+[x-cardexpandable].x-card--expanded > .x-card__expandable-content:not(.x-card__expandable-content--unclamped) {
+  max-height: 1000px;
+}
