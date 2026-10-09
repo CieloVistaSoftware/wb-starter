@@ -100,13 +100,13 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-07"
+          "modified": "2026-10-09"
         },
         {
           "file": "behavior-cross-reference.md",
           "title": "Behavior Cross-Reference",
           "description": "Relationships between every behavior",
-          "modified": "2026-10-06"
+          "modified": "2026-10-09"
         },
         {
           "file": "audio.md",
@@ -412,7 +412,7 @@
           "file": "behaviors/cardproduct.md",
           "title": "Product Card",
           "description": "x-cardproduct renders a shop product card with an image, name, description, price (struck-through original-price when discounted), star rating and an…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-09"
         },
         {
           "file": "behaviors/cardprofile.md",

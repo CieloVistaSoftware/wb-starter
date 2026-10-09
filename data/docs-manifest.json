@@ -795,7 +795,8 @@
         "path": "docs/behaviors/cart.md",
         "title": "Cart",
         "name": "cart",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-10-09"
       },
       {
         "path": "docs/behaviors/center.md",
@@ -2443,7 +2444,8 @@
       "path": "docs/behaviors/cart.md",
       "title": "Cart",
       "name": "cart",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-10-09"
     },
     {
       "path": "docs/behaviors/center.md",

@@ -23,27 +23,27 @@
   },
   "$view": [],
   "$methods": {
-    "add": {
+    "addItem": {
       "description": "Add an item ({ title, price, id }); adding the same product again raises its quantity",
       "params": [
         "item"
       ]
     },
-    "remove": {
+    "removeItem": {
       "description": "Remove an item by its id (or its title when it has no id)",
       "params": [
         "id"
       ]
     },
-    "clear": {
+    "reset": {
       "description": "Empty the cart",
       "params": []
     },
-    "items": {
+    "getItems": {
       "description": "The items in the cart, each { id, title, price, qty }",
       "params": []
     },
-    "count": {
+    "getCount": {
       "description": "How many items the cart holds, counting quantities",
       "params": []
     }

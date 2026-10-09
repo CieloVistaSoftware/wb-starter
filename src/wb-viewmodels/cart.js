@@ -28,7 +28,7 @@ import { readAttr } from '../core/read-attr.js';
  *
  * Anything can add to it, not only product cards: dispatch
  * `wb:cardproduct:addtocart` with { title, price, id }, or call
- * element.wbCart.add({ title, price, id }).
+ * element.wbCart.addItem({ title, price, id }).
  */
 
 const DEFAULT_KEY = 'wb-cart';
@@ -196,12 +196,13 @@ export function cart(element, options = {}) {
     listening = true;
   }
 
+  // Canonical verbs (#782): typed add/remove, reset, typed getters.
   element.wbCart = {
-    add: (item) => add(key, item),
-    remove: (id) => remove(key, String(id)),
-    clear: () => clear(key),
-    items: () => storeFor(key).items.map((i) => ({ ...i })),
-    count: () => storeFor(key).items.reduce((n, i) => n + i.qty, 0),
+    addItem: (item) => add(key, item),
+    removeItem: (id) => remove(key, String(id)),
+    reset: () => clear(key),
+    getItems: () => storeFor(key).items.map((i) => ({ ...i })),
+    getCount: () => storeFor(key).items.reduce((n, i) => n + i.qty, 0),
   };
 
   render(element);

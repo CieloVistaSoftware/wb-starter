@@ -28,7 +28,7 @@ Click **Add to Cart** on the product below, then open the cart.
 
 Anything can add to the cart, not only product cards: dispatch
 `wb:cardproduct:addtocart` with `{ title, price, id }`, or call
-`element.wbCart.add({ title, price, id })`.
+`element.wbCart.addItem({ title, price, id })`.
 
 ## Attributes
 
@@ -42,11 +42,11 @@ On `element.wbCart`:
 
 | Method | What it does |
 |---|---|
-| `add(item)` | Add `{ title, price, id }`; the same product again raises its quantity |
-| `remove(id)` | Remove an item by its id (or its title when it has no id) |
-| `clear()` | Empty the cart |
-| `items()` | The items, each `{ id, title, price, qty }` |
-| `count()` | How many items, counting quantities |
+| `addItem(item)` | Add `{ title, price, id }`; the same product again raises its quantity |
+| `removeItem(id)` | Remove an item by its id (or its title when it has no id) |
+| `reset()` | Empty the cart |
+| `getItems()` | The items, each `{ id, title, price, qty }` |
+| `getCount()` | How many items, counting quantities |
 
 ## Events
 

@@ -2420,10 +2420,24 @@
     },
     "x-cart": {
       "source": "<div x-cart></div>\n<article x-cardproduct\n  image=\"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg\"\n  title=\"Field headphones\"\n  price=\"$149\"></article>",
-      "alternates": [
-        "<div x-cart key=\"wishlist\"></div>"
-      ],
+      "alternates": [],
       "examples": [
+        {
+          "label": "on its own",
+          "source": "<div x-cart></div>"
+        },
+        {
+          "label": "beside a product",
+          "source": "<div x-cart></div>\n<article x-cardproduct title=\"Desk Lamp\" price=\"$20\"></article>"
+        },
+        {
+          "label": "beside two products",
+          "source": "<div x-cart></div>\n<article x-cardproduct title=\"Desk Lamp\" price=\"$20\"></article>\n<article x-cardproduct title=\"Coffee Mug\" price=\"$12\"></article>"
+        },
+        {
+          "label": "under a heading",
+          "source": "<section>\n  <h3>Your basket</h3>\n  <div x-cart></div>\n</section>"
+        },
         {
           "label": "two carts kept apart",
           "source": "<div x-cart key=\"cart-a\"></div>\n<div x-cart key=\"cart-b\"></div>"
