@@ -669,6 +669,27 @@
   overflow-wrap: anywhere;
 }
 
+/* #286: what the behavior does, one line under its name. Spans both columns
+   of a row; one line, ellipsised, with the whole sentence in its title. */
+.behaviors-search-results__desc {
+  grid-column: 1 / -1;
+  display: block;
+  min-width: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9ca3af);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* A group's line sits under its collapsed name, indented like the name. */
+.behaviors-search-results__desc--group {
+  padding: 0 1rem 0.6rem;
+}
+.behaviors-search-results__group details[open] + .behaviors-search-results__desc--group {
+  display: none;
+}
+
 
 /* #666: the row whose example is currently rendered. Arrow keys walk the list,
    so the reader needs to see where they are without relying on focus ring

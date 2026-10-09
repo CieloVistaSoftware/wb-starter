@@ -6,6 +6,155 @@
   ],
   "releases": [
     {
+      "version": "1.0.455",
+      "date": "2026-10-08",
+      "summary": "Demo.css styled only the [x-demo] attribute, so a demo applied with WB.inject() lost its padded, clipped box; every host rule now matches the .x-demo class too, and x-accordion is recorded as needing no rule of its own. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1788\" target=\"_blank\" rel=\"noopener\">#1788</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-demo gets its look by class; x-accordion recorded as needing no rule</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1095\" target=\"_blank\" rel=\"noopener\">#1095</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1788\" target=\"_blank\" rel=\"noopener\">#1788</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/25837df22f653c4f288271285cce890c84a57401\" target=\"_blank\" rel=\"noopener\"><code>25837df</code></a>",
+          "issues": [
+            1095,
+            1788
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and run WB.inject(el, &#39;demo&#39;) on a new &lt;div&gt; holding a button. Before: padding 0, margin-bottom 0, overflow visible. Now: the 16px padded, clipped demo box a &lt;div x-demo&gt; has.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/25837df22f653c4f288271285cce890c84a57401\" target=\"_blank\" rel=\"noopener\"><code>25837df</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.454",
+      "date": "2026-10-08",
+      "summary": "Every line in the Behaviors page&#39;s browse list now carries the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1787\" target=\"_blank\" rel=\"noopener\">PR 1787</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/286\" target=\"_blank\" rel=\"noopener\">#286</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Behaviors list says what each behavior does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/286\" target=\"_blank\" rel=\"noopener\">#286</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d76ccf615574870e497692b693310ff42a21f5d5\" target=\"_blank\" rel=\"noopener\"><code>d76ccf6</code></a>",
+          "issues": [
+            286
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors and look down the list. Before: each line showed only a behavior name and its options. Now: each behavior has a one-line description of what it does under its name.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b1efd76e94c96ff4934e4a28bc735c9bec129c07\" target=\"_blank\" rel=\"noopener\"><code>b1efd76</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.453",
+      "date": "2026-10-08",
+      "summary": "When a demo&#39;s control finished building after the demo had committed its width, the code panel was already showing and visibly jumped wider (355 to 422px on the Large Card demo). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1780\" target=\"_blank\" rel=\"noopener\">#1780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1783\" target=\"_blank\" rel=\"noopener\">#1783</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A late-built control&#39;s demo reveals its code panel once, at its final width</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1780\" target=\"_blank\" rel=\"noopener\">#1780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1783\" target=\"_blank\" rel=\"noopener\">#1783</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/365e268788181ea3aa687c24813c01b474115b5d\" target=\"_blank\" rel=\"noopener\"><code>365e268</code></a>",
+          "issues": [
+            1780,
+            1783
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> with card.js slowed (DevTools, Network throttling) and watch the Large Card demo&#39;s code panel. Before: it appeared at 355px, then grew to 422px when the card built. Now: it appears once, at 422px, and stays.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/365e268788181ea3aa687c24813c01b474115b5d\" target=\"_blank\" rel=\"noopener\"><code>365e268</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.452",
+      "date": "2026-10-08",
+      "summary": "Pages/ai-permutation-test.css had 57 px sizes (radii, paddings, (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1785\" target=\"_blank\" rel=\"noopener\">PR 1785</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The AI permutation test page sizes in rem, and the px gate holds 344</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9679af55208d346996cf906a857893b31d947340\" target=\"_blank\" rel=\"noopener\"><code>9679af5</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=ai-permutation-test\" target=\"_blank\" rel=\"noopener\">pages/ai-permutation-test.html</a> and set the browser&#39;s default font size to 20px. Before: the cards, badges and radii stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/77649801d302be7f10d29f1a47f6cd9516f67f78\" target=\"_blank\" rel=\"noopener\"><code>7764980</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.451",
+      "date": "2026-10-08",
+      "summary": "The errors viewer showed errors fixed days ago exactly like ones happening now, because no entry said which site version raised it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1782\" target=\"_blank\" rel=\"noopener\">PR 1782</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1773\" target=\"_blank\" rel=\"noopener\">#1773</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Errors record the site version; the viewer marks older ones</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1773\" target=\"_blank\" rel=\"noopener\">#1773</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/35df261bb73c965620661cfec06ab9d9c016a0f8\" target=\"_blank\" rel=\"noopener\"><code>35df261</code></a>",
+          "issues": [
+            1773
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html\" target=\"_blank\" rel=\"noopener\">public/errors-viewer.html</a> in a browser that visited the site before this change. Before: Sep 28-29 errors such as <a href=\"https://cielovistasoftware.github.io/wb-starter/images/placeholder.svg\" target=\"_blank\" rel=\"noopener\">images/placeholder.svg</a> looked current. Now: they show an &quot;older version&quot; badge, are dimmed and listed last, and &quot;On This Version (v1.0.N)&quot; counts only the live ones.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7caed5a8a8bbc89eccf93e11961aa04a6ad1dd3e\" target=\"_blank\" rel=\"noopener\"><code>7caed5a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.450",
+      "date": "2026-10-08",
+      "summary": "Site.css styles every page, and 90 of its sizes were px: header (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1784\" target=\"_blank\" rel=\"noopener\">PR 1784</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Site.css sizes in rem, and the px gate holds 401</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/57c8ad935f09ddba6da5138c1142fea560dbfa02\" target=\"_blank\" rel=\"noopener\"><code>57c8ad9</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open any page and set the browser&#39;s default font size to 20px. Before: the header, nav and spinners stayed the same pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/76bf776ebd5405f08a0325c4b9d0785110e5063e\" target=\"_blank\" rel=\"noopener\"><code>76bf776</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.449",
+      "date": "2026-10-08",
+      "summary": "The glass card no longer carries a GPU-layer workaround that was added blind and did not fix the phone report. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1781\" target=\"_blank\" rel=\"noopener\">PR 1781</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop the unverified translateZ(0) / will-change from the glass card</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1cf33db59c8360927664d9129b6b8d2bc0e7d914\" target=\"_blank\" rel=\"noopener\"><code>1cf33db</code></a>",
+          "issues": [
+            832
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> at &quot;Glass Card&quot; and inspect the card in devtools. Before: its computed transform is matrix(1, 0, 0, 1, 0, 0) from translateZ(0) and will-change is backdrop-filter. Now: transform is none and will-change is auto; the card still looks frosted over the coloured discs.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1b8c3a35b689ed8634f233e95884767bcb9ced23\" target=\"_blank\" rel=\"noopener\"><code>1b8c3a3</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.448",
       "date": "2026-10-08",
       "summary": "Glass cards now visibly look like frosted glass in their demos, including on phones with animations turned off. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1778\" target=\"_blank\" rel=\"noopener\">PR 1778</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/832\" target=\"_blank\" rel=\"noopener\">#832</a>",
