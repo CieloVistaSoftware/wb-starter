@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.454",
+      "date": "2026-10-08",
+      "summary": "Every line in the Behaviors page&#39;s browse list now carries the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1787\" target=\"_blank\" rel=\"noopener\">PR 1787</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/286\" target=\"_blank\" rel=\"noopener\">#286</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Behaviors list says what each behavior does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/286\" target=\"_blank\" rel=\"noopener\">#286</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d76ccf615574870e497692b693310ff42a21f5d5\" target=\"_blank\" rel=\"noopener\"><code>d76ccf6</code></a>",
+          "issues": [
+            286
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors and look down the list. Before: each line showed only a behavior name and its options. Now: each behavior has a one-line description of what it does under its name.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b1efd76e94c96ff4934e4a28bc735c9bec129c07\" target=\"_blank\" rel=\"noopener\"><code>b1efd76</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.453",
       "date": "2026-10-08",
       "summary": "When a demo&#39;s control finished building after the demo had committed its width, the code panel was already showing and visibly jumped wider (355 to 422px on the Large Card demo). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1780\" target=\"_blank\" rel=\"noopener\">#1780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1783\" target=\"_blank\" rel=\"noopener\">#1783</a>",
