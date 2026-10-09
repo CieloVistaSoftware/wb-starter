@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.453",
+      "date": "2026-10-08",
+      "summary": "When a demo&#39;s control finished building after the demo had committed its width, the code panel was already showing and visibly jumped wider (355 to 422px on the Large Card demo). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1780\" target=\"_blank\" rel=\"noopener\">#1780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1783\" target=\"_blank\" rel=\"noopener\">#1783</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A late-built control&#39;s demo reveals its code panel once, at its final width</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1780\" target=\"_blank\" rel=\"noopener\">#1780</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1783\" target=\"_blank\" rel=\"noopener\">#1783</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/365e268788181ea3aa687c24813c01b474115b5d\" target=\"_blank\" rel=\"noopener\"><code>365e268</code></a>",
+          "issues": [
+            1780,
+            1783
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a> with card.js slowed (DevTools, Network throttling) and watch the Large Card demo&#39;s code panel. Before: it appeared at 355px, then grew to 422px when the card built. Now: it appears once, at 422px, and stays.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/365e268788181ea3aa687c24813c01b474115b5d\" target=\"_blank\" rel=\"noopener\"><code>365e268</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.452",
       "date": "2026-10-08",
       "summary": "Pages/ai-permutation-test.css had 57 px sizes (radii, paddings, (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1785\" target=\"_blank\" rel=\"noopener\">PR 1785</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
