@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.487",
+      "date": "2026-10-10",
+      "summary": "A new wb-starter site carries a GitHub Pages workflow, and creating it offers to make the GitHub repo and publish it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1232\" target=\"_blank\" rel=\"noopener\">#1232</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1824\" target=\"_blank\" rel=\"noopener\">#1824</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Creating a site offers to publish it on GitHub Pages</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1232\" target=\"_blank\" rel=\"noopener\">#1232</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1824\" target=\"_blank\" rel=\"noopener\">#1824</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c0ca1fcbfe3f75dd4d86f3ae4560789ade2d6210\" target=\"_blank\" rel=\"noopener\"><code>c0ca1fc</code></a>",
+          "issues": [
+            1232,
+            1824
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm create wb-starter my-site</code> with gh signed in. Before: no .github folder and no question; publishing was a manual build and upload. Now: my-site/.github/workflows/deploy.yml exists, and it asks &quot;Create a public GitHub repo &quot;my-site&quot; and publish it on GitHub Pages now? (y/N)&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c0ca1fcbfe3f75dd4d86f3ae4560789ade2d6210\" target=\"_blank\" rel=\"noopener\"><code>c0ca1fc</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.486",
       "date": "2026-10-10",
       "summary": "Navs take orientation=&quot;vertical|horizontal&quot; and itemstyle=&quot;pill&quot;, on &lt;nav&gt;, x-nav and x-sidebar alike. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1826\" target=\"_blank\" rel=\"noopener\">#1826</a>",
