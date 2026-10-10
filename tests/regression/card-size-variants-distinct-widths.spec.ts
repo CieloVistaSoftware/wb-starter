@@ -41,13 +41,13 @@ test('.x-card size variants render at genuinely distinct widths', async ({ page 
 
   for (const { size, hasClass } of widths) {
     // `auto` is the DEFAULT and card.css declares it on the base rule, so
-    // composeCard deliberately stamps no --auto modifier (it would sit on
-    // every card and mean nothing). Every other size is a real modifier.
-    if (size === 'auto') {
-      expect(hasClass, 'size="auto" is the default and carries no modifier class').toBe(false);
-    } else {
-      expect(hasClass, `x-card size="${size}" must get its x-card--${size} class applied`).toBe(true);
-    }
+    // composeCard deliberately stamps no --auto modifier on a card that does
+    // not ask for one (it would sit on every card and mean nothing). This
+    // card WRITES size="auto", and card.css keeps .x-card--auto as exactly
+    // that "explicit opt-back-in", so the shared declared-modifier applier
+    // adds it -- under wb.js always, and under this page's wb-lazy runtime
+    // since #1831. It renders like the default either way (checked below).
+    expect(hasClass, `x-card size="${size}" must get its x-card--${size} class applied`).toBe(true);
   }
 
   const bySize = Object.fromEntries(widths.map((w) => [w.size, w.width]));

@@ -606,7 +606,12 @@
     radial-gradient(at 50% 50%, hsla(var(--hue-primary), calc(var(--saturation-primary) * 1%), calc(var(--lightness-primary) * 1%), 0.2) 0px, transparent 50%);
 }
 
-.x-hero.x-hero--cosmic > * {
+/* Lift the content above the nebula -- but not x-cardhero's legibility scrim
+   (.x-card__overlay), which is itself a layer: `position: relative` here
+   outranked its `position: absolute; inset: 0` and collapsed it to 0x0, so a
+   cosmic x-cardhero lost its scrim the moment .x-hero--cosmic landed (#1831,
+   seen once wb-lazy pages started applying declared modifiers). */
+.x-hero.x-hero--cosmic > :not(.x-card__overlay) {
   position: relative;
   z-index: 1;
 }

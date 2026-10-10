@@ -2,7 +2,7 @@
  * Which class names the loaded stylesheets actually define.
  * -----------------------------------------------------------------------------
  * #885: two places independently mapped a declared enum property to a modifier
- * class -- wb.js's applyDeclaredModifiers() (#770) and schema-builder.js's
+ * class -- declared-modifiers.js's applyDeclaredModifiers() (#770) and schema-builder.js's
  * applyProperty(). Both were right for `size`/`variant`, which are style axes,
  * and wrong for `icon="star"` and `target="_self"`, which are values. The
  * result was `class="x-button x-button--star x-button--start x-button--primary
