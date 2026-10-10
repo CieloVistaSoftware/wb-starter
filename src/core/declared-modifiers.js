@@ -25,7 +25,7 @@
  */
 
 import { loadSchemaIndex, schemaIndexNow } from './schema-index.js';
-import { styleSheetDefinesClass } from './style-registry.js';
+import { styleSheetDefinesClass, classAddsNothing } from './style-registry.js';
 
 // Elements built before the index arrived, applied the moment it lands.
 const modifiersWaitingForIndex = [];
@@ -94,6 +94,10 @@ export function applyDeclaredModifiers(element, behaviorName) {
       // do; `icon="star"` and `target="_self"` do not, and never did.
       const cls = `${base}--${raw}`;
       if (!styleSheetDefinesClass(cls)) continue;
+      // a8a7362e: a class every rule already reaches by the attribute the
+      // element carries (`.x-card--elevated, [elevated]`) is injection for
+      // its own sake -- specificity does the job. See classAddsNothing().
+      if (classAddsNothing(element, cls)) continue;
       element.classList.add(cls);
     } else if (def.type === 'boolean') {
       // "false"/"0" mean OFF (#747): a bare presence check reads the string
@@ -101,6 +105,7 @@ export function applyDeclaredModifiers(element, behaviorName) {
       if (raw === 'false' || raw === '0') continue;
       const boolCls = `${base}--${attr}`;
       if (!styleSheetDefinesClass(boolCls)) continue;
+      if (classAddsNothing(element, boolCls)) continue;
       element.classList.add(boolCls);
     }
   }

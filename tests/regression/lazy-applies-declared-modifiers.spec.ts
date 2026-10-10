@@ -23,7 +23,9 @@ test('wb-lazy applies declared modifier classes, with the same rules as wb.js (#
     '<div id="notePlain" x-cardnotification variant="warning" title="Flat">msg</div>',
     // boolean written "false" means OFF (#747)
     '<div id="noteFalse" x-cardnotification variant="warning" elevated="false" title="Off">msg</div>',
-    // boolean on x-card (card.css defines .x-card--elevated)
+    // boolean on x-card: card.css styles `.x-card--elevated, [elevated]` in
+    // one rule, so the attribute already does the job and a8a7362e's
+    // "specificity, not class injection" holds -- no class, same look.
     '<article id="cardElevated" x-card elevated title="Card">Body</article>',
     // enum: featured-tone="success" -> .x-card--success (card.css accent stripe)
     '<article id="cardTone" x-card featured-tone="success" title="Toned">Body</article>',
@@ -38,16 +40,24 @@ test('wb-lazy applies declared modifier classes, with the same rules as wb.js (#
     page.evaluate(([i, c]) => document.getElementById(i)!.classList.contains(c), [id, cls] as const);
   await expect.poll(() => has('noteElevated', 'x-cardnotification--elevated'),
     'elevated on x-cardnotification lands .x-cardnotification--elevated under wb-lazy').toBe(true);
-  await expect.poll(() => has('cardElevated', 'x-card--elevated'),
-    'elevated on x-card lands .x-card--elevated under wb-lazy').toBe(true);
   await expect.poll(() => has('cardTone', 'x-card--success'),
     'featured-tone="success" lands .x-card--success under wb-lazy').toBe(true);
+
+  // Cards and notifications carry `transition: all 0.2s` (card.css), so the
+  // border and shadow the class brings ANIMATE in. Read mid-transition, the
+  // stripe measured 1px on CI's Windows runner and 3px here. Wait for the
+  // elements' own transitions to finish -- the event, not a duration.
+  await page.evaluate(() => Promise.all(['noteElevated', 'cardTone', 'cardElevated'].flatMap((id) =>
+    document.getElementById(id)!.getAnimations().map((a) => a.finished.catch(() => undefined)))));
 
   const m = await page.evaluate(() => {
     const el = (id: string) => document.getElementById(id)!;
     const cs = (id: string) => getComputedStyle(el(id));
     return {
       noteFalseClass: el('noteFalse').classList.contains('x-cardnotification--elevated'),
+      cardElevatedClass: el('cardElevated').classList.contains('x-card--elevated'),
+      cardElevatedShadow: cs('cardElevated').boxShadow,
+      cardPlainShadow: cs('cardNoTone').boxShadow,
       typoClasses: [...el('cardTypo').classList].filter((c) => /^x-card--suc/.test(c)),
       noteElevatedShadow: cs('noteElevated').boxShadow,
       notePlainShadow: cs('notePlain').boxShadow,
@@ -57,14 +67,17 @@ test('wb-lazy applies declared modifier classes, with the same rules as wb.js (#
   });
 
   expect.soft(m.noteFalseClass, 'elevated="false" means off: no modifier class').toBe(false);
+  expect.soft(m.cardElevatedClass, 'a8a7362e: x-card elevated is styled by [elevated]; .x-card--elevated is not injected').toBe(false);
+  expect.soft(m.cardElevatedShadow, 'the elevated card still casts card.css\'s elevated shadow').not.toBe(m.cardPlainShadow);
   expect.soft(m.typoClasses, 'an undeclared value (a typo) never becomes a class').toEqual([]);
   // What a reader sees: notification.css's own elevated shadow, which only
   // the class selects (#1831: before, card.css's generic [elevated] shadow).
   expect.soft(m.noteElevatedShadow, 'the elevated notification wears .x-cardnotification--elevated\'s shadow')
     .toBe('rgba(0, 0, 0, 0.15) 0px 4px 12px 0px');
   expect.soft(m.notePlainShadow, 'a plain notification casts no elevated shadow').not.toBe(m.noteElevatedShadow);
-  // card.css's --x-card-accent-width stripe: wider than a plain card's edge.
-  expect.soft(parseFloat(m.toneBorder), 'featured-tone draws card.css\'s accent stripe')
+  // card.css's --x-card-accent-width stripe (4px) against a plain card's 1px edge.
+  expect.soft(m.toneBorder, 'featured-tone draws card.css\'s 4px accent stripe').toBe('4px');
+  expect.soft(parseFloat(m.toneBorder), 'the accent stripe is wider than a plain card\'s edge')
     .toBeGreaterThan(parseFloat(m.noToneBorder));
 });
 
