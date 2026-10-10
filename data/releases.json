@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.494",
+      "date": "2026-10-10",
+      "summary": "Every live example in pages, demos and docs now sits in a figure element and renders exactly as before. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/917\" target=\"_blank\" rel=\"noopener\">#917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1836\" target=\"_blank\" rel=\"noopener\">#1836</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every demo is a &lt;figure x-demo&gt;, and figure() no longer stacks on its host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/917\" target=\"_blank\" rel=\"noopener\">#917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1836\" target=\"_blank\" rel=\"noopener\">#1836</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d48d1dfb669a7f35e778235f252df272ff4c1b7e\" target=\"_blank\" rel=\"noopener\"><code>d48d1df</code></a>",
+          "issues": [
+            917,
+            1836
+          ]
+        }
+      ],
+      "seeIt": "Run <code>grep -rn &quot;figure x-demo&quot; pages/ demos/ docs/ | wc -l</code> and open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a>. Before: 1,600 &quot;div x-demo&quot; lines (1,522 of them real examples), and a figure-hosted demo gave its example image a lightbox and 16px of extra margin. Now: all 1,522 examples are figure x-demo, they render identically, and a new div-hosted demo fails <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/x-demo-host-is-semantic.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/x-demo-host-is-semantic.spec.ts</a>.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d48d1dfb669a7f35e778235f252df272ff4c1b7e\" target=\"_blank\" rel=\"noopener\"><code>d48d1df</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.493",
       "date": "2026-10-10",
       "summary": "The permutation probe already rendered a schema&#39;s `element` as (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1827\" target=\"_blank\" rel=\"noopener\">PR 1827</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a>",
