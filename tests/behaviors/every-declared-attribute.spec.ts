@@ -80,11 +80,12 @@ import { test, expect, Page } from '../fixtures/offline';
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { settlePage } from '../base';
+import { PRIMARY_VALUE_ATTRIBUTE } from '../../src/core/author-content.js';
 
 const ROOT = process.cwd();
 const MODELS = join(ROOT, 'src/wb-models');
 
-interface Attr { name: string; sample: string; bare: boolean; }
+interface Attr { name: string; sample: string; bare: boolean; primary?: boolean; }
 interface Behavior { name: string; token: string; tag: string; inputType: string; attrs: Attr[]; }
 
 /** kebab-case is what the DOM sees: iconPosition -> icon-position. */
@@ -137,7 +138,12 @@ function loadBehaviors(): Behavior[] {
       if (def?.scope === 'child') continue;
       const s = sampleFor(def);
       if (!s) continue;
-      attrs.push({ name: kebab(prop), sample: s.value, bare: s.bare });
+      // #417: the behavior's PRIMARY attribute is the fallback for the text
+      // between the tags, and the text wins. On the "probe"-bodied host below
+      // it correctly does nothing (and a behavior may never look it up), so it
+      // is probed on an empty host, against an empty-host baseline.
+      const primary = (PRIMARY_VALUE_ATTRIBUTE as Record<string, string>)[declared.replace(/^x-/, '')] === prop;
+      attrs.push({ name: kebab(prop), sample: s.value, bare: s.bare, primary });
     }
     if (!attrs.length) continue;
 
@@ -191,13 +197,15 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
     document.body.appendChild(host);
 
     const typeAttr = inputType ? ` type="${inputType}"` : '';
-    const mk = (extra: string, id: string) =>
-      `<${tag} id="${id}"${typeAttr} ${token}${extra}>probe</${tag}>`;
+    const mk = (extra: string, id: string, body = 'probe') =>
+      `<${tag} id="${id}"${typeAttr} ${token}${extra}>${body}</${tag}>`;
 
+    // base-empty: the baseline for a primary attribute, probed with no body
+    // (#417 -- content wins, so the attribute only shows on an empty host).
     host.innerHTML =
-      mk('', 'base') +
+      mk('', 'base') + mk('', 'base-empty', '') +
       attrs.map((a: any, i: number) =>
-        mk(a.bare ? ` ${a.name}` : ` ${a.name}="${a.sample}"`, `p${i}`)).join('');
+        mk(a.bare ? ` ${a.name}` : ` ${a.name}="${a.sample}"`, `p${i}`, a.primary ? '' : 'probe')).join('');
 
     // Instrument BEFORE the behaviors run — that is the only window in which
     // the reads happen.
@@ -258,10 +266,10 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
       return clone.outerHTML;
     };
 
-    const baseEl = document.getElementById('base');
-    const baseStyle = baseEl ? snapStyle(baseEl) : '';
     const ignored: string[] = [];
     attrs.forEach((a: any, i: number) => {
+      const baseEl = document.getElementById(a.primary ? 'base-empty' : 'base');
+      const baseStyle = baseEl ? snapStyle(baseEl) : '';
       const el = document.getElementById('p' + i);
       const name = a.name.toLowerCase();
       const seen = seenBy[i];

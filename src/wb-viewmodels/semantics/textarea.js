@@ -9,6 +9,7 @@
  * the real textarea now, see below); emits a one-time console warning.
  */
 import { setRule, clearRules } from '../../core/dynamic-style.js';
+import { authorText } from '../../core/author-content.js';
 import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
 import { moveKeepingFocus } from '../../core/keep-focus.js';
 
@@ -32,7 +33,9 @@ const ENHANCE_ATTRS = ['variant', 'size', 'autosize', 'maxLength', 'showCount', 
  * @param {HTMLTextAreaElement} inner
  */
 function reflectHostAttributes(host, inner) {
-  const value = readAttr(host, 'value');
+  // #417: the author's text between the host's tags (stashed by the schema
+  // build as _wbOriginalContent) wins over `value`, the fallback.
+  const value = authorText(host) || readAttr(host, 'value');
   // textContent is the textarea's default value -- the declarative spelling,
   // so it also survives a form reset.
   if (value && !inner.textContent) inner.textContent = value;
@@ -103,7 +106,9 @@ export function textarea(element, options = {}) {
     if (host.hasAttribute('disabled')) built.disabled = true;
     if (host.hasAttribute('required')) built.required = true;
     if (readFlag(host, 'readonly')) built.readOnly = true;
-    if (host.textContent && host.textContent.trim()) built.value = host.textContent.trim();
+    // #417: content wins over `value` -- through the shared author-content test.
+    const authoredValue = authorText(host);
+    if (authoredValue) built.value = authoredValue;
     else if (host.getAttribute('value')) built.value = host.getAttribute('value');
     ENHANCE_ATTRS.forEach((attr) => {
       if (hasAuthoredAttr(host, attr)) built.setAttribute(attr, readAttr(host, attr, ''));

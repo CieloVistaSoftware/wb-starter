@@ -144,6 +144,14 @@ export const CONVENTION = /^x-([a-z0-9]+)(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?(?:--[a-
  * `countdown` included. Checking against tag-map.js only reported real
  * behavior names as concepts.
  *
+ * A registered name with a hyphen (`fix-card`, `drawer-layout`) cannot be the
+ * {behavior} of a class: the convention's {behavior} is one word, and
+ * `x-fix-card__main` reads as the `fix` behavior's `card__main`. Such a
+ * behavior's classes use its function name lowercased -- fixCard() ->
+ * `x-fixcard`, drawerLayout() -> `x-drawerlayout` -- while the attribute keeps
+ * the hyphen (docs/standards/CSS-CLASS-CONVENTION.md, #1096). So the
+ * hyphen-free spelling counts as registered for class purposes.
+ *
  * @param {string} root  repository root
  * @returns {Set<string>}
  */
@@ -157,6 +165,7 @@ export function registeredBehaviorNames(root) {
   if (start !== -1) {
     for (const m of index.slice(start, end).matchAll(/(?:^|[,{]\s*|\n\s*)'?([a-zA-Z][\w-]*)'?\s*:/g)) names.add(m[1].toLowerCase());
   }
+  for (const name of [...names]) if (name.includes('-')) names.add(name.replace(/-/g, ''));
   return names;
 }
 

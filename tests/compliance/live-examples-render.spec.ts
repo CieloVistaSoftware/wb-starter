@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { globSync } from 'glob';
+import { buildEveryDemo, auditDemos } from '../helpers/x-demo-audit';
 
 /**
  * TEST AUDIT — Dimension 2 of 4: "do all the examples work?" (John,
@@ -66,74 +67,24 @@ test.describe('Live examples render — every <div x-demo> shows real content, n
 
       const demos = page.locator('[x-demo]');
       const demoCount = await demos.count();
-      // The work here is per block: every demo is scrolled into view so the lazy
-      // runtime (#491) builds it. demos/site/cards.html holds 293 of them and needs
-      // ~22s on an idle machine (at HEAD too), so a flat 30s budget failed it only
-      // under parallel load. The budget grows with the page; nothing asserted changes.
-      test.setTimeout(30_000 + demoCount * 150);
+      // The work here is per block: every demo has to be brought into view so the
+      // lazy runtime (#491) builds it. demos/site/cards.html holds 293 of them and
+      // needs ~22s on an idle machine, so the budget grows with the page. The base
+      // is 60s rather than 30s because the wait below is now for the builds
+      // themselves (#1817), and a busy machine is allowed to be slow at building.
+      const budget = 60_000 + demoCount * 150;
+      test.setTimeout(budget);
       if (demoCount === 0) test.skip(true, 'no <div x-demo> blocks actually rendered on this page');
 
-      // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
-      // synchronously; the rest wait for an IntersectionObserver against the
-      // real scroll container. Scroll each into view so lazily-built demos
-      // further down the page are actually checked, not silently skipped.
-      // 5000ms per demo was the real cost here: on a page with many blocks the
-      // scroll loop alone could consume the whole 30s test budget before a
-      // single assertion ran, and the test died as a timeout rather than
-      // reporting what rendered. Scrolling is cheap when it works, so cap it
-      // low — a scroll that needs more than 1.5s is not going to succeed.
-      for (let i = 0; i < demoCount; i++) {
-        try {
-          await demos.nth(i).scrollIntoViewIfNeeded({ timeout: 1500 });
-        } catch {
-          // best-effort -- audit whatever built/rendered regardless
-        }
-      }
-
-      // Wait for the grids to actually fill rather than sleeping 500ms and
-      // hoping. Capped and swallowed: a demo that legitimately never renders is
-      // the bug this test exists to CATCH, so it must fall through and report,
-      // never hang.
-      await page
-        .waitForFunction(
-          () =>
-            Array.from(document.querySelectorAll('[x-demo]')).every((d) => {
-              const g = d.querySelector('.x-demo__grid');
-              return g && g.innerHTML.trim().length > 0;
-            }),
-          null,
-          { timeout: 5000 }
-        )
-        .catch(() => {});
-
-      const emptyDemos = await page.evaluate(() => {
-        const problems: string[] = [];
-        document.querySelectorAll('[x-demo]').forEach((demo, i) => {
-          const grid = demo.querySelector('.x-demo__grid');
-          if (!grid) {
-            problems.push(`[x-demo][${i}]: no .x-demo__grid was built at all`);
-            return;
-          }
-          const kids = Array.from(grid.children) as HTMLElement[];
-          if (kids.length === 0) {
-            problems.push(`[x-demo][${i}]: .x-demo__grid built but has zero rendered children`);
-            return;
-          }
-          const anyVisible = kids.some((k) => {
-            const r = k.getBoundingClientRect();
-            return r.width > 0 && r.height > 0;
-          });
-          if (!anyVisible) {
-            const label = (demo.textContent || '').trim().slice(0, 50);
-            problems.push(`x-demo[${i}] "${label}": has ${kids.length} child(ren) but none has a non-zero rendered size (upgrade likely failed silently)`);
-          }
-        });
-        return problems;
-      });
+      // #1817: wait for the builds themselves, then audit (tests/helpers/x-demo-audit.ts).
+      const buildWait = budget - 15_000;
+      const builtInTime = await buildEveryDemo(page, buildWait);
+      const emptyDemos = await auditDemos(page, buildWait);
 
       const message = `${rel}:\n` +
         (pageErrors.length ? `PAGE ERRORS:\n  ${pageErrors.join('\n  ')}\n` : '') +
-        (emptyDemos.length ? `EMPTY/BROKEN DEMOS:\n  ${emptyDemos.join('\n  ')}\n` : '');
+        (emptyDemos.length ? `EMPTY/BROKEN DEMOS:\n  ${emptyDemos.join('\n  ')}\n` : '') +
+        (builtInTime ? '' : `(not every block had finished building within ${buildWait}ms)\n`);
 
       expect(pageErrors, message).toEqual([]);
       expect(emptyDemos, message).toEqual([]);
