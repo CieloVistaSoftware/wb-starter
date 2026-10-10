@@ -1,4 +1,4 @@
-/* global document, Node -- this function runs in the browser page, not in Node. */
+/* global document, Node, NodeFilter -- this function runs in the browser page, not in Node. */
 /**
  * The extractor: runs INSIDE the rendered page (page.evaluate), so it reads
  * the DOM the browser built, after the page's own scripts ran, not the raw
@@ -18,6 +18,9 @@
  * that auto-injects its behavior (nativeMap in src/core/tag-map.js) or an
  * x-* attribute in extensionMap. The registry is passed in, and the rules
  * refuse to emit an x-* attribute it does not list.
+ *
+ * v1 (#1832) adds pricing tables (x-cardpricing), YouTube and Vimeo embeds
+ * (x-youtube, x-vimeo), tab sets (x-tabs) and inline SVG icons (x-icon).
  *
  * @param {{nativeMap: Record<string,string>, extensionMap: Record<string,string>}} registry
  */
@@ -176,6 +179,49 @@ export function extractInPage(registry) {
     template: 'Inert markup their scripts used',
   };
 
+  // ---------------------------------------------------------------- v1 recognisers (#1832)
+  // Pricing: a card that carries a price. Everything in it must have a place
+  // in x-cardpricing, which replaces its content: what does not fit makes it
+  // an ordinary card again.
+  const PRICE = '.pricing-card-title, .price, .plan-price, .card-price, .pricing-price';
+  const isPricing = (e) => !!e.querySelector(PRICE)
+    && (isCard(e) || hasClass(e, /^(pricing|pricing-card|pricing-table|pricing-plan|price-card|plan)$/));
+  // Video embeds: the two players WB Starter has behaviors for.
+  const YOUTUBE = /^(?:https?:)?\/\/(?:www\.)?(?:youtube(?:-nocookie)?\.com\/(?:embed|shorts|live|v)\/|youtu\.be\/)([\w-]{11})/i;
+  const VIMEO = /^(?:https?:)?\/\/player\.vimeo\.com\/video\/(\d+)/i;
+  // Inline SVG: an icon is drawn at text size.
+  const ICON_MAX = 48;
+  const isIconSvg = (e) => {
+    const r = e.getBoundingClientRect();
+    if (r.width || r.height) return r.width <= ICON_MAX && r.height <= ICON_MAX;
+    const w = parseFloat(e.getAttribute('width'));
+    const h = parseFloat(e.getAttribute('height'));
+    return w > 0 && h > 0 && w <= ICON_MAX && h <= ICON_MAX;
+  };
+  // Tabs: a tab list whose tabs each name a panel, and the one element that
+  // holds exactly those panels. Found before the walk, because the list comes
+  // first in the page and the panels after it.
+  const TABLIST = '[role="tablist"], .nav-tabs, .nav-pills';
+  const TAB = '[role="tab"], [data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-toggle="tab"], [data-toggle="pill"]';
+  const tabLists = new Map();
+  const tabHosts = new Map();
+  for (const list of document.body.querySelectorAll(TABLIST)) {
+    const tabs = [...list.querySelectorAll(TAB)];
+    if (tabs.length < 2) continue;
+    const targetOf = (t) => {
+      const ref = t.getAttribute('data-bs-target') || t.getAttribute('data-target') || (t.getAttribute('aria-controls') ? `#${t.getAttribute('aria-controls')}` : '') || t.getAttribute('href') || '';
+      return ref.startsWith('#') && ref.length > 1 ? document.getElementById(ref.slice(1)) : null;
+    };
+    const panels = tabs.map(targetOf);
+    const host = panels[0] && panels[0].parentElement;
+    if (!host || panels.some((p) => !p || p.parentElement !== host) || new Set(panels).size !== panels.length
+      || kids(host).length !== panels.length || list.contains(host) || host.contains(list)) continue;
+    const active = Math.max(0, tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true' || t.classList.contains('active')));
+    const group = { list, host, tabs, panels, active, labels: tabs.map((t) => norm(t.textContent)) };
+    tabLists.set(list, group);
+    tabHosts.set(host, group);
+  }
+
   // ---------------------------------------------------------------- rules
   const keepAs = (e, tag, why) => {
     const { kept, dropped } = cleanAttrs(e);
@@ -222,7 +268,7 @@ export function extractInPage(registry) {
     return [el('section', attrs, convertChildren(e))];
   };
 
-  const card = (e) => {
+  const card = (e, before = '') => {
     const nested = (x) => x.parentElement.closest('.card, .panel, .tile') !== e;
     const titleEl = [...e.querySelectorAll('.card-title, .panel-title, h1, h2, h3, h4, h5, h6')].find((x) => !nested(x));
     const subEl = [...e.querySelectorAll('.card-subtitle, .panel-subtitle')].find((x) => !nested(x));
@@ -231,7 +277,7 @@ export function extractInPage(registry) {
     if (titleEl && !titleEl.querySelector('a, img')) { attrs.push(['title', norm(titleEl.textContent)]); skip.add(titleEl); moved.push(`the heading "${norm(titleEl.textContent)}" becomes title`); }
     if (subEl && !subEl.querySelector('a, img')) { attrs.push(['subtitle', norm(subEl.textContent)]); skip.add(subEl); moved.push(`"${norm(subEl.textContent)}" becomes subtitle`); }
     const { dropped } = cleanAttrs(e);
-    note(e, showTag(nativeTag('article'), attrs), `A card in their markup; <article> IS a card in WB Starter (nativeMap 'article' → card, Law 0).${moved.length ? ` ${moved.join(', ')[0].toUpperCase()}${moved.join(', ').slice(1)} (the card renders it in its header);` : ''} the rest stays between the tags (#968).${dropReason(e, dropped)}`);
+    note(e, showTag(nativeTag('article'), attrs), `${before}A card in their markup; <article> IS a card in WB Starter (nativeMap 'article' → card, Law 0).${moved.length ? ` ${moved.join(', ')[0].toUpperCase()}${moved.join(', ').slice(1)} (the card renders it in its header);` : ''} the rest stays between the tags (#968).${dropReason(e, dropped)}`);
     return [el('article', attrs, convertChildren(e))];
   };
 
@@ -318,6 +364,112 @@ export function extractInPage(registry) {
     return [el(tag, attrs, items)];
   };
 
+  const pricing = (e) => {
+    const priceEl = e.querySelector(PRICE);
+    const periodEl = [...priceEl.children].find((c) => /^(small|span|sub|sup)$/.test(lower(c))) || null;
+    const price = norm([...priceEl.childNodes].filter((c) => c.nodeType === Node.TEXT_NODE).map((c) => c.data).join(' '));
+    const period = periodEl ? norm(periodEl.textContent) : '';
+    const planEl = [...e.querySelectorAll('h1, h2, h3, h4, h5, h6, .plan-name, .plan-title')].find((x) => x !== priceEl && !priceEl.contains(x) && !x.contains(priceEl)) || null;
+    const items = [...e.querySelectorAll('li')];
+    const actions = [...e.querySelectorAll('a, button')].filter((x) => !x.closest('li'));
+    const paras = [...e.querySelectorAll('p')].filter((x) => !priceEl.contains(x) && !x.closest('li') && !(planEl && planEl.contains(x)));
+    // x-cardpricing renders its own defaults for what is missing ("/month",
+    // "Get Started", "Feature 1"): a missing piece would put words on the page
+    // that the source never had.
+    const why = [];
+    if (!price) why.push('it has no price');
+    if (!period) why.push('the price has no period, and x-cardpricing would show "/month"');
+    if (priceEl.children.length > (periodEl ? 1 : 0)) why.push('the price holds more than an amount and a period');
+    if (!planEl || !norm(planEl.textContent)) why.push('it has no plan name');
+    if (!items.length) why.push('it lists no features, and x-cardpricing would show "Feature 1, Feature 2"');
+    if (items.some((li) => li.textContent.includes(','))) why.push('a feature has a comma in it, and x-cardpricing\'s features attribute is split on commas');
+    if (items.some((li) => li.querySelector('a, img, button'))) why.push('a feature holds a link or an image, which features="..." cannot carry');
+    if (actions.length !== 1) why.push(actions.length ? 'it has more than one call to action' : 'it has no call to action, and x-cardpricing would show "Get Started"');
+    if (paras.length > 1) why.push('it has more than one paragraph, and x-cardpricing has room for one description');
+    if (e.querySelector('img, svg, video, iframe, table, form')) why.push('it holds media or a table, which x-cardpricing would drop');
+    // Every word must land in an attribute: x-cardpricing replaces its content.
+    const used = [priceEl, planEl, ...items, ...actions, ...paras].filter(Boolean);
+    const walker = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
+    const left = [];
+    for (let t = walker.nextNode(); t; t = walker.nextNode()) if (t.data.trim() && !used.some((u) => u.contains(t))) left.push(norm(t.data));
+    if (left.length) why.push(`"${left.join(' ')}" has no place in it`);
+    if (why.length) return card(e, `A pricing card, but not x-cardpricing: ${why.join('; ')}. `);
+
+    const cta = actions[0];
+    const attrs = [...cleanAttrs(e).kept.filter(([k]) => k === 'id'), xAttr('x-cardpricing'),
+      ['plan', norm(planEl.textContent)], ['price', price], ['period', period]];
+    if (paras.length) attrs.push(['description', norm(paras[0].textContent)]);
+    attrs.push(['features', items.map((li) => norm(li.textContent)).join(', ')], ['cta', norm(cta.textContent)]);
+    const href = lower(cta) === 'a' ? cta.getAttribute('href') : null;
+    if (href) attrs.push(['cta-href', href]);
+    const featured = hasClass(e, /^(featured|popular|recommended|highlight|border-primary)$/);
+    if (featured) attrs.push(['featured', '']);
+    note(e, showTag('article', attrs), `A pricing card; x-cardpricing is WB Starter's pricing card (extensionMap 'x-cardpricing'). Every piece of it is copied into an attribute, word for word: the plan name, the price and its period${paras.length ? ', the description' : ''}, ${items.length} feature${items.length === 1 ? '' : 's'} and the call to action.${href ? '' : ' The call to action was a button with no link, so cta-href is left out and it points nowhere (#) until you set it.'}${featured ? ` It was marked as the featured plan (class="${norm(e.getAttribute('class'))}"), so featured.` : ''}${dropReason(e, cleanAttrs(e).dropped)}`);
+    return [el('article', attrs, [])];
+  };
+
+  const embed = (e, src) => {
+    const yt = src.match(YOUTUBE);
+    const vm = src.match(VIMEO);
+    let query;
+    try { query = new URL(src, document.baseURI).searchParams; } catch { query = new URLSearchParams(); }
+    const on = (k) => query.get(k) === '1' || query.get(k) === 'true';
+    const flags = [on('autoplay') && 'autoplay', (on('mute') || on('muted')) && 'muted', on('loop') && 'loop'].filter(Boolean);
+    const asked = flags.length ? ` The URL asked for ${flags.join(', ')}, so ${flags.length === 1 ? 'that attribute is' : 'those attributes are'} set.` : '';
+    const title = e.getAttribute('title');
+    const lost = title ? ` Their title="${norm(title)}" is not carried over: the behavior builds its own <iframe>.` : '';
+    if (yt) {
+      const attrs = [xAttr('x-youtube'), ['url', src], ...flags.map((f) => [f, ''])];
+      if (query.get('controls') === '0') attrs.push(['controls', 'false']);
+      note(e, showTag('div', attrs), `A YouTube player; x-youtube embeds it (extensionMap 'x-youtube'), reading the video id from the same URL.${asked}${lost}`);
+      return [el('div', attrs, [])];
+    }
+    const attrs = [xAttr('x-vimeo'), ['video-id', vm[1]], ...flags.map((f) => [f, ''])];
+    note(e, showTag('div', attrs), `A Vimeo player; x-vimeo embeds it (extensionMap 'x-vimeo') from the video id in its URL.${asked}${lost}`);
+    return [el('div', attrs, [])];
+  };
+
+  const tabSet = (e) => {
+    const g = tabHosts.get(e);
+    const attrs = [xAttr('x-tabs')];
+    if (g.active) attrs.push(['active-tab', String(g.active)]);
+    note(e, showTag('div', attrs), `A tab set; x-tabs builds the tab buttons from its panels (extensionMap 'x-tabs'). Each panel's tab label becomes its tab-title${g.active ? `, and tab ${g.active + 1} ("${g.labels[g.active]}") started open, so active-tab="${g.active}"` : ''}.${dropReason(e, cleanAttrs(e).dropped)}`);
+    const panels = g.panels.map((p, i) => {
+      const ids = cleanAttrs(p).kept.map(([k]) => k).filter((k) => k === 'id' || k.startsWith('aria-'));
+      note(p, showTag('div', [['tab-title', g.labels[i]]]), `Tab panel ${i + 1}, labelled "${g.labels[i]}" by its tab.${ids.length ? ` Its ${ids.join(' and ')} ${ids.length === 1 ? 'goes' : 'go'}: x-tabs gives each panel its own id and label.` : ''}${dropReason(p, cleanAttrs(p).dropped)}`);
+      return el('div', [['tab-title', g.labels[i]]], convertChildren(p));
+    });
+    return [el('div', attrs, panels)];
+  };
+
+  /** Inline SVG, copied as it is: only class, style, data-* and on* go. */
+  const copySvg = (n) => {
+    if (n.nodeType === Node.TEXT_NODE) return n.data.trim() ? [text(n.data.replace(/\s+/g, ' '))] : [];
+    if (n.nodeType !== Node.ELEMENT_NODE) return [];
+    const attrs = [...n.attributes].filter(({ name }) => !(name === 'class' || name === 'style' || name.startsWith('data-') || /^on/.test(name))).map(({ name, value }) => [name, value]);
+    return [el(n.tagName, attrs, [...n.childNodes].flatMap(copySvg))];
+  };
+  const svg = (e) => {
+    const r = e.getBoundingClientRect();
+    const size = `${Math.round(r.width)}x${Math.round(r.height)}px`;
+    const { dropped } = cleanAttrs(e);
+    const gone = dropped.filter((n) => n === 'class' || n === 'style' || n.startsWith('data-') || /^on/.test(n));
+    const dropNote = gone.length ? ` Dropped ${gone.map((n) => (n === 'class' ? `class="${norm(e.getAttribute('class'))}"` : n)).join(', ')}.` : '';
+    if (isIconSvg(e)) {
+      if ('x-icon' in registry.extensionMap) {
+        const attrs = [xAttr('x-icon')];
+        note(e, `${showTag('span', attrs)} + <svg>`, `An inline SVG icon (${size}); x-icon sizes it to the text beside it (extensionMap 'x-icon'). The drawing is kept as it is.${dropNote}`);
+        return [el('span', attrs, copySvg(e))];
+      }
+      note(e, '<svg> (kept as it is)', `An inline SVG icon (${size}). The registry has no x-icon, so the SVG is kept as it is, at the size its own width and height give it.${dropNote}`);
+      return copySvg(e);
+    }
+    const why = `an inline drawing (${size}), too big to be an icon: keep it inline, or save it as an .svg file and use <img> with alt text`;
+    unclassified.push({ path: pathOf(e), from: describe(e), text: norm(e.getAttribute('aria-label') || e.textContent) || 'inline <svg>', why });
+    note(e, '<!-- TODO: unclassified --> + <svg>', `Not classified: ${why}. Kept as it is under a TODO comment for a person to decide.${dropNote}`);
+    return [{ t: 'comment', v: ' TODO: unclassified (was an inline svg) ' }, ...copySvg(e)];
+  };
+
   const generic = (e) => {
     const tag = lower(e);
     const { kept, dropped } = cleanAttrs(e);
@@ -349,10 +501,17 @@ export function extractInPage(registry) {
       note(e, '(removed)', `${DROP[tag]}.`);
       return [];
     }
-    if (tag === 'svg' || tag === 'iframe' || tag === 'canvas' || tag === 'object' || tag === 'embed') {
+    if (tag === 'svg') return svg(e);
+    if (tag === 'iframe' && (YOUTUBE.test(e.getAttribute('src') || '') || VIMEO.test(e.getAttribute('src') || ''))) return embed(e, e.getAttribute('src'));
+    if (tabLists.has(e)) {
+      note(e, '(removed)', `The tab buttons of a tab set; x-tabs builds its own from each panel's tab-title (${tabLists.get(e).labels.map((l) => `"${l}"`).join(', ')}).`);
+      return [];
+    }
+    if (tabHosts.has(e)) return tabSet(e);
+    if (tag === 'iframe' || tag === 'canvas' || tag === 'object' || tag === 'embed') {
       const src = e.getAttribute('src') || e.getAttribute('data') || '';
-      unclassified.push({ path: pathOf(e), from: describe(e), text: src || `inline <${tag}>`, why: `<${tag}> is not migrated by v0; add it back by hand (an image, x-youtube, x-icon, ...)` });
-      note(e, '(removed, listed as unclassified)', `<${tag}> is not migrated by v0.`);
+      unclassified.push({ path: pathOf(e), from: describe(e), text: src || `inline <${tag}>`, why: `<${tag}> is not migrated; add it back by hand (an image, a link, ...)` });
+      note(e, '(removed, listed as unclassified)', `<${tag}> is not migrated${tag === 'iframe' ? ': only YouTube and Vimeo players are' : ''}.`);
       return [];
     }
     if (isHero(e)) return hero(e);
@@ -362,6 +521,7 @@ export function extractInPage(registry) {
       return convertChildren(e);
     }
     if (isTestimonial(e)) return testimonial(e);
+    if (isPricing(e)) return pricing(e);
     if (isCard(e)) return card(e);
     if (isAccordion(e)) return accordion(e);
     if (isFigureLike(e)) return figure(e);

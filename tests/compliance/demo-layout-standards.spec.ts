@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import { globSync } from 'glob';
 import { traceNavigations } from '../helpers/navigation-trace';
 import { wbIdle } from '../base';
+import { panelPaddingViolations, MIN_TEXT_EDGE_PX, MIN_PANEL_WIDTH, MIN_PANEL_HEIGHT } from '../../scripts/lib/layout-checks.mjs';
 
 // #1311: a failure here prints every main-frame navigation the page made.
 traceNavigations(test);
@@ -35,7 +36,8 @@ const FILES = [
 
 const MIN_GAP_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding
 const MIN_PADDING_PX = 15;
-const MIN_TEXT_EDGE_PX = 16; // 1rem — matches DEMOS-AND-DOCS-STANDARDS.md §13's documented minimum
+// MIN_TEXT_EDGE_PX (16, 1rem) is DEMOS-AND-DOCS-STANDARDS.md §13's documented minimum; it lives
+// beside the check in scripts/lib/layout-checks.mjs.
 
 /**
  * Read the page the way a reader does before measuring it.
@@ -348,9 +350,8 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
   // <span x-badge> with 1rem padding would be a visual regression, not a fix).
   // The exclusion is by SIZE (a real content panel is meaningfully larger
   // than a UI atom), not by an ad-hoc class denylist, so it generalizes to
-  // atoms not explicitly listed here.
-  const MIN_PANEL_WIDTH = 120;
-  const MIN_PANEL_HEIGHT = 32;
+  // atoms not explicitly listed here: MIN_PANEL_WIDTH x MIN_PANEL_HEIGHT
+  // (120 x 32px, scripts/lib/layout-checks.mjs).
 
   for (const file of FILES) {
     test(`${file}: content-panel elements keep >=1rem text padding`, async ({ page }) => {
@@ -359,120 +360,10 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
       await settled(page);
       await readThrough(page);
 
-      const violations = await page.evaluate(({ minPad, minW, minH }) => {
-        const problems: string[] = [];
-        const all = Array.from(document.querySelectorAll('body *')) as HTMLElement[];
-
-        // Exclude by ROLE first, before any size heuristic. §13 governs content
-        // panels — surfaces that hold block text. Some elements are atoms no
-        // matter how large they get: a wide <code> chip, a long <button>, a
-        // badge, an avatar. Judging those by size produced a steady drip of
-        // false positives (#561 patched exactly one, by shape, and more kept
-        // arriving), because "big" and "is a panel" are different properties.
-        const ATOM_TAGS = new Set(['BUTTON', 'CODE', 'KBD', 'SAMP', 'VAR', 'A', 'LABEL', 'SUMMARY', 'OPTION', 'SELECT', 'INPUT', 'TEXTAREA']);
-        const ATOM_CLASS = /(^|[\s_-])(badge|chip|pill|avatar|tag|icon|btn|button|code|label|counter|dot)([\s_-]|$)/i;
-        const isAtomByRole = (el: HTMLElement) => {
-          if (ATOM_TAGS.has(el.tagName)) return true;
-          if (ATOM_CLASS.test(el.className || '')) return true;
-          const role = el.getAttribute('role') || '';
-          if (/^(button|link|img|status|badge)$/i.test(role)) return true;
-          // An inline box is by definition not a panel.
-          const d = getComputedStyle(el).display;
-          return d === 'inline' || d === 'inline-block' || d === 'inline-flex';
-        };
-
-        for (const el of all) {
-          if (isAtomByRole(el)) continue;
-          // A cell of a table its author declared `compact` is on the
-          // compact padding scale on purpose -- data.css's
-          // `.x-table--compact` 0.5rem is the whole point of the variant,
-          // exactly as a badge's small padding is the point of a badge. The
-          // size cut-off below was the stand-in for "intentionally compact",
-          // and it only held while the demo tables were empty: with real rows
-          // (demos/site/content.html) a compact "Name" header is 127px wide
-          // and got judged as a 1rem content panel. No compact padding can
-          // satisfy that (with `bordered` every compact cell has four edges),
-          // so the variant itself is the exclusion. Non-compact cells are
-          // still held to 1rem (#545).
-          if ((el.tagName === 'TH' || el.tagName === 'TD') && el.closest('table.x-table--compact')) continue;
-          const rect = el.getBoundingClientRect();
-          if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
-          // #561: the SIZE-based atom exclusion above (width/height < 120px)
-          // doesn't catch x-cardportfolio__avatar-placeholder (card.js's
-          // initials-fallback avatar circle) -- its default diameter is
-          // exactly 7.5rem/120px, and its lg/xl/full size variants exceed
-          // it, so this check treated it as a full content panel needing
-          // 1rem padding. But this element centers its initials via
-          // `display:flex; align-items:center; justify-content:center`, not
-          // via padding -- the real gap from "JS"/"SC" to the circle's edge
-          // is (diameter - content size) / 2, generous regardless of the
-          // padding value the CSS declares. A circular, flex-centered
-          // element is never "crowding" text the way a padding check can
-          // detect, at any size, so exclude by SHAPE here as a second,
-          // independent test -- the describe block's own intro comment
-          // already lists "avatars" among the intentionally-excluded
-          // compact atoms; this just makes that exclusion match the actual
-          // centering mechanism instead of only a width/height heuristic
-          // that happens to miss this element at its default size.
-          const shapeCs = getComputedStyle(el);
-          // Chromium's computed `border-*-radius` stays a PERCENTAGE string
-          // (e.g. "50%") rather than resolving to px, even though the USED
-          // value is resolved against the box -- so this must compare
-          // against the declared percentage (>=50 == fully round), never
-          // against rect.width/2 in px (a px comparison silently fails for
-          // every avatar, since parseFloat("50%") is 50 regardless of the
-          // element's actual size).
-          const isFullyRound = (side: string) => {
-            const v = (shapeCs as any)[`border${side}Radius`] as string;
-            return v.trim().endsWith('%') && parseFloat(v) >= 50;
-          };
-          const isCircular = isFullyRound('TopLeft') && isFullyRound('TopRight')
-            && isFullyRound('BottomLeft') && isFullyRound('BottomRight');
-          const isFlexCentered = shapeCs.display === 'flex'
-            && shapeCs.alignItems === 'center'
-            && shapeCs.justifyContent === 'center';
-          if (isCircular && isFlexCentered) continue;
-          // Must have direct, non-whitespace text of its own (not just via
-          // nested elements) -- otherwise the padding requirement belongs to
-          // whichever descendant actually renders text.
-          const hasOwnText = Array.from(el.childNodes).some(
-            (n) => n.nodeType === Node.TEXT_NODE && (n.textContent || '').trim().length > 0
-          );
-          if (!hasOwnText) continue;
-
-          const cs = getComputedStyle(el);
-          const parent = el.parentElement ? getComputedStyle(el.parentElement) : null;
-          // #447: a single-side border (e.g. a heading's border-bottom
-          // underline/divider) isn't an enclosing "panel" -- it doesn't
-          // crowd the text against edges the way a real bordered box does.
-          // Require all four sides so a genuine panel (a card, a bordered
-          // box) is still caught, but a plain underlined heading isn't
-          // (confirmed live: demos/autoinject.html's "Zero-Config Form" h2
-          // has only a border-bottom divider, flagged as a false positive).
-          const hasBorder = ['Top', 'Right', 'Bottom', 'Left'].every(
-            (side) => parseFloat((cs as any)[`border${side}Width`]) > 0 && cs[`border${side}Style` as any] !== 'none'
-          );
-          const bg = cs.backgroundColor;
-          const isTransparent = bg === 'transparent' || bg === 'rgba(0, 0, 0, 0)';
-          const hasDistinctBg = !isTransparent && (!parent || parent.backgroundColor !== bg);
-          if (!hasBorder && !hasDistinctBg) continue; // not a "panel" -- no visible edge to crowd
-
-          const pads = [
-            parseFloat(cs.paddingTop),
-            parseFloat(cs.paddingRight),
-            parseFloat(cs.paddingBottom),
-            parseFloat(cs.paddingLeft),
-          ];
-          const minSide = Math.min(...pads);
-          if (minSide < minPad) {
-            const label = (el.textContent || '').trim().slice(0, 40);
-            problems.push(
-              `<${el.tagName.toLowerCase()} class="${el.className}"> "${label}" has ${minSide}px padding on its tightest side < ${minPad}px`
-            );
-          }
-        }
-        return problems;
-      }, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
+      // The measurement, and the reason for every exclusion it makes, is in
+      // scripts/lib/layout-checks.mjs: site-migrate runs the same rule against
+      // the page it proposes (#1832).
+      const violations = await page.evaluate(panelPaddingViolations, { minPad: MIN_TEXT_EDGE_PX, minW: MIN_PANEL_WIDTH, minH: MIN_PANEL_HEIGHT });
 
       expect(violations, `${file}:\n${violations.join('\n')}`).toHaveLength(0);
     });

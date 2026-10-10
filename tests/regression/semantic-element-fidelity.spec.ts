@@ -1,7 +1,7 @@
 import { test, expect } from '../fixtures/offline';
-import * as fs from 'fs';
 import * as path from 'path';
 import { setupBehaviorTest, setupTestContainer } from '../base';
+import { strictSemanticSchemas } from '../../scripts/lib/semantic-elements.mjs';
 
 /**
  * Every schema.json may declare `semanticElement.tagName` -- a promise that
@@ -35,7 +35,9 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * declares-vs-delivers-the-tag bug, so it's tracked separately rather than
  * forcing it through this test's tag-presence check.
  */
-const STRICT_TAGS = new Set(['select', 'table', 'dialog', 'details', 'textarea']);
+// STRICT_TAGS and the schema scan (strictSemanticSchemas) are in
+// scripts/lib/semantic-elements.mjs: site-migrate holds the page it proposes
+// to the same promise (#1832).
 
 // schemaFor -> tracking issue. Remove an entry only once the component is
 // verified (via its own regression test) to actually deliver the tag.
@@ -60,33 +62,7 @@ const KNOWN_VIOLATIONS: Record<string, string> = {
 };
 
 const SCHEMA_DIR = path.join(process.cwd(), 'src/wb-models');
-
-interface SchemaEntry {
-  file: string;
-  schemaFor: string;
-  tagName: string;
-  setupHtml: string;
-}
-
-function loadCandidates(): SchemaEntry[] {
-  if (!fs.existsSync(SCHEMA_DIR)) return [];
-  const results: SchemaEntry[] = [];
-  for (const file of fs.readdirSync(SCHEMA_DIR)) {
-    if (!file.endsWith('.schema.json') || file.includes('.base.')) continue;
-    let schema: any;
-    try {
-      schema = JSON.parse(fs.readFileSync(path.join(SCHEMA_DIR, file), 'utf-8'));
-    } catch {
-      continue;
-    }
-    const tagName = schema?.semanticElement?.tagName;
-    if (!tagName || !STRICT_TAGS.has(tagName)) continue;
-    const setupHtml = schema?.test?.setup?.[0];
-    if (!setupHtml) continue;
-    results.push({ file, schemaFor: schema.schemaFor, tagName, setupHtml });
-  }
-  return results;
-}
+const loadCandidates = () => strictSemanticSchemas(SCHEMA_DIR);
 
 test.describe('schema-declared semanticElement.tagName is actually delivered in the rendered DOM', () => {
   test.beforeEach(async ({ page }) => {
