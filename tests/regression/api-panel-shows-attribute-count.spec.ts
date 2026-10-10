@@ -63,9 +63,9 @@ test.describe('the API panel states its attribute count (#993)', () => {
   test('card: the chip states the count, and the panel lists every attribute', async ({ page }) => {
     // card.schema.json holds the byline attributes merged from the former
     // article schema (author, date, category, readingTime, featured), plus
-    // featuredTone (#998).
+    // featuredTone (#998), plus goldenRatio (#477).
     const declared = declaredAttributes('card');
-    expect(declared.length, 'card.schema.json should declare fifteen attributes').toBe(15);
+    expect(declared.length, 'card.schema.json should declare sixteen attributes').toBe(16);
 
     await select(page, 'x-card');
 

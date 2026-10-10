@@ -328,7 +328,7 @@
           "file": "behaviors/card.md",
           "title": "Card",
           "description": "Card.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/cardbutton.md",
@@ -628,7 +628,7 @@
           "file": "behaviors/figure.md",
           "title": "Figure",
           "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text,…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/file.md",
@@ -754,7 +754,7 @@
           "file": "behaviors/hero.md",
           "title": "Hero",
           "description": "x-hero styles a section as a page hero: large centred heading and lead text on a full-width band.",
-          "modified": "2026-10-04"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/icon.md",
@@ -766,7 +766,7 @@
           "file": "behaviors/img.md",
           "title": "Img",
           "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspect-ratio reserves its box so the page…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/input.md",
@@ -1174,7 +1174,7 @@
           "file": "behaviors/video.md",
           "title": "Video",
           "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/vimeo.md",

@@ -16,12 +16,13 @@ test.describe('card component documentation examples (#419)', () => {
     const fences = [...text.matchAll(/```(\w*)\r?\n([\s\S]*?)```/g)]
       .map((match) => ({ language: match[1], source: match[2] }));
 
-    expect(demos, 'card.md should keep the ten live card examples').toHaveLength(10);
+    // Eleven since #477 added the goldenRatio example.
+    expect(demos, 'card.md should keep the eleven live card examples').toHaveLength(11);
     expect(
       // <article> is a card by itself; any other host names the behavior.
       demos.filter((source) => /<article[\s>]|<[a-z]+\s+x-card[\s>]/i.test(source)),
       'each live card example should contain a card usage element'
-    ).toHaveLength(10);
+    ).toHaveLength(11);
 
     const renderableFences = fences.filter(
       ({ language, source }) => language.toLowerCase() === 'html' && RENDERABLE.test(source)
