@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.489",
+      "date": "2026-10-10",
+      "summary": "Test helper elementReady() no longer fails with a false &quot;Execution context was destroyed&quot; when a page is busy the moment an element is ready. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>ElementReady() waits through waitForFunction, not an awaited evaluate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>",
+          "issues": [
+            1818,
+            1828
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/element-ready-survives-a-busy-page.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/element-ready-survives-a-busy-page.spec.ts</a> --project=regression. Before: elementReady failed 2 of 6 rounds with &quot;Execution context was destroyed&quot;. Now: all rounds pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.488",
       "date": "2026-10-10",
       "summary": "The last 6 behavior classes that broke the x-{behavior} naming rule are renamed or deleted, so the naming ratchet is 0 and every class a behavior applies can be derived from its name. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a>",
