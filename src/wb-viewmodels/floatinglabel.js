@@ -80,7 +80,10 @@ export function floatinglabel(element, options = {}) {
   const placeholder = (field.placeholder || '').trim();
   const authored = isField ? null
     : ([...element.querySelectorAll('label')].find((l) => field.id && l.htmlFor === field.id) || element.querySelector('label'));
-  const text = element.getAttribute('label') || options.label || (authored && authored.textContent.trim()) || placeholder || '';
+  // #417: content wins -- an authored <label> is the author's text for it, so
+  // it wins over `label=`, which fills in only when there is none (it used to
+  // overwrite the authored label's text).
+  const text = options.label || (authored && authored.textContent.trim()) || element.getAttribute('label') || placeholder || '';
 
   const label = authored || document.createElement('label');
   label.classList.add('x-floatinglabel__label');

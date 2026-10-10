@@ -41,7 +41,7 @@ always shows a value, so its label is always risen.
 | Attribute | Type | Default | Description |
 |---|---|---|---|
 | `placeholder` | text | — | Used as the label text if present (checked first). |
-| `label` | text | — | Fallback label text when there's no `placeholder`. |
+| `label` | text | — | Label text, used when the host has no authored `<label>`; an authored `<label>` wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). Wins over `placeholder`. |
 
 ## CSS Classes
 

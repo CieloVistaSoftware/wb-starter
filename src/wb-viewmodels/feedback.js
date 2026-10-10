@@ -1,5 +1,6 @@
 import { readFlag, readAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule } from '../core/dynamic-style.js';
+import { authorText, hasAuthorContent, authoredNodes } from '../core/author-content.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
@@ -290,6 +291,12 @@ export function badge(element, options = {}) {
   if (glow) element.classList.add('x-badge--glow');
 
   if (dot) {
+    // #417: content wins over `label` here too. The dot branch clears the
+    // host and rebuilds it, so read the author's text first -- it used to be
+    // wiped unread, and <span x-badge dot>Live</span> rendered a bare dot.
+    // authorText() is captured once, so a re-run reads what the author wrote,
+    // not the dot-label span this branch built.
+    const dotText = authorText(element) || (label ?? '');
     element.textContent = ''; // clear first -- rebuilt below from scratch
     // #415: dot + removable are NOT mutually exclusive -- dot = a small
     // colored indicator instead of a text label, removable = has a
@@ -307,7 +314,7 @@ export function badge(element, options = {}) {
     // way to express. `dot` + `label` together now render both: a small
     // colored dot indicator, then the label text next to it -- still
     // compact, no longer silently textless.
-    const hasLabel = label != null && label !== '';
+    const hasLabel = dotText !== '';
     if (removable || hasLabel) {
       if (!element.querySelector('.x-badge__dot')) {
         const dotEl = document.createElement('span');
@@ -317,27 +324,17 @@ export function badge(element, options = {}) {
       if (hasLabel) {
         const labelEl = document.createElement('span');
         labelEl.className = 'x-badge__dot-label';
-        labelEl.textContent = label;
+        labelEl.textContent = dotText;
         element.appendChild(labelEl);
       }
     }
   } else {
     // Render the `label` attribute as the badge text — but only if the author
-    // didn't already put content inside the tag (children win over label).
-    // #618: on a x-demo page, demo.js's doc-link 📖 icon (.x-demo__card-doc-link)
-    // is appended as hostEl's own DOM CHILD before this behavior ever runs
-    // (see demo.js's attachInstanceDocLink) -- a plain `element.textContent.trim()`
-    // check can't tell that apart from real author content, so it saw the icon,
-    // assumed the label had already been "handled," and silently dropped every
-    // label on every x-demo'd badge. Only the doc-link icon renders text this
-    // early, so excluding it from the emptiness check is enough to tell the two
-    // apart.
-    const hasAuthorContent = Array.from(element.childNodes).some(
-      (n) => n.nodeType === Node.TEXT_NODE
-        ? n.textContent.trim()
-        : !n.classList?.contains('x-demo__card-doc-link')
-    );
-    if (label != null && label !== '' && !hasAuthorContent) {
+    // didn't already put content inside the tag (#417: content wins, the
+    // attribute is the fallback). #618: demo.js's doc-link 📖 icon is a DOM
+    // child that is not author content; hasAuthorContent() (core/
+    // author-content.js) is the one test that knows that.
+    if (label != null && label !== '' && !hasAuthorContent(element)) {
       element.textContent = label;
     }
     // icon → a small leading glyph/emoji before the label (e.g. "🟢 Live").
@@ -434,7 +431,9 @@ export function spinner(element, options = {}) {
   // spinner.schema.json declares `label` ("Accessible label", default
   // "Loading") and the docs say the aria-label is taken from it; it used to
   // be hard-coded to "Loading" whatever the author wrote.
-  element.setAttribute('aria-label', options.label || readAttr(element, 'label') || 'Loading');
+  // #417: text between the tags is the label too, and wins over `label`
+  // (<div x-spinner>Loading orders</div>) -- it used to be wiped unread.
+  element.setAttribute('aria-label', options.label || authorText(element) || readAttr(element, 'label') || 'Loading');
   element.innerHTML = '';
 
   // spinner.schema.json declares size default:"md" -- that default used to
@@ -488,7 +487,9 @@ export function avatar(element, options = {}) {
   element.classList.add('x-avatar');
 
   const src = options.src || element.getAttribute('src') || '';
-  const initials = options.initials || element.getAttribute('initials') || '';
+  // #417: <span x-avatar>JD</span> -- the text between the tags is the
+  // initials and wins over `initials`; it used to be wiped unread.
+  const initials = options.initials || authorText(element) || element.getAttribute('initials') || '';
   const name = options.name || element.getAttribute('name') || '';
   const status = options.status || element.getAttribute('status') || '';
   // `alt` is declared in avatar.schema.json. It used to be read nowhere: the
@@ -527,14 +528,11 @@ export function avatar(element, options = {}) {
  * CSS: src/styles/behaviors/chip.css
  */
 export function chip(element, options = {}) {
-  // Authored text is the label when no `label` attribute is given -- the same
-  // primary-value rule input/rating/progress/timeline already follow, read the
-  // same way (the schema builder has wiped innerHTML by now and stashed it on
-  // _wbOriginalContent). Without it `<span x-chip>New</span>`, the form every
-  // schema's test.setup and the schema viewer use, rendered an empty pill:
-  // innerHTML is cleared below and the label fell back to ''.
-  const authoredLabel = (element._wbOriginalContent || element.textContent || '').trim();
-  const label = options.label ?? element.getAttribute('label') ?? authoredLabel;
+  // #417: authored text is the label, and wins over `label` -- the attribute
+  // is the fallback. authorText() reads the schema builder's
+  // _wbOriginalContent stash when it has wiped the host, and is captured once,
+  // so a re-run does not read this chip's own built icon/label/× back as text.
+  const label = options.label ?? (authorText(element) || element.getAttribute('label') || '');
   const icon = options.icon || element.getAttribute('icon') || '';
   // Bare (dismissible) and data-prefixed (data-dismissible) attributes both
   // opt in -- consistent with card()'s clickable/elevated dual-check
@@ -636,9 +634,21 @@ export function alert(element, options = {}) {
   element.classList.add('x-alert');
   element.classList.add(`x-alert--${variant}`);
 
-  const content = message || element.innerHTML || 'Alert message';
+  // #417: the content between the tags is the message and wins over
+  // `message`, which is the fallback. It is MOVED in as nodes, not copied as
+  // a string: it used to go in through textContent, so the documented
+  // `<div x-alert><strong>Warning:</strong> …</div>` showed its tags as text.
+  // authorText() is captured once, so a re-run takes the nodes back out of the
+  // message this alert built instead of treating its icon and title as the
+  // author's.
+  const prevMsg = element.querySelector(':scope > .x-alert__content > .x-alert__message');
+  const authoredMsg = authorText(element)
+    ? (prevMsg ? Array.from(prevMsg.childNodes) : authoredNodes(element))
+    : [];
+  const content = message || 'Alert message';
   const titleText = title || 'Alert';
 
+  authoredMsg.forEach((n) => n.remove());
   element.innerHTML = '';
 
   const iconEl = document.createElement('span');
@@ -653,7 +663,8 @@ export function alert(element, options = {}) {
   titleEl.textContent = titleText;
   const msgEl = document.createElement('div');
   msgEl.className = 'x-alert__message';
-  msgEl.textContent = content;
+  if (authoredMsg.length) msgEl.append(...authoredMsg);
+  else msgEl.textContent = content;
   contentEl.appendChild(titleEl);
   contentEl.appendChild(msgEl);
   element.appendChild(contentEl);
@@ -717,7 +728,10 @@ export function skeleton(element) {
  * CSS: src/styles/behaviors/divider.css (TODO: create if missing)
  */
 export function divider(element, options = {}) {
-  const text = options.text || element.getAttribute('text') || '';
+  // #417: <div x-divider>or</div> -- the text between the tags is the label
+  // and wins over `text`. It used to be left as bare text with no rules either
+  // side, unless `text` was set, which then replaced it.
+  const text = options.text || authorText(element) || element.getAttribute('text') || '';
   const vertical = options.vertical ?? element.hasAttribute('vertical');
 
   element.setAttribute('role', 'separator');

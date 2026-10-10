@@ -2,6 +2,7 @@ import { readFlag, readAttr, authoredAttr } from '../core/read-attr.js';
 import { writeToClipboard } from './copy.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 import { TIME_ZONE, clockParts } from '../core/central-time.js';
+import { hasAuthorContent } from '../core/author-content.js';
 /**
  * Utility Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -107,8 +108,8 @@ export function print(element, options = {}) {
 
   element.classList.add('x-print');
   
-  // Make it VISIBLE!
-  if (!element.textContent.trim()) {
+  // Make it VISIBLE! #417: content wins -- `label` only fills an empty host.
+  if (!hasAuthorContent(element)) {
     element.textContent = config.label;
   }
   // #1003 -- these declarations were assigned here as `element.style.cssText`,
@@ -151,8 +152,8 @@ export function share(element, options = {}) {
 
   element.classList.add('x-share');
   
-  // Make it VISIBLE!
-  if (!element.textContent.trim()) {
+  // Make it VISIBLE! #417: content wins -- `label` only fills an empty host.
+  if (!hasAuthorContent(element)) {
     element.textContent = config.label;
   }
   // #1003 -- these declarations were assigned here as `element.style.cssText`,
@@ -197,8 +198,8 @@ export function fullscreen(element, options = {}) {
 
   element.classList.add('x-fullscreen');
 
-  // Make it VISIBLE!
-  if (!element.textContent.trim()) {
+  // Make it VISIBLE! #417: content wins -- `label` only fills an empty host.
+  if (!hasAuthorContent(element)) {
     element.textContent = config.label;
   }
   // #1003 -- these declarations were assigned here as `element.style.cssText`,
@@ -413,8 +414,8 @@ export function clipboard(element, options = {}) {
 
   element.classList.add('x-clipboard');
   
-  // Make it VISIBLE!
-  if (!element.textContent.trim()) {
+  // Make it VISIBLE! #417: content wins -- `label` only fills an empty host.
+  if (!hasAuthorContent(element)) {
     element.innerHTML = config.label;
   }
   // #1003 -- these declarations were assigned here as `element.style.cssText`,
@@ -467,8 +468,8 @@ export function scroll(element, options = {}) {
 
   element.classList.add('x-scroll');
   
-  // Make it VISIBLE!
-  if (!element.textContent.trim()) {
+  // Make it VISIBLE! #417: content wins -- `label` only fills an empty host.
+  if (!hasAuthorContent(element)) {
     element.textContent = config.label;
   }
   // #1003 -- these declarations were assigned here as `element.style.cssText`,

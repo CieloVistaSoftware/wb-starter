@@ -1,5 +1,6 @@
 import { readAttr } from '../../core/read-attr.js';
 import { moveKeepingFocus } from '../../core/keep-focus.js';
+import { authorText } from '../../core/author-content.js';
 /**
  * Radio - Enhanced <input type="radio"> element
  * Adds visual enhancements, labels, radio groups
@@ -18,6 +19,11 @@ export function radio(element, options = {}) {
   // radio inside it and enhance that, reading the host's options -- the same
   // approach range.js takes for <div x-range>.
   if (element.tagName !== 'INPUT') {
+    // #417: <div x-radio>Monthly</div> -- the text between the tags is the
+    // label and wins over `label`. Read before the host is emptied below (it
+    // used to be wiped unread); captured once, so a re-scan does not read the
+    // built wrapper's label back.
+    const authoredLabel = authorText(element);
     let input = element.querySelector(':scope > input[type="radio"], :scope > .x-radio__wrapper > input[type="radio"]');
     if (!input) {
       input = document.createElement('input');
@@ -33,6 +39,7 @@ export function radio(element, options = {}) {
       const value = element.getAttribute(key);
       if (value) hostOptions[key] = value;
     }
+    if (authoredLabel) hostOptions.label = authoredLabel;
     return radio(input, { ...hostOptions, ...options });
   }
   if (element.type !== 'radio') {

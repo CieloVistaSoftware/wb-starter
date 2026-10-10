@@ -1,4 +1,5 @@
 import { readFlag, readAttr, readOption, authoredAttr } from '../core/read-attr.js';
+import { authorHTML, authorText } from '../core/author-content.js';
 import { READY_ATTRIBUTE } from '../core/ready-signal.js';
 import { setRule } from '../core/dynamic-style.js';
 /**
@@ -313,6 +314,21 @@ function stampCardPartIds(element) {
  * Shared Card Composition
  * All variants compose this shared structure
  */
+/**
+ * #417: a card's body -- the content between the tags wins, and the `content`
+ * attribute is the fallback, used only when there is none. This is #968's
+ * order (schema-builder's extractData), and it reverses #683, which had the
+ * attribute win. authorHTML() skips what is not the author's (the x-demo
+ * doc-link icon, #618) and whitespace.
+ *
+ * @param {Element} element
+ * @param {object} options  an explicit options.content (programmatic) still wins
+ * @returns {string}
+ */
+function cardContent(element, options = {}) {
+  return options.content || authorHTML(element) || readAttr(element, 'content');
+}
+
 export function composeCard(element, options = {}) {
   // #940: every card builder runs synchronously after this call, so a
   // microtask stamps the parts once the whole card is built.
@@ -347,7 +363,7 @@ export function composeCard(element, options = {}) {
   //   - trim(): whitespace-only innerHTML is truthy, and would otherwise
   //     manufacture an empty body -- the blank-line problem #608 removed.
   const alreadyBuilt = !!element.querySelector(`:scope > .x-card__header, :scope > .${CARD_BODY_CLASS}`);
-  const authoredContent = (schemaProcessed || alreadyBuilt) ? '' : (element.innerHTML || '').trim();
+  const authoredContent = (schemaProcessed || alreadyBuilt) ? '' : authorHTML(element);
 
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
@@ -387,7 +403,8 @@ export function composeCard(element, options = {}) {
       const t = String(options.featuredTone || readAttr(element, 'featuredTone') || '').trim().toLowerCase();
       return ['primary', 'success', 'warning', 'danger', 'info', 'neutral'].includes(t) ? t : '';
     })(),
-    content: readOption(element, options, 'content') || authoredContent,
+    // #417: content between the tags wins; the attribute is the fallback.
+    content: options.content || authoredContent || readAttr(element, 'content') || '',
     footer: readOption(element, options, 'footer') || '',
     variant: readOption(element, options, 'variant') || 'default',
     badge: readOption(element, options, 'badge') || '',
@@ -983,19 +1000,15 @@ export function card(element, options = {}) {
       hasMain = bodyEl;
     }
   }
-  const hasContent = options.content || readAttr(element, 'content');
-  
   // Capture content:
   // 1. If semantic structure exists, we don't capture innerHTML (it's already in the structure)
-  // 2. If valid content option/data provided, use it
-  // 3. Fallback to innerHTML (raw content mode)
+  // 2. Otherwise the content between the tags, else the `content` attribute.
   //
-  // #683: the precedence rule, one for every card path -- an explicit
-  // content="..." attribute WINS over the text between the tags, the same
-  // order composeCard() and the typed cards (cardimage, ...) already use.
-  // The children used to be left in place beside the attribute's body, so
-  // both rendered: the attribute in the body and the children loose above it.
-  const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
+  // #417 (reverses #683's order): the content between the tags WINS over an
+  // explicit content="..." attribute, which is the fallback -- one rule for
+  // every card path, see cardContent(). #683's other half stands: the losing
+  // side never renders loose beside the body.
+  const initialContent = isSemantic ? '' : cardContent(element, options);
 
   const base = composeCard(element, { 
     ...element.dataset, 
@@ -1009,8 +1022,8 @@ export function card(element, options = {}) {
 
   // Clear the authored children once they are accounted for: in raw mode
   // they were captured above and buildStructure() rebuilds them inside the
-  // new body (clearing stops it duplicating them); when the attribute wins
-  // (#683) they are the losing side of the precedence rule above.
+  // new body (clearing stops it duplicating them). Only non-author nodes (the
+  // doc-link icon) can be left when the attribute was the fallback.
   if (!isSemantic && element.innerHTML.trim()) {
     element.innerHTML = '';
   }
@@ -1046,7 +1059,7 @@ export function cardimage(element, options = {}) {
     // innerHTML, which is empty for a self-closing-style <div x-cardimage
     // src="..." content="...">. Confirmed live: "Optional content below the
     // image." never rendered, just an empty content area.
-    content: readOption(element, options, 'content') || element.innerHTML,
+    content: cardContent(element, options),
     // caption / href / loading were declared in cardimage.schema.json and read
     // nowhere: no caption ever rendered, href never made the card clickable,
     // and every image was hard-wired to loading="lazy".
@@ -1142,7 +1155,7 @@ export function cardvideo(element, options = {}) {
     // back to the browser's intrinsic video default (~300x150) (#482).
     aspect: getAttr(element, options, 'aspect') || '16/9',
     // #608: same missing getAttribute('content') gap as cardimage() above.
-    content: readOption(element, options, 'content') || element.innerHTML,
+    content: cardContent(element, options),
     // #968: one word, one placement. `subtitle` is the line under the title;
     // `description` is the paragraph .x-card__description, never a subtitle.
     description: getAttr(element, options, 'description'),
@@ -1747,7 +1760,11 @@ export function cardstats(element, options = {}) {
  */
 export function cardtestimonial(element, options = {}) {
   const config = {
-    quote: readOption(element, options, 'quote') || element.textContent,
+    // #417: the text between the tags is the quote and wins over `quote`,
+    // the fallback (it was the other way round). authorText() is captured
+    // once, so a re-run does not read back the quote-mark icon, quote and author
+    // line this card built.
+    quote: options.quote || authorText(element) || readOption(element, {}, 'quote'),
     author: readOption(element, options, 'author'),
     role: readOption(element, options, 'role'),
     avatar: readOption(element, options, 'avatar'),
@@ -1929,7 +1946,10 @@ export function cardnotification(element, options = {}) {
   const variant = readOption(element, options, 'variant')
     || readOption(element, options, 'type') || 'info';
   const title = readOption(element, options, 'title') || '';
-  const message = readOption(element, options, 'message') || element.textContent || '';
+  // #417: the text between the tags is the message and wins over `message`
+  // (it was the other way round); captured once, so a re-run does not read
+  // back the icon/title/message this card built.
+  const message = options.message || authorText(element) || readOption(element, {}, 'message') || '';
   const dismissible = parseBoolean(
     options.dismissible ?? readAttr(element, 'dismissible') ?? element.getAttribute('dismissible')
   ) !== false;
@@ -2299,7 +2319,7 @@ export function cardhorizontal(element, options = {}) {
     // sections, tests/fixtures/cards-permutation-matrix.html) silently lost
     // that text the instant `element.innerHTML = ''` ran a few lines down --
     // confirmed live, zero .x-card__horiz-body elements ever got created.
-    content: options.content || readAttr(element, 'content') || element.innerHTML,
+    content: cardContent(element, options),
     ...options
   };
 
@@ -2719,7 +2739,7 @@ export function carddraggable(element, options = {}) {
     constrain: readOption(element, options, 'constrain') || 'none',
     axis: readOption(element, options, 'axis') || 'both',
     snapToGrid: parseInt(readOption(element, options, 'snapToGrid') || 0),
-    content: options.content || readAttr(element, 'content') || rawContent,
+    content: cardContent(element, options) || rawContent,
     ...options
   };
 
