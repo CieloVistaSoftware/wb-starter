@@ -53,14 +53,59 @@ export function pullLatest(root) {
  * must never pull anyone's checkout), pull, re-stamp the version on success,
  * and log one line. Resolves { updated, message }.
  */
-export function updateToLatest(root) {
-  if (process.env.CI || process.env.WB_NO_OPEN === '1') {
+export function updateToLatest(root, { quiet = false } = {}) {
+  if (isTestServer()) {
     return Promise.resolve({ updated: false, message: 'test server: not updating' });
   }
   const result = pullLatest(root);
-  console.log(`[update-to-latest] ${result.message}`);
+  if (!quiet || result.updated) console.log(`[update-to-latest] ${result.message}`);
   if (!result.updated) return Promise.resolve(result);
   return new Promise((resolve) => {
-    execFile(process.execPath, [path.join(root, 'scripts', 'stamp-version.js')], { cwd: root }, () => resolve(result));
+    execFile(process.execPath, restampArgs(root), { cwd: root }, () => resolve(result));
   });
+}
+
+const isTestServer = () => Boolean(process.env.CI) || process.env.WB_NO_OPEN === '1';
+
+/**
+ * The re-stamp after an update. --local, the same as npm start: the dev server
+ * serves .local/src/core/version.js (#1131), so a stamp written to the tracked
+ * file left the badge on the old number until a restart, and dirtied the
+ * working tree besides.
+ */
+export function restampArgs(root) {
+  return [path.join(root, 'scripts', 'stamp-version.js'), '--local'];
+}
+
+/**
+ * John, 2026-10-10: "the local version must always match the .io". npm start
+ * pulls once and the badge pulls on a click, but main moves many times a day,
+ * so a server left running fell behind the live site and showed an older
+ * number. This checks origin/main every `everyMs` and brings the checkout up
+ * to it under pullLatest()'s rules (main only, fast-forward only, never over
+ * the person's own edits). It logs only when it updates, or when the reason
+ * it cannot changes, so a checkout on a branch says so once, not every tick.
+ * Off on a test or CI server. Returns a function that stops it.
+ */
+export function keepUpToDate(root, {
+  everyMs = 120000, update = updateToLatest, log = console.log,
+  schedule = (fn, ms) => setInterval(fn, ms), cancel = clearInterval,
+} = {}) {
+  if (isTestServer()) return () => {};
+  let last = '';
+  let running = false;
+  const tick = async () => {
+    if (running) return;
+    running = true;
+    try {
+      const { updated, message } = await update(root, { quiet: true });
+      if (!updated && message !== 'already the latest code' && message !== last) {
+        log(`[keep-up-to-date] ${message} -- this copy can fall behind the live site`);
+      }
+      last = updated ? '' : message;
+    } finally { running = false; }
+  };
+  const timer = schedule(tick, everyMs);
+  if (timer && timer.unref) timer.unref();
+  return () => cancel(timer);
 }
