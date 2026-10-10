@@ -191,7 +191,7 @@ if (schema.sections) {
       // natural widths forced into shared grid tracks). Fixes #563.
       for (const demo of section.demos) {
         const attrs = attrString(demo.attrs);
-        lines.push('    <div x-demo columns="1">');
+        lines.push('    <figure x-demo columns="1">');
         if (demo.children) {
           lines.push(`      <${demo.tag}${attrs}>`);
           lines.push(`        ${demo.children}`);
@@ -200,10 +200,11 @@ if (schema.sections) {
           lines.push(`      <${demo.tag}${attrs}>`);
           lines.push(`      </${demo.tag}>`);
         }
-        lines.push('    </div>');
+        lines.push('    </figure>');
       }
     } else {
-      lines.push(`    <div x-demo columns="${cols}">`);
+      // #917: an example is a figure (DEMOS-AND-DOCS-STANDARDS.md §1).
+      lines.push(`    <figure x-demo columns="${cols}">`);
       for (const demo of section.demos) {
         const attrs = attrString(demo.attrs);
         if (demo.children) {
@@ -215,7 +216,7 @@ if (schema.sections) {
           lines.push(`      </${demo.tag}>`);
         }
       }
-      lines.push('    </div>');
+      lines.push('    </figure>');
     }
 
     lines.push('  </div>');

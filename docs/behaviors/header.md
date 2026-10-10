@@ -4,17 +4,17 @@ A plain `<header>` gets a page header built from its attributes: an `icon` and `
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <header title="Field notes" subtitle="Everything that happened this week" badge="New"></header>
-</div>
+</figure>
 
 No attribute needed on `<header>`. Don't add `x-header` to it (#746).
 
 On another element, write `x-header`:
 
-<div x-demo>
+<figure x-demo>
 <div x-header title="Field notes" subtitle="Everything that happened this week" badge="New"></div>
-</div>
+</figure>
 
 `<header x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

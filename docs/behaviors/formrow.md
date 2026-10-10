@@ -8,22 +8,22 @@ Styles a form field wrapper as a row, optionally laid out inline. See
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-formrow>
   <label>Name</label>
   <input type="text" placeholder="Jane Doe">
 </div>
-</div>
+</figure>
 
 Add `data-inline` (plain `data-*` attribute, not `x-*`) to lay the label and
 control out on one line instead of stacked:
 
-<div x-demo>
+<figure x-demo>
 <div x-formrow data-inline>
   <label>Email</label>
   <input type="email" placeholder="you@example.com">
 </div>
-</div>
+</figure>
 
 ## Properties
 

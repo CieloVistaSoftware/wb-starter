@@ -71,7 +71,7 @@
   <div class="behaviors-browse">
     <ul id="behaviors-search-results" class="behaviors-search-results" hidden aria-busy="true"></ul>
     <!-- A <div>, deliberately not a <section id>: applyFilter() hides every
-         `section[id]` that contains no visible <div x-demo>, which would sweep up
+         `section[id]` that contains no visible <figure x-demo>, which would sweep up
          this panel (it holds injected markup, never a x-demo) and leave it
          display:none no matter what was clicked. -->
     <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
@@ -241,7 +241,7 @@
   <script>
   // #635: John, screenshot on this page: "Add a search here that allows
   // finding all of our behaviors. e.g. x-tooltiop, x-this, x-that etc.
-  // typing in just x- will show all of them". Matches each <div x-demo>'s own
+  // typing in just x- will show all of them". Matches each <figure x-demo>'s own
   // `_rawSource` (the exact authored markup, captured synchronously at
   // connectedCallback -- see x-demo.js -- available immediately, no need
   // to wait for lazy behaviors to finish applying) against the query, then
@@ -353,7 +353,7 @@
      *
      * #1047, third pass. The catalogue was re-rooted and the deployed page still
      * 404'd, because the doc panel renders docs/behaviors/<name>.md straight into
-     * the DOM -- and blockquote.md carries a live `<div x-demo>` whose
+     * the DOM -- and blockquote.md carries a live `<figure x-demo>` whose
      * avatar="/images/placeholder.svg" is markup, not prose. It renders, it
      * requests, it 404s, and no amount of fixing the catalogue reaches it.
      *
@@ -1698,7 +1698,7 @@
     }
 
     // The markup for most behaviors is already on this page, inside the
-    // <div x-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
+    // <figure x-demo> blocks. Prefer a demo whose source ACTUALLY uses the token as
     // an attribute/tag rather than merely mentioning it in prose, so clicking
     // "x-card" does not land on a demo that happens to say "x-card" in a
     // sentence.

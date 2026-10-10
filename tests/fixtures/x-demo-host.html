@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>x-demo host fixture</title>
+  <!-- #917: the same demos on a <div> host and on a <figure> host, with
+       auto-injection ON, so a spec can compare the two hosts side by side.
+       ?runtime=wb loads src/core/wb.js; anything else loads wb-lazy.js. -->
+  <link rel="stylesheet" href="../../src/styles/normalize.css">
+  <link rel="stylesheet" href="../../src/styles/themes.css">
+  <link rel="stylesheet" href="../../src/styles/site.css">
+  <script type="module">
+    const runtime = new URLSearchParams(location.search).get('runtime') === 'wb' ? 'wb' : 'wb-lazy';
+    const { default: WB } = await import(`../../src/core/${runtime}.js`);
+    window.WB = WB;
+    await WB.init({ autoInject: true });
+    window.__runtime = runtime;
+  </script>
+</head>
+<body>
+  <main id="host-area">
+    <section id="button">
+      <div x-demo id="div-button">
+        <button>Go</button>
+      </div>
+      <figure x-demo id="figure-button">
+        <button>Go</button>
+      </figure>
+    </section>
+
+    <!-- An <img> and a <figcaption> are exactly what the figure behavior acts
+         on: it adds a lightbox to the first <img> it finds and owns the first
+         <figcaption>. Inside a demo they belong to the example, not the host. -->
+    <section id="image">
+      <div x-demo id="div-image">
+        <img src="../../images/avatar.svg" alt="Avatar" width="64" height="64">
+      </div>
+      <figure x-demo id="figure-image">
+        <img src="../../images/avatar.svg" alt="Avatar" width="64" height="64">
+      </figure>
+    </section>
+
+    <!-- A real <figure> as the example itself still gets the figure behavior. -->
+    <section id="nested">
+      <div x-demo id="div-nested">
+        <figure caption="Inner caption"><img src="../../images/avatar.svg" alt="Avatar" width="64" height="64"></figure>
+      </div>
+      <figure x-demo id="figure-nested">
+        <figure caption="Inner caption"><img src="../../images/avatar.svg" alt="Avatar" width="64" height="64"></figure>
+      </figure>
+    </section>
+  </main>
+</body>
+</html>

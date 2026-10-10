@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardminimizable
   title="Build log">tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.</article>
-</div>
+</figure>
 
 ## Attributes
 

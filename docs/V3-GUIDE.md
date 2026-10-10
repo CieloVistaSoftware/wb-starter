@@ -51,7 +51,7 @@ Key principles:
 
 A standalone page needs the theme + base styles and one module script:
 
-<div x-demo>
+<figure x-demo>
 <article
   title="Build resilient interfaces"
   subtitle="Separate structure from behavior"
@@ -61,19 +61,19 @@ A standalone page needs the theme + base styles and one module script:
   <p>Keep content readable and focused by giving each card one clear job.</p>
   <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
 </article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <button
   x-toast
   message="Saved!"
   toast-variant="success">
   Save
 </button>
-</div>
+</figure>
 
 The full page this comes from — everything outside `<body>` is boilerplate
-`<div x-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
+`<figure x-demo>` can't represent (a `<!DOCTYPE>`/`<head>`/module script aren't
 renderable fragments), so it's shown separately below rather than folded
 into the live example above:
 
@@ -149,45 +149,45 @@ A semantic element maps to its behavior, and any other element takes the `x-*` a
 
 **Card** — `<article>`:
 
-<div x-demo>
+<figure x-demo>
 <article
   title="Pro"
   variant="glass">
   <p>Card body.</p>
 </article>
-</div>
+</figure>
 
 **Spinner** — `<div x-spinner>`:
 
-<div x-demo>
+<figure x-demo>
 <div x-spinner
   size="lg"
   variant="success">
 </div>
-</div>
+</figure>
 
 **Progress bar** — `<progress>`:
 
-<div x-demo>
+<figure x-demo>
 <progress
   value="75"
   striped>
 </progress>
-</div>
+</figure>
 
 **Badge** — `<span x-badge>`:
 
-<div x-demo>
+<figure x-demo>
 <span x-badge
   variant="success"
   pill>
   New
 </span>
-</div>
+</figure>
 
 **Tabs** — `<nav x-tabs>`:
 
-<div x-demo>
+<figure x-demo>
 <nav x-tabs>
   <div tab-title="Overview">
     <p>…</p>
@@ -196,15 +196,15 @@ A semantic element maps to its behavior, and any other element takes the `x-*` a
     <p>…</p>
   </div>
 </nav>
-</div>
+</figure>
 
 **Accordion** — `<div x-accordion>`:
 
-<div x-demo>
+<figure x-demo>
 <div x-accordion title="What is wb-starter?">
   <p>A zero-build behavior library.</p>
 </div>
-</div>
+</figure>
 
 Card variants come from the schema (`default`, `glass`, `elevated`, `float`, …).
 Each behavior's exact attributes live in its schema at `src/wb-models/<name>.schema.json`.
@@ -216,7 +216,7 @@ Each behavior's exact attributes live in its schema at `src/wb-models/<name>.sch
 Attach a behavior to **any** element with an `x-<name>` attribute. These don't
 need a custom tag:
 
-<div x-demo>
+<figure x-demo>
 <!-- feedback -->
 <button
   x-toast
@@ -245,7 +245,7 @@ need a custom tag:
 <input
   type="password"
   placeholder="Password with toggle">
-</div>
+</figure>
 
 **Every registered behavior is reachable as `x-<name>`** (#1642). Names live in
 `src/wb-viewmodels/index.js`, which maps each one to its module file; the extra

@@ -145,12 +145,12 @@ Use the native `<details>`: it is the expandable, and it gets the `details`
 behavior from its tag. There is no item-level accordion attribute; a group of panels is
 `x-accordion` (see [accordion](./behaviors/accordion.md)).
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>Section Title</summary>
   <p>Section content</p>
 </details>
-</div>
+</figure>
 
 ### Tabs
 
@@ -158,42 +158,42 @@ Each child `<section>` is a panel and its `title` is the tab label. `x-tabs`
 builds the `role="tablist"` nav, the tab buttons and the ARIA wiring itself, so
 they are never hand-written:
 
-<div x-demo>
+<figure x-demo>
 <section x-tabs>
   <section title="Tab 1">Panel 1</section>
   <section title="Tab 2">Panel 2</section>
 </section>
-</div>
+</figure>
 
 ### Sidebar/Aside
 
 `x-sidebar` builds its links from `items`; children are replaced, not kept:
 
-<div x-demo>
+<figure x-demo>
 <aside
   x-sidebar
   items="Dashboard,Projects,Settings"
   active="Projects">
 </aside>
-</div>
+</figure>
 
 ### Testimonials/Quotes
 
 The quote and its author are attributes; the behavior builds the
 `<blockquote>`, `<cite>` and footer from them:
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardtestimonial
   quote="This product changed my life!"
   author="John Doe"
   role="CEO, Company">
 </article>
-</div>
+</figure>
 
 ### Progress/Stats
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardstats
   value="1,234"
@@ -205,7 +205,7 @@ The quote and its author are attributes; the behavior builds the
   max="100">
   75%
 </progress>
-</div>
+</figure>
 
 ### Forms
 
@@ -243,7 +243,7 @@ Only use `<div>` for:
 
 A layout wrapper with an ID:
 
-<div x-demo>
+<figure x-demo>
 <div
   id="grid-layout-1"
   x-grid
@@ -252,7 +252,7 @@ A layout wrapper with an ID:
   <article id="card-2" title="Two">Second card</article>
   <article id="card-3" title="Three">Third card</article>
 </div>
-</div>
+</figure>
 
 ---
 

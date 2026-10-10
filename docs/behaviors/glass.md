@@ -8,7 +8,7 @@ not stop at the button, it runs through the inside of it and out the other
 side. That button is `x-glass`. **Try the Playground**, beside it, is solid and
 blocks the scene; the difference between the two is the effect.
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <section x-cardhero
   background="../../images/placeholder-waves.svg"
   height="280px"
@@ -16,7 +16,7 @@ blocks the scene; the difference between the two is the effect.
   title="Infinite Possibility."
   cta="Try the Playground"
   ctaSecondary="Read the Guide"></section>
-</div>
+</figure>
 
 ## What it does
 
@@ -29,14 +29,14 @@ It needs something behind it to carry. Over a flat colour an `x-glass` element
 is only a slightly lighter box. Over an image, an SVG scene or a gradient, the
 scene shows through.
 
-<div x-demo>
+<figure x-demo>
 <button x-glass>Read the Guide</button>
 <span x-glass>Zero build</span>
 <nav x-glass>
   <a href="#">Docs</a>
   <a href="#">Demos</a>
 </nav>
-</div>
+</figure>
 
 ## Attributes
 
@@ -54,9 +54,9 @@ The tint stops at 30% on purpose. Past that the element stops carrying the
 scene and starts hiding it, and light text on it loses contrast against a dark
 scene.
 
-<div x-demo>
+<figure x-demo>
 <button x-glass amount="least">Read the Guide</button>
-</div>
+</figure>
 
 ## Colour
 

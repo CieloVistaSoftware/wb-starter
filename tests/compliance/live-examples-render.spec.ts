@@ -42,7 +42,8 @@ const toPosix = (f: string) => f.split(path.sep).join('/');
 
 function hasWbDemo(file: string): boolean {
   try {
-    return fs.readFileSync(file, 'utf8').includes('<div x-demo');
+    // #917: any host; the standard one is <figure x-demo>.
+    return /<(?:figure|div|section|article) x-demo/.test(fs.readFileSync(file, 'utf8'));
   } catch {
     return false;
   }

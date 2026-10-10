@@ -34,30 +34,30 @@ sidebar depends on `side`).
 
 ### Sidebar on the left (default)
 
-<div x-demo>
+<figure x-demo>
 <div x-sidebarlayout side="left" sideWidth="200px">
   <nav>Sidebar navigation</nav>
   <main>Main content grows to fill the remaining space.</main>
 </div>
-</div>
+</figure>
 
 ### Sidebar on the right
 
-<div x-demo>
+<figure x-demo>
 <div x-sidebarlayout side="right" sideWidth="200px">
   <main>Main content comes first in the DOM, sidebar renders after it.</main>
   <nav>Sidebar navigation</nav>
 </div>
-</div>
+</figure>
 
 ### Custom gap and content minimum
 
-<div x-demo>
+<figure x-demo>
 <div x-sidebarlayout sideWidth="150px" gap="2rem" contentMin="60%">
   <nav>Sidebar</nav>
   <main>Wider gap, and the main column won't shrink below 60% before wrapping.</main>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

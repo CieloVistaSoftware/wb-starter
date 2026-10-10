@@ -4,7 +4,7 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <section x-cardhero
   pretitle="Release 3.0"
   title="Zero build. Real behaviors."
@@ -12,7 +12,7 @@
   cta="Read the guide"
   ctaHref="#"
   height="320px"></section>
-</div>
+</figure>
 
 ## Attributes
 

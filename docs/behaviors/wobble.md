@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-wobble>Click to wobble</button>
-</div>
+</figure>
 
 <sub>Schema: [`wobble.schema.json`](../../src/wb-models/wobble.schema.json)</sub>

@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-flex gap="1rem" justify="space-between">
   <div style="padding:0.5rem 1rem;border:1px solid var(--border-color)">First</div>
   <div style="padding:0.5rem 1rem;border:1px solid var(--border-color)">Second</div>
   <div style="padding:0.5rem 1rem;border:1px solid var(--border-color)">Third</div>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

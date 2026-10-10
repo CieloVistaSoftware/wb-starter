@@ -13,16 +13,16 @@ Applied to a real `<input>`, the input itself is converted in place to
 element becomes the swatch's starting color) — no separate child input is
 created, since an `<input>` can't hold children:
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-colorpicker value="#22c55e">
-</div>
+</figure>
 
 Applied to a non-input container instead, it builds its own child
 `<input type="color">` inside the element:
 
-<div x-demo>
+<figure x-demo>
 <div x-colorpicker value="#6366f1"></div>
-</div>
+</figure>
 
 ## Properties
 

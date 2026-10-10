@@ -39,9 +39,9 @@
   "$methods": {},
   "test": {
     "setup": [
-      "<div x-demo><p>Simple content</p></div>",
-      "<div x-demo columns=\"2\"><p>A</p><p>B</p></div>",
-      "<div x-demo columns=\"3\"><article title=\"One\"><p>Card 1</p></article><article title=\"Two\"><p>Card 2</p></article><article title=\"Three\"><p>Card 3</p></article></div>"
+      "<figure x-demo><p>Simple content</p></figure>",
+      "<figure x-demo columns=\"2\"><p>A</p><p>B</p></figure>",
+      "<figure x-demo columns=\"3\"><article title=\"One\"><p>Card 1</p></article><article title=\"Two\"><p>Card 2</p></article><article title=\"Three\"><p>Card 3</p></article></figure>"
     ]
   }
 }

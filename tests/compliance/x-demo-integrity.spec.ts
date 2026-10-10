@@ -30,6 +30,24 @@ test.describe('<div x-demo> markup integrity — example fixtures', () => {
     expect(scanHtml(html)).toEqual([]);
   });
 
+  // #917: the standard host is <figure x-demo>. A demo can hold a <figure> of
+  // its own, so the scan pairs figures by depth exactly as it pairs divs.
+  test('a <figure x-demo> holding a <figure> example is one balanced block', () => {
+    const html = `
+      <figure x-demo>
+        <figure caption="Inner"><img src="a.png" alt="A"></figure>
+      </figure>
+      <figure x-demo><button>ok</button></figure>
+    `;
+    expect(scanHtml(html)).toEqual([]);
+  });
+
+  test('catches a stray </figure> left after a <figure x-demo>', () => {
+    const html = `<figure x-demo><button>ok</button></figure>\n<input type="text">\n</figure>`;
+    const issues = scanHtml(html);
+    expect(issues.some((i) => i.includes('stray </figure>'))).toBe(true);
+  });
+
   test('a [x-demo] with attributes (e.g. a title) is still recognized', () => {
     const html = `<div x-demo title="Copy functionality"><button x-copy>Copy</button></div>`;
     expect(scanHtml(html)).toEqual([]);

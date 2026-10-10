@@ -13,15 +13,15 @@ Apply `x-autocomplete` directly to a real `<input>` — the behavior wraps it in
 `<input>` is a void element and can't hold children, so nothing is ever
 appended inside it).
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">
-</div>
+</figure>
 
 `items` also accepts a JSON array string instead of CSV:
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-autocomplete items='["Red","Green","Blue","Yellow","Purple"]' placeholder="Pick a color…">
-</div>
+</figure>
 
 ## Properties
 

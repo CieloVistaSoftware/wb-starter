@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <span x-badge label="Beta" variant="warning" pill></span>
 <span x-badge label="3 failing" variant="error"></span>
 <span x-badge label="Passed" variant="success" outline></span>
-</div>
+</figure>
 
 ## Attributes
 

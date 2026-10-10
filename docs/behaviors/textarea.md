@@ -4,12 +4,12 @@ A plain `<textarea>` gets the form styling, and optionally grows with its conten
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <textarea
   placeholder="What changed in this release?"
   name="notes"
   rows="3"></textarea>
-</div>
+</figure>
 
 No attribute needed on `<textarea>`. Don't add `x-textarea` to it (#746).
 

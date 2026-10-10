@@ -30,21 +30,21 @@ whole content is centered. No marker attribute is needed.
 
 ### Header and footer pinned, content centered
 
-<div x-demo>
+<figure x-demo>
 <div x-cover minHeight="300px">
   <header>Top content</header>
   <h2>Vertically centered content</h2>
   <footer>Bottom content</footer>
 </div>
-</div>
+</figure>
 
 ### Custom padding
 
-<div x-demo>
+<figure x-demo>
 <div x-cover minHeight="200px" padding="2rem">
   <p>Centered, with extra padding around the whole container.</p>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

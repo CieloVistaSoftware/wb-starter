@@ -28,6 +28,15 @@
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 
+/* #917: an example's host is <figure x-demo>, and the UA gives a <figure>
+   `margin: 1em 40px` that a <div> host never had. demo.css undoes it, but
+   demo.css loads just-in-time with the demo behavior, so until then every
+   demo sat 16px lower and 80px narrower than on a <div> -- enough to change
+   which demos are in view while the page's first scan decides what to build
+   (measured on demos/site/overlays.html). Undone here, before any behavior,
+   at zero specificity so any author rule still wins. */
+:where(figure[x-demo]) { margin: 0; }
+
 /* #274: prose <li>s have zero margin by default, so a long item that wraps
    to 2+ lines sits flush against the next item -- their line boxes visually
    touch/overlap with no gap at all. Seen project-wide on any content page

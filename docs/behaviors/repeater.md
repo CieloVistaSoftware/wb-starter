@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <ul>
   <div x-repeater count="3">
     <template><li>Row {{index}}</li></template>
   </div>
 </ul>
-</div>
+</figure>
 
 ## Attributes
 

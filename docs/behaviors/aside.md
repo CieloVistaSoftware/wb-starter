@@ -12,27 +12,27 @@ The `<aside>` element represents content that is tangentially related to the con
 
 ### 1. Card Notification (`cardnotification`)
 
-<div x-demo>
+<figure x-demo>
 <aside
   x-cardnotification
   type="info"
   title="Heads Up"
   message="A new version is available.">
 </aside>
-</div>
+</figure>
 
 **Why `<aside>`?** Notifications are supplementary information that doesn't affect the main page content.
 
 ### 2. Alert (`alert`)
 
-<div x-demo>
+<figure x-demo>
 <aside
   x-alert
   variant="warning"
   title="Warning"
   message="Your session will expire soon.">
 </aside>
-</div>
+</figure>
 
 **Why `<aside>`?** Alerts are tangential messages that inform but don't constitute main content.
 
@@ -47,7 +47,7 @@ The `<aside>` element represents content that is tangentially related to the con
 
 ## Example: Notification with ARIA
 
-<div x-demo>
+<figure x-demo>
 <aside
   x-cardnotification
   type="success"
@@ -56,7 +56,7 @@ The `<aside>` element represents content that is tangentially related to the con
   role="status"
   aria-live="polite">
 </aside>
-</div>
+</figure>
 
 ## CSS Styling
 

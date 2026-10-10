@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <nav x-pagination total="100" perPage="10" current="5"></nav>
-</div>
+</figure>
 
 ## Attributes
 

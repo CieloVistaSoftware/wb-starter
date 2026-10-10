@@ -33,27 +33,27 @@ the same behavior; new markup should use `x-codetheme`.
 
 ### Default
 
-<div x-demo>
+<figure x-demo>
 <div x-codetheme></div>
-</div>
+</figure>
 
 ### Small, no label
 
-<div x-demo>
+<figure x-demo>
 <div x-codetheme size="sm" show-label="false"></div>
-</div>
+</figure>
 
 ### Flat list (no category groups), non-persisting
 
-<div x-demo>
+<figure x-demo>
 <div x-codetheme show-category="false" persist="false"></div>
-</div>
+</figure>
 
 ### On a plain `<div>`
 
-<div x-demo>
+<figure x-demo>
 <div x-codetheme size="lg"></div>
-</div>
+</figure>
 
 ## CSS Classes
 

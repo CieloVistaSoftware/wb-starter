@@ -36,9 +36,9 @@ back-compat, but the plain attribute above is canonical.
 
 ### Beam (default) — sweeping animated cone
 
-<div x-demo>
+<figure x-demo>
 <div x-stagelight variant="beam" color="#6366f1" style="height: 220px;"></div>
-</div>
+</figure>
 
 ### Spotlight — follows the mouse
 
@@ -46,17 +46,17 @@ back-compat, but the plain attribute above is canonical.
 darkens everything except a circle around the cursor — move the mouse over the page
 to see it track.
 
-<div x-demo>
+<figure x-demo>
 <div x-stagelight variant="spotlight" size="200px"></div>
-</div>
+</figure>
 
 ### Fixture — clickable light housing with a label
 
 Click the housing to toggle the light on/off (dims to `intensity="0.1"`).
 
-<div x-demo>
+<figure x-demo>
 <div x-stagelight variant="fixture" color="#ef4444" label="Key Light"></div>
-</div>
+</figure>
 
 ## CSS Classes
 

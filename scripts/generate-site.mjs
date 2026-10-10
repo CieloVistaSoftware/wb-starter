@@ -790,16 +790,17 @@ function generatePageHtml(pageSchema) {
         // layout failures (mismatched natural widths forced into shared grid
         // tracks). Fixes #563.
         for (const demo of demos) {
-          lines.push('  <div x-demo columns="1">');
+          lines.push('  <figure x-demo columns="1">');
           pushDemoTag(demo, '    ');
-          lines.push('  </div>');
+          lines.push('  </figure>');
         }
       } else {
-        lines.push(`  <div x-demo columns="${section.columns || 3}">`);
+        // #917: an example is a figure (DEMOS-AND-DOCS-STANDARDS.md §1).
+        lines.push(`  <figure x-demo columns="${section.columns || 3}">`);
         for (const demo of demos) {
           pushDemoTag(demo, '    ');
         }
-        lines.push('  </div>');
+        lines.push('  </figure>');
       }
       lines.push('  </section>');
       lines.push('');

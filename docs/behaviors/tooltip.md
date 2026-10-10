@@ -2,9 +2,9 @@
 
 Shows a tooltip on hover/focus for any element.
 
-<div x-demo>
+<figure x-demo>
 <button x-tooltip="Tooltip text">Hover me</button>
-</div>
+</figure>
 
 - **Note:** Use for contextual, hover-based help.
 

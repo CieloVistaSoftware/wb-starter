@@ -12,9 +12,9 @@ under it is the exact markup that produced it.
 
 One attribute. Everything else has a default.
 
-<div x-demo>
+<figure x-demo>
 <div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 Omit `src` entirely and it falls back to that same royalty-free track, so
 `<div x-audio></div>` on its own renders a working player.
@@ -43,10 +43,10 @@ Attributes are kebab-case in markup (`showEq`), camelCase in the schema
 
 ### `showEq` — the 15-band equalizer
 
-<div x-demo>
+<figure x-demo>
 <div x-audio showEq
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 The EQ uses the Web Audio API, which reads the raw samples. That means a
 **cross-origin track must send CORS headers** — see the note at the bottom.
@@ -55,38 +55,38 @@ silence.
 
 ### `volume` — initial level
 
-<div x-demo>
+<figure x-demo>
 <div x-audio volume="0.3"
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 ### `loop` — repeat on finish
 
-<div x-demo>
+<figure x-demo>
 <div x-audio loop
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 ### `showDisplay="false"` — hide the track display
 
-<div x-demo>
+<figure x-demo>
 <div x-audio showDisplay="false"
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 ### `showPlayButton="false"` — no custom transport
 
-<div x-demo>
+<figure x-demo>
 <div x-audio showPlayButton="false"
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 ### `autoplay` + `muted`
 
-<div x-demo>
+<figure x-demo>
 <div x-audio autoplay muted
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 Every current browser blocks autoplay with sound. `muted` is the documented
 companion — but see the next section: it is not wired up, so this demo will be
@@ -94,7 +94,7 @@ blocked rather than starting silently.
 
 ### Everything at once
 
-<div x-demo>
+<figure x-demo>
 <div x-audio
      showEq
      showDisplay
@@ -102,7 +102,7 @@ blocked rather than starting silently.
      volume="0.6"
      loop
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
-</div>
+</figure>
 
 ---
 

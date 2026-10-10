@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-alert variant="warning" title="Staging is read-only" message="Deploys are paused until the 14:00 migration finishes." dismissible></div>
-</div>
+</figure>
 
 ## Attributes
 

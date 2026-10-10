@@ -12,22 +12,22 @@ buttons) into one visually joined control. See
 Addons are marked with `data-prepend` / `data-append` on the child elements
 themselves — the behavior finds them inside the host and classes them:
 
-<div x-demo>
+<figure x-demo>
 <div x-inputgroup>
   <span data-prepend>$</span>
   <input type="number" placeholder="0.00">
   <span data-append>USD</span>
 </div>
-</div>
+</figure>
 
 A group only needs one side:
 
-<div x-demo>
+<figure x-demo>
 <div x-inputgroup>
   <span data-prepend>@</span>
   <input type="text" placeholder="username">
 </div>
-</div>
+</figure>
 
 ## Properties
 

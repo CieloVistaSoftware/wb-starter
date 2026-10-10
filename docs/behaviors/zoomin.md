@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-zoomin>Click to zoom in</button>
-</div>
+</figure>
 
 <sub>Schema: [`zoomin.schema.json`](../../src/wb-models/zoomin.schema.json)</sub>

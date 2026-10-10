@@ -4,8 +4,8 @@ A plain `<kbd>` is drawn as a keycap: monospace text on a raised, bordered key. 
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>
-</div>
+</figure>
 
 <sub>Schema: [`kbd.schema.json`](../../src/wb-models/kbd.schema.json)</sub>

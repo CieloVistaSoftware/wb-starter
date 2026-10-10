@@ -270,10 +270,10 @@ export const EXAMPLES = {
   <div>Row template — add and remove copies of this block.</div>
 </div>`,
 
-  'x-demo': `<div x-demo columns="2">
+  'x-demo': `<figure x-demo columns="2">
   <button>One</button>
   <button>Two</button>
-</div>`,
+</figure>`,
 
   // ── Media ──────────────────────────────────────────────────────────────────
   // #762: remote media only. A local path resolves against the reader's page.

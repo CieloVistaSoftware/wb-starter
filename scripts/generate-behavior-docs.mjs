@@ -307,7 +307,7 @@ export function summaryFor(docName, schema) {
 }
 
 /**
- * A raw `<div x-demo>` block. The doc viewer renders it live AND shows the
+ * A raw `<figure x-demo>` block (#917: an example is a figure). The doc viewer renders it live AND shows the
  * markup under it; a bare ```html fence of plain semantic HTML (no x-* in it)
  * is left as unrendered text (John, on figure.md: "why does this not show the
  * rendered result?"). Markdown ends a raw HTML block at a blank line, so
@@ -315,7 +315,7 @@ export function summaryFor(docName, schema) {
  */
 export function demoBlock(markup) {
   const body = markup.split('\n').filter((l) => l.trim() && !/^\s*<!--.*-->\s*$/.test(l)).join('\n');
-  return `<div x-demo>\n${body}\n</div>`;
+  return `<figure x-demo>\n${body}\n</figure>`;
 }
 
 export function buildDoc({ token, docName }) {
@@ -346,9 +346,9 @@ export function buildDoc({ token, docName }) {
       `On another element, write \`${token}\`:`,
       '',
       // #307 Rule 4: behavior markup is a live demo, never a static fence.
-      '<div x-demo>',
+      '<figure x-demo>',
       alternateHostUsage(token, schema),
-      '</div>',
+      '</figure>',
       '',
       `\`<${tag} x-ignore>\` opts out ([escape hatches](../escape-hatches.md)).`,
       '',

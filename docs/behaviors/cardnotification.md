@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <aside x-cardnotification
   variant="warning"
   title="Certificate expires in 6 days"
   message="Renew before 26 Aug or the staging domain will start failing TLS."
   dismissible></aside>
-</div>
+</figure>
 
 ## Attributes
 

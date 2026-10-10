@@ -34,40 +34,40 @@ attribute needed.
 
 ### Grid layout
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <div x-articles title="Grid layout" layout="grid" columns="2">
   <article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety: generics, unions, interfaces, and decorators.</article>
   <article title="React Hooks Deep Dive">Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner behaviors.</article>
 </div>
-</div>
+</figure>
 
 ### List layout
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <div x-articles title="List layout" layout="list">
   <article title="API Design Best Practices">Build RESTful APIs with proper versioning, pagination, error handling, and documentation.</article>
   <article title="Testing Strategies">Unit tests, integration tests, end-to-end tests, and performance testing for reliable software.</article>
 </div>
-</div>
+</figure>
 
 ### Masonry layout
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <div x-articles title="Masonry layout" layout="masonry" columns="2">
   <article title="Microservices Architecture">Break monoliths into independently deployable services with service discovery and circuit breakers.</article>
   <article title="State Management">Redux, Zustand, Recoil, and context patterns — choosing the right fit for your app's complexity.</article>
   <article title="Performance Monitoring">Core Web Vitals, Lighthouse, and Real User Monitoring for finding and fixing bottlenecks.</article>
 </div>
-</div>
+</figure>
 
 ### With pagination controls
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <div x-articles title="With pagination" pagination>
   <article title="Cloud Computing Basics">AWS, Azure, and Google Cloud services, pricing models, and when to use each.</article>
   <article title="Containerization with Docker">Images, containers, registries, and compose for microservices.</article>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 
