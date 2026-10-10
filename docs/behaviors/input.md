@@ -22,7 +22,7 @@ No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 | --- | --- | --- | --- |
 | `label` | text | — | Input label text |
 | `placeholder` | text | — | Placeholder text |
-| `value` | text | — | Input value |
+| `value` | text | — | Input value. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `name` | text | — | Form field name |
 | `inputType` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type |
 | `helper` | text | — | Helper text below input |

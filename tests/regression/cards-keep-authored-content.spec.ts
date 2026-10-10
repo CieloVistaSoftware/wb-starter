@@ -92,12 +92,12 @@ test.describe('cards keep the author content (#678)', () => {
     expect(result.h, 'and the card must have real height').toBeGreaterThan(0);
   });
 
-  test('the content attribute wins over the children, inside the body (#683)', async ({ page }) => {
-    // #683 settled the precedence, one rule for every card path: an explicit
-    // content="..." wins over the text between the tags -- the order
-    // composeCard() and the typed cards already used. card() used to put the
-    // attribute in the body AND leave the children loose above it, so both
-    // rendered, the children outside the card's structure.
+  test('the children win over the content attribute, inside the body (#417, was #683)', async ({ page }) => {
+    // #683 settled ONE precedence for every card path, and #417 kept the
+    // "one" but turned it round: the content between the tags wins, and
+    // content="..." is the fallback (ATTRIBUTE-NAMING-STANDARD.md, "Primary
+    // Value: Content Wins"; #968's order). #683's other half stands: the
+    // losing side never renders loose beside the body.
     await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
     const text = await page.evaluate(async () => {
       const host = document.createElement('div');
@@ -112,8 +112,8 @@ test.describe('cards keep the author content (#678)', () => {
       const main = card.querySelector(':scope > .x-card__body') as HTMLElement | null;
       return { all: card.innerText.trim(), body: (main?.innerText || '').trim() };
     });
-    expect(text.body, 'the attribute fills the card body').toBe('FROM_ATTRIBUTE');
-    expect(text.all, 'the losing children must not render loose beside the body').not.toContain('FROM_CHILDREN');
+    expect(text.body, 'the children fill the card body').toBe('FROM_CHILDREN');
+    expect(text.all, 'the losing attribute must not render anywhere').not.toContain('FROM_ATTRIBUTE');
   });
 
   test('a card with no content renders no empty body box (#683)', async ({ page }) => {

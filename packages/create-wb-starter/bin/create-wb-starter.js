@@ -13,10 +13,15 @@
  *
  *   npm create wb-starter my-site
  *   npx create-wb-starter my-site [--name "My Site"] [--wb-starter <version or path>]
+ *                                 [--yes] [--no-github] [--private]
+ *
+ * After the files are written it offers to put the site on GitHub Pages
+ * (#1232); see lib/github-pages.js.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, cpSync, renameSync, statSync } from 'node:fs';
 import { join, dirname, resolve, basename, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { offerGitHubPages } from '../lib/github-pages.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_DIR = join(HERE, '..', 'template');
@@ -27,11 +32,16 @@ function fail(message) {
   process.exit(1);
 }
 
+// Flags that never take a value, so `--yes my-site` keeps my-site as the folder.
+const BOOLEAN_FLAGS = new Set(['yes', 'no-github', 'private', 'help']);
+
 function parseArgs(argv) {
   const out = { _: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a.startsWith('--')) out[a.slice(2)] = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true;
+    if (a === '-y') out.yes = true;
+    else if (a.startsWith('--') && BOOLEAN_FLAGS.has(a.slice(2))) out[a.slice(2)] = true;
+    else if (a.startsWith('--')) out[a.slice(2)] = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true;
     else out._.push(a);
   }
   return out;
@@ -42,6 +52,11 @@ const rawTarget = args._[0];
 if (!rawTarget || args.help) {
   console.log(`
 Usage: npm create wb-starter <project-directory> [--name "My Site"]
+                                [--yes] [--no-github] [--private]
+
+  --yes, -y      create the GitHub repo and publish on GitHub Pages without asking
+  --no-github    do not offer GitHub at all
+  --private      make the GitHub repo private (GitHub Pages then needs a paid plan)
 
 Example:
   npm create wb-starter my-site
@@ -86,7 +101,10 @@ cpSync(TEMPLATE_DIR, targetDir, { recursive: true });
 
 // npm drops .gitignore from published packages, so the template ships it as
 // _gitignore and it is renamed here.
-if (existsSync(join(targetDir, '_gitignore'))) renameSync(join(targetDir, '_gitignore'), join(targetDir, '.gitignore'));
+// The same for .github/ (the GitHub Pages workflow, #1232): it ships as _github.
+for (const [from, to] of [['_gitignore', '.gitignore'], ['_github', '.github']]) {
+  if (existsSync(join(targetDir, from))) renameSync(join(targetDir, from), join(targetDir, to));
+}
 
 const walk = (dir) => readdirSync(dir).flatMap((e) => {
   const p = join(dir, e);
@@ -109,4 +127,12 @@ ${cd}  npm install
 
 Edit pages/*.html and config/site.json, and reload. When it is ready:
   npm run build     (writes dist/ for any static host)
-`);
+  or push it to GitHub: .github/workflows/deploy.yml publishes it on GitHub Pages.`);
+
+await offerGitHubPages({
+  siteDir: targetDir,
+  repoName: packageName,
+  flags: { yes: args.yes === true, noGithub: args['no-github'] === true, isPrivate: args.private === true },
+  interactive: Boolean(process.stdin.isTTY && process.stdout.isTTY),
+});
+console.log('');

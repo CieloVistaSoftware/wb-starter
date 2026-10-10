@@ -190,8 +190,8 @@ function renderFixCard(host, card, fix) {
 
   // Ensure the main content area expands
   if (main) {
-    // overflow/flex are .x-fix-card__main in fix-card.css (#779).
-    main.classList.add('x-fix-card__main');
+    // overflow/flex are .x-fixcard__main in fix-card.css (#779).
+    main.classList.add('x-fixcard__main');
     
     // Also ensure internal code blocks don't take up too much space individually
     // (Though the global card scroll handles the overflow, keeping these small helps UX)
@@ -200,7 +200,7 @@ function renderFixCard(host, card, fix) {
       // Only apply scroll container class to non-fix-code blocks (stack trace etc)
       if (!block.closest('.fix-code-block')) {
           // max-height/overflow/display come with the class (fix-card.css, #779).
-          block.classList.add('x-fix-card-scroll-container');
+          block.classList.add('x-fixcard__scroll-container');
       }
     });
   }
@@ -214,7 +214,7 @@ function renderFixCard(host, card, fix) {
 // happens to an element whose TAG is x-fix-card. A <div> cannot be upgraded
 // to a custom element class, so on the canonical 4.0.0 form -- the one the
 // schema's examples and tests/regression/schema-tags-render-audit.spec.ts use --
-// nothing added .x-fix-card, no card was composed, and `.data = fix` created a
+// nothing added .x-fixcard, no card was composed, and `.data = fix` created a
 // plain property that rendered nothing. The behavior was inert while its
 // comments said it was live.
 //
@@ -228,7 +228,7 @@ function renderFixCard(host, card, fix) {
 const attached = new WeakSet();
 
 export default function fixCard(element) {
-  element.classList.add('x-fix-card');
+  element.classList.add('x-fixcard');
   if (attached.has(element)) return () => {};
   attached.add(element);
 
@@ -258,7 +258,7 @@ export default function fixCard(element) {
     attached.delete(element);
     delete element.data;
     if (base && typeof base.cleanup === 'function') base.cleanup();
-    element.classList.remove('x-fix-card');
+    element.classList.remove('x-fixcard');
   };
 }
 

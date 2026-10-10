@@ -45,7 +45,7 @@ no header; a card with no `footer` gets no footer. Nothing is emitted empty.
 | `hoverText` | text | `""` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. |
 | `goldenRatio` | `boolean` | `false` | Shape the whole card (header, body and footer together) as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. Content taller than that still grows the card rather than being cut off. Text sizes are unchanged. Bare attribute. |
 | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints "Featured"; `featured="Deal of the week"` prints that label instead. |
-| `content` | text or HTML | `""` | Body text. When both are given, `content="…"` wins over the text between the tags, and the children are not rendered (#683). A card with no content at all gets no body box. |
+| `content` | text or HTML | `""` | Body text. When both are given, the text between the tags wins and `content="…"` is not rendered: the attribute is the fallback (#417, reversing #683). A card with no content at all gets no body box. |
 
 ### An article is a card
 

@@ -10,11 +10,16 @@
  */
 import { createToast } from '../feedback.js';
 import { readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
+import { authorText, authoredNodes } from '../../core/author-content.js';
 
 export function switchInput(element, options = {}) {
   const host = element;
   const isBareCheckbox = host.tagName === 'INPUT' && host.type === 'checkbox';
   let input = isBareCheckbox ? host : host.querySelector('input');
+  // #417: <div x-switch>Dark mode</div> -- the text between the tags is the
+  // label and wins over `label`. Read before anything is built (captured once,
+  // so a re-scan never reads the built label back as authored).
+  const authoredLabel = isBareCheckbox ? '' : authorText(host);
 
   // #931: a bare <input type="checkbox" x-switch> used to be RECOGNISED here
   // and then excluded from the only branch that builds the switch UI, so the
@@ -65,6 +70,9 @@ export function switchInput(element, options = {}) {
   // path. Mirrors tabs.js's "build from children if no pre-rendered
   // structure exists" pattern. (#279)
   if (!isBareCheckbox && !input) {
+    // The authored text becomes the label span below, so it leaves the host's
+    // body rather than rendering twice.
+    if (authoredLabel) authoredNodes(host).forEach((n) => n.remove());
     input = document.createElement('input');
     input.type = 'checkbox';
     host.appendChild(input);
@@ -148,7 +156,7 @@ export function switchInput(element, options = {}) {
   // host attributes ONTO the inner input is meaningless when the host IS the
   // input, but the label is not — it now has a container to live in.
   {
-    const label = host.getAttribute('label');
+    const label = authoredLabel || host.getAttribute('label');
     // #930: this read `[class*="[x-switch]__label"]` -- searching for a class
     // attribute CONTAINING the literal substring `[x-switch]__label`. No class
     // name has square brackets in it, so the guard never matched and the label
@@ -159,7 +167,11 @@ export function switchInput(element, options = {}) {
     // was never read: the label always went after the track. `start` now puts
     // it first, matching the schema's own label-start/label-end $view parts.
     const labelPosition = readAttr(host, 'label-position', 'end') === 'start' ? 'start' : 'end';
-    if (label && !container.querySelector('[class*="x-switch__label"]')) {
+    const builtLabel = container.querySelector('[class*="x-switch__label"]');
+    // Built from `label` by the schema (wb-lazy.js) while the author's text
+    // waited in _wbOriginalContent: content wins, so it replaces the text.
+    if (builtLabel && authoredLabel) builtLabel.textContent = authoredLabel;
+    if (label && !builtLabel) {
       const span = document.createElement('span');
       span.className = `x-switch__label-${labelPosition}`;
       span.textContent = label;

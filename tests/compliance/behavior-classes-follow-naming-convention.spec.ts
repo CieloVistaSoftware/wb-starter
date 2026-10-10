@@ -37,9 +37,12 @@ const root = process.cwd();
  * 107 on 2026-10-07; batch 1 (the form-control family below) took it to 96,
  * batch 2 (the layout compounds) to 85, batch 3 (the -trigger family) to 66,
  * batch 4 (the parts semantic elements build) to 50, batch 5 (bases that were
- * not a behavior name) to 28, batch 6 (the single-dash compounds) to 6.
+ * not a behavior name) to 28, batch 6 (the single-dash compounds) to 6, and
+ * the final batch to 0: fix-card's classes renamed, effects.js's clickAnim
+ * classes named for their behaviors, and behavior.js and behaviors-showcase.js
+ * deleted as unreachable.
  */
-const NON_CONFORMING_MAX = 6;
+const NON_CONFORMING_MAX = 0;
 
 /**
  * Old name -> the name that replaced it. Each old name is gone for good.
@@ -161,6 +164,28 @@ const RETIRED: Record<string, string> = {
   'x-scroll-lock': 'x-drawer--scroll-lock',
   'x-tag-glass': 'x-header__badge--glass',
   'x-toast-container': 'x-toast__container',
+  // Final batch, 2026-10-09. The behavior registered as `fix-card` takes its
+  // function name lowercased, fixCard -> x-fixcard, as drawerLayout's classes
+  // are x-drawerlayout: the convention's {behavior} is one word. The attribute
+  // and the <x-fix-card> tag are unchanged. effects.js's clickAnim() put the
+  // KEYFRAME's name on the element as its class (x-fade-in, x-slide-in-left);
+  // the class is now the behavior's own, with the slide direction as its
+  // modifier, and the keyframes keep their names.
+  'x-fix-card': 'x-fixcard',
+  'x-fix-card__main': 'x-fixcard__main',
+  'x-fix-card-scroll-container': 'x-fixcard__scroll-container',
+  'x-fade-in': 'x-fadein',
+  'x-fade-out': 'x-fadeout',
+  'x-zoom-in': 'x-zoomin',
+  'x-zoom-out': 'x-zoomout',
+  'x-slide-in-left': 'x-slidein--left',
+  'x-slide-in-right': 'x-slidein--right',
+  'x-slide-in-up': 'x-slidein--up',
+  'x-slide-in-down': 'x-slidein--down',
+  'x-slide-out-left': 'x-slideout--left',
+  'x-slide-out-right': 'x-slideout--right',
+  'x-slide-out-up': 'x-slideout--up',
+  'x-slide-out-down': 'x-slideout--down',
 };
 
 /**
@@ -171,14 +196,26 @@ const RETIRED: Record<string, string> = {
  * toHaveClass, baseClass, appliesClass, checkClasses, class=). Any suffixed
  * form (`x-drawer-layout--vertical`) is a class wherever it appears.
  */
-const ALSO_ATTRIBUTES = new Set(['x-sidebar-layout', 'x-drawer-layout']);
+const ALSO_ATTRIBUTES = new Set(['x-sidebar-layout', 'x-drawer-layout', 'x-fix-card']);
+
+/**
+ * Retired CLASS names that are still live @keyframes names. clickAnim() used
+ * the keyframe's name as the class; the class was renamed and the keyframe was
+ * not, so `animation: x-fade-in 0.3s` and `@keyframes x-slide-in-left` are
+ * correct uses. Treated like ALSO_ATTRIBUTES: a hit only as a class.
+ */
+const ALSO_KEYFRAMES = new Set([
+  'x-fade-in', 'x-fade-out', 'x-zoom-in', 'x-zoom-out',
+  'x-slide-in-left', 'x-slide-in-right', 'x-slide-in-up', 'x-slide-in-down',
+  'x-slide-out-left', 'x-slide-out-right', 'x-slide-out-up', 'x-slide-out-down',
+]);
 const CLASS_CONTEXT = /class(?:Name|List|es)?\b|toHaveClass|baseClass|appliesClass|checkClasses/;
 
 /** Is this match a use of the retired CLASS, rather than of a same-named attribute? */
 function isClassUse(token: string, line: string, at: number): boolean {
   // A file name that happens to start with an old class, x-drawer-trigger-not-op.spec.ts.
   if (/^\.(?:spec\.ts|test\.ts|[cm]?js|ts|css|html|md|json)\b/.test(line.slice(at + token.length))) return false;
-  if (!ALSO_ATTRIBUTES.has(token)) return true;
+  if (!ALSO_ATTRIBUTES.has(token) && !ALSO_KEYFRAMES.has(token)) return true;
   const before = line[at - 1] ?? '';
   const after = line[at + token.length] ?? '';
   if (before === '.') return true;
@@ -275,6 +312,12 @@ test.describe('Behavior classes follow x-{behavior}[__part][--modifier] (#1096)'
     expect('preview-x-form-row'.match(retiredPattern()), 'inside another word').toBeNull();
     expect(at('x-drawer-trigger-not-op', 'covered by x-drawer-trigger-not-op.spec.ts).'), 'a spec file name').toBe(false);
     expect(at('x-drawer-layout--vertical', 'see x-drawer-layout--vertical'), 'a suffixed form is always a class').toBe(true);
+    expect(at('x-fade-in', '  animation: x-fade-in 0.3s ease;'), 'a keyframe played by animation').toBe(false);
+    expect(at('x-slide-in-left', '@keyframes x-slide-in-left {'), 'a keyframe defined').toBe(false);
+    expect(at('x-fade-in', '.x-fade-in { opacity: 0; }'), 'a class selector on a keyframe name').toBe(true);
+    expect(at('x-zoom-in', "expect(el).toHaveClass('x-zoom-in');"), 'a class assertion on a keyframe name').toBe(true);
+    expect(at('x-fix-card', '<div x-fix-card id="fc"></div>'), 'the fix-card attribute').toBe(false);
+    expect(at('x-fix-card', "el.classList.contains('x-fix-card')"), 'the retired fix-card class').toBe(true);
   });
 
   test('every replacement name itself follows the convention', () => {

@@ -27,7 +27,9 @@ npm sees `create wb-starter`, downloads the small package **`create-wb-starter`*
 
 1. makes the `my-site` folder with a starter site in it;
 2. writes your site's name into the header, title and footer;
-3. writes a `package.json` whose only dependency is **`wb-starter`**, the framework itself.
+3. writes a `package.json` whose only dependency is **`wb-starter`**, the framework itself;
+4. adds `.github/workflows/deploy.yml`, which publishes the site on GitHub Pages once it is on GitHub;
+5. offers, default No, to create the GitHub repo and publish it now (see [Publish it](#7-publish-it)).
 
 `create-wb-starter` only runs once. Your site never depends on it.
 
@@ -109,13 +111,36 @@ Put your own CSS in `styles/site.css`.
 
 ## 7. Publish it
 
+### On GitHub Pages
+
+Every new site carries `.github/workflows/deploy.yml`. Once the site is on GitHub, every push to `main` runs `npm run build` and publishes `dist\` to `https://YOUR-USER.github.io/REPO/`.
+
+When you create the site, it asks:
+
+```text
+Create a public GitHub repo "my-site" and publish it on GitHub Pages now? (y/N)
+```
+
+The question appears only when the [GitHub CLI](https://cli.github.com/) is installed and signed in (`gh auth login`). Yes creates the repo, turns Pages on and pushes, then prints the site's address. No prints the steps to do it later; they are also in your site's `README.md`.
+
+| Option | What it does |
+|---|---|
+| `--yes` | Create the repo and publish without asking |
+| `--no-github` | Skip the question |
+| `--private` | Make the repo private. GitHub Pages is free only for public repos, so a private one needs a paid GitHub plan |
+
+Pass an option after `--`, as with `--name` above.
+
+To use your own domain, add a `CNAME` file to the site; the site's `README.md` has the steps.
+
+### Anywhere else
+
 ```powershell
 npm run build
 ```
 
 This runs `wb-starter build`, which writes a complete static copy of the site to **`dist\`**: your pages plus the parts of the wb-starter runtime they use. Upload `dist\` to any static host:
 
-- **GitHub Pages:** push `dist\` to a `gh-pages` branch, or publish it with a GitHub Pages action. The build already includes the `.nojekyll` file GitHub Pages needs.
 - **Netlify, Cloudflare Pages, Azure Static Web Apps, any web server:** upload the contents of `dist\`.
 
 `dist\` does not need Node.js or wb-starter to run. It is only files.

@@ -1,3 +1,4 @@
+import { authorText } from '../../core/author-content.js';
 /**
  * Checkbox - Enhanced <input type="checkbox">
  *
@@ -138,7 +139,8 @@ export function checkbox(element, options = {}) {
     input.type = 'checkbox';
     const box = part('span', 'x-checkbox__box', 'box');
     box.appendChild(part('span', 'x-checkbox__check', 'check'));
-    const labelText = element.getAttribute('label') || element.textContent.trim();
+    // #417: the text between the tags is the label and wins over `label`.
+    const labelText = authorText(element) || element.getAttribute('label') || '';
     element.textContent = '';
     element.append(input, box);
     if (labelText) {
@@ -167,6 +169,19 @@ export function checkbox(element, options = {}) {
   // own `.x-checkbox__input` early-return below, since it targets the HOST
   // (x-checkbox), not that input.
   if (isHost) {
+    // #417: when the schema built this host (wb-lazy.js), its label part came
+    // from the `label` attribute -- or the schema's own default -- and the
+    // author's text went to _wbOriginalContent. Content wins: put it back.
+    const authoredLabel = authorText(element);
+    if (authoredLabel) {
+      let labelEl = element.querySelector('.x-checkbox__label');
+      if (!labelEl) {
+        labelEl = document.createElement('span');
+        labelEl.className = 'x-checkbox__label';
+        element.appendChild(labelEl);
+      }
+      labelEl.textContent = authoredLabel;
+    }
     const input = element.querySelector('input[type="checkbox"]');
     if (input) {
       if (element.hasAttribute('checked')) input.checked = true;
