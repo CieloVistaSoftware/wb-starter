@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.493",
+      "date": "2026-10-10",
+      "summary": "The permutation probe already rendered a schema&#39;s `element` as (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1827\" target=\"_blank\" rel=\"noopener\">PR 1827</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Permutation probe builds element hosts from the schema&#39;s selector</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/713a2cc429f7c687814610c15f71fc0a5b119d7c\" target=\"_blank\" rel=\"noopener\"><code>713a2cc</code></a>",
+          "issues": [
+            835
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Behaviors page header says which behavior an element becomes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/74e02fff76b27a4b424337e8945638a762e0a939\" target=\"_blank\" rel=\"noopener\"><code>74e02ff</code></a>",
+          "issues": [
+            835
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Behavior schemas say whether they are an element or a decorator</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9a22e7e616f8a510b376af5f562720f4fcddded2\" target=\"_blank\" rel=\"noopener\"><code>9a22e7e</code></a>",
+          "issues": [
+            835
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/permutation-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/permutation-compliance.spec.ts</a> -g &quot;select: comprehensive&quot; --repeat-each=3. Before: 3 failed, &quot;Component did not initialize&quot; (and checkbox/radio/range failed the same way in CI). Now: 3 passed, and the whole spec is 176/176.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/16364e431f193d6c3af6b189e23dc85895bd9f8e\" target=\"_blank\" rel=\"noopener\"><code>16364e4</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.492",
       "date": "2026-10-10",
       "summary": "New site-migrate CLI proposes a WB Starter page for an existing HTML page and lists every change with its reason. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/982\" target=\"_blank\" rel=\"noopener\">#982</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1833\" target=\"_blank\" rel=\"noopener\">#1833</a>",
