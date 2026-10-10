@@ -51,6 +51,13 @@ import { test, expect } from '../fixtures/offline';
 const EXPECTED_INERT: Record<string, string> = {
   // Needs a live server route and a document to fetch; renders nothing without.
   'x-mdhtml': 'renders fetched markdown; nothing to render with no source',
+  // These three came into this sweep with #831, which moved wb-lazy.js's own
+  // attribute table into tag-map.js's extensionMap -- the map this spec reads.
+  // They were never measured before; each does its work somewhere this
+  // harness's fingerprint of the host cannot see.
+  'x-notify': 'click-time only: notify() adds a click listener that fires a toast; the host itself never changes',
+  'x-copybutton': 'builds its button BESIDE the host, in a .x-copybutton__wrapper it moves the host into; the host is unchanged',
+  'x-autosize': 'sizes a <textarea> (the host or one inside it); the harness host holds a <span>, so there is nothing to size',
 };
 
 /** Content that gives a behavior something to work with. */

@@ -180,7 +180,7 @@ test.describe('Fix Verification Tests', () => {
 
     // 039: <pre> is auto-enhanced by its native-tag mapping (tag-map.js)
     // without needing an explicit x-code attribute -- x-code is for a
-    // <code> nested inside a <pre> (see semantic-attributes.js /
+    // <code> nested inside a <pre> (see tag-map.js's nativeMap /
     // demo.js's own <pre x-behavior="pre"><code x-behavior="code">
     // convention), not the <pre> itself. pre.js adds x-pre, not x-code.
     await expect(page.locator('#test-code')).toHaveClass(/x-pre/);

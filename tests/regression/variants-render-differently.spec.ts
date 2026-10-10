@@ -168,8 +168,7 @@ function labelFor(prop: string, value: string): string {
 /**
  * The (behavior, authoring form) pairs the showcase lists with more than one
  * option -- computed from the same sources pages/behaviors.html builds its list
- * from (tag-map's extensionMap and nativeMap, wb-lazy's
- * WB_LAZY_ONLY_ATTRIBUTES, data/schema-index.json and
+ * from (tag-map's extensionMap and nativeMap, data/schema-index.json and
  * data/behavior-examples.json), by the same rules, so the tests are known when
  * the file is collected. Each test checks the page really lists that many rows,
  * so a drift between this and the page fails loudly instead of comparing
@@ -180,14 +179,8 @@ function labelFor(prop: string, value: string): string {
  * and x-button alone is 82 rows -- too many for one test's budget.
  */
 function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'; options: OptionInfo[] }[] {
-  // wb-lazy.js is a browser module with a large import graph; its table is a
-  // plain object literal, so it is read as text rather than imported.
-  const lazySrc = readFileSync(join(ROOT, 'src/core/wb-lazy.js'), 'utf8');
-  const start = lazySrc.indexOf('export const WB_LAZY_ONLY_ATTRIBUTES = {');
-  const block = lazySrc.slice(start, lazySrc.indexOf('\n};', start));
-  const lazyOnly: Record<string, string> = {};
-  for (const m of block.matchAll(/^\s*'(x-[\w-]+)':\s*'([\w-]+)'/gm)) lazyOnly[m[1]] = m[2];
-  const all: Record<string, string> = { ...lazyOnly, ...(extensionMap as Record<string, string>) };
+  // tag-map.js is the one registry (#831); wb-lazy.js no longer has a table.
+  const all: Record<string, string> = extensionMap as Record<string, string>;
 
   const index = JSON.parse(readFileSync(join(ROOT, 'data/schema-index.json'), 'utf8'));
   const byName = new Map<string, { properties?: Record<string, PropDef> }>(

@@ -23,14 +23,7 @@ import { test, expect } from '../fixtures/offline';
 
 async function expectedDescriptions(): Promise<Map<string, string>> {
   const tag = await import(new URL('../../src/core/tag-map.js', import.meta.url).href);
-  let lazy: Record<string, unknown> = {};
-  try {
-    lazy = await import(new URL('../../src/core/wb-lazy.js', import.meta.url).href);
-  } catch { /* the page tolerates this too */ }
-  const registry: Record<string, string> = {
-    ...((lazy as { WB_LAZY_ONLY_ATTRIBUTES?: Record<string, string> }).WB_LAZY_ONLY_ATTRIBUTES || {}),
-    ...tag.extensionMap,
-  };
+  const registry: Record<string, string> = tag.extensionMap;
   const index = JSON.parse(fs.readFileSync('data/schema-index.json', 'utf8'));
   const byName = new Map<string, string>(
     index.schemas.map((s: { name: string; description?: string }) => [s.name, String(s.description || '').trim()]));

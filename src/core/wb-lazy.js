@@ -18,11 +18,12 @@ import { getConfig, setConfig } from './config.js';
 import { matchingElements } from './dom-query.js';
 import { setRule } from './dynamic-style.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
-import { elementMap, nativeMap, extensionMap } from './tag-map.js';
+import {
+  elementMap, nativeMap, extensionMap, BEHAVIOR_ALIASES, propertyMappings, legacyLazyMap,
+} from './tag-map.js';
 import { isReplacedByExplicitBehavior, DIRECTIVES } from './replacement-guard.js';
 import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
 import { isComponentLandmark } from './component-landmark.js';
-import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel, isTraceCategoryEnabled } from './debug-trace.js';
 import { sliceOverBudget, nextSlice } from './main-thread-budget.js';
@@ -32,7 +33,7 @@ import {
   startObserving, stopObserving, commonInitOptions, bootDocument,
 } from './runtime-shared.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
-import { aliasesFor, BEHAVIOR_ALIASES } from './attribute-aliases.js';
+import { aliasesFor } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
@@ -162,149 +163,15 @@ function flow(fn, ...parts) {
 // load, regardless of whether it's on or off.
 console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setItem('x-debug', '1') for everything, or a comma-separated category list, then reload)`);
 
-// #333: this table used to hand-duplicate tag-map.js's elementMap/nativeMap/
-// extensionMap (wb.js's own single source of truth) and had drifted --
-// e.g. this file was missing header/footer (present in nativeMap) while
-// tag-map.js was missing every legacy card-*/noun-first alias this file
-// still needs to serve older standalone demo pages. Now built by spreading
-// the shared tag-map.js tables first, with only the genuinely
-// runtime-specific entries layered on top explicitly -- so anything added to
-// tag-map.js going forward is picked up here automatically instead of
-// silently working on only one runtime.
-
-// x-modal: tag-map.js's elementMap says 'dialog', this runtime's own table
-// (below) says 'modal' -- both names resolve to the exact same function
-// (dialog.js does `export { dialog as modal }`), so this is a benign naming
-// difference, not a behavior difference. Kept as an explicit override so
-// it's not silently swept up if tag-map.js's mapping ever changes.
-//
-// x-drawer used to be a SECOND, genuinely broken override here (mapped to
-// 'drawerLayout' -- an unrelated collapsible-sidebar behavior -- instead of
-// 'drawer', the actual trigger+overlay behavior every <div x-drawer> demo
-// markup expects). Confirmed live: every <div x-drawer> on a wb-lazy.js-only
-// page (e.g. demos/site/overlays.html) rendered as an inert, wrongly-styled
-// sidebar fragment with its own attribute text as visible content, never as
-// a working "click to open a drawer" trigger. #333 already unified the rest
-// of this table against tag-map.js's elementMap; this specific entry was
-// carved out "pending investigation" and never revisited. Now that
-// overlay.js's drawer() is schema-aware (this session), removed the
-// override so x-drawer agrees with tag-map.js's 'drawer' on both runtimes.
-const ELEMENT_MAP_OVERRIDES = new Set(['[x-modal]']);
-
-// x-grid was described here as a REAL custom element (x-grid.js, eagerly
-// imported by wb.js) whose own connectedCallback called the layout function
-// directly. It never was one -- nothing called customElements.define() for
-// WBGrid, so that connectedCallback never ran, and the file is now deleted
-// (#1063). x-grid dispatches as an ordinary injected behavior on BOTH
-// runtimes, which is what this entry already did.
-// x-cluster/x-stack/x-row/x-accordion USED to be real custom elements
-// too, but those `extends HTMLElement` wrappers were removed (#279) in favor
-// of tag-map.js's elementMap (cluster/stack/flex/accordion) -- now picked up
-// automatically via the elementMap spread above, no longer needed here.
-// The rest of this table covers the legacy card-*/noun-first tag aliases and
-// a few tags tag-map.js genuinely doesn't know about at all (x-inputgroup,
-// x-formrow, x-stat, x-code-card) -- none of these are duplicated anywhere
-// else.
-const WB_LAZY_ONLY_ELEMENTS = {
-  // EMPTY ON PURPOSE -- see elementMap in tag-map.js.
-  //
-  // These 18 are why the first migration pass left <div x-container>, <div x-grid>
-  // and <div> behind: the script read tag-map.js and nothing else, so a
-  // second element registry living here was invisible to it. That is #831 in
-  // miniature -- it broke the very tool written to find that class of bug.
-};
-
-// Extension attributes tag-map.js's extensionMap doesn't cover. wb.js doesn't
-// need an equivalent list at all for these -- it resolves x-{name} shorthand
-// attributes dynamically from the behaviors registry itself
-// (Object.keys(behaviors) in scan()/observe()), not from a hardcoded
-// selector table. This runtime's dispatch (getAutoInjectBehaviors(), below)
-// is selector-table-driven, so it still needs these listed explicitly.
-// Porting wb.js's dynamic approach here would remove the need for this list
-// entirely -- a larger follow-up, not done as part of this consolidation.
-// Exported (#666) so tooling can enumerate the FULL x-* surface. This table is
-// a second registry alongside tag-map.js's extensionMap, and the two diverge:
-// 34 x-* attributes used by real demos on pages/behaviors.html live only here,
-// so anything reading tag-map alone reports an incomplete behavior list.
-// Consolidating the two is tracked separately; exporting is the read-only step
-// that stops consumers silently under-reporting in the meantime.
-export const WB_LAZY_ONLY_ATTRIBUTES = {
-  // mdhtml.js marks rendered code blocks with bare `x-pre`/`x-code` presence
-  // attributes (src/wb-viewmodels/mdhtml.js) and relies on WB.scan() to pick
-  // them up -- on wb.js that "just works" via its dynamic x-{name} shorthand
-  // resolution (see the file comment above), but wb-lazy.js has no such
-  // dynamic path and neither name was ever added to this static table, so
-  // every rendered <pre>/<code> block on a wb-lazy.js-driven page (any
-  // standalone demo, doc-viewer.html reached via one) silently never got the
-  // pre()/code() enhancement (#322) -- confirmed live: WB.inject() was never
-  // even called for these elements, since no selector in customElementMappings
-  // matched `[x-pre]`/`[x-code]` at all.
-  'x-pre': 'pre',
-  'x-code': 'code',
-  'x-breadcrumb': 'breadcrumb',
-  'x-notify': 'notify',
-  'x-typewriter': 'typewriter',
-  'x-bounce': 'bounce',
-  'x-pulse': 'pulse',
-  // x-copy (#645): moved to tag-map.js's extensionMap (shared with wb.js) --
-  // see the comment there for the x-copybutton distinction.
-  // x-copybutton (#291) — overlays a separate positioned copy button on ANY
-  // element (distinct from x-copy, which makes the element itself the
-  // trigger). See src/wb-viewmodels/copy.js's copyButton().
-  'x-copybutton': 'copybutton',
-  'x-fadein': 'fadein',
-  'x-shake': 'shake',
-  // Entrance / attention-seeker animations + relative time — behaviors exist in
-  // effects.js/helpers and are registered in index.js, but were unmapped (issue #138)
-  'x-slidein': 'slidein',
-  'x-zoomin': 'zoomin',
-  'x-wobble': 'wobble',
-  'x-tada': 'tada',
-  'x-jello': 'jello',
-  'x-heartbeat': 'heartbeat',
-  'x-flip': 'flip',
-  'x-flash': 'flash',
-  'x-relativetime': 'relativetime',
-  // x-glow, x-rainbow, x-sparkle: removed (#831). extensionMap in tag-map.js
-  // already declares each with the same selector and behavior, so every
-  // x-glow element matched two mappings and was queued twice.
-  'x-password': 'password',
-  // #1185: documented from 4.0.0, never wired here (wb.js resolves x-{name}).
-  'x-ul': 'ul',
-  'x-ol': 'ol',
-  'x-dl': 'dl',
-  'x-stepper': 'stepper',
-  'x-otp': 'otp',
-  'x-search': 'search',
-  'x-clock': 'clock',
-  'x-countdown': 'countdown',
-  'x-pagination': 'pagination',
-  'x-steps': 'steps',
-  'x-kbd': 'kbd',
-  // #834 -- the element is <img>. docs/behaviors/img.md already teaches
-  // x-img in four places; it was never registered, so following the docs
-  // produced no behavior and no error.
-  'x-img': 'img',
-  'x-popover': 'popover',
-  'x-confirm': 'confirm',
-  'x-prompt': 'prompt',
-  'x-lightbox': 'lightbox',
-  'x-share': 'share',
-  'x-print': 'print',
-  'x-fullscreen': 'fullscreen',
-  'x-truncate': 'truncate',
-  'x-masonry': 'masonry',
-  'x-autosize': 'autosize',
-  // #645: x-form, x-tags, x-file, x-masked, x-counter, x-autocomplete,
-  // x-colorpicker, x-floatinglabel, x-label, x-youtube, x-timeline,
-  // x-gallery, x-drawer, x-dropdown, x-toggle, x-drawer-layout, x-copy,
-  // x-toast and x-collapse all moved to tag-map.js's extensionMap (shared
-  // with wb.js) -- see the comment block there for the drawer/drawer-layout
-  // disambiguation notes.
-};
+// #831: every selector this runtime binds comes from tag-map.js -- the one
+// registry. This file used to keep two tables of its own beside it
+// (WB_LAZY_ONLY_ELEMENTS and WB_LAZY_ONLY_ATTRIBUTES), invisible to anything
+// that read tag-map.js alone; both were folded into tag-map.js and deleted.
+// scripts/audit-behavior-registry.mjs --gate fails if a selector table
+// appears here again.
 
 /**
- * `[x-{name}]` for each registered behavior no map above routes (#1642).
+ * `[x-{name}]` for each registered behavior no tag-map.js map routes (#1642).
  * Computed from the registry, not listed, so a behavior added to index.js
  * gets its attribute without anyone remembering to add it here.
  * @returns {{selector: string, behavior: string}[]}
@@ -317,7 +184,6 @@ const PARENT_WIRED_BEHAVIORS = new Set(['moveup', 'movedown', 'moveleft', 'mover
 function unroutedBehaviorAttributes() {
   const routed = new Set([
     ...Object.keys(extensionMap),
-    ...Object.keys(WB_LAZY_ONLY_ATTRIBUTES),
     ...Object.keys(BEHAVIOR_ALIASES).map((old) => `x-${old}`),
   ]);
   return listBehaviors()
@@ -327,13 +193,9 @@ function unroutedBehaviorAttributes() {
 
 // Auto-injection mappings
 const customElementMappings = [
-  ...Object.entries(elementMap)
-    .filter(([selector]) => !ELEMENT_MAP_OVERRIDES.has(selector))
-    .map(([selector, behavior]) => ({ selector, behavior })),
+  ...Object.entries(elementMap).map(([selector, behavior]) => ({ selector, behavior })),
   ...Object.entries(extensionMap)
     .map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
-  ...Object.entries(WB_LAZY_ONLY_ELEMENTS).map(([selector, behavior]) => ({ selector, behavior })),
-  ...Object.entries(WB_LAZY_ONLY_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
   // A renamed behavior's old attribute runs the new behavior (#668).
   ...Object.entries(BEHAVIOR_ALIASES).map(([old, now]) => ({ selector: `[x-${old}]`, behavior: now })),
   // Every other registered behavior by its own x-{name} attribute (#1642).
@@ -343,10 +205,10 @@ const customElementMappings = [
   // routed every registered name this way. With x-behavior deprecated, the
   // attribute is the one spelling, so it has to work for every behavior.
   ...unroutedBehaviorAttributes(),
-  // Semantic property attributes (tooltip=, badge=, ripple, toast-message=)
-  // -- shared with wb.js via semantic-attributes.js so both engines support
-  // the same vocabulary (#354).
-  ...semanticPropertyMappings,
+  // Property attributes (tooltip=, badge=, ripple, toast-message=) -- tag-map's
+  // propertyMap, shared with wb.js so both engines support the same
+  // vocabulary (#354).
+  ...propertyMappings,
   // No custom-element selectors here. <button-tooltip> lived at this spot as a
   // hardcoded dual-behavior binding -- a SEVENTH place a selector could be
   // bound (#831) -- and was never used in a single .html in the repo or the
@@ -358,7 +220,7 @@ const customElementMappings = [
 const autoInjectMappings = [
   ...Object.entries(nativeMap).map(([selector, behavior]) => ({ selector, behavior })),
   // Legacy bare data-attribute fallback -- pre-dates x-tooltip.
-  { selector: '[data-tooltip]', behavior: 'tooltip' },
+  ...Object.entries(legacyLazyMap).map(([selector, behavior]) => ({ selector, behavior })),
 ];
 
 /**
@@ -467,10 +329,31 @@ function getAutoInjectBehaviors(element) {
 // its behavior. x-dropdown is the same kind of behavior (dropdown() builds
 // its trigger and menu) and was missing: its $view emptied the author's
 // trigger text and left a second, empty menu beside the real one.
+//
+// #831: the second group is wb-lazy's old WB_LAZY_ONLY_ATTRIBUTES table, now in
+// tag-map.js's extensionMap. schemaNameFor() resolves through extensionMap, so
+// without this list moving the table would have started schema-building all
+// of them -- something neither runtime ever did. Measured before this list
+// existed: <div x-pre> picked up class="x-pre" and x-schema on the HOST as well
+// as on the <pre> pre() builds inside it, and <div x-search>Text</div> had its
+// text moved into an attribute. These behaviors build their own DOM (an empty
+// or behavior-owned $view), so skipping the schema keeps them exactly as they
+// were. A name leaves this group only with a measurement that building its
+// schema changes nothing a reader can see.
+const NEVER_SCHEMA_BUILT_ON_LAZY = [
+  'x-pre', 'x-code', 'x-breadcrumb', 'x-notify', 'x-typewriter', 'x-bounce',
+  'x-pulse', 'x-copybutton', 'x-fadein', 'x-shake', 'x-slidein', 'x-zoomin',
+  'x-wobble', 'x-tada', 'x-jello', 'x-heartbeat', 'x-flip', 'x-flash',
+  'x-relativetime', 'x-password', 'x-ul', 'x-ol', 'x-dl', 'x-stepper', 'x-otp',
+  'x-search', 'x-clock', 'x-countdown', 'x-pagination', 'x-steps', 'x-kbd',
+  'x-img', 'x-popover', 'x-confirm', 'x-prompt', 'x-lightbox', 'x-share',
+  'x-print', 'x-fullscreen', 'x-truncate', 'x-masonry', 'x-autosize',
+];
 const SCHEMA_SKIP_TAGS = new Set([
   'x-demo', 'x-details', 'x-cluster', 'x-stack', 'x-flex', 'x-searchfield',
   'x-accordion', 'x-articles', 'x-select', 'x-skeleton',
   'x-dialog', 'x-fix-card', 'x-view', 'x-audio', 'x-dropdown',
+  ...NEVER_SCHEMA_BUILT_ON_LAZY,
 ]);
 
 // One fetch attempt per derived schema NAME (not per element) -- avoids
@@ -1566,16 +1449,16 @@ const STATE_MARKER_SUFFIX = /-init$/;
 /**
  * Every attribute that DOES name a behaviour.
  *
- * Both maps, never one: WB_LAZY_ONLY_ATTRIBUTES holds 39 behaviours that appear
- * nowhere in tag-map, so checking extensionMap alone would report x-breadcrumb,
- * x-notify, x-copybutton and every animation effect as unknown -- the exact
- * incomplete-registry mistake #1056 fixed on the behaviours page.
+ * tag-map's extensionMap holds every x-* binding (#831 folded wb-lazy's own
+ * table into it); x-breadcrumb, x-notify, x-copybutton and the animation
+ * effects used to live only in that second table, and checking extensionMap
+ * alone reported them unknown -- the incomplete-registry mistake #1056 fixed
+ * on the behaviours page.
  */
 function knownBehaviorAttributes() {
   return new Set([
     ...Object.keys(extensionMap || {}),
-    ...Object.keys(WB_LAZY_ONLY_ATTRIBUTES || {}),
-    // THE THIRD REGISTRY, and the one that actually decides existence.
+    // The module registry, which is what actually decides existence.
     //
     // A behaviour may wire its own helper attributes: move.js:242 does
     // `wire('x-moveright', moveright)` for all six directions, and those names
@@ -1587,8 +1470,7 @@ function knownBehaviorAttributes() {
     // That is the incomplete-registry mistake this function's own comment warns
     // about, made one map short of the warning. behaviorModules is what
     // getBehavior() consults before throwing "Unknown behavior", so it is the
-    // registry whose answer matters; read it rather than list its members here
-    // (#831 is the work of collapsing all of them into one).
+    // registry whose answer matters; read it rather than list its members here.
     ...Object.keys(behaviorModules || {}).map((name) => `x-${name}`),
   ]);
 }

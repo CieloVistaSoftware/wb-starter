@@ -7,7 +7,7 @@
  * @version 2.1.1 (2025-12-21) - Fixed semantic module paths
  */
 
-import { BEHAVIOR_ALIASES } from '../core/attribute-aliases.js';
+import { BEHAVIOR_ALIASES } from '../core/tag-map.js';
 
 // Debug logging — silent unless localStorage['x-debug'] === '1'.
 const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch (e) { return false; } })();

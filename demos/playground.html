@@ -284,7 +284,6 @@
     // below don't hand-roll their own navigator.clipboard try/catch.
     import { writeToClipboard } from '../src/wb-viewmodels/copy.js';
     import { getExtensionBehavior, extensionMap } from '../src/core/tag-map.js';
-    import { WB_LAZY_ONLY_ATTRIBUTES } from '../src/core/wb-lazy.js';
     import { loadSchemaIndex } from '../src/core/schema-index.js';
     import { attachEditorAssist } from '../src/lib/html-editor-assist.js';
     import { oneTwentyHeroes } from '../src/lib/hero-permutations.js';
@@ -1054,10 +1053,10 @@
     });
 
     // #265: Tab indents, and typing offers x-* behaviors and their options.
-    // Every registered attribute, from the same two registries the runtime
+    // Every registered attribute, from tag-map.js, the registry the runtime
     // reads; each behavior's options from the schema index.
     attachEditorAssist(input, {
-      behaviors: { ...WB_LAZY_ONLY_ATTRIBUTES, ...extensionMap },
+      behaviors: extensionMap,
       loadSchemas: loadSchemaIndex,
     }, { popupClass: 'pg-assist' });
 

@@ -12,7 +12,7 @@
    the tag alone must supply everything the class used to (background/
    border/padding/etc.), not just inline-flex/width sizing. The class rule
    is kept for the `badge="..."` semantic attribute on a plain element
-   (badge() still adds `.x-badge` there, per semantic-attributes.js). */
+   (badge() still adds `.x-badge` there, per tag-map.js's propertyMap). */
 [x-badge],
 .x-badge {
   display: inline-flex;

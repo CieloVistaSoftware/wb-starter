@@ -4,42 +4,38 @@
  *
  * WHY THIS EXISTS
  *
- * A behavior is only usable if several separate files agree about it, and
- * they are edited independently:
+ * A behavior is only usable if several separate files agree about it:
  *
- *   src/core/tag-map.js            elementMap / nativeMap / extensionMap
- *                                  — selector -> behavior
- *   src/core/wb-lazy.js            WB_LAZY_ONLY_ELEMENTS / _ATTRIBUTES
- *                                  — MORE selector -> behavior, invisible to
- *                                    anything that reads only tag-map.js
- *   src/core/semantic-attributes.js SEMANTIC_PROPERTY_ATTRIBUTES
- *                                  — and MORE again: tooltip=, badge=, ripple
+ *   src/core/tag-map.js            THE selector registry (#831):
+ *                                  elementMap / nativeMap / extensionMap
+ *                                  / propertyMap / legacyLazyMap, and
+ *                                  BEHAVIOR_ALIASES for renamed x- names
  *   src/wb-viewmodels/index.js     behaviorModules — behavior -> module file
  *   src/wb-models/*.schema.json    the declared model
  *   src/wb-viewmodels/**.js        the code that actually runs
  *
- * Nothing checks that they agree, so a behavior can be half-registered in
+ * Nothing else checks that they agree, so a behavior can be half-registered in
  * several different ways and each one fails differently:
  *
  *   - a module and a schema, no selector  -> ships, unreachable, invisible
  *   - a selector, no module entry         -> resolves, then fails to load
- *   - registered only in wb-lazy.js       -> works, but a grep of tag-map
+ *   - a selector table outside tag-map.js -> works, but a read of tag-map.js
  *                                            says it does not exist
  *
- * That last one is not hypothetical. Reviewing this repo by grepping
- * tag-map.js alone produced two wrong conclusions in a row — `pagination`,
- * `steps`, `breadcrumb` and `stat` reported as unreachable when all four are
- * registered in wb-lazy.js. wb-lazy.js's own comment says of extensionMap:
- * "wb.js's own single source of truth -- and had drifted".
- *
- * The goal is ONE registry. This audit is the evidence for getting there:
- * it prints exactly which behaviors are split across files, so the merge can
- * be done knowing what moves.
+ * That last one is not hypothetical. Until #831 there were six selector maps
+ * in three files: wb-lazy.js kept WB_LAZY_ONLY_ELEMENTS and
+ * WB_LAZY_ONLY_ATTRIBUTES, and semantic-attributes.js kept
+ * SEMANTIC_PROPERTY_ATTRIBUTES. Reviewing this repo by grepping tag-map.js
+ * alone produced two wrong conclusions in a row — `pagination`, `steps`,
+ * `breadcrumb` and `stat` reported as unreachable when all four were
+ * registered in wb-lazy.js. Those maps now live in tag-map.js, and this audit
+ * reports a STRAY TABLE if a selector -> behavior entry appears anywhere else
+ * under src/, so the split cannot quietly come back.
  *
  * WHY IT PARSES THE WAY IT DOES
  *
- * The maps are not imported. tag-map.js could be, but wb-lazy.js touches
- * browser globals at module scope and WB_LAZY_ONLY_ELEMENTS is not exported.
+ * The maps are not imported, so --root can point at a checkout without its
+ * dependencies, and index.js touches browser globals at module scope.
  * Regex over the source is what produced the wrong answers above, so instead
  * each object literal is located by name, brace-matched to its true end, and
  * evaluated as JavaScript. Comments, multi-line entries and mixed quoting all
@@ -130,22 +126,20 @@ function readLiteral(file, name) {
   return null;
 }
 
-/** Every place a selector can be bound to a behavior. */
+/** Every place a selector can be bound to a behavior: all in tag-map.js (#831). */
+const REGISTRY = 'src/core/tag-map.js';
 const SELECTOR_SOURCES = [
-  { file: 'src/core/tag-map.js', name: 'elementMap',              label: 'tag-map:element' },
-  { file: 'src/core/tag-map.js', name: 'nativeMap',               label: 'tag-map:native' },
-  { file: 'src/core/tag-map.js', name: 'extensionMap',            label: 'tag-map:extension' },
-  { file: 'src/core/wb-lazy.js', name: 'WB_LAZY_ONLY_ELEMENTS',   label: 'wb-lazy:element' },
-  { file: 'src/core/wb-lazy.js', name: 'WB_LAZY_ONLY_ATTRIBUTES', label: 'wb-lazy:attribute' },
-  // A sixth source. wb-lazy.js folds semanticPropertyMappings into the same
-  // selector list, so `tooltip=`, `badge=`, `ripple` and friends bind
-  // behaviors without appearing in either of the two maps above. Omitting it
-  // would give this audit the exact blind spot it exists to detect.
-  { file: 'src/core/semantic-attributes.js', name: 'SEMANTIC_PROPERTY_ATTRIBUTES', label: 'semantic-attr' },
+  { file: REGISTRY, name: 'elementMap',    label: 'tag-map:element' },
+  { file: REGISTRY, name: 'nativeMap',     label: 'tag-map:native' },
+  { file: REGISTRY, name: 'extensionMap',  label: 'tag-map:extension' },
+  // Plain property attributes: `tooltip=`, `badge=`, `ripple`, `toast-message=`.
+  { file: REGISTRY, name: 'propertyMap',   label: 'tag-map:property' },
+  // [data-tooltip], which only wb-lazy.js applies.
+  { file: REGISTRY, name: 'legacyLazyMap', label: 'tag-map:legacy-lazy' },
 ];
 
 /*
- * THE SEVENTH SOURCE: ROUTES COMPUTED FROM THE REGISTRY (#1642)
+ * ROUTES COMPUTED FROM THE REGISTRY (#1642)
  *
  * wb-lazy.js no longer needs a table entry for an x-{name} attribute.
  * unroutedBehaviorAttributes() gives `[x-{name}]` to every name in
@@ -168,7 +162,7 @@ const SELECTOR_SOURCES = [
 const ROUTE_INPUTS = {
   directives:  { file: 'src/core/replacement-guard.js', name: 'DIRECTIVES' },
   parentWired: { file: 'src/core/wb-lazy.js',           name: 'PARENT_WIRED_BEHAVIORS' },
-  aliases:     { file: 'src/core/attribute-aliases.js', name: 'BEHAVIOR_ALIASES' },
+  aliases:     { file: REGISTRY,                        name: 'BEHAVIOR_ALIASES' },
 };
 // Text that must still be in wb-lazy.js for the computed route to exist. If
 // either goes, every behavior below loses its only selector, so the audit
@@ -184,14 +178,6 @@ const ROUTE_MARKERS = ['function unroutedBehaviorAttributes()', '...unroutedBeha
  * unnoticed). Adding a line is a decision, so it needs a reason a reviewer
  * can check.
  */
-const LAZY_ONLY_REASON =
-  'x-NAME -> NAME in WB_LAZY_ONLY_ATTRIBUTES. Redundant since #1642: deleting the line leaves the '
-  + 'computed [x-NAME] route doing the same thing. Deleting the table is #831 step 2; the table is frozen at '
-  + 'these names until then (#667 gate).';
-const NATIVE_PAIR_REASON =
-  'nativeMap binds the tag, WB_LAZY_ONLY_ATTRIBUTES binds x-TAG, both to the same behavior. #834 requires '
-  + 'x-TAG to exist, so the x- form stays; where it is registered is the #831 merge, and the 2026-10-08 status '
-  + 'leaves these five pairs to John.';
 const REVIEWED = {
   naming: {
     'x-article': '9f85773ce removed x-article on purpose (John: "an article is a card in this system"). '
@@ -199,20 +185,7 @@ const REVIEWED = {
       + 'instead of silently applying a different behavior, the failure #834 was about.',
   },
   unreachable: {},
-  splitRegistration: {
-    code: NATIVE_PAIR_REASON,
-    img: NATIVE_PAIR_REASON,
-    kbd: NATIVE_PAIR_REASON,
-    password: NATIVE_PAIR_REASON + ' Here the tag is input[type="password"].',
-    pre: NATIVE_PAIR_REASON,
-  },
-  lazyOnly: Object.fromEntries([
-    'autosize', 'bounce', 'breadcrumb', 'clock', 'confirm', 'copybutton', 'countdown', 'dl',
-    'fadein', 'flash', 'flip', 'fullscreen', 'heartbeat', 'jello', 'lightbox', 'masonry',
-    'notify', 'ol', 'otp', 'pagination', 'popover', 'print', 'prompt', 'pulse',
-    'relativetime', 'search', 'shake', 'share', 'slidein', 'stepper', 'steps', 'tada',
-    'truncate', 'typewriter', 'ul', 'wobble', 'zoomin',
-  ].map((name) => [name, LAZY_ONLY_REASON])),
+  strayTable: {},
 };
 
 // Schemas that schema.schema.json's own _schemaTypes say are not behaviors.
@@ -256,7 +229,6 @@ function collect() {
     const parentWired = new Set(input.parentWired);
     const routed = new Set([
       ...Object.keys(maps.extensionMap || {}),
-      ...Object.keys(maps.WB_LAZY_ONLY_ATTRIBUTES || {}),
       ...Object.keys(input.aliases).map((old) => `x-${old}`),
     ]);
     // index.js registers each alias's old name too, so listBehaviors() has it.
@@ -264,7 +236,7 @@ function collect() {
     for (const [old, now] of Object.entries(input.aliases)) bind(now, 'alias', `x-${old}`);
     const exportAliases = readObjectLiteral('src/wb-viewmodels/index.js', 'exportAliases') || {};
     const fnOf = (name) => `${behaviorModules[name]}#${exportAliases[name] || name}`;
-    const routedTo = { ...(maps.extensionMap || {}), ...(maps.WB_LAZY_ONLY_ATTRIBUTES || {}) };
+    const routedTo = maps.extensionMap || {};
     for (const name of registered) {
       // x-NAME is routed, but to a different registry key. When both keys load
       // the same export of the same module (drawer-layout and drawerLayout),
@@ -282,11 +254,6 @@ function collect() {
       bind(name, 'computed', `x-${name}`);
       computed.push(name);
     }
-    // What the computed route would do if a table line were deleted: used to
-    // say which LAZY-ONLY entries are redundant.
-    input.wouldCompute = (name) => Object.prototype.hasOwnProperty.call(behaviorModules, name)
-      && !directives.has(name) && !parentWired.has(name)
-      && !Object.prototype.hasOwnProperty.call(maps.extensionMap || {}, `x-${name}`);
   }
 
   const schemas = new Set();
@@ -305,18 +272,60 @@ function collect() {
     for (const { selector } of bound) if (selector.startsWith('x-') && !selector.includes(' ')) attrIndex[selector] = beh;
   }
 
+  const aliasTargets = new Set(Object.values(input.aliases || {}));
+  const strays = findStrayTables(new Set([...Object.keys(behaviorModules), ...aliasTargets]));
+
   return {
-    selectors, behaviorModules, schemas, notBehaviors, missingMaps, computed,
-    nativeMapRaw: maps.nativeMap || {}, attrIndex, wouldCompute: input.wouldCompute || (() => false),
+    selectors, behaviorModules, schemas, notBehaviors, missingMaps, computed, strays,
+    nativeMapRaw: maps.nativeMap || {}, attrIndex,
   };
+}
+
+/*
+ * STRAY TABLES
+ *
+ * One registry is only one while nothing else binds a selector. WB_LAZY_ONLY_*
+ * and SEMANTIC_PROPERTY_ATTRIBUTES were each "a few entries the other file
+ * doesn't cover" when they started. This walks every .js file under src/
+ * except tag-map.js and reports two shapes of binding:
+ *
+ *   'x-name': 'behavior'          an object-literal row (also '[selector]': ...)
+ *   { selector: '...', behavior: 'behavior' }   a hard-coded mapping
+ *
+ * Only rows whose value is a behavior that loads count, so a table of class
+ * names or CSS files is not mistaken for a registry.
+ */
+const ROW = /^\s*(['"])(x-[a-z0-9-]+|\[[^\]]+\])\1\s*:\s*(['"])([A-Za-z][\w-]*)\3/;
+const HARDCODED = /selector:\s*(['"`])([^'"`]+)\1\s*,\s*behavior:\s*(['"])([\w-]+)\3/g;
+
+function findStrayTables(behaviorNames) {
+  const found = [];
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith('.js')) continue;
+      const rel = path.relative(ROOT, full).replace(/\\/g, '/');
+      if (rel === REGISTRY) continue;
+      fs.readFileSync(full, 'utf8').split('\n').forEach((text, i) => {
+        const row = ROW.exec(text);
+        if (row && behaviorNames.has(row[4])) found.push({ file: rel, line: i + 1, selector: row[2], behavior: row[4] });
+        for (const m of text.matchAll(HARDCODED)) {
+          if (behaviorNames.has(m[4])) found.push({ file: rel, line: i + 1, selector: m[2], behavior: m[4] });
+        }
+      });
+    }
+  };
+  walk(path.join(ROOT, 'src'));
+  return found;
 }
 
 /* ── The findings ─────────────────────────────────────────────────────── */
 
 function audit() {
   const {
-    selectors, behaviorModules, schemas, notBehaviors, missingMaps, computed,
-    nativeMapRaw, attrIndex, wouldCompute,
+    selectors, behaviorModules, schemas, notBehaviors, missingMaps, computed, strays,
+    nativeMapRaw, attrIndex,
   } = collect();
 
   const names = new Set([
@@ -328,17 +337,11 @@ function audit() {
   const rows = [];
   for (const name of [...names].sort()) {
     const bound = selectors.get(name) || [];
-    const lazyAttrs = bound.filter((b) => b.source === 'wb-lazy:attribute');
     rows.push({
       behavior: name,
       selectors: bound,
       sources: [...new Set(bound.map((b) => b.source))],
-      inTagMap: bound.some((b) => b.source.startsWith('tag-map')),
-      inWbLazy: bound.some((b) => b.source.startsWith('wb-lazy')),
       computedOnly: bound.length > 0 && bound.every((b) => b.source === 'computed'),
-      // Every wb-lazy table line for it is x-NAME -> NAME, which the computed
-      // route would produce on its own if the line were deleted.
-      lazyRedundant: lazyAttrs.length > 0 && lazyAttrs.every((b) => b.selector === `x-${name}`) && wouldCompute(name),
       hasModule: Object.prototype.hasOwnProperty.call(behaviorModules, name),
       hasSchema: schemas.has(name),
     });
@@ -369,9 +372,8 @@ function audit() {
     unreachable: rows.filter((r) => !r.selectors.length && (r.hasModule || r.hasSchema)),
     noModule:    rows.filter((r) => r.selectors.length && !r.hasModule),
 
-    // Split-brain — works today, but only because two files happen to agree.
-    splitRegistration: rows.filter((r) => r.inTagMap && r.inWbLazy),
-    lazyOnly:          rows.filter((r) => r.inWbLazy && !r.inTagMap),
+    // A second registry — a selector bound outside tag-map.js (#831).
+    strayTable: strays,
 
     // Informational.
     schemaNoSelector: rows.filter((r) => r.hasSchema && !r.selectors.length),
@@ -380,7 +382,11 @@ function audit() {
 
   // The gate's view: which findings are reviewed, which are new, which
   // reviewed entries no longer occur.
-  const keyOf = (category, f) => (category === 'naming' ? f.attr : f.behavior);
+  const keyOf = (category, f) => {
+    if (category === 'naming') return f.attr;
+    if (category === 'strayTable') return `${f.file}: ${f.selector}`;
+    return f.behavior;
+  };
   const unreviewed = [];
   const stale = [];
   for (const category of Object.keys(REVIEWED).concat('noModule')) {
@@ -406,7 +412,7 @@ function report(result) {
   const tag = (category, f) => (Object.prototype.hasOwnProperty.call(REVIEWED[category] || {}, keyOf(category, f)) ? '' : '   <- NOT REVIEWED');
 
   out.push(`behavior registry audit — ${rows.length} behavior names across ${SELECTOR_SOURCES.length} selector maps`
-    + ' + the computed x-{name} route\n');
+    + ` in ${REGISTRY} + its aliases + the computed x-{name} route\n`);
 
   if (missingMaps.length) {
     out.push('COULD NOT READ (a map was renamed or moved — this audit is now blind to it):');
@@ -447,20 +453,13 @@ function report(result) {
     out.push('');
   }
 
-  if (findings.splitRegistration.length) {
-    out.push(`SPLIT REGISTRATION — ${findings.splitRegistration.length} behavior(s) are registered in BOTH tag-map.js and wb-lazy.js.`);
-    out.push('  Works today; drifts tomorrow. Two files must be kept in agreement by hand,');
-    out.push('  and wb-lazy.js already records that this drifted once before.');
-    findings.splitRegistration.forEach((r) => out.push(line(r) + tag('splitRegistration', r)));
-    out.push('');
-  }
-
-  if (findings.lazyOnly.length) {
-    const redundant = findings.lazyOnly.filter((r) => r.lazyRedundant).length;
-    out.push(`LAZY-ONLY — ${findings.lazyOnly.length} behavior(s) are registered ONLY in wb-lazy.js.`);
-    out.push(`  ${redundant} of them are redundant: the line is x-NAME -> NAME, and the computed route`);
-    out.push('  would bind the same selector if it were deleted. Marked (redundant).');
-    findings.lazyOnly.forEach((r) => out.push(line(r) + (r.lazyRedundant ? '  (redundant)' : '') + tag('lazyOnly', r)));
+  if (findings.strayTable.length) {
+    out.push(`STRAY TABLE — ${findings.strayTable.length} selector(s) bound to a behavior outside ${REGISTRY}.`);
+    out.push('  A second registry: it works, and a read of tag-map.js says it does not exist.');
+    out.push(`  Move each one into ${REGISTRY}.`);
+    findings.strayTable.forEach((f) => out.push(
+      `    ${f.file}:${f.line}  ${f.selector} -> ${f.behavior}${tag('strayTable', f)}`,
+    ));
     out.push('');
   }
 
@@ -484,18 +483,12 @@ function report(result) {
     out.push('');
   }
 
-  const hard = findings.unreachable.length + findings.noModule.length;
-  const split = findings.splitRegistration.length + findings.lazyOnly.length;
+  const hard = findings.unreachable.length + findings.noModule.length + findings.strayTable.length;
   out.push('─'.repeat(72));
-  out.push(`  ${hard} hard error(s)   ${split} behavior(s) affected by the split registry`);
+  out.push(`  ${hard} hard error(s)   ${findings.strayTable.length} selector(s) bound outside ${REGISTRY}`);
   out.push(`  ${unreviewed.length} finding(s) not in REVIEWED   ${stale.length} REVIEWED entr${stale.length === 1 ? 'y' : 'ies'} no longer found`);
   unreviewed.forEach((u) => out.push(`    NEW    ${u.category}: ${u.key} — fix it, or add it to REVIEWED with a reason`));
   stale.forEach((s) => out.push(`    FIXED  ${s.category}: ${s.key} — delete its REVIEWED entry`));
-  if (split) {
-    out.push('');
-    out.push('  The split is the root cause, not a symptom. One registry means these');
-    out.push('  numbers become impossible rather than merely absent.');
-  }
 
   return out.join('\n');
 }
@@ -507,7 +500,6 @@ if (asJson) {
     counts: Object.fromEntries(Object.entries(result.findings).map(([k, v]) => [k, v.length])),
     findings: Object.fromEntries(Object.entries(result.findings).map(([k, v]) => [k, v.map((f) => result.keyOf(k, f))])),
     computedOnly: result.rows.filter((r) => r.computedOnly).map((r) => r.behavior),
-    lazyRedundant: result.findings.lazyOnly.filter((r) => r.lazyRedundant).map((r) => r.behavior),
     notBehaviors: result.notBehaviors,
     unreviewed: result.unreviewed,
     stale: result.stale,

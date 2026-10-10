@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T21:40:43.727Z",
+  "generatedAt": "2026-10-10T22:30:33.605Z",
   "count": 177,
   "schemas": [
     {
@@ -5948,8 +5948,8 @@
       "properties": {
         "length": {
           "type": "integer",
-          "description": "Number of OTP digits",
-          "default": 0,
+          "description": "Number of single-digit boxes.",
+          "default": 6,
           "examples": [
             3,
             4,
@@ -6118,12 +6118,12 @@
       "properties": {
         "toggle": {
           "type": "boolean",
-          "description": "Show/hide password toggle",
-          "default": false
+          "description": "Show/hide button beside the field. On unless toggle=\"false\".",
+          "default": true
         },
         "strength": {
           "type": "boolean",
-          "description": "Show password strength meter",
+          "description": "Strength meter under the field, scored 0-4 as the password is typed (length 8+, mixed case, a digit, a symbol).",
           "default": false
         }
       },
@@ -8484,17 +8484,22 @@
       "properties": {
         "min": {
           "type": "number",
-          "description": "Minimum value",
-          "default": 0
+          "description": "Lowest value − can reach. Absent: no lower bound.",
+          "default": null
         },
         "max": {
           "type": "number",
-          "description": "Maximum value",
-          "default": 0
+          "description": "Highest value + can reach. Absent: no upper bound.",
+          "default": null
         },
         "step": {
           "type": "number",
-          "description": "Step increment",
+          "description": "How much one − or + click changes the value.",
+          "default": 1
+        },
+        "value": {
+          "type": "number",
+          "description": "Starting value. On a <div> host, a number written between the tags wins over this; on an <input> host, the input's own value is used when this is absent.",
           "default": 0
         }
       },

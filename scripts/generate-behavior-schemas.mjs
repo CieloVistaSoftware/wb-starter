@@ -28,7 +28,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { extensionMap, nativeMap } from '../src/core/tag-map.js';
-import { WB_LAZY_ONLY_ATTRIBUTES } from '../src/core/wb-lazy.js';
 import { jsdocSummary } from './lib/behavior-prose.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -39,7 +38,8 @@ const CHECK = process.argv.includes('--check');
 // this script ALREADY wrote, without touching any key they already have.
 const BACKFILL = process.argv.includes('--backfill');
 
-const MERGED = { ...(WB_LAZY_ONLY_ATTRIBUTES || {}), ...extensionMap };
+// Every x-* attribute is in tag-map's extensionMap (#831).
+const MERGED = extensionMap;
 const FILENAME_SAFE = /^[a-z0-9][a-z0-9-]*$/i;
 
 /** Attributes every element has — never a behavior's own option. */

@@ -28,13 +28,13 @@
  * behavior's own demos. That broader rule stays where it was.
  */
 
-import { CARD_TAGS } from './semantic-attributes.js';
+import { CARD_TAGS } from './tag-map.js';
 
 const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
 
 /**
  * A card host: an <article> (a card by auto-injection), any card attribute
- * ([x-card], [x-cardstats], [x-cardexpandable], ... -- semantic-attributes.js
+ * ([x-card], [x-cardstats], [x-cardexpandable], ... -- tag-map.js
  * keeps the list), or anything still marked with an x-card class.
  *
  * #969: the typed cards used to be caught by `[class*="x-card"]` alone, through

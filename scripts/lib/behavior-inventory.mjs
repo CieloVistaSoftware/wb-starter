@@ -11,9 +11,10 @@
  * from the selector (the KEY). Looking docs up by key reported x-drawer-layout
  * as undocumented when it was documented -- caught by opening the files.
  *
- * wb-lazy.js's WB_LAZY_ONLY_ATTRIBUTES is a second registry: x-* attributes the
- * lazy runtime dispatches that tag-map.js does not list (#666). Pass
- * { includeLazy: true } for the full surface a page can use.
+ * tag-map.js is the only selector registry (#831): wb-lazy.js's second table,
+ * WB_LAZY_ONLY_ATTRIBUTES, was folded into extensionMap. Only the three
+ * selector maps are read -- propertyMap and BEHAVIOR_ALIASES are not
+ * attribute -> behavior rows a reader authors as x-NAME.
  *
  * Shared by tests/compliance/every-behavior-is-documented.spec.ts and
  * scripts/generate-behavior-cross-reference.mjs, so the two cannot disagree
@@ -28,23 +29,23 @@ function entries(src) {
   return [...src.matchAll(ENTRY)].map(([, key, value]) => ({ key, value: value.trim() }));
 }
 
-/** The body of `export const WB_LAZY_ONLY_ATTRIBUTES = { ... };` */
-function lazyBlock(src) {
-  const start = src.indexOf('export const WB_LAZY_ONLY_ATTRIBUTES = {');
-  if (start < 0) return '';
-  const end = src.indexOf('\n};', start);
-  return src.slice(start, end < 0 ? undefined : end);
+/** The bodies of tag-map.js's three selector maps, `export const NAME = { ... };`. */
+function selectorMapBlocks(src) {
+  return ['elementMap', 'nativeMap', 'extensionMap'].map((name) => {
+    const start = src.indexOf(`export const ${name} = {`);
+    if (start < 0) return '';
+    const end = src.indexOf('\n};', start);
+    return src.slice(start, end < 0 ? undefined : end);
+  }).join('\n');
 }
 
 /**
  * @param {string} root  repository root
- * @param {{ includeLazy?: boolean }} [opts]
  * @returns {Array<{ token: string, name: string, key: string, autoInjected: boolean }>}
  */
-export function reachableBehaviors(root, { includeLazy = false } = {}) {
+export function reachableBehaviors(root) {
   const tagMap = fs.readFileSync(path.join(root, 'src', 'core', 'tag-map.js'), 'utf8');
-  const all = entries(tagMap);
-  if (includeLazy) all.push(...entries(lazyBlock(fs.readFileSync(path.join(root, 'src', 'core', 'wb-lazy.js'), 'utf8'))));
+  const all = entries(selectorMapBlocks(tagMap));
   const out = new Map();
   for (const { key, value: name } of all) {
     // A typed input variant is a host selector, not a behavior with its own doc.

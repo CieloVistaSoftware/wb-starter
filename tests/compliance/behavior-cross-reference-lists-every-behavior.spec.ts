@@ -26,7 +26,7 @@ test('the inventory is current with the registries (#1099)', () => {
 
 test('every reachable behavior has a row, and the doc claims no more than that (#1099)', () => {
   const doc = fs.readFileSync(docPath, 'utf8');
-  const names = new Set(reachableBehaviors(root, { includeLazy: true }).map((b) => b.name));
+  const names = new Set(reachableBehaviors(root).map((b) => b.name));
   expect(names.size, 'read no behaviors from the registries').toBeGreaterThan(100);
   const rows = [...doc.matchAll(/^\|\s*\x60([^\x60]+)\x60\s*\|/gm)].map((m) => m[1]);
   const missing = [...names].filter((n) => !rows.includes(n));

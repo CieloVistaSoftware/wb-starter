@@ -10,13 +10,10 @@ import { test, expect } from '../fixtures/offline';
  * because the page read a hand-maintained `docs/manifest.json` that nothing
  * regenerated. Nothing noticed for months. This test is what notices.
  *
- * THE SOURCE MATTERS. The count is compared against `tag-map.js` UNION
- * `wb-lazy.js`, never tag-map alone: WB_LAZY_ONLY_ATTRIBUTES holds 39
- * behaviours that resolve at runtime and appear nowhere in tag-map
- * (x-breadcrumb, x-notify, x-copybutton, every animation effect). Reading
- * tag-map alone is a known bug -- #1056 fixed exactly that on
- * pages/behaviors.html, and wb-lazy.js's own comment predicts it:
- * "anything reading tag-map alone reports an incomplete behavior list."
+ * THE SOURCE MATTERS. The count is compared against `tag-map.js`, the one
+ * behaviour registry since #831. Before that a second table in `wb-lazy.js`
+ * held 39 behaviours tag-map did not list (x-breadcrumb, x-notify,
+ * x-copybutton, every animation effect), and this test had to read both.
  *
  * It is also NOT compared against docs/behaviors/*.md, which is wrong in both
  * directions: 6 behaviours have no file, and 14 files (aside, blockquote, ol,
@@ -26,17 +23,12 @@ import { test, expect } from '../fixtures/offline';
 /** The authoritative behaviour surface, read in page context. */
 async function readRegistries(page: import('@playwright/test').Page) {
   return page.evaluate(async () => {
-    const [tag, lazy] = await Promise.all([
-      import('/src/core/tag-map.js'),
-      import('/src/core/wb-lazy.js').catch(() => ({} as Record<string, unknown>)),
-    ]);
-    const lazyOnly = (lazy as { WB_LAZY_ONLY_ATTRIBUTES?: Record<string, unknown> })
-      .WB_LAZY_ONLY_ATTRIBUTES || {};
-    const t = tag as { extensionMap: Record<string, unknown>; nativeMap: Record<string, unknown> };
+    const t = await import('/src/core/tag-map.js') as {
+      extensionMap: Record<string, unknown>; nativeMap: Record<string, unknown>;
+    };
     return {
-      extension: Object.keys({ ...lazyOnly, ...t.extensionMap }).sort(),
+      extension: Object.keys(t.extensionMap).sort(),
       semantic: Object.keys(t.nativeMap || {}).sort(),
-      lazyOnlyCount: Object.keys(lazyOnly).filter(k => !(k in t.extensionMap)).length,
     };
   });
 }
@@ -49,13 +41,8 @@ test('[docs] lists every behavior, split into semantic and x- sections (#1098)',
 
   const registries = await readRegistries(page);
 
-  // Guard the guard: if wb-lazy stopped contributing, this test would silently
-  // start asserting the SHORT list and pass while the page was wrong again.
-  expect(
-    registries.lazyOnlyCount,
-    'wb-lazy contributes no behaviours beyond tag-map — either the registries merged '
-    + '(good, simplify this test) or the lazy import broke (bad, the list is now short)',
-  ).toBeGreaterThan(0);
+  // Guard the guard: an empty read would make every check below vacuous.
+  expect(registries.extension.length, 'read no x- behaviours from tag-map.js').toBeGreaterThan(150);
 
   const semanticItems = page.locator('#behaviors-semantic .behaviors-grid__item');
   const extensionItems = page.locator('#behaviors-extension .behaviors-grid__item');
@@ -128,14 +115,14 @@ test('[docs] a behavior with no doc is shown and marked, never omitted (#1098)',
     + 'indistinguishable from one that has one').toBe(true);
 });
 
-test('[docs] search filters both sections and reveals lazy-only behaviors (#1098)', async ({ page }) => {
+test('[docs] search filters both sections and reveals once-lazy-only behaviors (#1098)', async ({ page }) => {
   await page.goto('/?page=docs');
   await expect(page.locator('#behaviors-sections')).toBeVisible();
 
   const search = page.locator('#docs-search');
 
-  // x-breadcrumb lives ONLY in wb-lazy. If the page ever reverts to reading
-  // tag-map alone, this is the assertion that fails.
+  // x-breadcrumb lived ONLY in wb-lazy's own table until #831 moved it into
+  // tag-map.js. It stays the probe: it is the name that went missing before.
   await search.fill('breadcrumb');
   const breadcrumbHits = page.locator('#behaviors-extension .behaviors-grid__item:visible');
   await expect(breadcrumbHits).toHaveCount(1);

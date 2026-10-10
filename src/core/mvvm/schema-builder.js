@@ -1025,7 +1025,14 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // instead of the 4-5 people with avatars the example authors. The attribute
   // form only reached this path once wb-lazy started building schemas for
   // x-* attributes (#884).
-  'x-dropdown'
+  'x-dropdown',
+  // #831: stepper(), password() and otp() build every part their schemas'
+  // $view now documents -- the -/+ buttons and value, the toggle and strength
+  // meter, the digit boxes -- and otp() clears the host first. Until #831 the
+  // three $views were empty, so building them did nothing; with the parts
+  // described, building them here would add a second set beside the
+  // behavior's own.
+  'x-stepper', 'x-password', 'x-otp'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves
