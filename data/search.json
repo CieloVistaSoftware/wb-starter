@@ -3,11 +3,11 @@
   "$stats": {
     "sources": {
       "pages": 22,
-      "docs": 256,
+      "docs": 257,
       "demos": 29
     },
-    "totalDocuments": 307,
-    "totalWords": 5997
+    "totalDocuments": 308,
+    "totalWords": 6017
   },
   "documents": [
     {
@@ -319,7 +319,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.491\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.491\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.492\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.492\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-10"
@@ -3431,6 +3431,17 @@
       "modified": "2026-10-10"
     },
     {
+      "id": "docs/guides/migrate-an-existing-page",
+      "url": "/docs/guides/migrate-an-existing-page",
+      "title": "migrate-an-existing-page",
+      "description": null,
+      "headings": [],
+      "content": "# How to Move an Existing Page onto WB Starter `site-migrate` reads one page of an existing site and proposes the same page written for WB Starter. It lists every change it made and why, so you can review the proposal before you use it. It is **assisted, not autonomous**. It does the mechanical part: plain HTML5 elements instead of `div` soup, WB Starter's behaviors instead of a framework's classes, and the old CSS and scripts dropped. The judgement stays with you. It never writes content of its own, and what it cannot classify stays in the page under a `TODO` comment for you to decide. > **v0 (#982):** one page at a time, read as the browser shows it. It is a prototype; [what it does not do yet](#what-it-does-not-do-yet) is listed below. ## What you need - A WB Starter checkout. `site-migrate` lives in `packages/site-migrate` and reads WB Starter's behavior registry, `src/core/tag-map.js`. - Node.js 18 or later, and Playwright's Chromium: `npx playwright install chromium`. - The page to move, saved as an `.html` file. Keep its images next to it if you want them checked. ## 1. Look at the proposal ```powershell node packages/site-migrate/bin/site-migrate.js old-site/index.html ``` This writes nothing. It prints: - the **changes**, one per element, each with what it was, what it becomes and why: ```text 16. body > section#bread > div.container > div.row > div.col-md-4:nth-of-type(1) > div.card - Was: - Now: - Why: A card in their markup; IS a card in WB Starter (nativeMap 'article' → card, Law 0). ... ``` - the **unclassified regions**: the parts it would not guess about; - the proposed **`config/site.json` entries**: the menu built from the old navigation, the company name, the footer copyright, and the page title and description; - the **assets** the page uses; - the **checks** the proposal passed; - the **proposed page** itself. ## 2. Write it ```powershell node packages/site-migrate/bin/site-migrate.js old-site/index.html --out my-site --write ``` This writes two files: | File | What it is | |---|---| | `my-site/pages/home.html` | The proposed page (`index.html` becomes the home page; other pages keep their names) | | `my-site/home.migration.md` | The review list from step 1 | Your input file is never changed. If `--write` would replace it, `site-migrate` stops and writes nothing. ## 3. Review it Work through `home.migration.md`: 1. **Unclassified regions.** For each one, decide what it is. The Riverbend sample has a styled banner (\"Free delivery on Fridays…\") and a `div` that opened a map on click. Each is in the page, word for word, under ` `. Make it a real element, give it a behavior, or delete it. 2. **Changes.** Read the *Why* of anything surprising. A card's heading becomes its `title` attribute, a testimonial's attribution becomes `author` and `role`, and an accordion becomes ` ` elements. 3. **Site shell.** Merge the proposed entries into your site's `config/site.json` by hand: `navigationMenu`, `branding.companyName`, `footerSettings.footerCopyrightText` and `searchEngineOptimization`. The navigation and footer are not in the page because the WB Starter shell builds them from that file. 4. **Assets.** Copy the images and downloads it lists into your site. 5. **Look at it.** Run `npm start` in your site and open the page. ## What it maps | In the old page | Becomes | |---|---| | a card (`div.card`, `.panel`, `.tile`) | ` `. ` ` is a card in WB Starter. | | a hero or jumbotron | ` ` | | a testimonial or attributed quote | ` ` with the quote between the tags | | an accordion | ` ` / ` ` | | an image with a caption | ` ` / ` ` | | a row of grid columns | ` ` | | layout wrappers (`.container`, `.col-*`) | removed; their content stays | | navigation, header, footer | proposed `config/site.json` entries | | `class`, `style`, `data-*`, `onclick` | dropped | Every `x-*` attribute it writes is checked against WB Starter's registry first. It cannot propose a behavior that does not exist. The full rule table is in [packages/site-migrate/README.md](../../packages/site-migrate/README.md). ## What it does not do yet - Read the old CSS for theme tokens (colours, type scale, spacing). - Run the proposed page through the compliance suite. - Migrate a whole site, follow links, or copy assets. - Map pricing tables, carousels, tabs, video embeds or inline SVG. These are listed as unclassified.",
+      "keywords": [],
+      "type": "doc",
+      "modified": "2026-10-10"
+    },
+    {
       "id": "docs/guides/search-index",
       "url": "/docs/guides/search-index",
       "title": "search-index",
@@ -5864,6 +5875,7 @@
       "docs/behaviors/img",
       "docs/behaviors/ratio",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/frameworks"
@@ -5881,6 +5893,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/time",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/index",
       "demos/site/cards",
@@ -6756,7 +6769,7 @@
     "484": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "491": [
+    "492": [
       "pages/home"
     ],
     "503": [
@@ -6948,6 +6961,9 @@
     ],
     "967": [
       "docs/behaviors/x-behavior"
+    ],
+    "982": [
+      "docs/guides/migrate-an-existing-page"
     ],
     "999": [
       "docs/behaviors/fieldset",
@@ -7207,6 +7223,7 @@
       "docs/auto-injection",
       "docs/behaviors/toast",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "docs/pricecard",
       "docs/semantic-standard",
@@ -7477,6 +7494,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -7577,6 +7595,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -7626,6 +7645,7 @@
       "docs/behaviors/stepper",
       "docs/behaviors/switch",
       "docs/behaviors/time",
+      "docs/guides/migrate-an-existing-page",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -7655,6 +7675,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -7717,6 +7738,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
@@ -8067,6 +8089,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -8205,6 +8228,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -8262,6 +8286,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/index",
       "docs/linkedin-framework-agnostic",
@@ -8329,6 +8354,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pce-candidates",
       "docs/pricecard",
@@ -8417,6 +8443,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -8520,6 +8547,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/index",
       "docs/linkedin-update-article",
@@ -8600,6 +8628,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
@@ -8666,6 +8695,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/schema.migration",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -8716,6 +8746,7 @@
       "docs/committing-fixes",
       "docs/container-pattern",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/npx-commands",
       "docs/property-viewer",
@@ -8761,6 +8792,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -9187,6 +9219,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
@@ -9353,6 +9386,7 @@
       "docs/committing-fixes",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
@@ -9443,6 +9477,7 @@
       "docs/code-examples-standard",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -9488,6 +9523,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/property-viewer",
       "docs/semantic-standard",
@@ -9548,6 +9584,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
@@ -9682,6 +9719,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/index",
       "docs/performance",
       "docs/semantic-audit",
@@ -9791,6 +9829,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/pricecard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -10096,6 +10135,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/index",
       "docs/inline-editing",
@@ -10255,6 +10295,7 @@
       "docs/committing-fixes",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
@@ -10333,6 +10374,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/performance",
@@ -10430,6 +10472,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/properties",
       "docs/schema-first-architecture",
@@ -10474,6 +10517,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/performance",
@@ -10700,6 +10744,7 @@
       "docs/behaviors/navbar",
       "docs/behaviors/tabs",
       "docs/card",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/linkedin-framework-agnostic",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
@@ -10742,6 +10787,7 @@
       "docs/card",
       "docs/claude/TIER1-LAWS",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
@@ -10908,6 +10954,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/npx-commands",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -11100,6 +11147,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -11241,6 +11289,7 @@
       "docs/behaviors/release",
       "docs/behaviors/toast",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -11567,6 +11616,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -11950,6 +12000,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -12739,6 +12790,7 @@
       "docs/committing-fixes",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-standards-article",
       "docs/npx-commands",
@@ -12784,6 +12836,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-update-article",
@@ -13212,6 +13265,7 @@
       "docs/card",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-update-article",
@@ -13376,6 +13430,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pce-candidates",
       "docs/schema",
@@ -13620,6 +13675,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/property-viewer",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -13679,6 +13735,7 @@
       "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/pce-candidates",
       "docs/pricecard",
@@ -13746,6 +13803,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/container-pattern",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
       "docs/property-viewer",
@@ -13772,6 +13830,7 @@
       "docs/behaviors/x-behavior",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -13965,6 +14024,7 @@
       "docs/behaviors/zoomin",
       "docs/code-examples-standard",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
       "docs/schema-first-architecture",
@@ -14041,6 +14101,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -14197,6 +14258,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/mcp",
@@ -14337,6 +14399,7 @@
       "docs/behaviors/reel",
       "docs/behaviors/video",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/performance",
       "docs/standards/V3-STANDARDS",
@@ -14808,6 +14871,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/index",
       "docs/inline-editing",
@@ -14898,6 +14962,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-update-article",
       "docs/pce-candidates",
@@ -15260,6 +15325,7 @@
       "docs/behaviors/navbar",
       "docs/behaviors/pagination",
       "docs/behaviors/reel",
+      "docs/guides/migrate-an-existing-page",
       "docs/index",
       "docs/semantic-standard",
       "docs/standards/REPO-LAYOUT",
@@ -15334,6 +15400,7 @@
       "docs/behaviors/themecontrol",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/properties",
       "docs/property-viewer",
@@ -15385,6 +15452,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/index",
       "docs/linkedin-framework-agnostic",
@@ -15655,6 +15723,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -15685,6 +15754,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/npx-commands",
       "docs/performance",
@@ -15833,6 +15903,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/mcp",
       "docs/npx-commands",
@@ -15967,6 +16038,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/schema-test-value",
       "docs/schema",
@@ -16084,6 +16156,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/property-viewer",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -16292,6 +16365,7 @@
       "docs/claude/README",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/pricecard",
@@ -16458,6 +16532,7 @@
       "docs/code-examples-standard",
       "docs/container-pattern",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "docs/schema-first-architecture",
       "docs/semantic-standard",
@@ -16749,6 +16824,7 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/performance",
       "docs/schema-first-architecture",
@@ -16957,6 +17033,7 @@
       "pages/behaviors",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/pricecard",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
@@ -17095,6 +17172,7 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/switcher",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/property-viewer",
       "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
@@ -17206,6 +17284,7 @@
       "docs/card",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/inline-editing",
       "docs/semantic-standard",
@@ -17248,6 +17327,7 @@
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema-test-value",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -17340,6 +17420,7 @@
       "docs/committing-fixes",
       "docs/container-pattern",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
@@ -17508,6 +17589,7 @@
       "docs/behaviors/control",
       "docs/behaviors/fix-card",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "demos/schema-first-architecture"
@@ -17609,6 +17691,7 @@
       "docs/behaviors/toast",
       "docs/card",
       "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -17665,6 +17748,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/inline-editing",
       "docs/linkedin-update-article",
@@ -17711,6 +17795,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/npx-commands",
       "docs/property-viewer",
@@ -17764,6 +17849,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/mcp",
@@ -18429,6 +18515,7 @@
       "docs/code-examples-standard",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -18544,6 +18631,7 @@
       "docs/code-examples-standard",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -18736,6 +18824,7 @@
       "docs/behaviors/sidebarlayout",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "docs/properties",
       "docs/property-viewer",
@@ -19090,6 +19179,7 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "demos/layout-test"
@@ -19372,6 +19462,7 @@
       "docs/behaviors/toggle",
       "docs/claude/TIER1-LAWS",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-update-article",
@@ -19438,6 +19529,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/mcp",
       "docs/npx-commands",
@@ -19452,7 +19544,8 @@
       "pages/features",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/behaviors/x-copybutton",
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "process": [
       "pages/features",
@@ -19486,6 +19579,7 @@
       "docs/claude/README",
       "docs/claude/TIER3-REFERENCE",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/index",
       "docs/inline-editing",
@@ -19545,6 +19639,7 @@
       "docs/behaviors/textarea",
       "docs/claude/TIER1-LAWS",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/standards/RELEASE-PROCESS",
@@ -19592,6 +19687,7 @@
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/performance",
@@ -19658,6 +19754,7 @@
       "docs/behaviors/dialog",
       "docs/behaviors/footer",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/schema-first-audit-report",
       "docs/schema-test-value",
@@ -19668,7 +19765,8 @@
     ],
     "branding": [
       "pages/features",
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "place": [
       "pages/features",
@@ -20006,6 +20104,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/code-examples-standard",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/index",
       "docs/inline-editing",
       "docs/pce-candidates",
@@ -20480,6 +20579,7 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/details",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -20495,6 +20595,7 @@
       "docs/behaviors/tabs",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/pce-candidates",
       "docs/property-viewer",
@@ -20668,6 +20769,7 @@
       "docs/behaviors/navbar",
       "docs/behaviors/select",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/properties",
@@ -20730,6 +20832,7 @@
       "docs/behaviors/grid",
       "docs/behaviors/table",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/properties",
       "docs/schema-test-value",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -20883,6 +20986,7 @@
       "docs/behaviors/ul",
       "docs/behaviors/video",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/pce-candidates",
       "docs/properties",
@@ -20910,6 +21014,7 @@
       "docs/behaviors/vimeo",
       "docs/behaviors/youtube",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/properties",
       "docs/semantic-standard",
@@ -21046,6 +21151,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/code-examples-standard",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
@@ -21459,6 +21565,7 @@
       "docs/behaviors/glass",
       "docs/behaviors/hero",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
@@ -21710,6 +21817,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-update-article",
@@ -21797,6 +21905,7 @@
       "docs/behaviors/switcher",
       "docs/behaviors/toggle",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/properties",
       "docs/schema.migration",
@@ -21812,6 +21921,7 @@
       "docs/behaviors/collapse",
       "docs/claude/PAGE-GENERATION",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/mcp",
@@ -21828,6 +21938,7 @@
       "docs/behaviors/gallery",
       "docs/behaviors/img",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/properties",
       "docs/semantic-audit",
@@ -21923,6 +22034,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/index",
       "docs/pce-candidates",
@@ -22007,6 +22119,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "docs/linkedin-update-article",
       "docs/pce-candidates",
@@ -22302,6 +22415,7 @@
       "docs/behaviors/kbd",
       "docs/behaviors/navbar",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -22457,6 +22571,7 @@
       "docs/audio",
       "docs/claude/TIER1-LAWS",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/site/learn-more"
@@ -22728,6 +22843,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pce-candidates",
       "docs/semantic-standard",
@@ -23206,6 +23322,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/code-examples-standard",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/schema",
@@ -23329,6 +23446,7 @@
       "docs/behaviors/switch",
       "docs/behaviors/x-toggle",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -23598,6 +23716,7 @@
       "docs/behaviors/video",
       "docs/claude/TIER1-LAWS",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/npx-commands",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -23657,6 +23776,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -23750,6 +23870,7 @@
       "docs/behaviors/rainbow",
       "docs/behaviors/x-collapse",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/schema-test-value",
       "docs/schema",
@@ -23779,6 +23900,7 @@
       "docs/behaviors/scrollable",
       "docs/behaviors/sidebarlayout",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/pricecard",
       "docs/properties",
@@ -23882,6 +24004,7 @@
       "docs/behaviors/x-toggle",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
       "docs/schema-first-architecture",
@@ -23939,6 +24062,7 @@
       "docs/card",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -24579,6 +24703,7 @@
       "docs/behaviors/x-draggable",
       "docs/claude/TIER1-LAWS",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/npx-commands",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -24726,6 +24851,7 @@
       "docs/behaviors/card",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/linkedin-update-article",
@@ -24850,6 +24976,7 @@
       "docs/architecture/solidjscomparison",
       "docs/auto-injection",
       "docs/behaviors-reference",
+      "docs/guides/migrate-an-existing-page",
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
@@ -24979,6 +25106,7 @@
       "docs/behaviors/x-darkmode",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema-first-audit-report",
       "docs/standards/V3-STANDARDS",
       "docs/wbservices",
@@ -25110,6 +25238,7 @@
       "docs/behaviors/img",
       "docs/behaviors/navbar",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -25234,6 +25363,7 @@
       "docs/behaviors/fill",
       "docs/claude/TOOLING-INVENTORY",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -25314,6 +25444,7 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -25367,6 +25498,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
@@ -25754,6 +25886,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
@@ -25865,6 +25998,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/schema.migration",
       "docs/semantic-audit",
@@ -26231,7 +26365,8 @@
       "docs/behaviors/dialog",
       "docs/behaviors/drawer",
       "docs/behaviors/notes",
-      "docs/behaviors/popover"
+      "docs/behaviors/popover",
+      "docs/guides/migrate-an-existing-page"
     ],
     "commits": [
       "pages/issues",
@@ -26288,6 +26423,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-standards-article",
       "docs/linkedin-update-article",
@@ -26317,6 +26453,7 @@
       "docs/behaviors/fieldset",
       "docs/behaviors/searchfield",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/mcp",
       "docs/pricecard",
@@ -26332,6 +26469,7 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "docs/wbservices"
@@ -27142,6 +27280,7 @@
       "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
@@ -27237,6 +27376,7 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
@@ -27453,6 +27593,7 @@
       "docs/behaviors/table",
       "docs/behaviors/tabs",
       "docs/behaviors/toast",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
@@ -27793,7 +27934,8 @@
     ],
     "copyright": [
       "pages/terms",
-      "docs/behaviors/footer"
+      "docs/behaviors/footer",
+      "docs/guides/migrate-an-existing-page"
     ],
     "trademark": [
       "pages/terms"
@@ -27842,6 +27984,7 @@
       "docs/behaviors/pagination",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/pricecard",
       "docs/schema-first-audit-report",
       "docs/semantic-standard",
@@ -28010,6 +28153,7 @@
       "docs/behaviors/accordion",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/styles",
       "docs/wbservices"
     ],
@@ -29107,6 +29251,7 @@
       "docs/behaviors/textarea",
       "docs/behaviors/typewriter",
       "docs/behaviors/ul",
+      "docs/guides/migrate-an-existing-page",
       "docs/property-viewer",
       "docs/standards/RELEASE-PROCESS",
       "docs/themes",
@@ -29227,6 +29372,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/release",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "docs/themes",
@@ -29312,6 +29458,7 @@
       "docs/AI",
       "docs/behaviors/fill",
       "docs/behaviors/rainbow",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
@@ -29938,6 +30085,7 @@
       "docs/code-examples-standard",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
@@ -30302,7 +30450,8 @@
       "docs/testing-runbook"
     ],
     "autonomous": [
-      "docs/AI"
+      "docs/AI",
+      "docs/guides/migrate-an-existing-page"
     ],
     "thinker": [
       "docs/AI"
@@ -30369,6 +30518,7 @@
     "review": [
       "docs/AI",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema.migration",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
@@ -30515,6 +30665,7 @@
       "docs/behaviors/stat",
       "docs/behaviors/x-copybutton",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/npx-commands",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -30626,6 +30777,7 @@
       "docs/committing-fixes",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/index",
       "docs/linkedin-standards-article",
@@ -30824,6 +30976,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/testing-runbook",
@@ -30865,7 +31018,8 @@
     ],
     "comment": [
       "docs/ANNOUNCE_TEST_POLICY",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/guides/migrate-an-existing-page"
     ],
     "remediation": [
       "docs/ANNOUNCE_TEST_POLICY"
@@ -31194,6 +31348,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/address",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/performance",
       "docs/schema.migration"
     ],
@@ -31232,12 +31387,14 @@
     "proposal": [
       "docs/BRANCH_PROTECTION",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec"
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/guides/migrate-an-existing-page"
     ],
     "sample": [
       "docs/BRANCH_PROTECTION",
       "docs/behaviors/demo",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/search",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/REPO-LAYOUT",
@@ -31256,6 +31413,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/linkedin-update-article",
       "docs/mcp",
@@ -31301,7 +31459,8 @@
       "docs/behaviors/address",
       "docs/behaviors/dialog",
       "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes"
+      "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page"
     ],
     "workflows": [
       "docs/BRANCH_PROTECTION",
@@ -31332,6 +31491,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/semantic-standard",
@@ -31680,6 +31840,7 @@
       "docs/IMPROVEMENTS",
       "docs/claude/TIER1-LAWS",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/standards/REPO-LAYOUT",
       "docs/testing-runbook",
@@ -31829,6 +31990,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/cardpricing",
       "docs/behaviors/data",
+      "docs/guides/migrate-an-existing-page",
       "docs/pricecard",
       "docs/properties",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -32249,6 +32411,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/inline-editing",
       "docs/linkedin-update-article",
@@ -32845,6 +33008,7 @@
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardprofile",
       "docs/behaviors/header",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pce-candidates"
     ],
@@ -33202,6 +33366,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema.migration"
     ],
     "plan": [
@@ -33283,6 +33448,7 @@
       "docs/behaviors/ripple",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/performance",
       "docs/pricecard",
@@ -33608,6 +33774,7 @@
     ],
     "migrate": [
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema.migration"
     ],
     "slots": [
@@ -33895,6 +34062,7 @@
       "docs/behaviors/ripple",
       "docs/behaviors/scrollalong",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
       "docs/pricecard",
@@ -33915,6 +34083,7 @@
       "docs/behaviors/draggable",
       "docs/behaviors/fill",
       "docs/behaviors/glass",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "identifier": [
@@ -34197,6 +34366,7 @@
       "docs/behaviors/ul",
       "docs/code-examples-standard",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-update-article",
@@ -34369,6 +34539,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audio",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/schema.migration",
@@ -34430,6 +34601,7 @@
       "docs/NOTES-V3-GUIDE",
       "docs/audits/X-USAGE-AUDIT",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/index"
     ],
     "toggled": [
@@ -34827,6 +34999,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/index",
       "docs/pce-candidates",
@@ -34880,6 +35053,7 @@
       "docs/behaviors/switcher",
       "docs/behaviors/table",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pce-candidates",
       "docs/schema",
@@ -35264,6 +35438,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -35288,6 +35463,7 @@
       "docs/behaviors/status",
       "docs/behaviors/truncate",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/pricecard",
@@ -35486,6 +35662,7 @@
       "docs/behaviors/move",
       "docs/behaviors/notify",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/V3-STANDARDS"
     ],
     "mutationobserver": [
@@ -35625,6 +35802,7 @@
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/performance",
       "docs/pricecard",
@@ -35822,6 +36000,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/escape-hatches",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pricecard",
       "docs/schema.migration",
@@ -36067,6 +36246,7 @@
       "docs/behaviors/floatinglabel",
       "docs/behaviors/pagination",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/wbservices"
     ],
@@ -36461,6 +36641,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/blockquote",
       "docs/behaviors/cardtestimonial",
+      "docs/guides/migrate-an-existing-page",
       "docs/semantic-standard"
     ],
     "surviving": [
@@ -36469,6 +36650,7 @@
     "checkout": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-runbook"
     ],
@@ -36535,6 +36717,7 @@
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors-reference",
       "docs/behaviors/table",
+      "docs/guides/migrate-an-existing-page",
       "demos/index",
       "demos/site/content",
       "demos/site/index"
@@ -36545,6 +36728,7 @@
       "docs/behaviors/print",
       "docs/behaviors/x-behavior",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -36561,6 +36745,7 @@
       "docs/behaviors/pagination",
       "docs/behaviors/x-effects",
       "docs/behaviors/x-enhancements",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -36667,6 +36852,7 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/ul",
       "docs/behaviors/x-draggable",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -36729,6 +36915,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/inline-editing",
       "docs/properties",
@@ -36910,6 +37097,7 @@
     "entries": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/standards/ERROR-LOG-RETENTION"
@@ -37024,6 +37212,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/dl",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -37059,7 +37248,8 @@
     ],
     "mechanical": [
       "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/guides/migrate-an-existing-page"
     ],
     "rename": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -37244,6 +37434,7 @@
       "docs/behaviors/accordion",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -37465,6 +37656,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/migrate-an-existing-page",
       "docs/index"
     ],
     "obsolete": [
@@ -37475,7 +37667,8 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "proposes": [
-      "docs/architecture/proposals/proposed-custom-elements"
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/guides/migrate-an-existing-page"
     ],
     "moving": [
       "docs/architecture/proposals/proposed-custom-elements",
@@ -37635,6 +37828,7 @@
       "docs/behaviors/table",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/schema",
       "demos/site/content"
@@ -37724,6 +37918,7 @@
       "docs/behaviors/ol",
       "docs/behaviors/table",
       "docs/behaviors/ul",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "docs/styles",
       "docs/themes"
@@ -37935,6 +38130,7 @@
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/glass",
       "docs/behaviors/icon",
+      "docs/guides/migrate-an-existing-page",
       "demos/autoinject"
     ],
     "icons": [
@@ -38256,6 +38452,7 @@
       "docs/behaviors/resizable",
       "docs/behaviors/skeleton",
       "docs/behaviors/ul",
+      "docs/guides/migrate-an-existing-page",
       "docs/performance",
       "docs/property-viewer",
       "docs/semantic-standard",
@@ -38319,6 +38516,7 @@
       "docs/behaviors/floatinglabel",
       "docs/behaviors/switch",
       "docs/behaviors/ul",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/V3-STANDARDS",
@@ -38662,6 +38860,7 @@
       "docs/behaviors/code",
       "docs/behaviors/input",
       "docs/behaviors/pre",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-update-article",
       "docs/themes",
       "demos/landing-page-showcase",
@@ -39384,6 +39583,7 @@
       "docs/behaviors/skeleton",
       "docs/behaviors/snow",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/testing-strategy"
     ],
     "seams": [
@@ -39405,6 +39605,7 @@
       "docs/behaviors/stack",
       "docs/behaviors/status",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/frameworks"
     ],
@@ -39811,7 +40012,8 @@
     "saved": [
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/glow",
-      "docs/behaviors/notes"
+      "docs/behaviors/notes",
+      "docs/guides/migrate-an-existing-page"
     ],
     "optionally": [
       "docs/architecture/standards/ERROR-MESSAGE",
@@ -39872,6 +40074,7 @@
       "docs/behaviors/dialog",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -39965,6 +40168,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/styles",
       "demos/schema-first-architecture"
     ],
@@ -40163,7 +40367,8 @@
     ],
     "col": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors/table"
+      "docs/behaviors/table",
+      "docs/guides/migrate-an-existing-page"
     ],
     "viewports": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -40309,6 +40514,7 @@
       "docs/behaviors/table",
       "docs/behaviors/time",
       "docs/container-pattern",
+      "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
@@ -40597,7 +40803,8 @@
       "docs/behaviors/toast",
       "docs/behaviors/toggle",
       "docs/behaviors/x-enhancements",
-      "docs/claude/SCHEMAS-GUIDE"
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/migrate-an-existing-page"
     ],
     "suspected": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -40615,6 +40822,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/migrate-an-existing-page",
       "docs/mcp",
       "docs/npx-commands",
       "docs/standards/REPO-LAYOUT",
@@ -41478,6 +41686,7 @@
       "docs/behaviors/cardimage",
       "docs/behaviors/figure",
       "docs/behaviors/stagelight",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/semantic-standard",
       "demos/site/content"
@@ -41728,6 +41937,7 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/table",
       "docs/behaviors/tabs",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/schema-first-architecture",
       "docs/semantic-audit",
@@ -42571,6 +42781,7 @@
     "testimonial": [
       "docs/behaviors/blockquote",
       "docs/behaviors/cardtestimonial",
+      "docs/guides/migrate-an-existing-page",
       "demos/site/cards"
     ],
     "identifies": [
@@ -42626,6 +42837,7 @@
     ],
     "attribution": [
       "docs/behaviors/blockquote",
+      "docs/guides/migrate-an-existing-page",
       "docs/semantic-standard"
     ],
     "relevant": [
@@ -43204,6 +43416,7 @@
     "downloads": [
       "docs/behaviors/cardfile",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/standards/REPO-LAYOUT"
     ],
     "picks": [
@@ -43461,7 +43674,8 @@
     ],
     "company": [
       "docs/behaviors/cardportfolio",
-      "docs/behaviors/cardtestimonial"
+      "docs/behaviors/cardtestimonial",
+      "docs/guides/migrate-an-existing-page"
     ],
     "photo": [
       "docs/behaviors/cardportfolio",
@@ -44392,7 +44606,8 @@
     "colours": [
       "docs/behaviors/confetti",
       "docs/behaviors/fireworks",
-      "docs/behaviors/status"
+      "docs/behaviors/status",
+      "docs/guides/migrate-an-existing-page"
     ],
     "ff0": [
       "docs/behaviors/confetti",
@@ -45191,6 +45406,7 @@
     "onclick": [
       "docs/behaviors/fieldset",
       "docs/code-examples-standard",
+      "docs/guides/migrate-an-existing-page",
       "demos/frameworks"
     ],
     "grouping": [
@@ -45729,6 +45945,7 @@
     ],
     "decide": [
       "docs/behaviors/img",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
       "demos/site/content"
     ],
@@ -47295,7 +47512,8 @@
     ],
     "embeds": [
       "docs/behaviors/vimeo",
-      "docs/behaviors/youtube"
+      "docs/behaviors/youtube",
+      "docs/guides/migrate-an-existing-page"
     ],
     "videoid": [
       "docs/behaviors/vimeo",
@@ -47491,6 +47709,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/escape-hatches",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/schema-first-architecture",
       "docs/styles",
@@ -47536,6 +47755,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/standards/REPO-LAYOUT",
       "docs/wbservices"
@@ -47865,6 +48085,7 @@
     ],
     "guess": [
       "docs/claude/TIER1-LAWS",
+      "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "demos/schema-first-architecture"
@@ -47895,6 +48116,7 @@
     ],
     "wrappers": [
       "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/semantic-standard"
     ],
@@ -48639,6 +48861,7 @@
     ],
     "powershell": [
       "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page",
       "docs/npx-commands"
     ],
     "differs": [
@@ -48675,7 +48898,8 @@
       "docs/guides/create-a-website"
     ],
     "navigationmenu": [
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "menuitemid": [
       "docs/guides/create-a-website"
@@ -48690,7 +48914,8 @@
       "docs/guides/create-a-website"
     ],
     "companyname": [
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "colortheme": [
       "docs/guides/create-a-website"
@@ -48702,13 +48927,16 @@
       "docs/guides/create-a-website"
     ],
     "footersettings": [
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "footercopyrighttext": [
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "searchengineoptimization": [
-      "docs/guides/create-a-website"
+      "docs/guides/create-a-website",
+      "docs/guides/migrate-an-existing-page"
     ],
     "pagetitle": [
       "docs/guides/create-a-website"
@@ -48743,6 +48971,81 @@
     ],
     "cloudflare": [
       "docs/guides/create-a-website"
+    ],
+    "assisted": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "soup": [
+      "docs/guides/migrate-an-existing-page",
+      "docs/linkedin-standards-article"
+    ],
+    "judgement": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "classify": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "v0": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "prototype": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "packages": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "chromium": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "bin": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "bread": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "nth": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "unclassified": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "regions": [
+      "docs/guides/migrate-an-existing-page",
+      "docs/styles"
+    ],
+    "assets": [
+      "docs/guides/migrate-an-existing-page",
+      "docs/performance",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/standards/REPO-LAYOUT"
+    ],
+    "riverbend": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "delivery": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "fridays": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "surprising": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "tile": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "jumbotron": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "attributed": [
+      "docs/guides/migrate-an-existing-page"
+    ],
+    "propose": [
+      "docs/guides/migrate-an-existing-page",
+      "demos/schema-first-architecture"
+    ],
+    "carousels": [
+      "docs/guides/migrate-an-existing-page"
     ],
     "powers": [
       "docs/guides/search-index"
@@ -49235,9 +49538,6 @@
       "docs/linkedin-standards-article",
       "docs/linkedin-update-article"
     ],
-    "soup": [
-      "docs/linkedin-standards-article"
-    ],
     "random": [
       "docs/linkedin-standards-article"
     ],
@@ -49703,11 +50003,6 @@
     ],
     "preconnect": [
       "docs/performance"
-    ],
-    "assets": [
-      "docs/performance",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/REPO-LAYOUT"
     ],
     "network": [
       "docs/performance"
@@ -51045,9 +51340,6 @@
     "directive": [
       "docs/styles"
     ],
-    "regions": [
-      "docs/styles"
-    ],
     "prohibited": [
       "docs/styles"
     ],
@@ -51841,9 +52133,6 @@
       "demos/schema-first-architecture"
     ],
     "intent": [
-      "demos/schema-first-architecture"
-    ],
-    "propose": [
       "demos/schema-first-architecture"
     ],
     "prevailing": [

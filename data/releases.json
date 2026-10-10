@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.492",
+      "date": "2026-10-10",
+      "summary": "New site-migrate CLI proposes a WB Starter page for an existing HTML page and lists every change with its reason. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/982\" target=\"_blank\" rel=\"noopener\">#982</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1833\" target=\"_blank\" rel=\"noopener\">#1833</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Site-migrate v0, a CLI that proposes a WB Starter page for one existing page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/982\" target=\"_blank\" rel=\"noopener\">#982</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1833\" target=\"_blank\" rel=\"noopener\">#1833</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/515f2a102803b627703b729cbb2b7b4f484d27fb\" target=\"_blank\" rel=\"noopener\"><code>515f2a1</code></a>",
+          "issues": [
+            982,
+            1833
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node packages/site-migrate/bin/site-migrate.js <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/fixtures/site-migrate/riverbend-bakery.html\" target=\"_blank\" rel=\"noopener\">tests/fixtures/site-migrate/riverbend-bakery.html</a></code>. Before: no tool; a page had to be rewritten by hand. Now: it prints 65 reasoned changes, 3 unclassified regions, the proposed site.json menu and the proposed page.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/515f2a102803b627703b729cbb2b7b4f484d27fb\" target=\"_blank\" rel=\"noopener\"><code>515f2a1</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.491",
       "date": "2026-10-10",
       "summary": "A behavior&#39;s main text can be written as an attribute or between the tags, and the text between the tags now always wins. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/417\" target=\"_blank\" rel=\"noopener\">#417</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1829\" target=\"_blank\" rel=\"noopener\">#1829</a>",
