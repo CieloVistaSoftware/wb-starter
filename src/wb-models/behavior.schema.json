@@ -899,9 +899,6 @@
       "type"
     ]
   },
-  "compliance": {
-    "baseClass": "x-behavior"
-  },
   "properties": {},
   "test": {
     "setup": [],

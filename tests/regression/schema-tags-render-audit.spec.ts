@@ -78,11 +78,12 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
   test('bare <div x-fix-card> upgrades to the real custom element class', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-upgrade"></div>`);
 
-    // 'x-fix-card' is only added by the fixCard() behavior -- it only runs if
+    // The class 'x-fixcard' (#1096: fixCard lowercased; the attribute is still
+    // x-fix-card) is only added by the fixCard() behavior -- it only runs if
     // WB.scan() actually imported fix-card.js. Before the fix, this class
     // never appeared because fix-card.js was never imported.
     await page.waitForFunction(
-      () => document.getElementById('fc-upgrade')?.classList.contains('x-fix-card'),
+      () => document.getElementById('fc-upgrade')?.classList.contains('x-fixcard'),
       // waitForFunction(fn, ARG, options): the options object used to sit in
       // the ARG slot, so this 5s bound was never applied and a missing class
       // hung until the 30s test timeout instead of failing here.
@@ -114,7 +115,7 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
   test('setting .data on an upgraded <div x-fix-card> actually renders content', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-render"></div>`);
     await page.waitForFunction(
-      () => document.getElementById('fc-render')?.classList.contains('x-fix-card'),
+      () => document.getElementById('fc-render')?.classList.contains('x-fixcard'),
       undefined,   // see the note in the test above: options go third
       { timeout: 5000 }
     );
@@ -188,7 +189,7 @@ test.describe('<x-fix-card> tag renders through the fix-card behavior (#789)', (
         proto: Object.getPrototypeOf(Object.getPrototypeOf(el)) === HTMLElement.prototype,
       };
     }, FIX);
-    expect(r.first.cls).toContain('fix-card');
+    expect(r.first.cls.split(/\s+/), 'fixCard() adds x-fixcard (#1096)').toContain('x-fixcard');
     expect(r.first.title).toBe('Tag form');
     expect(r.first.headers, 'one card, not one per path that reached the tag').toBe(1);
     expect(r.moved.title, 'moving the card keeps its record').toBe('Tag form');

@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.489",
+      "date": "2026-10-10",
+      "summary": "Test helper elementReady() no longer fails with a false &quot;Execution context was destroyed&quot; when a page is busy the moment an element is ready. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>ElementReady() waits through waitForFunction, not an awaited evaluate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>",
+          "issues": [
+            1818,
+            1828
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/element-ready-survives-a-busy-page.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/element-ready-survives-a-busy-page.spec.ts</a> --project=regression. Before: elementReady failed 2 of 6 rounds with &quot;Execution context was destroyed&quot;. Now: all rounds pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.488",
+      "date": "2026-10-10",
+      "summary": "The last 6 behavior classes that broke the x-{behavior} naming rule are renamed or deleted, so the naming ratchet is 0 and every class a behavior applies can be derived from its name. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Final batch — fix-card and effect classes named for their behavior, two unreachable modules deleted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3813805cc6facfed297c07cf2fada012ad65e10e\" target=\"_blank\" rel=\"noopener\"><code>3813805</code></a>",
+          "issues": [
+            1096,
+            1816
+          ]
+        }
+      ],
+      "seeIt": "Click a <code>&lt;button x-slidein direction=&quot;up&quot;&gt;</code> and inspect it. Before: <code>class=&quot;x-slide-in-up&quot;</code>, the keyframe&#39;s name. Now: <code>class=&quot;x-slidein x-slidein--up&quot;</code>, and it slides in exactly as before.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3813805cc6facfed297c07cf2fada012ad65e10e\" target=\"_blank\" rel=\"noopener\"><code>3813805</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.487",
       "date": "2026-10-10",
       "summary": "A new wb-starter site carries a GitHub Pages workflow, and creating it offers to make the GitHub repo and publish it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1232\" target=\"_blank\" rel=\"noopener\">#1232</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1824\" target=\"_blank\" rel=\"noopener\">#1824</a>",

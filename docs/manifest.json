@@ -652,7 +652,7 @@
           "file": "behaviors/fix-card.md",
           "title": "Fix Card",
           "description": "x-fix-card displays one entry from the project's fix log — status, cause, file and code change — when a fix object is assigned to the element's data…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/flash.md",
@@ -1396,7 +1396,7 @@
           "file": "standards/CSS-CLASS-CONVENTION.md",
           "title": "CSS class convention — you can name the class without reading the code",
           "description": "Convention over configuration.",
-          "modified": "2026-10-09"
+          "modified": "2026-10-10"
         },
         {
           "file": "standards/ERROR-LOG-RETENTION.md",

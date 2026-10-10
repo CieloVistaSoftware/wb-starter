@@ -97,25 +97,31 @@ export function animate(element, options = {}) {
   };
 }
 
-// Helper for click-triggered animations
-function clickAnim(element, animName, duration = '0.5s') {
-  element.classList.add(`x-${animName}`);
+// Helper for click-triggered animations.
+//
+// The class and the keyframe are separate names (#1096). The class is the
+// behavior's own, x-{behavior} -- `x-fadein` for fadein() -- so an author who
+// knows the behavior can write `.x-fadein` without opening this file. The
+// keyframe keeps its kebab-cased name (`x-fade-in`), which dialog.css,
+// overlays.css and the rest already play. They were one string once, so the
+// element carried the keyframe's name, a shape the naming convention has no
+// slot for.
+//
+// `classes` is the host class plus any modifier (`x-slidein--left`).
+function clickAnim(element, classes, keyframe, duration = '0.5s') {
+  element.classList.add(...classes);
   // A generated rule, not element.style (#779): cleared, reflowed and set
   // again so a second click replays the animation.
   const playAnimation = () => {
     setRule(element, 'anim', null);
     void element.offsetWidth;
-    setRule(element, 'anim', { animation: `x-${animName} ${duration} ease` });
+    setRule(element, 'anim', { animation: `${keyframe} ${duration} ease` });
   };
-  if (element.tagName === 'BUTTON') {
-    element.onclick = playAnimation;
-  } else {
-    element.onclick = playAnimation;
-  }
+  element.onclick = playAnimation;
   element.wbAnim = { play: playAnimation };
   return () => {
     clearRules(element);
-    element.classList.remove(`x-${animName}`);
+    element.classList.remove(...classes);
   };
 }
 
@@ -124,40 +130,43 @@ function clickAnim(element, animName, duration = '0.5s') {
  * Fade In
  * Helper Attribute: [x-fadein]
  */
-export function fadein(element) { return clickAnim(element, 'fade-in', '0.5s'); }
+export function fadein(element) { return clickAnim(element, ['x-fadein'], 'x-fade-in', '0.5s'); }
 /**
  * Fade Out
  * Helper Attribute: [x-fadeout]
  */
-export function fadeout(element) { return clickAnim(element, 'fade-out', '0.5s'); }
+export function fadeout(element) { return clickAnim(element, ['x-fadeout'], 'x-fade-out', '0.5s'); }
 /**
  * Slide In
  * Helper Attribute: [x-slidein]
+ *
+ * `direction` picks the keyframe the element enters along; the class records
+ * it as a modifier of the slidein block, x-slidein--{direction}.
  */
 export function slidein(element, options = {}) {
   const dir = options.direction || element.getAttribute('direction') || 'left';
-  return clickAnim(element, `slide-in-${dir}`, '0.5s');
+  return clickAnim(element, ['x-slidein', `x-slidein--${dir}`], `x-slide-in-${dir}`, '0.5s');
 }
 export function slideout(element, options = {}) {
   const dir = options.direction || element.getAttribute('direction') || 'left';
-  return clickAnim(element, `slide-out-${dir}`, '0.5s');
+  return clickAnim(element, ['x-slideout', `x-slideout--${dir}`], `x-slide-out-${dir}`, '0.5s');
 }
-export function zoomin(element) { return clickAnim(element, 'zoom-in', '0.4s'); }
-export function zoomout(element) { return clickAnim(element, 'zoom-out', '0.4s'); }
-export function flip(element) { return clickAnim(element, 'flip', '0.6s'); }
-export function rotate(element) { return clickAnim(element, 'rotate', '0.6s'); }
+export function zoomin(element) { return clickAnim(element, ['x-zoomin'], 'x-zoom-in', '0.4s'); }
+export function zoomout(element) { return clickAnim(element, ['x-zoomout'], 'x-zoom-out', '0.4s'); }
+export function flip(element) { return clickAnim(element, ['x-flip'], 'x-flip', '0.6s'); }
+export function rotate(element) { return clickAnim(element, ['x-rotate'], 'x-rotate', '0.6s'); }
 
 // Attention seekers
-export function bounce(element) { return clickAnim(element, 'bounce', '0.75s'); }
-export function shake(element) { return clickAnim(element, 'shake', '0.5s'); }
-export function pulse(element) { return clickAnim(element, 'pulse', '0.5s'); }
-export function flash(element) { return clickAnim(element, 'flash', '0.75s'); }
-export function tada(element) { return clickAnim(element, 'tada', '1s'); }
-export function wobble(element) { return clickAnim(element, 'wobble', '1s'); }
-export function jello(element) { return clickAnim(element, 'jello', '1s'); }
-export function swing(element) { return clickAnim(element, 'swing', '0.75s'); }
-export function rubberband(element) { return clickAnim(element, 'rubberband', '1s'); }
-export function heartbeat(element) { return clickAnim(element, 'heartbeat', '1.3s'); }
+export function bounce(element) { return clickAnim(element, ['x-bounce'], 'x-bounce', '0.75s'); }
+export function shake(element) { return clickAnim(element, ['x-shake'], 'x-shake', '0.5s'); }
+export function pulse(element) { return clickAnim(element, ['x-pulse'], 'x-pulse', '0.5s'); }
+export function flash(element) { return clickAnim(element, ['x-flash'], 'x-flash', '0.75s'); }
+export function tada(element) { return clickAnim(element, ['x-tada'], 'x-tada', '1s'); }
+export function wobble(element) { return clickAnim(element, ['x-wobble'], 'x-wobble', '1s'); }
+export function jello(element) { return clickAnim(element, ['x-jello'], 'x-jello', '1s'); }
+export function swing(element) { return clickAnim(element, ['x-swing'], 'x-swing', '0.75s'); }
+export function rubberband(element) { return clickAnim(element, ['x-rubberband'], 'x-rubberband', '1s'); }
+export function heartbeat(element) { return clickAnim(element, ['x-heartbeat'], 'x-heartbeat', '1.3s'); }
 
 /**
  * Particle colours from a declared `colors` attribute.
