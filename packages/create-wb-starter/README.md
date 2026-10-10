@@ -31,7 +31,7 @@ After the files are written, creation asks one question, default No:
 Create a public GitHub repo "my-site" and publish it on GitHub Pages now? (y/N)
 ```
 
-It is asked only when the [GitHub CLI](https://cli.github.com/) (`gh`) is installed and signed in, and only in a terminal. On yes it runs `git init` and a first commit, `gh repo create my-site --public --source . --remote origin`, turns Pages on with "GitHub Actions" as the source, pushes, and prints `https://<your-user>.github.io/my-site/`. On no, or when any of that cannot be done, it prints the steps to do it later. Creating the site never fails because of GitHub.
+It is asked only when the [GitHub CLI](https://cli.github.com/) (`gh`) is installed and signed in, and only in a terminal. On yes it runs `git init` and a first commit, `gh repo create my-site --public --source . --remote origin`, turns Pages on with "GitHub Actions" as the source, pushes, and prints `https://YOUR-USER.github.io/my-site/`. On no, or when any of that cannot be done, it prints the steps to do it later. Creating the site never fails because of GitHub.
 
 The repo is public by default because GitHub Pages is free only for public repos. There is no custom-domain question: the new site's README explains how to add a `CNAME`.
 
@@ -54,4 +54,4 @@ wb-starter itself is an npm dependency, not a copy. `npm start` (`wb-starter ser
 
 ## Developing this package
 
-`template/` is hand-written; edit it directly. npm drops dotfiles from a published package, so `.gitignore` ships as `template/_gitignore` and `.github/` as `template/_github/`; creation renames both. `tests/regression/create-wb-starter-new-site.spec.ts` scaffolds a site from it, installs wb-starter from the checkout, serves it, builds it, and checks the result in a browser, at the root and under a `/<name>/` sub-path as GitHub Pages serves it. `tests/regression/create-wb-starter-github-pages.spec.ts` covers the GitHub step with `gh` stubbed: it never calls GitHub.
+`template/` is hand-written; edit it directly. npm drops dotfiles from a published package, so `.gitignore` ships as `template/_gitignore` and `.github/` as `template/_github/`; creation renames both. `tests/regression/create-wb-starter-new-site.spec.ts` scaffolds a site from it, installs the runtime from the checkout, serves it, builds it, and checks the result in a browser, at the root and under a `/NAME/` sub-path as GitHub Pages serves it. The GitHub Pages spec beside it covers the GitHub step with `gh` stubbed: it never calls GitHub.

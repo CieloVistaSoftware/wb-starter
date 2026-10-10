@@ -41,7 +41,7 @@ If you said yes when the site was created, it is already on GitHub. Otherwise, o
 
 2. On GitHub: **Settings > Pages > Build and deployment > Source: GitHub Actions**.
 
-The site is then at `https://<your-user>.github.io/__PROJECT_NAME__/`. GitHub Pages is free for public repos; on a private repo it needs a paid GitHub plan.
+The site is then at `https://YOUR-USER.github.io/__PROJECT_NAME__/`. GitHub Pages is free for public repos; on a private repo it needs a paid GitHub plan.
 
 ### Your own domain
 
@@ -55,7 +55,7 @@ To serve the site from your own domain (say `www.example.com`):
 
    `npm run build` copies it into `dist/`, so every deploy keeps it.
 
-2. At your domain's DNS provider, add a `CNAME` record from `www` to `<your-user>.github.io`.
+2. At your domain's DNS provider, add a `CNAME` record from `www` to `YOUR-USER.github.io`.
 3. On GitHub: **Settings > Pages > Custom domain**, enter the domain, and tick **Enforce HTTPS** once it is offered.
 
 GitHub's guide: <https://docs.github.com/pages/configuring-a-custom-domain-for-your-github-pages-site>

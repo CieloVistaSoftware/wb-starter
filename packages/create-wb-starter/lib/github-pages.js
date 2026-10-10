@@ -1,5 +1,5 @@
 /**
- * The optional "publish it on GitHub Pages now?" step of create-wb-starter (#1232).
+ * The optional "publish it on GitHub Pages now?" step of creating a site (#1232).
  *
  * Every new site carries .github/workflows/deploy.yml, which builds and
  * publishes the site on each push to main. This step does the rest, when the
@@ -50,7 +50,7 @@ export function manualSteps(repoName, { isPrivate = false } = {}) {
     `     e.g. with the GitHub CLI: gh repo create ${repoName} ${visibility} --source . --push`,
     '  2. On GitHub: Settings -> Pages -> Build and deployment -> Source: GitHub Actions.',
     '  3. Push to main. .github/workflows/deploy.yml builds the site and publishes it',
-    `     at https://<your-user>.github.io/${repoName}/`,
+    `     at https://YOUR-USER.github.io/${repoName}/`,
     ...(isPrivate ? ['  GitHub Pages on a private repo needs a paid GitHub plan.'] : []),
   ].join('\n');
 }
@@ -98,7 +98,7 @@ export async function offerGitHubPages({
     if (!git(['init']).ok || !git(['symbolic-ref', 'HEAD', 'refs/heads/main']).ok) {
       return later('git-init-failed', 'git init failed (is git installed?), so the site was not put on GitHub.');
     }
-    const committed = git(['add', '-A']).ok && git(['commit', '-m', `Create ${repoName} with create-wb-starter`]);
+    const committed = git(['add', '-A']).ok && git(['commit', '-m', `Create ${repoName}`]);
     if (!committed || !committed.ok) {
       return later('git-commit-failed', `The first commit failed${committed?.stderr ? `: ${committed.stderr.split('\n')[0]}` : ''}. Set git's user.name and user.email, then commit.`);
     }
@@ -109,7 +109,7 @@ export async function offerGitHubPages({
     if (!created.ok) return later('repo-create-failed', `gh repo create failed: ${created.stderr.split('\n')[0] || 'no reason given'}`);
 
     const login = run(gh, ['api', 'user', '--jq', '.login']);
-    const owner = login.ok && login.stdout ? login.stdout : '<your-user>';
+    const owner = login.ok && login.stdout ? login.stdout : 'YOUR-USER';
     const pages = run(gh, ['api', '-X', 'POST', `repos/${owner}/${repoName}/pages`, '-f', 'build_type=workflow']);
     if (!pages.ok) {
       log(`\nThe repo was created, but GitHub Pages was not turned on${isPrivate ? ' (Pages on a private repo needs a paid GitHub plan)' : ''}.`);

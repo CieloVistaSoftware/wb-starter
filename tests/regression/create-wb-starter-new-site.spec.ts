@@ -58,7 +58,7 @@ async function serveStatic(dir: string, prefix = '/'): Promise<StaticSite> {
   const opened = new Set<fs.ReadStream>();
   const server = http.createServer((req, res) => {
     // `prefix` is where the site lives, as GitHub Pages serves a project site
-    // from /<repo>/ (#1232). Anything outside it is not the site's.
+    // from /REPO/ (#1232). Anything outside it is not the site's.
     const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
     if (!urlPath.startsWith(prefix)) { res.writeHead(404).end(); return; }
     const rel = urlPath.slice(prefix.length).replace(/^\/+/, '').replace(/(^|\/)$/, '$1index.html');
@@ -93,7 +93,7 @@ async function answering(url: string): Promise<void> {
 test.beforeAll(() => {
   work = fs.mkdtempSync(path.join(os.tmpdir(), 'wb-create-'));
   // --no-github: never offer to put a test site on GitHub (#1232; that step
-  // has its own spec, create-wb-starter-github-pages.spec.ts).
+  // has its own spec, the GitHub Pages one beside this file).
   execFileSync(process.execPath, [CREATE, 'my-site', '--wb-starter', ROOT, '--no-github'], { cwd: work, stdio: 'pipe' });
   site = path.join(work, 'my-site');
   execFileSync(NPM, ['install', '--no-audit', '--no-fund', '--ignore-scripts'], { cwd: site, stdio: 'pipe', shell: process.platform === 'win32' });
@@ -115,7 +115,7 @@ test.afterAll(async () => {
 test('the new site holds only its own files, and depends on wb-starter', () => {
   const files = fs.readdirSync(site).filter((f) => f !== 'node_modules' && f !== 'package-lock.json').sort();
   expect(files).toEqual(['.github', '.gitignore', 'README.md', 'config', 'index.html', 'package.json', 'pages', 'styles']);
-  // The GitHub Pages workflow (#1232); create-wb-starter-github-pages.spec.ts checks what it does.
+  // The GitHub Pages workflow (#1232); the GitHub Pages spec checks what it does.
   expect(fs.readdirSync(path.join(site, '.github', 'workflows'))).toEqual(['deploy.yml']);
   const pkg = JSON.parse(fs.readFileSync(path.join(site, 'package.json'), 'utf8'));
   expect(pkg.name).toBe('my-site');
@@ -244,8 +244,8 @@ test('npm run build writes a static site that works without wb-starter running',
   await expect(page.locator('#about-add-page')).toBeHidden();
 });
 
-test('the built site works under the /<repo>/ sub-path GitHub Pages serves it from (#1232)', async ({ page }) => {
-  // GitHub Pages serves a project site at https://<owner>.github.io/<repo>/,
+test('the built site works under the /REPO/ sub-path GitHub Pages serves it from (#1232)', async ({ page }) => {
+  // GitHub Pages serves a project site at https://OWNER.github.io/REPO/,
   // not at the root. Runs after the build test above (serial), on its dist/.
   const dist = path.join(site, 'dist');
   expect(fs.existsSync(path.join(dist, 'index.html')), 'the build test runs first').toBe(true);
@@ -260,7 +260,7 @@ test('the built site works under the /<repo>/ sub-path GitHub Pages serves it fr
   await page.goto(base);
   await expect(page.locator('#home-hero h1')).toHaveText('My Site');
   await expect(page.locator('#siteNav')).toContainText('About');
-  // Styles: wb-starter's theme and the site's own stylesheet both loaded.
+  // Styles: the runtime's theme and the site's own stylesheet both loaded.
   const sheets = await page.evaluate(() => [...document.styleSheets].map((s) => s.href || '').filter(Boolean));
   expect(sheets).toEqual(expect.arrayContaining([`${base}src/styles/themes.css`, `${base}styles/site.css`]));
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg-primary').trim()), 'theme tokens applied').not.toBe('');

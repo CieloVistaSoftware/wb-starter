@@ -113,7 +113,7 @@ Put your own CSS in `styles/site.css`.
 
 ### On GitHub Pages
 
-Every new site carries `.github/workflows/deploy.yml`. Once the site is on GitHub, every push to `main` runs `npm run build` and publishes `dist\` to `https://<your-user>.github.io/<repo>/`.
+Every new site carries `.github/workflows/deploy.yml`. Once the site is on GitHub, every push to `main` runs `npm run build` and publishes `dist\` to `https://YOUR-USER.github.io/REPO/`.
 
 When you create the site, it asks:
 
@@ -129,9 +129,7 @@ The question appears only when the [GitHub CLI](https://cli.github.com/) is inst
 | `--no-github` | Skip the question |
 | `--private` | Make the repo private. GitHub Pages is free only for public repos, so a private one needs a paid GitHub plan |
 
-```powershell
-npm create wb-starter my-site -- --yes
-```
+Pass an option after `--`, as with `--name` above.
 
 To use your own domain, add a `CNAME` file to the site; the site's `README.md` has the steps.
 

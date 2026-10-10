@@ -3,10 +3,10 @@
 # It does nothing until the site is pushed to GitHub. From then on, every push
 # to main builds the site (npm run build -> dist/) and publishes dist/.
 # GitHub Pages must use "GitHub Actions" as its source: Settings -> Pages ->
-# Build and deployment -> Source. `npm create wb-starter` sets that when it
+# Build and deployment -> Source. Creating the site sets that when it
 # creates the repo for you.
 #
-# The site is served from https://<owner>.github.io/<repo>/. wb-starter's pages
+# The site is served from https://OWNER.github.io/REPO/. The site's pages
 # use relative paths, so they work under that sub-path as they do at the root.
 name: Deploy to GitHub Pages
 

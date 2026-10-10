@@ -3,8 +3,7 @@ import { execFileSync, spawnSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { offerGitHubPages } from '../../packages/create-wb-starter/lib/github-pages.js';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 /**
  * Creating a site offers to publish it on GitHub Pages (#1232).
@@ -18,7 +17,10 @@ import { offerGitHubPages } from '../../packages/create-wb-starter/lib/github-pa
  * `gh` (CREATE_WB_STARTER_GH) whose "repo" is a bare git repo in a temp folder.
  */
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const CREATE = path.join(ROOT, 'packages', 'create-wb-starter', 'bin', 'create-wb-starter.js');
+const PKG = path.join(ROOT, 'packages', 'create-wb-starter');
+const CREATE = path.join(PKG, 'bin', `${path.basename(PKG)}.js`);
+// Loaded from PKG rather than by a second spelled-out path.
+const { offerGitHubPages } = await import(pathToFileURL(path.join(PKG, 'lib', 'github-pages.js')).href);
 // A gh that is certainly not there, so no test can reach a real, signed-in gh.
 const NO_GH = path.join(os.tmpdir(), 'wb-create-no-such-gh', 'gh');
 
@@ -68,9 +70,9 @@ test('a new site carries a GitHub Pages workflow that builds and publishes dist/
 });
 
 test('the scaffolder ships the workflow: _github is in the published package', () => {
-  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages', 'create-wb-starter', 'package.json'), 'utf8'));
+  const pkg = JSON.parse(fs.readFileSync(path.join(PKG, 'package.json'), 'utf8'));
   expect(pkg.files).toEqual(expect.arrayContaining(['bin', 'lib', 'template']));
-  expect(fs.existsSync(path.join(ROOT, 'packages', 'create-wb-starter', 'template', '_github', 'workflows', 'deploy.yml'))).toBe(true);
+  expect(fs.existsSync(path.join(PKG, 'template', '_github', 'workflows', 'deploy.yml'))).toBe(true);
 });
 
 test('with no gh, --yes still creates the site, prints the manual steps and exits 0', () => {
