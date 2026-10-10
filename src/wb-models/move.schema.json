@@ -4,6 +4,7 @@
   "title": "Move",
   "description": "Animation behavior to move elements.",
   "schemaFor": "move",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-move",
     "supportLevel": "stable",

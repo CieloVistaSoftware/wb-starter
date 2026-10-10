@@ -4,6 +4,7 @@
   "title": "Fill",
   "description": "Makes an element as wide as its container allows, using the property that actually governs width in the parent's layout",
   "schemaFor": "fill",
+  "kind": "decorator",
   "baseClass": "x-fill",
   "compliance": {
     "baseClass": "x-fill",

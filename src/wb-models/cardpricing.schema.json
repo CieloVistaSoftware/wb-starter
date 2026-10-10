@@ -4,6 +4,7 @@
   "title": "Pricing Card",
   "description": "Pricing tier card with plan name, price, features list, and CTA",
   "schemaFor": "cardpricing",
+  "kind": "decorator",
   "baseClass": "x-cardpricing",
   "semanticElement": {
     "tagName": "article",

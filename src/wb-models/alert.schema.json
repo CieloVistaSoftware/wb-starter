@@ -4,6 +4,7 @@
   "title": "Alert",
   "description": "Alert behavior for displaying messages with severity levels",
   "schemaFor": "alert",
+  "kind": "decorator",
   "baseClass": "x-alert",
   "semanticElement": {
     "tagName": "div",

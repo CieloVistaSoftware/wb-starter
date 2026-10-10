@@ -4,6 +4,7 @@
   "title": "Theme Control",
   "description": "Theme switcher control.",
   "schemaFor": "themecontrol",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-themecontrol",
     "supportLevel": "stable",

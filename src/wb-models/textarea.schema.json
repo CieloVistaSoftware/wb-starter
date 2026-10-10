@@ -4,6 +4,8 @@
   "title": "Textarea",
   "description": "Multi-line text input with autosize and character count",
   "schemaFor": "textarea",
+  "kind": "element",
+  "element": "textarea",
   "baseClass": "x-textarea",
   "semanticElement": {
     "tagName": "div",

@@ -4,6 +4,7 @@
   "title": "Repeater",
   "description": "x-repeater stamps out count copies of its <template>, replacing {{index}} with 1, 2, 3… and {{i}} with 0, 1, 2….",
   "schemaFor": "repeater",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-repeater",
     "supportLevel": "stable",

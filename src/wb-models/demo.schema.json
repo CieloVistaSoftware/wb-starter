@@ -4,6 +4,7 @@
   "title": "Demo Container",
   "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
   "schemaFor": "demo",
+  "kind": "decorator",
   "baseClass": "x-demo",
   "semanticElement": {
     "tagName": "div",

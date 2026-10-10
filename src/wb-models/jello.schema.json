@@ -4,6 +4,7 @@
   "title": "Jello",
   "description": "On click, plays the jello animation for 1s.",
   "schemaFor": "jello",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

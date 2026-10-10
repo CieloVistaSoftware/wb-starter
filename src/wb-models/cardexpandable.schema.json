@@ -4,6 +4,7 @@
   "title": "Expandable Card",
   "description": "Card with collapsible/expandable content section",
   "schemaFor": "cardexpandable",
+  "kind": "decorator",
   "baseClass": "x-card-expandable",
   "semanticElement": {
     "tagName": "article",

@@ -4,6 +4,8 @@
   "title": "Details",
   "description": "Native HTML5 details disclosure widget with optional animation",
   "schemaFor": "details",
+  "kind": "element",
+  "element": "details",
   "baseClass": "x-details",
   "semanticElement": {
     "tagName": "details",

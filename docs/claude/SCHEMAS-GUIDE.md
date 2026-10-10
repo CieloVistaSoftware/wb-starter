@@ -304,6 +304,7 @@ Never create a schema from scratch if one already exists. Extend what's there.
   "title": "Behavior Name",
   "description": "What it does",
   "schemaFor": "{behavior}",
+  "kind": "decorator",
   "behavior": "{behavior}",
   "baseClass": "wb-{behavior}",
   "properties": { ... },
@@ -314,6 +315,12 @@ Never create a schema from scratch if one already exists. Extend what's there.
   }
 }
 ```
+
+`kind` says what the behavior is (#835). Use `"decorator"` when it adds
+behavior to whatever host it lands on (x-ripple, x-tooltip). Use `"element"`
+with `"element": "<selector>"` when `nativeMap` in `src/core/tag-map.js` maps
+a native element onto it (x-card is `"element": "article"`).
+`tests/compliance/schemas-declare-kind.spec.ts` keeps the two in step.
 
 ### Step 4: Run the validation test
 ```

@@ -46,6 +46,9 @@ for (const file of files) {
       description: schema.description || '',
       tag: `x-${name}`,
       baseClass: schema.baseClass || `x-${name}`,
+      // #835: element or decorator, and for an element the native element it is.
+      ...(schema.kind ? { kind: schema.kind } : {}),
+      ...(schema.element ? { element: schema.element } : {}),
       properties: schema.properties || {},
       // "scroll": every option of this behavior only shows while its box scrolls
       // (x-sticky); the behaviors page renders its examples in a scroll box (#750).

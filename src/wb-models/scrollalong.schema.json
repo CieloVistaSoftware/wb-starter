@@ -4,6 +4,7 @@
   "title": "ScrollAlong",
   "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
   "schemaFor": "scrollalong",
+  "kind": "decorator",
   "baseClass": "x-scrollalong",
   "semanticElement": {
     "tagName": "aside"

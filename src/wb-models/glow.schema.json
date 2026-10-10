@@ -4,6 +4,7 @@
   "title": "Glow",
   "description": "x-glow gives the element a halo in color, which defaults to the theme's primary colour: a pulsing ring around the box, or with target=\"text\" a steady glow around the letters.",
   "schemaFor": "glow",
+  "kind": "decorator",
   "properties": {
     "color": {
       "type": "string",

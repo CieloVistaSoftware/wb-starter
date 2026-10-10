@@ -4,6 +4,7 @@
   "title": "Minimizable Card",
   "description": "Card with minimize/expand toggle button in header",
   "schemaFor": "cardminimizable",
+  "kind": "decorator",
   "baseClass": "x-card-minimizable",
   "semanticElement": {
     "tagName": "article",

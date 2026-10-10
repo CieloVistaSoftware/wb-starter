@@ -4,6 +4,7 @@
   "title": "Search",
   "description": "Search input behavior with icon and debounced search events",
   "schemaFor": "search",
+  "kind": "decorator",
   "baseClass": "x-search",
   "semanticElement": {
     "tagName": "search",

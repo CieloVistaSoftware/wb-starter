@@ -4,6 +4,7 @@
   "title": "Accordion",
   "description": "Turns titled child sections into independently expandable items. Deprecated: use <details>/<summary> instead.",
   "schemaFor": "accordion",
+  "kind": "decorator",
   "properties": {
     "accordionTitle": {
       "type": "string",

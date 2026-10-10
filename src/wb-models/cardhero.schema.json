@@ -4,6 +4,7 @@
   "title": "Hero Card",
   "description": "Hero banner with background image, title, subtitle, and optional CTA",
   "schemaFor": "cardhero",
+  "kind": "decorator",
   "baseClass": "x-hero",
   "semanticElement": {
     "tagName": "section",

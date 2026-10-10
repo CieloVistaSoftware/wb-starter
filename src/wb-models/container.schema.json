@@ -4,6 +4,7 @@
   "title": "Container",
   "description": "Layout container that is a flex stack at one column and a responsive auto-fit grid at two or more.",
   "schemaFor": "container",
+  "kind": "decorator",
   "properties": {
     "direction": {
       "type": "string",

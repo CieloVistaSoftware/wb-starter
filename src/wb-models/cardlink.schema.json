@@ -4,6 +4,7 @@
   "title": "Link Card",
   "description": "Clickable card that navigates to a URL",
   "schemaFor": "cardlink",
+  "kind": "decorator",
   "baseClass": "x-card-link",
   "semanticElement": {
     "tagName": "article",

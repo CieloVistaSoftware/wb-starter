@@ -322,12 +322,23 @@ function generateHtml(behavior: string, props: Record<string, any>, content: str
   // and it was still live here.
   const bare = behavior.replace(/^(?:wb-|x-)/, '');
   // An explicit semantic element from the schema wins; otherwise a neutral
-  // host carrying x-<behavior>.
-  const semantic = tagName && tagName !== 'div' ? tagName : null;
-  const tag = semantic || 'div';
-  let attrs = semantic ? '' : ` x-${bare}`;
+  // host. #835: the schema's `element` is the tag-map SELECTOR (`article`,
+  // `input[type="checkbox"]`), so its attribute part is written onto the host
+  // -- `input[type="checkbox"]` is not a tag name. The host always names the
+  // behavior too (`<select x-select>`): a bare native element only picks its
+  // behavior up under autoInject, which is off by default, so `<select>` alone
+  // never initialized when no earlier test in the worker had turned it on.
+  const selector = tagName && tagName !== 'div' ? tagName : null;
+  const sel = selector ? /^([a-z][a-z0-9-]*)((?:\[[^\]]+\])*)$/i.exec(selector) : null;
+  const tag = sel ? sel[1] : 'div';
+  let attrs = ` x-${bare}`;
+  if (sel) {
+    for (const [, name, value] of sel[2].matchAll(/\[([^=\]]+)(?:="?([^"\]]*)"?)?\]/g)) {
+      attrs += value === undefined ? ` ${name}` : ` ${name}="${value}"`;
+    }
+  }
 
-  if (tag === 'input' && behavior === 'checkbox') {
+  if (tag === 'input' && behavior === 'checkbox' && !/\stype=/.test(attrs)) {
     attrs += ' type="checkbox"';
   }
 

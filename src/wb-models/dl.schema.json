@@ -4,6 +4,7 @@
   "title": "Description list",
   "description": "Enhances a <dl>: vertical or horizontal layout, borders, striping and spacing.",
   "schemaFor": "dl",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "dl"
   },

@@ -4,6 +4,8 @@
   "title": "Progress",
   "description": "Progress bar with determinate and indeterminate states",
   "schemaFor": "progress",
+  "kind": "element",
+  "element": "progress",
   "baseClass": "x-progress",
   "semanticElement": {
     "tagName": "progress",

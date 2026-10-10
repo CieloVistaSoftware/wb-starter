@@ -4,6 +4,7 @@
   "title": "Cluster",
   "description": "x-cluster lays its children out in a wrapping row with a fixed gap, centred on a shared line.",
   "schemaFor": "cluster",
+  "kind": "decorator",
   "properties": {
     "gap": {
       "type": "string",

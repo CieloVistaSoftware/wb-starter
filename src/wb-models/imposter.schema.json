@@ -4,6 +4,7 @@
   "title": "Imposter",
   "description": "Centers an element over its positioned container, like a dialog or badge laid over content. It applies to any element, so it names no host.",
   "schemaFor": "imposter",
+  "kind": "decorator",
   "properties": {
     "breakout": {
       "type": "boolean",

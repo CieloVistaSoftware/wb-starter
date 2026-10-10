@@ -4,6 +4,7 @@
   "title": "Cart",
   "description": "A shopping cart that remembers what Add to Cart added: shows how many items it holds and opens to list them with remove buttons, the total and Clear. Kept in localStorage, so it survives a reload",
   "schemaFor": "cart",
+  "kind": "decorator",
   "baseClass": "x-cart",
   "semanticElement": {
     "tagName": "div",

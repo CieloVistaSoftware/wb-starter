@@ -4,6 +4,7 @@
   "title": "Copy",
   "description": "Click to copy text to clipboard.",
   "schemaFor": "copy",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-copy",
     "supportLevel": "stable",

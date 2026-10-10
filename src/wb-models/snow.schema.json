@@ -4,6 +4,7 @@
   "title": "Snow",
   "description": "Falling snowflake animation effect",
   "schemaFor": "snow",
+  "kind": "decorator",
   "baseClass": "x-snow",
   "compliance": {
     "baseClass": "x-snow",

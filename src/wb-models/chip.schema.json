@@ -4,6 +4,7 @@
   "title": "Chip",
   "description": "Small pill-shaped tag/label, optionally dismissible",
   "schemaFor": "chip",
+  "kind": "decorator",
   "baseClass": "x-chip",
   "semanticElement": {
     "tagName": "span",
