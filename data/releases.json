@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.485",
+      "date": "2026-10-10",
+      "summary": "The live site showed v1.0.481 while a local server still showed an (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1823\" target=\"_blank\" rel=\"noopener\">PR 1823</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1822\" target=\"_blank\" rel=\"noopener\">#1822</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The local server keeps up with main, so its version matches the live site</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1822\" target=\"_blank\" rel=\"noopener\">#1822</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ca3e15514baca336731a2b7596d0c949563d2612\" target=\"_blank\" rel=\"noopener\"><code>ca3e155</code></a>",
+          "issues": [
+            1822
+          ]
+        }
+      ],
+      "seeIt": "Run npm start on main and leave it running while a PR merges. Before: port 3000 kept the old version until a restart while the live site moved on. Now: within two minutes the server pulls, re-stamps, and the badge shows the live site&#39;s number.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/21c445bffb5960cd7ba7bf9bafa3a5f7d783cc9c\" target=\"_blank\" rel=\"noopener\"><code>21c445b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.484",
       "date": "2026-10-10",
       "summary": "Nightly 2026-10-10 failed one new test on main: (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1820\" target=\"_blank\" rel=\"noopener\">PR 1820</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a>",
