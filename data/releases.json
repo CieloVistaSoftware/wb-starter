@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.484",
+      "date": "2026-10-10",
+      "summary": "Nightly 2026-10-10 failed one new test on main: (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1820\" target=\"_blank\" rel=\"noopener\">PR 1820</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Playground editor loads the schema index on demand, not at page load</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f8a2f9c5774191cad2c76a9af4e3ba08b448b738\" target=\"_blank\" rel=\"noopener\"><code>f8a2f9c</code></a>",
+          "issues": [
+            1818
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/stagelight-spotlight-stays-in-its-demo-box.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/stagelight-spotlight-stays-in-its-demo-box.spec.ts</a> --project=regression --repeat-each=15. Before: 6 of 30 failed with &quot;Execution context was destroyed&quot;. Now: 60 of 60 pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ee2b088b68547930bc1e24196b0a00591d039cd8\" target=\"_blank\" rel=\"noopener\"><code>ee2b088</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.483",
       "date": "2026-10-10",
       "summary": "Src/styles/behaviors/avatar.css sized every avatar in px: the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1821\" target=\"_blank\" rel=\"noopener\">PR 1821</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
