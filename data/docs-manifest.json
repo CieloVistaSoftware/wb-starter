@@ -1,5 +1,5 @@
 {
-  "totalFiles": 274,
+  "totalFiles": 275,
   "categories": [
     "_today",
     "architecture",
@@ -1883,6 +1883,13 @@
         "created": "2026-09-30"
       },
       {
+        "path": "docs/guides/migrate-an-existing-page.md",
+        "title": "How to Move an Existing Page onto WB Starter",
+        "name": "migrate-an-existing-page",
+        "category": "guides",
+        "created": "2026-10-10"
+      },
+      {
         "path": "docs/guides/search-index.md",
         "title": "Search Index Generator",
         "name": "search-index",
@@ -3566,6 +3573,13 @@
       "name": "create-a-website",
       "category": "guides",
       "created": "2026-09-30"
+    },
+    {
+      "path": "docs/guides/migrate-an-existing-page.md",
+      "title": "How to Move an Existing Page onto WB Starter",
+      "name": "migrate-an-existing-page",
+      "category": "guides",
+      "created": "2026-10-10"
     },
     {
       "path": "docs/guides/search-index.md",
