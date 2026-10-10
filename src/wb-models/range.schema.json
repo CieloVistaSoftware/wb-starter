@@ -5,7 +5,7 @@
   "description": "Slider with a live value display and min/max bound labels. input[type=\"range\"] IS this behavior, so there is no attribute to add.",
   "schemaFor": "range",
   "kind": "element",
-  "element": "input",
+  "element": "input[type=\"range\"]",
   "baseClass": "x-range",
   "semanticElement": {
     "tagName": "input",

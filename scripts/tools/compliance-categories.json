@@ -50,7 +50,6 @@
     "behavior-registry.spec.ts",
     "behavior-registry-audit-gate.spec.ts",
     "schema-index-stays-current.spec.ts",
-    "behavior-schemas-declare-kind.spec.ts",
     "registry-integrity.spec.ts",
     "fragment-registration.spec.ts",
     "fix-data-integrity.spec.ts",

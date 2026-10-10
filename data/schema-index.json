@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T20:57:17.648Z",
+  "generatedAt": "2026-10-10T21:40:43.727Z",
   "count": 177,
   "schemas": [
     {
@@ -1512,7 +1512,7 @@
       "tag": "x-checkbox",
       "baseClass": "x-checkbox",
       "kind": "element",
-      "element": "input",
+      "element": "input[type=\"checkbox\"]",
       "properties": {
         "label": {
           "type": "string",
@@ -2464,8 +2464,7 @@
       "description": "Enhances a <dl>: vertical or horizontal layout, borders, striping and spacing.",
       "tag": "x-dl",
       "baseClass": "x-dl",
-      "kind": "element",
-      "element": "dl",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -5899,8 +5898,7 @@
       "description": "Enhances an <ol>: stepped and timeline variants, number style, start number, indent and item spacing.",
       "tag": "x-ol",
       "baseClass": "x-ol",
-      "kind": "element",
-      "element": "ol",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -6116,7 +6114,7 @@
       "tag": "x-password",
       "baseClass": "x-password",
       "kind": "element",
-      "element": "input",
+      "element": "input[type=\"password\"]",
       "properties": {
         "toggle": {
           "type": "boolean",
@@ -6902,7 +6900,7 @@
       "tag": "x-radio",
       "baseClass": "x-radio",
       "kind": "element",
-      "element": "input",
+      "element": "input[type=\"radio\"]",
       "properties": {
         "label": {
           "type": "string",
@@ -6969,7 +6967,7 @@
       "tag": "x-range",
       "baseClass": "x-range",
       "kind": "element",
-      "element": "input",
+      "element": "input[type=\"range\"]",
       "properties": {
         "showValue": {
           "type": "boolean",
@@ -9601,8 +9599,7 @@
       "description": "Enhances a <ul>: checklist and icon-list variants, marker style, indent and item spacing.",
       "tag": "x-ul",
       "baseClass": "x-ul",
-      "kind": "element",
-      "element": "ul",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",

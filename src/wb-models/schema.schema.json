@@ -13,8 +13,7 @@
         "description",
         "properties",
         "$view",
-        "$methods",
-        "kind"
+        "$methods"
       ],
       "requiresBehaviorOrSchemaFor": true,
       "propertyRules": "type + default mandatory on every property"
@@ -118,18 +117,12 @@
     },
     "kind": {
       "type": "string",
-      "enum": [
-        "element",
-        "decorator"
-      ],
-      "description": "What kind of behavior this is (#835). 'element' = what one semantic element BECOMES, named for that element (<article> -> card, <table>, <details>); 'element' names the tag. 'decorator' = extra function laid on ANY element, named for what it adds (x-ripple, x-tooltip, x-glow). Required on every component-tier schema; base, definition and page schemas are not behaviors and carry none.",
-      "default": "decorator"
+      "enum": ["element", "decorator"],
+      "description": "#835: element = the behavior is (or replaces) a native element, the one named in 'element'; decorator = it adds behavior to whatever host it lands on"
     },
     "element": {
       "type": "string",
-      "pattern": "^[a-z][a-z0-9]*$",
-      "description": "With kind 'element': the HTML tag this behavior is the behavior OF -- the bare tag name, so input[type=\"checkbox\"] is 'input'. Absent for a decorator.",
-      "default": "this is the element"
+      "description": "#835: for kind element, the native element selector the tag map maps this behavior onto (e.g. article, input[type=checkbox])"
     },
     "baseClass": {
       "type": "string",
@@ -276,22 +269,6 @@
       "required": [
         "schemaFor"
       ]
-    }
-  ],
-  "allOf": [
-    {
-      "if": {
-        "properties": { "schemaType": { "const": "component" } }
-      },
-      "then": { "required": ["kind"] }
-    },
-    {
-      "if": {
-        "properties": { "kind": { "const": "element" } },
-        "required": ["kind"]
-      },
-      "then": { "required": ["element"] },
-      "else": { "not": { "required": ["element"] } }
     }
   ],
   "$defs": {

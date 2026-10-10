@@ -10,7 +10,13 @@
           "file": "guides/create-a-website.md",
           "title": "How to Create a Website with wb-starter",
           "description": "npm create wb-starter: create, run, edit, add pages, publish and update a site",
-          "modified": "2026-10-01"
+          "modified": "2026-10-10"
+        },
+        {
+          "file": "guides/migrate-an-existing-page.md",
+          "title": "How to Move an Existing Page onto WB Starter",
+          "description": "site-migrate: propose a WB Starter page for an existing page, with every change listed for review",
+          "modified": "2026-10-10"
         },
         {
           "file": "V3-GUIDE.md",
@@ -166,7 +172,7 @@
           "file": "behaviors/stagelight.md",
           "title": "Stage Light",
           "description": "Beam, spotlight, and fixture lighting effects",
-          "modified": "2026-09-27"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/tooltip.md",
@@ -262,7 +268,7 @@
           "file": "behaviors/alert.md",
           "title": "Alert",
           "description": "x-alert builds an inline alert box from its message, title and variant attributes, with a severity icon and colour, and an optional close button when…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/articles.md",
@@ -292,13 +298,13 @@
           "file": "behaviors/avatar.md",
           "title": "Avatar",
           "description": "x-avatar renders a round (or shaped) picture from src, and falls back to initials taken from name when there is no image or it fails to load.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/badge.md",
           "title": "Badge",
           "description": "x-badge turns a <span> into a small coloured label: its text comes from label, its colour from variant, and pill, dot, outline and glow change its shape.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/blockquote.md",
@@ -328,7 +334,7 @@
           "file": "behaviors/card.md",
           "title": "Card",
           "description": "Card.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/cardbutton.md",
@@ -388,7 +394,7 @@
           "file": "behaviors/cardnotification.md",
           "title": "Notification Card",
           "description": "x-cardnotification renders a notice card coloured by variant (info, success, warning, error), with an icon, title, message and a dismiss button that removes it.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/cardoverlay.md",
@@ -430,7 +436,7 @@
           "file": "behaviors/cardtestimonial.md",
           "title": "Testimonial Card",
           "description": "x-cardtestimonial renders a quotation card with the quote, the author's name, role and avatar, and an optional star rating.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/cardvideo.md",
@@ -454,13 +460,13 @@
           "file": "behaviors/checkbox.md",
           "title": "Checkbox",
           "description": "Checkbox input with label and custom styling",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/chip.md",
           "title": "chip",
           "description": "A small pill-shaped tag/label with optional icon, color variant, and dismiss button.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/clock.md",
@@ -496,7 +502,7 @@
           "file": "behaviors/confetti.md",
           "title": "Confetti",
           "description": "x-confetti fires a burst of coloured confetti from the element each time it is clicked; count sets how many pieces and colors their palette.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/confirm.md",
@@ -646,13 +652,13 @@
           "file": "behaviors/fireworks.md",
           "title": "Fireworks",
           "description": "x-fireworks launches a burst of firework particles from the element each time it is clicked; count sets particles per burst and colors their palette.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/fix-card.md",
           "title": "Fix Card",
           "description": "x-fix-card displays one entry from the project's fix log — status, cause, file and code change — when a fix object is assigned to the element's data…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/flash.md",
@@ -676,7 +682,7 @@
           "file": "behaviors/floatinglabel.md",
           "title": "x-floatinglabel Behavior",
           "description": "Turns a field's placeholder into a label that floats above the field once it has focus or a value.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/footer.md",
@@ -772,7 +778,7 @@
           "file": "behaviors/input.md",
           "title": "Input",
           "description": "A plain <input> gets the form styling: variant shows a success or error state, size sets the scale, and clearable adds a button that empties it.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/inputgroup.md",
@@ -898,7 +904,7 @@
           "file": "behaviors/progress.md",
           "title": "Progress",
           "description": "A plain <progress> gets a styled bar with an optional label and percentage (show-value), colour variants, stripes, and an indeterminate state for work of…",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/prompt.md",
@@ -916,7 +922,7 @@
           "file": "behaviors/radio.md",
           "title": "Radio Behavior Design & User Guide",
           "description": "The radio behavior modernizes the <input type=\"radio\"> element.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/rainbow.md",
@@ -934,7 +940,7 @@
           "file": "behaviors/rating.md",
           "title": "Rating",
           "description": "x-rating renders a row of max stars with value of them filled, and lets the user click to set a new rating unless readonly is set; half allows half stars.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/ratio.md",
@@ -1030,7 +1036,7 @@
           "file": "behaviors/snow.md",
           "title": "Snow",
           "description": "x-snow makes the element a button that starts or stops snowflakes falling over the page; count sets how many and duration how long each takes to fall.",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/sparkle.md",
@@ -1042,7 +1048,7 @@
           "file": "behaviors/spinner.md",
           "title": "Spinner",
           "description": "x-spinner draws an animated loading ring in the element, sized by size and coloured by variant, with label as its accessible name.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/stack.md",
@@ -1084,7 +1090,7 @@
           "file": "behaviors/switch.md",
           "title": "Switch",
           "description": "x-switch builds an on/off switch with its label, backed by a real checkbox so it submits with a form under name.",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/switcher.md",
@@ -1120,7 +1126,7 @@
           "file": "behaviors/textarea.md",
           "title": "Textarea",
           "description": "A plain <textarea> gets the form styling, and optionally grows with its content (autosize) and shows a character count against max-length (show-count).",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/themecontrol.md",
@@ -1162,7 +1168,7 @@
           "file": "behaviors/typewriter.md",
           "title": "Typewriter",
           "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "behaviors/ul.md",
@@ -1396,7 +1402,7 @@
           "file": "standards/CSS-CLASS-CONVENTION.md",
           "title": "CSS class convention — you can name the class without reading the code",
           "description": "Convention over configuration.",
-          "modified": "2026-10-09"
+          "modified": "2026-10-10"
         },
         {
           "file": "standards/ERROR-LOG-RETENTION.md",
@@ -1522,7 +1528,7 @@
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "Attribute Naming Standard",
           "description": "Standards for attribute naming conventions",
-          "modified": "2026-10-06"
+          "modified": "2026-10-10"
         },
         {
           "file": "architecture/standards/ERROR-MESSAGE.md",
@@ -1540,7 +1546,7 @@
           "file": "claude/SCHEMAS-GUIDE.md",
           "title": "Schemas Guide",
           "description": "Claude guide for working with schemas",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "claude/TIER3-REFERENCE.md",

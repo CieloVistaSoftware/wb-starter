@@ -23,9 +23,6 @@ const SCHEMA_DIR = path.join(process.cwd(), 'src/wb-models');
 interface Schema {
   title: string;
   behavior: string;
-  /** #835: element vs decorator. With kind "element", `element` is the tag this
-   *  behavior is the behavior OF -- not a host for generateHtml() to probe on. */
-  kind?: 'element' | 'decorator';
   element?: string;
   properties: Record<string, PropertyDef>;
   compliance: ComplianceDef;
@@ -315,7 +312,7 @@ const isCovered = (el: Element, cls: string): boolean =>
   || el.children.length > 0
   || /\bx-/.test((el as HTMLElement).className || '');
 
-function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content'): string {
+function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
   // Strip an existing x- prefix as well as the retired wb-.
   //
   // Schemas whose schemaFor already begins with x- (x-clock, x-flex, x-img,
@@ -324,15 +321,26 @@ function generateHtml(behavior: string, props: Record<string, any>, content: str
   // probe reported every one of them as broken. #861 named this exact defect
   // and it was still live here.
   const bare = behavior.replace(/^(?:wb-|x-)/, '');
-  // A neutral host carrying x-<behavior>. This used to take a host tag from a
-  // top-level `element` field that no schema declared, so it was always <div>.
-  // #835 gave `element` its meaning -- the tag a kind:"element" behavior is the
-  // behavior OF -- and a bare <ul>, <select> or <input> with no x- attribute and
-  // no content is not a host this probe can initialize (it failed every
-  // permutation of checkbox, dl, ol, select and ul). A schema that wants a
-  // specific host says so in test.setup, which callers prefer over this.
-  const tag = 'div';
+  // An explicit semantic element from the schema wins; otherwise a neutral
+  // host. #835: the schema's `element` is the tag-map SELECTOR (`article`,
+  // `input[type="checkbox"]`), so its attribute part is written onto the host
+  // -- `input[type="checkbox"]` is not a tag name. The host always names the
+  // behavior too (`<select x-select>`): a bare native element only picks its
+  // behavior up under autoInject, which is off by default, so `<select>` alone
+  // never initialized when no earlier test in the worker had turned it on.
+  const selector = tagName && tagName !== 'div' ? tagName : null;
+  const sel = selector ? /^([a-z][a-z0-9-]*)((?:\[[^\]]+\])*)$/i.exec(selector) : null;
+  const tag = sel ? sel[1] : 'div';
   let attrs = ` x-${bare}`;
+  if (sel) {
+    for (const [, name, value] of sel[2].matchAll(/\[([^=\]]+)(?:="?([^"\]]*)"?)?\]/g)) {
+      attrs += value === undefined ? ` ${name}` : ` ${name}="${value}"`;
+    }
+  }
+
+  if (tag === 'input' && behavior === 'checkbox' && !/\stype=/.test(attrs)) {
+    attrs += ' type="checkbox"';
+  }
 
   for (const [key, value] of Object.entries(props)) {
     if (value === null || value === undefined) continue;
@@ -602,7 +610,7 @@ test.describe('Component Compliance', () => {
       const allErrors: string[] = [];
       
       // ========== CHECK 1: Base Class ==========
-      const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content');
+      const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content', schema.element);
       const element = await setupTestContainer(page, baseHtml);
       
       // NO base-class requirement (John: "I don't think we need base class of
@@ -687,7 +695,7 @@ test.describe('Component Compliance', () => {
           if (value === null && propDef.required) continue;
           
           const props: Record<string, any> = { [propName]: value };
-          const html = generateHtml(behaviorName, props, 'Test Content');
+          const html = generateHtml(behaviorName, props, 'Test Content', schema.element);
           
           const el = await setupTestContainer(page, html);
           
@@ -759,7 +767,7 @@ test.describe('Component Compliance', () => {
           }
 
           for (const combo of cases) {
-            const html = generateHtml(behaviorName, combo, 'Test Content');
+            const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
             const el = await setupTestContainer(page, html);
 
             // "Initialized" must cover every way a behavior can leave a mark.
@@ -788,7 +796,7 @@ test.describe('Component Compliance', () => {
       // ========== CHECK 6: Matrix Combinations ==========
       if (schema.test?.matrix?.combinations) {
         for (const combo of schema.test.matrix.combinations) {
-          const html = generateHtml(behaviorName, combo, 'Test Content');
+          const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
           const el = await setupTestContainer(page, html);
 
           // "Initialized" = ANY sign the component was processed: its baseClass,
@@ -964,7 +972,7 @@ test.describe('Component Compliance', () => {
       
       // ========== CHECK 10: Accessibility ==========
       if (schema.accessibility) {
-        const el = await setupTestContainer(page, schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content'));
+        const el = await setupTestContainer(page, schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content', schema.element));
         
         for (const [selector, ariaReqs] of Object.entries(schema.accessibility)) {
           // Skip $inherits directive - it's for schema inheritance, not a CSS selector
@@ -1018,7 +1026,7 @@ test.describe('Interactive Elements', () => {
       await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
       
       const allErrors: string[] = [];
-      const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content');
+      const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content', schema.element);
       const element = await setupTestContainer(page, baseHtml);
       
       for (const [selector, intDef] of Object.entries(schema.interactions.elements)) {

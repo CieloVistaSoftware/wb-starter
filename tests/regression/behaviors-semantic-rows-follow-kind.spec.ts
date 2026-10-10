@@ -8,7 +8,7 @@
  * its example is a plain <input type="password">, while x-radio and x-range
  * (no curated example, nothing to match) kept theirs.
  *
- * Now each behavior's schema declares `kind` ("element" + the tag, or
+ * Now each behavior's schema declares `kind` ("element" + its native selector, or
  * "decorator"), the schema index carries it, and the page reads it. The only
  * other reason to drop a semantic row is declared too: a curated example with
  * `form: "attribute"` has no semantic markup to show (x-checkbox, #761).
@@ -31,12 +31,11 @@ function expectedSemanticBehaviors(): string[] {
   const catalogue = JSON.parse(readFileSync(join(ROOT, 'data/behavior-examples.json'), 'utf8')).examples;
   const out = new Set<string>();
   const seen = new Set<string>();
-  for (const [selector, behavior] of Object.entries(nativeMap as Record<string, string>)) {
+  for (const behavior of Object.values(nativeMap as Record<string, string>)) {
     if (seen.has(behavior)) continue; // the page's host is the FIRST selector for a behavior
     seen.add(behavior);
-    const tag = (selector.match(/^[a-z][a-z0-9]*/) || [''])[0];
     const sc = byName.get(behavior);
-    if (!sc || sc.kind !== 'element' || sc.element !== tag) continue;
+    if (!sc || sc.kind !== 'element') continue;
     if (catalogue[`x-${behavior}`]?.form === 'attribute') continue;
     out.add(behavior);
   }

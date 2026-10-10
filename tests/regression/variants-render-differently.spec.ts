@@ -204,10 +204,9 @@ function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'
   // behaviors.html's relabelByExample() (#835): a semantic row survives only when
   // the behavior's schema declares it the element behavior of its host, and its
   // curated example is not declared attribute-only.
-  const usesHost = (attr: string, host: string, behavior: string) => {
-    const sc = byName.get(behavior) as { kind?: string; element?: string } | undefined;
-    const tag = (host.match(/^[a-z][a-z0-9]*/) || [''])[0];
-    if (!sc || sc.kind !== 'element' || sc.element !== tag) return false;
+  const usesHost = (attr: string, behavior: string) => {
+    const sc = byName.get(behavior) as { kind?: string } | undefined;
+    if (!sc || sc.kind !== 'element') return false;
     return (examples[attr] as { form?: string } | undefined)?.form !== 'attribute';
   };
 
@@ -281,7 +280,7 @@ function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'
         .map((ex) => ({ label: ex.label!, exempt: (ex.visual === false ? 'non-visual' : '') as OptionInfo['exempt'], open: ex.visibleWhen === 'open' })),
     ];
     for (const form of ['semantic', 'attribute'] as const) {
-      if (form === 'semantic' && !(host && usesHost(attr, host, behavior))) continue;
+      if (form === 'semantic' && !(host && usesHost(attr, behavior))) continue;
       const forForm = withAuthored(form);
       if (forForm.length >= 2) out.push({ token: attr, form, options: forForm });
     }

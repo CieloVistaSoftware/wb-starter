@@ -46,8 +46,7 @@ for (const file of files) {
       description: schema.description || '',
       tag: `x-${name}`,
       baseClass: schema.baseClass || `x-${name}`,
-      // #835: element vs decorator, declared once in the schema. The behaviors
-      // page reads it to decide whether a behavior has a semantic row.
+      // #835: element or decorator, and for an element the native element it is.
       ...(schema.kind ? { kind: schema.kind } : {}),
       ...(schema.element ? { element: schema.element } : {}),
       properties: schema.properties || {},

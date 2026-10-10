@@ -20,7 +20,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.491">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.493">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -674,8 +674,8 @@
           });
         // #835: whether a behavior has a SEMANTIC row is a fact about the
         // behavior, and its schema now declares it: `kind: "element"` with
-        // `element: "<tag>"` for what that element becomes (<article> -> card,
-        // <table>, <details>), `kind: "decorator"` for extra function laid on
+        // `element: "<selector>"` for the native element it becomes (<article>
+        // -> card, input[type="password"]), `kind: "decorator"` for extra function laid on
         // any element (x-ripple, x-tooltip). This used to be recovered by
         // string-matching the curated example for `<` + host (#767's '\b' bug
         // lived there), and the host is a SELECTOR for inputs --
@@ -698,8 +698,7 @@
             // supposed to read x-{behavior}.
             if (!e.host || e.form === 'attribute') return;
             const sc = schemaByName.get(e.behavior);
-            const tag = (e.host.match(/^[a-z][a-z0-9]*/) || [''])[0];
-            const isElement = !!sc && sc.kind === 'element' && sc.element === tag;
+            const isElement = !!sc && sc.kind === 'element';
             const curated = exampleCatalogue && exampleCatalogue[e.attr];
             const attributeOnly = !!(curated && curated.form === 'attribute');
             if (!isElement || attributeOnly) e.dropSemantic = true;
@@ -3054,7 +3053,15 @@
       const optionText = authored
         ? authored.label
         : optionLabel({ prop, value: variant, boolean: isBool });
-      liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
+      // #835: a semantic row is labelled by its element (`article`), and the
+      // API and doc panels below are the behavior's (`card`). The schema says
+      // which behavior an element becomes, so the header says it too:
+      // `article → card · glass`, not a `card` doc under an `article` header.
+      const sc = schemaByName.get(behaviorName);
+      const becomes = form === 'semantic' && sc && sc.kind === 'element' && shown !== behaviorName
+        ? `${shown} → ${behaviorName}`
+        : shown;
+      liveToken.textContent = optionText ? `${becomes} · ${optionText}` : becomes;
 
       if (!src) {
         // John: "x-article shows nothing shouldn't it at least show a semantic
