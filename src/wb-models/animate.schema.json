@@ -4,6 +4,7 @@
   "title": "Animate",
   "description": "Plays one of the library's keyframe animations on its host, when it is clicked or as soon as it loads. A button always plays it on click. It applies to any element, so it names no host.",
   "schemaFor": "animate",
+  "kind": "decorator",
   "properties": {
     "animation": {
       "type": "string",

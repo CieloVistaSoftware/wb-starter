@@ -4,6 +4,8 @@
   "title": "Navbar",
   "description": "Navigation bar with brand, links, and responsive menu",
   "schemaFor": "navbar",
+  "kind": "element",
+  "element": "nav",
   "baseClass": "x-navbar",
   "semanticElement": {
     "tagName": "nav",

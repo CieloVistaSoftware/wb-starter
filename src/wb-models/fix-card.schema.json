@@ -4,6 +4,7 @@
   "title": "Fix Card",
   "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
   "schemaFor": "fix-card",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-fix-card",
     "supportLevel": "stable",

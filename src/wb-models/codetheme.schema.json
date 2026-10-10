@@ -4,6 +4,7 @@
   "title": "Code Theme",
   "description": "Dropdown that picks a highlight.js code theme and applies it to every code block on the page at once.",
   "schemaFor": "codetheme",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-codetheme",
     "supportLevel": "stable",

@@ -4,6 +4,7 @@
   "title": "Masonry",
   "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
   "schemaFor": "masonry",
+  "kind": "decorator",
   "properties": {
     "columns": {
       "type": "string",

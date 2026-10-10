@@ -4,6 +4,7 @@
   "title": "Dark Mode Toggle",
   "description": "Button to toggle dark/light theme.",
   "schemaFor": "darkmode",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-darkmode",
     "supportLevel": "stable",

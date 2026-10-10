@@ -4,6 +4,7 @@
   "title": "Badge",
   "description": "Small label/tag for status indicators, counts, or categories",
   "schemaFor": "badge",
+  "kind": "decorator",
   "baseClass": "x-badge",
   "semanticElement": {
     "tagName": "span",

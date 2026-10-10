@@ -4,6 +4,8 @@
   "title": "Kbd",
   "description": "A plain <kbd> is drawn as a keycap: monospace text on a raised, bordered key.",
   "schemaFor": "kbd",
+  "kind": "element",
+  "element": "kbd",
   "properties": {},
   "$view": [],
   "$methods": {},

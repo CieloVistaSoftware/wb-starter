@@ -4,6 +4,7 @@
   "title": "Heartbeat",
   "description": "On click, plays the heartbeat animation for 1.3s.",
   "schemaFor": "heartbeat",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

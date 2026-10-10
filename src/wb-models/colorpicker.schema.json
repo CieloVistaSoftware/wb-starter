@@ -6,6 +6,7 @@
   "properties": {},
   "required": [],
   "schemaFor": "colorpicker",
+  "kind": "decorator",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

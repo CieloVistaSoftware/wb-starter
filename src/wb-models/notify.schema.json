@@ -4,6 +4,7 @@
   "title": "Notify",
   "description": "x-notify makes the element pop a toast notification on each click.",
   "schemaFor": "notify",
+  "kind": "decorator",
   "properties": {
     "message": {
       "type": "string",

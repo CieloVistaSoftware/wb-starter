@@ -4,6 +4,7 @@
   "title": "Youtube",
   "description": "x-youtube embeds a YouTube video from videoId or a full url as a responsive player that keeps its aspect ratio.",
   "schemaFor": "youtube",
+  "kind": "decorator",
   "properties": {
     "url": {
       "type": "string",

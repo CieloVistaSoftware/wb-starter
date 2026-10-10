@@ -4,6 +4,7 @@
   "title": "Grid",
   "description": "Responsive CSS grid: items auto-fit into columns from a minimum item width.",
   "schemaFor": "grid",
+  "kind": "decorator",
   "properties": {
     "columns": {
       "type": "string",

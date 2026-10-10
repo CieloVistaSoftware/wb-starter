@@ -4,6 +4,7 @@
   "title": "Button Card",
   "description": "Card with action buttons in footer",
   "schemaFor": "cardbutton",
+  "kind": "decorator",
   "baseClass": "x-card-button",
   "semanticElement": {
     "tagName": "article",

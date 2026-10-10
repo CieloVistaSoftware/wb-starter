@@ -4,6 +4,7 @@
   "title": "Zoomin",
   "description": "On click, plays the zoom-in animation for 0.4s.",
   "schemaFor": "zoomin",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

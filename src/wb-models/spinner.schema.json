@@ -4,6 +4,7 @@
   "title": "Spinner",
   "description": "Loading spinner indicator",
   "schemaFor": "spinner",
+  "kind": "decorator",
   "baseClass": "x-spinner",
   "semanticElement": {
     "tagName": "div",

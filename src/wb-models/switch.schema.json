@@ -4,6 +4,7 @@
   "title": "Switch",
   "description": "Toggle switch for boolean settings",
   "schemaFor": "switch",
+  "kind": "decorator",
   "baseClass": "x-switch",
   "semanticElement": {
     "tagName": "div",

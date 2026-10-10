@@ -16,6 +16,16 @@
 
 ---
 
+**Updated 2026-10-10.** Behavior schemas say element or decorator (#835).
+
+**Files touched:** every behavior schema in `src/wb-models/` (177: 28 `"kind": "element"` with `"element"`, 149 `"kind": "decorator"`); `src/wb-models/schema.schema.json`; `scripts/build-schema-index.mjs` and `data/schema-index.json` (regenerated, now carry kind/element); `tests/compliance/schemas-declare-kind.spec.ts` (new gate); `docs/claude/SCHEMAS-GUIDE.md` — documents `kind`/`element` in the schema template.
+
+**Last action:** the gate checks kind element exactly when `nativeMap` in `src/core/tag-map.js` maps a native element onto the behavior, and `element` names that selector.
+
+**Next step:** tools that guess element vs decorator (wizard, IntelliSense) can read `kind` from the schema index.
+
+---
+
 **Updated 2026-10-09, later.** Class naming convention, batch 6 (#1096).
 
 **Files touched:** `src/wb-viewmodels/card.js`, `copy.js`, `demo.js`, `effects.js`, `feedback.js`, `header.js`, `media-load-retry.js`, `notes.js`, `overlay.js`, `semantics/code.js`, `semantics/dialog.js`, `semantics/img.js`; `src/core/site-engine.js`, `click-confirm.js`, `component-landmark.js` (comment); `src/styles/site.css`, `x-signature.css` and the behavior sheets card, cardfile, cardhorizontal, cardimage, cardlink, dialog, drawer, effects, image, notes, overlays, toast, ui-utils; `src/wb-models/cardfile`, `cardhorizontal`, `cardimage`, `header`, `toast` schemas; `data/schema-index.json` (regenerated), `data/behavior-component-index.json`, `data/bug-registry.json`; `docs/standards/CSS-CLASS-CONVENTION.md`, `docs/behaviors/toast.md`; the naming spec and the specs that selected the old classes.

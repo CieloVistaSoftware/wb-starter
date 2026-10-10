@@ -6,6 +6,7 @@
   "properties": {},
   "required": [],
   "schemaFor": "help",
+  "kind": "decorator",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

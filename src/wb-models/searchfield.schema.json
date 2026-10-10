@@ -4,6 +4,7 @@
   "title": "Searchfield",
   "description": "Complete search field: icon, debounced search events, clear button and loading state.",
   "schemaFor": "searchfield",
+  "kind": "decorator",
   "properties": {
     "size": {
       "type": "string",

@@ -4,6 +4,7 @@
   "title": "Highlight",
   "description": "Marks text with a highlight background. Without color it uses the theme's highlight colours.",
   "schemaFor": "highlight",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "mark"
   },

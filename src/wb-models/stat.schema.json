@@ -4,6 +4,7 @@
   "title": "Stat",
   "description": "x-stat shows one figure: a large value over a small label, with an optional colour variant.",
   "schemaFor": "stat",
+  "kind": "decorator",
   "properties": {
     "label": {
       "type": "string",

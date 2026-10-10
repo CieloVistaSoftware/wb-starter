@@ -4,6 +4,7 @@
   "title": "Toggle",
   "description": "Toggle visibility or state of another element.",
   "schemaFor": "toggle",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-toggle",
     "supportLevel": "stable",

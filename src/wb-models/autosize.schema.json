@@ -4,6 +4,7 @@
   "title": "Autosize",
   "description": "Grows a textarea to fit its content as the user types.",
   "schemaFor": "autosize",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

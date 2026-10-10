@@ -6,6 +6,7 @@
   "properties": {},
   "required": [],
   "schemaFor": "file",
+  "kind": "decorator",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

@@ -4,6 +4,7 @@
   "title": "Product Card",
   "description": "E-commerce product card with image, price, rating, and CTA",
   "schemaFor": "cardproduct",
+  "kind": "decorator",
   "baseClass": "x-product",
   "semanticElement": {
     "tagName": "article",

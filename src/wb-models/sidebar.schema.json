@@ -4,6 +4,7 @@
   "title": "Sidebar",
   "description": "Vertical navigation list with an active item, an icon-only collapsed mode, drag-resize, and a block or pill item style. The site's left nav is one (#829).",
   "schemaFor": "sidebar",
+  "kind": "decorator",
   "baseClass": "x-sidebar",
   "semanticElement": {
     "tagName": "nav",

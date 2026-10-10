@@ -4,6 +4,7 @@
   "title": "Share",
   "description": "x-share makes the element open the device's share sheet with shareTitle, shareText and shareUrl; where the Web Share API is missing it copies the URL to the clipboard instead.",
   "schemaFor": "share",
+  "kind": "decorator",
   "properties": {
     "text": {
       "type": "string",

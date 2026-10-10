@@ -31,6 +31,8 @@
   },
   "required": [],
   "schemaFor": "label",
+  "kind": "element",
+  "element": "label",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

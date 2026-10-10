@@ -4,6 +4,7 @@
   "title": "Clipboard button",
   "description": "A button that copies text to the clipboard and confirms it. The text is its clipboardText, or the text of the element its target selector names.",
   "schemaFor": "clipboard",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "button"
   },

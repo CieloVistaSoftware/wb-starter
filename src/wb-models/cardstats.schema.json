@@ -4,6 +4,7 @@
   "title": "Stats Card",
   "description": "Statistics display card with value, label, icon, and trend indicator",
   "schemaFor": "cardstats",
+  "kind": "decorator",
   "baseClass": "x-cardstats",
   "semanticElement": {
     "tagName": "article",

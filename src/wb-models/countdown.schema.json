@@ -4,6 +4,7 @@
   "title": "Countdown",
   "description": "x-countdown shows the time left until date (or to), or for a fixed number of seconds, and updates it every second until it reaches zero, when wb:countdown:complete fires.",
   "schemaFor": "countdown",
+  "kind": "decorator",
   "properties": {
     "seconds": {
       "type": "string",

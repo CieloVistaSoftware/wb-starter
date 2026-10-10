@@ -115,6 +115,15 @@
       "description": "Legacy behavior identifier (prefer 'behavior')",
       "default": "this is the schema for"
     },
+    "kind": {
+      "type": "string",
+      "enum": ["element", "decorator"],
+      "description": "#835: element = the behavior is (or replaces) a native element, the one named in 'element'; decorator = it adds behavior to whatever host it lands on"
+    },
+    "element": {
+      "type": "string",
+      "description": "#835: for kind element, the native element selector the tag map maps this behavior onto (e.g. article, input[type=checkbox])"
+    },
     "baseClass": {
       "type": "string",
       "pattern": "^wb-[a-z][a-z0-9-]*$",

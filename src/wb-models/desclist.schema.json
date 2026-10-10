@@ -4,6 +4,7 @@
   "title": "Description list from items",
   "description": "Fills a <dl> with one term/description pair per entry of its items attribute.",
   "schemaFor": "desclist",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "dl"
   },

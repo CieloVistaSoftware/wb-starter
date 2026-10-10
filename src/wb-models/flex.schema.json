@@ -4,6 +4,7 @@
   "title": "Flex",
   "description": "x-flex makes the element a flex container and sets direction, wrap, justify, align and gap from attributes, so a row or column layout needs no CSS.",
   "schemaFor": "flex",
+  "kind": "decorator",
   "properties": {
     "direction": {
       "type": "string",
