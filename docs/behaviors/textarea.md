@@ -21,7 +21,7 @@ No attribute needed on `<textarea>`. Don't add `x-textarea` to it (#746).
 | --- | --- | --- | --- |
 | `label` | text | — | Field label |
 | `placeholder` | text | — | Placeholder text |
-| `value` | text | — | Text value |
+| `value` | text | — | Text value. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `name` | text | — | Form field name |
 | `rows` | `number` | `3` | Visible rows |
 | `maxLength` | `number` | `0` | Max character limit |

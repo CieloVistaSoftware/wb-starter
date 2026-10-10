@@ -18,7 +18,7 @@
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Notification type/severity |
 | `title` | text | — | Notification title |
-| `message` | text | — | Notification message |
+| `message` | text | — | Notification message. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `icon` | emoji or icon name | — | Custom icon (overrides variant-based icon) |
 | `dismissible` | `boolean` | `true` | Show dismiss button |
 | `elevated` | `boolean` | `false` | Add shadow elevation |

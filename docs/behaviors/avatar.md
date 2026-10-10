@@ -15,7 +15,7 @@
 | --- | --- | --- | --- |
 | `src` | URL | `#` | Image source URL |
 | `alt` | text | — | Alt text for image |
-| `initials` | up to 2 characters | — | Fallback initials (2 chars) |
+| `initials` | up to 2 characters | — | Fallback initials (2 chars). Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `name` | text | — | Full name (generates initials if not provided) |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` |  |
 | `shape` | `circle` · `square` · `rounded` | `circle` |  |

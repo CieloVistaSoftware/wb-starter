@@ -1,4 +1,5 @@
 import { readAttr, hasAuthoredAttr, authoredAttr } from '../../core/read-attr.js';
+import { authorText } from '../../core/author-content.js';
 import { logError } from '../../core/error-logger.js';
 import { moveKeepingFocus } from '../../core/keep-focus.js';
 
@@ -75,10 +76,10 @@ export function input(element, options = {}) {
     // <input> host honoured them (#754).
     if (element.querySelector('input.x-input__field')) return () => {}; // already built by us (eager runtime already ran)
 
-    const authoredValue = (element._wbOriginalContent || element.textContent || '').trim();
     const label = element.getAttribute('label') || '';
     const placeholder = element.getAttribute('placeholder') || '';
-    const value = element.getAttribute('value') || authoredValue;
+    // #417: the text between the tags is the value and wins over `value`.
+    const value = authorText(element) || element.getAttribute('value') || '';
     const name = element.getAttribute('name') || '';
     const inputType = authoredAttr(element, 'inputType') || 'text';
     const helper = element.getAttribute('helper') || '';

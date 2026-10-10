@@ -1,6 +1,7 @@
 import { readFlag } from '../core/read-attr.js';
 import { setRule, clearRules, clearRulesIn } from '../core/dynamic-style.js';
 import { isThemeColor } from '../core/theme-color.js';
+import { authorText, hasAuthorContent } from '../core/author-content.js';
 /**
  * Effects Behavior
  * -----------------------------------------------------------------------------
@@ -273,9 +274,11 @@ export function confetti(element, options = {}) {
   // it. Guarded so a literal <x-confetti> tag does not get a redundant class.
   element.classList.add('x-confetti');
 
-  // MAKE IT VISIBLE! Render as a button if empty
-  if (config.showButton && !element.textContent.trim()) {
-    element.innerHTML = `<span>🎉</span><span>${config.label}</span>`;
+  // MAKE IT VISIBLE! Render as a button if empty. #417: content wins --
+  // `label` is used only when the author wrote nothing between the tags.
+  if (config.showButton && !hasAuthorContent(element)) {
+    element.innerHTML = '<span>🎉</span><span></span>';
+    element.lastElementChild.textContent = config.label;
   }
 
   // The button chrome and its hover lift live in effects.css under
@@ -344,7 +347,10 @@ export function confetti(element, options = {}) {
  */
 export function typewriter(element, options = {}) {
   const config = {
-    text: options.text || element.getAttribute('text') || element.textContent || 'Hello World!',
+    // #417: the text between the tags is what gets typed, and wins over
+    // `text`. authorText() is captured once: a re-run must not read back the
+    // half-typed text the last run left in the element.
+    text: options.text || authorText(element) || element.getAttribute('text') || 'Hello World!',
     speed: parseInt(options.speed || element.getAttribute('speed') || '50'),
     cursor: options.cursor ?? element.getAttribute('cursor') !== 'false',
   };
@@ -388,13 +394,22 @@ export function typewriter(element, options = {}) {
   };
 }
 
+/** The author's number between the tags, or '' when what is there is not one. */
+function countupTarget(element) {
+  const raw = authorText(element);
+  return Number.isFinite(parseFloat(raw)) ? raw : '';
+}
+
 /**
  * Countup - Animated number counter
  */
 export function countup(element, options = {}) {
   const config = {
     start: parseFloat(options.start || element.getAttribute('from') || '0'),
-    end: parseFloat(options.end || element.getAttribute('to') || element.textContent || '100'),
+    // #417: a number between the tags is the target and wins over `to`.
+    // authorText() is captured once, so a re-run never takes the half-counted
+    // figure the last run left in the element for the target.
+    end: parseFloat(options.end || countupTarget(element) || element.getAttribute('to') || '100'),
     duration: parseInt(options.duration || element.getAttribute('duration') || '2000'),
     prefix: options.prefix || element.getAttribute('prefix') || '',
     suffix: options.suffix || element.getAttribute('suffix') || '',
@@ -695,9 +710,11 @@ export function fireworks(element, options = {}) {
   // it. Guarded so a literal <x-fireworks> tag does not get a redundant class.
   element.classList.add('x-fireworks');
 
-  // Make visible
-  if (config.showButton && !element.textContent.trim()) {
-    element.innerHTML = '🎆 <span>Fireworks!</span>';
+  // Make visible. #417: content wins; `label` (declared in
+  // fireworks.schema.json, never read until now) is the fallback.
+  if (config.showButton && !hasAuthorContent(element)) {
+    element.innerHTML = '🎆 <span></span>';
+    element.lastElementChild.textContent = options.label || element.getAttribute('label') || 'Fireworks!';
   }
   // #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
   // >=1rem padding on every side of a button's text; 0.75rem (12px) failed
@@ -789,9 +806,11 @@ export function snow(element, options = {}) {
   // it. Guarded so a literal <x-snow> tag does not get a redundant class.
   element.classList.add('x-snow');
 
-  // Make visible
-  if (config.showButton && !element.textContent.trim()) {
-    element.innerHTML = '❄️ <span>Let it Snow!</span>';
+  // Make visible. #417: content wins; `label` (declared in snow.schema.json,
+  // never read until now) is the fallback.
+  if (config.showButton && !hasAuthorContent(element)) {
+    element.innerHTML = '❄️ <span></span>';
+    element.lastElementChild.textContent = options.label || element.getAttribute('label') || 'Let it Snow!';
   }
   // Chrome: .x-snow--trigger-button in effects.css (#779).
   if (config.showButton) element.classList.add('x-snow--trigger-button');

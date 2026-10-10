@@ -1,4 +1,5 @@
 import { authoredAttr, hasAuthoredAttr } from '../../core/read-attr.js';
+import { hasAuthorContent } from '../../core/author-content.js';
 /**
  * Button - Semantic enhancement for <button> and <button>
  * 
@@ -157,12 +158,9 @@ function resolveIcon(name) {
 function applyLabel(element) {
   const label = element.getAttribute('label');
   if (label == null || label === '') return;
-  const hasAuthorContent = Array.from(element.childNodes).some(
-    (n) => n.nodeType === Node.TEXT_NODE
-      ? n.textContent.trim()
-      : !n.classList?.contains('x-demo__card-doc-link')
-  );
-  if (!hasAuthorContent) {
+  // #417: the "is there real author content" test is shared now
+  // (core/author-content.js) -- this was its second copy.
+  if (!hasAuthorContent(element)) {
     element.textContent = label;
   }
 }
