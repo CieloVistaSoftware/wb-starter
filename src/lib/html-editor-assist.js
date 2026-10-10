@@ -128,14 +128,29 @@ function caretPoint(textarea, pos) {
 /**
  * Attach the editor keys and the completion popup to a textarea.
  * @param {HTMLTextAreaElement} textarea
- * @param {() => Promise<{ behaviors: Record<string, string>, schemas: Record<string, object> }>} loadData
+ * @param {{ behaviors: Record<string, string>, loadSchemas: () => Promise<Record<string, object>> }} source
+ *   behaviors: attribute -> behavior name, known up front. loadSchemas: the
+ *   schema index, fetched only the first time an option is asked for.
  * @param {{ popupClass?: string }} [opts]
  * @returns {() => void} detach
  */
-export function attachEditorAssist(textarea, loadData, opts = {}) {
+export function attachEditorAssist(textarea, source, opts = {}) {
   const cls = opts.popupClass || 'html-assist';
-  let data = { behaviors: {}, schemas: {} };
-  loadData().then((d) => { if (d) data = d; }).catch(() => {});
+  const data = { behaviors: source.behaviors || {}, schemas: {} };
+  // Not at page load (#1818): fetching the schema index while the page is
+  // still starting up changed when the playground's demos settled, and the
+  // nightly suite caught a demo host that never did. The index is needed only
+  // for an option name, so it is fetched the first time someone types one.
+  let schemas = null;
+  const ensureSchemas = () => {
+    if (!schemas) {
+      schemas = Promise.resolve()
+        .then(() => source.loadSchemas())
+        .then((idx) => { data.schemas = idx || {}; })
+        .catch(() => {});
+    }
+    return schemas;
+  };
 
   const list = document.createElement('ul');
   list.className = cls;
@@ -181,6 +196,9 @@ export function attachEditorAssist(textarea, loadData, opts = {}) {
 
   const open = () => {
     const c = completionContext(textarea.value, textarea.selectionStart);
+    if (c && !c.prefix.startsWith('x-') && !schemas) {
+      ensureSchemas().then(() => { if (document.activeElement === textarea) open(); });
+    }
     const found = c && textarea.selectionStart === textarea.selectionEnd ? suggest(c, data) : [];
     // Nothing to offer, or the only offer is exactly what is already typed.
     if (!found.length || (found.length === 1 && found[0].label === c.prefix)) { close(); return; }
