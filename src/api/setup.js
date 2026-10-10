@@ -24,55 +24,55 @@ const SETUP_CSS = `
 .setup-div-2 { font-size: 5rem; margin-bottom: 1rem; }
 .setup-h1-1 { font-size: 2.5rem; margin: 0 0 0.5rem 0; color: var(--primary); }
 .setup-p-1 { font-size: 1.1rem; color: var(--text-secondary); margin: 0; }
-.setup-div-3 { width: 100%; height: 500px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin: 2rem 0; }
-.setup-div-4 { max-width: 600px; }
+.setup-div-3 { width: 100%; height: 31.25rem; background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin: 2rem 0; }
+.setup-div-4 { max-width: 37.5rem; }
 .setup-h2-1 { font-size: 3.5rem; margin: 0 0 1.5rem 0; font-weight: 700; line-height: 1.2; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
 .setup-blockquote-1 { font-size: 1.3rem; font-style: italic; color: rgba(255,255,255,0.95); margin: 2rem 0; border-left: 4px solid white; padding-left: 2rem; text-align: left; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
 .setup-div-5 { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
-.setup-a-1 { display: inline-block; padding: 1rem 2rem; background: white; color: var(--primary); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
-.setup-a-2 { display: inline-block; padding: 1rem 2rem; border: 2px solid white; color: white; background: transparent; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
-.setup-div-6 { max-width: 600px; margin: 4rem auto; padding: 3rem 2rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); }
+.setup-a-1 { display: inline-block; padding: 1rem 2rem; background: white; color: var(--primary); border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
+.setup-a-2 { display: inline-block; padding: 1rem 2rem; border: 2px solid white; color: white; background: transparent; border-radius: 0.5rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
+.setup-div-6 { max-width: 37.5rem; margin: 4rem auto; padding: 3rem 2rem; background: var(--bg-secondary); border-radius: 0.75rem; border: 1px solid var(--border-color); }
 .setup-h2-2 { text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 1.8rem; }
 .setup-div-7 { display: flex; flex-direction: column; gap: 2rem; }
 .setup-h3-1 { margin: 0 0 0.5rem 0; color: var(--text-primary); font-size: 1.1rem; }
 .setup-a-3 { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 1.05rem; }
 .setup-p-2 { margin: 0; color: var(--text-secondary); font-size: 1.05rem; }
-.setup-div-8 { width: 100%; height: 400px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin-bottom: 3rem; }
+.setup-div-8 { width: 100%; height: 25rem; background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin-bottom: 3rem; }
 .setup-h1-2 { font-size: 3rem; margin: 0 0 0.5rem 0; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
 .setup-p-3 { font-size: 1.3rem; margin: 0; color: rgba(255,255,255,0.9); text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
-.setup-div-9 { max-width: 900px; margin: 0 auto; padding: 2rem; }
+.setup-div-9 { max-width: 56.25rem; margin: 0 auto; padding: 2rem; }
 .setup-h2-3 { font-size: 2rem; color: var(--text-primary); margin-bottom: 1rem; }
 .setup-p-4 { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); }
-.setup-div-10 { max-width: 900px; margin: 2rem auto; padding: 2rem; }
+.setup-div-10 { max-width: 56.25rem; margin: 2rem auto; padding: 2rem; }
 .setup-h2-4 { font-size: 2rem; color: var(--text-primary); margin-bottom: 2rem; }
 .setup-p-5 { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; }
 .setup-div-11 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-.setup-div-12 { padding: 1.5rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); text-align: center; }
+.setup-div-12 { padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.75rem; border: 1px solid var(--border-color); text-align: center; }
 .setup-div-13 { font-size: 3rem; margin-bottom: 1rem; }
 .setup-h3-2 { font-size: 1.3rem; color: var(--text-primary); margin: 0 0 0.5rem 0; }
 .setup-p-6 { color: var(--primary); margin: 0 0 1rem 0; font-weight: 600; }
 .setup-p-7 { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
 .setup-div-14 { text-align: center; padding: 2rem; }
-.setup-a-4 { display: inline-block; padding: 1rem 2.5rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 1.05rem; transition: all 0.3s ease; }
-.setup-div-15 { width: 100%; height: 400px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin-bottom: 3rem; }
-.setup-div-16 { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+.setup-a-4 { display: inline-block; padding: 1rem 2.5rem; background: var(--primary); color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 1.05rem; transition: all 0.3s ease; }
+.setup-div-15 { width: 100%; height: 25rem; background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop') center/cover; background-blend-mode: overlay; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 2rem; margin-bottom: 3rem; }
+.setup-div-16 { max-width: 75rem; margin: 0 auto; padding: 2rem; }
 .setup-div-17 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
-.setup-div-18 { padding: 2rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer; }
+.setup-div-18 { padding: 2rem; background: var(--bg-secondary); border-radius: 0.75rem; border: 1px solid var(--border-color); transition: all 0.3s ease; cursor: pointer; }
 .setup-h3-3 { color: var(--primary); margin-top: 0; font-size: 1.3rem; margin-bottom: 1rem; }
 .setup-p-8 { color: var(--text-secondary); line-height: 1.6; }
 .setup-div-19 { margin-top: 4rem; }
 .setup-h2-5 { font-size: 2rem; color: var(--text-primary); margin-bottom: 2rem; text-align: center; }
 .setup-div-20 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-.setup-div-21 { padding: 2rem; background: var(--bg-secondary); border-radius: 12px; border-left: 4px solid var(--primary); }
+.setup-div-21 { padding: 2rem; background: var(--bg-secondary); border-radius: 0.75rem; border-left: 4px solid var(--primary); }
 .setup-p-9 { color: var(--text-secondary); font-style: italic; margin: 0 0 1rem 0; line-height: 1.6; }
 .setup-div-22 { color: var(--text-primary); font-weight: 600; }
 .setup-div-23 { color: var(--text-secondary); font-size: 0.9rem; }
-.setup-div-24 { margin-top: 4rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+.setup-div-24 { margin-top: 4rem; max-width: 50rem; margin-left: auto; margin-right: auto; }
 .setup-div-25 { display: flex; flex-direction: column; gap: 1.5rem; }
-.setup-div-26 { padding: 1.5rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); }
+.setup-div-26 { padding: 1.5rem; background: var(--bg-secondary); border-radius: 0.75rem; border: 1px solid var(--border-color); }
 .setup-h4-1 { color: var(--primary); margin: 0 0 1rem 0; font-size: 1.1rem; }
 .setup-p-10 { color: var(--text-secondary); margin: 0; line-height: 1.6; }
-.setup-div-27 { text-align: center; background: var(--bg-secondary); padding: 3rem 2rem; border-radius: 12px; margin-top: 4rem; border: 1px solid var(--border-color); }
+.setup-div-27 { text-align: center; background: var(--bg-secondary); padding: 3rem 2rem; border-radius: 0.75rem; margin-top: 4rem; border: 1px solid var(--border-color); }
 .setup-p-11 { font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-secondary); }
 .setup-hover-lift-dark:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
 .setup-hover-ghost:hover { background: rgba(255,255,255,0.1); }
