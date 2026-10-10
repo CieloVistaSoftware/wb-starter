@@ -15,7 +15,7 @@ import { promisify } from 'util';
 // failed the first time the compliance project ran on its own runner.
 const execFileAsync = promisify(execFile);
 import { marked } from 'marked';
-import { updateToLatest } from './scripts/lib/pull-latest.mjs';
+import { updateToLatest, keepUpToDate } from './scripts/lib/pull-latest.mjs';
 import { mergeIntoLog } from './scripts/lib/error-log-merge.mjs';
 import { FOLDER_PAGES } from './src/core/routes.js';
 
@@ -1718,6 +1718,10 @@ function tryListen(p, attemptsLeft) {
 function onListening(p) {
   sitePort = p;
   console.log(`WB Starter running at http://localhost:${p}`);
+  // The local copy keeps up with main, and so with the version the live site
+  // shows (scripts/lib/pull-latest.mjs keepUpToDate). Off in production and on
+  // a test or CI server.
+  if (!isProduction) keepUpToDate(rootDir);
   if (ENABLE_COLLAB) {
     console.log(`Collab Server running at ws://localhost:${WS_PORT}/collab`);
   } else {

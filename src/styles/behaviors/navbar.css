@@ -409,3 +409,52 @@
 .x-navbar.x-navbar--plain a:not([class]):focus-visible {
   text-decoration: underline;
 }
+
+/* ── #830: orientation and itemstyle (navbar.schema.json) ────────────────────
+   Both apply to every navbar: a plain <nav>, <div x-nav>, and the site header.
+   orientation="vertical" stacks the links. It outranks the header's row
+   (`:is([x-navbar], .x-navbar--site)`, 0,1,0) and its menu and list rules
+   (`.x-navbar > div.x-navbar__menu`, 0,2,1; `> div:last-of-type`, 0,2,1). */
+.x-navbar.x-navbar--vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.25rem;
+}
+.x-navbar.x-navbar--vertical > div.x-navbar__menu,
+.x-navbar.x-navbar--vertical > div:last-of-type,
+.x-navbar.x-navbar--vertical .x-navbar__list {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex: none;
+  gap: 0.25rem;
+}
+
+/* itemstyle="pill": every link gets a fully rounded fill on hover and focus,
+   and the current page's link (aria-current="page") a solid accent pill.
+   (0,3,1) beats the header's `a:not(:first-of-type)` padding (0,2,1). */
+.x-navbar.x-navbar--pill a.x-navbar__item,
+.x-navbar.x-navbar--pill.x-navbar--plain a:not([class]) {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
+  border-radius: 999rem;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.x-navbar.x-navbar--pill a.x-navbar__item:hover,
+.x-navbar.x-navbar--pill a.x-navbar__item:focus-visible,
+.x-navbar.x-navbar--pill.x-navbar--plain a:not([class]):hover,
+.x-navbar.x-navbar--pill.x-navbar--plain a:not([class]):focus-visible {
+  background: var(--bg-tertiary);
+  text-decoration: none;
+  opacity: 1;
+}
+.x-navbar.x-navbar--pill a.x-navbar__item[aria-current="page"],
+.x-navbar.x-navbar--pill.x-navbar--plain a:not([class])[aria-current="page"] {
+  background: var(--primary);
+  color: var(--text-on-accent);
+  opacity: 1;
+}

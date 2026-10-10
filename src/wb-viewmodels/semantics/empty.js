@@ -1,4 +1,5 @@
 import { readAttr } from '../../core/read-attr.js';
+import { authorText } from '../../core/author-content.js';
 /**
  * Empty State Behavior
  * Renders an empty state placeholder
@@ -8,7 +9,10 @@ export function empty(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
     icon: options.icon || element.getAttribute('icon') || readAttr(element, 'icon') || '∅',
-    message: options.message || element.getAttribute('message') || readAttr(element, 'message') || 'No data',
+    // #417: the text between the tags is the message and wins over
+    // `message`. It used to be overwritten unread. authorText() is captured
+    // once, so a re-run does not read the icon and heading built below.
+    message: options.message || authorText(element) || element.getAttribute('message') || readAttr(element, 'message') || 'No data',
     description: options.description || element.getAttribute('description') || readAttr(element, 'description') || '',
     ...options
   };

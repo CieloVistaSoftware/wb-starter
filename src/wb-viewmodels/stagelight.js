@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { authorText } from '../core/author-content.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 import { themeColor } from '../core/theme-color.js';
 /**
@@ -41,6 +42,11 @@ export default function stagelight(element, options = {}) {
   // it. Guarded so a literal <x-stagelight> tag does not get a redundant class.
   element.classList.add('x-stagelight');
 
+  // #417: the host keeps its authored text (#647), and that text IS the
+  // fixture's label -- `label` is the fallback for an empty host. Both used to
+  // render side by side. Read before the parts below are added.
+  const authoredLabel = authorText(element);
+
   // === STEP 2: CREATE DOM STRUCTURE BASED ON VARIANT ===
   if (config.variant === 'beam') {
     // Create source (light fixture at top)
@@ -59,8 +65,8 @@ export default function stagelight(element, options = {}) {
     housing.className = 'x-stagelight__housing';
     element.appendChild(housing);
     
-    // Create label if provided
-    if (config.label) {
+    // Create label if provided, and only when the author wrote none.
+    if (config.label && !authoredLabel) {
       const label = document.createElement('span');
       label.textContent = config.label;
       element.appendChild(label);

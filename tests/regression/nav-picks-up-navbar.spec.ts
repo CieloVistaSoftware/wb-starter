@@ -74,7 +74,10 @@ for (const name of PLAIN_NAV_PAGES) {
     await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 20_000 });
     await page.waitForFunction(() => document.querySelector('nav.x-navbar--plain'), null, { timeout: 15_000 });
     const moved = await page.evaluate(async () => {
-      const navs = Array.from(document.querySelectorAll('nav.x-navbar--plain')) as HTMLElement[];
+      // #830: a <nav orientation="vertical"> or <nav itemstyle="pill"> asked
+      // for a layout, so moving its links is the point. Every other plain
+      // <nav> must stay exactly where it was.
+      const navs = Array.from(document.querySelectorAll('nav.x-navbar--plain:not(.x-navbar--vertical):not(.x-navbar--pill)')) as HTMLElement[];
       const read = () => navs.flatMap((n) => Array.from(n.querySelectorAll('a')).map((a) => {
         const r = a.getBoundingClientRect();
         return `${Math.round(r.left)},${Math.round(r.top)},${Math.round(r.width)}`;

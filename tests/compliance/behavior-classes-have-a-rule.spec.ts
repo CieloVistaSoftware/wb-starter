@@ -50,8 +50,9 @@ const UNSTYLED: Record<string, string> = {};
  */
 const NEEDS_NO_RULE: Record<string, string> = {
   // A marker with nothing to show: the behavior builds no DOM and sets no state.
-  'x-behavior': 'the generic marker behavior.js adds and nothing more; permutation-compliance reads it as the baseClass',
-  'x-behaviors-showcase': 'page wiring on the showcase container (nav highlight, smooth scroll); the page stylesheet styles that page',
+  // (x-behavior and x-behaviors-showcase were listed here until #1096 deleted
+  // behavior.js and behaviors-showcase.js: no registry, import or page reached
+  // either function, so nothing ever added the classes.)
   'x-control': 'control() adds its baseClass and does nothing else (control.schema.json says so); a rule would style a no-op',
   'x-globe': 'globe() adds its baseClass and builds nothing; a rule would style an empty host',
   'x-slider': 'slider() adds its baseClass and builds nothing; a rule would style an empty host',

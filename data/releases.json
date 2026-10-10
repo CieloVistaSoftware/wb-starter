@@ -6,6 +6,159 @@
   ],
   "releases": [
     {
+      "version": "1.0.491",
+      "date": "2026-10-10",
+      "summary": "A behavior&#39;s main text can be written as an attribute or between the tags, and the text between the tags now always wins. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/417\" target=\"_blank\" rel=\"noopener\">#417</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1829\" target=\"_blank\" rel=\"noopener\">#1829</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Content between the tags wins over a behavior&#39;s primary attribute</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/417\" target=\"_blank\" rel=\"noopener\">#417</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1829\" target=\"_blank\" rel=\"noopener\">#1829</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f1ca362df43a0db1654d9332eba7485999dd7513\" target=\"_blank\" rel=\"noopener\"><code>f1ca362</code></a>",
+          "issues": [
+            417,
+            1829
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/primary-value-content-wins.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/primary-value-content-wins.spec.ts</a> --project=regression</code>. Before: 81 of 102 fail on main (e.g. &lt;div x-cardtestimonial quote=&quot;A&quot;&gt;B&lt;/div&gt; quoted A; &lt;div x-stat label=&quot;Users&quot;&gt;7&lt;/div&gt; showed no 7; a re-scanned testimonial quoted its own built icon and author line). Now: 102 pass, on both runtimes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f1ca362df43a0db1654d9332eba7485999dd7513\" target=\"_blank\" rel=\"noopener\"><code>f1ca362</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.490",
+      "date": "2026-10-10",
+      "summary": "The live-examples audit no longer reports a slow-building demo as missing its grid. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1817\" target=\"_blank\" rel=\"noopener\">#1817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1834\" target=\"_blank\" rel=\"noopener\">#1834</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The x-demo audit waits for each demo to build, not for a fixed 5s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1817\" target=\"_blank\" rel=\"noopener\">#1817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1834\" target=\"_blank\" rel=\"noopener\">#1834</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/20059ac42c0587c62d75971475a109488b7fe153\" target=\"_blank\" rel=\"noopener\"><code>20059ac</code></a>",
+          "issues": [
+            1817,
+            1834
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/live-examples-wait-for-slow-demo-builds.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/live-examples-wait-for-slow-demo-builds.spec.ts</a> --project=regression. Before: frameworks.html at 6x CPU throttling reported &quot;[x-demo][0]: no .x-demo__grid was built at all&quot; 4 of 4 times. Now: every demo builds and the audit is clean, 5 of 5.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/20059ac42c0587c62d75971475a109488b7fe153\" target=\"_blank\" rel=\"noopener\"><code>20059ac</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.489",
+      "date": "2026-10-10",
+      "summary": "Test helper elementReady() no longer fails with a false &quot;Execution context was destroyed&quot; when a page is busy the moment an element is ready. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>ElementReady() waits through waitForFunction, not an awaited evaluate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>",
+          "issues": [
+            1818,
+            1828
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/element-ready-survives-a-busy-page.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/element-ready-survives-a-busy-page.spec.ts</a> --project=regression. Before: elementReady failed 2 of 6 rounds with &quot;Execution context was destroyed&quot;. Now: all rounds pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.488",
+      "date": "2026-10-10",
+      "summary": "The last 6 behavior classes that broke the x-{behavior} naming rule are renamed or deleted, so the naming ratchet is 0 and every class a behavior applies can be derived from its name. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Final batch — fix-card and effect classes named for their behavior, two unreachable modules deleted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3813805cc6facfed297c07cf2fada012ad65e10e\" target=\"_blank\" rel=\"noopener\"><code>3813805</code></a>",
+          "issues": [
+            1096,
+            1816
+          ]
+        }
+      ],
+      "seeIt": "Click a <code>&lt;button x-slidein direction=&quot;up&quot;&gt;</code> and inspect it. Before: <code>class=&quot;x-slide-in-up&quot;</code>, the keyframe&#39;s name. Now: <code>class=&quot;x-slidein x-slidein--up&quot;</code>, and it slides in exactly as before.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3813805cc6facfed297c07cf2fada012ad65e10e\" target=\"_blank\" rel=\"noopener\"><code>3813805</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.487",
+      "date": "2026-10-10",
+      "summary": "A new wb-starter site carries a GitHub Pages workflow, and creating it offers to make the GitHub repo and publish it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1232\" target=\"_blank\" rel=\"noopener\">#1232</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1824\" target=\"_blank\" rel=\"noopener\">#1824</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Creating a site offers to publish it on GitHub Pages</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1232\" target=\"_blank\" rel=\"noopener\">#1232</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1824\" target=\"_blank\" rel=\"noopener\">#1824</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c0ca1fcbfe3f75dd4d86f3ae4560789ade2d6210\" target=\"_blank\" rel=\"noopener\"><code>c0ca1fc</code></a>",
+          "issues": [
+            1232,
+            1824
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npm create wb-starter my-site</code> with gh signed in. Before: no .github folder and no question; publishing was a manual build and upload. Now: my-site/.github/workflows/deploy.yml exists, and it asks &quot;Create a public GitHub repo &quot;my-site&quot; and publish it on GitHub Pages now? (y/N)&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c0ca1fcbfe3f75dd4d86f3ae4560789ade2d6210\" target=\"_blank\" rel=\"noopener\"><code>c0ca1fc</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.486",
+      "date": "2026-10-10",
+      "summary": "Navs take orientation=&quot;vertical|horizontal&quot; and itemstyle=&quot;pill&quot;, on &lt;nav&gt;, x-nav and x-sidebar alike. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1826\" target=\"_blank\" rel=\"noopener\">#1826</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Nav unit takes orientation and itemstyle, declared in both schemas</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1826\" target=\"_blank\" rel=\"noopener\">#1826</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/af8b4ac744cee7fd78b52d74e6d241a77a4cd0b6\" target=\"_blank\" rel=\"noopener\"><code>af8b4ac</code></a>",
+          "issues": [
+            830,
+            1826
+          ]
+        }
+      ],
+      "seeIt": "Open any page with &lt;nav orientation=&quot;vertical&quot; itemstyle=&quot;pill&quot;&gt;&lt;a href=&quot;#a&quot; aria-current=&quot;page&quot;&gt;A&lt;/a&gt;&lt;a href=&quot;#b&quot;&gt;B&lt;/a&gt;&lt;/nav&gt;. Before: A and B sit on one line as plain links. Now: they stack and A is a rounded accent pill.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/af8b4ac744cee7fd78b52d74e6d241a77a4cd0b6\" target=\"_blank\" rel=\"noopener\"><code>af8b4ac</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.485",
+      "date": "2026-10-10",
+      "summary": "The live site showed v1.0.481 while a local server still showed an (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1823\" target=\"_blank\" rel=\"noopener\">PR 1823</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1822\" target=\"_blank\" rel=\"noopener\">#1822</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The local server keeps up with main, so its version matches the live site</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1822\" target=\"_blank\" rel=\"noopener\">#1822</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ca3e15514baca336731a2b7596d0c949563d2612\" target=\"_blank\" rel=\"noopener\"><code>ca3e155</code></a>",
+          "issues": [
+            1822
+          ]
+        }
+      ],
+      "seeIt": "Run npm start on main and leave it running while a PR merges. Before: port 3000 kept the old version until a restart while the live site moved on. Now: within two minutes the server pulls, re-stamps, and the badge shows the live site&#39;s number.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/21c445bffb5960cd7ba7bf9bafa3a5f7d783cc9c\" target=\"_blank\" rel=\"noopener\"><code>21c445b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.484",
       "date": "2026-10-10",
       "summary": "Nightly 2026-10-10 failed one new test on main: (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1820\" target=\"_blank\" rel=\"noopener\">PR 1820</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a>",

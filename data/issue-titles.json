@@ -1250,5 +1250,7 @@
   "1795": "A labelled radio has no space between the button and its text: .x-label's display:block overrides the wrapper's inline-flex",
   "1817": "live-examples-render: frameworks.html's first demo builds no grid under heavy load",
   "1818": "Nightly 2026-10-10: new test failures on main",
-  "1822": "The local server's version falls behind the live site's: it pulls main only at start, and a badge update never refreshes the number it serves"
+  "1822": "The local server's version falls behind the live site's: it pulls main only at start, and a badge update never refreshes the number it serves",
+  "1831": "wb-lazy pages never apply declared modifier classes: an option like variant= works under wb.js but not on demos/ or the behaviors page",
+  "1832": "site-migrate v1: compliance run, theme tokens and asset copy for a proposed page"
 }

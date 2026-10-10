@@ -1,3 +1,4 @@
+import { authorText } from '../../core/author-content.js';
 /**
  * Stat - Statistic display
  * Custom Tag: <div x-stat>
@@ -7,7 +8,10 @@
  *   <div x-stat value="<1s" label="Build Time" variant="orange"></div>
  */
 export function stat(element, options = {}) {
-  const value = options.value || element.getAttribute('value') || '';
+  // #417: <div x-stat label="Users">1,234</div> -- the text between the tags
+  // is the value and wins over `value`. It used to be wiped whenever `label`
+  // was set.
+  const value = options.value || authorText(element) || element.getAttribute('value') || '';
   const label = options.label || element.getAttribute('label') || '';
   const variant = options.variant || element.getAttribute('variant') || '';
 

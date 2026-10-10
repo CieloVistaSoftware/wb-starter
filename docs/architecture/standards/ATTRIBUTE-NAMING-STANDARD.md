@@ -14,6 +14,8 @@
 
 Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know behavior internals**.
 
+A behavior's one primary value (a badge's label, an alert's message, a card's body) may also be written as the content between the tags, and then the content wins — see [Primary Value: Content Wins](#primary-value-content-wins).
+
 ### The Principle
 
 ```html-static
@@ -79,12 +81,13 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 7. [Naming Conventions](#naming-conventions)
 8. [Accessibility Attributes](#accessibility-attributes)
 9. [Units and Values](#units-and-values)
-10. [CSS Custom Properties](#css-custom-properties)
-11. [Migration from Legacy Syntax](#migration-from-legacy-syntax)
-12. [Error Handling](#error-handling)
-13. [IDE Support](#ide-support)
-14. [Quick Reference](#quick-reference)
-15. [Examples by Behavior](#examples-by-behavior)
+10. [Primary Value: Content Wins](#primary-value-content-wins)
+11. [CSS Custom Properties](#css-custom-properties)
+12. [Migration from Legacy Syntax](#migration-from-legacy-syntax)
+13. [Error Handling](#error-handling)
+14. [IDE Support](#ide-support)
+15. [Quick Reference](#quick-reference)
+16. [Examples by Behavior](#examples-by-behavior)
 
 ---
 
@@ -653,6 +656,43 @@ Display values can include formatting - they're strings, not numbers:
   min="0"
   max="10">
 </div>
+
+---
+
+## Primary Value: Content Wins
+
+Decided in #417, in the same order as #968.
+
+A behavior's **primary value** can be written two ways, and every behavior in the table below accepts both:
+
+```html-static
+<span x-badge label="New"></span>   <!-- the attribute -->
+<span x-badge>New</span>            <!-- the content between the tags -->
+```
+
+**When both are given, the content wins.** The attribute is the fallback, used only when there is no author content. Whitespace, comments and the x-demo doc-link icon are not author content. A programmatic `options.<name>` passed to the behavior still overrides both.
+
+One implementation: `src/core/author-content.js` (`authorText`, `hasAuthorContent`, `authorHTML`). It reads the author's content once, before the behavior builds anything, so a re-scan never mistakes the behavior's own built children for author content. Numeric primaries (`value`, `to`) take the content only when it is a number, so `<progress value="70">Loading…</progress>` fallback text never zeroes the bar.
+
+| Behavior | Primary attribute |
+|----------|-------------------|
+| `x-badge`, `x-pill`, `x-button`, `x-chip`, `x-spinner`, `x-checkbox`, `x-switch`, `x-radio`, `x-floatinglabel`, `x-stagelight` | `label` |
+| `x-print`, `x-share`, `x-fullscreen`, `x-clipboard`, `x-scroll`, `x-confetti`, `x-fireworks`, `x-snow` | `label` |
+| `x-alert`, `x-empty`, `x-cardnotification` | `message` |
+| `x-divider`, `x-link`, `x-typewriter` | `text` |
+| `x-avatar` | `initials` |
+| `x-stat`, `x-input`, `x-textarea`, `x-progress`, `x-rating`, `x-stepper` | `value` |
+| `x-countup` | `to` |
+| `x-cardtestimonial` | `quote` |
+| `x-card`, `x-cardbutton`, `x-carddraggable`, `x-cardexpandable`, `x-cardfile`, `x-cardhero`, `x-cardhorizontal`, `x-cardimage`, `x-cardlink`, `x-cardminimizable`, `x-cardoverlay`, `x-cardportfolio`, `x-cardpricing`, `x-cardproduct`, `x-cardprofile`, `x-cardstats`, `x-cardvideo` | `content` (the card body) |
+
+`tests/regression/primary-value-content-wins.spec.ts` is driven by the same table and checks attribute only, text only and both for every row; it fails if this table and the spec's drift apart.
+
+**Behaviors with no single primary value** are not in the table, because their content is something else:
+
+- **Containers** — the content is the body, and the attributes are a heading or settings around it: `x-collapse` (`heading`), `x-details` (`summary`), `x-articles`, `x-header`, `x-footer`, `x-figure`, `x-select`, `x-dropdown`, `x-breadcrumb`, `x-hero`.
+- **Triggers** — the content is the trigger's own face; the attribute is what the trigger opens or sends: `x-toast`, `x-notify`, `x-tooltip`, `x-popover`, `x-drawer`, `x-dialog`, `x-lightbox`, `x-offcanvas`, `x-sheet`, `x-confirm`, `x-prompt`.
+- **Overrides** — the attribute deliberately differs from what is shown: `x-copy` / `x-copybutton` (`text` is what gets copied; the content is the visible label or the default to copy), `x-colorpicker` (the content is the picker's caption).
 
 ---
 
