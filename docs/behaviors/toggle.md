@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-toggle target="#x-ex-toggle-panel" toggle-class="sr-only" toggle-self="false">Show / hide the note</button>
 <p id="x-ex-toggle-panel">This note is hidden by the <code>sr-only</code> class on the first click and shown again on the next.</p>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,12 +4,12 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardbutton
   title="Upgrade to Team"
   primary="Start free trial"
   secondary="Compare plans">Shared workspaces, audit history and SSO.</article>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,9 +4,9 @@ Every `<nav>` picks up navbar; no `x-navbar` attribute needed (#958). A plain `<
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <nav brand="wb-starter" brandHref="#" tagline="Zero build"></nav>
-</div>
+</figure>
 
 ## Attributes
 

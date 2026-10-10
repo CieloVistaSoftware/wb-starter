@@ -9,16 +9,16 @@ enforces the limit via the native `maxlength`. See
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
-</div>
+</figure>
 
 Add `warning` for a threshold that turns the counter into a warning state
 before the field is actually full:
 
-<div x-demo>
+<figure x-demo>
 <textarea x-counter max="120" warning="90" placeholder="Tell us about yourself" rows="3"></textarea>
-</div>
+</figure>
 
 ## Properties
 

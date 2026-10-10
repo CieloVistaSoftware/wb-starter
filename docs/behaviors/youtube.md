@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>
-</div>
+</figure>
 
 ## Attributes
 

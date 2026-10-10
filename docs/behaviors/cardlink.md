@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardlink
   href="#"
   title="Attribute naming standard"
   description="Why every attribute is kebab-case, and what breaks when it is not."
   badge="Standard"></article>
-</div>
+</figure>
 
 ## Attributes
 

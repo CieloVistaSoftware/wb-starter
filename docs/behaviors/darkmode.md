@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-darkmode>Switch dark / light</button>
-</div>
+</figure>
 
 <sub>Schema: [`darkmode.schema.json`](../../src/wb-models/darkmode.schema.json)</sub>

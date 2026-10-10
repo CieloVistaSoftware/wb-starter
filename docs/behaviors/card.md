@@ -9,19 +9,19 @@ an element in place, exactly as `x-ripple` does.
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article title="Card title" subtitle="A line under it" footer="Footer text"></article>
-</div>
+</figure>
 
 Explicitly, or on a non-article element:
 
-<div x-demo>
+<figure x-demo>
 <div x-card
   title="Card title"
   subtitle="A line under it"
   footer="Footer text"
   elevated></div>
-</div>
+</figure>
 
 Only the parts you give it are rendered. A card with no `title`/`subtitle` gets
 no header; a card with no `footer` gets no footer. Nothing is emitted empty.
@@ -52,83 +52,83 @@ There is no separate article behavior. A blog post, news item or doc page is an
 `<article>`, so it is a card, and the byline attributes above are how it says who
 wrote it and when:
 
-<div x-demo>
+<figure x-demo>
 <article title="Ada on Engines" author="Ada Lovelace"
   date="1843-10-01" category="Computing" readingTime="7 min">
   The Engine weaves algebraic patterns as the loom weaves flowers.
 </article>
-</div>
+</figure>
 
 ### Badge
 
 `badge` puts a short label in the header's right-hand column:
 
-<div x-demo>
+<figure x-demo>
 <article title="Release 4.2" badge="NEW">
   Lazy loading is now the default runtime.
 </article>
-</div>
+</figure>
 
 ### Variants
 
 `variant="glass"` frosts the surface so whatever sits behind the card shows
 through, blurred:
 
-<div x-demo>
+<figure x-demo>
 <article title="Glass" variant="glass">
   Frosted surface over the page background.
 </article>
-</div>
+</figure>
 
 `variant="bordered"` drops the fill and keeps a heavier outline, for cards
 sitting on a busy surface:
 
-<div x-demo>
+<figure x-demo>
 <article title="Bordered" variant="bordered">
   Outline only; the page shows through.
 </article>
-</div>
+</figure>
 
 ### Elevated
 
 `elevated` lifts the card off the page with a drop shadow:
 
-<div x-demo>
+<figure x-demo>
 <article title="Elevated" elevated>
   Raised above its neighbours.
 </article>
-</div>
+</figure>
 
 ### Clickable
 
 `clickable` makes the whole card one control: it takes focus, and Enter or
 Space activates it the same as a click.
 
-<div x-demo>
+<figure x-demo>
 <article title="Open the report" clickable>
   Anywhere on this card opens it.
 </article>
-</div>
+</figure>
 
 ### Tooltip
 
 `tooltip` shows its text in a themed tooltip on hover:
 
-<div x-demo>
+<figure x-demo>
 <article title="Hover me" tooltip="Updated two minutes ago">
   Point at the card to see when it last changed.
 </article>
-</div>
+</figure>
 
 ### Featured
 
 `featured` promotes one card over its siblings; give it a value to say why:
 
-<div x-demo>
+<figure x-demo>
 <article title="Trail boots" featured="Deal of the week">
   Waterproof, resoleable, 20% off until Sunday.
 </article>
-</div>
+</figure>
 
 ## Methods
 

@@ -47,31 +47,31 @@ a real accordion via `x-accordion` on semantic HTML.
 
 ### Multi-item FAQ list
 
-<div x-demo>
+<figure x-demo>
 <div x-accordion>
   <div accordionTitle="What is wb-starter?">A schema-first, no-build website starter kit.</div>
   <div accordionTitle="Does it need a build step?">No — every behavior runs directly in the browser.</div>
   <div accordionTitle="Is x-accordion the recommended choice?">No, prefer the native details/summary element for new markup.</div>
 </div>
-</div>
+</figure>
 
 ### One item pre-opened
 
-<div x-demo>
+<figure x-demo>
 <div x-accordion>
   <div accordionTitle="Closed by default">This item starts collapsed.</div>
   <div accordionTitle="Opened by default" open>This item starts expanded because it carries its own open attribute.</div>
 </div>
-</div>
+</figure>
 
 ### Host-level `open` expands the first item
 
-<div x-demo>
+<figure x-demo>
 <div x-accordion open>
   <div accordionTitle="First item">Opens automatically — the host itself carries open, and no child overrides it.</div>
   <div accordionTitle="Second item">Stays collapsed.</div>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

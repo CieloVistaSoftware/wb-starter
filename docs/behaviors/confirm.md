@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-confirm confirmTitle="Delete branch?" confirmMessage="fix/706-dropdown will be removed. This cannot be undone.">Delete branch</button>
-</div>
+</figure>
 
 ## Attributes
 

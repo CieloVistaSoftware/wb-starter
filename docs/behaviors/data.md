@@ -16,7 +16,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 hand-authored children are replaced, not merged. The trend line uses `trend`
 (`up`/`down`) plus `trendValue` for the display text.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardstats
   value="1234"
@@ -24,7 +24,7 @@ hand-authored children are replaced, not merged. The trend line uses `trend`
   trend="up"
   trendValue="+12%">
 </article>
-</div>
+</figure>
 
 ### 2. Card Product (`cardproduct`)
 
@@ -32,28 +32,28 @@ hand-authored children are replaced, not merged. The trend line uses `trend`
 not a `<data>` element — its `price`/`originalPrice` attributes are strings
 shown verbatim, not machine-readable values.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardproduct
   price="$99.99"
   originalPrice="$129.99"
   description="Wireless headphones">
 </article>
-</div>
+</figure>
 
 ### 3. Card Pricing (`cardpricing`)
 
 **Note:** like `cardproduct`, `cardpricing` renders `price` as a plain
 `<span class="x-card__amount">`, not a `<data>` element.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardpricing
   plan="Starter"
   price="$29"
   period="/month">
 </article>
-</div>
+</figure>
 
 ## `value` Attribute Formats
 
@@ -75,7 +75,7 @@ shown verbatim, not machine-readable values.
 
 ## Example: Dashboard Stats
 
-<div x-demo>
+<figure x-demo>
 <section
   class="dashboard-stats"
   aria-label="Key Metrics">
@@ -96,7 +96,7 @@ shown verbatim, not machine-readable values.
     trendValue="3%">
   </article>
 </section>
-</div>
+</figure>
 
 ## CSS Styling
 

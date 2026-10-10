@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-otp length="6"></div>
-</div>
+</figure>
 
 ## Attributes
 

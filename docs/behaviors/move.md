@@ -44,7 +44,7 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
 
 ### Grid reorder buttons
 
-<div x-demo>
+<figure x-demo>
 <div x-move style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
   <div style="padding: 1rem; border: 1px solid var(--border-color);">
     Item 1 <button x-moveright>→</button>
@@ -56,11 +56,11 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
     Item 3 <button x-moveleft>←</button>
   </div>
 </div>
-</div>
+</figure>
 
 ### On a plain `<div>`
 
-<div x-demo>
+<figure x-demo>
 <div x-move style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
   <div style="padding: 1rem; border: 1px solid var(--border-color);">
     A <button x-moveright>→</button>
@@ -69,7 +69,7 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
     B <button x-moveleft>←</button>
   </div>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

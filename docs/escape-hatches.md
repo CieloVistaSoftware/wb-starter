@@ -34,17 +34,17 @@ Prevent WB from automatically applying behaviors to an element with
 would inject and any `x-*` it carries (#1168); its children are still enhanced.
 There is no `skip` or `skip-children` attribute.
 
-<div x-demo>
+<figure x-demo>
 <button x-ignore>Not enhanced by WB</button>
 <button>Enhanced</button>
-</div>
+</figure>
 
 ## Override Behavior Options
 
 Pass options as plain attributes on the element, named as the behavior's
 schema names them:
 
-<div x-demo>
+<figure x-demo>
 <article
   title="Compact card"
   variant="bordered"
@@ -57,7 +57,7 @@ schema names them:
   duration="10000">
   Show for 10 seconds
 </button>
-</div>
+</figure>
 
 ## Override Injected CSS
 

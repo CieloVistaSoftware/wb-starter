@@ -4,7 +4,7 @@ A `<code>` element gets syntax highlighting for its `language` and, with `showCo
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <code language="javascript">
 // Debounce — delay a call until the caller stops firing.
 export function debounce(fn, wait = 200) {
@@ -30,7 +30,7 @@ const onResize = debounce(() =&gt; {
 }, 250);
 window.addEventListener('resize', onResize);
 </code>
-</div>
+</figure>
 
 No attribute needed on `<code>`. Don't add `x-code` to it (#746).
 

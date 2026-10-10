@@ -6,14 +6,14 @@ Both rows below are flex containers with a dashed border. The first holds a
 plain `<span>`, which hugs its text; the second holds the same `<span>` with
 `x-fill`, which stretches to the container's edge:
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <div style="display:flex;padding:0.25rem;border:1px dashed var(--border-color)">
   <span style="padding:0.25rem 0.5rem;background:var(--bg-tertiary)">No x-fill: as wide as its text</span>
 </div>
 <div style="display:flex;padding:0.25rem;border:1px dashed var(--border-color)">
   <span x-fill style="padding:0.25rem 0.5rem;background:var(--bg-tertiary);outline:2px solid var(--primary)">x-fill: out to the container's edge</span>
 </div>
-</div>
+</figure>
 
 ## Why this is not just `width: 100%`
 
@@ -42,9 +42,9 @@ token is usually somebody's deliberate decision, and "as wide as possible" still
 means "as wide as you are *allowed* to be". Use `ignoreMaxWidth` when the cap
 is the thing in your way.
 
-<div x-demo>
+<figure x-demo>
 <article x-fill ignoreMaxWidth>Edge to edge, cap and all</article>
-</div>
+</figure>
 
 ## What it sets
 

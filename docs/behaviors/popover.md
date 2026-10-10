@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-popover popoverTitle="Retry policy" popoverContent="Failed runs retry twice, 30 seconds apart.">Retry policy</button>
-</div>
+</figure>
 
 ## Attributes
 

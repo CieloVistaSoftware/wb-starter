@@ -29,27 +29,27 @@ centering the box itself (default) or by centering its children with flexbox
 
 ### Constrained width (default)
 
-<div x-demo>
+<figure x-demo>
 <div x-center maxWidth="400px">
   <p>This block is capped at 400px and centered on the page, with 1rem of gutter padding on each side.</p>
 </div>
-</div>
+</figure>
 
 ### Custom gutters
 
-<div x-demo>
+<figure x-demo>
 <div x-center maxWidth="300px" gutters="2rem">
   <p>Wider gutters around a narrower column.</p>
 </div>
-</div>
+</figure>
 
 ### Intrinsic centering
 
-<div x-demo>
+<figure x-demo>
 <div x-center intrinsic>
   <button>Centered by content width</button>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

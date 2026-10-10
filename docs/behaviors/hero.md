@@ -4,12 +4,12 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-hero>
   <h1>Ship the markup, not the toolchain</h1>
   <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

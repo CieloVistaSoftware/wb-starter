@@ -29,7 +29,7 @@ The container gets `display: flex`, `overflow-x: auto`, and
 
 ### Auto-width items
 
-<div x-demo>
+<figure x-demo>
 <div x-reel>
   <div>Card 1</div>
   <div>Card 2</div>
@@ -37,17 +37,17 @@ The container gets `display: flex`, `overflow-x: auto`, and
   <div>Card 4</div>
   <div>Card 5</div>
 </div>
-</div>
+</figure>
 
 ### Fixed item width
 
-<div x-demo>
+<figure x-demo>
 <div x-reel itemWidth="150px" gap="0.5rem">
   <div>Card 1</div>
   <div>Card 2</div>
   <div>Card 3</div>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

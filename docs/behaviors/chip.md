@@ -35,27 +35,27 @@ attributes, so any hand-written inner content is discarded in favor of `label`.
 
 ### Basic chip
 
-<div x-demo>
+<figure x-demo>
 <span x-chip label="Tag"></span>
-</div>
+</figure>
 
 ### Variant + size
 
-<div x-demo>
+<figure x-demo>
 <span x-chip label="Primary" variant="primary" size="lg"></span>
-</div>
+</figure>
 
 ### Dismissible
 
-<div x-demo>
+<figure x-demo>
 <span x-chip label="Removable" variant="info" dismissible></span>
-</div>
+</figure>
 
 ### Icon + outlined
 
-<div x-demo>
+<figure x-demo>
 <span x-chip label="Starred" icon="⭐" outlined variant="warning"></span>
-</div>
+</figure>
 
 ## CSS Classes
 

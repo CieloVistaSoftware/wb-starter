@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-clock></div>
 <div x-clock format="12" variant="led"></div>
 <div x-clock variant="analog" showSeconds="false"></div>
-</div>
+</figure>
 
 ## Attributes
 

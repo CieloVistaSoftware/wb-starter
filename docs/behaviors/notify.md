@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-notify message="Deploy finished — staging is live.">Show notification</button>
-</div>
+</figure>
 
 ## Attributes
 

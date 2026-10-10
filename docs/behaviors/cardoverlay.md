@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardoverlay
   image="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Price_Building_illuminated_at_night_in_Quebec_City.jpg/1280px-Price_Building_illuminated_at_night_in_Quebec_City.jpg"
   title="Night shift"
   subtitle="City desk, 02:00"
   position="bottom"></article>
-</div>
+</figure>
 
 ## Attributes
 

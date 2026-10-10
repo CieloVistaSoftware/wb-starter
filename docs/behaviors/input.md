@@ -4,13 +4,13 @@ A plain `<input>` gets the form styling: `variant` shows a success or error stat
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <input
   variant="error"
   placeholder="owner/name"
   name="repo"
   type="text">
-</div>
+</figure>
 
 No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 

@@ -4,7 +4,7 @@ A plain `<form>` gets validation on submit, and with `ajax` it sends its fields 
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <form validate ajax action="/api/demo-form" successMessage="Sent — check the events panel below.">
   <label>Email <input type="email" name="email" required placeholder="you@example.com"></label>
   <label>Message <textarea name="message" rows="3" required></textarea></label>
@@ -12,7 +12,7 @@ A plain `<form>` gets validation on submit, and with `ajax` it sends its fields 
   type: submit
 </button>
 </form>
-</div>
+</figure>
 
 No attribute needed on `<form>`. Don't add `x-form` to it (#746).
 

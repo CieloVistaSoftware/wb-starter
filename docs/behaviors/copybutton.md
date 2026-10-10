@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-copybutton copyTarget="#x-ex-copy-source">Copy</button>
 <code id="x-ex-copy-source">npm run test:compliance</code>
-</div>
+</figure>
 
 ## Attributes
 

@@ -31,48 +31,48 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 
 ### Custom Element (Flex Stack, Default)
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
   <article title="One">Content</article>
   <article title="Two">Content</article>
 </div>
-</div>
+</figure>
 
 ### Row Direction
 
-<div x-demo>
+<figure x-demo>
 <div x-container direction="row" gap="0.75rem">
   <button variant="primary">Save</button>
   <button variant="ghost">Cancel</button>
 </div>
-</div>
+</figure>
 
 ### Grid Mode (2+ Columns)
 
-<div x-demo>
+<figure x-demo>
 <div x-container columns="3" gap="1rem">
   <article title="A">Card A</article>
   <article title="B">Card B</article>
   <article title="C">Card C</article>
 </div>
-</div>
+</figure>
 
 ### Centered, Max-Width
 
-<div x-demo>
+<figure x-demo>
 <div x-container maxWidth="640px" padding="2rem">
   <p>Centered reading-width content block.</p>
 </div>
-</div>
+</figure>
 
 ### Alignment
 
-<div x-demo>
+<figure x-demo>
 <div x-container direction="row" justify="space-between" align="center">
   <span>Left</span>
   <span>Right</span>
 </div>
-</div>
+</figure>
 
 ## Generated Structure
 

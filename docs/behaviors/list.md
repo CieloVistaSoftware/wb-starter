@@ -4,9 +4,9 @@ The List behavior (`semantics/list.js`) is a utility behavior that populates a l
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <ul x-list items="Item 1, Item 2, Item 3"></ul>
-</div>
+</figure>
 
 `list` is applied with its own `x-list` attribute. (This page used to show the
 generic `x-behavior="list"` form, now deprecated (#1642), and before that
