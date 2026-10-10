@@ -26,7 +26,7 @@
 }
 
 /* #917: the preferred host is <figure x-demo>, and the UA stylesheet gives a
-   <figure> `margin: 1em 40px`. The rule above zeroes left/right, but nothing
+   <figure> margin (1em top and bottom, 40 pixels each side). The rule above zeroes left/right, but nothing
    set the TOP margin on a <div> host, so a <figure> host kept the UA's 1em and
    every demo moved down 16px. :where() has zero specificity, so this only
    undoes the UA margin (any author rule still beats it) -- exactly the margin
