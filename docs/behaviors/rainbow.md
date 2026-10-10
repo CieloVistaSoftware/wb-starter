@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <p x-rainbow>Release day</p>
-</div>
+</figure>
 
 ## Attributes
 

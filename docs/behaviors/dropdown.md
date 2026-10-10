@@ -34,31 +34,31 @@ value that a form submits, use a plain [`<select>`](select.md)
 
 ### Items list
 
-<div x-demo>
+<figure x-demo>
 <button x-dropdown items="Profile,Settings,Logout" label="Account"></button>
-</div>
+</figure>
 
 ### Real child links, open on the right edge
 
-<div x-demo>
+<figure x-demo>
 <div x-dropdown label="Actions" position="bottom-end">
   <a href="#">Edit</a>
   <a href="#">Duplicate</a>
   <a href="#">Delete</a>
 </div>
-</div>
+</figure>
 
 ### Hover trigger
 
-<div x-demo>
+<figure x-demo>
 <button x-dropdown items="Home,Docs,Support" label="Menu" trigger="hover"></button>
-</div>
+</figure>
 
 ### Host text as its own trigger (no `label`, no child items)
 
-<div x-demo>
+<figure x-demo>
 <button x-dropdown items="Item A,Item B">Click me ▾</button>
-</div>
+</figure>
 
 ## CSS Classes
 

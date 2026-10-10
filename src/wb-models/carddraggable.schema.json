@@ -4,6 +4,7 @@
   "title": "Draggable Card",
   "description": "Card that can be dragged around the page",
   "schemaFor": "carddraggable",
+  "kind": "decorator",
   "baseClass": "x-card-draggable",
   "semanticElement": {
     "tagName": "article",

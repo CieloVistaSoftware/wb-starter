@@ -4,6 +4,7 @@
   "title": "Confetti",
   "description": "Confetti particle animation effect",
   "schemaFor": "confetti",
+  "kind": "decorator",
   "baseClass": "x-confetti",
   "compliance": {
     "baseClass": "x-confetti",

@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-tada>Done!</button>
-</div>
+</figure>
 
 <sub>Schema: [`tada.schema.json`](../../src/wb-models/tada.schema.json)</sub>

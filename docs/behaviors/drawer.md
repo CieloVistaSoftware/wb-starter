@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-drawer title="Filters" content="Status, owner, label and date range live here." position="right" width="320px">Open filters</button>
-</div>
+</figure>
 
 ## Attributes
 

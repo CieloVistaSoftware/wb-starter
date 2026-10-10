@@ -4,6 +4,7 @@
   "title": "Pulse",
   "description": "On click, plays the pulse animation for 0.5s.",
   "schemaFor": "pulse",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

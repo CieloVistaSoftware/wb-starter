@@ -4,6 +4,8 @@
   "title": "Code",
   "description": "A <code> block gets syntax highlighting for its language, a surface to sit on, and an optional copy button (showCopy).",
   "schemaFor": "code",
+  "kind": "element",
+  "element": "code",
   "properties": {
     "language": {
       "type": "string",

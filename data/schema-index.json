@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T20:57:18.053Z",
+  "generatedAt": "2026-10-10T21:52:57.185Z",
   "count": 177,
   "schemas": [
     {
@@ -9,6 +9,7 @@
       "description": "Turns titled child sections into independently expandable items. Deprecated: use <details>/<summary> instead.",
       "tag": "x-accordion",
       "baseClass": "x-accordion",
+      "kind": "decorator",
       "properties": {
         "accordionTitle": {
           "type": "string",
@@ -36,6 +37,7 @@
       "description": "Alert behavior for displaying messages with severity levels",
       "tag": "x-alert",
       "baseClass": "x-alert",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -125,6 +127,7 @@
       "description": "Plays one of the library's keyframe animations on its host, when it is clicked or as soon as it loads. A button always plays it on click. It applies to any element, so it names no host.",
       "tag": "x-animate",
       "baseClass": "x-animate",
+      "kind": "decorator",
       "properties": {
         "animation": {
           "type": "string",
@@ -175,6 +178,7 @@
       "description": "A wrapper behavior to display a list or grid of articles.",
       "tag": "x-articles",
       "baseClass": "x-articles",
+      "kind": "decorator",
       "properties": {
         "layout": {
           "type": "string",
@@ -235,6 +239,8 @@
       "description": "Audio player with optional 15-band graphic equalizer",
       "tag": "x-audio",
       "baseClass": "x-audio",
+      "kind": "element",
+      "element": "audio",
       "properties": {
         "src": {
           "type": "string",
@@ -323,6 +329,7 @@
       "description": "Adds a filterable suggestion list under a text input as the user types.",
       "tag": "x-autocomplete",
       "baseClass": "x-autocomplete",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "array",
@@ -343,6 +350,7 @@
       "description": "Grows a textarea to fit its content as the user types.",
       "tag": "x-autosize",
       "baseClass": "x-autosize",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -358,6 +366,7 @@
       "description": "User avatar with image, initials fallback, and status indicator",
       "tag": "x-avatar",
       "baseClass": "x-avatar",
+      "kind": "decorator",
       "properties": {
         "src": {
           "type": "string",
@@ -452,6 +461,7 @@
       "description": "Small label/tag for status indicators, counts, or categories",
       "tag": "x-badge",
       "baseClass": "x-badge",
+      "kind": "decorator",
       "properties": {
         "label": {
           "type": "string",
@@ -847,6 +857,7 @@
       "description": "On click, plays the bounce animation for 0.75s.",
       "tag": "x-bounce",
       "baseClass": "x-bounce",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -862,6 +873,7 @@
       "description": "x-breadcrumb builds a breadcrumb trail inside a <nav> from the comma-separated items, drawing separator between them and marking the last item as the current page.",
       "tag": "x-breadcrumb",
       "baseClass": "x-breadcrumb",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
@@ -895,6 +907,8 @@
       "description": "Interactive button with variants, sizes, and optional icon",
       "tag": "x-button",
       "baseClass": "x-button",
+      "kind": "element",
+      "element": "button",
       "properties": {
         "label": {
           "type": "string",
@@ -1068,6 +1082,7 @@
       "description": "Card with action buttons in footer",
       "tag": "x-cardbutton",
       "baseClass": "x-card-button",
+      "kind": "decorator",
       "properties": {
         "title": {
           "type": "string",
@@ -1140,6 +1155,8 @@
       "description": "Card. Composes an article with a header, main and footer.",
       "tag": "x-card",
       "baseClass": "x-card",
+      "kind": "element",
+      "element": "article",
       "properties": {
         "title": {
           "type": "string",
@@ -1323,6 +1340,7 @@
       "description": "Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).",
       "tag": "x-cardprofile",
       "baseClass": "x-card",
+      "kind": "decorator",
       "properties": {
         "name": {
           "type": "string",
@@ -1430,6 +1448,7 @@
       "description": "A shopping cart that remembers what Add to Cart added: shows how many items it holds and opens to list them with remove buttons, the total and Clear. Kept in localStorage, so it survives a reload",
       "tag": "x-cart",
       "baseClass": "x-cart",
+      "kind": "decorator",
       "properties": {
         "key": {
           "type": "string",
@@ -1452,6 +1471,7 @@
       "description": "Centres the element horizontally, or with flexbox centres its children.",
       "tag": "x-center",
       "baseClass": "x-center",
+      "kind": "decorator",
       "properties": {
         "maxWidth": {
           "type": "string",
@@ -1491,6 +1511,8 @@
       "description": "Checkbox input with label and custom styling",
       "tag": "x-checkbox",
       "baseClass": "x-checkbox",
+      "kind": "element",
+      "element": "input[type=\"checkbox\"]",
       "properties": {
         "label": {
           "type": "string",
@@ -1594,6 +1616,7 @@
       "description": "Small pill-shaped tag/label, optionally dismissible",
       "tag": "x-chip",
       "baseClass": "x-chip",
+      "kind": "decorator",
       "properties": {
         "label": {
           "type": "string",
@@ -1676,6 +1699,7 @@
       "description": "A button that copies text to the clipboard and confirms it. The text is its clipboardText, or the text of the element its target selector names.",
       "tag": "x-clipboard",
       "baseClass": "x-clipboard",
+      "kind": "decorator",
       "properties": {
         "clipboardText": {
           "type": "string",
@@ -1713,6 +1737,7 @@
       "description": "x-clock shows the current time in the element and updates it every second. It shows US Central time unless timezone says otherwise.",
       "tag": "x-clock",
       "baseClass": "x-clock",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -1768,6 +1793,7 @@
       "description": "x-cluster lays its children out in a wrapping row with a fixed gap, centred on a shared line.",
       "tag": "x-cluster",
       "baseClass": "x-cluster",
+      "kind": "decorator",
       "properties": {
         "gap": {
           "type": "string",
@@ -1808,6 +1834,8 @@
       "description": "A <code> block gets syntax highlighting for its language, a surface to sit on, and an optional copy button (showCopy).",
       "tag": "x-code",
       "baseClass": "x-code",
+      "kind": "element",
+      "element": "code",
       "properties": {
         "language": {
           "type": "string",
@@ -1855,6 +1883,7 @@
       "description": "Dropdown that picks a highlight.js code theme and applies it to every code block on the page at once.",
       "tag": "x-codetheme",
       "baseClass": "x-codetheme",
+      "kind": "decorator",
       "properties": {
         "showLabel": {
           "type": "boolean",
@@ -1884,6 +1913,7 @@
       "description": "Collapsible content area.",
       "tag": "x-collapse",
       "baseClass": "x-collapse",
+      "kind": "decorator",
       "properties": {
         "heading": {
           "type": "string",
@@ -1918,6 +1948,7 @@
       "description": "Turns a field into a native colour picker with a swatch.",
       "tag": "x-colorpicker",
       "baseClass": "x-colorpicker",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -1929,6 +1960,7 @@
       "description": "Confetti particle animation effect",
       "tag": "x-confetti",
       "baseClass": "x-confetti",
+      "kind": "decorator",
       "properties": {
         "count": {
           "type": "number",
@@ -1981,6 +2013,7 @@
       "description": "x-confirm puts a confirmation dialog in front of a click: the dialog shows confirmTitle and confirmMessage with OK and Cancel buttons, and fires wb:confirm:ok or wb:confirm:cancel.",
       "tag": "x-confirm",
       "baseClass": "x-confirm",
+      "kind": "decorator",
       "properties": {
         "heading": {
           "type": "string",
@@ -2027,6 +2060,7 @@
       "description": "Layout container that is a flex stack at one column and a responsive auto-fit grid at two or more.",
       "tag": "x-container",
       "baseClass": "x-container",
+      "kind": "decorator",
       "properties": {
         "direction": {
           "type": "string",
@@ -2096,6 +2130,7 @@
       "description": "x-control adds the x-control class to the element and does nothing else; no stylesheet targets that class yet.",
       "tag": "x-control",
       "baseClass": "x-control",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -2111,6 +2146,7 @@
       "description": "Click to copy text to clipboard.",
       "tag": "x-copy",
       "baseClass": "x-copy",
+      "kind": "decorator",
       "properties": {
         "text": {
           "type": "string",
@@ -2145,6 +2181,7 @@
       "description": "x-copybutton makes the element copy the text of another element when clicked: the one matched by copyTarget (or the selector given as the attribute value), or its own text when there is none.",
       "tag": "x-copybutton",
       "baseClass": "x-copybutton",
+      "kind": "decorator",
       "properties": {
         "x-copybutton": {
           "type": "string",
@@ -2191,6 +2228,7 @@
       "description": "x-countdown shows the time left until date (or to), or for a fixed number of seconds, and updates it every second until it reaches zero, when wb:countdown:complete fires.",
       "tag": "x-countdown",
       "baseClass": "x-countdown",
+      "kind": "decorator",
       "properties": {
         "seconds": {
           "type": "string",
@@ -2227,6 +2265,7 @@
       "description": "Shows a live length/max character counter under a text field and enforces the limit.",
       "tag": "x-counter",
       "baseClass": "x-counter",
+      "kind": "decorator",
       "properties": {
         "max": {
           "type": "integer",
@@ -2249,6 +2288,7 @@
       "description": "Counts its host's number up from a start value to an end value, easing out, the first time it scrolls into view. It applies to any element, so it names no host.",
       "tag": "x-countup",
       "baseClass": "x-countup",
+      "kind": "decorator",
       "properties": {
         "from": {
           "type": "number",
@@ -2294,6 +2334,7 @@
       "description": "A full-height flex column that centers its content, with a <header> child pinned to the top and a <footer> child pinned to the bottom -- the hero or splash-screen layout.",
       "tag": "x-cover",
       "baseClass": "x-cover",
+      "kind": "decorator",
       "properties": {
         "minHeight": {
           "type": "string",
@@ -2329,6 +2370,7 @@
       "description": "Button to toggle dark/light theme.",
       "tag": "x-darkmode",
       "baseClass": "x-darkmode",
+      "kind": "decorator",
       "properties": {},
       "matrix": [
         {}
@@ -2342,6 +2384,7 @@
       "description": "An on-page panel that shows console errors, warnings and (optionally) logs, for debugging where devtools are not available.",
       "tag": "x-debug",
       "baseClass": "x-debug",
+      "kind": "decorator",
       "properties": {
         "showErrors": {
           "type": "boolean",
@@ -2396,6 +2439,7 @@
       "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
       "tag": "x-demo",
       "baseClass": "x-demo",
+      "kind": "decorator",
       "properties": {
         "columns": {
           "type": "integer",
@@ -2420,6 +2464,7 @@
       "description": "Enhances a <dl>: vertical or horizontal layout, borders, striping and spacing.",
       "tag": "x-dl",
       "baseClass": "x-dl",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -2459,6 +2504,7 @@
       "description": "Fills a <dl> with one term/description pair per entry of its items attribute.",
       "tag": "x-desclist",
       "baseClass": "x-desclist",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
@@ -2484,6 +2530,8 @@
       "description": "Native HTML5 details disclosure widget with optional animation",
       "tag": "x-details",
       "baseClass": "x-details",
+      "kind": "element",
+      "element": "details",
       "properties": {
         "summary": {
           "type": "string",
@@ -2545,6 +2593,8 @@
       "description": "Modal dialog using native HTML5 dialog element",
       "tag": "x-dialog",
       "baseClass": "x-dialog",
+      "kind": "element",
+      "element": "dialog",
       "properties": {
         "title": {
           "type": "string",
@@ -2635,6 +2685,7 @@
       "description": "Make an element draggable.",
       "tag": "x-draggable",
       "baseClass": "x-draggable",
+      "kind": "decorator",
       "properties": {
         "axis": {
           "type": "string",
@@ -2683,6 +2734,7 @@
       "description": "Card that can be dragged around the page",
       "tag": "x-carddraggable",
       "baseClass": "x-card-draggable",
+      "kind": "decorator",
       "properties": {
         "title": {
           "type": "string",
@@ -2762,6 +2814,7 @@
       "description": "Slide-out panel overlay from screen edge",
       "tag": "x-drawer",
       "baseClass": "x-drawer",
+      "kind": "decorator",
       "properties": {
         "title": {
           "type": "string",
@@ -2847,6 +2900,7 @@
       "description": "Collapsible sidebar layout with toggle",
       "tag": "x-drawer-layout",
       "baseClass": "x-drawerlayout",
+      "kind": "decorator",
       "properties": {
         "position": {
           "type": "string",
@@ -2917,6 +2971,7 @@
       "description": "Toggleable dropdown menu",
       "tag": "x-dropdown",
       "baseClass": "x-dropdown",
+      "kind": "decorator",
       "properties": {
         "position": {
           "type": "string",
@@ -2986,6 +3041,7 @@
       "description": "x-error marks an element as an error message: it adds the x-error class and role=\"alert\", so assistive technology announces the text as soon as it appears.",
       "tag": "x-error",
       "baseClass": "x-error",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -2997,6 +3053,7 @@
       "description": "Card with collapsible/expandable content section",
       "tag": "x-cardexpandable",
       "baseClass": "x-card-expandable",
+      "kind": "decorator",
       "properties": {
         "title": {
           "type": "string",
@@ -3064,6 +3121,7 @@
       "description": "Marks a link as external: opens it in a new tab with rel=\"noopener noreferrer\" and adds a ↗ icon.",
       "tag": "x-external",
       "baseClass": "x-external",
+      "kind": "decorator",
       "properties": {
         "newTab": {
           "type": "boolean",
@@ -3089,6 +3147,7 @@
       "description": "On click, plays the fade-in animation for 0.5s.",
       "tag": "x-fadein",
       "baseClass": "x-fadein",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -3104,6 +3163,8 @@
       "description": "Marks a <fieldset> as a group of related form controls, named by its <legend>. It has no open/closed state; wrap it in <details> for that.",
       "tag": "x-fieldset",
       "baseClass": "x-fieldset",
+      "kind": "element",
+      "element": "fieldset",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -3115,6 +3176,8 @@
       "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text, and captionPosition=\"overlay\" lays the caption across the bottom of the image.",
       "tag": "x-figure",
       "baseClass": "x-figure",
+      "kind": "element",
+      "element": "figure",
       "properties": {
         "captionPosition": {
           "type": "string",
@@ -3170,6 +3233,7 @@
       "description": "Builds a styled file picker inside a container element.",
       "tag": "x-file",
       "baseClass": "x-file",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -3181,6 +3245,7 @@
       "description": "File display card with icon, name, size, and download",
       "tag": "x-cardfile",
       "baseClass": "x-cardfile",
+      "kind": "decorator",
       "properties": {
         "filename": {
           "type": "string",
@@ -3276,6 +3341,7 @@
       "description": "Makes an element as wide as its container allows, using the property that actually governs width in the parent's layout",
       "tag": "x-fill",
       "baseClass": "x-fill",
+      "kind": "decorator",
       "properties": {
         "ignoreMaxWidth": {
           "type": "boolean",
@@ -3293,6 +3359,7 @@
       "description": "Fireworks particle burst animation effect",
       "tag": "x-fireworks",
       "baseClass": "x-fireworks",
+      "kind": "decorator",
       "properties": {
         "count": {
           "type": "number",
@@ -3353,6 +3420,7 @@
       "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
       "tag": "x-fix-card",
       "baseClass": "x-fixcard",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -3364,6 +3432,7 @@
       "description": "On click, plays the flash animation for 0.75s.",
       "tag": "x-flash",
       "baseClass": "x-flash",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -3379,6 +3448,7 @@
       "description": "x-flex makes the element a flex container and sets direction, wrap, justify, align and gap from attributes, so a row or column layout needs no CSS.",
       "tag": "x-flex",
       "baseClass": "x-flex",
+      "kind": "decorator",
       "properties": {
         "direction": {
           "type": "string",
@@ -3431,6 +3501,7 @@
       "description": "On click, plays the flip animation for 0.6s.",
       "tag": "x-flip",
       "baseClass": "x-flip",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -3446,6 +3517,7 @@
       "description": "Turns a field's placeholder into a label that floats above the field once it has focus or a value.",
       "tag": "x-floatinglabel",
       "baseClass": "x-floatinglabel",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -3457,6 +3529,8 @@
       "description": "Page footer with copyright, links, and social icons",
       "tag": "x-footer",
       "baseClass": "x-footer",
+      "kind": "element",
+      "element": "footer",
       "properties": {
         "copyright": {
           "type": "string",
@@ -3525,6 +3599,8 @@
       "description": "A plain <form> gets validation on submit, and with ajax it sends its fields to action with fetch instead of reloading the page, firing wb:form:submit, then wb:form:success or wb:form:error.",
       "tag": "x-form",
       "baseClass": "x-form",
+      "kind": "element",
+      "element": "form",
       "properties": {
         "ajax": {
           "type": "boolean",
@@ -3551,6 +3627,7 @@
       "description": "Lays out a label and its field as one form row, stacked or inline.",
       "tag": "x-formrow",
       "baseClass": "x-formrow",
+      "kind": "decorator",
       "properties": {
         "inline": {
           "type": "boolean",
@@ -3568,6 +3645,7 @@
       "description": "x-frame holds its first child to an aspect ratio: it sets --x-frame-ratio from ratio (default 16/9) and makes the child fill the frame.",
       "tag": "x-frame",
       "baseClass": "x-frame",
+      "kind": "decorator",
       "properties": {
         "ratio": {
           "type": "string",
@@ -3589,6 +3667,7 @@
       "description": "x-fullscreen makes the element a button that expands the page (or the element matched by target) to full screen and back.",
       "tag": "x-fullscreen",
       "baseClass": "x-fullscreen",
+      "kind": "decorator",
       "properties": {
         "target": {
           "type": "string",
@@ -3615,6 +3694,7 @@
       "description": "x-gallery lays the images inside it out as a grid of columns (or fixed-size tiles with size), and clicking any image opens it full-size in a lightbox you can step through.",
       "tag": "x-gallery",
       "baseClass": "x-gallery",
+      "kind": "decorator",
       "properties": {
         "columns": {
           "type": "string",
@@ -3660,6 +3740,7 @@
       "description": "The element carries the background scene: its fill is mostly transparent, so whatever is behind it (an image, an SVG scene, a gradient) passes straight through it",
       "tag": "x-glass",
       "baseClass": "x-glass",
+      "kind": "decorator",
       "properties": {
         "amount": {
           "type": "string",
@@ -3688,6 +3769,7 @@
       "description": "3D Globe visualization.",
       "tag": "x-globe",
       "baseClass": "x-globe",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -3699,6 +3781,7 @@
       "description": "x-glow gives the element a halo in color, which defaults to the theme's primary colour: a pulsing ring around the box, or with target=\"text\" a steady glow around the letters.",
       "tag": "x-glow",
       "baseClass": "x-glow",
+      "kind": "decorator",
       "properties": {
         "color": {
           "type": "string",
@@ -3737,6 +3820,7 @@
       "description": "Responsive CSS grid: items auto-fit into columns from a minimum item width.",
       "tag": "x-grid",
       "baseClass": "x-grid",
+      "kind": "decorator",
       "properties": {
         "columns": {
           "type": "string",
@@ -3811,6 +3895,8 @@
       "description": "Page header with logo, title, and optional navigation",
       "tag": "x-header",
       "baseClass": "x-header",
+      "kind": "element",
+      "element": "header",
       "properties": {
         "icon": {
           "type": "string",
@@ -3889,6 +3975,7 @@
       "description": "On click, plays the heartbeat animation for 1.3s.",
       "tag": "x-heartbeat",
       "baseClass": "x-heartbeat",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -3904,6 +3991,7 @@
       "description": "Always-visible help text for a form field; adds role=\"note\".",
       "tag": "x-help",
       "baseClass": "x-help",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -3915,6 +4003,7 @@
       "description": "Hero section behavior.",
       "tag": "x-hero",
       "baseClass": "x-hero",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -3943,6 +4032,7 @@
       "description": "Hero banner with background image, title, subtitle, and optional CTA",
       "tag": "x-cardhero",
       "baseClass": "x-hero",
+      "kind": "decorator",
       "properties": {
         "background": {
           "type": "string",
@@ -4102,6 +4192,7 @@
       "description": "Marks text with a highlight background. Without color it uses the theme's highlight colours.",
       "tag": "x-highlight",
       "baseClass": "x-highlight",
+      "kind": "decorator",
       "properties": {
         "color": {
           "type": "string",
@@ -4430,6 +4521,7 @@
       "description": "Card with horizontal layout - image on side, content on other",
       "tag": "x-cardhorizontal",
       "baseClass": "x-cardhorizontal",
+      "kind": "decorator",
       "properties": {
         "image": {
           "type": "string",
@@ -4512,6 +4604,7 @@
       "description": "Pairs an inline SVG icon with adjacent text in an inline-flex row and sizes the icon to the text.",
       "tag": "x-icon",
       "baseClass": "x-icon",
+      "kind": "decorator",
       "properties": {
         "size": {
           "type": "string",
@@ -4544,6 +4637,7 @@
       "description": "Card with featured image and optional title/subtitle",
       "tag": "x-cardimage",
       "baseClass": "x-cardimage",
+      "kind": "decorator",
       "properties": {
         "src": {
           "type": "string",
@@ -4682,6 +4776,8 @@
       "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspectRatio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
       "tag": "x-img",
       "baseClass": "x-img",
+      "kind": "element",
+      "element": "img",
       "properties": {
         "placeholder": {
           "type": "string",
@@ -4741,6 +4837,7 @@
       "description": "Centers an element over its positioned container, like a dialog or badge laid over content. It applies to any element, so it names no host.",
       "tag": "x-imposter",
       "baseClass": "x-imposter",
+      "kind": "decorator",
       "properties": {
         "breakout": {
           "type": "boolean",
@@ -4766,6 +4863,8 @@
       "description": "Text input field with label, helper text, and validation states",
       "tag": "x-input",
       "baseClass": "x-input",
+      "kind": "element",
+      "element": "input",
       "properties": {
         "label": {
           "type": "string",
@@ -4961,6 +5060,7 @@
       "description": "Joins an input with prepended and appended addons (currency, units, buttons) into one control.",
       "tag": "x-inputgroup",
       "baseClass": "x-inputgroup",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -4972,6 +5072,7 @@
       "description": "On click, plays the jello animation for 1s.",
       "tag": "x-jello",
       "baseClass": "x-jello",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -4987,6 +5088,8 @@
       "description": "A plain <kbd> is drawn as a keycap: monospace text on a raised, bordered key.",
       "tag": "x-kbd",
       "baseClass": "x-kbd",
+      "kind": "element",
+      "element": "kbd",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -5002,6 +5105,8 @@
       "description": "Goes directly on a form control (input, select, textarea); its value is the label text. Creates a real <label>, associates it via for/id, and inserts it right before the control (to its left) by default.",
       "tag": "x-label",
       "baseClass": "x-label",
+      "kind": "element",
+      "element": "label",
       "properties": {
         "x-label": {
           "type": "string",
@@ -5038,6 +5143,7 @@
       "description": "x-lightbox makes the element open the image at src full-screen over a dark backdrop when clicked; clicking the backdrop closes it.",
       "tag": "x-lightbox",
       "baseClass": "x-lightbox",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -5053,6 +5159,7 @@
       "description": "Clickable card that navigates to a URL",
       "tag": "x-cardlink",
       "baseClass": "x-card-link",
+      "kind": "decorator",
       "properties": {
         "href": {
           "type": "string",
@@ -5151,6 +5258,7 @@
       "description": "Fills a <ul> or <ol> with one <li> per entry of its items attribute.",
       "tag": "x-list",
       "baseClass": "x-list",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
@@ -5176,6 +5284,8 @@
       "description": "A plain <mark> highlights text; variant picks a success, warning, danger or info colour, and color sets any colour with the text colour chosen to stay readable.",
       "tag": "x-mark",
       "baseClass": "x-mark",
+      "kind": "element",
+      "element": "mark",
       "properties": {
         "variant": {
           "type": "string",
@@ -5211,6 +5321,7 @@
       "description": "Renders Markdown content as HTML, either from inline content or external source",
       "tag": "x-mdhtml",
       "baseClass": "x-mdhtml",
+      "kind": "decorator",
       "properties": {
         "src": {
           "type": "string",
@@ -5269,6 +5380,7 @@
       "description": "Formats input against a mask pattern (9 = digit, A = letter) as the user types.",
       "tag": "x-masked",
       "baseClass": "x-masked",
+      "kind": "decorator",
       "properties": {
         "mask": {
           "type": "string",
@@ -5296,6 +5408,7 @@
       "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
       "tag": "x-masonry",
       "baseClass": "x-masonry",
+      "kind": "decorator",
       "properties": {
         "columns": {
           "type": "string",
@@ -5331,6 +5444,7 @@
       "description": "Card with minimize/expand toggle button in header",
       "tag": "x-cardminimizable",
       "baseClass": "x-card-minimizable",
+      "kind": "decorator",
       "properties": {
         "title": {
           "type": "string",
@@ -5384,6 +5498,7 @@
       "description": "A trigger that opens a modal <dialog>. x-modal is the dialog() behavior (semantics/dialog.js exports it as `modal`): with modalTitle or modalContent the host becomes a clickable trigger that builds and opens the dialog; without them the host is hidden and its children become the content of a dialog opened by calling element.open().",
       "tag": "x-modal",
       "baseClass": "x-modal",
+      "kind": "decorator",
       "properties": {
         "modalTitle": {
           "type": "string",
@@ -5433,6 +5548,7 @@
       "description": "Animation behavior to move elements.",
       "tag": "x-move",
       "baseClass": "x-move",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -5444,6 +5560,8 @@
       "description": "Navigation bar with brand, links, and responsive menu",
       "tag": "x-navbar",
       "baseClass": "x-navbar",
+      "kind": "element",
+      "element": "nav",
       "properties": {
         "brand": {
           "type": "string",
@@ -5545,6 +5663,7 @@
       "description": "Slide-out notes drawer with multiple display modes",
       "tag": "x-notes",
       "baseClass": "x-notes",
+      "kind": "decorator",
       "properties": {
         "position": {
           "type": "string",
@@ -5617,6 +5736,7 @@
       "description": "Dismissible notification card with variant-based styling",
       "tag": "x-cardnotification",
       "baseClass": "x-cardnotification",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -5697,6 +5817,7 @@
       "description": "x-notify makes the element pop a toast notification on each click.",
       "tag": "x-notify",
       "baseClass": "x-notify",
+      "kind": "decorator",
       "properties": {
         "message": {
           "type": "string",
@@ -5723,6 +5844,7 @@
       "description": "Makes its host a trigger: a click slides a panel with a title and body in from the left or right edge over a backdrop, and a second click, the backdrop or the close button takes it away. It applies to any clickable element, so it names no host.",
       "tag": "x-offcanvas",
       "baseClass": "x-offcanvas",
+      "kind": "decorator",
       "properties": {
         "offcanvasTitle": {
           "type": "string",
@@ -5776,6 +5898,7 @@
       "description": "Enhances an <ol>: stepped and timeline variants, number style, start number, indent and item spacing.",
       "tag": "x-ol",
       "baseClass": "x-ol",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -5821,6 +5944,7 @@
       "description": "x-otp replaces the element's content with length single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.",
       "tag": "x-otp",
       "baseClass": "x-otp",
+      "kind": "decorator",
       "properties": {
         "length": {
           "type": "integer",
@@ -5845,6 +5969,7 @@
       "description": "Card with text overlaid on background image",
       "tag": "x-cardoverlay",
       "baseClass": "x-card-overlay",
+      "kind": "decorator",
       "properties": {
         "image": {
           "type": "string",
@@ -5951,6 +6076,7 @@
       "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and perPage (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
       "tag": "x-pagination",
       "baseClass": "x-pagination",
+      "kind": "decorator",
       "properties": {
         "total": {
           "type": "string",
@@ -5987,6 +6113,8 @@
       "description": "x-password wraps a password <input> with a show/hide button, and with strength adds a meter that rates the password as it is typed.",
       "tag": "x-password",
       "baseClass": "x-password",
+      "kind": "element",
+      "element": "input[type=\"password\"]",
       "properties": {
         "toggle": {
           "type": "boolean",
@@ -6009,6 +6137,7 @@
       "description": "x-popover attaches a small panel with popoverTitle and popoverContent to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
       "tag": "x-popover",
       "baseClass": "x-popover",
+      "kind": "decorator",
       "properties": {
         "description": {
           "type": "string",
@@ -6055,6 +6184,7 @@
       "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
       "tag": "x-cardportfolio",
       "baseClass": "x-cardportfolio",
+      "kind": "decorator",
       "properties": {
         "name": {
           "type": "string",
@@ -6265,6 +6395,8 @@
       "description": "A plain <pre> gets a code block: syntax highlighting for language, line numbers, an optional copy button (showCopy), wrapping or horizontal scrolling, and a maxHeight after which it scrolls.",
       "tag": "x-pre",
       "baseClass": "x-pre",
+      "kind": "element",
+      "element": "pre",
       "properties": {
         "language": {
           "type": "string",
@@ -6326,6 +6458,7 @@
       "description": "Pricing tier card with plan name, price, features list, and CTA",
       "tag": "x-cardpricing",
       "baseClass": "x-cardpricing",
+      "kind": "decorator",
       "properties": {
         "plan": {
           "type": "string",
@@ -6428,6 +6561,7 @@
       "description": "x-print makes the element a button that prints the page, or only the element matched by target.",
       "tag": "x-print",
       "baseClass": "x-print",
+      "kind": "decorator",
       "properties": {
         "target": {
           "type": "string",
@@ -6454,6 +6588,7 @@
       "description": "E-commerce product card with image, price, rating, and CTA",
       "tag": "x-cardproduct",
       "baseClass": "x-product",
+      "kind": "decorator",
       "properties": {
         "image": {
           "type": "string",
@@ -6561,6 +6696,8 @@
       "description": "Progress bar with determinate and indeterminate states",
       "tag": "x-progress",
       "baseClass": "x-progress",
+      "kind": "element",
+      "element": "progress",
       "properties": {
         "value": {
           "type": "number",
@@ -6699,6 +6836,7 @@
       "description": "x-prompt makes a click open a dialog that asks for a line of text, with promptTitle, promptMessage, a placeholder and an optional defaultValue.",
       "tag": "x-prompt",
       "baseClass": "x-prompt",
+      "kind": "decorator",
       "properties": {
         "heading": {
           "type": "string",
@@ -6745,6 +6883,7 @@
       "description": "On click, plays the pulse animation for 0.5s.",
       "tag": "x-pulse",
       "baseClass": "x-pulse",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -6760,6 +6899,8 @@
       "description": "Styles a native radio button, keeping it a real form control.",
       "tag": "x-radio",
       "baseClass": "x-radio",
+      "kind": "element",
+      "element": "input[type=\"radio\"]",
       "properties": {
         "label": {
           "type": "string",
@@ -6803,6 +6944,7 @@
       "description": "x-rainbow paints the element's text with a moving rainbow gradient that cycles every duration.",
       "tag": "x-rainbow",
       "baseClass": "x-rainbow",
+      "kind": "decorator",
       "properties": {
         "duration": {
           "type": "string",
@@ -6824,6 +6966,8 @@
       "description": "Slider with a live value display and min/max bound labels. input[type=\"range\"] IS this behavior, so there is no attribute to add.",
       "tag": "x-range",
       "baseClass": "x-range",
+      "kind": "element",
+      "element": "input[type=\"range\"]",
       "properties": {
         "showValue": {
           "type": "boolean",
@@ -6906,6 +7050,7 @@
       "description": "Star rating behavior for displaying or collecting ratings",
       "tag": "x-rating",
       "baseClass": "x-rating",
+      "kind": "decorator",
       "properties": {
         "value": {
           "type": "number",
@@ -6985,6 +7130,7 @@
       "description": "x-ratio gives the element a fixed aspect ratio from ratio (16:9, 4x3 or 1/1 all work) and makes a direct image, video or iframe child cover it.",
       "tag": "x-ratio",
       "baseClass": "x-ratio",
+      "kind": "decorator",
       "properties": {
         "ratio": {
           "type": "string",
@@ -7013,6 +7159,7 @@
       "description": "Horizontally scrolling row whose children snap into place as it scrolls.",
       "tag": "x-reel",
       "baseClass": "x-reel",
+      "kind": "decorator",
       "properties": {
         "itemWidth": {
           "type": "string",
@@ -7048,6 +7195,7 @@
       "description": "x-relativetime replaces the element's text with how long ago date was — \"3 days ago\", \"Just now\" — and recomputes it every refresh milliseconds.",
       "tag": "x-relativetime",
       "baseClass": "x-relativetime",
+      "kind": "decorator",
       "properties": {
         "datetime": {
           "type": "string",
@@ -7079,6 +7227,7 @@
       "description": "Renders the site's current build/release number from its single source of truth.",
       "tag": "x-release",
       "baseClass": "x-release",
+      "kind": "decorator",
       "properties": {
         "format": {
           "type": "string",
@@ -7112,6 +7261,7 @@
       "description": "x-repeater stamps out count copies of its <template>, replacing {{index}} with 1, 2, 3… and {{i}} with 0, 1, 2….",
       "tag": "x-repeater",
       "baseClass": "x-repeater",
+      "kind": "decorator",
       "properties": {
         "count": {
           "type": "string",
@@ -7133,6 +7283,7 @@
       "description": "Make an element resizable.",
       "tag": "x-resizable",
       "baseClass": "x-resizable",
+      "kind": "decorator",
       "properties": {
         "handles": {
           "type": "string",
@@ -7153,6 +7304,7 @@
       "description": "Material Design ripple effect on click",
       "tag": "x-ripple",
       "baseClass": "x-ripple",
+      "kind": "decorator",
       "properties": {
         "color": {
           "type": "string",
@@ -7193,6 +7345,7 @@
       "description": "A button or link that scrolls the page to an element, the top or the bottom.",
       "tag": "x-scroll",
       "baseClass": "x-scroll",
+      "kind": "decorator",
       "properties": {
         "scrollTo": {
           "type": "string",
@@ -7236,6 +7389,7 @@
       "description": "CSS sticky positioning for sidebars that stay visible while scrolling",
       "tag": "x-scrollalong",
       "baseClass": "x-scrollalong",
+      "kind": "decorator",
       "properties": {
         "offset": {
           "type": "string",
@@ -7260,6 +7414,7 @@
       "description": "Search input behavior with icon and debounced search events",
       "tag": "x-search",
       "baseClass": "x-search",
+      "kind": "decorator",
       "properties": {
         "placeholder": {
           "type": "string",
@@ -7372,6 +7527,7 @@
       "description": "Complete search field: icon, debounced search events, clear button and loading state.",
       "tag": "x-searchfield",
       "baseClass": "x-searchfield",
+      "kind": "decorator",
       "properties": {
         "size": {
           "type": "string",
@@ -7433,6 +7589,8 @@
       "description": "Enhanced select dropdown with search, clear, and multi-select",
       "tag": "x-select",
       "baseClass": "x-select",
+      "kind": "element",
+      "element": "select",
       "properties": {
         "label": {
           "type": "string",
@@ -7536,6 +7694,7 @@
       "description": "On click, plays the shake animation for 0.5s.",
       "tag": "x-shake",
       "baseClass": "x-shake",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -7551,6 +7710,7 @@
       "description": "x-share makes the element open the device's share sheet with shareTitle, shareText and shareUrl; where the Web Share API is missing it copies the URL to the clipboard instead.",
       "tag": "x-share",
       "baseClass": "x-share",
+      "kind": "decorator",
       "properties": {
         "text": {
           "type": "string",
@@ -7597,6 +7757,7 @@
       "description": "Makes its host a trigger for a notes panel: a click opens a resizable sheet from the left edge with a title and either the given content or a notes textarea, and drag on its edge resizes it between its minimum and maximum width. It applies to any clickable element, so it names no host.",
       "tag": "x-sheet",
       "baseClass": "x-sheet",
+      "kind": "decorator",
       "properties": {
         "sheetTitle": {
           "type": "string",
@@ -7641,6 +7802,7 @@
       "description": "Vertical (or horizontal) navigation list with an active item, an icon-only collapsed mode, drag-resize, and a block or pill item style. The site's left nav is one (#829). With no items attribute, its authored <a> children are the items (#830).",
       "tag": "x-sidebar",
       "baseClass": "x-sidebar",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
@@ -7721,6 +7883,7 @@
       "description": "Two-column layout: a sidebar beside a main area that grows to fill the remaining space.",
       "tag": "x-sidebarlayout",
       "baseClass": "x-sidebarlayout",
+      "kind": "decorator",
       "properties": {
         "side": {
           "type": "string",
@@ -7768,6 +7931,7 @@
       "description": "Loading skeleton placeholder with shimmer animation",
       "tag": "x-skeleton",
       "baseClass": "x-skeleton",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -7833,6 +7997,7 @@
       "description": "On click, plays the slide-in-<dir> animation for 0.5s.",
       "tag": "x-slidein",
       "baseClass": "x-slidein",
+      "kind": "decorator",
       "properties": {
         "direction": {
           "type": "string",
@@ -7854,6 +8019,7 @@
       "description": "Image comparison slider or carousel.",
       "tag": "x-slider",
       "baseClass": "x-slider",
+      "kind": "decorator",
       "properties": {},
       "matrix": [
         {}
@@ -7867,6 +8033,7 @@
       "description": "Falling snowflake animation effect",
       "tag": "x-snow",
       "baseClass": "x-snow",
+      "kind": "decorator",
       "properties": {
         "count": {
           "type": "number",
@@ -7922,6 +8089,7 @@
       "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
       "tag": "x-sparkle",
       "baseClass": "x-sparkle",
+      "kind": "decorator",
       "properties": {
         "count": {
           "type": "string",
@@ -7943,6 +8111,7 @@
       "description": "Loading spinner indicator",
       "tag": "x-spinner",
       "baseClass": "x-spinner",
+      "kind": "decorator",
       "properties": {
         "size": {
           "type": "string",
@@ -8013,6 +8182,7 @@
       "description": "Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.",
       "tag": "x-stack",
       "baseClass": "x-stack",
+      "kind": "decorator",
       "properties": {
         "gap": {
           "type": "string",
@@ -8064,6 +8234,7 @@
       "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
       "tag": "x-stagelight",
       "baseClass": "x-stagelight",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -8139,6 +8310,7 @@
       "description": "x-stat shows one figure: a large value over a small label, with an optional colour variant.",
       "tag": "x-stat",
       "baseClass": "x-stat",
+      "kind": "decorator",
       "properties": {
         "label": {
           "type": "string",
@@ -8174,6 +8346,7 @@
       "description": "Statistics display card with value, label, icon, and trend indicator",
       "tag": "x-cardstats",
       "baseClass": "x-cardstats",
+      "kind": "decorator",
       "properties": {
         "value": {
           "type": "string",
@@ -8269,6 +8442,7 @@
       "description": "Status-coloured inline text (primary, success, error, ...) or a window-control dot (red, yellow, green, dot). Was x-span, which still works as an alias (#1105).",
       "tag": "x-status",
       "baseClass": "x-status",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -8306,6 +8480,7 @@
       "description": "x-stepper builds a number field with − and + buttons that change the value by step, never going below min or above max.",
       "tag": "x-stepper",
       "baseClass": "x-stepper",
+      "kind": "decorator",
       "properties": {
         "min": {
           "type": "number",
@@ -8333,6 +8508,7 @@
       "description": "x-steps draws a progress indicator for a multi-step process from the comma-separated items, marking steps before current as done and current itself as active.",
       "tag": "x-steps",
       "baseClass": "x-steps",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
@@ -8359,6 +8535,7 @@
       "description": "Makes element stick to viewport on scroll",
       "tag": "x-sticky",
       "baseClass": "x-sticky",
+      "kind": "decorator",
       "properties": {
         "offset": {
           "type": "string",
@@ -8410,6 +8587,7 @@
       "description": "Toggle switch for boolean settings",
       "tag": "x-switch",
       "baseClass": "x-switch",
+      "kind": "decorator",
       "properties": {
         "label": {
           "type": "string",
@@ -8510,6 +8688,7 @@
       "description": "Lays children out in a row, and stacks them when the space is too narrow — no media query.",
       "tag": "x-switcher",
       "baseClass": "x-switcher",
+      "kind": "decorator",
       "properties": {
         "threshold": {
           "type": "string",
@@ -8549,6 +8728,8 @@
       "description": "Data table with sorting, filtering, and pagination",
       "tag": "x-table",
       "baseClass": "x-table",
+      "kind": "element",
+      "element": "table",
       "properties": {
         "data": {
           "type": "string",
@@ -8672,6 +8853,7 @@
       "description": "Tab navigation for switching between content panels",
       "tag": "x-tabs",
       "baseClass": "x-tabs",
+      "kind": "decorator",
       "properties": {
         "activeTab": {
           "type": "number",
@@ -8749,6 +8931,7 @@
       "description": "On click, plays the tada animation for 1s.",
       "tag": "x-tada",
       "baseClass": "x-tada",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -8764,6 +8947,7 @@
       "description": "Type and press Enter to build a list of removable tags next to a text input.",
       "tag": "x-tags",
       "baseClass": "x-tags",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {}
@@ -8775,6 +8959,7 @@
       "description": "Customer testimonial/review card with quote, author, avatar, and rating",
       "tag": "x-cardtestimonial",
       "baseClass": "x-testimonial",
+      "kind": "decorator",
       "properties": {
         "quote": {
           "type": "string",
@@ -8886,6 +9071,8 @@
       "description": "Multi-line text input with autosize and character count",
       "tag": "x-textarea",
       "baseClass": "x-textarea",
+      "kind": "element",
+      "element": "textarea",
       "properties": {
         "label": {
           "type": "string",
@@ -9009,6 +9196,7 @@
       "description": "Theme switcher control.",
       "tag": "x-themecontrol",
       "baseClass": "x-themecontrol",
+      "kind": "decorator",
       "properties": {
         "showLabel": {
           "type": "boolean",
@@ -9033,6 +9221,7 @@
       "description": "Vertical timeline behavior for displaying sequential events",
       "tag": "x-timeline",
       "baseClass": "x-timeline",
+      "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
@@ -9065,6 +9254,7 @@
       "description": "Toast notification system for temporary messages. Container (.x-toast__container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
       "tag": "x-toast",
       "baseClass": "x-toast--trigger",
+      "kind": "decorator",
       "properties": {
         "message": {
           "type": "string",
@@ -9181,6 +9371,7 @@
       "description": "Toggle visibility or state of another element.",
       "tag": "x-toggle",
       "baseClass": "x-toggle",
+      "kind": "decorator",
       "properties": {
         "target": {
           "type": "string",
@@ -9212,6 +9403,7 @@
       "description": "Tooltip for displaying additional information on hover/focus",
       "tag": "x-tooltip",
       "baseClass": "x-tooltip--trigger",
+      "kind": "decorator",
       "properties": {
         "content": {
           "type": "string",
@@ -9344,6 +9536,7 @@
       "description": "x-truncate cuts text off after lines lines with an ellipsis; expandable adds a \"Show more\" control that reveals the rest.",
       "tag": "x-truncate",
       "baseClass": "x-truncate",
+      "kind": "decorator",
       "properties": {
         "lines": {
           "type": "string",
@@ -9374,6 +9567,7 @@
       "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
       "tag": "x-typewriter",
       "baseClass": "x-typewriter",
+      "kind": "decorator",
       "properties": {
         "speed": {
           "type": "string",
@@ -9405,6 +9599,7 @@
       "description": "Enhances a <ul>: checklist and icon-list variants, marker style, indent and item spacing.",
       "tag": "x-ul",
       "baseClass": "x-ul",
+      "kind": "decorator",
       "properties": {
         "variant": {
           "type": "string",
@@ -9446,6 +9641,8 @@
       "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown before playback.",
       "tag": "x-video",
       "baseClass": "x-video",
+      "kind": "element",
+      "element": "video",
       "properties": {
         "poster": {
           "type": "string",
@@ -9499,6 +9696,7 @@
       "description": "Card with embedded video player",
       "tag": "x-cardvideo",
       "baseClass": "x-card-video",
+      "kind": "decorator",
       "properties": {
         "src": {
           "type": "string",
@@ -9613,6 +9811,7 @@
       "description": "x-vimeo embeds the Vimeo video with videoId as a responsive player that keeps its aspect ratio.",
       "tag": "x-vimeo",
       "baseClass": "x-vimeo",
+      "kind": "decorator",
       "properties": {
         "videoId": {
           "type": "string",
@@ -9762,6 +9961,7 @@
       "description": "On click, plays the wobble animation for 1s.",
       "tag": "x-wobble",
       "baseClass": "x-wobble",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {
@@ -9777,6 +9977,7 @@
       "description": "x-youtube embeds a YouTube video from videoId or a full url as a responsive player that keeps its aspect ratio.",
       "tag": "x-youtube",
       "baseClass": "x-youtube",
+      "kind": "decorator",
       "properties": {
         "url": {
           "type": "string",
@@ -9829,6 +10030,7 @@
       "description": "On click, plays the zoom-in animation for 0.4s.",
       "tag": "x-zoomin",
       "baseClass": "x-zoomin",
+      "kind": "decorator",
       "properties": {},
       "matrix": [],
       "_metadata": {

@@ -36,13 +36,13 @@ Behaviors are applied using attributes with a configurable prefix (default: `x-`
 ### 1. Decoration (`x-{behavior}`)
 Enhances an element without changing its fundamental structure.
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple>Click Me</button>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <div x-tooltip="Hello World">Hover Me</div>
-</div>
+</figure>
 
 | Element | Behavior | Result |
 |---------|----------|--------|
@@ -58,14 +58,14 @@ There is no `-as-` infix any more. A behavior that builds out a behavior's
 internals is applied exactly like any other: the attribute name **is** the
 behavior name, and on a semantic element it is injected for you.
 
-<div x-demo>
+<figure x-demo>
 <article>
   <header>
     <h3>Title</h3>
   </header>
   <p>Content</p>
 </article>
-</div>
+</figure>
 
 | Element | Behavior | Written as |
 |---------|----------|------------|
@@ -94,14 +94,14 @@ To opt a page out, pass `{ autoInject: false }` to `WB.init()`; to opt one eleme
 When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 `dialog`/`img` behaviors attached automatically, with no `x-` attribute needed:
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <p>Auto-decorated dialog (zero <code>x-</code> attributes):</p>
 <dialog open>Auto-decorated dialog content.</dialog>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <img src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo" alt="Auto-decorated image">
-</div>
+</figure>
 
 ---
 
@@ -147,60 +147,60 @@ Enhances standard HTML elements with better styling and functionality.
 
 **`audio`**
 
-<div x-demo>
+<figure x-demo>
 <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-</div>
+</figure>
 
 **`video`**
 
-<div x-demo>
+<figure x-demo>
 <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
-</div>
+</figure>
 
 **`img` → `image`**
 
-<div x-demo>
+<figure x-demo>
 <img
   src="https://placehold.co/600x400/1e293b/e2e8f0?text=Photo"
   alt="Photo">
-</div>
+</figure>
 
 **`code`**
 
-<div x-demo>
+<figure x-demo>
 <code
   language="Python">
   print("Hello")
 </code>
-</div>
+</figure>
 
 **`input`**
 
-<div x-demo>
+<figure x-demo>
 <div x-input
   label="Email"
   inputType="email"
   placeholder="Enter your email">
 </div>
-</div>
+</figure>
 
 **`textarea`**
 
-<div x-demo>
+<figure x-demo>
 <textarea
   label="Message"
   placeholder="Enter your message...">
 </textarea>
-</div>
+</figure>
 
 **`select`**
 
-<div x-demo>
+<figure x-demo>
 <div x-select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
 </div>
-</div>
+</figure>
 
 `label` and `options` build the `<select>` for you, so they belong on an
 `x-select` host. A native `<select>` keeps its own `<option>` children as the
@@ -210,25 +210,25 @@ empty dropdown.
 
 **`checkbox`**
 
-<div x-demo>
+<figure x-demo>
 <div x-checkbox label="I agree to the terms"></div>
-</div>
+</figure>
 
 **`switch`**
 
-<div x-demo events="wb:switch:change">
+<figure x-demo events="wb:switch:change">
 <div x-switch label="Dark mode"></div>
-</div>
+</figure>
 
 **`rating`**
 
-<div x-demo>
-<span x-rating value="3"></div>
+<figure x-demo>
+<span x-rating value="3"></figure>
 </div>
 
 **`form`**
 
-<div x-demo>
+<figure x-demo>
 <form action="/api/submit">
   <div x-input
     name="email"
@@ -237,32 +237,32 @@ empty dropdown.
   </div>
   <button type="submit">Submit</button>
 </form>
-</div>
+</figure>
 
 **`details`**
 
-<div x-demo>
+<figure x-demo>
 <details summary="More Information">
   <p>Hidden content revealed when expanded.</p>
 </details>
-</div>
+</figure>
 
 **`dialog`**
 
-<div x-demo>
+<figure x-demo>
 <dialog
   title="Welcome"
   id="behaviors-ref-dialog">
   <p>Dialog content goes here.</p>
 </dialog>
 <button onclick="document.getElementById('behaviors-ref-dialog').showModal()">Open Dialog</button>
-</div>
+</figure>
 
 **`button`**
 
-<div x-demo>
+<figure x-demo>
 <button>Click Me</button>
-</div>
+</figure>
 
 `figure`, `table`, `pre`, `radio`, and `range` don't yet have a dedicated behavior doc
 with a live example to pull from — tracked as remaining work, not guessed here.
@@ -309,76 +309,76 @@ Rich interactive behaviors.
 
 **`card`**
 
-<div x-demo>
+<figure x-demo>
 <article title="Hello" variant="elevated">
   <p>It just works.</p>
 </article>
-</div>
+</figure>
 
 **`cardlink`**
 
-<div x-demo>
+<figure x-demo>
 <div x-cardlink
   title="Documentation"
   href="/docs"
   icon="📚">
 </div>
-</div>
+</figure>
 
 **`progress`**
 
-<div x-demo>
+<figure x-demo>
 <progress value="50"></progress>
-</div>
+</figure>
 
 **`tooltip`**
 
-<div x-demo>
+<figure x-demo>
 <button x-tooltip="Tooltip text">Hover me</button>
-</div>
+</figure>
 
 **`tabs`**
 
-<div x-demo events="wb:tabs:change">
+<figure x-demo events="wb:tabs:change">
 <nav x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
 </nav>
-</div>
+</figure>
 
 **`toast`**
 
-<div x-demo>
+<figure x-demo>
 <button x-toast message="Saved!" toast-variant="success">Show toast</button>
-</div>
+</figure>
 
 **`chip`**
 
-<div x-demo>
+<figure x-demo>
 <span x-chip label="Removable" variant="info" dismissible></span>
-</div>
+</figure>
 
 **`skeleton`**
 
-<div x-demo>
+<figure x-demo>
 <div x-skeleton variant="text" lines="3"></div>
-</div>
+</figure>
 
 **`dropdown`**
 
-<div x-demo>
+<figure x-demo>
 <button x-dropdown items="Profile,Settings,Logout" label="Account"></button>
-</div>
+</figure>
 
 **`accordion`**
 
-<div x-demo>
+<figure x-demo>
 <div x-accordion>
   <div accordionTitle="What is wb-starter?">A schema-first, no-build website starter kit.</div>
   <div accordionTitle="Is x-accordion recommended?">No, prefer the native details/summary element for new markup.</div>
 </div>
-</div>
+</figure>
 
 `hero`, `card*` variants, `spinner`, `notify`, `badge`, `alert`, `divider`,
 `breadcrumb`, `avatar`, `navbar`, `sidebar`, `menu`, `pagination`, and `steps`
@@ -421,52 +421,52 @@ Tools for arranging content.
 
 **`drawerLayout`**
 
-<div x-demo>
+<figure x-demo>
 <div x-drawer-layout
   position="left"
   width="300px">
   <h3>Sidebar</h3>
   <nav>Navigation content...</nav>
 </div>
-</div>
+</figure>
 
 **`draggable`**
 
-<div x-demo>
+<figure x-demo>
 <div x-carddraggable title="Drag Me">Drag this card around.</div>
-</div>
+</figure>
 
 **`stack`**
 
-<div x-demo>
+<figure x-demo>
 <div x-stack gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <div x-stack gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</div>
+</figure>
 
 **`cluster`**
 
-<div x-demo>
+<figure x-demo>
 <div x-cluster gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <div x-cluster gap="1rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</div>
+</figure>
 
 `grid`, `flex`, `container`, `center`, `masonry`, `sticky`, `scrollable`,
 `sidebarlayout`, `switcher`, `cover`, `frame`, `reel`, `icon`, and `resizable` don't yet
@@ -492,14 +492,14 @@ Handling media content and overlaying views.
 
 **`drawer`**
 
-<div x-demo>
+<figure x-demo>
 <button
   x-drawer
   title="Settings"
   content="Settings content...">
   Open Settings
 </button>
-</div>
+</figure>
 
 `gallery`, `youtube`, `vimeo`, `carousel`, `popover`, `lightbox`, `offcanvas`, and
 `sheet` don't yet have a dedicated behavior doc with a live example to pull from —
@@ -537,15 +537,15 @@ Functional utilities.
 
 **`themecontrol`**
 
-<div x-demo>
+<figure x-demo>
 <div x-themecontrol></div>
-</div>
+</figure>
 
 **`mdhtml`**
 
-<div x-demo>
+<figure x-demo>
 <div x-mdhtml> # Hello World This is **bold** and *italic*. </div>
-</div>
+</figure>
 
 `copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
 `scroll`, `truncate`, `highlight`, `countdown`, `clock`, `relativetime`, `visible`,
@@ -580,12 +580,12 @@ Apply animations to elements.
 
 **`confetti`**
 
-<div x-demo>
+<figure x-demo>
 <div x-confetti
   count="100"
   label="Celebrate!">
 </div>
-</div>
+</figure>
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
 `sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a

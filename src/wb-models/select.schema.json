@@ -4,6 +4,8 @@
   "title": "Select",
   "description": "Enhanced select dropdown with search, clear, and multi-select",
   "schemaFor": "select",
+  "kind": "element",
+  "element": "select",
   "baseClass": "x-select",
   "semanticElement": {
     "tagName": "div",

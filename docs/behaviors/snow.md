@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-snow>Let it snow</button>
-</div>
+</figure>
 
 ## Attributes
 

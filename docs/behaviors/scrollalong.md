@@ -30,27 +30,27 @@ by its container, it does not add any wrapper or placeholder.
 
 ### Default
 
-<div x-demo>
+<figure x-demo>
 <aside x-scrollalong style="padding: 1rem; border: 1px solid var(--border-color);">
   This element sticks to the top of the viewport as you scroll past it.
 </aside>
-</div>
+</figure>
 
 ### With an offset
 
-<div x-demo>
+<figure x-demo>
 <aside x-scrollalong offset="20" style="padding: 1rem; border: 1px solid var(--border-color);">
   Sticks 20px from the top instead of flush against it.
 </aside>
-</div>
+</figure>
 
 ### On a plain `<div>`
 
-<div x-demo>
+<figure x-demo>
 <div x-scrollalong style="padding: 1rem; border: 1px solid var(--border-color); display: block;">
   A plain div with x-scrollalong
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

@@ -4,6 +4,7 @@
   "title": "Vimeo",
   "description": "x-vimeo embeds the Vimeo video with videoId as a responsive player that keeps its aspect ratio.",
   "schemaFor": "vimeo",
+  "kind": "decorator",
   "properties": {
     "videoId": {
       "type": "string",

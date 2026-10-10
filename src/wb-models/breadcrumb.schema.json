@@ -4,6 +4,7 @@
   "title": "Breadcrumb",
   "description": "x-breadcrumb builds a breadcrumb trail inside a <nav> from the comma-separated items, drawing separator between them and marking the last item as the current page.",
   "schemaFor": "breadcrumb",
+  "kind": "decorator",
   "properties": {
     "items": {
       "type": "string",

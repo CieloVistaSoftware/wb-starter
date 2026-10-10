@@ -4,6 +4,8 @@
   "title": "Button",
   "description": "Interactive button with variants, sizes, and optional icon",
   "schemaFor": "button",
+  "kind": "element",
+  "element": "button",
   "baseClass": "x-button",
   "semanticElement": {
     "tagName": "button",

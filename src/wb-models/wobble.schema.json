@@ -4,6 +4,7 @@
   "title": "Wobble",
   "description": "On click, plays the wobble animation for 1s.",
   "schemaFor": "wobble",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

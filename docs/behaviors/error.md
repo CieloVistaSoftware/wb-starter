@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <label>Email <input type="email" value="ada@"></label>
 <div x-error>Enter a full address, like ada@example.com.</div>
-</div>
+</figure>
 
 <sub>Schema: [`error.schema.json`](../../src/wb-models/error.schema.json)</sub>

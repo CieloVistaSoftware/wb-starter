@@ -6,6 +6,8 @@
   "properties": {},
   "required": [],
   "schemaFor": "fieldset",
+  "kind": "element",
+  "element": "fieldset",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

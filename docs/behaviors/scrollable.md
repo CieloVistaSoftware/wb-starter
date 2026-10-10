@@ -25,7 +25,7 @@ content scrolls internally instead of growing the page.
 
 ### Vertical scroll with a height cap
 
-<div x-demo>
+<figure x-demo>
 <div x-scrollable direction="vertical" maxHeight="120px">
   <p>Line one of a long block of content.</p>
   <p>Line two.</p>
@@ -33,11 +33,11 @@ content scrolls internally instead of growing the page.
   <p>Line four.</p>
   <p>Line five — by now the content overflows the 120px cap and scrolls.</p>
 </div>
-</div>
+</figure>
 
 ### Horizontal scroll with a width cap
 
-<div x-demo>
+<figure x-demo>
 <div x-scrollable direction="horizontal" maxWidth="250px">
   <div style="display:flex; gap:1rem;">
     <span>Panel 1</span>
@@ -46,17 +46,17 @@ content scrolls internally instead of growing the page.
     <span>Panel 4</span>
   </div>
 </div>
-</div>
+</figure>
 
 ### Both axes (default)
 
-<div x-demo>
+<figure x-demo>
 <div x-scrollable maxHeight="120px" maxWidth="250px">
   <div style="width:400px;">
     <p>This content is wider and taller than the caps in both directions, so it scrolls both ways.</p>
   </div>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

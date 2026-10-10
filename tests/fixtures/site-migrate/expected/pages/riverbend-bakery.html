@@ -1,0 +1,83 @@
+<!-- Proposed by site-migrate from riverbend-bakery.html: review riverbend-bakery.migration.md before using it. -->
+<section x-hero>
+  <h1>Fresh bread every morning</h1>
+  <p>Sourdough, rye and pastries, baked by hand before sunrise.</p>
+  <a href="menu.html">See today's bread</a>
+</section>
+<!-- TODO: unclassified (was div.promo-strip) -->
+<div>Free delivery on Fridays within five miles.</div>
+<section id="bread">
+  <h2>Our bread</h2>
+  <div x-grid columns="3">
+    <article title="Country sourdough" subtitle="48-hour ferment">
+      <img src="images/sourdough.jpg" alt="A round sourdough loaf">
+      <p>A crackling crust and an open, tangy crumb.</p>
+      <a href="menu.html#sourdough">Details</a>
+    </article>
+    <article title="Dark rye">
+      <img src="images/rye.jpg" alt="Sliced dark rye bread">
+      <p>Dense, with caraway and a little molasses.</p>
+      <a href="menu.html#rye">Details</a>
+    </article>
+    <article title="Butter croissants">
+      <img src="images/croissant.jpg" alt="Three butter croissants">
+      <p>Laminated over two days. <b>Saturdays only.</b></p>
+      <a href="menu.html#pastry">Details</a>
+    </article>
+  </div>
+</section>
+<section id="story">
+  <h2>Our story</h2>
+  <figure>
+    <img src="images/oven.jpg" alt="The wood-fired oven">
+    <figcaption>The oven, fired at four every morning.</figcaption>
+  </figure>
+  <p>We started in a garage with one oven and a borrowed mixer. Today we bake for the whole valley.</p>
+  <p><a href="files/price-list.pdf" download>Download the wholesale price list</a></p>
+</section>
+<section id="reviews">
+  <h2>What people say</h2>
+  <article x-cardtestimonial author="Ana Ruiz" role="Regular since 2019" avatar="images/customer-ana.jpg" rating="5">
+    <p>The rye is the best I have had outside my grandmother's kitchen.</p>
+  </article>
+</section>
+<section id="faq">
+  <h2>Questions</h2>
+  <details open>
+    <summary>When do you open?</summary>
+    <p>Seven days a week, from 7am until the bread runs out.</p>
+  </details>
+  <details>
+    <summary>Do you bake gluten-free bread?</summary>
+    <p>Not yet. Our kitchen uses wheat flour all day, so we cannot promise it.</p>
+  </details>
+</section>
+<section id="visit">
+  <h2>Visit us</h2>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Day</th>
+        <th scope="col">Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monday to Friday</td>
+        <td>7am to 6pm</td>
+      </tr>
+      <tr>
+        <td>Saturday and Sunday</td>
+        <td>8am to 2pm</td>
+      </tr>
+    </tbody>
+  </table>
+  <form x-grid columns="2" action="/contact" method="post">
+    <div><label for="name">Your name</label><input id="name" type="text" name="name" required></div>
+    <div><label for="email">Email</label><input id="email" type="email" name="email" required></div>
+    <div><label for="message">Message</label><textarea id="message" name="message" rows="3"></textarea></div>
+    <button type="submit">Send</button>
+  </form>
+  <!-- TODO: unclassified (was div.map-embed) -->
+  <div>Open the map to 12 Mill Lane</div>
+</section>

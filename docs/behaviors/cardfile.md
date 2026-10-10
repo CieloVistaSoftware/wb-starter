@@ -4,41 +4,41 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="quarterly-report.pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
-</div>
+</figure>
 
 ## One example per file type
 
 The icon comes from the filename's extension; there is no separate type attribute to write, or to get out of step with the name. An extension the table does not know gets the generic file icon.
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="quarterly-report.pdf" size="2.4 MB"></article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="meeting-notes.docx" size="480 KB"></article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="architecture-diagram.png" size="2.4 MB"></article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="product-walkthrough.mp4" size="58 MB"></article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="interview-recording.m4a" size="12 MB"></article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="release-assets.zip" size="104 MB"></article>
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <article x-cardfile filename="sensor-capture.bin" size="31 MB"></article>
-</div>
+</figure>
 
 ## Attributes
 

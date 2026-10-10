@@ -130,13 +130,13 @@ Or add behaviors explicitly, one `x-*` attribute each. (The old generic
 `x-behavior="ripple tooltip"` form is deprecated (#1642): it still runs, and
 warns.)
 
-<div x-demo>
+<figure x-demo>
 <button
   x-ripple
   x-tooltip="Hello!">
   Hover
 </button>
-</div>
+</figure>
 
 **From `src/site-engine.js:95`:**
 ```javascript
@@ -601,7 +601,7 @@ form.addEventListener('wb:form:success', (e) => {
 
 Stack multiple behaviors on a single element:
 
-<div x-demo>
+<figure x-demo>
 <button
   x-ripple
   x-tooltip
@@ -609,7 +609,7 @@ Stack multiple behaviors on a single element:
   tooltip="Click me!">
   Submit
 </button>
-</div>
+</figure>
 
 This applies three behaviors:
 1. `button()` - Button styling and states

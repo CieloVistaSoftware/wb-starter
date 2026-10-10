@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-sparkle>Make it sparkle</button>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,6 +4,7 @@
   "title": "Dropdown",
   "description": "Toggleable dropdown menu",
   "schemaFor": "dropdown",
+  "kind": "decorator",
   "baseClass": "x-dropdown",
   "semanticElement": {
     "tagName": "div",

@@ -4,6 +4,7 @@
   "title": "Slider",
   "description": "Image comparison slider or carousel.",
   "schemaFor": "slider",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-slider",
     "supportLevel": "stable",

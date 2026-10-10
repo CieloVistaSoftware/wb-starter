@@ -4,6 +4,7 @@
   "title": "Sparkle",
   "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
   "schemaFor": "sparkle",
+  "kind": "decorator",
   "properties": {
     "count": {
       "type": "string",

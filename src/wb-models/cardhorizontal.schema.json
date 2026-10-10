@@ -4,6 +4,7 @@
   "title": "Horizontal Card",
   "description": "Card with horizontal layout - image on side, content on other",
   "schemaFor": "cardhorizontal",
+  "kind": "decorator",
   "baseClass": "x-cardhorizontal",
   "semanticElement": {
     "tagName": "article",

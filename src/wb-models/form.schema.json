@@ -9,6 +9,8 @@
   },
   "required": [],
   "schemaFor": "form",
+  "kind": "element",
+  "element": "form",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

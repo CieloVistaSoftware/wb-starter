@@ -4,6 +4,7 @@
   "title": "Portfolio Card",
   "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
   "schemaFor": "cardportfolio",
+  "kind": "decorator",
   "baseClass": "x-cardportfolio",
   "semanticElement": {
     "tagName": "article",

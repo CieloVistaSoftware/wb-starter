@@ -6,6 +6,7 @@
   "properties": {},
   "required": [],
   "schemaFor": "tags",
+  "kind": "decorator",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

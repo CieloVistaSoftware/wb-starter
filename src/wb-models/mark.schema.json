@@ -4,6 +4,8 @@
   "title": "Mark",
   "description": "A plain <mark> highlights text; variant picks a success, warning, danger or info colour, and color sets any colour with the text colour chosen to stay readable.",
   "schemaFor": "mark",
+  "kind": "element",
+  "element": "mark",
   "properties": {
     "variant": {
       "type": "string",

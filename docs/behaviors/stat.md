@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-stat value="1,284" label="Builds this month"></div>
-</div>
+</figure>
 
 ## Classes applied
 

@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-slidein direction="left">Click to slide in</button>
-</div>
+</figure>
 
 ## Attributes
 

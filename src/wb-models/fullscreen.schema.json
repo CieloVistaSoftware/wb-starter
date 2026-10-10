@@ -4,6 +4,7 @@
   "title": "Fullscreen",
   "description": "x-fullscreen makes the element a button that expands the page (or the element matched by target) to full screen and back.",
   "schemaFor": "fullscreen",
+  "kind": "decorator",
   "properties": {
     "target": {
       "type": "string",

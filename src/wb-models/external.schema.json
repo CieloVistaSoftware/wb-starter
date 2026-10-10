@@ -4,6 +4,7 @@
   "title": "External link",
   "description": "Marks a link as external: opens it in a new tab with rel=\"noopener noreferrer\" and adds a ↗ icon.",
   "schemaFor": "external",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "a"
   },

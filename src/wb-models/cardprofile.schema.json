@@ -3,6 +3,7 @@
   "title": "Card Profile",
   "description": "Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).",
   "schemaFor": "cardprofile",
+  "kind": "decorator",
   "baseClass": "x-card",
   "properties": {
     "name": {

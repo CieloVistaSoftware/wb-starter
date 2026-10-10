@@ -12,9 +12,9 @@
 
 Old markup still works: the runtime applies the behaviors it names, and prints one console warning per spelling with the markup to write instead. Nothing in this project writes it any more, and `tests/compliance/no-x-behavior-attribute.spec.ts` fails if a page, demo or src file starts to again.
 
-<div x-demo>
+<figure x-demo>
 <span x-badge label="Beta" variant="warning"></span>
-</div>
+</figure>
 
 - **Implementation:** the legacy dispatch is in `src/core/wb.js` and `src/core/wb-lazy.js`; the warning is `src/core/x-behavior-deprecation.js`.
 - **Demo:** [autoinject.html](../../demos/autoinject.html) shows which tags need no attribute at all.

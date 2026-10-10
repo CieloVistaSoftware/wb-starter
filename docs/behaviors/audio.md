@@ -4,9 +4,9 @@ A bare `<audio>` gets a styled player with a track display, a play button and, w
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls></audio>
-</div>
+</figure>
 
 No attribute needed on `<audio>`. Don't add `x-audio` to it (#746).
 

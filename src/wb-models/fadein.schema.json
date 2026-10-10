@@ -4,6 +4,7 @@
   "title": "Fadein",
   "description": "On click, plays the fade-in animation for 0.5s.",
   "schemaFor": "fadein",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

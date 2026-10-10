@@ -4,6 +4,7 @@
   "title": "Stage Light",
   "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
   "schemaFor": "stagelight",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-stagelight",
     "supportLevel": "experimental",

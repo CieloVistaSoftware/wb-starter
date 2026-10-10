@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-fadein>Click to fade in</button>
-</div>
+</figure>
 
 <sub>Schema: [`fadein.schema.json`](../../src/wb-models/fadein.schema.json)</sub>

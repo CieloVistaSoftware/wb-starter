@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-shake>Wrong password</button>
-</div>
+</figure>
 
 <sub>Schema: [`shake.schema.json`](../../src/wb-models/shake.schema.json)</sub>

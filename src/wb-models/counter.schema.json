@@ -9,6 +9,7 @@
   },
   "required": [],
   "schemaFor": "counter",
+  "kind": "decorator",
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

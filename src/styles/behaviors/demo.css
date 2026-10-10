@@ -25,6 +25,16 @@
   padding: 1rem;
 }
 
+/* #917: the preferred host is <figure x-demo>, and the UA stylesheet gives a
+   <figure> margin (1em top and bottom, 40 pixels each side). The rule above zeroes left/right, but nothing
+   set the TOP margin on a <div> host, so a <figure> host kept the UA's 1em and
+   every demo moved down 16px. :where() has zero specificity, so this only
+   undoes the UA margin (any author rule still beats it) -- exactly the margin
+   a <div> host starts from. */
+:where(figure:is([x-demo], .x-demo)) {
+  margin: 0;
+}
+
 /* #425: an open dropdown positioned to open upward (top-start/top-end)
    extends above its trigger and got clipped by x-demo's own
    overflow:hidden above. Lift the clip specifically while a dropdown

@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-resizable handles="se" style="width:240px;height:120px;padding:1rem;border:1px solid var(--border-color);background:var(--bg-secondary)">
   Drag the bottom-right corner.
 </div>
-</div>
+</figure>
 
 ## Attributes
 

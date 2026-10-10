@@ -4,6 +4,8 @@
   "title": "Table",
   "description": "Data table with sorting, filtering, and pagination",
   "schemaFor": "table",
+  "kind": "element",
+  "element": "table",
   "baseClass": "x-table",
   "semanticElement": {
     "tagName": "table",

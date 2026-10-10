@@ -23,6 +23,12 @@
           "title": "Search Index",
           "description": "Documentation for Search Index",
           "modified": "2026-10-06"
+        },
+        {
+          "file": "guides/migrate-an-existing-page.md",
+          "title": "How to Move an Existing Page onto WB Starter",
+          "description": "site-migrate: propose a WB Starter page for an existing page, with every change listed for review",
+          "modified": "2026-10-10"
         }
       ]
     },

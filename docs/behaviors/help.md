@@ -2,9 +2,9 @@
 
 Displays always-visible help text for form fields or UI elements.
 
-<div x-demo>
+<figure x-demo>
 <span x-help>Enter your email address here.</span>
-</div>
+</figure>
 
 - **Note:** x-help is functionally the same as a span except for styling and accessibility (adds role="note" and a help class). For hover-based help, use x-tooltip.
 

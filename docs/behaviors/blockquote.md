@@ -16,25 +16,25 @@ The `<blockquote>` element represents an extended quotation from another source.
 `quote`/`author`/`role` attributes — hand-authored children are replaced, not
 merged.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardtestimonial
   quote="This product changed my life. Highly recommended!"
   author="James Smith"
   role="CEO, TechCorp">
 </article>
-</div>
+</figure>
 
 ## Companion Element: `<cite>`
 
 The `<cite>` element identifies the source of a quotation:
 
-<div x-demo>
+<figure x-demo>
 <blockquote>
   <p>Design is not just what it looks like. Design is how it works.</p>
 </blockquote>
 <cite>Steve Jobs</cite>
-</div>
+</figure>
 
 **Note:** `<cite>` should contain the *title of a work* or *name of a person*, not the quotation itself.
 
@@ -48,7 +48,7 @@ The `<cite>` element identifies the source of a quotation:
 
 ## Example: Full Testimonial Structure
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardtestimonial
   quote="This product changed my life. The support team is incredible and the features are exactly what I needed."
@@ -57,7 +57,7 @@ The `<cite>` element identifies the source of a quotation:
   avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg"
   rating="5">
 </article>
-</div>
+</figure>
 
 ## CSS Styling
 

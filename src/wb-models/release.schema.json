@@ -4,6 +4,7 @@
   "title": "Release",
   "description": "Renders the site's current build/release number from its single source of truth.",
   "schemaFor": "release",
+  "kind": "decorator",
   "properties": {
     "format": {
       "type": "string",

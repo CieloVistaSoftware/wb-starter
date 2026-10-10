@@ -135,11 +135,11 @@ action?** A value is `<select>`; an action is `x-dropdown` (#682).
 - An attribute takes intent (`variant="success"`), never CSS internals.
 - Booleans are bare attributes: `hoverable`, not `hoverable="true"`.
 
-<div x-demo>
+<figure x-demo>
 <article title="Release notes" subtitle="Version 3" variant="glass" hoverable>
   <p>Changes in this release.</p>
 </article>
-</div>
+</figure>
 
 ## Schemas
 
@@ -188,30 +188,30 @@ its source and confirming it builds everything it needs unconditionally.
 
 ### A native element, auto-injected
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>More information</summary>
   <p>Additional details.</p>
 </details>
-</div>
+</figure>
 
 No attribute: `<details>` is in `nativeMap`. Without WB it is still a working
 disclosure.
 
 ### A native element with an explicit enhancement
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple type="button">Save</button>
-</div>
+</figure>
 
 The button stays a button: same role, focus order and form behavior. The ripple
 is added on top.
 
 ### A behavior on a neutral host
 
-<div x-demo>
+<figure x-demo>
 <div x-alert variant="success" title="Saved">Your changes were saved.</div>
-</div>
+</figure>
 
 No native element means "alert box", so the behavior goes on a `<div>`.
 

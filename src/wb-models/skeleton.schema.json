@@ -4,6 +4,7 @@
   "title": "Skeleton",
   "description": "Loading skeleton placeholder with shimmer animation",
   "schemaFor": "skeleton",
+  "kind": "decorator",
   "baseClass": "x-skeleton",
   "semanticElement": {
     "tagName": "div",

@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-prompt promptTitle="Rename file" promptMessage="New name:" defaultValue="notes.md">Rename…</button>
-</div>
+</figure>
 
 ## Attributes
 
