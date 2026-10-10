@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T19:17:00.871Z",
+  "generatedAt": "2026-10-10T20:57:18.053Z",
   "count": 177,
   "schemas": [
     {
@@ -3352,7 +3352,7 @@
       "title": "Fix Card",
       "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
       "tag": "x-fix-card",
-      "baseClass": "x-fix-card",
+      "baseClass": "x-fixcard",
       "properties": {},
       "matrix": [],
       "_metadata": {}
