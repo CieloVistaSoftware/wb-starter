@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.495",
+      "date": "2026-10-10",
+      "summary": "The Behaviors page decides which semantic rows to show from each schema&#39;s declared kind. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1825\" target=\"_blank\" rel=\"noopener\">#1825</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Behaviors page picks semantic rows from the declared kind</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1825\" target=\"_blank\" rel=\"noopener\">#1825</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0719d677e80b815ef1b081003b7d7510408f8223\" target=\"_blank\" rel=\"noopener\"><code>0719d67</code></a>",
+          "issues": [
+            835,
+            1825
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors and look for the Semantic password row. Before: x-password had no semantic row because its host is a selector no markup contains. Now: password is listed as a semantic row.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0719d677e80b815ef1b081003b7d7510408f8223\" target=\"_blank\" rel=\"noopener\"><code>0719d67</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.494",
       "date": "2026-10-10",
       "summary": "Every live example in pages, demos and docs now sits in a figure element and renders exactly as before. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/917\" target=\"_blank\" rel=\"noopener\">#917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1836\" target=\"_blank\" rel=\"noopener\">#1836</a>",
