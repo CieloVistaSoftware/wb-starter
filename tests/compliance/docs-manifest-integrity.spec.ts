@@ -6,8 +6,10 @@ test.describe('Docs Manifest Integrity', () => {
   const MANIFEST_PATH = path.join(ROOT, 'docs', 'manifest.json');
   const DOCS_DIR = path.join(ROOT, 'docs');
 
-  test('All markdown files in docs/ should be listed in manifest.json', async () => {
+  test('Every user doc in docs/ should be listed in manifest.json', async () => {
     const manifest = readJson(MANIFEST_PATH);
+    const generated = readJson(path.join(ROOT, 'data', 'docs-manifest.json'));
+    const audienceOf = new Map<string, string>((generated.files || []).map((f: { path: string; audience: string }) => [f.path, f.audience]));
     expect(manifest).toBeTruthy();
 
     // Extract all file paths from manifest
@@ -41,8 +43,13 @@ test.describe('Docs Manifest Integrity', () => {
       // Normalize path separators
       const normalizedPath = path.normalize(relativePath);
       
-      // Skip _today folder as it seems to be for daily logs
-      if (normalizedPath.startsWith('_today')) continue;
+      // #1239: the curated manifest is the reader-facing catalog, so only
+      // USER docs belong in it. Maintainer docs (data/docs-manifest.json
+      // audience "maintainer") are hidden from it, and docs/archive/ is not a
+      // doc set at all. tests/regression/docs-catalog-is-user-docs.spec.ts
+      // checks the other direction: nothing but user docs is listed.
+      if (normalizedPath.split(path.sep)[0] === 'archive') continue;
+      if (audienceOf.get('docs/' + normalizedPath.split(path.sep).join('/')) !== 'user') continue;
       
       // Skip manifest.json itself (it's not md)
       

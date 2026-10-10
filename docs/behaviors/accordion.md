@@ -38,7 +38,7 @@ markup (`.x-accordion__item` / `.x-accordion__head` / `.x-accordion__body`) when
 either (a) the host has children carrying `accordionTitle`, or (b) the host tag
 is literally `<div x-accordion>`. Put `x-accordion` on any *other* element with no
 titled children (e.g. `<div x-accordion title="Q">A</div>`) and it silently falls
-back to the plain [`x-collapse`](x-collapse.md) behavior instead — a single
+back to the plain [`x-collapse`](collapse.md) behavior instead — a single
 toggle button + content panel styled with `.x-collapse__trigger` /
 `.x-collapse__content`, not accordion classes. Use the multi-item form below for
 a real accordion via `x-accordion` on semantic HTML.

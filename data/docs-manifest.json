@@ -1,5 +1,9 @@
 {
-  "totalFiles": 274,
+  "totalFiles": 259,
+  "audiences": {
+    "user": 175,
+    "maintainer": 84
+  },
   "categories": [
     "_today",
     "architecture",
@@ -14,17 +18,11 @@
   "byCategory": {
     "root": [
       {
-        "path": "docs/AI.md",
-        "title": "AI",
-        "name": "AI",
-        "category": "root",
-        "created": "2026-07-04"
-      },
-      {
         "path": "docs/ANNOUNCE_TEST_POLICY.md",
         "title": "Release announcement: Local test gating and PR policy",
         "name": "ANNOUNCE_TEST_POLICY",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-06"
       },
       {
@@ -32,6 +30,7 @@
         "title": "Branch protection: require fast Tier‑1 check",
         "name": "BRANCH_PROTECTION",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-06"
       },
       {
@@ -39,6 +38,7 @@
         "title": "Potential Improvements for WB-Starter",
         "name": "IMPROVEMENTS",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -46,6 +46,7 @@
         "title": "Intellisense Tooltip Audit Report",
         "name": "INTELLISENSE-TOOLTIPS",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -53,6 +54,7 @@
         "title": "WB-Starter MVVM Migration Plan",
         "name": "MVVM-MIGRATION-PLAN",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -60,6 +62,7 @@
         "title": "wb-starter v3.0 - MVVM Architecture",
         "name": "MVVM-MIGRATION",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -67,6 +70,7 @@
         "title": "Notes Behavior v3.0 - Updates Summary",
         "name": "NOTES-V3-GUIDE",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -74,6 +78,7 @@
         "title": "wb-starter v3 — Complete Guide",
         "name": "V3-GUIDE",
         "category": "root",
+        "audience": "user",
         "created": "2026-06-27"
       },
       {
@@ -81,6 +86,7 @@
         "title": "WB-Starter Behavior System - Technical Workflow",
         "name": "WB_BEHAVIOR_SYSTEM",
         "category": "root",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -88,6 +94,7 @@
         "title": "Audio",
         "name": "audio",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -95,6 +102,7 @@
         "title": "Auto Injection (Preview)",
         "name": "auto-injection",
         "category": "root",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -102,6 +110,7 @@
         "title": "WB-Starter Behaviors Cross-Reference",
         "name": "behavior-cross-reference",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -109,6 +118,7 @@
         "title": "WB-Starter Reference",
         "name": "behaviors-reference",
         "category": "root",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -116,6 +126,7 @@
         "title": "Card Behavior Documentation",
         "name": "card",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -123,6 +134,7 @@
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-02"
       },
       {
@@ -130,6 +142,7 @@
         "title": "Committing Fixes Workflow",
         "name": "committing-fixes",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-29"
       },
       {
@@ -137,6 +150,7 @@
         "title": "Container Behaviors Pattern",
         "name": "container-pattern",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -144,6 +158,7 @@
         "title": "wb-starter Escape Hatches",
         "name": "escape-hatches",
         "category": "root",
+        "audience": "user",
         "created": "2026-01-14"
       },
       {
@@ -151,6 +166,7 @@
         "title": "Home Page Documentation",
         "name": "home-page",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -158,6 +174,7 @@
         "title": "WB-Starter Documentation",
         "name": "index",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -165,6 +182,7 @@
         "title": "Double-Click Inline Editing System",
         "name": "inline-editing",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -172,6 +190,7 @@
         "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
         "name": "linkedin-framework-agnostic",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-13"
       },
       {
@@ -179,20 +198,15 @@
         "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
         "name": "linkedin-standards-article",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-13"
-      },
-      {
-        "path": "docs/linkedin-update-article.md",
-        "title": "Cielo Vista Software Update",
-        "name": "linkedin-update-article",
-        "category": "root",
-        "created": "2026-08-02"
       },
       {
         "path": "docs/mcp.md",
         "title": "MCP Runner & Docs Access",
         "name": "mcp",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-01"
       },
       {
@@ -200,6 +214,7 @@
         "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
         "name": "npx-commands",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-09-28"
       },
       {
@@ -207,6 +222,7 @@
         "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
         "name": "pce-candidates",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-02"
       },
       {
@@ -214,6 +230,7 @@
         "title": "Performance Improvement Plan",
         "name": "performance",
         "category": "root",
+        "audience": "user",
         "created": "2026-01-02"
       },
       {
@@ -221,6 +238,7 @@
         "title": "Price Card & PCE (Pseudo-Custom Elements) Refactor",
         "name": "pricecard",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-02"
       },
       {
@@ -228,6 +246,7 @@
         "title": "WB-Starter - Property System Documentation",
         "name": "properties",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -235,6 +254,7 @@
         "title": "Property Viewer (Right Panel)",
         "name": "property-viewer",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-13"
       },
       {
@@ -242,6 +262,7 @@
         "title": "Schema-First MVVM Architecture",
         "name": "schema-first-architecture",
         "category": "root",
+        "audience": "user",
         "created": "2026-01-10"
       },
       {
@@ -249,6 +270,7 @@
         "title": "Schema-First Architecture Audit Report",
         "name": "schema-first-audit-report",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -256,6 +278,7 @@
         "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
         "name": "schema-test-value",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -263,6 +286,7 @@
         "title": "Schema Standards for WB-Starter Behaviors & Pages",
         "name": "schema",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -270,6 +294,7 @@
         "title": "WB-Starter Schema Migration Plan",
         "name": "schema.migration",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -277,6 +302,7 @@
         "title": "Search Behavior Documentation",
         "name": "search",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -284,6 +310,7 @@
         "title": "Semantic HTML Audit Report",
         "name": "semantic-audit",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -291,6 +318,7 @@
         "title": "HTML5 Semantic Standard (Mandatory)",
         "name": "semantic-standard",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -298,6 +326,7 @@
         "title": "Class Naming & Semantics",
         "name": "styles",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-01-02"
       },
       {
@@ -305,6 +334,7 @@
         "title": "Comprehensive Test Schema Standard",
         "name": "test-schema-standard",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -312,6 +342,7 @@
         "title": "Testing & CI — Runbook (developer-focused)",
         "name": "testing-runbook",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-01"
       },
       {
@@ -319,6 +350,7 @@
         "title": "Tiered Test Structure (Playwright Gates)",
         "name": "testing-strategy",
         "category": "root",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -326,6 +358,7 @@
         "title": "Theme System Documentation",
         "name": "themes",
         "category": "root",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -333,6 +366,7 @@
         "title": "wbservices",
         "name": "wbservices",
         "category": "root",
+        "audience": "maintainer",
         "created": "2026-02-14"
       }
     ],
@@ -342,6 +376,7 @@
         "title": "021426FIXPLAN",
         "name": "021426FIXPLAN",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -349,6 +384,7 @@
         "title": "AI Coordination Protocol",
         "name": "AI-COORDINATION",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-06"
       },
       {
@@ -356,6 +392,7 @@
         "title": "AI Answers",
         "name": "ANSWERS",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-06"
       },
       {
@@ -363,6 +400,7 @@
         "title": "CSS Ownership Migration Plan",
         "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -370,6 +408,7 @@
         "title": "CURRENT HANDOFF — 2026-09-11",
         "name": "CURRENT-STATUS",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -377,6 +416,7 @@
         "title": "Merge Plan - Completed",
         "name": "MERGE-PLAN",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-10"
       },
       {
@@ -384,6 +424,7 @@
         "title": "PAGE REPAIR PLAN — Master Execution Guide",
         "name": "PAGE-REPAIR-PLAN",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -391,6 +432,7 @@
         "title": "AI Questions",
         "name": "QUESTIONS",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-06"
       },
       {
@@ -398,6 +440,7 @@
         "title": "REPAIR PLAN — Page & Demo Compliance",
         "name": "REPAIR-PLAN-021526",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -405,6 +448,7 @@
         "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
         "name": "ROOT-CAUSE-md-double-parse",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-07-04"
       },
       {
@@ -412,6 +456,7 @@
         "title": "---",
         "name": "TODO",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-01-02"
       },
       {
@@ -419,6 +464,7 @@
         "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
         "name": "audit-code-panels-v3-standards",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-08-13"
       },
       {
@@ -426,64 +472,33 @@
         "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
         "name": "audit-v3-guide-doc-viewer",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-08-08"
-      },
-      {
-        "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
-        "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
-        "name": "common-errors-retrospective-2026-08-15",
-        "category": "_today",
-        "created": "2026-08-15"
       },
       {
         "path": "docs/_today/demos-redo-plan-268.md",
         "title": "#268 — demos/ consolidation plan (closed 2026-07-15)",
         "name": "demos-redo-plan-268",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-07-10"
-      },
-      {
-        "path": "docs/_today/hardcoded-colors-audit.md",
-        "title": "Hardcoded-Color Audit & Recommendations",
-        "name": "hardcoded-colors-audit",
-        "category": "_today",
-        "created": "2026-07-06"
-      },
-      {
-        "path": "docs/_today/inheritance-usage-report.md",
-        "title": "\"inheritance\" usage report — `.md` files",
-        "name": "inheritance-usage-report",
-        "category": "_today",
-        "created": "2026-07-05"
-      },
-      {
-        "path": "docs/_today/slot-audit.md",
-        "title": "\"slot\" Audit & Retirement Plan",
-        "name": "slot-audit",
-        "category": "_today",
-        "created": "2026-07-06"
       },
       {
         "path": "docs/_today/test-audit-2026-08-14.md",
         "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
         "name": "test-audit-2026-08-14",
         "category": "_today",
+        "audience": "maintainer",
         "created": "2026-08-14"
       }
     ],
     "architecture": [
       {
-        "path": "docs/architecture/WB-PREFIX-AUDIT.md",
-        "title": "`wb-` Prefix Audit",
-        "name": "WB-PREFIX-AUDIT",
-        "category": "architecture",
-        "created": "2026-08-26"
-      },
-      {
         "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
         "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
         "name": "X-PREFIX-MIGRATION-PHASE1",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -491,6 +506,7 @@
         "title": "> **OBSOLETE — superseded by",
         "name": "proposed-custom-elements",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -498,6 +514,7 @@
         "title": "Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface",
         "name": "remove-wb-prefix-authoring-surface",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-08-08"
       },
       {
@@ -505,6 +522,7 @@
         "title": "Proposal: v4 Golden-Ratio Layout Specification",
         "name": "v4-golden-ratio-layout-spec",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-08-04"
       },
       {
@@ -512,6 +530,7 @@
         "title": "wb-starter compared to Solid.js",
         "name": "solidjscomparison",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-09-03"
       },
       {
@@ -519,6 +538,7 @@
         "title": "WB-Starter Attribute Naming Standard",
         "name": "ATTRIBUTE-NAMING-STANDARD",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-01-10"
       },
       {
@@ -526,6 +546,7 @@
         "title": "ERROR-MESSAGE",
         "name": "ERROR-MESSAGE",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -533,6 +554,7 @@
         "title": "WB-Starter Schema Specification v3.0",
         "name": "SCHEMA-SPECIFICATION",
         "category": "architecture",
+        "audience": "maintainer",
         "created": "2026-01-10"
       }
     ],
@@ -542,13 +564,7 @@
         "title": "Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS",
         "name": "HOST-CHILD-DISPATCH-AUDIT",
         "category": "audits",
-        "created": "2026-07-18"
-      },
-      {
-        "path": "docs/audits/INLINE-STYLES-AUDIT.md",
-        "title": "Inline Styles Audit — Tier-1 Law 9 violation",
-        "name": "INLINE-STYLES-AUDIT",
-        "category": "audits",
+        "audience": "maintainer",
         "created": "2026-07-18"
       },
       {
@@ -556,6 +572,7 @@
         "title": "X-Attribute Usage Audit",
         "name": "X-USAGE-AUDIT",
         "category": "audits",
+        "audience": "maintainer",
         "created": "2026-01-10"
       }
     ],
@@ -565,6 +582,7 @@
         "title": "accordion",
         "name": "accordion",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -572,6 +590,7 @@
         "title": "`<address>` Element",
         "name": "address",
         "category": "behaviors",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -579,6 +598,7 @@
         "title": "Alert",
         "name": "alert",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -586,6 +606,7 @@
         "title": "articles",
         "name": "articles",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -593,6 +614,7 @@
         "title": "`<aside>` Element",
         "name": "aside",
         "category": "behaviors",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -600,6 +622,7 @@
         "title": "Audio",
         "name": "audio",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -607,6 +630,7 @@
         "title": "x-autocomplete Behavior",
         "name": "autocomplete",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -614,6 +638,7 @@
         "title": "x-autosize Behavior",
         "name": "autosize",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-02-17"
       },
       {
@@ -621,6 +646,7 @@
         "title": "Avatar",
         "name": "avatar",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -628,6 +654,7 @@
         "title": "Badge",
         "name": "badge",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -635,6 +662,7 @@
         "title": "`<blockquote>` Element",
         "name": "blockquote",
         "category": "behaviors",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -642,6 +670,7 @@
         "title": "Bounce",
         "name": "bounce",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -649,6 +678,7 @@
         "title": "Breadcrumb",
         "name": "breadcrumb",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -656,6 +686,7 @@
         "title": "Button",
         "name": "button",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -663,6 +694,7 @@
         "title": "Card",
         "name": "card",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -670,6 +702,7 @@
         "title": "Button Card",
         "name": "cardbutton",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -677,6 +710,7 @@
         "title": "Draggable Card",
         "name": "carddraggable",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -684,6 +718,7 @@
         "title": "Expandable Card",
         "name": "cardexpandable",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -691,6 +726,7 @@
         "title": "File Card",
         "name": "cardfile",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -698,6 +734,7 @@
         "title": "Hero Card",
         "name": "cardhero",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -705,6 +742,7 @@
         "title": "Horizontal Card",
         "name": "cardhorizontal",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -712,6 +750,7 @@
         "title": "Image Card",
         "name": "cardimage",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -719,6 +758,7 @@
         "title": "Link Card",
         "name": "cardlink",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -726,6 +766,7 @@
         "title": "Minimizable Card",
         "name": "cardminimizable",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -733,6 +774,7 @@
         "title": "Notification Card",
         "name": "cardnotification",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -740,6 +782,7 @@
         "title": "Overlay Card",
         "name": "cardoverlay",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -747,6 +790,7 @@
         "title": "Portfolio Card",
         "name": "cardportfolio",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -754,6 +798,7 @@
         "title": "Pricing Card",
         "name": "cardpricing",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -761,6 +806,7 @@
         "title": "Product Card",
         "name": "cardproduct",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -768,6 +814,7 @@
         "title": "Card Profile",
         "name": "cardprofile",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -775,6 +822,7 @@
         "title": "Stats Card",
         "name": "cardstats",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -782,6 +830,7 @@
         "title": "Testimonial Card",
         "name": "cardtestimonial",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -789,6 +838,7 @@
         "title": "Video Card",
         "name": "cardvideo",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -796,6 +846,7 @@
         "title": "Cart",
         "name": "cart",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-10-09"
       },
       {
@@ -803,6 +854,7 @@
         "title": "Center - wb-starter v3.0",
         "name": "center",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -810,6 +862,7 @@
         "title": "Checkbox",
         "name": "checkbox",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -817,6 +870,7 @@
         "title": "chip",
         "name": "chip",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -824,6 +878,7 @@
         "title": "Clock",
         "name": "clock",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -831,6 +886,7 @@
         "title": "Cluster",
         "name": "cluster",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -838,6 +894,7 @@
         "title": "Code",
         "name": "code",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -845,6 +902,7 @@
         "title": "Code Theme - wb-starter v3.0",
         "name": "codetheme",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -852,6 +910,7 @@
         "title": "Collapse",
         "name": "collapse",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -859,6 +918,7 @@
         "title": "x-colorpicker Behavior",
         "name": "colorpicker",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -866,6 +926,7 @@
         "title": "Confetti",
         "name": "confetti",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -873,6 +934,7 @@
         "title": "Confirm",
         "name": "confirm",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -880,6 +942,7 @@
         "title": "Container - wb-starter v3.0",
         "name": "container",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-02-14"
       },
       {
@@ -887,6 +950,7 @@
         "title": "Control",
         "name": "control",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -894,6 +958,7 @@
         "title": "Copy",
         "name": "copy",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -901,6 +966,7 @@
         "title": "Copybutton",
         "name": "copybutton",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -908,6 +974,7 @@
         "title": "Countdown",
         "name": "countdown",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -915,6 +982,7 @@
         "title": "x-counter Behavior",
         "name": "counter",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -922,6 +990,7 @@
         "title": "Cover - wb-starter v3.0",
         "name": "cover",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -929,20 +998,15 @@
         "title": "Dark Mode Toggle",
         "name": "darkmode",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/data.md",
-        "title": "`<data>` Element",
-        "name": "data",
-        "category": "behaviors",
-        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/demo.md",
         "title": "Demo Container",
         "name": "demo",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -950,6 +1014,7 @@
         "title": "Details",
         "name": "details",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -957,6 +1022,7 @@
         "title": "Dialog",
         "name": "dialog",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -964,6 +1030,7 @@
         "title": "DL (Description List) Behavior Design & User Guide",
         "name": "dl",
         "category": "behaviors",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -971,6 +1038,7 @@
         "title": "Draggable",
         "name": "draggable",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -978,6 +1046,7 @@
         "title": "Drawer",
         "name": "drawer",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -985,6 +1054,7 @@
         "title": "Drawer Layout",
         "name": "drawerLayout",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -992,6 +1062,7 @@
         "title": "dropdown",
         "name": "dropdown",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -999,6 +1070,7 @@
         "title": "Error Behavior",
         "name": "error",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1006,6 +1078,7 @@
         "title": "Fadein",
         "name": "fadein",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1013,6 +1086,7 @@
         "title": "x-fieldset Behavior",
         "name": "fieldset",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1020,6 +1094,7 @@
         "title": "Figure",
         "name": "figure",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1027,6 +1102,7 @@
         "title": "x-file Behavior",
         "name": "file",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1034,6 +1110,7 @@
         "title": "fill — as wide as the container allows",
         "name": "fill",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-22"
       },
       {
@@ -1041,6 +1118,7 @@
         "title": "Fireworks",
         "name": "fireworks",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1048,6 +1126,7 @@
         "title": "Fix Card",
         "name": "fix-card",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1055,6 +1134,7 @@
         "title": "Flash",
         "name": "flash",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1062,6 +1142,7 @@
         "title": "Flex",
         "name": "flex",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1069,6 +1150,7 @@
         "title": "Flip",
         "name": "flip",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1076,6 +1158,7 @@
         "title": "x-floatinglabel Behavior",
         "name": "floatinglabel",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1083,6 +1166,7 @@
         "title": "Footer",
         "name": "footer",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1090,6 +1174,7 @@
         "title": "Form Behavior",
         "name": "form",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1097,6 +1182,7 @@
         "title": "x-formrow Behavior",
         "name": "formrow",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1104,6 +1190,7 @@
         "title": "Frame",
         "name": "frame",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-26"
       },
       {
@@ -1111,6 +1198,7 @@
         "title": "Fullscreen",
         "name": "fullscreen",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1118,6 +1206,7 @@
         "title": "Gallery",
         "name": "gallery",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1125,6 +1214,7 @@
         "title": "glass — the element carries the background scene",
         "name": "glass",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-10-01"
       },
       {
@@ -1132,6 +1222,7 @@
         "title": "Globe",
         "name": "globe",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1139,6 +1230,7 @@
         "title": "Glow",
         "name": "glow",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1146,6 +1238,7 @@
         "title": "x-grid",
         "name": "grid",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-02-17"
       },
       {
@@ -1153,6 +1246,7 @@
         "title": "Header",
         "name": "header",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1160,6 +1254,7 @@
         "title": "Heartbeat",
         "name": "heartbeat",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1167,6 +1262,7 @@
         "title": "x-help Behavior",
         "name": "help",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-02-17"
       },
       {
@@ -1174,6 +1270,7 @@
         "title": "Hero",
         "name": "hero",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1181,6 +1278,7 @@
         "title": "Icon - wb-starter v3.0",
         "name": "icon",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -1188,6 +1286,7 @@
         "title": "Img",
         "name": "img",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1195,6 +1294,7 @@
         "title": "Input",
         "name": "input",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1202,6 +1302,7 @@
         "title": "x-inputgroup Behavior",
         "name": "inputgroup",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1209,6 +1310,7 @@
         "title": "Jello",
         "name": "jello",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1216,6 +1318,7 @@
         "title": "Kbd",
         "name": "kbd",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1223,6 +1326,7 @@
         "title": "x-label Behavior",
         "name": "label",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-02-17"
       },
       {
@@ -1230,6 +1334,7 @@
         "title": "Lightbox",
         "name": "lightbox",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1237,6 +1342,7 @@
         "title": "List Behavior",
         "name": "list",
         "category": "behaviors",
+        "audience": "user",
         "created": "2025-12-30"
       },
       {
@@ -1244,6 +1350,7 @@
         "title": "Mark",
         "name": "mark",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1251,6 +1358,7 @@
         "title": "x-masked Behavior",
         "name": "masked",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1258,6 +1366,7 @@
         "title": "Masonry",
         "name": "masonry",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1265,6 +1374,7 @@
         "title": "Markdown to HTML",
         "name": "mdhtml",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1272,6 +1382,7 @@
         "title": "Modal",
         "name": "modal",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-26"
       },
       {
@@ -1279,6 +1390,7 @@
         "title": "Move - wb-starter v3.0",
         "name": "move",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1286,6 +1398,7 @@
         "title": "Navbar",
         "name": "navbar",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1293,6 +1406,7 @@
         "title": "Notes",
         "name": "notes",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1300,6 +1414,7 @@
         "title": "Notify",
         "name": "notify",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1307,6 +1422,7 @@
         "title": "OL (Ordered List) Behavior Design & User Guide",
         "name": "ol",
         "category": "behaviors",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -1314,6 +1430,7 @@
         "title": "OTP Behavior",
         "name": "otp",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1321,6 +1438,7 @@
         "title": "Pagination",
         "name": "pagination",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1328,6 +1446,7 @@
         "title": "Password Behavior",
         "name": "password",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1335,6 +1454,7 @@
         "title": "Popover",
         "name": "popover",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1342,6 +1462,7 @@
         "title": "Pre",
         "name": "pre",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1349,6 +1470,7 @@
         "title": "Print",
         "name": "print",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1356,6 +1478,7 @@
         "title": "Progress",
         "name": "progress",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1363,6 +1486,7 @@
         "title": "Prompt",
         "name": "prompt",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1370,6 +1494,7 @@
         "title": "Pulse",
         "name": "pulse",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1377,6 +1502,7 @@
         "title": "Radio Behavior Design & User Guide",
         "name": "radio",
         "category": "behaviors",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -1384,6 +1510,7 @@
         "title": "Rainbow",
         "name": "rainbow",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1391,6 +1518,7 @@
         "title": "Range Behavior Design & User Guide",
         "name": "range",
         "category": "behaviors",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -1398,6 +1526,7 @@
         "title": "Rating",
         "name": "rating",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1405,6 +1534,7 @@
         "title": "Ratio",
         "name": "ratio",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1412,6 +1542,7 @@
         "title": "Reel - wb-starter v3.0",
         "name": "reel",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -1419,6 +1550,7 @@
         "title": "Relativetime",
         "name": "relativetime",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1426,6 +1558,7 @@
         "title": "Release - wb-starter v3.0",
         "name": "release",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1433,6 +1566,7 @@
         "title": "Repeater",
         "name": "repeater",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1440,6 +1574,7 @@
         "title": "Resizable",
         "name": "resizable",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1447,6 +1582,7 @@
         "title": "Ripple - wb-starter v3.0",
         "name": "ripple",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1454,6 +1590,7 @@
         "title": "Scrollable - wb-starter v3.0",
         "name": "scrollable",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -1461,6 +1598,7 @@
         "title": "ScrollAlong - wb-starter v3.0",
         "name": "scrollalong",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1468,6 +1606,7 @@
         "title": "Search",
         "name": "search",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1475,6 +1614,7 @@
         "title": "x-searchfield Behavior",
         "name": "searchfield",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1482,6 +1622,7 @@
         "title": "Select",
         "name": "select",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1489,6 +1630,7 @@
         "title": "Shake",
         "name": "shake",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1496,6 +1638,7 @@
         "title": "Share",
         "name": "share",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1503,6 +1646,7 @@
         "title": "Sidebar Layout - wb-starter v3.0",
         "name": "sidebarlayout",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -1510,6 +1654,7 @@
         "title": "skeleton",
         "name": "skeleton",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1517,6 +1662,7 @@
         "title": "Slidein",
         "name": "slidein",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1524,6 +1670,7 @@
         "title": "Slider",
         "name": "slider",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1531,6 +1678,7 @@
         "title": "Snow",
         "name": "snow",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1538,6 +1686,7 @@
         "title": "Sparkle",
         "name": "sparkle",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1545,6 +1694,7 @@
         "title": "Spinner",
         "name": "spinner",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1552,6 +1702,7 @@
         "title": "Stack Layout Behavior",
         "name": "stack",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1559,6 +1710,7 @@
         "title": "Stage Light - wb-starter v3.0",
         "name": "stagelight",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1566,6 +1718,7 @@
         "title": "Stat",
         "name": "stat",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-26"
       },
       {
@@ -1573,6 +1726,7 @@
         "title": "Status",
         "name": "status",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-10-06"
       },
       {
@@ -1580,6 +1734,7 @@
         "title": "Stepper Behavior",
         "name": "stepper",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1587,6 +1742,7 @@
         "title": "Steps",
         "name": "steps",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1594,6 +1750,7 @@
         "title": "Sticky",
         "name": "sticky",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1601,6 +1758,7 @@
         "title": "Switch",
         "name": "switch",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1608,6 +1766,7 @@
         "title": "Switcher - wb-starter v3.0",
         "name": "switcher",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-05"
       },
       {
@@ -1615,6 +1774,7 @@
         "title": "Table",
         "name": "table",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1622,6 +1782,7 @@
         "title": "Tabs",
         "name": "tabs",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1629,6 +1790,7 @@
         "title": "Tada",
         "name": "tada",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1636,6 +1798,7 @@
         "title": "x-tags Behavior",
         "name": "tags",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-17"
       },
       {
@@ -1643,6 +1806,7 @@
         "title": "Textarea",
         "name": "textarea",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1650,6 +1814,7 @@
         "title": "Theme Control",
         "name": "themecontrol",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1657,6 +1822,7 @@
         "title": "`<time>` Element",
         "name": "time",
         "category": "behaviors",
+        "audience": "maintainer",
         "created": "2025-12-28"
       },
       {
@@ -1664,6 +1830,7 @@
         "title": "Timeline",
         "name": "timeline",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1671,6 +1838,7 @@
         "title": "toast",
         "name": "toast",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-18"
       },
       {
@@ -1678,6 +1846,7 @@
         "title": "Toggle",
         "name": "toggle",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1685,6 +1854,7 @@
         "title": "x-tooltip Behavior",
         "name": "tooltip",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-02-17"
       },
       {
@@ -1692,6 +1862,7 @@
         "title": "Truncate",
         "name": "truncate",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1699,6 +1870,7 @@
         "title": "Typewriter",
         "name": "typewriter",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1706,6 +1878,7 @@
         "title": "UL (Unordered List) Behavior Design & User Guide",
         "name": "ul",
         "category": "behaviors",
+        "audience": "user",
         "created": "2025-12-28"
       },
       {
@@ -1713,6 +1886,7 @@
         "title": "Video",
         "name": "video",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1720,6 +1894,7 @@
         "title": "Vimeo",
         "name": "vimeo",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1727,6 +1902,7 @@
         "title": "Wobble",
         "name": "wobble",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1734,20 +1910,7 @@
         "title": "x-behavior",
         "name": "x-behavior",
         "category": "behaviors",
-        "created": "2026-02-17"
-      },
-      {
-        "path": "docs/behaviors/x-collapse.md",
-        "title": "x-collapse",
-        "name": "x-collapse",
-        "category": "behaviors",
-        "created": "2026-02-17"
-      },
-      {
-        "path": "docs/behaviors/x-copy.md",
-        "title": "x-copy",
-        "name": "x-copy",
-        "category": "behaviors",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -1755,27 +1918,15 @@
         "title": "x-copybutton",
         "name": "x-copybutton",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-07-30"
-      },
-      {
-        "path": "docs/behaviors/x-darkmode.md",
-        "title": "x-darkmode",
-        "name": "x-darkmode",
-        "category": "behaviors",
-        "created": "2026-07-16"
-      },
-      {
-        "path": "docs/behaviors/x-draggable.md",
-        "title": "x-draggable",
-        "name": "x-draggable",
-        "category": "behaviors",
-        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-effects.md",
         "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
         "name": "x-effects",
         "category": "behaviors",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -1783,27 +1934,15 @@
         "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
         "name": "x-enhancements",
         "category": "behaviors",
+        "audience": "maintainer",
         "created": "2026-02-17"
-      },
-      {
-        "path": "docs/behaviors/x-resizable.md",
-        "title": "x-resizable",
-        "name": "x-resizable",
-        "category": "behaviors",
-        "created": "2026-07-16"
-      },
-      {
-        "path": "docs/behaviors/x-toggle.md",
-        "title": "x-toggle",
-        "name": "x-toggle",
-        "category": "behaviors",
-        "created": "2026-07-16"
       },
       {
         "path": "docs/behaviors/youtube.md",
         "title": "Youtube",
         "name": "youtube",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       },
       {
@@ -1811,6 +1950,7 @@
         "title": "Zoomin",
         "name": "zoomin",
         "category": "behaviors",
+        "audience": "user",
         "created": "2026-08-20"
       }
     ],
@@ -1820,6 +1960,7 @@
         "title": "Page Generation Pipeline",
         "name": "PAGE-GENERATION",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -1827,6 +1968,7 @@
         "title": "AI Documentation Tier System",
         "name": "README",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -1834,6 +1976,7 @@
         "title": "SCHEMAS — Claude's Guide to Getting It Right",
         "name": "SCHEMAS-GUIDE",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-02-17"
       },
       {
@@ -1841,6 +1984,7 @@
         "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
         "name": "TIER1-LAWS",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -1848,6 +1992,7 @@
         "title": "TIER2-DOMAIN-GUIDES",
         "name": "TIER2-DOMAIN-GUIDES",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -1855,6 +2000,7 @@
         "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
         "name": "TIER3-REFERENCE",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-02-14"
       },
       {
@@ -1862,6 +2008,7 @@
         "title": "Tooling Inventory — What This Repo Already Has",
         "name": "TOOLING-INVENTORY",
         "category": "claude",
+        "audience": "maintainer",
         "created": "2026-09-03"
       }
     ],
@@ -1871,6 +2018,7 @@
         "title": "ISO/IEC 42001 Alignment Report",
         "name": "iso-42001-alignment",
         "category": "compliance",
+        "audience": "maintainer",
         "created": "2025-12-30"
       }
     ],
@@ -1880,6 +2028,7 @@
         "title": "How to Create a Website with wb-starter",
         "name": "create-a-website",
         "category": "guides",
+        "audience": "user",
         "created": "2026-09-30"
       },
       {
@@ -1887,6 +2036,7 @@
         "title": "Search Index Generator",
         "name": "search-index",
         "category": "guides",
+        "audience": "user",
         "created": "2026-01-10"
       }
     ],
@@ -1896,6 +2046,7 @@
         "title": "A gate must be seen to fail",
         "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-09-08"
       },
       {
@@ -1903,6 +2054,7 @@
         "title": "CSS class convention — you can name the class without reading the code",
         "name": "CSS-CLASS-CONVENTION",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-09-09"
       },
       {
@@ -1910,6 +2062,7 @@
         "title": "Demos & Documentation Standards",
         "name": "DEMOS-AND-DOCS-STANDARDS",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-07-05"
       },
       {
@@ -1917,6 +2070,7 @@
         "title": "Error Log Retention — 30 Days",
         "name": "ERROR-LOG-RETENTION",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-09-06"
       },
       {
@@ -1924,6 +2078,7 @@
         "title": "The Signature Block",
         "name": "ISSUE-SIGNATURE-BLOCK",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-09-06"
       },
       {
@@ -1931,6 +2086,7 @@
         "title": "Release Process Standards",
         "name": "RELEASE-PROCESS",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-08-21"
       },
       {
@@ -1938,6 +2094,7 @@
         "title": "Repo Layout",
         "name": "REPO-LAYOUT",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-09-28"
       },
       {
@@ -1945,6 +2102,7 @@
         "title": "WB-Starter v3 Standards",
         "name": "V3-STANDARDS",
         "category": "standards",
+        "audience": "maintainer",
         "created": "2026-01-10"
       }
     ]
@@ -1955,6 +2113,7 @@
       "title": "021426FIXPLAN",
       "name": "021426FIXPLAN",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -1962,6 +2121,7 @@
       "title": "AI Coordination Protocol",
       "name": "AI-COORDINATION",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-06"
     },
     {
@@ -1969,6 +2129,7 @@
       "title": "AI Answers",
       "name": "ANSWERS",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-06"
     },
     {
@@ -1976,6 +2137,7 @@
       "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
       "name": "audit-code-panels-v3-standards",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-08-13"
     },
     {
@@ -1983,20 +2145,15 @@
       "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
       "name": "audit-v3-guide-doc-viewer",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-08-08"
-    },
-    {
-      "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
-      "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
-      "name": "common-errors-retrospective-2026-08-15",
-      "category": "_today",
-      "created": "2026-08-15"
     },
     {
       "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
       "title": "CSS Ownership Migration Plan",
       "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -2004,6 +2161,7 @@
       "title": "CURRENT HANDOFF — 2026-09-11",
       "name": "CURRENT-STATUS",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -2011,27 +2169,15 @@
       "title": "#268 — demos/ consolidation plan (closed 2026-07-15)",
       "name": "demos-redo-plan-268",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-07-10"
-    },
-    {
-      "path": "docs/_today/hardcoded-colors-audit.md",
-      "title": "Hardcoded-Color Audit & Recommendations",
-      "name": "hardcoded-colors-audit",
-      "category": "_today",
-      "created": "2026-07-06"
-    },
-    {
-      "path": "docs/_today/inheritance-usage-report.md",
-      "title": "\"inheritance\" usage report — `.md` files",
-      "name": "inheritance-usage-report",
-      "category": "_today",
-      "created": "2026-07-05"
     },
     {
       "path": "docs/_today/MERGE-PLAN.md",
       "title": "Merge Plan - Completed",
       "name": "MERGE-PLAN",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-10"
     },
     {
@@ -2039,6 +2185,7 @@
       "title": "PAGE REPAIR PLAN — Master Execution Guide",
       "name": "PAGE-REPAIR-PLAN",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -2046,6 +2193,7 @@
       "title": "AI Questions",
       "name": "QUESTIONS",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-06"
     },
     {
@@ -2053,6 +2201,7 @@
       "title": "REPAIR PLAN — Page & Demo Compliance",
       "name": "REPAIR-PLAN-021526",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -2060,20 +2209,15 @@
       "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
       "name": "ROOT-CAUSE-md-double-parse",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-07-04"
-    },
-    {
-      "path": "docs/_today/slot-audit.md",
-      "title": "\"slot\" Audit & Retirement Plan",
-      "name": "slot-audit",
-      "category": "_today",
-      "created": "2026-07-06"
     },
     {
       "path": "docs/_today/test-audit-2026-08-14.md",
       "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
       "name": "test-audit-2026-08-14",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-08-14"
     },
     {
@@ -2081,20 +2225,15 @@
       "title": "---",
       "name": "TODO",
       "category": "_today",
+      "audience": "maintainer",
       "created": "2026-01-02"
-    },
-    {
-      "path": "docs/AI.md",
-      "title": "AI",
-      "name": "AI",
-      "category": "root",
-      "created": "2026-07-04"
     },
     {
       "path": "docs/ANNOUNCE_TEST_POLICY.md",
       "title": "Release announcement: Local test gating and PR policy",
       "name": "ANNOUNCE_TEST_POLICY",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-06"
     },
     {
@@ -2102,6 +2241,7 @@
       "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
       "name": "X-PREFIX-MIGRATION-PHASE1",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -2109,6 +2249,7 @@
       "title": "> **OBSOLETE — superseded by",
       "name": "proposed-custom-elements",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -2116,6 +2257,7 @@
       "title": "Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface",
       "name": "remove-wb-prefix-authoring-surface",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-08-08"
     },
     {
@@ -2123,6 +2265,7 @@
       "title": "Proposal: v4 Golden-Ratio Layout Specification",
       "name": "v4-golden-ratio-layout-spec",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-08-04"
     },
     {
@@ -2130,6 +2273,7 @@
       "title": "wb-starter compared to Solid.js",
       "name": "solidjscomparison",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-09-03"
     },
     {
@@ -2137,6 +2281,7 @@
       "title": "WB-Starter Attribute Naming Standard",
       "name": "ATTRIBUTE-NAMING-STANDARD",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -2144,6 +2289,7 @@
       "title": "ERROR-MESSAGE",
       "name": "ERROR-MESSAGE",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -2151,20 +2297,15 @@
       "title": "WB-Starter Schema Specification v3.0",
       "name": "SCHEMA-SPECIFICATION",
       "category": "architecture",
+      "audience": "maintainer",
       "created": "2026-01-10"
-    },
-    {
-      "path": "docs/architecture/WB-PREFIX-AUDIT.md",
-      "title": "`wb-` Prefix Audit",
-      "name": "WB-PREFIX-AUDIT",
-      "category": "architecture",
-      "created": "2026-08-26"
     },
     {
       "path": "docs/audio.md",
       "title": "Audio",
       "name": "audio",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -2172,13 +2313,7 @@
       "title": "Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS",
       "name": "HOST-CHILD-DISPATCH-AUDIT",
       "category": "audits",
-      "created": "2026-07-18"
-    },
-    {
-      "path": "docs/audits/INLINE-STYLES-AUDIT.md",
-      "title": "Inline Styles Audit — Tier-1 Law 9 violation",
-      "name": "INLINE-STYLES-AUDIT",
-      "category": "audits",
+      "audience": "maintainer",
       "created": "2026-07-18"
     },
     {
@@ -2186,6 +2321,7 @@
       "title": "X-Attribute Usage Audit",
       "name": "X-USAGE-AUDIT",
       "category": "audits",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -2193,6 +2329,7 @@
       "title": "Auto Injection (Preview)",
       "name": "auto-injection",
       "category": "root",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -2200,6 +2337,7 @@
       "title": "WB-Starter Behaviors Cross-Reference",
       "name": "behavior-cross-reference",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -2207,6 +2345,7 @@
       "title": "WB-Starter Reference",
       "name": "behaviors-reference",
       "category": "root",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -2214,6 +2353,7 @@
       "title": "accordion",
       "name": "accordion",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -2221,6 +2361,7 @@
       "title": "`<address>` Element",
       "name": "address",
       "category": "behaviors",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -2228,6 +2369,7 @@
       "title": "Alert",
       "name": "alert",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2235,6 +2377,7 @@
       "title": "articles",
       "name": "articles",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -2242,6 +2385,7 @@
       "title": "`<aside>` Element",
       "name": "aside",
       "category": "behaviors",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -2249,6 +2393,7 @@
       "title": "Audio",
       "name": "audio",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2256,6 +2401,7 @@
       "title": "x-autocomplete Behavior",
       "name": "autocomplete",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2263,6 +2409,7 @@
       "title": "x-autosize Behavior",
       "name": "autosize",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-02-17"
     },
     {
@@ -2270,6 +2417,7 @@
       "title": "Avatar",
       "name": "avatar",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2277,6 +2425,7 @@
       "title": "Badge",
       "name": "badge",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2284,6 +2433,7 @@
       "title": "`<blockquote>` Element",
       "name": "blockquote",
       "category": "behaviors",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -2291,6 +2441,7 @@
       "title": "Bounce",
       "name": "bounce",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2298,6 +2449,7 @@
       "title": "Breadcrumb",
       "name": "breadcrumb",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2305,6 +2457,7 @@
       "title": "Button",
       "name": "button",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2312,6 +2465,7 @@
       "title": "Card",
       "name": "card",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2319,6 +2473,7 @@
       "title": "Button Card",
       "name": "cardbutton",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2326,6 +2481,7 @@
       "title": "Draggable Card",
       "name": "carddraggable",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2333,6 +2489,7 @@
       "title": "Expandable Card",
       "name": "cardexpandable",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2340,6 +2497,7 @@
       "title": "File Card",
       "name": "cardfile",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2347,6 +2505,7 @@
       "title": "Hero Card",
       "name": "cardhero",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2354,6 +2513,7 @@
       "title": "Horizontal Card",
       "name": "cardhorizontal",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2361,6 +2521,7 @@
       "title": "Image Card",
       "name": "cardimage",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2368,6 +2529,7 @@
       "title": "Link Card",
       "name": "cardlink",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2375,6 +2537,7 @@
       "title": "Minimizable Card",
       "name": "cardminimizable",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2382,6 +2545,7 @@
       "title": "Notification Card",
       "name": "cardnotification",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2389,6 +2553,7 @@
       "title": "Overlay Card",
       "name": "cardoverlay",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2396,6 +2561,7 @@
       "title": "Portfolio Card",
       "name": "cardportfolio",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2403,6 +2569,7 @@
       "title": "Pricing Card",
       "name": "cardpricing",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2410,6 +2577,7 @@
       "title": "Product Card",
       "name": "cardproduct",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2417,6 +2585,7 @@
       "title": "Card Profile",
       "name": "cardprofile",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2424,6 +2593,7 @@
       "title": "Stats Card",
       "name": "cardstats",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2431,6 +2601,7 @@
       "title": "Testimonial Card",
       "name": "cardtestimonial",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2438,6 +2609,7 @@
       "title": "Video Card",
       "name": "cardvideo",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2445,6 +2617,7 @@
       "title": "Cart",
       "name": "cart",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-10-09"
     },
     {
@@ -2452,6 +2625,7 @@
       "title": "Center - wb-starter v3.0",
       "name": "center",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -2459,6 +2633,7 @@
       "title": "Checkbox",
       "name": "checkbox",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2466,6 +2641,7 @@
       "title": "chip",
       "name": "chip",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -2473,6 +2649,7 @@
       "title": "Clock",
       "name": "clock",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2480,6 +2657,7 @@
       "title": "Cluster",
       "name": "cluster",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2487,6 +2665,7 @@
       "title": "Code",
       "name": "code",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2494,6 +2673,7 @@
       "title": "Code Theme - wb-starter v3.0",
       "name": "codetheme",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -2501,6 +2681,7 @@
       "title": "Collapse",
       "name": "collapse",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2508,6 +2689,7 @@
       "title": "x-colorpicker Behavior",
       "name": "colorpicker",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2515,6 +2697,7 @@
       "title": "Confetti",
       "name": "confetti",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2522,6 +2705,7 @@
       "title": "Confirm",
       "name": "confirm",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2529,6 +2713,7 @@
       "title": "Container - wb-starter v3.0",
       "name": "container",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-02-14"
     },
     {
@@ -2536,6 +2721,7 @@
       "title": "Control",
       "name": "control",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2543,6 +2729,7 @@
       "title": "Copy",
       "name": "copy",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2550,6 +2737,7 @@
       "title": "Copybutton",
       "name": "copybutton",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2557,6 +2745,7 @@
       "title": "Countdown",
       "name": "countdown",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2564,6 +2753,7 @@
       "title": "x-counter Behavior",
       "name": "counter",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2571,6 +2761,7 @@
       "title": "Cover - wb-starter v3.0",
       "name": "cover",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -2578,20 +2769,15 @@
       "title": "Dark Mode Toggle",
       "name": "darkmode",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/data.md",
-      "title": "`<data>` Element",
-      "name": "data",
-      "category": "behaviors",
-      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/demo.md",
       "title": "Demo Container",
       "name": "demo",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2599,6 +2785,7 @@
       "title": "Details",
       "name": "details",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2606,6 +2793,7 @@
       "title": "Dialog",
       "name": "dialog",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2613,6 +2801,7 @@
       "title": "DL (Description List) Behavior Design & User Guide",
       "name": "dl",
       "category": "behaviors",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -2620,6 +2809,7 @@
       "title": "Draggable",
       "name": "draggable",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2627,6 +2817,7 @@
       "title": "Drawer",
       "name": "drawer",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2634,6 +2825,7 @@
       "title": "Drawer Layout",
       "name": "drawerLayout",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2641,6 +2833,7 @@
       "title": "dropdown",
       "name": "dropdown",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -2648,6 +2841,7 @@
       "title": "Error Behavior",
       "name": "error",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2655,6 +2849,7 @@
       "title": "Fadein",
       "name": "fadein",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2662,6 +2857,7 @@
       "title": "x-fieldset Behavior",
       "name": "fieldset",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2669,6 +2865,7 @@
       "title": "Figure",
       "name": "figure",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2676,6 +2873,7 @@
       "title": "x-file Behavior",
       "name": "file",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2683,6 +2881,7 @@
       "title": "fill — as wide as the container allows",
       "name": "fill",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-22"
     },
     {
@@ -2690,6 +2889,7 @@
       "title": "Fireworks",
       "name": "fireworks",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2697,6 +2897,7 @@
       "title": "Fix Card",
       "name": "fix-card",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2704,6 +2905,7 @@
       "title": "Flash",
       "name": "flash",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2711,6 +2913,7 @@
       "title": "Flex",
       "name": "flex",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2718,6 +2921,7 @@
       "title": "Flip",
       "name": "flip",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2725,6 +2929,7 @@
       "title": "x-floatinglabel Behavior",
       "name": "floatinglabel",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2732,6 +2937,7 @@
       "title": "Footer",
       "name": "footer",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2739,6 +2945,7 @@
       "title": "Form Behavior",
       "name": "form",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2746,6 +2953,7 @@
       "title": "x-formrow Behavior",
       "name": "formrow",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2753,6 +2961,7 @@
       "title": "Frame",
       "name": "frame",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-26"
     },
     {
@@ -2760,6 +2969,7 @@
       "title": "Fullscreen",
       "name": "fullscreen",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2767,6 +2977,7 @@
       "title": "Gallery",
       "name": "gallery",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2774,6 +2985,7 @@
       "title": "glass — the element carries the background scene",
       "name": "glass",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-10-01"
     },
     {
@@ -2781,6 +2993,7 @@
       "title": "Globe",
       "name": "globe",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2788,6 +3001,7 @@
       "title": "Glow",
       "name": "glow",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2795,6 +3009,7 @@
       "title": "x-grid",
       "name": "grid",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-02-17"
     },
     {
@@ -2802,6 +3017,7 @@
       "title": "Header",
       "name": "header",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2809,6 +3025,7 @@
       "title": "Heartbeat",
       "name": "heartbeat",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2816,6 +3033,7 @@
       "title": "x-help Behavior",
       "name": "help",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-02-17"
     },
     {
@@ -2823,6 +3041,7 @@
       "title": "Hero",
       "name": "hero",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2830,6 +3049,7 @@
       "title": "Icon - wb-starter v3.0",
       "name": "icon",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -2837,6 +3057,7 @@
       "title": "Img",
       "name": "img",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2844,6 +3065,7 @@
       "title": "Input",
       "name": "input",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2851,6 +3073,7 @@
       "title": "x-inputgroup Behavior",
       "name": "inputgroup",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2858,6 +3081,7 @@
       "title": "Jello",
       "name": "jello",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2865,6 +3089,7 @@
       "title": "Kbd",
       "name": "kbd",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2872,6 +3097,7 @@
       "title": "x-label Behavior",
       "name": "label",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-02-17"
     },
     {
@@ -2879,6 +3105,7 @@
       "title": "Lightbox",
       "name": "lightbox",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2886,6 +3113,7 @@
       "title": "List Behavior",
       "name": "list",
       "category": "behaviors",
+      "audience": "user",
       "created": "2025-12-30"
     },
     {
@@ -2893,6 +3121,7 @@
       "title": "Mark",
       "name": "mark",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2900,6 +3129,7 @@
       "title": "x-masked Behavior",
       "name": "masked",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -2907,6 +3137,7 @@
       "title": "Masonry",
       "name": "masonry",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2914,6 +3145,7 @@
       "title": "Markdown to HTML",
       "name": "mdhtml",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2921,6 +3153,7 @@
       "title": "Modal",
       "name": "modal",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-26"
     },
     {
@@ -2928,6 +3161,7 @@
       "title": "Move - wb-starter v3.0",
       "name": "move",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -2935,6 +3169,7 @@
       "title": "Navbar",
       "name": "navbar",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2942,6 +3177,7 @@
       "title": "Notes",
       "name": "notes",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2949,6 +3185,7 @@
       "title": "Notify",
       "name": "notify",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2956,6 +3193,7 @@
       "title": "OL (Ordered List) Behavior Design & User Guide",
       "name": "ol",
       "category": "behaviors",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -2963,6 +3201,7 @@
       "title": "OTP Behavior",
       "name": "otp",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2970,6 +3209,7 @@
       "title": "Pagination",
       "name": "pagination",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2977,6 +3217,7 @@
       "title": "Password Behavior",
       "name": "password",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2984,6 +3225,7 @@
       "title": "Popover",
       "name": "popover",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2991,6 +3233,7 @@
       "title": "Pre",
       "name": "pre",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -2998,6 +3241,7 @@
       "title": "Print",
       "name": "print",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3005,6 +3249,7 @@
       "title": "Progress",
       "name": "progress",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3012,6 +3257,7 @@
       "title": "Prompt",
       "name": "prompt",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3019,6 +3265,7 @@
       "title": "Pulse",
       "name": "pulse",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3026,6 +3273,7 @@
       "title": "Radio Behavior Design & User Guide",
       "name": "radio",
       "category": "behaviors",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -3033,6 +3281,7 @@
       "title": "Rainbow",
       "name": "rainbow",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3040,6 +3289,7 @@
       "title": "Range Behavior Design & User Guide",
       "name": "range",
       "category": "behaviors",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -3047,6 +3297,7 @@
       "title": "Rating",
       "name": "rating",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3054,6 +3305,7 @@
       "title": "Ratio",
       "name": "ratio",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3061,6 +3313,7 @@
       "title": "Reel - wb-starter v3.0",
       "name": "reel",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -3068,6 +3321,7 @@
       "title": "Relativetime",
       "name": "relativetime",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3075,6 +3329,7 @@
       "title": "Release - wb-starter v3.0",
       "name": "release",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -3082,6 +3337,7 @@
       "title": "Repeater",
       "name": "repeater",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3089,6 +3345,7 @@
       "title": "Resizable",
       "name": "resizable",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3096,6 +3353,7 @@
       "title": "Ripple - wb-starter v3.0",
       "name": "ripple",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -3103,6 +3361,7 @@
       "title": "Scrollable - wb-starter v3.0",
       "name": "scrollable",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -3110,6 +3369,7 @@
       "title": "ScrollAlong - wb-starter v3.0",
       "name": "scrollalong",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -3117,6 +3377,7 @@
       "title": "Search",
       "name": "search",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3124,6 +3385,7 @@
       "title": "x-searchfield Behavior",
       "name": "searchfield",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -3131,6 +3393,7 @@
       "title": "Select",
       "name": "select",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3138,6 +3401,7 @@
       "title": "Shake",
       "name": "shake",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3145,6 +3409,7 @@
       "title": "Share",
       "name": "share",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3152,6 +3417,7 @@
       "title": "Sidebar Layout - wb-starter v3.0",
       "name": "sidebarlayout",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -3159,6 +3425,7 @@
       "title": "skeleton",
       "name": "skeleton",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -3166,6 +3433,7 @@
       "title": "Slidein",
       "name": "slidein",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3173,6 +3441,7 @@
       "title": "Slider",
       "name": "slider",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3180,6 +3449,7 @@
       "title": "Snow",
       "name": "snow",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3187,6 +3457,7 @@
       "title": "Sparkle",
       "name": "sparkle",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3194,6 +3465,7 @@
       "title": "Spinner",
       "name": "spinner",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3201,6 +3473,7 @@
       "title": "Stack Layout Behavior",
       "name": "stack",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3208,6 +3481,7 @@
       "title": "Stage Light - wb-starter v3.0",
       "name": "stagelight",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -3215,6 +3489,7 @@
       "title": "Stat",
       "name": "stat",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-26"
     },
     {
@@ -3222,6 +3497,7 @@
       "title": "Status",
       "name": "status",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-10-06"
     },
     {
@@ -3229,6 +3505,7 @@
       "title": "Stepper Behavior",
       "name": "stepper",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3236,6 +3513,7 @@
       "title": "Steps",
       "name": "steps",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3243,6 +3521,7 @@
       "title": "Sticky",
       "name": "sticky",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3250,6 +3529,7 @@
       "title": "Switch",
       "name": "switch",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3257,6 +3537,7 @@
       "title": "Switcher - wb-starter v3.0",
       "name": "switcher",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-05"
     },
     {
@@ -3264,6 +3545,7 @@
       "title": "Table",
       "name": "table",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3271,6 +3553,7 @@
       "title": "Tabs",
       "name": "tabs",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3278,6 +3561,7 @@
       "title": "Tada",
       "name": "tada",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3285,6 +3569,7 @@
       "title": "x-tags Behavior",
       "name": "tags",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-17"
     },
     {
@@ -3292,6 +3577,7 @@
       "title": "Textarea",
       "name": "textarea",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3299,6 +3585,7 @@
       "title": "Theme Control",
       "name": "themecontrol",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3306,6 +3593,7 @@
       "title": "`<time>` Element",
       "name": "time",
       "category": "behaviors",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3313,6 +3601,7 @@
       "title": "Timeline",
       "name": "timeline",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3320,6 +3609,7 @@
       "title": "toast",
       "name": "toast",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-18"
     },
     {
@@ -3327,6 +3617,7 @@
       "title": "Toggle",
       "name": "toggle",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3334,6 +3625,7 @@
       "title": "x-tooltip Behavior",
       "name": "tooltip",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-02-17"
     },
     {
@@ -3341,6 +3633,7 @@
       "title": "Truncate",
       "name": "truncate",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3348,6 +3641,7 @@
       "title": "Typewriter",
       "name": "typewriter",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3355,6 +3649,7 @@
       "title": "UL (Unordered List) Behavior Design & User Guide",
       "name": "ul",
       "category": "behaviors",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -3362,6 +3657,7 @@
       "title": "Video",
       "name": "video",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3369,6 +3665,7 @@
       "title": "Vimeo",
       "name": "vimeo",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3376,6 +3673,7 @@
       "title": "Wobble",
       "name": "wobble",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3383,20 +3681,7 @@
       "title": "x-behavior",
       "name": "x-behavior",
       "category": "behaviors",
-      "created": "2026-02-17"
-    },
-    {
-      "path": "docs/behaviors/x-collapse.md",
-      "title": "x-collapse",
-      "name": "x-collapse",
-      "category": "behaviors",
-      "created": "2026-02-17"
-    },
-    {
-      "path": "docs/behaviors/x-copy.md",
-      "title": "x-copy",
-      "name": "x-copy",
-      "category": "behaviors",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -3404,27 +3689,15 @@
       "title": "x-copybutton",
       "name": "x-copybutton",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-07-30"
-    },
-    {
-      "path": "docs/behaviors/x-darkmode.md",
-      "title": "x-darkmode",
-      "name": "x-darkmode",
-      "category": "behaviors",
-      "created": "2026-07-16"
-    },
-    {
-      "path": "docs/behaviors/x-draggable.md",
-      "title": "x-draggable",
-      "name": "x-draggable",
-      "category": "behaviors",
-      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-effects.md",
       "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
       "name": "x-effects",
       "category": "behaviors",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -3432,27 +3705,15 @@
       "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
       "name": "x-enhancements",
       "category": "behaviors",
+      "audience": "maintainer",
       "created": "2026-02-17"
-    },
-    {
-      "path": "docs/behaviors/x-resizable.md",
-      "title": "x-resizable",
-      "name": "x-resizable",
-      "category": "behaviors",
-      "created": "2026-07-16"
-    },
-    {
-      "path": "docs/behaviors/x-toggle.md",
-      "title": "x-toggle",
-      "name": "x-toggle",
-      "category": "behaviors",
-      "created": "2026-07-16"
     },
     {
       "path": "docs/behaviors/youtube.md",
       "title": "Youtube",
       "name": "youtube",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3460,6 +3721,7 @@
       "title": "Zoomin",
       "name": "zoomin",
       "category": "behaviors",
+      "audience": "user",
       "created": "2026-08-20"
     },
     {
@@ -3467,6 +3729,7 @@
       "title": "Branch protection: require fast Tier‑1 check",
       "name": "BRANCH_PROTECTION",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-06"
     },
     {
@@ -3474,6 +3737,7 @@
       "title": "Card Behavior Documentation",
       "name": "card",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3481,6 +3745,7 @@
       "title": "Page Generation Pipeline",
       "name": "PAGE-GENERATION",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3488,6 +3753,7 @@
       "title": "AI Documentation Tier System",
       "name": "README",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3495,6 +3761,7 @@
       "title": "SCHEMAS — Claude's Guide to Getting It Right",
       "name": "SCHEMAS-GUIDE",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -3502,6 +3769,7 @@
       "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
       "name": "TIER1-LAWS",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3509,6 +3777,7 @@
       "title": "TIER2-DOMAIN-GUIDES",
       "name": "TIER2-DOMAIN-GUIDES",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3516,6 +3785,7 @@
       "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
       "name": "TIER3-REFERENCE",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3523,6 +3793,7 @@
       "title": "Tooling Inventory — What This Repo Already Has",
       "name": "TOOLING-INVENTORY",
       "category": "claude",
+      "audience": "maintainer",
       "created": "2026-09-03"
     },
     {
@@ -3530,6 +3801,7 @@
       "title": "Code Examples Standard",
       "name": "code-examples-standard",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-02"
     },
     {
@@ -3537,6 +3809,7 @@
       "title": "Committing Fixes Workflow",
       "name": "committing-fixes",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-29"
     },
     {
@@ -3544,6 +3817,7 @@
       "title": "ISO/IEC 42001 Alignment Report",
       "name": "iso-42001-alignment",
       "category": "compliance",
+      "audience": "maintainer",
       "created": "2025-12-30"
     },
     {
@@ -3551,6 +3825,7 @@
       "title": "Container Behaviors Pattern",
       "name": "container-pattern",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3558,6 +3833,7 @@
       "title": "wb-starter Escape Hatches",
       "name": "escape-hatches",
       "category": "root",
+      "audience": "user",
       "created": "2026-01-14"
     },
     {
@@ -3565,6 +3841,7 @@
       "title": "How to Create a Website with wb-starter",
       "name": "create-a-website",
       "category": "guides",
+      "audience": "user",
       "created": "2026-09-30"
     },
     {
@@ -3572,6 +3849,7 @@
       "title": "Search Index Generator",
       "name": "search-index",
       "category": "guides",
+      "audience": "user",
       "created": "2026-01-10"
     },
     {
@@ -3579,6 +3857,7 @@
       "title": "Home Page Documentation",
       "name": "home-page",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-17"
     },
     {
@@ -3586,6 +3865,7 @@
       "title": "Potential Improvements for WB-Starter",
       "name": "IMPROVEMENTS",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3593,6 +3873,7 @@
       "title": "WB-Starter Documentation",
       "name": "index",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3600,6 +3881,7 @@
       "title": "Double-Click Inline Editing System",
       "name": "inline-editing",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3607,6 +3889,7 @@
       "title": "Intellisense Tooltip Audit Report",
       "name": "INTELLISENSE-TOOLTIPS",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3614,6 +3897,7 @@
       "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
       "name": "linkedin-framework-agnostic",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-13"
     },
     {
@@ -3621,20 +3905,15 @@
       "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
       "name": "linkedin-standards-article",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-13"
-    },
-    {
-      "path": "docs/linkedin-update-article.md",
-      "title": "Cielo Vista Software Update",
-      "name": "linkedin-update-article",
-      "category": "root",
-      "created": "2026-08-02"
     },
     {
       "path": "docs/mcp.md",
       "title": "MCP Runner & Docs Access",
       "name": "mcp",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-01"
     },
     {
@@ -3642,6 +3921,7 @@
       "title": "WB-Starter MVVM Migration Plan",
       "name": "MVVM-MIGRATION-PLAN",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3649,6 +3929,7 @@
       "title": "wb-starter v3.0 - MVVM Architecture",
       "name": "MVVM-MIGRATION",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3656,6 +3937,7 @@
       "title": "Notes Behavior v3.0 - Updates Summary",
       "name": "NOTES-V3-GUIDE",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3663,6 +3945,7 @@
       "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
       "name": "npx-commands",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-09-28"
     },
     {
@@ -3670,6 +3953,7 @@
       "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
       "name": "pce-candidates",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-02"
     },
     {
@@ -3677,6 +3961,7 @@
       "title": "Performance Improvement Plan",
       "name": "performance",
       "category": "root",
+      "audience": "user",
       "created": "2026-01-02"
     },
     {
@@ -3684,6 +3969,7 @@
       "title": "Price Card & PCE (Pseudo-Custom Elements) Refactor",
       "name": "pricecard",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-02"
     },
     {
@@ -3691,6 +3977,7 @@
       "title": "WB-Starter - Property System Documentation",
       "name": "properties",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3698,6 +3985,7 @@
       "title": "Property Viewer (Right Panel)",
       "name": "property-viewer",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-13"
     },
     {
@@ -3705,6 +3993,7 @@
       "title": "Schema-First MVVM Architecture",
       "name": "schema-first-architecture",
       "category": "root",
+      "audience": "user",
       "created": "2026-01-10"
     },
     {
@@ -3712,6 +4001,7 @@
       "title": "Schema-First Architecture Audit Report",
       "name": "schema-first-audit-report",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3719,6 +4009,7 @@
       "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
       "name": "schema-test-value",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3726,6 +4017,7 @@
       "title": "Schema Standards for WB-Starter Behaviors & Pages",
       "name": "schema",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3733,6 +4025,7 @@
       "title": "WB-Starter Schema Migration Plan",
       "name": "schema.migration",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3740,6 +4033,7 @@
       "title": "Search Behavior Documentation",
       "name": "search",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-14"
     },
     {
@@ -3747,6 +4041,7 @@
       "title": "Semantic HTML Audit Report",
       "name": "semantic-audit",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3754,6 +4049,7 @@
       "title": "HTML5 Semantic Standard (Mandatory)",
       "name": "semantic-standard",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3761,6 +4057,7 @@
       "title": "A gate must be seen to fail",
       "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-09-08"
     },
     {
@@ -3768,6 +4065,7 @@
       "title": "CSS class convention — you can name the class without reading the code",
       "name": "CSS-CLASS-CONVENTION",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-09-09"
     },
     {
@@ -3775,6 +4073,7 @@
       "title": "Demos & Documentation Standards",
       "name": "DEMOS-AND-DOCS-STANDARDS",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-07-05"
     },
     {
@@ -3782,6 +4081,7 @@
       "title": "Error Log Retention — 30 Days",
       "name": "ERROR-LOG-RETENTION",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-09-06"
     },
     {
@@ -3789,6 +4089,7 @@
       "title": "The Signature Block",
       "name": "ISSUE-SIGNATURE-BLOCK",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-09-06"
     },
     {
@@ -3796,6 +4097,7 @@
       "title": "Release Process Standards",
       "name": "RELEASE-PROCESS",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-08-21"
     },
     {
@@ -3803,6 +4105,7 @@
       "title": "Repo Layout",
       "name": "REPO-LAYOUT",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-09-28"
     },
     {
@@ -3810,6 +4113,7 @@
       "title": "WB-Starter v3 Standards",
       "name": "V3-STANDARDS",
       "category": "standards",
+      "audience": "maintainer",
       "created": "2026-01-10"
     },
     {
@@ -3817,6 +4121,7 @@
       "title": "Class Naming & Semantics",
       "name": "styles",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-01-02"
     },
     {
@@ -3824,6 +4129,7 @@
       "title": "Comprehensive Test Schema Standard",
       "name": "test-schema-standard",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3831,6 +4137,7 @@
       "title": "Testing & CI — Runbook (developer-focused)",
       "name": "testing-runbook",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-01"
     },
     {
@@ -3838,6 +4145,7 @@
       "title": "Tiered Test Structure (Playwright Gates)",
       "name": "testing-strategy",
       "category": "root",
+      "audience": "maintainer",
       "created": "2025-12-28"
     },
     {
@@ -3845,6 +4153,7 @@
       "title": "Theme System Documentation",
       "name": "themes",
       "category": "root",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -3852,6 +4161,7 @@
       "title": "wb-starter v3 — Complete Guide",
       "name": "V3-GUIDE",
       "category": "root",
+      "audience": "user",
       "created": "2026-06-27"
     },
     {
@@ -3859,6 +4169,7 @@
       "title": "WB-Starter Behavior System - Technical Workflow",
       "name": "WB_BEHAVIOR_SYSTEM",
       "category": "root",
+      "audience": "user",
       "created": "2025-12-28"
     },
     {
@@ -3866,6 +4177,7 @@
       "title": "wbservices",
       "name": "wbservices",
       "category": "root",
+      "audience": "maintainer",
       "created": "2026-02-14"
     }
   ]

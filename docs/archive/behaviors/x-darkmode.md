@@ -1,6 +1,6 @@
 # x-darkmode
 
-Forces a theme on an element (or the whole page), independent of the global theme setting. See [src/wb-viewmodels/darkmode.js](../../src/wb-viewmodels/darkmode.js).
+Forces a theme on an element (or the whole page), independent of the global theme setting. See [src/wb-viewmodels/darkmode.js](../../../src/wb-viewmodels/darkmode.js).
 
 - **Type:** Attribute
 - **Usage:** `[x-darkmode]`
@@ -18,7 +18,7 @@ Distinct from `<div x-themecontrol>` (the global theme-picker dropdown, persiste
 Themes cascade through any container via the plain `data-theme="…"` HTML attribute alone — no `x-darkmode` needed for that case. `x-darkmode` is specifically for *forcing* a theme via a behavior attribute rather than authoring `data-theme` directly.
 
 ## Demo
-See [Interactive & Utility demos](../../demos/site/interactive.html#theme-dark-mode).
+See [Interactive & Utility demos](../../../demos/site/interactive.html#theme-dark-mode).
 
 ## Schema/Test
-[darkmode.schema.json](../../src/wb-models/darkmode.schema.json)
+[darkmode.schema.json](../../../src/wb-models/darkmode.schema.json)
