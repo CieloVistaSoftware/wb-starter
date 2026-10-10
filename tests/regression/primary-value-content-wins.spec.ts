@@ -39,8 +39,8 @@ type Row = {
   body?: (text: string) => string;
   /** markup the attribute-only form still needs inside the host */
   empty?: string;
-  /** ms to let an animation finish (typewriter, countup) */
-  waitMs?: number;
+  /** the value animates in (typewriter, countup): wait until each host shows its final value */
+  animated?: boolean;
 };
 
 const text = (sel: string) => `(h.querySelector(${JSON.stringify(sel)})?.innerText ?? '')`;
@@ -57,8 +57,8 @@ const PRIMARY_VALUES: Row[] = [
   { behavior: 'stat', attr: 'value', extra: 'label="Users"', read: text('.x-stat__value') },
   { behavior: 'empty', attr: 'message', read: text('.x-empty__message') },
   { behavior: 'link', attr: 'text', tag: 'a', extra: 'href="#top"' },
-  { behavior: 'typewriter', attr: 'text', extra: 'speed="1"', waitMs: 600 },
-  { behavior: 'countup', attr: 'to', numeric: true, extra: 'duration="20"', waitMs: 600 },
+  { behavior: 'typewriter', attr: 'text', extra: 'speed="1"', animated: true },
+  { behavior: 'countup', attr: 'to', numeric: true, extra: 'duration="20"', animated: true },
   { behavior: 'print', attr: 'label', tag: 'button' },
   { behavior: 'share', attr: 'label', tag: 'button' },
   { behavior: 'fullscreen', attr: 'label', tag: 'button' },
@@ -109,7 +109,7 @@ async function render(page: Page, runtime: Runtime, row: Row, a: string, t: stri
     both: `${open(`${row.attr}="${a}"`)}${body}${close}`,
   };
   await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
-  return page.evaluate(async ({ runtime, markup, read, waitMs }) => {
+  return page.evaluate(async ({ runtime, markup, read, animated, a, t }) => {
     const mod: any = await import(`/src/core/${runtime}.js`);
     const WB = mod.default || mod.WB;
     if (runtime === 'wb') await WB.init({ autoInject: true });
@@ -126,11 +126,21 @@ async function render(page: Page, runtime: Runtime, row: Row, a: string, t: stri
     }
     await WB.scan(stage, { eager: true });
     await WB.settled({ timeout: 10000 });
-    if (waitMs) await new Promise((r) => setTimeout(r, waitMs));
     // A behavior may replace or wrap its host (x-switch, x-radio, x-progress);
     // read the wrapper the host now lives in when it left the page.
     const live = (k: string) => (hosts[k].isConnected ? hosts[k] : stage.children[Object.keys(hosts).indexOf(k)] as HTMLElement);
     const see = (k: string) => String(reader(live(k)) ?? '').trim();
+    if (animated) {
+      // The value types or counts in after the behavior settles. Wait for the
+      // condition itself -- each host showing the value it should end on --
+      // frame by frame, up to a deadline; a broken behavior never gets there
+      // and the assertions below report what it showed instead.
+      const deadline = performance.now() + 5000;
+      const done = () => see('attrOnly').includes(a) && see('textOnly').includes(t) && see('both').includes(t);
+      while (!done() && performance.now() < deadline) {
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+      }
+    }
     const out = {
       attrOnly: see('attrOnly'),
       textOnly: see('textOnly'),
@@ -139,7 +149,7 @@ async function render(page: Page, runtime: Runtime, row: Row, a: string, t: stri
     };
     stage.remove();
     return out;
-  }, { runtime, markup, read: row.read || 'h.innerText', waitMs: row.waitMs || 0 });
+  }, { runtime, markup, read: row.read || 'h.innerText', animated: !!row.animated, a, t });
 }
 
 test.describe('primary value: content wins, the attribute is the fallback (#417)', () => {

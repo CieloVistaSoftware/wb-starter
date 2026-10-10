@@ -661,7 +661,7 @@ Display values can include formatting - they're strings, not numbers:
 
 ## Primary Value: Content Wins
 
-Decided in [#417](https://github.com/CieloVistaSoftware/wb-starter/issues/417), same order as [#968](https://github.com/CieloVistaSoftware/wb-starter/issues/968).
+Decided in #417, in the same order as #968.
 
 A behavior's **primary value** can be written two ways, and every behavior in the table below accepts both:
 
