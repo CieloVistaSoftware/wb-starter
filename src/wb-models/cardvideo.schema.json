@@ -4,6 +4,7 @@
   "title": "Video Card",
   "description": "Card with embedded video player",
   "schemaFor": "cardvideo",
+  "kind": "decorator",
   "baseClass": "x-card-video",
   "semanticElement": {
     "tagName": "article",

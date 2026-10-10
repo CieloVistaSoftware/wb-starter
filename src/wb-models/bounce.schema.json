@@ -4,6 +4,7 @@
   "title": "Bounce",
   "description": "On click, plays the bounce animation for 0.75s.",
   "schemaFor": "bounce",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

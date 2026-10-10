@@ -4,6 +4,7 @@
   "title": "Sheet",
   "description": "Makes its host a trigger for a notes panel: a click opens a resizable sheet from the left edge with a title and either the given content or a notes textarea, and drag on its edge resizes it between its minimum and maximum width. It applies to any clickable element, so it names no host.",
   "schemaFor": "sheet",
+  "kind": "decorator",
   "properties": {
     "sheetTitle": {
       "type": "string",

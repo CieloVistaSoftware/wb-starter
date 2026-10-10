@@ -4,6 +4,7 @@
   "title": "Status",
   "description": "Status-coloured inline text (primary, success, error, ...) or a window-control dot (red, yellow, green, dot). Was x-span, which still works as an alias (#1105).",
   "schemaFor": "status",
+  "kind": "decorator",
   "baseClass": "x-status",
   "semanticElement": {
     "tagName": "span",

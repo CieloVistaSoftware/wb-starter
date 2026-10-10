@@ -201,14 +201,14 @@ function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'
   for (const [selector, beh] of Object.entries(nativeMap as Record<string, string>)) {
     if (!autoHost[beh]) autoHost[beh] = selector;
   }
-  // behaviors.html's relabelByExample(): a semantic row survives only when the
-  // behavior's curated example is written on its host.
-  const usesHost = (attr: string, host: string) => {
-    const src = examples[attr]?.source;
-    if (!src) return true;
-    const at = src.indexOf('<' + host);
-    const after = at === -1 ? '' : src.charAt(at + host.length + 1);
-    return at !== -1 && (after === '' || /[\s>/]/.test(after));
+  // behaviors.html's relabelByExample() (#835): a semantic row survives only when
+  // the behavior's schema declares it the element behavior of its host, and its
+  // curated example is not declared attribute-only.
+  const usesHost = (attr: string, host: string, behavior: string) => {
+    const sc = byName.get(behavior) as { kind?: string; element?: string } | undefined;
+    const tag = (host.match(/^[a-z][a-z0-9]*/) || [''])[0];
+    if (!sc || sc.kind !== 'element' || sc.element !== tag) return false;
+    return (examples[attr] as { form?: string } | undefined)?.form !== 'attribute';
   };
 
   const out: { token: string; form: 'semantic' | 'attribute'; options: OptionInfo[] }[] = [];
@@ -281,7 +281,7 @@ function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'
         .map((ex) => ({ label: ex.label!, exempt: (ex.visual === false ? 'non-visual' : '') as OptionInfo['exempt'], open: ex.visibleWhen === 'open' })),
     ];
     for (const form of ['semantic', 'attribute'] as const) {
-      if (form === 'semantic' && !(host && usesHost(attr, host))) continue;
+      if (form === 'semantic' && !(host && usesHost(attr, host, behavior))) continue;
       const forForm = withAuthored(form);
       if (forForm.length >= 2) out.push({ token: attr, form, options: forForm });
     }

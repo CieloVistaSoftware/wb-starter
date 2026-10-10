@@ -4,6 +4,7 @@
   "title": "Modal",
   "description": "A trigger that opens a modal <dialog>. x-modal is the dialog() behavior (semantics/dialog.js exports it as `modal`): with modalTitle or modalContent the host becomes a clickable trigger that builds and opens the dialog; without them the host is hidden and its children become the content of a dialog opened by calling element.open().",
   "schemaFor": "modal",
+  "kind": "decorator",
   "properties": {
     "modalTitle": {
       "type": "string",

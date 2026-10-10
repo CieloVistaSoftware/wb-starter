@@ -5,6 +5,7 @@
   "title": "Sticky",
   "description": "Makes element stick to viewport on scroll",
   "schemaFor": "sticky",
+  "kind": "decorator",
   "baseClass": "x-sticky",
   "semanticElement": {
     "tagName": "nav"

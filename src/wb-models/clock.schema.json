@@ -4,6 +4,7 @@
   "title": "Clock",
   "description": "x-clock shows the current time in the element and updates it every second. It shows US Central time unless timezone says otherwise.",
   "schemaFor": "clock",
+  "kind": "decorator",
   "properties": {
     "variant": {
       "type": "string",

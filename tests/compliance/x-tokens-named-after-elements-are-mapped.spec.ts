@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'url';
 import path from 'path';
+import { HTML_ELEMENTS } from '../helpers/html-elements';
 
 /**
  * AN x- TOKEN NAMED AFTER AN HTML ELEMENT MUST BE ONE nativeMap MAPS (#1105)
@@ -15,15 +16,6 @@ import path from 'path';
  * Nothing guarded the registry before: no-redundant-x-attribute.spec.ts
  * catches `<mark x-mark>` in markup, not a token added to tag-map.js.
  */
-
-// MDN's HTML element reference (current elements, not obsolete ones).
-const HTML_ELEMENTS = new Set(('a abbr address area article aside audio b base bdi bdo blockquote body br '
-  + 'button canvas caption cite code col colgroup data datalist dd del details dfn dialog div dl dt em '
-  + 'embed fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe '
-  + 'img input ins kbd label legend li link main map mark menu meta meter nav noscript object ol optgroup '
-  + 'option output p picture pre progress q rp rt ruby s samp script search section select slot small '
-  + 'source span strong style sub summary sup table tbody td template textarea tfoot th thead time title '
-  + 'tr track u ul var video wbr').split(' '));
 
 async function load() {
   const root = process.cwd();

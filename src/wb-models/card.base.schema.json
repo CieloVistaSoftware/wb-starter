@@ -3,6 +3,8 @@
   "title": "Card Base",
   "description": "Shared card properties, semantic requirements and compliance rules. Every card variant schema includes them; this is not a behavior itself (composition, #465).",
   "schemaFor": "card",
+  "kind": "element",
+  "element": "article",
   "isBase": true,
   "semantic": {
     "element": {

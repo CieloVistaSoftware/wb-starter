@@ -4,6 +4,8 @@
   "title": "Ordered list",
   "description": "Enhances an <ol>: stepped and timeline variants, number style, start number, indent and item spacing.",
   "schemaFor": "ol",
+  "kind": "element",
+  "element": "ol",
   "semanticElement": {
     "tagName": "ol"
   },

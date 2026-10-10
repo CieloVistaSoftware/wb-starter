@@ -4,6 +4,7 @@
   "title": "Overlay Card",
   "description": "Card with text overlaid on background image",
   "schemaFor": "cardoverlay",
+  "kind": "decorator",
   "baseClass": "x-card-overlay",
   "semanticElement": {
     "tagName": "article",

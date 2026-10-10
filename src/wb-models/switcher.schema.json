@@ -4,6 +4,7 @@
   "title": "Switcher",
   "description": "Lays children out in a row, and stacks them when the space is too narrow — no media query.",
   "schemaFor": "switcher",
+  "kind": "decorator",
   "properties": {
     "threshold": {
       "type": "string",

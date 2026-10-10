@@ -4,6 +4,7 @@
   "title": "Popover",
   "description": "x-popover attaches a small panel with popoverTitle and popoverContent to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
   "schemaFor": "popover",
+  "kind": "decorator",
   "properties": {
     "description": {
       "type": "string",

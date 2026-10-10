@@ -4,6 +4,7 @@
   "title": "Slidein",
   "description": "On click, plays the slide-in-<dir> animation for 0.5s.",
   "schemaFor": "slidein",
+  "kind": "decorator",
   "properties": {
     "direction": {
       "type": "string",

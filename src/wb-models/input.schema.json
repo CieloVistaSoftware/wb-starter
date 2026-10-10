@@ -4,6 +4,8 @@
   "title": "Input",
   "description": "Text input field with label, helper text, and validation states",
   "schemaFor": "input",
+  "kind": "element",
+  "element": "input",
   "baseClass": "x-input",
   "semanticElement": {
     "tagName": "div",

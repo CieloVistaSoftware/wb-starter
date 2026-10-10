@@ -4,6 +4,8 @@
   "title": "Unordered list",
   "description": "Enhances a <ul>: checklist and icon-list variants, marker style, indent and item spacing.",
   "schemaFor": "ul",
+  "kind": "element",
+  "element": "ul",
   "semanticElement": {
     "tagName": "ul"
   },

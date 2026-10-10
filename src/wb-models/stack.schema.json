@@ -4,6 +4,7 @@
   "title": "Stack Layout",
   "description": "Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.",
   "schemaFor": "stack",
+  "kind": "decorator",
   "baseClass": "x-stack",
   "compliance": {
     "baseClass": "x-stack",

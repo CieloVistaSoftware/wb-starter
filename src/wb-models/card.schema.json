@@ -4,6 +4,8 @@
   "title": "Card",
   "description": "Card. Composes an article with a header, main and footer.",
   "schemaFor": "card",
+  "kind": "element",
+  "element": "article",
   "baseClass": "x-card",
   "semanticElement": {
     "tagName": "article",

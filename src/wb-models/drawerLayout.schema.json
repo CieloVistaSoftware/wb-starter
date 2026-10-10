@@ -4,6 +4,7 @@
   "title": "Drawer Layout",
   "description": "Collapsible sidebar layout with toggle",
   "schemaFor": "drawer-layout",
+  "kind": "decorator",
   "baseClass": "x-drawerlayout",
   "semanticElement": {
     "tagName": "aside"

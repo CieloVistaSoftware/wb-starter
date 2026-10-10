@@ -4,6 +4,7 @@
   "title": "Control",
   "description": "x-control adds the x-control class to the element and does nothing else; no stylesheet targets that class yet.",
   "schemaFor": "control",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-control",
     "supportLevel": "stable",

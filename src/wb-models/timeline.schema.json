@@ -4,6 +4,7 @@
   "title": "Timeline",
   "description": "Vertical timeline behavior for displaying sequential events",
   "schemaFor": "timeline",
+  "kind": "decorator",
   "baseClass": "x-timeline",
   "semanticElement": {
     "tagName": "div",

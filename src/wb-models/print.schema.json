@@ -4,6 +4,7 @@
   "title": "Print",
   "description": "x-print makes the element a button that prints the page, or only the element matched by target.",
   "schemaFor": "print",
+  "kind": "decorator",
   "properties": {
     "target": {
       "type": "string",

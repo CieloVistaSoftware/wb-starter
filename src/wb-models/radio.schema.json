@@ -4,6 +4,8 @@
   "title": "Radio",
   "description": "Styles a native radio button, keeping it a real form control.",
   "schemaFor": "radio",
+  "kind": "element",
+  "element": "input",
   "semanticElement": {
     "tagName": "input",
     "type": "radio"

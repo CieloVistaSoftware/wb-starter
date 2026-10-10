@@ -4,6 +4,7 @@
   "title": "Tada",
   "description": "On click, plays the tada animation for 1s.",
   "schemaFor": "tada",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

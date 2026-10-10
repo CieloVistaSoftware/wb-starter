@@ -4,6 +4,7 @@
   "title": "Glass",
   "description": "The element carries the background scene: its fill is mostly transparent, so whatever is behind it (an image, an SVG scene, a gradient) passes straight through it",
   "schemaFor": "glass",
+  "kind": "decorator",
   "baseClass": "x-glass",
   "semanticElement": {
     "tagName": "button"

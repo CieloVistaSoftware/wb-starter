@@ -13,7 +13,8 @@
         "description",
         "properties",
         "$view",
-        "$methods"
+        "$methods",
+        "kind"
       ],
       "requiresBehaviorOrSchemaFor": true,
       "propertyRules": "type + default mandatory on every property"
@@ -114,6 +115,21 @@
       "pattern": "^[a-z][a-z0-9-]*$",
       "description": "Legacy behavior identifier (prefer 'behavior')",
       "default": "this is the schema for"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "element",
+        "decorator"
+      ],
+      "description": "What kind of behavior this is (#835). 'element' = what one semantic element BECOMES, named for that element (<article> -> card, <table>, <details>); 'element' names the tag. 'decorator' = extra function laid on ANY element, named for what it adds (x-ripple, x-tooltip, x-glow). Required on every component-tier schema; base, definition and page schemas are not behaviors and carry none.",
+      "default": "decorator"
+    },
+    "element": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*$",
+      "description": "With kind 'element': the HTML tag this behavior is the behavior OF -- the bare tag name, so input[type=\"checkbox\"] is 'input'. Absent for a decorator.",
+      "default": "this is the element"
     },
     "baseClass": {
       "type": "string",
@@ -260,6 +276,22 @@
       "required": [
         "schemaFor"
       ]
+    }
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": { "schemaType": { "const": "component" } }
+      },
+      "then": { "required": ["kind"] }
+    },
+    {
+      "if": {
+        "properties": { "kind": { "const": "element" } },
+        "required": ["kind"]
+      },
+      "then": { "required": ["element"] },
+      "else": { "not": { "required": ["element"] } }
     }
   ],
   "$defs": {

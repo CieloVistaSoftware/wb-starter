@@ -4,6 +4,7 @@
   "title": "Fireworks",
   "description": "Fireworks particle burst animation effect",
   "schemaFor": "fireworks",
+  "kind": "decorator",
   "baseClass": "x-fireworks",
   "compliance": {
     "baseClass": "x-fireworks",

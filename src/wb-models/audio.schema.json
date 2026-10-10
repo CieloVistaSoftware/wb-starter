@@ -4,6 +4,8 @@
   "title": "Audio",
   "description": "Audio player with optional 15-band graphic equalizer",
   "schemaFor": "audio",
+  "kind": "element",
+  "element": "audio",
   "baseClass": "x-audio",
   "semanticElement": {
     "tagName": "audio"

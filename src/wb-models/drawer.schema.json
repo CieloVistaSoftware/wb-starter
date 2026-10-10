@@ -4,6 +4,7 @@
   "title": "Drawer",
   "description": "Slide-out panel overlay from screen edge",
   "schemaFor": "drawer",
+  "kind": "decorator",
   "baseClass": "x-drawer",
   "semanticElement": {
     "tagName": "aside",

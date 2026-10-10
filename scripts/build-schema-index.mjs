@@ -46,6 +46,10 @@ for (const file of files) {
       description: schema.description || '',
       tag: `x-${name}`,
       baseClass: schema.baseClass || `x-${name}`,
+      // #835: element vs decorator, declared once in the schema. The behaviors
+      // page reads it to decide whether a behavior has a semantic row.
+      ...(schema.kind ? { kind: schema.kind } : {}),
+      ...(schema.element ? { element: schema.element } : {}),
       properties: schema.properties || {},
       // "scroll": every option of this behavior only shows while its box scrolls
       // (x-sticky); the behaviors page renders its examples in a scroll box (#750).

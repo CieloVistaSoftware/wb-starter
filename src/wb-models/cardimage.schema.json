@@ -4,6 +4,7 @@
   "title": "Image Card",
   "description": "Card with featured image and optional title/subtitle",
   "schemaFor": "cardimage",
+  "kind": "decorator",
   "baseClass": "x-cardimage",
   "semanticElement": {
     "tagName": "article",
