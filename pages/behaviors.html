@@ -3045,7 +3045,15 @@
       const optionText = authored
         ? authored.label
         : optionLabel({ prop, value: variant, boolean: isBool });
-      liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
+      // #835: a semantic row is labelled by its element (`article`), and the
+      // API and doc panels below are the behavior's (`card`). The schema says
+      // which behavior an element becomes, so the header says it too:
+      // `article → card · glass`, not a `card` doc under an `article` header.
+      const sc = schemaByName.get(behaviorName);
+      const becomes = form === 'semantic' && sc && sc.kind === 'element' && shown !== behaviorName
+        ? `${shown} → ${behaviorName}`
+        : shown;
+      liveToken.textContent = optionText ? `${becomes} · ${optionText}` : becomes;
 
       if (!src) {
         // John: "x-article shows nothing shouldn't it at least show a semantic

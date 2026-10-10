@@ -22,6 +22,8 @@
 
 **Last action:** the gate checks kind element exactly when `nativeMap` in `src/core/tag-map.js` maps a native element onto the behavior, and `element` names that selector.
 
+The Behaviors page header reads `article → card` on a semantic row of an element behavior, from the schema's kind (`pages/behaviors.html`, `tests/regression/behaviors-header-says-what-an-element-becomes.spec.ts`).
+
 **Next step:** tools that guess element vs decorator (wizard, IntelliSense) can read `kind` from the schema index.
 
 ---
