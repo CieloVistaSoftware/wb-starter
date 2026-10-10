@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 307,
-    "totalWords": 5993
+    "totalWords": 5997
   },
   "documents": [
     {
@@ -319,7 +319,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.490\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.490\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.491\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.491\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-10"
@@ -1002,10 +1002,10 @@
           "id": "features-title"
         }
       ],
-      "content": "# WB-Starter Attribute Naming Standard **Version:** 1.1 **Created:** 2026-01-03 **Updated:** 2026-01-05 **Status:** Active --- ## Golden Rule: Attributes Over Nested Markup > **Attribute name = what it is for** > **Schema = where it goes** Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know behavior internals**. ### The Principle ```html-static Explore the Universe Your journey begins Launch Mission ``` ### When to Use What | Content Type | Use | Example | |--------------|-----|-------| | Simple text values | **Attributes** | `title=\"Hello\"` | | Enum choices | **Attributes** | `variant=\"cosmic\"` | | Boolean flags | **Attributes** | `elevated`, `dismissible` | | Arbitrary/rich content | **Body (children)** | ` Any HTML here ` | ### The Contract | Layer | Responsibility | |-------|---------------| | **User** | Provides attribute values | | **Schema** | Defines what tags/structure those values become | | **Framework** | Builds the DOM from schema | ``` User Input Schema Transform DOM Output ─────────── ──────────────── ────────── title=\"Hello\" → \"tag\": \"h1\" → Hello subtitle=\"World\" → \"tag\": \"p\" → World cta=\"Click\" → \"tag\": \"button\" → Click ``` **User doesn't care about internals. Attributes in, DOM out.** --- ## Core Rule > **If a native HTML attribute exists with the same meaning, use the native name.** > > If no native equivalent exists, create a clear, semantic name that doesn't collide with native attributes. --- ## Table of Contents 1. [Element Naming Convention](#element-naming-convention) 2. [Native Attributes to Reuse](#native-attributes-to-reuse) 3. [Native Attributes to Avoid](#native-attributes-to-avoid) 4. [Standard Custom Attributes](#standard-custom-attributes) 5. [Data Injection](#data-injection) 6. [Extension Attributes](#extension-attributes) 7. [Naming Conventions](#naming-conventions) 8. [Accessibility Attributes](#accessibility-attributes) 9. [Units and Values](#units-and-values) 10. [CSS Custom Properties](#css-custom-properties) 11. [Migration from Legacy Syntax](#migration-from-legacy-syntax) 12. [Error Handling](#error-handling) 13. [IDE Support](#ide-support) 14. [Quick Reference](#quick-reference) 15. [Examples by Behavior](#examples-by-behavior) --- ## Element Naming Convention WB-Starter uses two patterns for applying behaviors: | Pattern | Meaning | Use Case | Example | |---------|---------|----------|---------| | semantic HTML tag | **Native** | The element IS the behavior (`nativeMap` in `src/core/tag-map.js`) | ` `, ` `, ` ` | | `x-{name}` | **Extension** | An attribute names the behavior on a host (`extensionMap`) | ` `, ` ` | There are no behavior tags of our own: 4.0.0 removed them, and `elementMap` is empty on purpose (Tier-1 Law 5). A behavior with no semantic tag is always an `x-*` attribute on a host. > **Both are composition.** The split is only about how the behavior is named — > by the semantic tag itself, or by an attribute on a host. Nothing subclasses > anything: ` ` does not extend a `card` class, the > `cardpricing` behavior function decorates the element in place, exactly as > `x-ripple` does. > > This used to be labelled IS-A / HAS-A and needed a paragraph explaining that the > label did not mean what it says. Renamed under **#465**: the architecture is > composition, so the vocabulary is too. Content Save --- ## Native Attributes to Reuse These native HTML attributes should be used **with the same meaning** on custom elements: ### Resource Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `src` | ` `, ` `, ` ` | Resource URL | ` `, ` `, ` ` | | `href` | ` `, ` ` | Link destination | ` `, ` ` | | `alt` | ` ` | Alternative text | ` `, ` ` | | `poster` | ` ` | Preview image | ` ` | ### Form Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `placeholder` | ` `, ` ` | Hint text | ` `, ` ` | | `disabled` | Form elements | Disabled state | Any interactive behavior | | `readonly` | ` `, ` ` | Read-only state | ` ` | | `required` | Form elements | Required field | Form behaviors | | `name` | Form elements | Form field name | Form behaviors | | `value` | Form elements | Current value | ` `, ` ` | | `checked` | ` ` | Checked state | ` `, ` ` | | `min` | ` ` | Minimum value | ` `, ` ` | | `max` | ` ` | Maximum value | ` `, ` ` | | `step` | ` ` | Step increment | ` `, ` ` | | `pattern` | ` ` | Validation pattern | ` ` | | `maxlength` | ` `, ` ` | Max characters | ` `, ` ` | | `autocomplete` | ` ` | Autocomplete hint | ` ` | ### Boolean Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `hidden` | Global | Hide element | Any behavior | | `open` | ` `, ` ` | Open state | ` `, ` ` | | `autoplay` | ` `, ` ` | Auto-start | ` `, ` ` | | `loop` | ` `, ` ` | Loop playback | ` `, ` ` | | `muted` | ` `, ` ` | Muted state | `",
+      "content": "# WB-Starter Attribute Naming Standard **Version:** 1.1 **Created:** 2026-01-03 **Updated:** 2026-01-05 **Status:** Active --- ## Golden Rule: Attributes Over Nested Markup > **Attribute name = what it is for** > **Schema = where it goes** Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know behavior internals**. A behavior's one primary value (a badge's label, an alert's message, a card's body) may also be written as the content between the tags, and then the content wins — see [Primary Value: Content Wins](#primary-value-content-wins). ### The Principle ```html-static Explore the Universe Your journey begins Launch Mission ``` ### When to Use What | Content Type | Use | Example | |--------------|-----|-------| | Simple text values | **Attributes** | `title=\"Hello\"` | | Enum choices | **Attributes** | `variant=\"cosmic\"` | | Boolean flags | **Attributes** | `elevated`, `dismissible` | | Arbitrary/rich content | **Body (children)** | ` Any HTML here ` | ### The Contract | Layer | Responsibility | |-------|---------------| | **User** | Provides attribute values | | **Schema** | Defines what tags/structure those values become | | **Framework** | Builds the DOM from schema | ``` User Input Schema Transform DOM Output ─────────── ──────────────── ────────── title=\"Hello\" → \"tag\": \"h1\" → Hello subtitle=\"World\" → \"tag\": \"p\" → World cta=\"Click\" → \"tag\": \"button\" → Click ``` **User doesn't care about internals. Attributes in, DOM out.** --- ## Core Rule > **If a native HTML attribute exists with the same meaning, use the native name.** > > If no native equivalent exists, create a clear, semantic name that doesn't collide with native attributes. --- ## Table of Contents 1. [Element Naming Convention](#element-naming-convention) 2. [Native Attributes to Reuse](#native-attributes-to-reuse) 3. [Native Attributes to Avoid](#native-attributes-to-avoid) 4. [Standard Custom Attributes](#standard-custom-attributes) 5. [Data Injection](#data-injection) 6. [Extension Attributes](#extension-attributes) 7. [Naming Conventions](#naming-conventions) 8. [Accessibility Attributes](#accessibility-attributes) 9. [Units and Values](#units-and-values) 10. [Primary Value: Content Wins](#primary-value-content-wins) 11. [CSS Custom Properties](#css-custom-properties) 12. [Migration from Legacy Syntax](#migration-from-legacy-syntax) 13. [Error Handling](#error-handling) 14. [IDE Support](#ide-support) 15. [Quick Reference](#quick-reference) 16. [Examples by Behavior](#examples-by-behavior) --- ## Element Naming Convention WB-Starter uses two patterns for applying behaviors: | Pattern | Meaning | Use Case | Example | |---------|---------|----------|---------| | semantic HTML tag | **Native** | The element IS the behavior (`nativeMap` in `src/core/tag-map.js`) | ` `, ` `, ` ` | | `x-{name}` | **Extension** | An attribute names the behavior on a host (`extensionMap`) | ` `, ` ` | There are no behavior tags of our own: 4.0.0 removed them, and `elementMap` is empty on purpose (Tier-1 Law 5). A behavior with no semantic tag is always an `x-*` attribute on a host. > **Both are composition.** The split is only about how the behavior is named — > by the semantic tag itself, or by an attribute on a host. Nothing subclasses > anything: ` ` does not extend a `card` class, the > `cardpricing` behavior function decorates the element in place, exactly as > `x-ripple` does. > > This used to be labelled IS-A / HAS-A and needed a paragraph explaining that the > label did not mean what it says. Renamed under **#465**: the architecture is > composition, so the vocabulary is too. Content Save --- ## Native Attributes to Reuse These native HTML attributes should be used **with the same meaning** on custom elements: ### Resource Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `src` | ` `, ` `, ` ` | Resource URL | ` `, ` `, ` ` | | `href` | ` `, ` ` | Link destination | ` `, ` ` | | `alt` | ` ` | Alternative text | ` `, ` ` | | `poster` | ` ` | Preview image | ` ` | ### Form Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `placeholder` | ` `, ` ` | Hint text | ` `, ` ` | | `disabled` | Form elements | Disabled state | Any interactive behavior | | `readonly` | ` `, ` ` | Read-only state | ` ` | | `required` | Form elements | Required field | Form behaviors | | `name` | Form elements | Form field name | Form behaviors | | `value` | Form elements | Current value | ` `, ` ` | | `checked` | ` ` | Checked state | ` `, ` ` | | `min` | ` ` | Minimum value | ` `, ` ` | | `max` | ` ` | Maximum value | ` `, ` ` | | `step` | ` ` | Step increment | ` `, ` ` | | `pattern` | ` ` | Validation pattern | ` ` | | `maxlength` | ` `, ` ` | Max characters | ` `, ` ` | | `autocomplete` | ` ` | Autocomplete hint | ` ` | ### Boolean Attributes | Attribute | Native Element | Meaning | U",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/architecture/standards/ERROR-MESSAGE",
@@ -1287,10 +1287,10 @@
       "title": "alert",
       "description": null,
       "headings": [],
-      "content": "# Alert `x-alert` builds an inline alert box from its `message`, `title` and `variant` attributes, with a severity icon and colour, and an optional close button when `dismissible` is set. Use it for a message that belongs in the page flow; for one that should float and go away on its own, use `x-toast` or `x-notify`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `info` · `success` · `warning` · `error` | `info` | Alert severity/style variant | | `title` | text | — | Alert title (optional heading) | | `message` | text | — | Alert message content | | `icon` | emoji or icon name | — | Icon (emoji or icon name) | | `dismissible` | `boolean` | `false` | Show close button to dismiss alert | ## Methods - `show()` — Shows the alert - `hide()` — Hides the alert - `toggle()` — Toggles alert visibility - `dismiss()` — Dismisses and removes the alert with animation Schema: [`alert.schema.json`](../../src/wb-models/alert.schema.json)",
+      "content": "# Alert `x-alert` builds an inline alert box from its `message`, `title` and `variant` attributes, with a severity icon and colour, and an optional close button when `dismissible` is set. Use it for a message that belongs in the page flow; for one that should float and go away on its own, use `x-toast` or `x-notify`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `info` · `success` · `warning` · `error` | `info` | Alert severity/style variant | | `title` | text | — | Alert title (optional heading) | | `message` | text | — | Alert message content. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `icon` | emoji or icon name | — | Icon (emoji or icon name) | | `dismissible` | `boolean` | `false` | Show close button to dismiss alert | ## Methods - `show()` — Shows the alert - `hide()` — Hides the alert - `toggle()` — Toggles alert visibility - `dismiss()` — Dismisses and removes the alert with animation Schema: [`alert.schema.json`](../../src/wb-models/alert.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/articles",
@@ -1353,10 +1353,10 @@
       "title": "avatar",
       "description": null,
       "headings": [],
-      "content": "# Avatar `x-avatar` renders a round (or `shape`d) picture from `src`, and falls back to initials taken from `name` when there is no image or it fails to load. `status` adds an online/busy/away dot. Put it on an empty ` ` or ` `. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `#` | Image source URL | | `alt` | text | — | Alt text for image | | `initials` | up to 2 characters | — | Fallback initials (2 chars) | | `name` | text | — | Full name (generates initials if not provided) | | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` | | | `shape` | `circle` · `square` · `rounded` | `circle` | | | `status` | `` · `online` · `offline` · `busy` · `away` | — | Status indicator (empty = no indicator) | | `bordered` | `boolean` | `false` | Show border | ## Methods - `setImage()` — Sets the image source - `setInitials()` — Sets initials - `setStatus()` — Sets status - `clearStatus()` — Removes status indicator ## Accessibility - **role** — img - **ariaLabel** — dynamic from name or alt Schema: [`avatar.schema.json`](../../src/wb-models/avatar.schema.json)",
+      "content": "# Avatar `x-avatar` renders a round (or `shape`d) picture from `src`, and falls back to initials taken from `name` when there is no image or it fails to load. `status` adds an online/busy/away dot. Put it on an empty ` ` or ` `. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `src` | URL | `#` | Image source URL | | `alt` | text | — | Alt text for image | | `initials` | up to 2 characters | — | Fallback initials (2 chars). Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `name` | text | — | Full name (generates initials if not provided) | | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` | | | `shape` | `circle` · `square` · `rounded` | `circle` | | | `status` | `` · `online` · `offline` · `busy` · `away` | — | Status indicator (empty = no indicator) | | `bordered` | `boolean` | `false` | Show border | ## Methods - `setImage()` — Sets the image source - `setInitials()` — Sets initials - `setStatus()` — Sets status - `clearStatus()` — Removes status indicator ## Accessibility - **role** — img - **ariaLabel** — dynamic from name or alt Schema: [`avatar.schema.json`](../../src/wb-models/avatar.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/badge",
@@ -1364,10 +1364,10 @@
       "title": "badge",
       "description": null,
       "headings": [],
-      "content": "# Badge `x-badge` turns a ` ` into a small coloured label: its text comes from `label`, its colour from `variant`, and `pill`, `dot`, `outline` and `glow` change its shape. Use it for a status, a count or a category next to other content. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Badge text content | | `variant` | `default` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `glass` · `gradient` | `default` | Color variant | | `size` | `xs` · `sm` · `md` · `lg` | `md` | Badge size | | `pill` | `boolean` | `false` | Pill shape with full border radius | | `dot` | `boolean` | `false` | Dot indicator (no text) | | `outline` | `boolean` | `false` | Outline style (transparent background) | | `removable` | `boolean` | `false` | Show remove/close button | | `glow` | `boolean` | `false` | Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges) | | `icon` | emoji or icon name | — | Leading icon/emoji shown before the label | ## Methods - `show()` — Shows the badge - `hide()` — Hides the badge - `toggle()` — Toggles visibility - `remove()` — Removes the badge from DOM with animation - `update()` — Updates the badge label Schema: [`badge.schema.json`](../../src/wb-models/badge.schema.json)",
+      "content": "# Badge `x-badge` turns a ` ` into a small coloured label: its text comes from `label`, its colour from `variant`, and `pill`, `dot`, `outline` and `glow` change its shape. Use it for a status, a count or a category next to other content. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Badge text content. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `variant` | `default` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `glass` · `gradient` | `default` | Color variant | | `size` | `xs` · `sm` · `md` · `lg` | `md` | Badge size | | `pill` | `boolean` | `false` | Pill shape with full border radius | | `dot` | `boolean` | `false` | Dot indicator (no text) | | `outline` | `boolean` | `false` | Outline style (transparent background) | | `removable` | `boolean` | `false` | Show remove/close button | | `glow` | `boolean` | `false` | Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges) | | `icon` | emoji or icon name | — | Leading icon/emoji shown before the label | ## Methods - `show()` — Shows the badge - `hide()` — Hides the badge - `toggle()` — Toggles visibility - `remove()` — Removes the badge from DOM with animation - `update()` — Updates the badge label Schema: [`badge.schema.json`](../../src/wb-models/badge.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/blockquote",
@@ -1419,10 +1419,10 @@
       "title": "card",
       "description": null,
       "headings": [],
-      "content": "# Card Card. Composes an article with a header, main and footer. Every card variant composes this same structure — they do not inherit it. There is no behavior base class (TIER1-LAWS §2): `composeCard()` is a function each variant calls, and the variants below are separate behaviors that decorate an element in place, exactly as `x-ripple` does. ## Usage Explicitly, or on a non-article element: Only the parts you give it are rendered. A card with no `title`/`subtitle` gets no header; a card with no `footer` gets no footer. Nothing is emitted empty. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | `\"\"` | Card title displayed in header | | `subtitle` | text | `\"\"` | Card subtitle displayed below title | | `author` | text | `\"\"` | Author name, rendered as the card's byline in an ` ` | | `date` | date | `\"\"` | Publication date, rendered in a ` ` element | | `category` | text | `\"\"` | Category or tag shown above the title | | `readingTime` | text | `\"\"` | Estimated reading time | | `footer` | text | `\"\"` | Card footer text | | `elevated` | `boolean` | `false` | Add drop shadow | | `clickable` | `boolean` | `false` | Make card clickable | | `variant` | `default` · `glass` · `bordered` · `flat` | `default` | Visual style variant | | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width | | `tooltip` | text | `\"\"` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). | | `hoverText` | text | `\"\"` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. | | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints \"Featured\"; `featured=\"Deal of the week\"` prints that label instead. | | `content` | text or HTML | `\"\"` | Body text. When both are given, `content=\"…\"` wins over the text between the tags, and the children are not rendered (#683). A card with no content at all gets no body box. | ### An article is a card There is no separate article behavior. A blog post, news item or doc page is an ` `, so it is a card, and the byline attributes above are how it says who wrote it and when: The Engine weaves algebraic patterns as the loom weaves flowers. ### Badge `badge` puts a short label in the header's right-hand column: Lazy loading is now the default runtime. ### Variants `variant=\"glass\"` frosts the surface so whatever sits behind the card shows through, blurred: Frosted surface over the page background. `variant=\"bordered\"` drops the fill and keeps a heavier outline, for cards sitting on a busy surface: Outline only; the page shows through. ### Elevated `elevated` lifts the card off the page with a drop shadow: Raised above its neighbours. ### Clickable `clickable` makes the whole card one control: it takes focus, and Enter or Space activates it the same as a click. Anywhere on this card opens it. ### Tooltip `tooltip` shows its text in a themed tooltip on hover: Point at the card to see when it last changed. ### Featured `featured` promotes one card over its siblings; give it a value to say why: Waterproof, resoleable, 20% off until Sunday. ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles card visibility - `update(options)` — Updates card properties ## Styling The card's own parts carry no classes. `card.css` names each one by its tag and position, so the markup is exactly what it looks like: ```text ← the CARD (any element with x-card works the same) ← the HEADER: article > header ← the TITLE, from `title`: article > header > h3 ← the SUBTITLE, from `subtitle`: article > header > p ← the BADGE, from `badge`: article > header > span:last-child ← the BODY, your content (#945) ← the FOOTER, from `footer`: .x-card__footer ``` The body and the footer are the two parts named by class. The body is a ` `, not a ` `: HTML only allows ` ` under `html`, `body`, `div` or `form`, so a ` ` inside a card is invalid, and an authored ` ` becomes this same ` ` (#945). `variant`, `elevated` and `clickable` are read straight off the element as attributes (`article[variant=\"glass\"]`); `size` becomes an `x-card--{size}` class. Style through the existing card stylesheet in `src/styles/behaviors/`, never a one-off class or inline style (TIER1-LAWS §9). `variant` and `size` are the supported knobs — reach for those before writing new CSS. ## Accessibility - Support level: **stable**, accessibility: **high** - Renders as ` `, which carries the `article` role — so a card is a landmark a screen reader can navigate to. Give it a `title` so that landmark has a name. - `clickable` makes the whole card activatable; it must remain reachable and operable by keyboard, not mouse only. ## Variants The card variants a",
+      "content": "# Card Card. Composes an article with a header, main and footer. Every card variant composes this same structure — they do not inherit it. There is no behavior base class (TIER1-LAWS §2): `composeCard()` is a function each variant calls, and the variants below are separate behaviors that decorate an element in place, exactly as `x-ripple` does. ## Usage Explicitly, or on a non-article element: Only the parts you give it are rendered. A card with no `title`/`subtitle` gets no header; a card with no `footer` gets no footer. Nothing is emitted empty. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | `\"\"` | Card title displayed in header | | `subtitle` | text | `\"\"` | Card subtitle displayed below title | | `author` | text | `\"\"` | Author name, rendered as the card's byline in an ` ` | | `date` | date | `\"\"` | Publication date, rendered in a ` ` element | | `category` | text | `\"\"` | Category or tag shown above the title | | `readingTime` | text | `\"\"` | Estimated reading time | | `footer` | text | `\"\"` | Card footer text | | `elevated` | `boolean` | `false` | Add drop shadow | | `clickable` | `boolean` | `false` | Make card clickable | | `variant` | `default` · `glass` · `bordered` · `flat` | `default` | Visual style variant | | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width | | `tooltip` | text | `\"\"` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). | | `hoverText` | text | `\"\"` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. | | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints \"Featured\"; `featured=\"Deal of the week\"` prints that label instead. | | `content` | text or HTML | `\"\"` | Body text. When both are given, the text between the tags wins and `content=\"…\"` is not rendered: the attribute is the fallback (#417, reversing #683). A card with no content at all gets no body box. | ### An article is a card There is no separate article behavior. A blog post, news item or doc page is an ` `, so it is a card, and the byline attributes above are how it says who wrote it and when: The Engine weaves algebraic patterns as the loom weaves flowers. ### Badge `badge` puts a short label in the header's right-hand column: Lazy loading is now the default runtime. ### Variants `variant=\"glass\"` frosts the surface so whatever sits behind the card shows through, blurred: Frosted surface over the page background. `variant=\"bordered\"` drops the fill and keeps a heavier outline, for cards sitting on a busy surface: Outline only; the page shows through. ### Elevated `elevated` lifts the card off the page with a drop shadow: Raised above its neighbours. ### Clickable `clickable` makes the whole card one control: it takes focus, and Enter or Space activates it the same as a click. Anywhere on this card opens it. ### Tooltip `tooltip` shows its text in a themed tooltip on hover: Point at the card to see when it last changed. ### Featured `featured` promotes one card over its siblings; give it a value to say why: Waterproof, resoleable, 20% off until Sunday. ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles card visibility - `update(options)` — Updates card properties ## Styling The card's own parts carry no classes. `card.css` names each one by its tag and position, so the markup is exactly what it looks like: ```text ← the CARD (any element with x-card works the same) ← the HEADER: article > header ← the TITLE, from `title`: article > header > h3 ← the SUBTITLE, from `subtitle`: article > header > p ← the BADGE, from `badge`: article > header > span:last-child ← the BODY, your content (#945) ← the FOOTER, from `footer`: .x-card__footer ``` The body and the footer are the two parts named by class. The body is a ` `, not a ` `: HTML only allows ` ` under `html`, `body`, `div` or `form`, so a ` ` inside a card is invalid, and an authored ` ` becomes this same ` ` (#945). `variant`, `elevated` and `clickable` are read straight off the element as attributes (`article[variant=\"glass\"]`); `size` becomes an `x-card--{size}` class. Style through the existing card stylesheet in `src/styles/behaviors/`, never a one-off class or inline style (TIER1-LAWS §9). `variant` and `size` are the supported knobs — reach for those before writing new CSS. ## Accessibility - Support level: **stable**, accessibility: **high** - Renders as ` `, which carries the `article` role — so a card is a landmark a screen reader can navigate to. Give it a `title` so that landmark has a name. - `clickable` makes the whole card activatable; it must remain reachable and operable by keyboard, not mouse only. ## V",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/cardbutton",
@@ -1529,10 +1529,10 @@
       "title": "cardnotification",
       "description": null,
       "headings": [],
-      "content": "# Notification Card `x-cardnotification` renders a notice card coloured by `variant` (info, success, warning, error), with an icon, title, message and a dismiss button that removes it. Use it for a message tied to a place on the page. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `info` · `success` · `warning` · `error` | `info` | Notification type/severity | | `title` | text | — | Notification title | | `message` | text | — | Notification message | | `icon` | emoji or icon name | — | Custom icon (overrides variant-based icon) | | `dismissible` | `boolean` | `true` | Show dismiss button | | `elevated` | `boolean` | `false` | Add shadow elevation | ## Events - `wb:cardnotification:dismiss` — The notification card is dismissed ## Methods - `show()` — Shows the notification - `hide()` — Hides the notification - `toggle()` — Toggles visibility - `dismiss()` — Dismisses and removes the notification ## Accessibility - **role** — alert - **ariaLive** — polite - **dismissAriaLabel** — Dismiss notification Schema: [`cardnotification.schema.json`](../../src/wb-models/cardnotification.schema.json)",
+      "content": "# Notification Card `x-cardnotification` renders a notice card coloured by `variant` (info, success, warning, error), with an icon, title, message and a dismiss button that removes it. Use it for a message tied to a place on the page. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `info` · `success` · `warning` · `error` | `info` | Notification type/severity | | `title` | text | — | Notification title | | `message` | text | — | Notification message. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `icon` | emoji or icon name | — | Custom icon (overrides variant-based icon) | | `dismissible` | `boolean` | `true` | Show dismiss button | | `elevated` | `boolean` | `false` | Add shadow elevation | ## Events - `wb:cardnotification:dismiss` — The notification card is dismissed ## Methods - `show()` — Shows the notification - `hide()` — Hides the notification - `toggle()` — Toggles visibility - `dismiss()` — Dismisses and removes the notification ## Accessibility - **role** — alert - **ariaLive** — polite - **dismissAriaLabel** — Dismiss notification Schema: [`cardnotification.schema.json`](../../src/wb-models/cardnotification.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/cardoverlay",
@@ -1606,10 +1606,10 @@
       "title": "cardtestimonial",
       "description": null,
       "headings": [],
-      "content": "# Testimonial Card `x-cardtestimonial` renders a quotation card with the `quote`, the author's name, role and avatar, and an optional star `rating`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `quote` | text | — | Testimonial quote text | | `author` | text | — | Author name | | `role` | text | — | Author role/title/company | | `avatar` | URL | — | Author avatar image URL | | `rating` | `number` | `0` | Star rating (0-5) | | `variant` | `default` · `elevated` · `bordered` · `minimal` · `centered` | `default` | Visual style variant | | `size` | `sm` · `md` · `lg` | `md` | Card size | ## Methods - `show()` — Shows the testimonial card - `hide()` — Hides the testimonial card - `toggle()` — Toggles visibility - `setRating()` — Updates the star rating ## Accessibility - **avatar** — {\"alt\":\"Photo of {{author}}\"} - **rating** — {\"ariaLabel\":\"{{rating}} out of 5 stars\"} Schema: [`cardtestimonial.schema.json`](../../src/wb-models/cardtestimonial.schema.json)",
+      "content": "# Testimonial Card `x-cardtestimonial` renders a quotation card with the `quote`, the author's name, role and avatar, and an optional star `rating`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `quote` | text | — | Testimonial quote text. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `author` | text | — | Author name | | `role` | text | — | Author role/title/company | | `avatar` | URL | — | Author avatar image URL | | `rating` | `number` | `0` | Star rating (0-5) | | `variant` | `default` · `elevated` · `bordered` · `minimal` · `centered` | `default` | Visual style variant | | `size` | `sm` · `md` · `lg` | `md` | Card size | ## Methods - `show()` — Shows the testimonial card - `hide()` — Hides the testimonial card - `toggle()` — Toggles visibility - `setRating()` — Updates the star rating ## Accessibility - **avatar** — {\"alt\":\"Photo of {{author}}\"} - **rating** — {\"ariaLabel\":\"{{rating}} out of 5 stars\"} Schema: [`cardtestimonial.schema.json`](../../src/wb-models/cardtestimonial.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/cardvideo",
@@ -1650,10 +1650,10 @@
       "title": "checkbox",
       "description": null,
       "headings": [],
-      "content": "# Checkbox Checkbox input with label and custom styling ## Usage Run the full suite before pushing That is the form to reach for. The behavior styles the control, keeps the native checked/indeterminate state, and leaves the element a real form control, so it posts and validates like any other. ### On a different element Use `x-checkbox` when the host is not an ` ` and you want the same behavior — it builds its own control and label from the attributes: Prefer the native form. Reaching for a ` ` when ` ` says it better trades correct HTML for a workaround: the div version has to re-create focus, keyboard toggling and form participation that the real control already has. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Label text | | `checked` | `boolean` | `false` | Checked state | | `disabled` | `boolean` | `false` | Disabled state | | `indeterminate` | `boolean` | `false` | Indeterminate state | | `name` | text | — | Form field name | | `value` | text | — | Form field value | | `required` | `boolean` | `false` | Required field | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `primary` · `success` | `default` | | ## Events - `wb:checkbox:change` — Fired when state changes ## Methods - `check()` — Checks the checkbox - `uncheck()` — Unchecks the checkbox - `toggle()` — Toggles checked state - `isChecked()` — Returns checked state - `enable()` — Enables the checkbox - `disable()` — Disables the checkbox Schema: [`checkbox.schema.json`](../../src/wb-models/checkbox.schema.json)",
+      "content": "# Checkbox Checkbox input with label and custom styling ## Usage Run the full suite before pushing That is the form to reach for. The behavior styles the control, keeps the native checked/indeterminate state, and leaves the element a real form control, so it posts and validates like any other. ### On a different element Use `x-checkbox` when the host is not an ` ` and you want the same behavior — it builds its own control and label from the attributes: Prefer the native form. Reaching for a ` ` when ` ` says it better trades correct HTML for a workaround: the div version has to re-create focus, keyboard toggling and form participation that the real control already has. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Label text. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `checked` | `boolean` | `false` | Checked state | | `disabled` | `boolean` | `false` | Disabled state | | `indeterminate` | `boolean` | `false` | Indeterminate state | | `name` | text | — | Form field name | | `value` | text | — | Form field value | | `required` | `boolean` | `false` | Required field | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `primary` · `success` | `default` | | ## Events - `wb:checkbox:change` — Fired when state changes ## Methods - `check()` — Checks the checkbox - `uncheck()` — Unchecks the checkbox - `toggle()` — Toggles checked state - `isChecked()` — Returns checked state - `enable()` — Enables the checkbox - `disable()` — Disables the checkbox Schema: [`checkbox.schema.json`](../../src/wb-models/checkbox.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/chip",
@@ -1661,10 +1661,10 @@
       "title": "chip",
       "description": null,
       "headings": [],
-      "content": "# chip A small pill-shaped tag/label with optional icon, color variant, and dismiss button. Implemented by `chip()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-chip` | | Attribute form | ` ` | | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | ` ` | | Category | Feedback | | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) | ## Properties `chip()` clears the element's existing children and rebuilds them from these attributes, so any hand-written inner content is discarded in favor of `label`. | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | text | `\"\"` | Chip text | | `icon` | emoji or icon name | `\"\"` | Leading icon/emoji shown before the label | | `dismissible` | boolean | `false` | Adds a × button that removes the chip. Bare `dismissible` or `data-dismissible` both work | | `disabled` | boolean | `false` | Disabled/faded state; also suppresses the dismiss button even if `dismissible` is set. Bare `disabled` or `data-disabled` both work | | `outlined` | boolean | `false` | Transparent background with a colored border instead of a filled background. Bare `outlined` or `data-outlined` both work | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `\"default\"` | `default`, `primary`, `success`, `warning`, `error`, `info` | | `size` | `sm` · `md` · `lg` | `\"md\"` | `sm`, `md`, `lg` | ## Usage ### Basic chip ### Variant + size ### Dismissible ### Icon + outlined ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` | host isn't already a ` ` tag | Base pill shape, padding, background | | `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color | | `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale | | `.x-chip--outlined` | `outlined` | Transparent background, colored border | | `.x-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled=\"true\"` | | `.x-chip__icon` | `icon` set | Leading icon wrapper | | `.x-chip__label` | Always | Wraps the label text | | `.x-chip__remove` | `dismissible` and not `disabled` | The × remove button (a ` `) | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | `{ label }`: the chip's text | ```javascript document.addEventListener('wb:chip:remove', (e) => { console.log('A chip was dismissed:', e.detail.label); }); ``` - [Demo](../../demos/site/feedback.html#chip-chip) - [Schema](../../src/wb-models/chip.schema.json)",
+      "content": "# chip A small pill-shaped tag/label with optional icon, color variant, and dismiss button. Implemented by `chip()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-chip` | | Attribute form | ` ` | | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | ` ` | | Category | Feedback | | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) | ## Properties `chip()` clears the element's existing children and rebuilds them from these attributes, so any hand-written inner content is discarded in favor of `label`. | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | text | `\"\"` | Chip text. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `icon` | emoji or icon name | `\"\"` | Leading icon/emoji shown before the label | | `dismissible` | boolean | `false` | Adds a × button that removes the chip. Bare `dismissible` or `data-dismissible` both work | | `disabled` | boolean | `false` | Disabled/faded state; also suppresses the dismiss button even if `dismissible` is set. Bare `disabled` or `data-disabled` both work | | `outlined` | boolean | `false` | Transparent background with a colored border instead of a filled background. Bare `outlined` or `data-outlined` both work | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `\"default\"` | `default`, `primary`, `success`, `warning`, `error`, `info` | | `size` | `sm` · `md` · `lg` | `\"md\"` | `sm`, `md`, `lg` | ## Usage ### Basic chip ### Variant + size ### Dismissible ### Icon + outlined ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` | host isn't already a ` ` tag | Base pill shape, padding, background | | `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color | | `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale | | `.x-chip--outlined` | `outlined` | Transparent background, colored border | | `.x-chip--disabled` | `disabled` | 50% opacity, `pointer-events: none`, and sets `aria-disabled=\"true\"` | | `.x-chip__icon` | `icon` set | Leading icon wrapper | | `.x-chip__label` | Always | Wraps the label text | | `.x-chip__remove` | `dismissible` and not `disabled` | The × remove button (a ` `) | ## Events | Event | Fires when | `detail` | |-------|-----------|----------| | `wb:chip:remove` | the × remove button is clicked, right before the chip removes itself from the DOM | `{ label }`: the chip's text | ```javascript document.addEventListener('wb:chip:remove', (e) => { console.log('A chip was dismissed:', e.detail.label); }); ``` - [Demo](../../demos/site/feedback.html#chip-chip) - [Schema](../../src/wb-models/chip.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/clock",
@@ -1738,10 +1738,10 @@
       "title": "confetti",
       "description": null,
       "headings": [],
-      "content": "# Confetti `x-confetti` fires a burst of coloured confetti from the element each time it is clicked; `count` sets how many pieces and `colors` their palette. Use it on a button that completes something worth celebrating. ## Usage Celebrate ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `50` | Number of particles | | `label` | text | `Fire Confetti!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `3s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]` | Particle colors as JSON array | ## Events - `wb:confetti:start` — Animation started - `wb:confetti:end` — Animation ended ## Methods - `fire()` — Triggers confetti - `stop()` — Stops animation Schema: [`confetti.schema.json`](../../src/wb-models/confetti.schema.json)",
+      "content": "# Confetti `x-confetti` fires a burst of coloured confetti from the element each time it is clicked; `count` sets how many pieces and `colors` their palette. Use it on a button that completes something worth celebrating. ## Usage Celebrate ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `50` | Number of particles | | `label` | text | `Fire Confetti!` | Trigger button label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `showButton` | `boolean` | `true` | Show trigger button | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `3s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]` | Particle colors as JSON array | ## Events - `wb:confetti:start` — Animation started - `wb:confetti:end` — Animation ended ## Methods - `fire()` — Triggers confetti - `stop()` — Stops animation Schema: [`confetti.schema.json`](../../src/wb-models/confetti.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/confirm",
@@ -2027,10 +2027,10 @@
       "title": "fireworks",
       "description": null,
       "headings": [],
-      "content": "# Fireworks `x-fireworks` launches a burst of firework particles from the element each time it is clicked; `count` sets particles per burst and `colors` their palette. ## Usage Launch ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Particles per burst | | `label` | text | `Fireworks!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `false` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `1.5s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]` | Particle colors as JSON array | ## Events - `wb:fireworks:start` — Animation started - `wb:fireworks:end` — Animation ended ## Methods - `fire()` — Triggers fireworks - `stop()` — Stops animation Schema: [`fireworks.schema.json`](../../src/wb-models/fireworks.schema.json)",
+      "content": "# Fireworks `x-fireworks` launches a burst of firework particles from the element each time it is clicked; `count` sets particles per burst and `colors` their palette. ## Usage Launch ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Particles per burst | | `label` | text | `Fireworks!` | Trigger button label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `false` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `1.5s` | Animation duration | | `colors` | JSON array of CSS colours | `[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]` | Particle colors as JSON array | ## Events - `wb:fireworks:start` — Animation started - `wb:fireworks:end` — Animation ended ## Methods - `fire()` — Triggers fireworks - `stop()` — Stops animation Schema: [`fireworks.schema.json`](../../src/wb-models/fireworks.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/fix-card",
@@ -2082,10 +2082,10 @@
       "title": "floatinglabel",
       "description": null,
       "headings": [],
-      "content": "# x-floatinglabel Behavior Turns a field's placeholder into a label that floats above the field once it has focus or a value. See [src/wb-viewmodels/floatinglabel.js](../../src/wb-viewmodels/floatinglabel.js). - **Root CSS class:** `x-floatinglabel` - **Schema:** [floatinglabel.schema.json](../../src/wb-models/floatinglabel.schema.json) ## Usage The label text comes from the field's `placeholder`, or from a `label` attribute if there's no placeholder — either way, the placeholder is cleared once the label is built: Or put it on a container that already holds the field and its own ` ` — the container becomes the wrapper and that label is the one that floats: Project name Works on ` `, ` ` and ` `. At rest the label sits inside the field like a placeholder; focused or filled, it rises onto the top border and shrinks (styles: `src/styles/behaviors/floatinglabel.css`). A ` ` always shows a value, so its label is always risen. ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `placeholder` | text | — | Used as the label text if present (checked first). | | `label` | text | — | Fallback label text when there's no `placeholder`. | ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-floatinglabel` | wrapper ` ` | always | | `x-floatinglabel__label` | the generated ` ` | always | | `x-floatinglabel--active` | wrapper ` ` | the field has a value or is focused | | `x-floatinglabel--input` / `--textarea` / `--select` | wrapper ` ` | always — which kind of field it holds | ## Events None — the behavior listens to the field's native `focus`/`blur`/`input` events; it doesn't dispatch any of its own. - [Schema](../../src/wb-models/floatinglabel.schema.json) - [Source](../../src/wb-viewmodels/floatinglabel.js)",
+      "content": "# x-floatinglabel Behavior Turns a field's placeholder into a label that floats above the field once it has focus or a value. See [src/wb-viewmodels/floatinglabel.js](../../src/wb-viewmodels/floatinglabel.js). - **Root CSS class:** `x-floatinglabel` - **Schema:** [floatinglabel.schema.json](../../src/wb-models/floatinglabel.schema.json) ## Usage The label text comes from the field's `placeholder`, or from a `label` attribute if there's no placeholder — either way, the placeholder is cleared once the label is built: Or put it on a container that already holds the field and its own ` ` — the container becomes the wrapper and that label is the one that floats: Project name Works on ` `, ` ` and ` `. At rest the label sits inside the field like a placeholder; focused or filled, it rises onto the top border and shrinks (styles: `src/styles/behaviors/floatinglabel.css`). A ` ` always shows a value, so its label is always risen. ## Properties | Attribute | Type | Default | Description | |---|---|---|---| | `placeholder` | text | — | Used as the label text if present (checked first). | | `label` | text | — | Label text, used when the host has no authored ` `; an authored ` ` wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). Wins over `placeholder`. | ## CSS Classes | Class | Applies to | When | |---|---|---| | `x-floatinglabel` | wrapper ` ` | always | | `x-floatinglabel__label` | the generated ` ` | always | | `x-floatinglabel--active` | wrapper ` ` | the field has a value or is focused | | `x-floatinglabel--input` / `--textarea` / `--select` | wrapper ` ` | always — which kind of field it holds | ## Events None — the behavior listens to the field's native `focus`/`blur`/`input` events; it doesn't dispatch any of its own. - [Schema](../../src/wb-models/floatinglabel.schema.json) - [Source](../../src/wb-viewmodels/floatinglabel.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/footer",
@@ -2279,10 +2279,10 @@
       "title": "input",
       "description": null,
       "headings": [],
-      "content": "# Input A plain ` ` gets the form styling: `variant` shows a success or error state, `size` sets the scale, and `clearable` adds a button that empties it. `label`, `helper` and `error` add text around the field. ## Usage No attribute needed on ` `. Don't add `x-input` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Input label text | | `placeholder` | text | — | Placeholder text | | `value` | text | — | Input value | | `name` | text | — | Form field name | | `inputType` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type | | `helper` | text | — | Helper text below input | | `error` | text | — | Error message (shows error state) | | `variant` | `default` · `success` · `error` | `default` | Visual validation state | | `size` | `sm` · `md` · `lg` | `md` | Input size | | `disabled` | `boolean` | `false` | Disabled state | | `readonly` | `boolean` | `false` | Read-only state | | `required` | `boolean` | `false` | Required field | | `icon` | emoji or icon name | — | Icon (emoji or icon name) | | `iconPosition` | `start` · `end` | `start` | Icon position | | `clearable` | `boolean` | `false` | Show clear button when has value | ## Events - `input` — Fired when value changes - `change` — Fired when value is committed - `focus` — Fired when input receives focus - `blur` — Fired when input loses focus ## Methods - `getValue()` — Gets the current input value - `setValue()` — Sets the input value - `clear()` — Clears the input value - `focus()` — Focuses the input - `blur()` — Removes focus from input - `select()` — Selects all text in input - `setError()` — Sets error state and message - `clearError()` — Clears error state - `validate()` — Validates the input value - `enable()` — Enables the input - `disable()` — Disables the input ## Accessibility - **role** — textbox - **ariaRequired** — dynamic when required - **ariaInvalid** — dynamic when error - **ariaDescribedBy** — helper or error text id Schema: [`input.schema.json`](../../src/wb-models/input.schema.json)",
+      "content": "# Input A plain ` ` gets the form styling: `variant` shows a success or error state, `size` sets the scale, and `clearable` adds a button that empties it. `label`, `helper` and `error` add text around the field. ## Usage No attribute needed on ` `. Don't add `x-input` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Input label text | | `placeholder` | text | — | Placeholder text | | `value` | text | — | Input value. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `name` | text | — | Form field name | | `inputType` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type | | `helper` | text | — | Helper text below input | | `error` | text | — | Error message (shows error state) | | `variant` | `default` · `success` · `error` | `default` | Visual validation state | | `size` | `sm` · `md` · `lg` | `md` | Input size | | `disabled` | `boolean` | `false` | Disabled state | | `readonly` | `boolean` | `false` | Read-only state | | `required` | `boolean` | `false` | Required field | | `icon` | emoji or icon name | — | Icon (emoji or icon name) | | `iconPosition` | `start` · `end` | `start` | Icon position | | `clearable` | `boolean` | `false` | Show clear button when has value | ## Events - `input` — Fired when value changes - `change` — Fired when value is committed - `focus` — Fired when input receives focus - `blur` — Fired when input loses focus ## Methods - `getValue()` — Gets the current input value - `setValue()` — Sets the input value - `clear()` — Clears the input value - `focus()` — Focuses the input - `blur()` — Removes focus from input - `select()` — Selects all text in input - `setError()` — Sets error state and message - `clearError()` — Clears error state - `validate()` — Validates the input value - `enable()` — Enables the input - `disable()` — Disables the input ## Accessibility - **role** — textbox - **ariaRequired** — dynamic when required - **ariaInvalid** — dynamic when error - **ariaDescribedBy** — helper or error text id Schema: [`input.schema.json`](../../src/wb-models/input.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/inputgroup",
@@ -2532,10 +2532,10 @@
       "title": "progress",
       "description": null,
       "headings": [],
-      "content": "# Progress A plain ` ` gets a styled bar with an optional `label` and percentage (`showValue`), colour `variant`s, stripes, and an `indeterminate` state for work of unknown length. ## Usage No attribute needed on ` `. Don't add `x-progress` to it (#746). On another element, write `x-progress`: ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `value` | `number` | `0` | Current progress value (0-100) | | `max` | `number` | `100` | Maximum value | | `label` | text | — | Progress label text | | `showValue` | `boolean` | `false` | Show percentage value | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `primary` | Color variant | | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | Bar height size | | `animated` | `boolean` | `true` | Animate on load | | `striped` | `boolean` | `false` | Show striped pattern | | `indeterminate` | `boolean` | `false` | Indeterminate loading state | ## Methods - `getValue()` — Gets the current progress value - `setValue()` — Sets the progress value - `increment()` — Increments the progress value - `decrement()` — Decrements the progress value - `reset()` — Resets progress to 0 - `complete()` — Sets progress to 100% - `setIndeterminate()` — Sets indeterminate state ## Accessibility - **role** — progressbar - **ariaValueMin** — 0 - **ariaValueMax** — dynamic from max - **ariaValueNow** — dynamic from value - **ariaLabel** — dynamic from label or default Schema: [`progress.schema.json`](../../src/wb-models/progress.schema.json)",
+      "content": "# Progress A plain ` ` gets a styled bar with an optional `label` and percentage (`showValue`), colour `variant`s, stripes, and an `indeterminate` state for work of unknown length. ## Usage No attribute needed on ` `. Don't add `x-progress` to it (#746). On another element, write `x-progress`: ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `value` | `number` | `0` | Current progress value (0-100). A number between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `max` | `number` | `100` | Maximum value | | `label` | text | — | Progress label text | | `showValue` | `boolean` | `false` | Show percentage value | | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `primary` | Color variant | | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | Bar height size | | `animated` | `boolean` | `true` | Animate on load | | `striped` | `boolean` | `false` | Show striped pattern | | `indeterminate` | `boolean` | `false` | Indeterminate loading state | ## Methods - `getValue()` — Gets the current progress value - `setValue()` — Sets the progress value - `increment()` — Increments the progress value - `decrement()` — Decrements the progress value - `reset()` — Resets progress to 0 - `complete()` — Sets progress to 100% - `setIndeterminate()` — Sets indeterminate state ## Accessibility - **role** — progressbar - **ariaValueMin** — 0 - **ariaValueMax** — dynamic from max - **ariaValueNow** — dynamic from value - **ariaLabel** — dynamic from label or default Schema: [`progress.schema.json`](../../src/wb-models/progress.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/prompt",
@@ -2565,10 +2565,10 @@
       "title": "radio",
       "description": null,
       "headings": [],
-      "content": "# Radio Behavior Design & User Guide ## 1. Design Philosophy The `radio` behavior modernizes the ` ` element. Like the checkbox behavior, it focuses on providing a consistent, custom appearance while maintaining the native radio group behavior and accessibility. ### Key Features - **Custom Styling**: Replaces browser defaults with a clean, scalable design. - **Label Integration**: Automatically wraps input in a label for better click targets. - **Size Variants**: Configurable sizes for different contexts. - **Group Logic**: Works seamlessly with native `name` attributes for grouping. ## 2. User Guide ### Basic Usage A plain ` ` gets this behavior automatically; there is no attribute to add. Writing `x-radio` on it is redundant (#746). ### Configuration Options | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | String | `''` | Text label to display. | | `variant` | String | `default` | Color variant. | | `size` | String | `md` | Size: `sm`, `md`, `lg`. | ## 3. Examples ### Example 1: Radio Group A standard group of options. ### Example 2: Large Selection Larger targets for touch devices. ## 4. Why It Works Similar to the checkbox, it checks for a parent ` `. If missing, it creates one to wrap the input and the text. This ensures that clicking the text label selects the radio button. The custom styling is applied via CSS classes that override the default browser appearance using `appearance: none` (or similar techniques in the CSS).",
+      "content": "# Radio Behavior Design & User Guide ## 1. Design Philosophy The `radio` behavior modernizes the ` ` element. Like the checkbox behavior, it focuses on providing a consistent, custom appearance while maintaining the native radio group behavior and accessibility. ### Key Features - **Custom Styling**: Replaces browser defaults with a clean, scalable design. - **Label Integration**: Automatically wraps input in a label for better click targets. - **Size Variants**: Configurable sizes for different contexts. - **Group Logic**: Works seamlessly with native `name` attributes for grouping. ## 2. User Guide ### Basic Usage A plain ` ` gets this behavior automatically; there is no attribute to add. Writing `x-radio` on it is redundant (#746). ### Configuration Options | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `label` | String | `''` | Text label to display. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `variant` | String | `default` | Color variant. | | `size` | String | `md` | Size: `sm`, `md`, `lg`. | ## 3. Examples ### Example 1: Radio Group A standard group of options. ### Example 2: Large Selection Larger targets for touch devices. ## 4. Why It Works Similar to the checkbox, it checks for a parent ` `. If missing, it creates one to wrap the input and the text. This ensures that clicking the text label selects the radio button. The custom styling is applied via CSS classes that override the default browser appearance using `appearance: none` (or similar techniques in the CSS).",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/rainbow",
@@ -2598,10 +2598,10 @@
       "title": "rating",
       "description": null,
       "headings": [],
-      "content": "# Rating `x-rating` renders a row of `max` stars with `value` of them filled, and lets the user click to set a new rating unless `readonly` is set; `half` allows half stars. Changes fire `wb:rating:change`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `value` | `number` | `0` | Current rating value | | `max` | `number` | `5` | Maximum rating | | `readonly` | `boolean` | `false` | Display only, not interactive | | `disabled` | `boolean` | `false` | Disabled state | | `half` | `boolean` | `false` | Allow half-star ratings | | `size` | `sm` · `md` · `lg` | `md` | | | `icon` | emoji or icon name | `★` | Custom icon (emoji or symbol) | ## Events - `wb:rating:change` — Rating changed ## Methods - `getValue()` — Gets current rating - `setValue()` — Sets rating value - `clear()` — Clears rating to 0 - `enable()` — Enables the rating - `disable()` — Disables the rating ## Accessibility - **role** — slider - **ariaValueMin** — 0 - **ariaValueMax** — dynamic from max - **ariaValueNow** — dynamic from value Schema: [`rating.schema.json`](../../src/wb-models/rating.schema.json)",
+      "content": "# Rating `x-rating` renders a row of `max` stars with `value` of them filled, and lets the user click to set a new rating unless `readonly` is set; `half` allows half stars. Changes fire `wb:rating:change`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `value` | `number` | `0` | Current rating value. A number between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `max` | `number` | `5` | Maximum rating | | `readonly` | `boolean` | `false` | Display only, not interactive | | `disabled` | `boolean` | `false` | Disabled state | | `half` | `boolean` | `false` | Allow half-star ratings | | `size` | `sm` · `md` · `lg` | `md` | | | `icon` | emoji or icon name | `★` | Custom icon (emoji or symbol) | ## Events - `wb:rating:change` — Rating changed ## Methods - `getValue()` — Gets current rating - `setValue()` — Sets rating value - `clear()` — Clears rating to 0 - `enable()` — Enables the rating - `disable()` — Disables the rating ## Accessibility - **role** — slider - **ariaValueMin** — 0 - **ariaValueMax** — dynamic from max - **ariaValueNow** — dynamic from value Schema: [`rating.schema.json`](../../src/wb-models/rating.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/ratio",
@@ -2807,10 +2807,10 @@
       "title": "snow",
       "description": null,
       "headings": [],
-      "content": "# Snow `x-snow` makes the element a button that starts or stops snowflakes falling over the page; `count` sets how many and `duration` how long each takes to fall. ## Usage Let it snow ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Number of snowflakes | | `label` | text | `Let it Snow!` | Trigger button label | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `true` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `8s` | Fall duration | ## Events - `wb:snow:start` — Animation started - `wb:snow:stop` — Animation stopped ## Methods - `start()` — Starts snow - `stop()` — Stops snow - `toggle()` — Toggles snow Schema: [`snow.schema.json`](../../src/wb-models/snow.schema.json)",
+      "content": "# Snow `x-snow` makes the element a button that starts or stops snowflakes falling over the page; `count` sets how many and `duration` how long each takes to fall. ## Usage Let it snow ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `count` | `number` | `30` | Number of snowflakes | | `label` | text | `Let it Snow!` | Trigger button label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `showButton` | `boolean` | `true` | Show trigger button | | `repeat` | `boolean` | `true` | Loop animation | | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay | | `duration` | CSS duration, e.g. `3s` | `8s` | Fall duration | ## Events - `wb:snow:start` — Animation started - `wb:snow:stop` — Animation stopped ## Methods - `start()` — Starts snow - `stop()` — Stops snow - `toggle()` — Toggles snow Schema: [`snow.schema.json`](../../src/wb-models/snow.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/sparkle",
@@ -2829,10 +2829,10 @@
       "title": "spinner",
       "description": null,
       "headings": [],
-      "content": "# Spinner `x-spinner` draws an animated loading ring in the element, sized by `size` and coloured by `variant`, with `label` as its accessible name. Show it while content loads and remove it when done. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | | | `variant` | `default` · `primary` · `success` · `warning` · `error` | `primary` | | | `speed` | `slow` · `medium` · `fast` | `medium` | | | `label` | text | `Loading` | Accessible label | ## Methods - `show()` — Shows the spinner - `hide()` — Hides the spinner ## Accessibility - **role** — status - **ariaLabel** — dynamic from label Schema: [`spinner.schema.json`](../../src/wb-models/spinner.schema.json)",
+      "content": "# Spinner `x-spinner` draws an animated loading ring in the element, sized by `size` and coloured by `variant`, with `label` as its accessible name. Show it while content loads and remove it when done. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | | | `variant` | `default` · `primary` · `success` · `warning` · `error` | `primary` | | | `speed` | `slow` · `medium` · `fast` | `medium` | | | `label` | text | `Loading` | Accessible label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | ## Methods - `show()` — Shows the spinner - `hide()` — Hides the spinner ## Accessibility - **role** — status - **ariaLabel** — dynamic from label Schema: [`spinner.schema.json`](../../src/wb-models/spinner.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/stack",
@@ -2851,10 +2851,10 @@
       "title": "stagelight",
       "description": null,
       "headings": [],
-      "content": "# Stage Light - wb-starter v3.0 Decorative stage-lighting effects — a sweeping beam, a mouse-tracking spotlight, or a clickable light fixture — driven entirely by CSS custom properties the behavior sets on the host element. ## Overview | Property | Value | |----------|-------| | Behavior | `stagelight` | | Attribute | `x-stagelight` | | Attribute form | ` ` | | Applies to | any element | | Category | Effects | | Support level | Experimental | | Schema | `src/wb-models/stagelight.schema.json` | | Source | `src/wb-viewmodels/stagelight.js` | ## Properties | Property | Attribute | Type | Default | Description | |----------|-----------|------|---------|-------------| | `variant` | `variant` | `beam` \\| `spotlight` \\| `fixture` | `\"beam\"` | Which lighting effect to render | | `color` | `color` | string (hex/rgb/named) | `\"#ffffff\"` | Light color | | `size` | `size` | string (CSS length) | `\"300px\"` | Beam width / spotlight radius | | `intensity` | `intensity` | number (0–1) | `\"0.5\"` | Brightness/opacity of the light | | `speed` | `speed` | string (CSS duration) | `\"3s\"` | Beam swing animation speed (`beam` variant only) | | `target` | `target` | string | `\"mouse\"` | Only `\"mouse\"` is implemented — attaches a `mousemove` tracker for the `spotlight` variant. Any other value leaves the spotlight untracked (stays centered) | | `label` | `label` | string | none | Caption shown under the `fixture` variant's housing | Every property also accepts a `data-*` fallback (e.g. `data-variant`) for back-compat, but the plain attribute above is canonical. ## Usage ### Beam (default) — sweeping animated cone ### Spotlight — follows the mouse `spotlight` renders a fixed, viewport-covering overlay (`position: fixed`) that darkens everything except a circle around the cursor — move the mouse over the page to see it track. ### Fixture — clickable light housing with a label Click the housing to toggle the light on/off (dims to `intensity=\"0.1\"`). ## CSS Classes | Class | Applied When | Description | |-------|--------------|--------------| | `.x-stagelight--beam` | `variant=\"beam\"` | Positions the swinging beam cone at the top of the host | | `.x-stagelight--spotlight` | `variant=\"spotlight\"` | Fixed, full-viewport darkening overlay with a radial cutout | | `.x-stagelight--fixture` | `variant=\"fixture\"` | Inline-flex housing + label layout | | `.x-stagelight__source` | `beam` variant | The fixture nub the beam appears to emit from | | `.x-stagelight__beam` | `beam` variant | The gradient cone itself | | `.x-stagelight__housing` | `fixture` variant | The clickable bulb housing | ## CSS Custom Properties Set on the host element and consumed by the injected stylesheet: | Property | Description | |----------|--------------| | `--x-stagelight-color` | Light color | | `--x-stagelight-size` | Beam/spotlight size | | `--x-stagelight-intensity` | Opacity/brightness | | `--speed` | Beam swing duration | ## Methods | Method | Description | |--------|--------------| | `element.wbStageLight.setColor(color)` | Updates `--x-stagelight-color` | | `element.wbStageLight.setIntensity(intensity)` | Updates `--x-stagelight-intensity` | | `element.wbStageLight.setSize(size)` | Updates `--x-stagelight-size` | ## Accessibility `stagelight` is purely decorative — the schema marks its implicit role as `presentation`, and the behavior adds no text alternative. The `spotlight` variant darkens the rest of the page (`mix-blend-mode: multiply` at high opacity), which can reduce contrast for the surrounding content; avoid it around text that needs to stay readable while the spotlight is active. ## Source [src/wb-viewmodels/stagelight.js](../../src/wb-viewmodels/stagelight.js)",
+      "content": "# Stage Light - wb-starter v3.0 Decorative stage-lighting effects — a sweeping beam, a mouse-tracking spotlight, or a clickable light fixture — driven entirely by CSS custom properties the behavior sets on the host element. ## Overview | Property | Value | |----------|-------| | Behavior | `stagelight` | | Attribute | `x-stagelight` | | Attribute form | ` ` | | Applies to | any element | | Category | Effects | | Support level | Experimental | | Schema | `src/wb-models/stagelight.schema.json` | | Source | `src/wb-viewmodels/stagelight.js` | ## Properties | Property | Attribute | Type | Default | Description | |----------|-----------|------|---------|-------------| | `variant` | `variant` | `beam` \\| `spotlight` \\| `fixture` | `\"beam\"` | Which lighting effect to render | | `color` | `color` | string (hex/rgb/named) | `\"#ffffff\"` | Light color | | `size` | `size` | string (CSS length) | `\"300px\"` | Beam width / spotlight radius | | `intensity` | `intensity` | number (0–1) | `\"0.5\"` | Brightness/opacity of the light | | `speed` | `speed` | string (CSS duration) | `\"3s\"` | Beam swing animation speed (`beam` variant only) | | `target` | `target` | string | `\"mouse\"` | Only `\"mouse\"` is implemented — attaches a `mousemove` tracker for the `spotlight` variant. Any other value leaves the spotlight untracked (stays centered) | | `label` | `label` | string | none | Caption shown under the `fixture` variant's housing. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | Every property also accepts a `data-*` fallback (e.g. `data-variant`) for back-compat, but the plain attribute above is canonical. ## Usage ### Beam (default) — sweeping animated cone ### Spotlight — follows the mouse `spotlight` renders a fixed, viewport-covering overlay (`position: fixed`) that darkens everything except a circle around the cursor — move the mouse over the page to see it track. ### Fixture — clickable light housing with a label Click the housing to toggle the light on/off (dims to `intensity=\"0.1\"`). ## CSS Classes | Class | Applied When | Description | |-------|--------------|--------------| | `.x-stagelight--beam` | `variant=\"beam\"` | Positions the swinging beam cone at the top of the host | | `.x-stagelight--spotlight` | `variant=\"spotlight\"` | Fixed, full-viewport darkening overlay with a radial cutout | | `.x-stagelight--fixture` | `variant=\"fixture\"` | Inline-flex housing + label layout | | `.x-stagelight__source` | `beam` variant | The fixture nub the beam appears to emit from | | `.x-stagelight__beam` | `beam` variant | The gradient cone itself | | `.x-stagelight__housing` | `fixture` variant | The clickable bulb housing | ## CSS Custom Properties Set on the host element and consumed by the injected stylesheet: | Property | Description | |----------|--------------| | `--x-stagelight-color` | Light color | | `--x-stagelight-size` | Beam/spotlight size | | `--x-stagelight-intensity` | Opacity/brightness | | `--speed` | Beam swing duration | ## Methods | Method | Description | |--------|--------------| | `element.wbStageLight.setColor(color)` | Updates `--x-stagelight-color` | | `element.wbStageLight.setIntensity(intensity)` | Updates `--x-stagelight-intensity` | | `element.wbStageLight.setSize(size)` | Updates `--x-stagelight-size` | ## Accessibility `stagelight` is purely decorative — the schema marks its implicit role as `presentation`, and the behavior adds no text alternative. The `spotlight` variant darkens the rest of the page (`mix-blend-mode: multiply` at high opacity), which can reduce contrast for the surrounding content; avoid it around text that needs to stay readable while the spotlight is active. ## Source [src/wb-viewmodels/stagelight.js](../../src/wb-viewmodels/stagelight.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/stat",
@@ -2917,10 +2917,10 @@
       "title": "switch",
       "description": null,
       "headings": [],
-      "content": "# Switch `x-switch` builds an on/off switch with its `label`, backed by a real checkbox so it submits with a form under `name`. Changes fire `wb:switch:change`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Switch label | | `checked` | `boolean` | `false` | On/off state | | `disabled` | `boolean` | `false` | Disabled state | | `name` | text | — | Form field name | | `value` | text | — | Form field value when checked | | `labelPosition` | `start` · `end` | `end` | | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `primary` · `success` | `default` | | ## Events - `wb:switch:change` — Fired when state changes ## Methods - `on()` — Turns switch on - `off()` — Turns switch off - `toggle()` — Toggles switch state - `isOn()` — Returns on/off state - `enable()` — Enables the switch - `disable()` — Disables the switch Schema: [`switch.schema.json`](../../src/wb-models/switch.schema.json)",
+      "content": "# Switch `x-switch` builds an on/off switch with its `label`, backed by a real checkbox so it submits with a form under `name`. Changes fire `wb:switch:change`. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Switch label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `checked` | `boolean` | `false` | On/off state | | `disabled` | `boolean` | `false` | Disabled state | | `name` | text | — | Form field name | | `value` | text | — | Form field value when checked | | `labelPosition` | `start` · `end` | `end` | | | `size` | `sm` · `md` · `lg` | `md` | | | `variant` | `default` · `primary` · `success` | `default` | | ## Events - `wb:switch:change` — Fired when state changes ## Methods - `on()` — Turns switch on - `off()` — Turns switch off - `toggle()` — Toggles switch state - `isOn()` — Returns on/off state - `enable()` — Enables the switch - `disable()` — Disables the switch Schema: [`switch.schema.json`](../../src/wb-models/switch.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/switcher",
@@ -2983,10 +2983,10 @@
       "title": "textarea",
       "description": null,
       "headings": [],
-      "content": "# Textarea A plain ` ` gets the form styling, and optionally grows with its content (`autosize`) and shows a character count against `maxLength` (`showCount`). ## Usage No attribute needed on ` `. Don't add `x-textarea` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Field label | | `placeholder` | text | — | Placeholder text | | `value` | text | — | Text value | | `name` | text | — | Form field name | | `rows` | `number` | `3` | Visible rows | | `maxLength` | `number` | `0` | Max character limit | | `showCount` | `boolean` | `false` | Show character count | | `autosize` | `boolean` | `false` | Auto-resize to content | | `disabled` | `boolean` | `false` | Disabled state | | `readonly` | `boolean` | `false` | Read-only state | | `required` | `boolean` | `false` | Required field | | `resize` | `none` · `vertical` · `horizontal` · `both` | `vertical` | | | `variant` | `default` · `success` · `error` | `default` | | ## Events - `input` — Fired on input - `change` — Fired on change ## Methods - `getValue()` — Gets current value - `setValue()` — Sets value - `clear()` — Clears the textarea - `focus()` — Focuses the textarea - `blur()` — Removes focus - `select()` — Selects all text - `enable()` — Enables the textarea - `disable()` — Disables the textarea Schema: [`textarea.schema.json`](../../src/wb-models/textarea.schema.json)",
+      "content": "# Textarea A plain ` ` gets the form styling, and optionally grows with its content (`autosize`) and shows a character count against `maxLength` (`showCount`). ## Usage No attribute needed on ` `. Don't add `x-textarea` to it (#746). ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `label` | text | — | Field label | | `placeholder` | text | — | Placeholder text | | `value` | text | — | Text value. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). | | `name` | text | — | Form field name | | `rows` | `number` | `3` | Visible rows | | `maxLength` | `number` | `0` | Max character limit | | `showCount` | `boolean` | `false` | Show character count | | `autosize` | `boolean` | `false` | Auto-resize to content | | `disabled` | `boolean` | `false` | Disabled state | | `readonly` | `boolean` | `false` | Read-only state | | `required` | `boolean` | `false` | Required field | | `resize` | `none` · `vertical` · `horizontal` · `both` | `vertical` | | | `variant` | `default` · `success` · `error` | `default` | | ## Events - `input` — Fired on input - `change` — Fired on change ## Methods - `getValue()` — Gets current value - `setValue()` — Sets value - `clear()` — Clears the textarea - `focus()` — Focuses the textarea - `blur()` — Removes focus - `select()` — Selects all text - `enable()` — Enables the textarea - `disable()` — Disables the textarea Schema: [`textarea.schema.json`](../../src/wb-models/textarea.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/themecontrol",
@@ -3076,10 +3076,10 @@
       "title": "typewriter",
       "description": null,
       "headings": [],
-      "content": "# Typewriter `x-typewriter` types the element's text (or `text`) out one character at a time, `speed` milliseconds apart, with a blinking cursor unless `cursor=\"false\"`. ## Usage Zero build. Real behaviors. Light DOM only. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `speed` | milliseconds | `50` | Milliseconds between characters. Defaults to `50` — lower is faster. | | `text` | text | — | Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup. | | `cursor` | `boolean` | `true` | Show the blinking caret. `cursor=\"false\"` turns it off; it is a caret, not a character. | Schema: [`typewriter.schema.json`](../../src/wb-models/typewriter.schema.json)",
+      "content": "# Typewriter `x-typewriter` types the element's text (or `text`) out one character at a time, `speed` milliseconds apart, with a blinking cursor unless `cursor=\"false\"`. ## Usage Zero build. Real behaviors. Light DOM only. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `speed` | milliseconds | `50` | Milliseconds between characters. Defaults to `50` — lower is faster. | | `text` | text | — | Text to type out, used when the element has no text of its own. The text between the tags wins over `text` when both are given (#417), so it can be left off when the content is already in the markup. | | `cursor` | `boolean` | `true` | Show the blinking caret. `cursor=\"false\"` turns it off; it is a caret, not a character. | Schema: [`typewriter.schema.json`](../../src/wb-models/typewriter.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/ul",
@@ -4898,10 +4898,10 @@
           "text": "Toggles"
         }
       ],
-      "content": "Card Behaviors ← Back to Index 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials 🃏 Curated Card Gallery — one example per variant Card This is a basic card with default styling. All features enabled. Image Card Hero Card Profile Card Button Card Pricing Cards Stats Cards Testimonial Card Product Card Notification Card File Card Link Card Horizontal Card Web behaviors are evolving rapidly with native browser APIs. Expandable Card The card system uses a behavior-based architecture. Each variant is an independent behavior that composes the shared card structure and CSS — there is no base class to inherit from. Variants CONTAIN specialized content rather than inheriting it, so a change to the shared structure propagates to every variant automatically. Minimizable Card Active connections: 1,234 | CPU: 45% | Memory: 67% Overlay Card Video Card Portfolio Card 🃏 Card This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. Variants This is example card content. This is example card content. This is example card content. This is example card content. size variants This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. featuredTone variants This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. Toggles This is example card content. This is example card content. This is example card content. 🔘 Button Card This is example button card content. This is example button card content. This is example button card content. Variants This is example button card content. This is example button card content. This is example button card content. 🎯 Draggable Card This is example draggable card content. This is example draggable card content. This is example draggable card content. constrain variants This is example draggable card content. This is example draggable card content. This is example draggable card content. axis variants This is example draggable card content. This is example draggable card content. This is example draggable card content. Variants This is example draggable card content. This is example draggable card content. ➕ Expandable Card An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree. An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree. An expandable card shows the start of its content and keeps the ",
+      "content": "Card Behaviors ← Back to Index 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials 🃏 Curated Card Gallery — one example per variant Card This is a basic card with default styling. All features enabled. Image Card Hero Card Profile Card Button Card Pricing Cards Stats Cards Testimonial Card Product Card Notification Card File Card Link Card Horizontal Card Web behaviors are evolving rapidly with native browser APIs. Expandable Card The card system uses a behavior-based architecture. Each variant is an independent behavior that composes the shared card structure and CSS — there is no base class to inherit from. Variants CONTAIN specialized content rather than inheriting it, so a change to the shared structure propagates to every variant automatically. Minimizable Card Active connections: 1,234 | CPU: 45% | Memory: 67% Overlay Card Video Card Portfolio Card 🃏 Card This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. Variants This is example card content. This is example card content. This is example card content. This is example card content. size variants This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. featuredTone variants This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. This is example card content. Toggles This is example card content. This is example card content. This is example card content. 🔘 Button Card This is example button card content. This is example button card content. Variants This is example button card content. This is example button card content. This is example button card content. 🎯 Draggable Card constrain variants This is example draggable card content. This is example draggable card content. This is example draggable card content. axis variants This is example draggable card content. This is example draggable card content. This is example draggable card content. Variants This is example draggable card content. This is example draggable card content. ➕ Expandable Card An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree. An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or description does not push the rest of the page down. Show More releases the limit and the card grows to fit everything; Show Less puts the limit back. The button reports its state through aria-expanded, so a screen reader announces whether the content is open. Keyboard users can toggle it with Enter or Space. When the content already fits inside the limit there is nothing to reveal, so the card shows no button at all. Resize the window or change the content and the card checks again, bringing the button back once something is hidden. Set lines to clamp the collapsed card to that many whole lines of text; when both lines and maxHeight are set, lines wins. Without either, the collapsed limit is a maxHeight of 100px. Add the expanded attribute to start the card open, with the button already reading Show Less. Every click flips the label between Show More and Show Less and flips aria-expanded with it, so the visible text and the announced state never disagree. An expandable card shows the start of its content and keeps the rest behind Show More. Collapsed, it holds the content to a height (maxHeight) or to a number of whole lines (lines), so a long answer, changelog or descript",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-07"
+      "modified": "2026-10-10"
     },
     {
       "id": "demos/site/content",
@@ -5026,10 +5026,10 @@
           "text": "Variants"
         }
       ],
-      "content": "Visual Effects ← Back to Index ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff 🎉 Confetti This is example confetti content. This is example confetti content. 🎆 Fireworks This is example fireworks content. This is example fireworks content. This is example fireworks content. 💧 Ripple This is example ripple content. This is example ripple content. This is example ripple content. Toggles This is example ripple content. ❄️ Snow This is example snow content. This is example snow content. This is example snow content. 📦 Stage Light This is example stage light content. This is example stage light content. This is example stage light content. This is example stage light content. Variants This is example stage light content. This is example stage light content. This is example stage light content.",
+      "content": "Visual Effects ← Back to Index ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff 🎉 Confetti This is example confetti content. This is example confetti content. 🎆 Fireworks This is example fireworks content. This is example fireworks content. This is example fireworks content. 💧 Ripple This is example ripple content. This is example ripple content. This is example ripple content. Toggles This is example ripple content. ❄️ Snow This is example snow content. This is example snow content. This is example snow content. 📦 Stage Light This is example stage light content. This is example stage light content. This is example stage light content. Variants This is example stage light content. This is example stage light content. This is example stage light content.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "demos/site/feedback",
@@ -5202,10 +5202,10 @@
           "text": "🧩 x-notify — one-off notification"
         }
       ],
-      "content": "Feedback & Status ← Back to Index 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips 🔔 Alert This is example alert content. This is example alert content. This is example alert content. This is example alert content. This is example alert content. This is example alert content. This is example alert content. This is example alert content. Variants This is example alert content. This is example alert content. This is example alert content. This is example alert content. Toggles This is example alert content. 👤 Avatar This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. size variants This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. shape variants This is example avatar content. This is example avatar content. This is example avatar content. status variants This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. Toggles This is example avatar content. 🏷️ Badge This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. Variants This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. size variants This is example badge content. This is example badge content. This is example badge content. This is example badge content. Toggles This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. 🏷️ Chip This is example chip content. This is example chip content. This is example chip content. This is example chip content. Variants This is example chip content. This is example chip content. This is example chip content. This is example chip content. This is example chip content. This is example chip content. size variants This is example chip content. This is example chip content. This is example chip content. Toggles This is example chip content. This is example chip content. This is example chip content. 📊 Progress This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. Variants This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. size variants This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. Toggles This is example progress content. This is example progress content. ⭐ Rating This is example rating content. This is example rating content. This is example rating content. This is example rating content. This is example rating content. size variants This is example rating content. This is example rating content. This is example rating content. Toggles This is example rating content. This is example rating content. This is example rating content. ▓ Skeleton This is example skeleton content",
+      "content": "Feedback & Status ← Back to Index 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips 🔔 Alert Variants Toggles 👤 Avatar This is example avatar content. size variants This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. shape variants This is example avatar content. This is example avatar content. This is example avatar content. status variants This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. This is example avatar content. Toggles This is example avatar content. 🏷️ Badge This is example badge content. Variants This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. size variants This is example badge content. This is example badge content. This is example badge content. This is example badge content. Toggles This is example badge content. This is example badge content. This is example badge content. This is example badge content. This is example badge content. 🏷️ Chip Variants This is example chip content. This is example chip content. This is example chip content. This is example chip content. This is example chip content. This is example chip content. size variants This is example chip content. This is example chip content. This is example chip content. Toggles This is example chip content. This is example chip content. This is example chip content. 📊 Progress This is example progress content. Variants This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. size variants This is example progress content. This is example progress content. This is example progress content. This is example progress content. This is example progress content. Toggles This is example progress content. This is example progress content. ⭐ Rating size variants This is example rating content. This is example rating content. This is example rating content. Toggles This is example rating content. This is example rating content. This is example rating content. ▓ Skeleton This is example skeleton content. This is example skeleton content. This is example skeleton content. This is example skeleton content. This is example skeleton content. Variants This is example skeleton content. ⏳ Spinner This is example spinner content. This is example spinner content. This is example spinner content. This is example spinner content. This is example spinner content. size variants This is example spinner content. This is example spinner content. This is example spinner content. Variants This is example spinner content. This is example spinner content. This is example spinner content. This is example spinner content. speed variants This is example spinner content. This is example spinner content. 🔔 Toast This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. Variants This is example toast content. This is example toast content. This is example toast content. This is example toast content. position variants This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. This is example toast content. 💬 Tooltip This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. position variants This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. Variants This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. trigger variants This is example tooltip content. This is example tooltip content. This is example tooltip content. This is example tooltip content. Toggles This is example tooltip content. 🧩 x-tooltip — on a real trigger element The tooltip behavior attaches via x-tooltip to a real trigger element (button, span, …) — not a standalone custom tag. Top Bottom Left Right 🧩 x-progress — on any element A progress i",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-10"
     },
     {
       "id": "demos/site/forms",
@@ -5405,10 +5405,10 @@
           "id": "semanticsforms-h2-77"
         }
       ],
-      "content": "Form Controls ← Back to Index 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 🔘 Button This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. icon variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. iconPosition variants This is example button content. This is example button content. Variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. size variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. target variants This is example button content. This is example button content. Toggles This is example button content. This is example button content. This is example button content. This is example button content. ☑️ Checkbox This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. size variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Toggles This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. 📝 Input This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. inputType variants This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. Variants This is example input content. This is example input content. This is example input content. size variants This is example input content. This is example input content. This is example input content. iconPosition variants This is example input content. This is example input content. Toggles This is example input content. This is example input content. This is example input content. This is example input content. 🔍 Search This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. size variants This is example search content. This is example search content. This is example search content. Variants This is example search content. This is example search content. This is example search content. Toggles This is example search content. This is example search content. This is example search content. 📋 Select is the control for choosing a VALUE. Each sample shows one thing it does; x-dropdown (overlays.html) is for menus of actions. --> main develop release Canada Germany Japan Mexico United States Apple Banana Cherry Cheese Mushroom Olive Pepper Pro (locked) Team size variants This is example select content. This is example select content. This is example select content. Variants This is example select content. This is example select content. This is example select content. Toggles This is example select content. 🔘 Switch This is example switch content. This is example switch content. This is example switch content. This is example switch content. labelPosition variants This is example switch content. This is example switch content. size variants This is example switch content. This is example switch content. This is example switch content. Variants This is example switch content. This is example switch",
+      "content": "Form Controls ← Back to Index 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 🔘 Button icon variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. iconPosition variants This is example button content. This is example button content. Variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. size variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. target variants This is example button content. This is example button content. Toggles This is example button content. This is example button content. This is example button content. This is example button content. ☑️ Checkbox size variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Toggles This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. 📝 Input This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. inputType variants This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. Variants This is example input content. This is example input content. This is example input content. size variants This is example input content. This is example input content. This is example input content. iconPosition variants This is example input content. This is example input content. Toggles This is example input content. This is example input content. This is example input content. This is example input content. 🔍 Search This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. size variants This is example search content. This is example search content. This is example search content. Variants This is example search content. This is example search content. This is example search content. Toggles This is example search content. This is example search content. This is example search content. 📋 Select is the control for choosing a VALUE. Each sample shows one thing it does; x-dropdown (overlays.html) is for menus of actions. --> main develop release Canada Germany Japan Mexico United States Apple Banana Cherry Cheese Mushroom Olive Pepper Pro (locked) Team size variants This is example select content. This is example select content. This is example select content. Variants This is example select content. This is example select content. This is example select content. Toggles This is example select content. 🔘 Switch labelPosition variants This is example switch content. This is example switch content. size variants This is example switch content. This is example switch content. This is example switch content. Variants This is example switch content. This is example switch content. This is example switch content. Toggles This is example switch content. This is example switch content. This is example switch content. This is example switch content. 📝 Textarea This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. resize variants This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. Variants This is example textarea content. This is example textarea content. This is example textarea content. Toggles This is example textarea content. This is example textarea content. This is example textarea content. 📦 Slider This is example slider content. 📦 Toggle This is example toggle con",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-08"
+      "modified": "2026-10-10"
     },
     {
       "id": "demos/site/index",
@@ -5857,6 +5857,7 @@
       "pages/hero-gallery",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/cardimage",
       "docs/behaviors/cardvideo",
       "docs/behaviors/frame",
@@ -6714,6 +6715,29 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
+    "417": [
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
+      "docs/behaviors/card",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/confetti",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/input",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
+      "docs/behaviors/textarea",
+      "docs/behaviors/typewriter"
+    ],
     "448": [
       "pages/ai-permutation-test"
     ],
@@ -6732,7 +6756,7 @@
     "484": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "490": [
+    "491": [
       "pages/home"
     ],
     "503": [
@@ -8220,6 +8244,7 @@
       "demos/scrollalong-test",
       "demos/site/cards",
       "demos/site/content",
+      "demos/site/feedback",
       "demos/site/index",
       "demos/site/interactive",
       "demos/standalone",
@@ -8273,12 +8298,31 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/auto-injection",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
       "docs/behaviors/cluster",
+      "docs/behaviors/confetti",
       "docs/behaviors/fill",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/input",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
       "docs/behaviors/tags",
+      "docs/behaviors/textarea",
+      "docs/behaviors/typewriter",
       "docs/behaviors/x-behavior",
       "docs/behaviors/x-enhancements",
       "docs/claude/PAGE-GENERATION",
@@ -8651,7 +8695,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/accordion",
       "docs/behaviors/blockquote",
       "docs/behaviors/button",
@@ -8819,28 +8862,46 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
       "docs/behaviors/bounce",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/confetti",
       "docs/behaviors/dialog",
       "docs/behaviors/fadein",
+      "docs/behaviors/fireworks",
       "docs/behaviors/flash",
       "docs/behaviors/flip",
+      "docs/behaviors/floatinglabel",
       "docs/behaviors/glass",
       "docs/behaviors/heartbeat",
       "docs/behaviors/img",
+      "docs/behaviors/input",
       "docs/behaviors/jello",
       "docs/behaviors/lightbox",
       "docs/behaviors/ol",
+      "docs/behaviors/progress",
       "docs/behaviors/pulse",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
       "docs/behaviors/shake",
       "docs/behaviors/slidein",
       "docs/behaviors/snow",
+      "docs/behaviors/spinner",
       "docs/behaviors/stagelight",
       "docs/behaviors/stat",
+      "docs/behaviors/switch",
       "docs/behaviors/tabs",
       "docs/behaviors/tada",
+      "docs/behaviors/textarea",
+      "docs/behaviors/typewriter",
       "docs/behaviors/video",
       "docs/behaviors/wobble",
       "docs/behaviors/zoomin",
@@ -8977,6 +9038,7 @@
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/playground",
+      "demos/site/feedback",
       "demos/site/interactive",
       "demos/standalone"
     ],
@@ -9148,6 +9210,7 @@
       "demos/landing-page-showcase",
       "demos/schema-first-architecture",
       "demos/site/content",
+      "demos/site/feedback",
       "demos/site/interactive",
       "demos/standalone"
     ],
@@ -10378,6 +10441,7 @@
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/content",
+      "demos/site/feedback",
       "demos/site/learn-more",
       "demos/site/shop-now"
     ],
@@ -10674,7 +10738,6 @@
       "docs/behaviors/counter",
       "docs/behaviors/range",
       "docs/behaviors/table",
-      "docs/behaviors/typewriter",
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/claude/TIER1-LAWS",
@@ -12262,20 +12325,26 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/alert",
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
+      "docs/behaviors/cardnotification",
       "docs/behaviors/cardoverlay",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardstats",
+      "docs/behaviors/cardtestimonial",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/clock",
       "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
+      "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
@@ -12284,6 +12353,7 @@
       "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
+      "docs/behaviors/fireworks",
       "docs/behaviors/flash",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/grid",
@@ -12294,6 +12364,7 @@
       "docs/behaviors/ol",
       "docs/behaviors/progress",
       "docs/behaviors/prompt",
+      "docs/behaviors/radio",
       "docs/behaviors/range",
       "docs/behaviors/rating",
       "docs/behaviors/reel",
@@ -12306,6 +12377,8 @@
       "docs/behaviors/select",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/skeleton",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
       "docs/behaviors/stack",
       "docs/behaviors/stagelight",
       "docs/behaviors/stat",
@@ -12603,6 +12676,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audio",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -13365,6 +13439,7 @@
       "docs/V3-GUIDE",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/behaviors/badge",
@@ -13776,7 +13851,8 @@
       "docs/schema.migration",
       "docs/wbservices",
       "demos/autoinject",
-      "demos/frameworks"
+      "demos/frameworks",
+      "demos/site/feedback"
     ],
     "dev": [
       "pages/ai-permutation-test",
@@ -14005,7 +14081,6 @@
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/auto-injection",
       "docs/behaviors-reference",
@@ -14236,6 +14311,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/V3-STANDARDS",
       "demos/playground",
+      "demos/site/feedback",
       "demos/site/overlays"
     ],
     "browser": [
@@ -14520,6 +14596,7 @@
       "pages/ai-permutation-test",
       "pages/home",
       "docs/V3-GUIDE",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/cardportfolio",
@@ -14910,26 +14987,40 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/WB_BEHAVIOR_SYSTEM",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/address",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
       "docs/behaviors/button",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
+      "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/data",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
       "docs/behaviors/glass",
       "docs/behaviors/glow",
       "docs/behaviors/grid",
+      "docs/behaviors/input",
       "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
       "docs/behaviors/sidebarlayout",
+      "docs/behaviors/snow",
       "docs/behaviors/spinner",
       "docs/behaviors/stack",
+      "docs/behaviors/stagelight",
       "docs/behaviors/status",
       "docs/behaviors/switch",
+      "docs/behaviors/textarea",
       "docs/behaviors/time",
       "docs/behaviors/toast",
       "docs/claude/PAGE-GENERATION",
@@ -14979,7 +15070,6 @@
       "pages/behaviors",
       "docs/AI",
       "docs/architecture/solidjscomparison",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
       "docs/behaviors/icon",
@@ -15262,7 +15352,6 @@
       "pages/home",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/audio",
       "docs/behaviors/button",
       "docs/behaviors/carddraggable",
@@ -16912,6 +17001,7 @@
       "docs/pce-candidates",
       "docs/schema-first-audit-report",
       "demos/playground",
+      "demos/site/feedback",
       "demos/site/overlays"
     ],
     "stay": [
@@ -16981,6 +17071,7 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "demos/site/cards",
+      "demos/site/forms",
       "demos/site/interactive"
     ],
     "keep": [
@@ -18039,6 +18130,7 @@
       "pages/hero-variants",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/NOTES-V3-GUIDE",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/alert",
       "docs/behaviors/cardnotification",
@@ -18239,6 +18331,7 @@
       "docs/standards/REPO-LAYOUT",
       "demos/index",
       "demos/playground",
+      "demos/site/feedback",
       "demos/standalone"
     ],
     "content": [
@@ -18268,6 +18361,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/aside",
       "docs/behaviors/autosize",
+      "docs/behaviors/avatar",
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
@@ -18277,13 +18371,17 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/cardimage",
       "docs/behaviors/cardminimizable",
+      "docs/behaviors/cardnotification",
       "docs/behaviors/cardoverlay",
       "docs/behaviors/cardprofile",
+      "docs/behaviors/cardtestimonial",
       "docs/behaviors/center",
+      "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
       "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
+      "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/data",
@@ -18294,19 +18392,27 @@
       "docs/behaviors/fadein",
       "docs/behaviors/figure",
       "docs/behaviors/fill",
+      "docs/behaviors/fireworks",
       "docs/behaviors/flex",
+      "docs/behaviors/floatinglabel",
       "docs/behaviors/grid",
       "docs/behaviors/icon",
+      "docs/behaviors/input",
       "docs/behaviors/notes",
       "docs/behaviors/otp",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
       "docs/behaviors/range",
+      "docs/behaviors/rating",
       "docs/behaviors/release",
       "docs/behaviors/repeater",
       "docs/behaviors/scrollable",
       "docs/behaviors/scrollalong",
       "docs/behaviors/sidebarlayout",
+      "docs/behaviors/snow",
       "docs/behaviors/spinner",
       "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
       "docs/behaviors/textarea",
       "docs/behaviors/time",
       "docs/behaviors/toast",
@@ -19001,7 +19107,6 @@
       "pages/demos",
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/x-darkmode",
@@ -19818,10 +19923,28 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/auto-injection",
       "docs/behaviors-reference",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/confetti",
       "docs/behaviors/data",
       "docs/behaviors/dl",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/input",
       "docs/behaviors/ol",
+      "docs/behaviors/progress",
       "docs/behaviors/radio",
+      "docs/behaviors/rating",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
+      "docs/behaviors/textarea",
       "docs/behaviors/time",
       "docs/behaviors/ul",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -19964,7 +20087,8 @@
       "docs/wbservices",
       "demos/autoinject",
       "demos/multi-behavior-demo-generated",
-      "demos/site/content"
+      "demos/site/content",
+      "demos/site/feedback"
     ],
     "complexity": [
       "pages/features",
@@ -20346,7 +20470,8 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
       "demos/frameworks",
-      "demos/landing-page-showcase"
+      "demos/landing-page-showcase",
+      "demos/site/feedback"
     ],
     "accordion": [
       "pages/features",
@@ -20419,7 +20544,8 @@
       "docs/behaviors/toast",
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "demos/frameworks"
+      "demos/frameworks",
+      "demos/site/feedback"
     ],
     "progress": [
       "pages/features",
@@ -20448,7 +20574,8 @@
       "docs/behaviors/button",
       "docs/behaviors/spinner",
       "docs/pce-candidates",
-      "docs/performance"
+      "docs/performance",
+      "demos/site/feedback"
     ],
     "avatar": [
       "pages/features",
@@ -20476,6 +20603,7 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behavior-cross-reference",
       "docs/behaviors/alert",
       "docs/behaviors/aside",
@@ -20947,7 +21075,8 @@
       "docs/properties",
       "docs/schema-test-value",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "demos/autoinject"
+      "demos/autoinject",
+      "demos/site/forms"
     ],
     "checkbox": [
       "pages/features",
@@ -21476,6 +21605,7 @@
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/cards",
+      "demos/site/feedback",
       "demos/site/forms",
       "demos/site/interactive",
       "demos/standalone"
@@ -21865,6 +21995,7 @@
       "docs/behaviors/table",
       "docs/behaviors/time",
       "docs/behaviors/toast",
+      "docs/behaviors/typewriter",
       "docs/behaviors/x-behavior",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-darkmode",
@@ -22031,6 +22162,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audio",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -22482,6 +22614,7 @@
       "docs/behaviors/x-copybutton",
       "docs/container-pattern",
       "docs/inline-editing",
+      "demos/site/feedback",
       "demos/site/overlays"
     ],
     "absolute": [
@@ -22546,6 +22679,7 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/property-viewer",
+      "demos/site/feedback",
       "demos/site/overlays"
     ],
     "ocean": [
@@ -23123,6 +23257,7 @@
       "docs/behaviors/card",
       "docs/behaviors/data",
       "docs/behaviors/dialog",
+      "docs/behaviors/floatinglabel",
       "docs/behaviors/pagination",
       "docs/behaviors/time",
       "docs/card",
@@ -23272,6 +23407,7 @@
       "docs/behaviors/share",
       "docs/behaviors/switcher",
       "docs/behaviors/time",
+      "docs/behaviors/typewriter",
       "docs/behaviors/video",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
@@ -24200,9 +24336,28 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/confetti",
       "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/input",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
       "docs/behaviors/select",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
+      "docs/behaviors/textarea",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
@@ -24758,7 +24913,8 @@
       "docs/behaviors/range",
       "docs/behaviors/ripple",
       "docs/behaviors/stagelight",
-      "docs/schema-first-architecture"
+      "docs/schema-first-architecture",
+      "demos/site/feedback"
     ],
     "either": [
       "pages/introduction",
@@ -25032,7 +25188,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/NOTES-V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/behaviors/alert",
       "docs/behaviors/badge",
@@ -26147,7 +26302,8 @@
       "docs/standards/V3-STANDARDS",
       "docs/themes",
       "demos/frameworks",
-      "demos/landing-page-showcase"
+      "demos/landing-page-showcase",
+      "demos/site/feedback"
     ],
     "map": [
       "pages/issues",
@@ -27672,6 +27828,7 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
@@ -28628,7 +28785,6 @@
       "pages/themes",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/NOTES-V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/behaviors/audio",
       "docs/behaviors/cardvideo",
@@ -28907,29 +29063,48 @@
     "between": [
       "docs/AI",
       "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/accordion",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
       "docs/behaviors/breadcrumb",
       "docs/behaviors/card",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
       "docs/behaviors/cluster",
+      "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/darkmode",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
+      "docs/behaviors/fireworks",
       "docs/behaviors/flex",
       "docs/behaviors/gallery",
       "docs/behaviors/glass",
       "docs/behaviors/icon",
+      "docs/behaviors/input",
       "docs/behaviors/list",
       "docs/behaviors/masonry",
       "docs/behaviors/ol",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
       "docs/behaviors/reel",
       "docs/behaviors/sidebarlayout",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
       "docs/behaviors/stack",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
       "docs/behaviors/switcher",
+      "docs/behaviors/textarea",
       "docs/behaviors/typewriter",
       "docs/behaviors/ul",
       "docs/property-viewer",
@@ -30391,12 +30566,14 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/address",
+      "docs/behaviors/alert",
       "docs/behaviors/articles",
       "docs/behaviors/audio",
       "docs/behaviors/avatar",
       "docs/behaviors/badge",
       "docs/behaviors/button",
       "docs/behaviors/card",
+      "docs/behaviors/cardnotification",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardproduct",
       "docs/behaviors/cardprofile",
@@ -30406,10 +30583,13 @@
       "docs/behaviors/chip",
       "docs/behaviors/code",
       "docs/behaviors/codetheme",
+      "docs/behaviors/confetti",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/figure",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
       "docs/behaviors/footer",
       "docs/behaviors/form",
       "docs/behaviors/header",
@@ -30423,7 +30603,9 @@
       "docs/behaviors/search",
       "docs/behaviors/searchfield",
       "docs/behaviors/select",
+      "docs/behaviors/snow",
       "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
       "docs/behaviors/switch",
       "docs/behaviors/table",
       "docs/behaviors/tabs",
@@ -31318,6 +31500,25 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/confetti",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/input",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
+      "docs/behaviors/textarea",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/committing-fixes",
@@ -32212,7 +32413,6 @@
     ],
     "loop": [
       "docs/INTELLISENSE-TOOLTIPS",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/behaviors/audio",
       "docs/behaviors/cardvideo",
@@ -32227,7 +32427,6 @@
     ],
     "playback": [
       "docs/INTELLISENSE-TOOLTIPS",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/behaviors/audio",
       "docs/behaviors/cardvideo",
@@ -32237,7 +32436,6 @@
     ],
     "autoplay": [
       "docs/INTELLISENSE-TOOLTIPS",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audio",
       "docs/behaviors/audio",
       "docs/behaviors/cardvideo",
@@ -32286,9 +32484,9 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/accordion",
       "docs/behaviors/avatar",
+      "docs/behaviors/card",
       "docs/behaviors/code",
       "docs/behaviors/codetheme",
-      "docs/behaviors/floatinglabel",
       "docs/behaviors/img",
       "docs/behaviors/pre",
       "docs/behaviors/relativetime",
@@ -33637,6 +33835,7 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "demos/autoinject",
+      "demos/site/feedback",
       "demos/site/overlays"
     ],
     "sections": [
@@ -34119,6 +34318,7 @@
       "docs/behaviors/copybutton",
       "docs/behaviors/dropdown",
       "docs/behaviors/file",
+      "docs/behaviors/floatinglabel",
       "docs/behaviors/formrow",
       "docs/behaviors/icon",
       "docs/behaviors/inputgroup",
@@ -35168,7 +35368,6 @@
       "docs/behaviors/pulse",
       "docs/behaviors/share",
       "docs/behaviors/stagelight",
-      "docs/behaviors/typewriter",
       "docs/inline-editing",
       "demos/charity-food",
       "demos/frameworks",
@@ -35521,7 +35720,6 @@
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
       "docs/behaviors/blockquote",
-      "docs/behaviors/card",
       "docs/behaviors/center",
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
@@ -35960,6 +36158,7 @@
       "docs/schema",
       "docs/schema.migration",
       "docs/standards/V3-STANDARDS",
+      "demos/site/feedback",
       "demos/site/overlays"
     ],
     "redefine": [
@@ -36771,7 +36970,26 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
       "docs/behaviors/clock",
+      "docs/behaviors/confetti",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/input",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
+      "docs/behaviors/textarea",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/committing-fixes",
@@ -37195,7 +37413,8 @@
       "docs/behaviors/status",
       "docs/behaviors/ul",
       "docs/property-viewer",
-      "docs/standards/V3-STANDARDS"
+      "docs/standards/V3-STANDARDS",
+      "demos/site/feedback"
     ],
     "needed": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -38750,6 +38969,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
       "docs/behaviors/copybutton",
+      "docs/behaviors/typewriter",
       "docs/standards/RELEASE-PROCESS"
     ],
     "solving": [
@@ -39308,6 +39528,35 @@
       "docs/inline-editing",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS"
+    ],
+    "wins": [
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/alert",
+      "docs/behaviors/avatar",
+      "docs/behaviors/badge",
+      "docs/behaviors/card",
+      "docs/behaviors/cardnotification",
+      "docs/behaviors/cardtestimonial",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/confetti",
+      "docs/behaviors/fireworks",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/img",
+      "docs/behaviors/input",
+      "docs/behaviors/mark",
+      "docs/behaviors/progress",
+      "docs/behaviors/radio",
+      "docs/behaviors/rating",
+      "docs/behaviors/snow",
+      "docs/behaviors/spinner",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/switch",
+      "docs/behaviors/textarea",
+      "docs/behaviors/typewriter",
+      "docs/standards/V3-STANDARDS",
+      "demos/site/cards"
     ],
     "principle": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -39954,8 +40203,7 @@
       "docs/behaviors/avatar",
       "docs/behaviors/cardvideo",
       "docs/behaviors/pre",
-      "docs/behaviors/share",
-      "docs/behaviors/typewriter"
+      "docs/behaviors/share"
     ],
     "restart": [
       "docs/audio",
@@ -40208,14 +40456,6 @@
     ],
     "additively": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
-    ],
-    "wins": [
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/behaviors/card",
-      "docs/behaviors/img",
-      "docs/behaviors/mark",
-      "docs/standards/V3-STANDARDS",
-      "demos/site/cards"
     ],
     "dispatched": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -41260,6 +41500,7 @@
       "demos/autoinject",
       "demos/layout-test",
       "demos/site/cards",
+      "demos/site/forms",
       "demos/standalone"
     ],
     "thumb": [
@@ -42652,6 +42893,9 @@
     "week": [
       "docs/behaviors/card",
       "docs/behaviors/time"
+    ],
+    "reversing": [
+      "docs/behaviors/card"
     ],
     "blog": [
       "docs/behaviors/card",
@@ -46098,7 +46342,8 @@
       "docs/behaviors/range",
       "docs/behaviors/rating",
       "docs/behaviors/slider",
-      "docs/properties"
+      "docs/properties",
+      "demos/site/forms"
     ],
     "contextual": [
       "docs/behaviors/range",
@@ -46570,7 +46815,8 @@
     "speed": [
       "docs/behaviors/spinner",
       "docs/behaviors/stagelight",
-      "docs/behaviors/typewriter"
+      "docs/behaviors/typewriter",
+      "demos/site/feedback"
     ],
     "pad": [
       "docs/behaviors/stack"
@@ -46906,7 +47152,6 @@
     ],
     "textcontent": [
       "docs/behaviors/time",
-      "docs/behaviors/typewriter",
       "docs/behaviors/x-copybutton",
       "docs/inline-editing"
     ],
@@ -51706,6 +51951,9 @@
     "bringing": [
       "demos/site/cards"
     ],
+    "descript": [
+      "demos/site/cards"
+    ],
     "fundamentals": [
       "demos/site/content"
     ],
@@ -51863,6 +52111,9 @@
       "demos/site/forms"
     ],
     "locked": [
+      "demos/site/forms"
+    ],
+    "con": [
       "demos/site/forms"
     ],
     "orientation": [
