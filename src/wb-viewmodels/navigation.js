@@ -67,6 +67,26 @@ export function navbar(element, options = {}) {
   // it. Guarded so a literal <x-navbar> tag does not get a redundant class.
   element.classList.add('x-navbar');
 
+  // #830: the nav unit's two layout options, on every navbar -- plain <nav>,
+  // <div x-nav> and the site header alike. orientation="vertical" stacks the
+  // links (horizontal is the default); itemstyle="pill" gives every link a
+  // fully rounded fill (block, the default, is the plain link). Both are
+  // classes navbar.css styles, and both follow the attribute after load.
+  const applyLayout = (orientation, itemstyle) => {
+    element.classList.toggle('x-navbar--vertical', String(orientation || '').trim() === 'vertical');
+    element.classList.toggle('x-navbar--pill', String(itemstyle || '').trim() === 'pill');
+  };
+  applyLayout(options.orientation ?? readAttr(element, 'orientation'), options.itemstyle ?? readAttr(element, 'itemstyle'));
+  const layoutObserver = new MutationObserver(() => applyLayout(readAttr(element, 'orientation'), readAttr(element, 'itemstyle')));
+  layoutObserver.observe(element, {
+    attributes: true,
+    attributeFilter: ['orientation', 'itemstyle', 'data-orientation', 'data-itemstyle'],
+  });
+  const removeLayout = () => {
+    layoutObserver.disconnect();
+    element.classList.remove('x-navbar--vertical', 'x-navbar--pill');
+  };
+
   // #958: a <nav> picks up navbar with no attribute (nativeMap). A PLAIN one --
   // no x-navbar, no brand/logo/items/sticky/variant -- is an in-page nav: it
   // gets the site's link look (.x-navbar--plain, navbar.css) and nothing else.
@@ -77,7 +97,10 @@ export function navbar(element, options = {}) {
   const asksForHeader = config.brand || config.logo || config.items.length > 0 || config.sticky || element.hasAttribute('variant');
   if (!authored && !asksForHeader) {
     element.classList.add('x-navbar--plain');
-    return () => element.classList.remove('x-navbar', 'x-navbar--plain');
+    return () => {
+      removeLayout();
+      element.classList.remove('x-navbar', 'x-navbar--plain');
+    };
   }
   if (!authored) element.classList.add('x-navbar--site');
   // Appearance lives in src/styles/behaviors/navbar.css (#903). Writing it
@@ -218,6 +241,7 @@ export function navbar(element, options = {}) {
   }
 
   return () => {
+    removeLayout();
     clearRulesIn(element);
     element.classList.remove('x-navbar', 'x-navbar--sticky');
   };
@@ -235,6 +259,11 @@ export function navbar(element, options = {}) {
  * - resizable:   a drag handle on the right edge (arrow keys when focused)
  * - width:       starting width (px number or any CSS length)
  * - resize-min / resize-max: drag bounds in px (default 60 / 600)
+ * - itemstyle:   block (default) | pill (#828)
+ * - orientation: vertical (default) | horizontal -- the items in a row (#830)
+ *
+ * With no items attribute, the authored <a> children are the items (#830),
+ * so <nav x-sidebar><a href="/">Home</a>...</nav> keeps its links.
  *
  * The site's own left nav (site-engine.js) is this behavior (#829 step 4); it
  * used to be a second, hand-rolled copy of items, active, collapse and resize.
@@ -273,8 +302,19 @@ export function sidebar(element, options = {}) {
   // accepts (plain or data-*), here AND when they change -- the observer
   // used to watch only data-* and then re-read only the plain spelling, so
   // neither form moved the active item after load.
+  // #830: no items attribute -- the authored links are the items. The list
+  // below replaces the host's children, so without this they were discarded.
+  const authoredItems = () => [...element.children]
+    .filter((child) => child.tagName === 'A')
+    .map((a) => toItem({
+      label: a.textContent.trim(),
+      id: a.id || undefined,
+      href: a.getAttribute('href') || '#',
+      target: a.getAttribute('target') || '',
+    }));
+  const itemsAttr = options.items ?? readAttr(element, 'items');
   const config = {
-    items: parseItems(options.items ?? readAttr(element, 'items')),
+    items: String(itemsAttr ?? '').trim() === '' && !Array.isArray(itemsAttr) ? authoredItems() : parseItems(itemsAttr),
     active: options.active || readAttr(element, 'active'),
     collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
     resizable: options.resizable ?? readFlag(element, 'resizable'),
@@ -289,8 +329,15 @@ export function sidebar(element, options = {}) {
   // #779: the panel, its collapsed width and the items (with their active
   // and :hover states) are .x-sidebar* rules in navigation.css -- they were
   // inline styles and onmouseenter/onmouseleave attribute handlers.
+  // #830: orientation="horizontal" lays the items out in a row
+  // (.x-sidebar--horizontal, navigation.css); vertical is the default.
+  const applyOrientation = (value) => {
+    element.classList.toggle('x-sidebar--horizontal', String(value || '').trim() === 'horizontal');
+  };
+
   element.classList.add('x-sidebar');
   applyItemStyle(options.itemstyle ?? readAttr(element, 'itemstyle'));
+  applyOrientation(options.orientation ?? readAttr(element, 'orientation'));
 
   const list = document.createElement('div');
   list.className = 'x-sidebar__items';
@@ -440,6 +487,7 @@ export function sidebar(element, options = {}) {
     const changed = new Set(mutations.map((m) => String(m.attributeName).replace(/^data-/, '')));
     if (changed.has('width')) setWidth(readAttr(element, 'width'));
     if (changed.has('itemstyle')) applyItemStyle(readAttr(element, 'itemstyle'));
+    if (changed.has('orientation')) applyOrientation(readAttr(element, 'orientation'));
     if (changed.has('resize-min') || changed.has('resize-max')) applyBounds();
     config.active = readAttr(element, 'active');
     if (changed.has('items') || changed.has('collapsed')) {
@@ -454,8 +502,8 @@ export function sidebar(element, options = {}) {
   observer.observe(element, {
     attributes: true,
     attributeFilter: [
-      'collapsed', 'items', 'active', 'width', 'itemstyle', 'resize-min', 'resize-max',
-      'data-collapsed', 'data-items', 'data-active', 'data-width', 'data-itemstyle', 'data-resize-min', 'data-resize-max',
+      'collapsed', 'items', 'active', 'width', 'itemstyle', 'orientation', 'resize-min', 'resize-max',
+      'data-collapsed', 'data-items', 'data-active', 'data-width', 'data-itemstyle', 'data-orientation', 'data-resize-min', 'data-resize-max',
     ],
   });
 
@@ -463,7 +511,7 @@ export function sidebar(element, options = {}) {
     observer.disconnect();
     handle?.remove();
     clearRulesIn(element);
-    element.classList.remove('x-sidebar', 'x-sidebar--collapsed', 'x-sidebar--resizable', 'x-sidebar--pill');
+    element.classList.remove('x-sidebar', 'x-sidebar--collapsed', 'x-sidebar--resizable', 'x-sidebar--pill', 'x-sidebar--horizontal');
   };
 }
 

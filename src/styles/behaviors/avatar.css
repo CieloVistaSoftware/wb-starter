@@ -18,18 +18,18 @@
   font-weight: 600;
   position: relative;
   overflow: hidden;
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
   font-size: 0.85rem;
 }
 
 /* Sizes — attribute selectors (schema: xs, sm, md, lg, xl, 2xl) */
-:is([x-avatar], .x-avatar)[size="xs"]  { width: 24px; height: 24px; font-size: 0.6rem; }
-:is([x-avatar], .x-avatar)[size="sm"]  { width: 32px; height: 32px; font-size: 0.7rem; }
-:is([x-avatar], .x-avatar)[size="md"]  { width: 40px; height: 40px; font-size: 0.85rem; }
-:is([x-avatar], .x-avatar)[size="lg"]  { width: 56px; height: 56px; font-size: 1.1rem; }
-:is([x-avatar], .x-avatar)[size="xl"]  { width: 80px; height: 80px; font-size: 1.6rem; }
-:is([x-avatar], .x-avatar)[size="2xl"] { width: 112px; height: 112px; font-size: 2.2rem; }
+:is([x-avatar], .x-avatar)[size="xs"]  { width: 1.5rem; height: 1.5rem; font-size: 0.6rem; }
+:is([x-avatar], .x-avatar)[size="sm"]  { width: 2rem; height: 2rem; font-size: 0.7rem; }
+:is([x-avatar], .x-avatar)[size="md"]  { width: 2.5rem; height: 2.5rem; font-size: 0.85rem; }
+:is([x-avatar], .x-avatar)[size="lg"]  { width: 3.5rem; height: 3.5rem; font-size: 1.1rem; }
+:is([x-avatar], .x-avatar)[size="xl"]  { width: 5rem; height: 5rem; font-size: 1.6rem; }
+:is([x-avatar], .x-avatar)[size="2xl"] { width: 7rem; height: 7rem; font-size: 2.2rem; }
 
 /* Shapes — attribute selectors (schema: circle [default], square, rounded) */
 :is([x-avatar], .x-avatar)[shape="circle"] { border-radius: 50%; }
