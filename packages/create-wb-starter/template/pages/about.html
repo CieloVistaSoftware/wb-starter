@@ -21,7 +21,11 @@
   </details>
   <details id="about-faq-publish">
     <summary>How do I publish it?</summary>
-    <p>Run <code>npm run build</code> and upload the <code>dist/</code> folder to any static host, such as GitHub Pages.</p>
+    <p>On GitHub Pages: push the site to the <code>main</code> branch of a GitHub repo and it publishes itself.
+      <code>.github/workflows/deploy.yml</code> builds it and publishes it to
+      <code>https://&lt;your-user&gt;.github.io/&lt;repo&gt;/</code> on every push.
+      Turn Pages on once: Settings, Pages, Source: GitHub Actions.</p>
+    <p>Anywhere else: run <code>npm run build</code> and upload the <code>dist/</code> folder to any static host.</p>
   </details>
 </section>
 

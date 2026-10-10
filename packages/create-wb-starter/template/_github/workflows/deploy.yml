@@ -1,0 +1,55 @@
+# Publishes this site on GitHub Pages (#1232).
+#
+# It does nothing until the site is pushed to GitHub. From then on, every push
+# to main builds the site (npm run build -> dist/) and publishes dist/.
+# GitHub Pages must use "GitHub Actions" as its source: Settings -> Pages ->
+# Build and deployment -> Source. `npm create wb-starter` sets that when it
+# creates the repo for you.
+#
+# The site is served from https://<owner>.github.io/<repo>/. wb-starter's pages
+# use relative paths, so they work under that sub-path as they do at the root.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push waits rather than cancelling a deploy
+# that is already publishing.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      # A new site has no package-lock.json until `npm install` has run once.
+      - name: Install
+        run: if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Build
+        run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
