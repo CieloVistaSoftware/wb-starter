@@ -25,7 +25,7 @@
    it no heavier than its host selector; "false" and "0" mean off, as in
    applyDeclaredModifiers(). */
 .x-img--golden-ratio,
-img:where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
+:is(img, [x-img]):where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
   aspect-ratio: var(--aspect-golden, 1.618);
   object-fit: cover;
 }
