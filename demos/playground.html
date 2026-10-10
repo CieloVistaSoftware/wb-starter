@@ -1056,10 +1056,10 @@
     // #265: Tab indents, and typing offers x-* behaviors and their options.
     // Every registered attribute, from the same two registries the runtime
     // reads; each behavior's options from the schema index.
-    attachEditorAssist(input, async () => ({
+    attachEditorAssist(input, {
       behaviors: { ...WB_LAZY_ONLY_ATTRIBUTES, ...extensionMap },
-      schemas: await loadSchemaIndex(),
-    }), { popupClass: 'pg-assist' });
+      loadSchemas: loadSchemaIndex,
+    }, { popupClass: 'pg-assist' });
 
     let debounce;
     input.addEventListener('input', () => {
