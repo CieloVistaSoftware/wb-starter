@@ -69,6 +69,16 @@ a:where(.x-sidebar .x-sidebar__item.x-sidebar__item--active) {
 :where(.x-sidebar--pill .x-sidebar__item) {
   border-radius: 999rem;
 }
+/* #830: orientation="horizontal" -- the same items in a row that wraps.
+   The panel sizes to its row instead of a column's 10rem minimum. */
+:where(.x-sidebar.x-sidebar--horizontal) {
+  min-width: 0;
+}
+:where(.x-sidebar--horizontal .x-sidebar__items) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
 :where(.x-sidebar .x-sidebar__icon) {
   flex-shrink: 0;
 }

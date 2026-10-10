@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T18:58:23.174Z",
+  "generatedAt": "2026-10-10T20:23:47.065Z",
   "count": 177,
   "schemas": [
     {
@@ -5590,7 +5590,7 @@
         },
         "items": {
           "type": "string",
-          "description": "Navigation items as JSON [{label, href}]",
+          "description": "Navigation items as comma-separated Label:href pairs (a label with no :href links to #)",
           "default": "this is the items"
         },
         "sticky": {
@@ -5608,6 +5608,24 @@
             "transparent"
           ],
           "default": "default"
+        },
+        "orientation": {
+          "type": "string",
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "description": "horizontal: the links in a row. vertical: the links stacked in a column (#830)",
+          "default": "horizontal"
+        },
+        "itemstyle": {
+          "type": "string",
+          "enum": [
+            "block",
+            "pill"
+          ],
+          "description": "block: plain links. pill: every link gets a fully rounded fill on hover and focus, and the aria-current=\"page\" link a solid accent pill (#828, #830)",
+          "default": "block"
         }
       },
       "matrix": [
@@ -5621,6 +5639,14 @@
         {
           "brand": "MySite",
           "variant": "dark"
+        },
+        {
+          "brand": "MySite",
+          "orientation": "vertical"
+        },
+        {
+          "brand": "MySite",
+          "itemstyle": "pill"
         }
       ],
       "_metadata": {
@@ -7773,14 +7799,14 @@
       "file": "sidebar.schema.json",
       "name": "sidebar",
       "title": "Sidebar",
-      "description": "Vertical navigation list with an active item, an icon-only collapsed mode, drag-resize, and a block or pill item style. The site's left nav is one (#829).",
+      "description": "Vertical (or horizontal) navigation list with an active item, an icon-only collapsed mode, drag-resize, and a block or pill item style. The site's left nav is one (#829). With no items attribute, its authored <a> children are the items (#830).",
       "tag": "x-sidebar",
       "baseClass": "x-sidebar",
       "kind": "decorator",
       "properties": {
         "items": {
           "type": "string",
-          "description": "Items as a JSON array of {id, label, href, icon, target}, or comma-separated label#href pairs",
+          "description": "Items as a JSON array of {id, label, href, icon, target}, or comma-separated Label:href pairs. Empty: the authored <a> children are the items",
           "default": ""
         },
         "active": {
@@ -7823,6 +7849,15 @@
           ],
           "description": "block: the full-width fill. pill: the active fill inset from both walls and fully rounded (#828)",
           "default": "block"
+        },
+        "orientation": {
+          "type": "string",
+          "enum": [
+            "vertical",
+            "horizontal"
+          ],
+          "description": "vertical: the items in a column (a sidebar). horizontal: the items in a row that wraps (#830)",
+          "default": "vertical"
         }
       },
       "matrix": [
@@ -7831,6 +7866,12 @@
         },
         {
           "itemstyle": "pill"
+        },
+        {
+          "orientation": "vertical"
+        },
+        {
+          "orientation": "horizontal"
         }
       ],
       "_metadata": {}
