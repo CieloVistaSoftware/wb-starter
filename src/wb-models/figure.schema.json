@@ -43,6 +43,12 @@
         "20rem",
         "50%"
       ]
+    },
+    "goldenRatio": {
+      "type": "boolean",
+      "description": "Shape the whole figure, image and caption together as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The image is cropped to fill the space the caption leaves. Text sizes are unchanged. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-figure--golden-ratio"
     }
   },
   "$view": [],

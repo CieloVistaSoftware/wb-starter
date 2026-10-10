@@ -35,11 +35,21 @@ No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 </figure>
 </div>
 
+**Make the whole figure a golden rectangle with `goldenRatio`.** The figure, image and caption together, is 1.618 times as wide as it is tall; the image takes the height the caption leaves and is cropped to it.
+
+<div x-demo>
+<figure width="320" goldenRatio>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge at sunset, in a golden-rectangle figure">
+  <figcaption>Image and caption together make the golden rectangle.</figcaption>
+</figure>
+</div>
+
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `captionPosition` | `bottom` · `overlay` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
+| `goldenRatio` | `boolean` | `false` | Shape the whole figure, image and caption together as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The image is cropped to fill the space the caption leaves. Text sizes are unchanged. Bare attribute. |
 | `zoom` | `boolean` | `false` | Clicking the image opens it at full size. Bare attribute. |
 | `lightbox` | on unless `false` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
 | `caption` | text | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |

@@ -1126,6 +1126,16 @@
           "label": "featured with your own text",
           "form": "attribute",
           "source": "<div x-card featured=\"Deal of the week\" featuredTone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+        },
+        {
+          "label": "golden ratio",
+          "form": "semantic",
+          "source": "<article goldenRatio title=\"Trailhead access\" subtitle=\"Updated this morning\" footer=\"Ranger station\">\n  The north gate is open.\n</article>"
+        },
+        {
+          "label": "golden ratio",
+          "form": "attribute",
+          "source": "<div x-card goldenRatio title=\"Trailhead access\" subtitle=\"Updated this morning\" footer=\"Ranger station\">\n  The north gate is open.\n</div>"
         }
       ]
     },
@@ -1332,6 +1342,10 @@
         {
           "label": "short headline",
           "source": "<div x-hero>\n  <h1>Hello.</h1>\n</div>"
+        },
+        {
+          "label": "golden ratio",
+          "source": "<div x-hero goldenRatio>\n  <h1>Hello.</h1>\n</div>"
         }
       ]
     },
@@ -1894,6 +1908,10 @@
         {
           "label": "square image inside a figure",
           "source": "<figure width=\"240\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped square\">\n  <figcaption>The img's width + height set the shape.</figcaption>\n</figure>"
+        },
+        {
+          "label": "golden ratio",
+          "source": "<figure width=\"320\" goldenRatio>\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg\" alt=\"Suspension bridge in fog\">\n  <figcaption>Image and caption make one golden rectangle.</figcaption>\n</figure>"
         }
       ]
     },

@@ -112,6 +112,12 @@
       "description": "Colour of the featured marker, as a theme role so it reads correctly in every theme. Setting it on its own shows the marker (it implies featured). For any other colour set --x-featured-bg (and --x-featured-fg) in your stylesheet",
       "enum": ["primary", "success", "warning", "danger", "info", "neutral"],
       "default": "primary"
+    },
+    "goldenRatio": {
+      "type": "boolean",
+      "description": "Shape the whole card (header, body and footer together) as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. Content taller than that still grows the card rather than being cut off. Text sizes are unchanged. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-card--golden-ratio"
     }
   },
   "$view": [],

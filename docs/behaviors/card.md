@@ -43,6 +43,7 @@ no header; a card with no `footer` gets no footer. Nothing is emitted empty.
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width |
 | `tooltip` | text | `""` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). |
 | `hoverText` | text | `""` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. |
+| `goldenRatio` | `boolean` | `false` | Shape the whole card (header, body and footer together) as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. Content taller than that still grows the card rather than being cut off. Text sizes are unchanged. Bare attribute. |
 | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints "Featured"; `featured="Deal of the week"` prints that label instead. |
 | `content` | text or HTML | `""` | Body text. When both are given, `content="…"` wins over the text between the tags, and the children are not rendered (#683). A card with no content at all gets no body box. |
 
@@ -127,6 +128,19 @@ Space activates it the same as a click.
 <div x-demo>
 <article title="Trail boots" featured="Deal of the week">
   Waterproof, resoleable, 20% off until Sunday.
+</article>
+</div>
+
+### Golden ratio
+
+`goldenRatio` makes the whole card a landscape golden rectangle: 1.618 times as
+wide as it is tall. The card keeps the width its layout gives it and its height
+follows; the body takes the extra space, so the footer sits on the bottom edge.
+Text sizes do not change. Content taller than the ratio still grows the card.
+
+<div x-demo>
+<article title="Ridge loop" subtitle="Moderate, 6 km" footer="Updated this morning" goldenRatio>
+  The north gate is open.
 </article>
 </div>
 
