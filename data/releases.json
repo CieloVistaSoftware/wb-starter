@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.483",
+      "date": "2026-10-10",
+      "summary": "Src/styles/behaviors/avatar.css sized every avatar in px: the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1821\" target=\"_blank\" rel=\"noopener\">PR 1821</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Avatar sizes in rem, and the px gate holds 264</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f9361ea16e72f9b3e3341d6a67f36516c0d25ddc\" target=\"_blank\" rel=\"noopener\"><code>f9361ea</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open the x-avatar example on the behaviors page and set the browser&#39;s default font size to 20px. Before: the circles kept their pixel size while the initials grew and crowded the edge. Now: the circle grows with the initials.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/19af50c97afff5007c29e12bb947c77d227b11d0\" target=\"_blank\" rel=\"noopener\"><code>19af50c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.482",
       "date": "2026-10-10",
       "summary": "Src/api/setup.js carries SETUP_CSS, the stylesheet written into the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1819\" target=\"_blank\" rel=\"noopener\">PR 1819</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
