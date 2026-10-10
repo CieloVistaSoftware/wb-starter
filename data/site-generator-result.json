@@ -7,8 +7,8 @@
     "errors": 0,
     "skipped": 0,
     "totalComponents": 69,
-    "totalSections": 213,
-    "totalDemos": 764
+    "totalSections": 215,
+    "totalDemos": 770
   },
   "pages": [
     {
@@ -317,8 +317,8 @@
       "status": "ok",
       "filename": "layout.html",
       "componentCount": 9,
-      "sectionCount": 19,
-      "totalDemos": 45,
+      "sectionCount": 21,
+      "totalDemos": 51,
       "components": [
         {
           "name": "header",
@@ -335,8 +335,8 @@
         {
           "name": "navbar",
           "status": "ok",
-          "sections": 3,
-          "demos": 7
+          "sections": 5,
+          "demos": 13
         },
         {
           "name": "tabs",

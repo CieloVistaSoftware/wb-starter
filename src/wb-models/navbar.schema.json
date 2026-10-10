@@ -42,7 +42,7 @@
     },
     "items": {
       "type": "string",
-      "description": "Navigation items as JSON [{label, href}]",
+      "description": "Navigation items as comma-separated Label:href pairs (a label with no :href links to #)",
       "default": "this is the items"
     },
     "sticky": {
@@ -60,6 +60,24 @@
         "transparent"
       ],
       "default": "default"
+    },
+    "orientation": {
+      "type": "string",
+      "enum": [
+        "horizontal",
+        "vertical"
+      ],
+      "description": "horizontal: the links in a row. vertical: the links stacked in a column (#830)",
+      "default": "horizontal"
+    },
+    "itemstyle": {
+      "type": "string",
+      "enum": [
+        "block",
+        "pill"
+      ],
+      "description": "block: plain links. pill: every link gets a fully rounded fill on hover and focus, and the aria-current=\"page\" link a solid accent pill (#828, #830)",
+      "default": "block"
     }
   },
   "$view": [
@@ -151,7 +169,9 @@
       "<div x-navbar brand=\"Sample brand\">brand=\"Sample brand\"</div>",
       "<div x-navbar brandHref=\"/\">brandHref=\"/\"</div>",
       "<div x-navbar logo=\"/assets/icons/favicon.svg\">logo=\"/assets/icons/favicon.svg\"</div>",
-      "<div x-navbar brand=\"MySite\"></div>"
+      "<div x-navbar brand=\"MySite\"></div>",
+      "<div x-navbar brand=\"MySite\" items=\"Home:#home,About:#about\" orientation=\"vertical\">orientation=vertical</div>",
+      "<div x-navbar brand=\"MySite\" items=\"Home:#home,About:#about\" itemstyle=\"pill\">itemstyle=pill</div>"
     ],
     "matrix": {
       "combinations": [
@@ -165,6 +185,14 @@
         {
           "brand": "MySite",
           "variant": "dark"
+        },
+        {
+          "brand": "MySite",
+          "orientation": "vertical"
+        },
+        {
+          "brand": "MySite",
+          "itemstyle": "pill"
         }
       ]
     },
