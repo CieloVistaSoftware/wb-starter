@@ -13,7 +13,7 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | `50` | Number of particles |
-| `label` | text | `Fire Confetti!` | Trigger button label |
+| `label` | text | `Fire Confetti!` | Trigger button label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `showButton` | `boolean` | `true` | Show trigger button |
 | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay |
 | `duration` | CSS duration, e.g. `3s` | `3s` | Animation duration |

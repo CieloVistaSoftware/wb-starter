@@ -31,7 +31,7 @@ already has.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | text | — | Label text |
+| `label` | text | — | Label text. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `checked` | `boolean` | `false` | Checked state |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `indeterminate` | `boolean` | `false` | Indeterminate state |

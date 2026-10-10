@@ -15,8 +15,7 @@
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` |  |
 | `variant` | `default` · `primary` · `success` · `warning` · `error` | `primary` |  |
 | `speed` | `slow` · `medium` · `fast` | `medium` |  |
-| `label` | text | `Loading` | Accessible label |
-
+| `label` | text | `Loading` | Accessible label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 ## Methods
 
 - `show()` — Shows the spinner

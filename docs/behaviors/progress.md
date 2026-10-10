@@ -22,7 +22,7 @@ On another element, write `x-progress`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `number` | `0` | Current progress value (0-100) |
+| `value` | `number` | `0` | Current progress value (0-100). A number between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `max` | `number` | `100` | Maximum value |
 | `label` | text | — | Progress label text |
 | `showValue` | `boolean` | `false` | Show percentage value |

@@ -17,7 +17,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `quote` | text | — | Testimonial quote text |
+| `quote` | text | — | Testimonial quote text. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `author` | text | — | Author name |
 | `role` | text | — | Author role/title/company |
 | `avatar` | URL | — | Author avatar image URL |

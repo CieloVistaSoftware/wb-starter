@@ -27,8 +27,7 @@ on the host element.
 | `intensity` | `intensity` | number (0–1) | `"0.5"` | Brightness/opacity of the light |
 | `speed` | `speed` | string (CSS duration) | `"3s"` | Beam swing animation speed (`beam` variant only) |
 | `target` | `target` | string | `"mouse"` | Only `"mouse"` is implemented — attaches a `mousemove` tracker for the `spotlight` variant. Any other value leaves the spotlight untracked (stays centered) |
-| `label` | `label` | string | none | Caption shown under the `fixture` variant's housing |
-
+| `label` | `label` | string | none | Caption shown under the `fixture` variant's housing. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 Every property also accepts a `data-*` fallback (e.g. `data-variant`) for
 back-compat, but the plain attribute above is canonical.
 

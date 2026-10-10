@@ -1,4 +1,5 @@
 import { setRule, clearRulesIn } from '../../core/dynamic-style.js';
+import { authorText } from '../../core/author-content.js';
 import { readFlag, authoredAttr } from '../../core/read-attr.js';
 /**
  * Progress - a labeled, variant-colored fill bar
@@ -66,7 +67,10 @@ export function progress(element, options = {}) {
   // clone of them, and show-value/animated were invisible to anything
   // checking what the behavior reads off the element it was applied to.
   const src = element;
-  const authoredValue = (src._wbOriginalContent || src.textContent || '').trim();
+  // #417: the text between the tags is the value and wins over `value` --
+  // when it IS a number. A native <progress> carries fallback text for old
+  // browsers ("Loading…"), which is not a value and must not zero the bar.
+  const authoredValue = parseFloat(authorText(src));
   const size = options.size || src.getAttribute('size') || 'md';
   const variant = options.variant || src.getAttribute('variant') || 'primary';
 
@@ -74,7 +78,7 @@ export function progress(element, options = {}) {
   // element, and '' is not nullish, so `?? 0` never applied) -- NaN, which
   // wrote `width: NaN%`, an invalid declaration the browser drops, and a
   // `NaN%` label. No value means an empty bar.
-  const parsedValue = parseFloat(options.value ?? src.getAttribute('value') ?? authoredValue);
+  const parsedValue = parseFloat(options.value ?? (Number.isFinite(authoredValue) ? authoredValue : src.getAttribute('value')));
   const state = {
     value: Number.isFinite(parsedValue) ? parsedValue : 0,
     max: parseFloat(options.max ?? src.getAttribute('max') ?? 100),

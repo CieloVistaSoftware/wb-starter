@@ -24,7 +24,7 @@ A plain `<input type="radio">` gets this behavior automatically; there is no att
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `label` | String | `''` | Text label to display. |
+| `label` | String | `''` | Text label to display. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `variant` | String | `default` | Color variant. |
 | `size` | String | `md` | Size: `sm`, `md`, `lg`. |
 
