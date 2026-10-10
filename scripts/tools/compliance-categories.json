@@ -36,7 +36,8 @@
     "demos-no-legacy-data-attrs.spec.ts",
     "demos-registry-coverage.spec.ts",
     "legacy-attr-compliance.spec.ts",
-    "legacy-pill.spec.ts"
+    "legacy-pill.spec.ts",
+    "x-demo-host-is-semantic.spec.ts"
   ],
   "schema": [
     "page-schema-validation.spec.ts",

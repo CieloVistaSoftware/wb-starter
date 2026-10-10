@@ -4,13 +4,13 @@ A plain `<select>` gets the form styling, with `variant` for validation state, `
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <select name="branch">
   <option value="main">main</option>
   <option value="develop">develop</option>
   <option value="fix/706-dropdown">fix/706-dropdown</option>
 </select>
-</div>
+</figure>
 
 No attribute needed on `<select>`. Don't add `x-select` to it (#746).
 

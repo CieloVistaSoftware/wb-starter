@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-bounce>Click me</button>
-</div>
+</figure>
 
 <sub>Schema: [`bounce.schema.json`](../../src/wb-models/bounce.schema.json)</sub>

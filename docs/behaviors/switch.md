@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-switch label="Publish to staging on merge" name="auto-deploy" checked></div>
-</div>
+</figure>
 
 ## Attributes
 

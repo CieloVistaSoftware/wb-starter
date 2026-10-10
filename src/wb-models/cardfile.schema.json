@@ -4,6 +4,7 @@
   "title": "File Card",
   "description": "File display card with icon, name, size, and download",
   "schemaFor": "cardfile",
+  "kind": "decorator",
   "baseClass": "x-cardfile",
   "semanticElement": {
     "tagName": "article",

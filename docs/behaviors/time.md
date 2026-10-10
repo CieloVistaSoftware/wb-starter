@@ -29,14 +29,14 @@ The `<time>` element represents a specific period in time. In WB-Starter, it's u
 **Note:** it renders `date` as plain text inside `.x-card__file-meta`, not a
 real `<time>` element.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardfile
   filename="report.pdf"
   type="pdf"
   date="Dec 15, 2024">
 </article>
-</div>
+</figure>
 
 ### 2. Card Notification (`cardnotification`)
 
@@ -59,7 +59,7 @@ Shown here as illustrative markup only; it will render without a timestamp.
 children, so hand-authored markup (including real `<time>` elements) renders
 as-is.
 
-<div x-demo>
+<figure x-demo>
 <div x-timeline>
   <article class="x-timeline__item">
     <time
@@ -72,7 +72,7 @@ as-is.
     </div>
   </article>
 </div>
-</div>
+</figure>
 
 ### 4. Relative Time Behavior (`relativetime`)
 
@@ -81,12 +81,12 @@ as-is.
 replaced, so the text below is illustrative only; the real rendered demo
 recomputes it live.
 
-<div x-demo>
+<figure x-demo>
 <time
   x-relativetime
   datetime="2026-07-08T10:30:00Z">
 </time>
-</div>
+</figure>
 
 ## Accessibility Considerations
 
@@ -98,7 +98,7 @@ recomputes it live.
 
 ## Example: Blog Post Metadata
 
-<div x-demo>
+<figure x-demo>
 <article class="blog-post">
   <header>
     <h1>Understanding Semantic HTML</h1>
@@ -121,7 +121,7 @@ recomputes it live.
     </p>
   </footer>
 </article>
-</div>
+</figure>
 
 ## CSS Styling
 

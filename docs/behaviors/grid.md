@@ -9,13 +9,13 @@ screens without a media query.
 
 ## Basic Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-grid columns="3">
   <div>Cell 1</div>
   <div>Cell 2</div>
   <div>Cell 3</div>
 </div>
-</div>
+</figure>
 
 ## Attributes
 
@@ -34,46 +34,46 @@ screens without a media query.
 
 ## Column Count
 
-<div x-demo>
+<figure x-demo>
 <div x-grid columns="4">
   <div>1</div>
   <div>2</div>
   <div>3</div>
   <div>4</div>
 </div>
-</div>
+</figure>
 
 ## Explicit Rows
 
-<div x-demo>
+<figure x-demo>
 <div x-grid columns="2" rows="2">
   <div>A</div>
   <div>B</div>
   <div>C</div>
   <div>D</div>
 </div>
-</div>
+</figure>
 
 ## Centered Content
 
-<div x-demo>
+<figure x-demo>
 <div x-grid center>
   <div>Centered</div>
   <div>Content</div>
 </div>
-</div>
+</figure>
 
 ## Background
 
-<div x-demo>
+<figure x-demo>
 <div x-grid background="bg-tertiary">
   <div>On a themed background</div>
 </div>
-</div>
+</figure>
 
 ## Alternating Row Colors
 
-<div x-demo>
+<figure x-demo>
 <div x-grid
   columns="1"
   altRows>
@@ -82,11 +82,11 @@ screens without a media query.
   <div>Row 3</div>
   <div>Row 4</div>
 </div>
-</div>
+</figure>
 
 ## Column Headers
 
-<div x-demo>
+<figure x-demo>
 <div x-grid
   columns="3"
   headers="Name,Age,Email">
@@ -97,14 +97,14 @@ screens without a media query.
   <div>25</div>
   <div>bob@example.com</div>
 </div>
-</div>
+</figure>
 
 ## Mixed: Data Table Style
 
 Headers, alt-rows, and a fixed column count combine into a lightweight
 data-table look without a real `<table>`.
 
-<div x-demo>
+<figure x-demo>
 <div x-grid
   columns="3"
   headers="Product,Price,Stock"
@@ -120,7 +120,7 @@ data-table look without a real `<table>`.
   <div>$14.99</div>
   <div>0</div>
 </div>
-</div>
+</figure>
 
 ## Notes
 

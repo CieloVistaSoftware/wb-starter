@@ -4,6 +4,7 @@
   "title": "Testimonial Card",
   "description": "Customer testimonial/review card with quote, author, avatar, and rating",
   "schemaFor": "cardtestimonial",
+  "kind": "decorator",
   "baseClass": "x-testimonial",
   "semanticElement": {
     "tagName": "article",

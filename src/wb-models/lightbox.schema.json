@@ -4,6 +4,7 @@
   "title": "Lightbox",
   "description": "x-lightbox makes the element open the image at src full-screen over a dark backdrop when clicked; clicking the backdrop closes it.",
   "schemaFor": "lightbox",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

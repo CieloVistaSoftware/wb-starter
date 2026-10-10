@@ -41,7 +41,7 @@ The custom tags this refactor introduced were removed in 4.0.0, so there is no
 "after" to compare any more: a pricing card is the `x-cardpricing` attribute on
 an `<article>`.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardpricing
   plan="Pro"
@@ -49,7 +49,7 @@ an `<article>`.
   period="/mo"
   features="Feature 1,Feature 2">
 </article>
-</div>
+</figure>
 
 ## Attribute Forms
 The two behaviors this refactor was about, as they are written now:

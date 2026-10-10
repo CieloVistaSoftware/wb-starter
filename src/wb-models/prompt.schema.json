@@ -4,6 +4,7 @@
   "title": "Prompt",
   "description": "x-prompt makes a click open a dialog that asks for a line of text, with promptTitle, promptMessage, a placeholder and an optional defaultValue.",
   "schemaFor": "prompt",
+  "kind": "decorator",
   "properties": {
     "heading": {
       "type": "string",

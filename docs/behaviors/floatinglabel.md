@@ -13,23 +13,23 @@ The label text comes from the field's `placeholder`, or from a `label`
 attribute if there's no placeholder — either way, the placeholder is cleared
 once the label is built:
 
-<div x-demo>
+<figure x-demo>
 <input type="email" x-floatinglabel placeholder="Email address">
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-floatinglabel label="Full name">
-</div>
+</figure>
 
 Or put it on a container that already holds the field and its own `<label>` —
 the container becomes the wrapper and that label is the one that floats:
 
-<div x-demo>
+<figure x-demo>
 <div x-floatinglabel>
   <input type="text" id="fl-doc-project" placeholder=" ">
   <label for="fl-doc-project">Project name</label>
 </div>
-</div>
+</figure>
 
 Works on `<input>`, `<textarea>` and `<select>`. At rest the label sits inside
 the field like a placeholder; focused or filled, it rises onto the top border

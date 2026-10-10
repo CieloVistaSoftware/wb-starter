@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-rating value="4" max="5" half></div>
-</div>
+</figure>
 
 ## Attributes
 

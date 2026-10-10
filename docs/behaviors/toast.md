@@ -39,27 +39,27 @@ click):
 
 ### Basic trigger
 
-<div x-demo>
+<figure x-demo>
 <button x-toast message="Saved!">Show toast</button>
-</div>
+</figure>
 
 ### Variant
 
-<div x-demo>
+<figure x-demo>
 <button x-toast message="Something went wrong." toast-variant="error">Trigger error toast</button>
-</div>
+</figure>
 
 ### Custom duration
 
-<div x-demo>
+<figure x-demo>
 <button x-toast message="This one sticks around for 6 seconds." duration="6000">Show long toast</button>
-</div>
+</figure>
 
 ### On a `<button>` (needs `toast-variant`, not `variant`)
 
-<div x-demo>
+<figure x-demo>
 <button x-toast message="Copied to clipboard" toast-variant="success" variant="primary">Copy</button>
-</div>
+</figure>
 
 ## CSS Classes
 

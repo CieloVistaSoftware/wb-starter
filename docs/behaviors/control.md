@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-control label="Threshold">
   <input type="range" min="0" max="100" value="60">
 </div>
-</div>
+</figure>
 
 <sub>Schema: [`control.schema.json`](../../src/wb-models/control.schema.json)</sub>

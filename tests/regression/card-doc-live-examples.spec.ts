@@ -11,7 +11,8 @@ test.describe('card component documentation examples (#419)', () => {
     // pattern used to end at `</x-demo>` -- the closing tag of the element
     // form retired in 4.0.0, which a <div x-demo> never has -- so it matched
     // nothing and reported ten live demos as zero.
-    const demos = [...text.matchAll(/^<div x-demo\b[^>]*>([\s\S]*?)^<\/div>/gim)]
+    // #917: the host is <figure x-demo> now, closed by its own `</figure>`.
+    const demos = [...text.matchAll(/^<figure x-demo\b[^>]*>([\s\S]*?)^<\/figure>/gim)]
       .map((match) => match[1]);
     const fences = [...text.matchAll(/```(\w*)\r?\n([\s\S]*?)```/g)]
       .map((match) => ({ language: match[1], source: match[2] }));

@@ -4,6 +4,7 @@
   "title": "Notes",
   "description": "Slide-out notes drawer with multiple display modes",
   "schemaFor": "notes",
+  "kind": "decorator",
   "baseClass": "x-notes",
   "semanticElement": {
     "tagName": "aside"

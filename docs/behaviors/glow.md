@@ -4,21 +4,21 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button variant="primary" x-glow>Start trial</button>
-</div>
+</figure>
 
 A glowing heading: the letters glow, not the line box, and it holds steady.
 
-<div x-demo>
+<figure x-demo>
 <h3 x-glow target="text" color="#06b6d4">Night mode</h3>
-</div>
+</figure>
 
 A theme colour by name: `color="success"`, never the token behind it (`var(--success-color)`).
 
-<div x-demo>
+<figure x-demo>
 <button x-glow color="success">Saved</button>
-</div>
+</figure>
 
 The box glow pulses; a reader who prefers reduced motion gets the glow without the pulse.
 

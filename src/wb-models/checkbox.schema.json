@@ -4,6 +4,8 @@
   "title": "Checkbox",
   "description": "Checkbox input with label and custom styling",
   "schemaFor": "checkbox",
+  "kind": "element",
+  "element": "input[type=\"checkbox\"]",
   "baseClass": "x-checkbox",
   "semanticElement": {
     "tagName": "div",

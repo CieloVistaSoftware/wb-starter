@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-steps items="Cart,Shipping,Payment,Confirm" current="2"></div>
-</div>
+</figure>
 
 ## Attributes
 

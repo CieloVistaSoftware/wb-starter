@@ -4,6 +4,7 @@
   "title": "Truncate",
   "description": "x-truncate cuts text off after lines lines with an ellipsis; expandable adds a \"Show more\" control that reveals the rest.",
   "schemaFor": "truncate",
+  "kind": "decorator",
   "properties": {
     "lines": {
       "type": "string",

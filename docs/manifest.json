@@ -13,6 +13,12 @@
           "modified": "2026-10-01"
         },
         {
+          "file": "guides/migrate-an-existing-page.md",
+          "title": "How to Move an Existing Page onto WB Starter",
+          "description": "site-migrate: propose a WB Starter page for an existing page, with every change listed for review",
+          "modified": "2026-10-10"
+        },
+        {
           "file": "V3-GUIDE.md",
           "title": "wb-starter v3 — Complete Guide",
           "description": "How to use wb-starter and how it works internally",
@@ -1540,7 +1546,7 @@
           "file": "claude/SCHEMAS-GUIDE.md",
           "title": "Schemas Guide",
           "description": "Claude guide for working with schemas",
-          "modified": "2026-10-07"
+          "modified": "2026-10-10"
         },
         {
           "file": "claude/TIER3-REFERENCE.md",

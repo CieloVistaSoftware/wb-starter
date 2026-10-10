@@ -4,12 +4,12 @@ A plain `<figure>` gets image handling: clicking the image opens it in a lightbo
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <figure>
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge in fog">
   <figcaption>The 6am crossing, before the fog lifted.</figcaption>
 </figure>
-</div>
+</figure>
 
 No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 
@@ -19,30 +19,30 @@ No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 
 **Set the figure's `width`.** The image shrinks to fit and the caption wraps at the same width. A bare number is pixels; any CSS length works (`20rem`, `50%`). A figure never grows past its container.
 
-<div x-demo>
+<figure x-demo>
 <figure width="320">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge at sunset, in a 320 pixel figure">
   <figcaption>The whole figure, caption included, is 320 pixels wide.</figcaption>
 </figure>
-</div>
+</figure>
 
 **Set the image's shape on the `<img>`.** A figure has no height of its own: it is as tall as its image plus its caption. Give the image both `width` and `height`, or an `aspectRatio`, and it is cropped to that shape (see [Img](img.md#controlling-size)).
 
-<div x-demo>
+<figure x-demo>
 <figure width="240">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" width="240" height="240" alt="Suspension bridge at sunset, cropped square">
   <figcaption>Cropped to a 240 by 240 square.</figcaption>
 </figure>
-</div>
+</figure>
 
 **Make the whole figure a golden rectangle with `goldenRatio`.** The figure, image and caption together, is 1.618 times as wide as it is tall; the image takes the height the caption leaves and is cropped to it.
 
-<div x-demo>
+<figure x-demo>
 <figure width="320" goldenRatio>
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge at sunset, in a golden-rectangle figure">
   <figcaption>Image and caption together make the golden rectangle.</figcaption>
 </figure>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-themecontrol></div>
-</div>
+</figure>
 
 <sub>Schema: [`themecontrol.schema.json`](../../src/wb-models/themecontrol.schema.json)</sub>

@@ -4,6 +4,8 @@
   "title": "Dialog",
   "description": "Modal dialog using native HTML5 dialog element",
   "schemaFor": "dialog",
+  "kind": "element",
+  "element": "dialog",
   "baseClass": "x-dialog",
   "semanticElement": {
     "tagName": "dialog",

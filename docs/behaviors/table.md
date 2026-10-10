@@ -4,7 +4,7 @@ A plain `<table>` gets sortable column headers, and can be filled from attribute
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <table headers="Behavior,Kind,Variants" rows='[
   ["badge", "inline", "9"],
   ["button", "control", "8"],
@@ -12,13 +12,13 @@ A plain `<table>` gets sortable column headers, and can be filled from attribute
   ["tabs", "container", "3"],
   ["alert", "feedback", "4"]
 ]'></table>
-</div>
+</figure>
 
 No attribute needed on `<table>`. Don't add `x-table` to it (#746).
 
 On another element, write `x-table`:
 
-<div x-demo>
+<figure x-demo>
 <div x-table headers="Behavior,Kind,Variants" rows='[
   ["badge", "inline", "9"],
   ["button", "control", "8"],
@@ -26,7 +26,7 @@ On another element, write `x-table`:
   ["tabs", "container", "3"],
   ["alert", "feedback", "4"]
 ]'></div>
-</div>
+</figure>
 
 `<table x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

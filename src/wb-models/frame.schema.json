@@ -4,6 +4,7 @@
   "title": "Frame",
   "description": "x-frame holds its first child to an aspect ratio: it sets --x-frame-ratio from ratio (default 16/9) and makes the child fill the frame.",
   "schemaFor": "frame",
+  "kind": "decorator",
   "properties": {
     "ratio": {
       "type": "string",

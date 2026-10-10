@@ -4,6 +4,8 @@
   "title": "Img",
   "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspectRatio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
   "schemaFor": "img",
+  "kind": "element",
+  "element": "img",
   "properties": {
     "placeholder": {
       "type": "string",

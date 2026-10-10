@@ -4,22 +4,22 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-hero>
   <h1>Ship the markup, not the toolchain</h1>
   <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>
 </div>
-</div>
+</figure>
 
 ### Golden ratio
 
 `goldenRatio` shapes the band as a landscape golden rectangle, 1.618 times as wide as it is tall, in place of the usual 400px minimum height. The heading and lead text keep their sizes.
 
-<div x-demo>
+<figure x-demo>
 <div x-hero goldenRatio>
   <h1>Hello.</h1>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

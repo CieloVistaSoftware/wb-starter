@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <p x-truncate lines="2" expandable style="max-width:360px">
   Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through.
 </p>
-</div>
+</figure>
 
 ## Attributes
 

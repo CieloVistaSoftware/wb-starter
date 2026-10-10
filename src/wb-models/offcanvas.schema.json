@@ -4,6 +4,7 @@
   "title": "Offcanvas",
   "description": "Makes its host a trigger: a click slides a panel with a title and body in from the left or right edge over a backdrop, and a second click, the backdrop or the close button takes it away. It applies to any clickable element, so it names no host.",
   "schemaFor": "offcanvas",
+  "kind": "decorator",
   "properties": {
     "offcanvasTitle": {
       "type": "string",

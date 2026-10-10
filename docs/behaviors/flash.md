@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-flash>Click to flash</button>
-</div>
+</figure>
 
 <sub>Schema: [`flash.schema.json`](../../src/wb-models/flash.schema.json)</sub>

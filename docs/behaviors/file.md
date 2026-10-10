@@ -12,9 +12,9 @@ Apply `x-file` to a plain container (`<div>`/`<span>`), **not** to a real
 `<input type="file">`, and a real `<input>` is a void element that can't hold
 appended children (they're silently not rendered).
 
-<div x-demo>
+<figure x-demo>
 <div x-file></div>
-</div>
+</figure>
 
 ## Properties
 

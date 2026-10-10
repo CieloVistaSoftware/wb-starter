@@ -4,6 +4,7 @@
   "title": "Rainbow",
   "description": "x-rainbow paints the element's text with a moving rainbow gradient that cycles every duration.",
   "schemaFor": "rainbow",
+  "kind": "decorator",
   "properties": {
     "duration": {
       "type": "string",

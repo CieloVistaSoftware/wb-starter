@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-print></button>
-</div>
+</figure>
 
 ## Attributes
 

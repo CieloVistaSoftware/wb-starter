@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <input x-slider type="range" min="0" max="100" value="35">
-</div>
+</figure>
 
 <sub>Schema: [`slider.schema.json`](../../src/wb-models/slider.schema.json)</sub>

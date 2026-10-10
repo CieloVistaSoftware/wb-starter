@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-timeline items="Project kickoff,Design phase,Development,Testing,Launch"></div>
-</div>
+</figure>
 
 ## Attributes
 

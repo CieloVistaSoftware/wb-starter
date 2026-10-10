@@ -4,6 +4,7 @@
   "title": "Hero",
   "description": "Hero section behavior.",
   "schemaFor": "hero",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-hero",
     "supportLevel": "stable",

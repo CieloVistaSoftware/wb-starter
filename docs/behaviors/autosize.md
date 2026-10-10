@@ -2,8 +2,8 @@
 
 Automatically resizes a textarea to fit its content as the user types.
 
-<div x-demo>
+<figure x-demo>
 <textarea x-autosize placeholder="Type several lines — the box grows with them"></textarea>
-</div>
+</figure>
 
 - [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)

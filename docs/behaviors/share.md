@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-share shareTitle="wb-starter" shareUrl="https://example.com"></button>
-</div>
+</figure>
 
 ## Attributes
 

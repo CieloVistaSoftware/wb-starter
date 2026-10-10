@@ -4,6 +4,7 @@
   "title": "Sidebarlayout",
   "description": "Two-column layout: a sidebar beside a main area that grows to fill the remaining space.",
   "schemaFor": "sidebarlayout",
+  "kind": "decorator",
   "properties": {
     "side": {
       "type": "string",

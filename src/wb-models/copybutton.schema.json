@@ -4,6 +4,7 @@
   "title": "Copybutton",
   "description": "x-copybutton makes the element copy the text of another element when clicked: the one matched by copyTarget (or the selector given as the attribute value), or its own text when there is none.",
   "schemaFor": "copybutton",
+  "kind": "decorator",
   "properties": {
     "x-copybutton": {
       "type": "string",

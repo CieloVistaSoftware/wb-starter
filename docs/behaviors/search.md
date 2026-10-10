@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-search placeholder="Search with icon">
-</div>
+</figure>
 
 ## Attributes
 

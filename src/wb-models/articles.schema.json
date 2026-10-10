@@ -4,6 +4,7 @@
   "title": "Articles List",
   "description": "A wrapper behavior to display a list or grid of articles.",
   "schemaFor": "articles",
+  "kind": "decorator",
   "baseClass": "x-articles",
   "semanticElement": {
     "tagName": "section",

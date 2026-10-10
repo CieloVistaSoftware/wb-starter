@@ -1374,7 +1374,7 @@ Attributes:
 
 ---
 
-## `<div x-demo>`
+## `<figure x-demo>`
 
 **Tooltip Output:**
 ```text

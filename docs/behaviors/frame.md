@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-frame ratio="4/3" style="max-width:320px">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg/1280px-Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg" alt="Coastline from the air">
 </div>
-</div>
+</figure>
 
 ## Classes applied
 

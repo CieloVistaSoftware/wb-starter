@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-copy copy-text="npm run test:compliance">Copy the test command</button>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,6 +4,7 @@
   "title": "Collapse",
   "description": "Collapsible content area.",
   "schemaFor": "collapse",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-collapse",
     "supportLevel": "stable",

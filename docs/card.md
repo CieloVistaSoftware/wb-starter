@@ -22,14 +22,14 @@ There are 19 distinct card behaviors available. All share the `card` behavior bu
 
 To create a card that acts as a link, put the `x-cardlink` attribute on an `<article>`:
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardlink
   href="#"
   title="My Page"
   badge="NEW">
 </article>
-</div>
+</figure>
 
 Supported attributes:
 - `href` - Link destination (required)
@@ -68,7 +68,7 @@ When using `<article>` or `<section>`, the behavior will automatically enhance e
 ---
 
 ## Usage Example
-<div x-demo>
+<figure x-demo>
 <article
   variant="primary"
   hoverable
@@ -76,7 +76,7 @@ When using `<article>` or `<section>`, the behavior will automatically enhance e
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </article>
-</div>
+</figure>
 
 > **Developer Tip:** In VS Code, type `<article` to trigger IntelliSense and see available attributes.
 

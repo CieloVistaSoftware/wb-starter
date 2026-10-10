@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <span x-relativetime date="2025-01-01">Jan 1, 2025</span>
-</div>
+</figure>
 
 ## Attributes
 

@@ -1,5 +1,5 @@
 /**
- * Extract `<div x-demo>` blocks from HTML.
+ * Extract x-demo blocks (`<figure x-demo>`, `<div x-demo>`, ...) from HTML.
  *
  * WHY THIS EXISTS
  *
@@ -14,18 +14,21 @@
  * not error. It would just quietly return the wrong thing.
  *
  * So the scan counts depth instead. `<div` opens, `</div>` closes, and the
- * block ends when depth returns to zero.
+ * block ends when depth returns to zero. #917 moved the host to `<figure>`,
+ * where the same holds: a demo can hold a <figure> of its own.
  */
 
-/** Match a `<div ... x-demo ...>` opening tag, capturing its attributes. */
-const OPEN = /<div\b([^>]*\bx-demo\b[^>]*)>/gi;
-
-/** Any div open or close, for depth counting. */
-const DIV = /<div\b[^>]*>|<\/div\s*>/gi;
+/**
+ * Match a demo's opening tag on any host, capturing the tag and its attributes.
+ * #917: the standard host is `<figure x-demo>`; `<div x-demo>` and
+ * `<section x-demo>` are still valid hosts, so the scan pairs whichever tag
+ * opened the block.
+ */
+const OPEN = /<(div|figure|section|article|aside)\b([^>]*\bx-demo\b[^>]*)>/gi;
 
 /**
  * @param {string} html
- * @returns {Array<{ attrs: string, inner: string, start: number, end: number }>}
+ * @returns {Array<{ tag: string, attrs: string, inner: string, start: number, end: number }>}
  */
 export function extractDemoBlocks(html) {
   const blocks = [];
@@ -34,13 +37,16 @@ export function extractDemoBlocks(html) {
 
   while ((m = OPEN.exec(html))) {
     const innerStart = m.index + m[0].length;
+    const tag = m[1].toLowerCase();
+    // Opens and closes of the HOST's tag, for depth counting.
+    const SAME = new RegExp(`<${tag}\\b[^>]*>|<\\/${tag}\\s*>`, 'gi');
 
-    DIV.lastIndex = innerStart;
+    SAME.lastIndex = innerStart;
     let depth = 1;
     let innerEnd = -1;
     let d;
 
-    while ((d = DIV.exec(html))) {
+    while ((d = SAME.exec(html))) {
       // A self-closing <div/> is not valid HTML for a container, but if one
       // appears it must not change depth.
       if (d[0].startsWith('</')) {
@@ -53,13 +59,14 @@ export function extractDemoBlocks(html) {
     if (innerEnd < 0) break;  // unbalanced: stop rather than guess
 
     blocks.push({
-      attrs: m[1].trim(),
+      tag,
+      attrs: m[2].trim(),
       inner: html.slice(innerStart, innerEnd),
       start: m.index,
-      end: DIV.lastIndex,
+      end: SAME.lastIndex,
     });
 
-    OPEN.lastIndex = DIV.lastIndex;
+    OPEN.lastIndex = SAME.lastIndex;
   }
 
   return blocks;

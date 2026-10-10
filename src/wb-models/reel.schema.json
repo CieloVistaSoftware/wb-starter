@@ -4,6 +4,7 @@
   "title": "Reel",
   "description": "Horizontally scrolling row whose children snap into place as it scrolls.",
   "schemaFor": "reel",
+  "kind": "decorator",
   "properties": {
     "itemWidth": {
       "type": "string",
