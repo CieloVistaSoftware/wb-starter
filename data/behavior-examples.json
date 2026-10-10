@@ -1401,6 +1401,7 @@
     },
     "x-checkbox": {
       "source": "<div x-checkbox label=\"Run the full suite before pushing\" name=\"full-suite\"></div>",
+      "form": "attribute",
       "alternates": []
     },
     "x-switch": {

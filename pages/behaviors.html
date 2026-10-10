@@ -20,7 +20,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.493">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.495">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -672,31 +672,36 @@
             }
             allEntries.push({ label: attr, attr, behavior: beh, native: false, host, form: 'attribute' });
           });
-        // Re-label any entry whose curated example does not use its semantic
-        // host. Runs after the catalogue fetch resolves; entries without a
-        // curated example keep the host label, since the generated example
-        // uses the host by construction (#753).
+        // #835: whether a behavior has a SEMANTIC row is a fact about the
+        // behavior, and its schema now declares it: `kind: "element"` with
+        // `element: "<selector>"` for the native element it becomes (<article>
+        // -> card, input[type="password"]), `kind: "decorator"` for extra function laid on
+        // any element (x-ripple, x-tooltip). This used to be recovered by
+        // string-matching the curated example for `<` + host (#767's '\b' bug
+        // lived there), and the host is a SELECTOR for inputs --
+        // `input[type="password"]` -- which no markup contains, so the semantic
+        // row of x-password was dropped although its example is a plain
+        // <input type="password">.
+        //
+        // The one other reason to drop a semantic row is a fact about the
+        // EXAMPLE: a curated example declared `form: "attribute"` has no
+        // semantic markup to show (x-checkbox's is <div x-checkbox>; #761, and
+        // John's "why are there 2 x-checkbox groups with 10?"). Declared too,
+        // the same `form` field authored examples already carry -- never parsed.
+        //
+        // Runs once BOTH the schema index and the catalogue are in. Without the
+        // index nothing is known about kind, so nothing is dropped on its say-so.
         function relabelByExample() {
+          if (!schemaByName.size) return;
           allEntries.forEach((e) => {
-            if (!e.host) return;
-            const src = exampleCatalogue && exampleCatalogue[e.attr] && exampleCatalogue[e.attr].source;
-            if (!src) return;
-            // #767: this built the boundary as '\b' inside a STRING, which is
-            // the backspace character, not a word boundary. The pattern was
-            // `<audio<backspace>` and matched nothing, ever -- so every entry
-            // failed the "uses its host" test and was relabelled to its x-
-            // token. That is why Semantic listed x-audio, x-button, x-card
-            // instead of audio, button, article.
-            //
-            // A prefix test says the same thing with no escape to get wrong:
-            // in real markup the tag is followed by whitespace, '>' or '/'.
-            // Only the SEMANTIC row may be relabelled; the attribute row is
+            // Only the SEMANTIC row may be dropped; the attribute row is
             // supposed to read x-{behavior}.
-            if (e.form === 'attribute') return;
-            const at = src.indexOf('<' + e.host);
-            const after = at === -1 ? '' : src.charAt(at + e.host.length + 1);
-            const usesHost = at !== -1 && (after === '' || /[\s>/]/.test(after));
-            if (!usesHost) e.dropSemantic = true;
+            if (!e.host || e.form === 'attribute') return;
+            const sc = schemaByName.get(e.behavior);
+            const isElement = !!sc && sc.kind === 'element';
+            const curated = exampleCatalogue && exampleCatalogue[e.attr];
+            const attributeOnly = !!(curated && curated.form === 'attribute');
+            if (!isElement || attributeOnly) e.dropSemantic = true;
           });
           // The attribute row for the same behavior already says e.attr, so
           // relabelling the semantic row to it listed the behavior TWICE --
@@ -724,7 +729,7 @@
         // sections no longer have to stay on the page purely as a data source.
         const catalogueLoaded = fetch(siteRoot() + 'data/behavior-examples.json')
           .then((r) => (r.ok ? r.json() : null))
-          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = rootRelativeAssets(cat.examples); try { relabelByExample(); } catch { /* list still renders */ } } })
+          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = rootRelativeAssets(cat.examples); } })
           .catch(() => {});
 
         // #997: the catalogue also carries authored example ROWS, so the list
@@ -740,6 +745,9 @@
             }
           })
           .catch(() => {})
+          // #835: kind comes from the index and the form from the catalogue, so
+          // the semantic rows are settled once both have arrived.
+          .then(() => { try { relabelByExample(); } catch { /* list still renders */ } })
           .then(() => { markSeedDataReady(); })
           .then(() => {
             // Through applyFilter, not renderBrowseAll directly: the count is
