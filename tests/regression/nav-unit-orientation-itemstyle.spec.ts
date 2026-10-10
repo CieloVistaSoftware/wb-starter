@@ -30,8 +30,14 @@ import { test, expect, type Page } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
 import { wbIdle } from '../base';
 
-/** Each link's box and look, in document order. */
-const links = (page: Page, hostId: string, selector = 'a') => page.locator(`#${hostId}`).evaluate((host, sel) => {
+/**
+ * Each link's box and look, in document order. A pill link's background
+ * transitions to the accent (navbar.css: transition: background 0.15s), so it
+ * is read only once the host's running transitions have finished; read mid-fade
+ * on a slow runner, the colour is neither transparent nor the accent.
+ */
+const links = (page: Page, hostId: string, selector = 'a') => page.locator(`#${hostId}`).evaluate(async (host, sel) => {
+  await Promise.all(host.getAnimations({ subtree: true }).map((a) => a.finished.catch(() => undefined)));
   const probe = document.createElement('span');
   probe.style.color = 'var(--primary)';
   document.body.append(probe);
