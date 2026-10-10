@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.490",
+      "date": "2026-10-10",
+      "summary": "The live-examples audit no longer reports a slow-building demo as missing its grid. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1817\" target=\"_blank\" rel=\"noopener\">#1817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1834\" target=\"_blank\" rel=\"noopener\">#1834</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The x-demo audit waits for each demo to build, not for a fixed 5s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1817\" target=\"_blank\" rel=\"noopener\">#1817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1834\" target=\"_blank\" rel=\"noopener\">#1834</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/20059ac42c0587c62d75971475a109488b7fe153\" target=\"_blank\" rel=\"noopener\"><code>20059ac</code></a>",
+          "issues": [
+            1817,
+            1834
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/live-examples-wait-for-slow-demo-builds.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/live-examples-wait-for-slow-demo-builds.spec.ts</a> --project=regression. Before: frameworks.html at 6x CPU throttling reported &quot;[x-demo][0]: no .x-demo__grid was built at all&quot; 4 of 4 times. Now: every demo builds and the audit is clean, 5 of 5.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/20059ac42c0587c62d75971475a109488b7fe153\" target=\"_blank\" rel=\"noopener\"><code>20059ac</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.489",
       "date": "2026-10-10",
       "summary": "Test helper elementReady() no longer fails with a false &quot;Execution context was destroyed&quot; when a page is busy the moment an element is ready. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a>",
