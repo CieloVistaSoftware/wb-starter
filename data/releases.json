@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.486",
+      "date": "2026-10-10",
+      "summary": "Navs take orientation=&quot;vertical|horizontal&quot; and itemstyle=&quot;pill&quot;, on &lt;nav&gt;, x-nav and x-sidebar alike. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1826\" target=\"_blank\" rel=\"noopener\">#1826</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Nav unit takes orientation and itemstyle, declared in both schemas</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1826\" target=\"_blank\" rel=\"noopener\">#1826</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/af8b4ac744cee7fd78b52d74e6d241a77a4cd0b6\" target=\"_blank\" rel=\"noopener\"><code>af8b4ac</code></a>",
+          "issues": [
+            830,
+            1826
+          ]
+        }
+      ],
+      "seeIt": "Open any page with &lt;nav orientation=&quot;vertical&quot; itemstyle=&quot;pill&quot;&gt;&lt;a href=&quot;#a&quot; aria-current=&quot;page&quot;&gt;A&lt;/a&gt;&lt;a href=&quot;#b&quot;&gt;B&lt;/a&gt;&lt;/nav&gt;. Before: A and B sit on one line as plain links. Now: they stack and A is a rounded accent pill.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/af8b4ac744cee7fd78b52d74e6d241a77a4cd0b6\" target=\"_blank\" rel=\"noopener\"><code>af8b4ac</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.485",
       "date": "2026-10-10",
       "summary": "The live site showed v1.0.481 while a local server still showed an (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1823\" target=\"_blank\" rel=\"noopener\">PR 1823</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1822\" target=\"_blank\" rel=\"noopener\">#1822</a>",
