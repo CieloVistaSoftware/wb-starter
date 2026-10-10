@@ -36,7 +36,8 @@ test('it proposes the reviewed page and report for the sample page', () => {
   const before = sha(INPUT);
   const r = run([INPUT, '--out', 'out', '--write']);
   expect(r.status, r.stderr).toBe(0);
-  expect(r.stdout).toContain('wrote out/pages/riverbend-bakery.html');
+  // The CLI prints the OS's own separator (out\\pages\\... on Windows), which is right for its reader.
+  expect(r.stdout.replace(/\\/g, '/')).toContain('wrote out/pages/riverbend-bakery.html');
   expect(fs.readFileSync(path.join(work, 'out', 'pages', 'riverbend-bakery.html'), 'utf8')).toBe(fs.readFileSync(EXPECTED_PAGE, 'utf8'));
   expect(fs.readFileSync(path.join(work, 'out', 'riverbend-bakery.migration.md'), 'utf8')).toBe(fs.readFileSync(EXPECTED_REPORT, 'utf8'));
   expect(sha(INPUT), 'the input is never changed').toBe(before);
