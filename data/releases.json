@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.482",
+      "date": "2026-10-10",
+      "summary": "Src/api/setup.js carries SETUP_CSS, the stylesheet written into the (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1819\" target=\"_blank\" rel=\"noopener\">PR 1819</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The setup API&#39;s page styles size in rem, and the px gate holds 278</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/af9e7f34dfbf1be3c2e2d5b867cc3df0b08dbca7\" target=\"_blank\" rel=\"noopener\"><code>af9e7f3</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-px-units.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-px-units.mjs</a></code>. Before: <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/api/setup.js\" target=\"_blank\" rel=\"noopener\">src/api/setup.js</a> topped the list with 18 px sizes and the total was 296. Now: it is gone from the list and the total is 278.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/af28380b4d2090470952d1db085b9fd795e3e2bc\" target=\"_blank\" rel=\"noopener\"><code>af28380</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.481",
       "date": "2026-10-09",
       "summary": "&lt;div x-nav&gt; now builds the same navigation bar &lt;nav&gt; does; it was an unknown attribute. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/830\" target=\"_blank\" rel=\"noopener\">#830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1815\" target=\"_blank\" rel=\"noopener\">#1815</a>",
