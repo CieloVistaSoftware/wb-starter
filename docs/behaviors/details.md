@@ -4,21 +4,21 @@ A plain `<details>` gets the styled disclosure: the `summary` attribute supplies
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <details summary="Trail conditions" animated>
   <p>Mud on the north ridge after Tuesday's rain; the lower loop is dry.</p>
 </details>
-</div>
+</figure>
 
 No attribute needed on `<details>`. Don't add `x-details` to it (#746).
 
 On another element, write `x-details`:
 
-<div x-demo>
+<figure x-demo>
 <div x-details summary="Trail conditions" animated>
   <p>Mud on the north ridge after Tuesday's rain; the lower loop is dry.</p>
 </div>
-</div>
+</figure>
 
 `<details x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

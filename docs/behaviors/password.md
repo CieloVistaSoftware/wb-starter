@@ -4,9 +4,9 @@ A password `<input>` gets a show/hide button, and with `strength` a meter that r
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <input type="password" strength placeholder="Choose a password">
-</div>
+</figure>
 
 ## Attributes
 

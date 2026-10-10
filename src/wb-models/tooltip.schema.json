@@ -4,6 +4,7 @@
   "title": "Tooltip",
   "description": "Tooltip for displaying additional information on hover/focus",
   "schemaFor": "tooltip",
+  "kind": "decorator",
   "baseClass": "x-tooltip--trigger",
   "compliance": {
     "baseClass": "x-tooltip--trigger",

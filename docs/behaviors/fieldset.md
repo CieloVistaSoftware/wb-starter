@@ -12,13 +12,13 @@ Marks a `<fieldset>` as a group of related form controls by adding the
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Shipping details</legend>
   <input type="text" placeholder="Address line 1">
   <input type="text" placeholder="City">
 </fieldset>
-</div>
+</figure>
 
 The `<legend>` is the group's accessible name, so screen readers announce
 "Shipping details" when focus enters either input.
@@ -26,7 +26,7 @@ The `<legend>` is the group's accessible name, so screen readers announce
 If a group genuinely needs to open and close, wrap it in the platform's
 disclosure element instead of asking the fieldset to do it:
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>Advanced options</summary>
   <fieldset>
@@ -34,7 +34,7 @@ disclosure element instead of asking the fieldset to do it:
     <input type="text" placeholder="Coupon code">
   </fieldset>
 </details>
-</div>
+</figure>
 
 ## Properties
 

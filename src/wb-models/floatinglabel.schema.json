@@ -6,6 +6,7 @@
   "properties": {},
   "required": [],
   "schemaFor": "floatinglabel",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "input",
     "type": "text",

@@ -30,27 +30,27 @@ there's no `="true"`/`="false"` value to set.
 
 ### Default (click position)
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple>Click me</button>
-</div>
+</figure>
 
 ### Centered ripple
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple ripple-centered>Centered ripple</button>
-</div>
+</figure>
 
 ### Custom color and duration
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple ripple-color="rgba(99, 102, 241, 0.5)" ripple-duration="900">Slow indigo ripple</button>
-</div>
+</figure>
 
 ### On a plain `<div>`
 
-<div x-demo>
+<figure x-demo>
 <div x-ripple>A plain div with x-ripple</div>
-</div>
+</figure>
 
 ## CSS Classes
 

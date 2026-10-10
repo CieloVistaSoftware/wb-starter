@@ -14,12 +14,12 @@ The `range` behavior improves the `<input type="range">` slider by adding contex
 ### Basic Usage
 A plain `<input type="range">` gets this behavior automatically; there is no attribute to add. Writing `x-range` on it is redundant (#746).
 
-<div x-demo>
+<figure x-demo>
 <input
   type="range"
   min="0"
   max="100">
-</div>
+</figure>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
@@ -46,19 +46,19 @@ Write the attribute to switch it on and leave it out to switch it off:
 ### Example 1: Percentage Slider
 A slider showing the percentage value.
 
-<div x-demo>
+<figure x-demo>
 <input
   type="range"
   showValue
   valueSuffix="%"
   min="0"
   max="100">
-</div>
+</figure>
 
 ### Example 2: Price Range
 A slider with currency formatting and bounds.
 
-<div x-demo>
+<figure x-demo>
 <input
   type="range"
   showValue
@@ -66,7 +66,7 @@ A slider with currency formatting and bounds.
   valuePrefix="$"
   min="10"
   max="1000">
-</div>
+</figure>
 
 ## 4. Why It Works
 The behavior wraps the input in a container and injects an `<output>` element for the value and `<span>` elements for the labels. It attaches an `input` event listener to the range slider to update the text content of the `<output>` element in real-time.

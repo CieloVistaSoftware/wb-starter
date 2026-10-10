@@ -4,6 +4,7 @@
   "title": "Globe",
   "description": "3D Globe visualization.",
   "schemaFor": "globe",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-globe",
     "supportLevel": "stable",

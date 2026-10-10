@@ -668,38 +668,70 @@ export async function pointerTo(page: Page, locator: Locator): Promise<void> {
  * actually care about after this resolves.
  */
 export async function elementReady(locator: Locator, timeoutMs = 15000): Promise<void> {
-  await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
-  await locator.first().evaluate(
-    (el, ms) => new Promise<void>((resolve, reject) => {
-      // The runtime's own wait when the page has one (#1516): it reads the
-      // readiness WB keeps, not the x-ready attribute, which exists only as a
-      // bridge under automation. The attribute watch below is for pages
-      // without WB.
-      const WB = (window as any).WB;
-      if (WB && typeof WB.whenReady === 'function') {
-        WB.whenReady(el, { timeout: ms }).then(() => resolve(), (e: Error) => reject(new Error(`elementReady: ${e.message}`)));
-        return;
-      }
-      if (el.hasAttribute('x-ready')) return resolve();
-      const timer = setTimeout(() => {
-        obs.disconnect();
-        // Say which element and what it was still waiting for — "timed out" on
-        // its own has cost enough time in this suite already.
-        reject(new Error(
-          `elementReady: <${el.tagName.toLowerCase()}${el.id ? ` id="${el.id}"` : ''}> ` +
-          `never became x-ready within ${ms}ms. On the lazy runtime an element ` +
-          `below the fold is not injected until it intersects — scroll to it first.`
-        ));
-      }, ms);
-      const obs = new MutationObserver(() => {
-        if (el.hasAttribute('x-ready')) { clearTimeout(timer); obs.disconnect(); resolve(); }
-      });
-      obs.observe(el, { attributes: true, attributeFilter: ['x-ready'] });
-      // It may have been stamped between the check above and observe() starting.
-      if (el.hasAttribute('x-ready')) { clearTimeout(timer); obs.disconnect(); resolve(); }
-    }),
-    timeoutMs
-  );
+  await waitForElementPredicate(locator, timeoutMs, 'elementReady', false,
+    `never became x-ready within ${timeoutMs}ms. On the lazy runtime an element ` +
+    `below the fold is not injected until it intersects — scroll to it first.`);
+}
+
+/**
+ * Wait, frame by frame, until `locator`'s first element is built (WB.isReady()
+ * when the page has WB (#1516), the x-ready attribute otherwise), scrolling it
+ * to the centre each frame first when `keepInView` is set.
+ *
+ * WHY waitForFunction AND NOT AN AWAITED evaluate (#1818). Both helpers used to
+ * be `el.evaluate(() => new Promise(...))`. The browser's inspector holds the
+ * promise it is awaiting only WEAKLY, and the promise Playwright hands it for
+ * a by-value evaluate is an async wrapper that nothing else references once it
+ * has fulfilled. Between that fulfilment and the inspector's own then-callback
+ * there are a few microtask hops; if the page is busy allocating in microtasks
+ * right then -- which is exactly what a page does when the element we waited
+ * for has just finished building -- a scavenge collects the wrapper and the
+ * evaluate fails with "Promise was collected", which Playwright reports as
+ * "Execution context was destroyed, most likely because of a navigation" (no
+ * navigation happened). Measured: 11 of 20 such evaluates failed on a blank
+ * page that churns microtasks after resolving; the nightly of 2026-10-10 lost
+ * stagelight-spotlight-stays-in-its-demo-box on the playground to it, 10 ms
+ * after the element became ready.
+ *
+ * waitForFunction keeps the promise it awaits on a live handle until the
+ * driver has the answer, so nothing can collect it. Each poll is a synchronous
+ * read of state that persists (the WeakSet behind WB.isReady, or the
+ * attribute), so polling misses nothing an event would have caught.
+ */
+async function waitForElementPredicate(
+  locator: Locator, timeoutMs: number, who: string, keepInView: boolean, timeoutText: string,
+): Promise<void> {
+  const first = locator.first();
+  await first.waitFor({ state: 'attached', timeout: timeoutMs });
+  const handle = await first.elementHandle({ timeout: timeoutMs });
+  if (!handle) throw new Error(`${who}: the element detached before it could be watched`);
+  try {
+    const frame = await handle.ownerFrame();
+    if (!frame) throw new Error(`${who}: the element is in no frame`);
+    await frame.waitForFunction(
+      ([node, scroll]) => {
+        const WB = (window as any).WB;
+        const built = WB && typeof WB.isReady === 'function' ? WB.isReady(node) : node.hasAttribute('x-ready');
+        if (built) return true;
+        // scrollIntoView() rather than safeScrollIntoView(): an unbuilt host can
+        // legitimately have no size yet -- building it is what this waits for.
+        if (scroll) node.scrollIntoView({ block: 'center' });
+        return false;
+      },
+      [handle, keepInView] as const,
+      { polling: 'raf', timeout: timeoutMs },
+    );
+  } catch (err) {
+    if ((err as Error)?.name !== 'TimeoutError') throw err;
+    // Say which element and what it was still waiting for — "timed out" on
+    // its own has cost enough time in this suite already.
+    const desc = await handle
+      .evaluate((n: Element) => `<${n.tagName.toLowerCase()}${n.id ? ` id="${n.id}"` : ''}>`)
+      .catch(() => '<element>');
+    throw new Error(`${who}: ${desc} ${timeoutText}`);
+  } finally {
+    await handle.dispose().catch(() => {});
+  }
 }
 
 /**
@@ -729,24 +761,8 @@ export async function elementReady(locator: Locator, timeoutMs = 15000): Promise
  * every spec that walks that page.
  */
 export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<void> {
-  const el = locator.first();
-  await el.waitFor({ state: 'attached', timeout: timeoutMs });
-  await el.evaluate(async (node: Element, ms: number) => {
-    const end = performance.now() + ms;
-    // WB.isReady() when the page has WB (#1516); the attribute otherwise.
-    const WB = (window as any).WB;
-    const built = () => (WB && typeof WB.isReady === 'function' ? WB.isReady(node) : node.hasAttribute('x-ready'));
-    while (!built()) {
-      if (performance.now() > end) {
-        throw new Error(
-          `buildInView: <${node.tagName.toLowerCase()}${node.id ? ` id="${node.id}"` : ''}> ` +
-          `never became x-ready within ${ms}ms of being kept in view.`
-        );
-      }
-      node.scrollIntoView({ block: 'center' });
-      await new Promise<void>((r) => requestAnimationFrame(() => r()));
-    }
-  }, timeoutMs);
+  await waitForElementPredicate(locator, timeoutMs, 'buildInView', true,
+    `never became x-ready within ${timeoutMs}ms of being kept in view.`);
 }
 
 /**

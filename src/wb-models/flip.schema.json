@@ -4,6 +4,7 @@
   "title": "Flip",
   "description": "On click, plays the flip animation for 0.6s.",
   "schemaFor": "flip",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

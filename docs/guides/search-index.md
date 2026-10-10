@@ -161,12 +161,12 @@ const results = search('card behavior');
 fires `wb:search` with the query as you type, and your handler runs `search()`
 above against `/data/search.json`:
 
-<div x-demo>
+<figure x-demo>
 <div
   x-searchfield
   placeholder="Search docs...">
 </div>
-</div>
+</figure>
 
 ```javascript
 document.addEventListener('wb:search', (e) => {

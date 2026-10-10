@@ -4,6 +4,8 @@
   "title": "Header",
   "description": "Page header with logo, title, and optional navigation",
   "schemaFor": "header",
+  "kind": "element",
+  "element": "header",
   "baseClass": "x-header",
   "semanticElement": {
     "tagName": "header",

@@ -4,6 +4,7 @@
   "title": "List from items",
   "description": "Fills a <ul> or <ol> with one <li> per entry of its items attribute.",
   "schemaFor": "list",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "ul"
   },

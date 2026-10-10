@@ -4,15 +4,15 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-switch label="Publish to staging on merge" name="auto-deploy" checked></div>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | text | — | Switch label |
+| `label` | text | — | Switch label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `checked` | `boolean` | `false` | On/off state |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `name` | text | — | Form field name |

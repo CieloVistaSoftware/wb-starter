@@ -4,6 +4,7 @@
   "title": "Draggable",
   "description": "Make an element draggable.",
   "schemaFor": "draggable",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-draggable",
     "supportLevel": "stable",

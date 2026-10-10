@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-sticky offset="0" stuckClass="is-stuck">
   Sticks to the top of its scroll container once you pass it.
 </div>
-</div>
+</figure>
 
 ## Attributes
 

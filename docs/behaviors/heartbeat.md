@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-heartbeat>♥ Like</button>
-</div>
+</figure>
 
 <sub>Schema: [`heartbeat.schema.json`](../../src/wb-models/heartbeat.schema.json)</sub>

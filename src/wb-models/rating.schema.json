@@ -4,6 +4,7 @@
   "title": "Rating",
   "description": "Star rating behavior for displaying or collecting ratings",
   "schemaFor": "rating",
+  "kind": "decorator",
   "baseClass": "x-rating",
   "semanticElement": {
     "tagName": "div",

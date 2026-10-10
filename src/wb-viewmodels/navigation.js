@@ -1,5 +1,6 @@
 import { readFlag, readAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRulesIn } from '../core/dynamic-style.js';
+import { authorText, hasAuthorContent } from '../core/author-content.js';
 /**
  * Navigation Behaviors
  * -----------------------------------------------------------------------------
@@ -783,7 +784,8 @@ export function backtotop(element, options = {}) {
 export function link(element, options = {}) {
   const config = {
     href: options.href || element.getAttribute('href') || element.getAttribute('href') || '#',
-    text: options.text || element.getAttribute('text') || element.textContent || 'Link',
+    // #417: the text between the tags wins over `text`, the fallback.
+    text: options.text || authorText(element) || element.getAttribute('text') || 'Link',
     offset: parseInt(options.offset || element.getAttribute('offset') || '0'),
     ...options
   };
@@ -804,7 +806,7 @@ export function link(element, options = {}) {
     element.setAttribute('href', config.href);
   }
   
-  if (!element.textContent.trim() || element.textContent === 'Link') {
+  if (!hasAuthorContent(element)) {
     element.textContent = config.text;
   }
 

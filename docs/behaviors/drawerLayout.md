@@ -4,7 +4,7 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <aside x-drawer-layout position="left" width="220px" minWidth="64px">
   <nav>
     <a href="#">Overview</a>
@@ -12,7 +12,7 @@
     <a href="#">Settings</a>
   </nav>
 </aside>
-</div>
+</figure>
 
 ## Attributes
 

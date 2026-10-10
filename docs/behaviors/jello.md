@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-jello>Click for jello</button>
-</div>
+</figure>
 
 <sub>Schema: [`jello.schema.json`](../../src/wb-models/jello.schema.json)</sub>

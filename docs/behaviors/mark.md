@@ -4,9 +4,9 @@ A plain `<mark>` highlights text; `variant` picks a success, warning, danger or 
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <p>Search matched <mark>light DOM</mark> in 12 documents; <mark variant="danger">3</mark> are out of date.</p>
-</div>
+</figure>
 
 No attribute needed on `<mark>`. Don't add `x-mark` to it (#746).
 

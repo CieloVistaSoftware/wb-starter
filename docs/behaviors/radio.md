@@ -15,16 +15,16 @@ The `radio` behavior modernizes the `<input type="radio">` element. Like the che
 ### Basic Usage
 A plain `<input type="radio">` gets this behavior automatically; there is no attribute to add. Writing `x-radio` on it is redundant (#746).
 
-<div x-demo>
+<figure x-demo>
 <input
   type="radio"
   name="option">
-</div>
+</figure>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `label` | String | `''` | Text label to display. |
+| `label` | String | `''` | Text label to display. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `variant` | String | `default` | Color variant. |
 | `size` | String | `md` | Size: `sm`, `md`, `lg`. |
 
@@ -33,7 +33,7 @@ A plain `<input type="radio">` gets this behavior automatically; there is no att
 ### Example 1: Radio Group
 A standard group of options.
 
-<div x-demo>
+<figure x-demo>
 <input
   type="radio"
   name="plan"
@@ -44,18 +44,18 @@ A standard group of options.
   name="plan"
   label="Pro Plan"
   value="pro">
-</div>
+</figure>
 
 ### Example 2: Large Selection
 Larger targets for touch devices.
 
-<div x-demo>
+<figure x-demo>
 <input
   type="radio"
   name="size"
   size="lg"
   label="Extra Large">
-</div>
+</figure>
 
 ## 4. Why It Works
 Similar to the checkbox, it checks for a parent `<label>`. If missing, it creates one to wrap the input and the text. This ensures that clicking the text label selects the radio button. The custom styling is applied via CSS classes that override the default browser appearance using `appearance: none` (or similar techniques in the CSS).

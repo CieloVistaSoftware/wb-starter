@@ -4,6 +4,7 @@
   "title": "Scroll button",
   "description": "A button or link that scrolls the page to an element, the top or the bottom.",
   "schemaFor": "scroll",
+  "kind": "decorator",
   "semanticElement": {
     "tagName": "button"
   },

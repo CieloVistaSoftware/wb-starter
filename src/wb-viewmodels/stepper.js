@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { authorText } from '../core/author-content.js';
 import { moveKeepingFocus } from '../core/keep-focus.js';
 // Standalone stepper behavior extracted from enhancements.js
 //
@@ -13,12 +14,17 @@ export function stepper(element, options = {}) {
     const n = parseFloat(v);
     return Number.isFinite(n) ? n : d;
   };
+  const authoredRaw = isInput ? '' : authorText(element);
+  const authoredNumber = Number.isFinite(parseFloat(authoredRaw)) ? authoredRaw : null;
   const config = {
     min: num(options.min ?? element.getAttribute('min') ?? readAttr(element, 'min'), -Infinity),
     max: num(options.max ?? element.getAttribute('max') ?? readAttr(element, 'max'), Infinity),
     step: num(options.step ?? element.getAttribute('step') ?? readAttr(element, 'step'), 1),
+    // #417: <div x-stepper>5</div> -- a number between the tags is the value
+    // and wins over `value`; it used to be wiped unread. (An <input> host has
+    // no content; its value is its own.)
     value: num(
-      options.value ?? element.getAttribute('value') ?? readAttr(element, 'value') ?? (isInput ? element.value : '0'),
+      options.value ?? (authoredNumber ?? element.getAttribute('value') ?? readAttr(element, 'value') ?? (isInput ? element.value : '0')),
       0
     ),
     ...options,

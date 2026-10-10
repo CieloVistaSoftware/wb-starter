@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardstats value="1,284" label="Builds this month" trend="up" trendValue="12%"></article>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-stepper value="5" min="0" max="10"></div>
-</div>
+</figure>
 
 ## Attributes
 

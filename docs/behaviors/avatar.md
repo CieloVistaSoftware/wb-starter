@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-avatar name="Ada Lovelace" size="lg" status="online"></div>
 <div x-avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ada_Lovelace_portrait.jpg/1280px-Ada_Lovelace_portrait.jpg" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
-</div>
+</figure>
 
 ## Attributes
 
@@ -15,7 +15,7 @@
 | --- | --- | --- | --- |
 | `src` | URL | `#` | Image source URL |
 | `alt` | text | — | Alt text for image |
-| `initials` | up to 2 characters | — | Fallback initials (2 chars) |
+| `initials` | up to 2 characters | — | Fallback initials (2 chars). Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `name` | text | — | Full name (generates initials if not provided) |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` |  |
 | `shape` | `circle` · `square` · `rounded` | `circle` |  |

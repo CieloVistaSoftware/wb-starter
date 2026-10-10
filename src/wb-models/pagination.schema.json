@@ -4,6 +4,7 @@
   "title": "Pagination",
   "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and perPage (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
   "schemaFor": "pagination",
+  "kind": "decorator",
   "properties": {
     "total": {
       "type": "string",

@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-carddraggable title="Drag me" constrain axis="both">Pick this card up and move it — the position sticks.</article>
-</div>
+</figure>
 
 ## Attributes
 

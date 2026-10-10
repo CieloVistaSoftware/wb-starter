@@ -4,6 +4,7 @@
   "title": "Shake",
   "description": "On click, plays the shake animation for 0.5s.",
   "schemaFor": "shake",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

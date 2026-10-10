@@ -51,8 +51,7 @@ function getAllJsSource(dir = JS_DIR) {
 function extractFunction(source, funcName) {
   // Handle reserved words mapping
   const nameMap = {
-    'switch': 'switchInput',
-    'behaviors-showcase': 'behaviorsShowcase'
+    'switch': 'switchInput'
   };
   const actualName = nameMap[funcName] || funcName;
 

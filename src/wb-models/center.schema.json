@@ -4,6 +4,7 @@
   "title": "Center",
   "description": "Centres the element horizontally, or with flexbox centres its children.",
   "schemaFor": "center",
+  "kind": "decorator",
   "properties": {
     "maxWidth": {
       "type": "string",

@@ -4,7 +4,7 @@ A plain `<dialog>` gets a styled header with its first heading as the title, a c
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button onclick="document.getElementById('delete-branch').showModal()">
   Open the dialog
 </button>
@@ -12,15 +12,15 @@ A plain `<dialog>` gets a styled header with its first heading as the title, a c
   <h2>Delete branch?</h2>
   <p>fix/706-dropdown will be removed. This cannot be undone.</p>
 </dialog>
-</div>
+</figure>
 
 No attribute needed on `<dialog>`. Don't add `x-dialog` to it (#746).
 
 On another element, write `x-dialog`:
 
-<div x-demo>
+<figure x-demo>
 <button x-dialog modalTitle="Delete branch?" modalContent="fix/706-dropdown will be removed. This cannot be undone.">Delete branch…</button>
-</div>
+</figure>
 
 `<dialog x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-tabs activeTab="0" variant="underline">
   <section title="Overview">Composition over inheritance, in light DOM.</section>
   <section title="Attributes">Every attribute is kebab-case (§31).</section>
   <section title="Events">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

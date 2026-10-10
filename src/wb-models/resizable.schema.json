@@ -4,6 +4,7 @@
   "title": "Resizable",
   "description": "Make an element resizable.",
   "schemaFor": "resizable",
+  "kind": "decorator",
   "compliance": {
     "baseClass": "x-resizable",
     "supportLevel": "stable",

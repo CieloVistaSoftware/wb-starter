@@ -4,6 +4,7 @@
   "title": "Icon",
   "description": "Pairs an inline SVG icon with adjacent text in an inline-flex row and sizes the icon to the text.",
   "schemaFor": "icon",
+  "kind": "decorator",
   "properties": {
     "size": {
       "type": "string",

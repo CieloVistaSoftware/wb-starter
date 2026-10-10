@@ -92,7 +92,9 @@ the showcase's copy anchor), took it to 28. Batch 6, the single-dash
 compounds (the cardfile, cardhorizontal and cardimage stems, the effect layers,
 the drawer's push target, the notes picker, the confirm and prompt dialog, the
 scroll lock, the media fallback message, the glass badge and the toast
-container), took it to 6. The count may only go down,
+container), took it to 6. The final batch took it to 0: the fix card's classes
+(below), the animation classes effects.js applies, and two functions nothing
+could reach (behavior.js and behaviors-showcase.js), deleted. The count may only go down,
 and a renamed class is retired: no source, stylesheet, test, doc, page, demo or
 data file may use the old name again.
 
@@ -144,6 +146,18 @@ each lock page scroll with their own `x-{behavior}--scroll-lock` on `<body>`.
 author applies drawerLayout; only the class the behavior adds changed, to
 `x-drawerlayout`. Where a retired class name is also a live attribute, the gate
 counts it only where it is used as a class.
+
+**A registered name with a hyphen or capitals uses its function name
+lowercased.** `{behavior}` is one lowercase word, so a behavior registered as
+`fix-card` or `drawer-layout` names its classes after its function, lowercased:
+fixCard() adds `x-fixcard`, `x-fixcard__main` and `x-fixcard__scroll-container`,
+and drawerLayout() adds `x-drawerlayout`. The attribute and the tag keep the
+registered name: `<div x-fix-card>` is unchanged.
+
+**A class is not a keyframe.** The animation behaviors put their own name on the
+element, `x-fadein` or `x-zoomin`, and a slide's direction is a modifier,
+`x-slidein x-slidein--left`. The @keyframes they play keep their kebab-case
+names (`x-fade-in`, `x-slide-in-left`).
 
 ---
 

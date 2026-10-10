@@ -4,17 +4,17 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <span x-badge label="Beta" variant="warning" pill></span>
 <span x-badge label="3 failing" variant="error"></span>
 <span x-badge label="Passed" variant="success" outline></span>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | text | — | Badge text content |
+| `label` | text | — | Badge text content. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `variant` | `default` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `glass` · `gradient` | `default` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` | `md` | Badge size |
 | `pill` | `boolean` | `false` | Pill shape with full border radius |

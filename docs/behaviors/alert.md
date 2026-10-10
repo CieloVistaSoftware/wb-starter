@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-alert variant="warning" title="Staging is read-only" message="Deploys are paused until the 14:00 migration finishes." dismissible></div>
-</div>
+</figure>
 
 ## Attributes
 
@@ -14,7 +14,7 @@
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Alert severity/style variant |
 | `title` | text | — | Alert title (optional heading) |
-| `message` | text | — | Alert message content |
+| `message` | text | — | Alert message content. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `icon` | emoji or icon name | — | Icon (emoji or icon name) |
 | `dismissible` | `boolean` | `false` | Show close button to dismiss alert |
 

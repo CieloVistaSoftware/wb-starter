@@ -1,4 +1,5 @@
 import { readAttr, readFlag } from '../../core/read-attr.js';
+import { authorText } from '../../core/author-content.js';
 import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 import { themeColor } from '../../core/theme-color.js';
 /**
@@ -24,7 +25,10 @@ export function rating(element, options = {}) {
   // showcase markup `<span x-rating value="3" icon="❤️">` was ignored — stars never
   // filled on first paint and the custom icon was dropped. (#177)
   const attr = (name) => element.getAttribute(name);
-  const authoredValue = (element._wbOriginalContent || element.textContent || '').trim();
+  // #417: the text between the tags is the value and wins over `value` --
+  // when it is a number (anything else is not a rating).
+  const authoredRaw = authorText(element);
+  const authoredValue = Number.isFinite(parseFloat(authoredRaw)) ? authoredRaw : '';
   // Declared in rating.schema.json / docs/behaviors/rating.md and read by
   // nothing until now: `half` (allow x.5 values) and `disabled` (no
   // interaction, dimmed, aria-disabled). Read first because `half` decides
@@ -37,7 +41,7 @@ export function rating(element, options = {}) {
   };
   const config = {
     max: parseInt(options.max || attr('max') || readAttr(element, 'max') || '5', 10),
-    value: parseValue(options.value || attr('value') || readAttr(element, 'value') || authoredValue || '0'),
+    value: parseValue(options.value || authoredValue || attr('value') || readAttr(element, 'value') || '0'),
     half,
     disabled,
     readonly: options.readonly ?? (element.hasAttribute('readonly') || readAttr(element, 'readonly') === 'true'),

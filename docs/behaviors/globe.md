@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-globe>No globe is drawn here: this div only gains the x-globe class.</div>
-</div>
+</figure>
 
 <sub>Schema: [`globe.schema.json`](../../src/wb-models/globe.schema.json)</sub>

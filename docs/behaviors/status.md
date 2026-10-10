@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <span x-status variant="red"></span> <span x-status variant="yellow"></span> <span x-status variant="green"></span>
 <span x-status variant="success">All checks passed</span>
-</div>
+</figure>
 
 ## Attributes
 

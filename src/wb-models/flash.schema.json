@@ -4,6 +4,7 @@
   "title": "Flash",
   "description": "On click, plays the flash animation for 0.75s.",
   "schemaFor": "flash",
+  "kind": "decorator",
   "properties": {},
   "$view": [],
   "$methods": {},

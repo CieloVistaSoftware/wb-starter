@@ -3,6 +3,7 @@
   "title": "WB Behavior Schema",
   "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
   "schemaFor": "behavior",
+  "kind": "decorator",
   "schemaType": "definition",
   "version": "3.0.0",
   "definitions": {
@@ -897,9 +898,6 @@
     "required": [
       "type"
     ]
-  },
-  "compliance": {
-    "baseClass": "x-behavior"
   },
   "properties": {},
   "test": {

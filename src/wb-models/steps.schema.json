@@ -4,6 +4,7 @@
   "title": "Steps",
   "description": "x-steps draws a progress indicator for a multi-step process from the comma-separated items, marking steps before current as done and current itself as active.",
   "schemaFor": "steps",
+  "kind": "decorator",
   "properties": {
     "items": {
       "type": "string",

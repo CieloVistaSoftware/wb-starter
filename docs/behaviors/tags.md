@@ -12,9 +12,9 @@ Apply `x-tags` directly to a real `<input>` — the behavior wraps it in a
 `.x-tags` container and adds the tag list as a sibling (an `<input>` is a
 void element and can't hold children, so nothing is ever appended inside it).
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-tags placeholder="Type a skill and press Enter…">
-</div>
+</figure>
 
 Click any tag to remove it.
 

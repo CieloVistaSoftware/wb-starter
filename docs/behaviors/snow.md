@@ -4,16 +4,16 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-snow>Let it snow</button>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | `30` | Number of snowflakes |
-| `label` | text | `Let it Snow!` | Trigger button label |
+| `label` | text | `Let it Snow!` | Trigger button label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `showButton` | `boolean` | `true` | Show trigger button |
 | `repeat` | `boolean` | `true` | Loop animation |
 | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay |

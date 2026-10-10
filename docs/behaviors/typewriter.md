@@ -4,16 +4,16 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <p x-typewriter speed="45">Zero build. Real behaviors. Light DOM only.</p>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `speed` | milliseconds | `50` | Milliseconds between characters. Defaults to `50` — lower is faster. |
-| `text` | text | — | Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup. |
+| `text` | text | — | Text to type out, used when the element has no text of its own. The text between the tags wins over `text` when both are given (#417), so it can be left off when the content is already in the markup. |
 | `cursor` | `boolean` | `true` | Show the blinking caret. `cursor="false"` turns it off; it is a caret, not a character. |
 
 <sub>Schema: [`typewriter.schema.json`](../../src/wb-models/typewriter.schema.json)</sub>

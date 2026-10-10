@@ -1004,6 +1004,12 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // textContent was always empty by the time it ran. Authored content was
   // silently replaced on every <div x-confetti>.
   'x-confetti',
+  // #417: x-fireworks and x-snow are the same shape as x-confetti (#655): the
+  // behavior builds its own trigger face, labelled by the author's text or
+  // else `label`. The schema's $view wiped that text first and built a
+  // `{{label}}` button the behavior then took for author content, so under
+  // wb-lazy <div x-fireworks>Celebrate</div> showed "Fireworks!".
+  'x-fireworks', 'x-snow',
   // #656: stagelight.schema.json's $view builds source/beam/spot/housing/label
   // -- the SAME elements stagelight() builds unconditionally for every variant.
   // That is precisely the schema-vs-behavior race this list exists for

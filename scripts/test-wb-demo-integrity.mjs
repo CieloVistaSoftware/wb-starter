@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * WB Framework - <div x-demo> Markup Integrity Check
+ * WB Framework - x-demo Markup Integrity Check
  * Runs as: npm run test:x-demo-integrity
  * Part of: npm test (compliance checks)
  *
  * FAST-FAIL: Exits with code 1 if any pages/*.html or demos/*.html file has
- * unbalanced <div x-demo>/</div> tags or a <div x-demo> with no content.
+ * an unbalanced x-demo host (<figure x-demo>...</figure>, or the older
+ * <div x-demo>...</div>) or an x-demo with no content.
  *
  * Written after a real bug (#behaviors.html "Special Input Types" and
  * "Masked Inputs"): a stray self-closed <div x-demo></div> rendered as a
@@ -182,11 +183,12 @@ export function scanHtml(rawHtml) {
   const html = stripComments(rawHtml);
   const issues = [];
 
-  const openCount = (html.match(/<div\b[^>]*\bx-demo\b[^>]*>/gi) || []).length;
+  // #917: any host -- <figure x-demo> is the standard one, <div x-demo> the old.
+  const openCount = (html.match(/<(?:div|figure|section|article|aside)\b[^>]*\bx-demo\b[^>]*>/gi) || []).length;
   const blocks = extractDemoBlocks(html);
   if (blocks.length !== openCount) {
     issues.push(
-      `unbalanced <div x-demo> blocks: ${openCount} opened, ${blocks.length} closed cleanly`,
+      `unbalanced x-demo blocks: ${openCount} opened, ${blocks.length} closed cleanly`,
     );
   }
 
@@ -198,23 +200,27 @@ export function scanHtml(rawHtml) {
   // those across the whole document. Script/style bodies are skipped: markup
   // quoted inside JS strings is not part of the document's own structure.
   const structure = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '');
-  let depth = 0;
-  let orphans = 0;
-  for (const tag of structure.match(/<div\b[^>]*>|<\/div\s*>/gi) || []) {
-    if (tag.startsWith('</')) {
-      if (depth === 0) orphans++;
-      else depth--;
-    } else if (!tag.endsWith('/>')) {
-      depth++;
+  // Per host tag: a stray </figure> re-parents what follows it just as a stray
+  // </div> does.
+  for (const name of new Set(['div', 'figure', ...blocks.map((b) => b.tag)])) {
+    let depth = 0;
+    let orphans = 0;
+    for (const tag of structure.match(new RegExp(`<${name}\\b[^>]*>|<\\/${name}\\s*>`, 'gi')) || []) {
+      if (tag.startsWith('</')) {
+        if (depth === 0) orphans++;
+        else depth--;
+      } else if (!tag.endsWith('/>')) {
+        depth++;
+      }
     }
-  }
-  if (orphans > 0) {
-    issues.push(`unbalanced markup: ${orphans} stray </div> with no matching open <div>`);
+    if (orphans > 0) {
+      issues.push(`unbalanced markup: ${orphans} stray </${name}> with no matching open <${name}>`);
+    }
   }
 
   const empty = blocks.filter((b) => b.inner.trim() === '');
   if (empty.length > 0) {
-    issues.push(`${empty.length} empty <div x-demo></div> block(s) — renders as a blank box`);
+    issues.push(`${empty.length} empty x-demo block(s) — renders as a blank box`);
   }
 
   return issues;
@@ -227,7 +233,7 @@ function scanFile(filePath) {
 }
 
 function main() {
-  console.log('\n🔍 WB Framework - <div x-demo> Markup Integrity Check\n');
+  console.log('\n🔍 WB Framework - x-demo Markup Integrity Check\n');
 
   const files = SCAN_DIRS.flatMap((dir) => getAllHtmlFiles(path.join(PROJECT_DIR, dir)));
   console.log(`📊 Scanning ${files.length} page/demo HTML files...\n`);
@@ -235,16 +241,16 @@ function main() {
   const results = files.map(scanFile).filter((r) => r.issues.length > 0);
 
   if (results.length === 0) {
-    console.log('✅ All <div x-demo> tags are balanced and non-empty!\n');
+    console.log('✅ All x-demo hosts are balanced and non-empty!\n');
     process.exit(0);
   }
 
-  console.error(`❌ Found <div x-demo> markup issues in ${results.length} file(s):\n`);
+  console.error(`❌ Found x-demo markup issues in ${results.length} file(s):\n`);
   results.forEach(({ relativePath, issues }) => {
     console.error(`   ${relativePath}`);
     issues.forEach((issue) => console.error(`      ⚠️  ${issue}`));
   });
-  console.error('\n   Fix: each <div x-demo> needs exactly one matching </div>, with content between them.\n');
+  console.error('\n   Fix: each x-demo host needs exactly one matching close tag, with content between them.\n');
   process.exit(1);
 }
 

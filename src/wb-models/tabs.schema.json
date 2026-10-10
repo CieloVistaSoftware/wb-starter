@@ -4,6 +4,7 @@
   "title": "Tabs",
   "description": "Tab navigation for switching between content panels",
   "schemaFor": "tabs",
+  "kind": "decorator",
   "baseClass": "x-tabs",
   "semanticElement": {
     "tagName": "div",

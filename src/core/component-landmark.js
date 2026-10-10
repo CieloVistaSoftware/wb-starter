@@ -43,13 +43,20 @@ const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
  * the attribute is what names the host here too. Without it a
  * <div x-cardstats>'s own <header> would take the page header behavior.
  *
+ * A fix card is a card too: fixCard() composes one (fix-card.js), header and
+ * all. It was caught only because the hyphenated name its host class had
+ * before #1096 happened to contain the substring "x-card"; once that became
+ * x-fixcard its header took the page navbar's behavior. So it is named here,
+ * by attribute and by tag.
+ *
  * And a <dialog> (#874): dialog.js builds its chrome from real <header> and
  * <footer> elements too, and they came out `x-dialog__header x-header`, so the
  * dialog title row took the page navbar's 0.8em text and 60px min-height and
  * its footer took the page footer's behavior. A landmark inside a dialog is
  * the dialog's.
  */
-export const COMPONENT_HOST = ['article', 'dialog', ...CARD_TAGS.map((t) => `[${t}]`), '[class*="x-card"]'].join(', ');
+const FIX_CARD_HOST = ['[x-fix-card]', 'x-fix-card'];
+export const COMPONENT_HOST = ['article', 'dialog', ...CARD_TAGS.map((t) => `[${t}]`), ...FIX_CARD_HOST, '[class*="x-card"]'].join(', ');
 
 /**
  * Is this element a landmark that belongs to an enclosing component, and so

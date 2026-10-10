@@ -4,20 +4,20 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardtestimonial
   quote="We deleted the build step and shipped faster the same week."
   author="Katherine Johnson"
   role="Platform lead"
   avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/330px-Katherine_Johnson_1983.jpg"
   rating="5"></article>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `quote` | text | — | Testimonial quote text |
+| `quote` | text | — | Testimonial quote text. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `author` | text | — | Author name |
 | `role` | text | — | Author role/title/company |
 | `avatar` | URL | — | Author avatar image URL |

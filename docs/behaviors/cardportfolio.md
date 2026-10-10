@@ -4,14 +4,14 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardportfolio
   name="Ada Lovelace"
   title="Principal engineer"
   company="Analytical Engines"
   location="London"
   cover="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Babbages_Analytical_Engine%2C_1834-1871._%289660574685%29.jpg/1280px-Babbages_Analytical_Engine%2C_1834-1871._%289660574685%29.jpg"></article>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button class="effect-demo" x-flip>Click to flip</button>
-</div>
+</figure>
 
 <sub>Schema: [`flip.schema.json`](../../src/wb-models/flip.schema.json)</sub>

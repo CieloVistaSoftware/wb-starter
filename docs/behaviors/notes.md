@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <aside x-notes position="right" defaultWidth="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>
 </aside>
-</div>
+</figure>
 
 ## Attributes
 

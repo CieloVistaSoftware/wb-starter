@@ -68,9 +68,30 @@ export function familyRoot(behavior) {
 /** Auto-injected behaviors that ANY explicit behavior on the host replaces (#958). */
 const EXCLUSIVE_AUTO = new Set(['navbar']);
 
+/**
+ * Explicit behaviors that own their host outright, so NO tag behavior runs on
+ * it (#917).
+ *
+ * x-demo is a frame, not a decoration: demo() moves every child into its own
+ * grid and builds the code panel beneath it. The standard asks for
+ * `<figure x-demo>`, and <figure> auto-injects figure(), which reaches INTO the
+ * element -- it takes the first <img> it finds for a lightbox (x-figure__zoomable,
+ * an onclick) and the first <figcaption> for its caption. Inside a demo those
+ * belong to the EXAMPLE: measured on tests/fixtures/x-demo-host.html, a plain
+ * <img> example gained a lightbox on a <figure> host that it does not have on a
+ * <div> host, in both runtimes. The host tag says what the demo IS; it must not
+ * change what the example does. `<article x-demo>` would stack a whole card the
+ * same way. A <figure> INSIDE the demo is an example and still gets figure().
+ */
+const HOST_OWNING_EXPLICIT = new Set(['demo']);
+
 export function isReplacedByExplicitBehavior(element, candidate, prefix = 'x') {
   const prefixAttr = `${prefix}-`;
   const family = familyRoot(candidate);
+
+  for (const owner of HOST_OWNING_EXPLICIT) {
+    if (candidate !== owner && element.hasAttribute(`${prefixAttr}${owner}`)) return true;
+  }
 
   // #967 -- John: "<input x-behavior=\"input\"> ... this should never happen."
   //

@@ -4,6 +4,8 @@
   "title": "Video",
   "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown before playback.",
   "schemaFor": "video",
+  "kind": "element",
+  "element": "video",
   "properties": {
     "poster": {
       "type": "string",

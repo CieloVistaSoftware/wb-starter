@@ -4,17 +4,17 @@ A plain `<progress>` gets a styled bar with an optional `label` and percentage (
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <progress value="72" max="100" label="Uploading footage" showValue></progress>
-</div>
+</figure>
 
 No attribute needed on `<progress>`. Don't add `x-progress` to it (#746).
 
 On another element, write `x-progress`:
 
-<div x-demo>
+<figure x-demo>
 <div x-progress value="72" max="100" label="Uploading footage" showValue></div>
-</div>
+</figure>
 
 `<progress x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
@@ -22,7 +22,7 @@ On another element, write `x-progress`:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `number` | `0` | Current progress value (0-100) |
+| `value` | `number` | `0` | Current progress value (0-100). A number between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `max` | `number` | `100` | Maximum value |
 | `label` | text | — | Progress label text |
 | `showValue` | `boolean` | `false` | Show percentage value |

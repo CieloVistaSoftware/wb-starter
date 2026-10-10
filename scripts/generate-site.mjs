@@ -47,6 +47,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { resolve, join, basename, relative } from 'path';
 import { execSync } from 'child_process';
+import { PRIMARY_VALUE_ATTRIBUTE } from '../src/core/author-content.js';
 
 const MODELS_DIR = resolve('src/wb-models');
 
@@ -337,7 +338,12 @@ function buildDemo(schema, tag, rawAttrs) {
   const dialogTrigger = isTrigger && isSemantic && semanticTag === 'dialog';
   const host = dialogTrigger ? 'button' : (isSemantic ? semanticTag : tag);
   const behavior = (autoInjectsThis && !dialogTrigger) ? {} : { [`x-${schema.schemaFor}`]: true };
-  const children = (isTrigger && label) ? label : placeholderChildren(schema, host);
+  // #417: the content between the tags wins over a behavior's primary
+  // attribute. A demo that sets that attribute (quote="Great!") must not also
+  // get the placeholder sentence, which would now be the quote instead.
+  const primary = PRIMARY_VALUE_ATTRIBUTE[schema.schemaFor];
+  const setsPrimary = primary && attrs[primary] !== undefined && attrs[primary] !== false && attrs[primary] !== null;
+  const children = (isTrigger && label) ? label : (setsPrimary ? '' : placeholderChildren(schema, host));
 
   return { tag: host, attrs: { ...behavior, ...extras, ...attrs }, children };
 }
@@ -790,16 +796,17 @@ function generatePageHtml(pageSchema) {
         // layout failures (mismatched natural widths forced into shared grid
         // tracks). Fixes #563.
         for (const demo of demos) {
-          lines.push('  <div x-demo columns="1">');
+          lines.push('  <figure x-demo columns="1">');
           pushDemoTag(demo, '    ');
-          lines.push('  </div>');
+          lines.push('  </figure>');
         }
       } else {
-        lines.push(`  <div x-demo columns="${section.columns || 3}">`);
+        // #917: an example is a figure (DEMOS-AND-DOCS-STANDARDS.md §1).
+        lines.push(`  <figure x-demo columns="${section.columns || 3}">`);
         for (const demo of demos) {
           pushDemoTag(demo, '    ');
         }
-        lines.push('  </div>');
+        lines.push('  </figure>');
       }
       lines.push('  </section>');
       lines.push('');

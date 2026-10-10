@@ -4,15 +4,15 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-rating value="4" max="5" half></div>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `number` | `0` | Current rating value |
+| `value` | `number` | `0` | Current rating value. A number between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `max` | `number` | `5` | Maximum rating |
 | `readonly` | `boolean` | `false` | Display only, not interactive |
 | `disabled` | `boolean` | `false` | Disabled state |

@@ -4,6 +4,7 @@
   "title": "Demo Container",
   "description": "A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.",
   "schemaFor": "demo",
+  "kind": "decorator",
   "baseClass": "x-demo",
   "semanticElement": {
     "tagName": "div",
@@ -39,9 +40,9 @@
   "$methods": {},
   "test": {
     "setup": [
-      "<div x-demo><p>Simple content</p></div>",
-      "<div x-demo columns=\"2\"><p>A</p><p>B</p></div>",
-      "<div x-demo columns=\"3\"><article title=\"One\"><p>Card 1</p></article><article title=\"Two\"><p>Card 2</p></article><article title=\"Three\"><p>Card 3</p></article></div>"
+      "<figure x-demo><p>Simple content</p></figure>",
+      "<figure x-demo columns=\"2\"><p>A</p><p>B</p></figure>",
+      "<figure x-demo columns=\"3\"><article title=\"One\"><p>Card 1</p></article><article title=\"Two\"><p>Card 2</p></article><article title=\"Three\"><p>Card 3</p></article></figure>"
     ]
   }
 }

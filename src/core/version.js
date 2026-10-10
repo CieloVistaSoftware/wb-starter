@@ -8,13 +8,13 @@
  */
 export const VERSION = {
   "version": "1.0.400",
-  "commit": "c0ca1fcb",
-  "builtAt": "2026-10-10T20:18:40.132Z",
+  "commit": "d48d1dfb",
+  "builtAt": "2026-10-10T21:52:29.996Z",
   "branch": "main",
   "dirty": false,
   "ahead": 0,
   "behind": 0,
   "upstream": "origin/main",
   "release": "1.0.400",
-  "sinceRelease": 87
+  "sinceRelease": 94
 };

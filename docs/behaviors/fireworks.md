@@ -4,16 +4,16 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button x-fireworks>Launch</button>
-</div>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `count` | `number` | `30` | Particles per burst |
-| `label` | text | `Fireworks!` | Trigger button label |
+| `label` | text | `Fireworks!` | Trigger button label. Text between the tags wins over it ([content wins](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md#primary-value-content-wins), #417). |
 | `showButton` | `boolean` | `true` | Show trigger button |
 | `repeat` | `boolean` | `false` | Loop animation |
 | `delay` | CSS duration, e.g. `0.5s` | `0s` | Start delay |

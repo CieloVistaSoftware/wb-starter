@@ -8,7 +8,9 @@ import { test, expect } from '../fixtures/offline';
  * both: a listener alone hangs when the moment already passed, a check alone
  * misses one still to come. Callers wrote the pair by hand or watched the
  * `x-ready` attribute, which exists only under automation. whenReady() is the
- * pair, written once; tests/base.ts elementReady() now uses it.
+ * pair, written once. (tests/base.ts elementReady() polls WB.isReady() through
+ * waitForFunction instead: an awaited evaluate can be reported "Promise was
+ * collected" on a busy page, #1818.)
  */
 
 test.beforeEach(async ({ page }) => {

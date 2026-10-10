@@ -4,6 +4,7 @@
   "title": "Ripple",
   "description": "Material Design ripple effect on click",
   "schemaFor": "ripple",
+  "kind": "decorator",
   "baseClass": "x-ripple",
   "compliance": {
     "baseClass": "x-ripple",

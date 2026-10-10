@@ -6,6 +6,173 @@
   ],
   "releases": [
     {
+      "version": "1.0.494",
+      "date": "2026-10-10",
+      "summary": "Every live example in pages, demos and docs now sits in a figure element and renders exactly as before. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/917\" target=\"_blank\" rel=\"noopener\">#917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1836\" target=\"_blank\" rel=\"noopener\">#1836</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every demo is a &lt;figure x-demo&gt;, and figure() no longer stacks on its host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/917\" target=\"_blank\" rel=\"noopener\">#917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1836\" target=\"_blank\" rel=\"noopener\">#1836</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d48d1dfb669a7f35e778235f252df272ff4c1b7e\" target=\"_blank\" rel=\"noopener\"><code>d48d1df</code></a>",
+          "issues": [
+            917,
+            1836
+          ]
+        }
+      ],
+      "seeIt": "Run <code>grep -rn &quot;figure x-demo&quot; pages/ demos/ docs/ | wc -l</code> and open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a>. Before: 1,600 &quot;div x-demo&quot; lines (1,522 of them real examples), and a figure-hosted demo gave its example image a lightbox and 16px of extra margin. Now: all 1,522 examples are figure x-demo, they render identically, and a new div-hosted demo fails <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/x-demo-host-is-semantic.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/x-demo-host-is-semantic.spec.ts</a>.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d48d1dfb669a7f35e778235f252df272ff4c1b7e\" target=\"_blank\" rel=\"noopener\"><code>d48d1df</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.493",
+      "date": "2026-10-10",
+      "summary": "The permutation probe already rendered a schema&#39;s `element` as (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1827\" target=\"_blank\" rel=\"noopener\">PR 1827</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Permutation probe builds element hosts from the schema&#39;s selector</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/713a2cc429f7c687814610c15f71fc0a5b119d7c\" target=\"_blank\" rel=\"noopener\"><code>713a2cc</code></a>",
+          "issues": [
+            835
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Behaviors page header says which behavior an element becomes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/74e02fff76b27a4b424337e8945638a762e0a939\" target=\"_blank\" rel=\"noopener\"><code>74e02ff</code></a>",
+          "issues": [
+            835
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Behavior schemas say whether they are an element or a decorator</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9a22e7e616f8a510b376af5f562720f4fcddded2\" target=\"_blank\" rel=\"noopener\"><code>9a22e7e</code></a>",
+          "issues": [
+            835
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/permutation-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/permutation-compliance.spec.ts</a> -g &quot;select: comprehensive&quot; --repeat-each=3. Before: 3 failed, &quot;Component did not initialize&quot; (and checkbox/radio/range failed the same way in CI). Now: 3 passed, and the whole spec is 176/176.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/16364e431f193d6c3af6b189e23dc85895bd9f8e\" target=\"_blank\" rel=\"noopener\"><code>16364e4</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.492",
+      "date": "2026-10-10",
+      "summary": "New site-migrate CLI proposes a WB Starter page for an existing HTML page and lists every change with its reason. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/982\" target=\"_blank\" rel=\"noopener\">#982</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1833\" target=\"_blank\" rel=\"noopener\">#1833</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Site-migrate v0, a CLI that proposes a WB Starter page for one existing page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/982\" target=\"_blank\" rel=\"noopener\">#982</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1833\" target=\"_blank\" rel=\"noopener\">#1833</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/515f2a102803b627703b729cbb2b7b4f484d27fb\" target=\"_blank\" rel=\"noopener\"><code>515f2a1</code></a>",
+          "issues": [
+            982,
+            1833
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node packages/site-migrate/bin/site-migrate.js <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/fixtures/site-migrate/riverbend-bakery.html\" target=\"_blank\" rel=\"noopener\">tests/fixtures/site-migrate/riverbend-bakery.html</a></code>. Before: no tool; a page had to be rewritten by hand. Now: it prints 65 reasoned changes, 3 unclassified regions, the proposed site.json menu and the proposed page.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/515f2a102803b627703b729cbb2b7b4f484d27fb\" target=\"_blank\" rel=\"noopener\"><code>515f2a1</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.491",
+      "date": "2026-10-10",
+      "summary": "A behavior&#39;s main text can be written as an attribute or between the tags, and the text between the tags now always wins. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/417\" target=\"_blank\" rel=\"noopener\">#417</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1829\" target=\"_blank\" rel=\"noopener\">#1829</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Content between the tags wins over a behavior&#39;s primary attribute</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/417\" target=\"_blank\" rel=\"noopener\">#417</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1829\" target=\"_blank\" rel=\"noopener\">#1829</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f1ca362df43a0db1654d9332eba7485999dd7513\" target=\"_blank\" rel=\"noopener\"><code>f1ca362</code></a>",
+          "issues": [
+            417,
+            1829
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/primary-value-content-wins.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/primary-value-content-wins.spec.ts</a> --project=regression</code>. Before: 81 of 102 fail on main (e.g. &lt;div x-cardtestimonial quote=&quot;A&quot;&gt;B&lt;/div&gt; quoted A; &lt;div x-stat label=&quot;Users&quot;&gt;7&lt;/div&gt; showed no 7; a re-scanned testimonial quoted its own built icon and author line). Now: 102 pass, on both runtimes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f1ca362df43a0db1654d9332eba7485999dd7513\" target=\"_blank\" rel=\"noopener\"><code>f1ca362</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.490",
+      "date": "2026-10-10",
+      "summary": "The live-examples audit no longer reports a slow-building demo as missing its grid. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1817\" target=\"_blank\" rel=\"noopener\">#1817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1834\" target=\"_blank\" rel=\"noopener\">#1834</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The x-demo audit waits for each demo to build, not for a fixed 5s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1817\" target=\"_blank\" rel=\"noopener\">#1817</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1834\" target=\"_blank\" rel=\"noopener\">#1834</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/20059ac42c0587c62d75971475a109488b7fe153\" target=\"_blank\" rel=\"noopener\"><code>20059ac</code></a>",
+          "issues": [
+            1817,
+            1834
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/live-examples-wait-for-slow-demo-builds.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/live-examples-wait-for-slow-demo-builds.spec.ts</a> --project=regression. Before: frameworks.html at 6x CPU throttling reported &quot;[x-demo][0]: no .x-demo__grid was built at all&quot; 4 of 4 times. Now: every demo builds and the audit is clean, 5 of 5.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/20059ac42c0587c62d75971475a109488b7fe153\" target=\"_blank\" rel=\"noopener\"><code>20059ac</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.489",
+      "date": "2026-10-10",
+      "summary": "Test helper elementReady() no longer fails with a false &quot;Execution context was destroyed&quot; when a page is busy the moment an element is ready. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>ElementReady() waits through waitForFunction, not an awaited evaluate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1818\" target=\"_blank\" rel=\"noopener\">#1818</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1828\" target=\"_blank\" rel=\"noopener\">#1828</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>",
+          "issues": [
+            1818,
+            1828
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/element-ready-survives-a-busy-page.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/element-ready-survives-a-busy-page.spec.ts</a> --project=regression. Before: elementReady failed 2 of 6 rounds with &quot;Execution context was destroyed&quot;. Now: all rounds pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc0dbccd3d72f569ab651a3d88354772c193c7ea\" target=\"_blank\" rel=\"noopener\"><code>dc0dbcc</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.488",
+      "date": "2026-10-10",
+      "summary": "The last 6 behavior classes that broke the x-{behavior} naming rule are renamed or deleted, so the naming ratchet is 0 and every class a behavior applies can be derived from its name. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Final batch — fix-card and effect classes named for their behavior, two unreachable modules deleted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1096\" target=\"_blank\" rel=\"noopener\">#1096</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1816\" target=\"_blank\" rel=\"noopener\">#1816</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3813805cc6facfed297c07cf2fada012ad65e10e\" target=\"_blank\" rel=\"noopener\"><code>3813805</code></a>",
+          "issues": [
+            1096,
+            1816
+          ]
+        }
+      ],
+      "seeIt": "Click a <code>&lt;button x-slidein direction=&quot;up&quot;&gt;</code> and inspect it. Before: <code>class=&quot;x-slide-in-up&quot;</code>, the keyframe&#39;s name. Now: <code>class=&quot;x-slidein x-slidein--up&quot;</code>, and it slides in exactly as before.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3813805cc6facfed297c07cf2fada012ad65e10e\" target=\"_blank\" rel=\"noopener\"><code>3813805</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.487",
       "date": "2026-10-10",
       "summary": "A new wb-starter site carries a GitHub Pages workflow, and creating it offers to make the GitHub repo and publish it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1232\" target=\"_blank\" rel=\"noopener\">#1232</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1824\" target=\"_blank\" rel=\"noopener\">#1824</a>",

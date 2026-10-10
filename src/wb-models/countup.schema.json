@@ -4,6 +4,7 @@
   "title": "Countup",
   "description": "Counts its host's number up from a start value to an end value, easing out, the first time it scrolls into view. It applies to any element, so it names no host.",
   "schemaFor": "countup",
+  "kind": "decorator",
   "properties": {
     "from": {
       "type": "number",

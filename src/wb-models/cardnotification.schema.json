@@ -4,6 +4,7 @@
   "title": "Notification Card",
   "description": "Dismissible notification card with variant-based styling",
   "schemaFor": "cardnotification",
+  "kind": "decorator",
   "baseClass": "x-cardnotification",
   "semanticElement": {
     "tagName": "aside",
