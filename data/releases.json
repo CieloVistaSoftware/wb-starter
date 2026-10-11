@@ -6,6 +6,30 @@
   ],
   "releases": [
     {
+      "version": "1.0.505",
+      "date": "2026-10-10",
+      "summary": "The Releases page describes 1.0.504 as the schemas for 37 behaviors, not a repeat of 1.0.503. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1849\" target=\"_blank\" rel=\"noopener\">#1849</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release 1.0.504 says what changed, not&#39;s summary</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1849\" target=\"_blank\" rel=\"noopener\">#1849</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab654cb1e4bef3374ed707750e29514895a6f42f\" target=\"_blank\" rel=\"noopener\"><code>ab654cb</code></a>",
+          "issues": [
+            1841,
+            1842,
+            1839,
+            1849
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">pages/releases.html</a> and read 1.0.504. Before: the same &quot;one behavior registry&quot; summary as 1.0.503. Now: it says every reachable behavior has a schema, and its steps run the registry gate.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab654cb1e4bef3374ed707750e29514895a6f42f\" target=\"_blank\" rel=\"noopener\"><code>ab654cb</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.504",
       "date": "2026-10-10",
       "summary": "Every behavior a page can reach now has a schema, so its options are validated, offered by IntelliSense and swept by the permutation tests, and the registry audit fails if a new behavior ships without one. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a>",
