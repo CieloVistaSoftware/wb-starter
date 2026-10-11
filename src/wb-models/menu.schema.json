@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "menu.schema.json",
+  "title": "Menu",
+  "description": "x-menu builds a vertical menu (role=\"menu\") from a comma-separated item list. Items are focusable, the arrow keys move between them, Enter or Space picks one, and a pick fires wb:menu:select.",
+  "schemaFor": "menu",
+  "kind": "decorator",
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "Comma-separated items. Each is a label, or label:value to give it a separate value.",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:menu:select": {
+      "description": "An item was clicked or picked from the keyboard.",
+      "detail": {
+        "index": "number",
+        "label": "string",
+        "value": "string"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-menu"
+  },
+  "test": {
+    "setup": [
+      "<div x-menu items=\"New,Open,Save:save-file\"></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "navigation.js menu() — every property here is one the behavior reads"
+  }
+}

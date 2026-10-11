@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "empty.schema.json",
+  "title": "Empty",
+  "description": "x-empty renders an empty-state placeholder in its host: an icon, a message heading and an optional description line.",
+  "schemaFor": "empty",
+  "kind": "decorator",
+  "properties": {
+    "icon": {
+      "type": "string",
+      "description": "Icon or emoji shown above the message.",
+      "default": "∅"
+    },
+    "message": {
+      "type": "string",
+      "description": "The heading. The text between the tags wins; this fills an empty host.",
+      "default": "No data"
+    },
+    "description": {
+      "type": "string",
+      "description": "A smaller line under the heading. Left out when empty.",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-empty"
+  },
+  "test": {
+    "setup": [
+      "<div x-empty>No results</div>",
+      "<div x-empty icon=\"📭\" message=\"Inbox zero\" description=\"New messages will show here.\"></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "semantics/empty.js empty() — every property here is one the behavior reads"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "timepicker.schema.json",
+  "title": "Timepicker",
+  "description": "x-timepicker is a minimal shim: it marks its host with x-timepicker-init and sets its data-open flag to true the first time the host takes focus. It draws no picker and reads no attributes; a native <input type=\"time\"> is the time picker.",
+  "schemaFor": "timepicker",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-timepicker"
+  },
+  "test": {
+    "setup": [
+      "<input x-timepicker type=\"time\">"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "semantics/timepicker.js timepicker() — every property here is one the behavior reads"
+  }
+}

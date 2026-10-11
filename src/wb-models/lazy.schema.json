@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "lazy.schema.json",
+  "title": "Lazy",
+  "description": "x-lazy defers an image: it sets the host's src (and srcset) only when the host scrolls into view, shows a placeholder box until then, and fires wb:lazy:loaded once the image has loaded. Without src it shows a warning.",
+  "schemaFor": "lazy",
+  "kind": "decorator",
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "The image URL to load when the host comes into view. Required.",
+      "default": ""
+    },
+    "srcset": {
+      "type": "string",
+      "description": "A responsive srcset, set together with src.",
+      "default": ""
+    },
+    "threshold": {
+      "type": "number",
+      "description": "How much of the host, from 0 to 1, must be visible before the image loads.",
+      "default": 0.1
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:lazy:loaded": {
+      "description": "The image finished loading.",
+      "detail": {
+        "src": "string"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-lazy"
+  },
+  "test": {
+    "setup": [
+      "<img x-lazy src=\"images/placeholder-mountain.svg\" alt=\"Mountain\">",
+      "<img x-lazy src=\"images/placeholder-forest.svg\" threshold=\"0.5\" alt=\"Forest\">"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "helpers.js lazy() — every property here is one the behavior reads"
+  }
+}

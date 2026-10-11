@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "docsviewer.schema.json",
+  "title": "Docsviewer",
+  "description": "x-docsviewer wires a documentation browser: each .docs-link child loads its src into the #doc-viewer child (through that child's x-mdhtml when it is ready) and becomes the active (btn-primary) link. The host itself reads no attributes.",
+  "schemaFor": "docsviewer",
+  "kind": "decorator",
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "Set on each .docs-link child, not on the host: the Markdown file that link loads into #doc-viewer.",
+      "default": "",
+      "scope": "child"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-docsviewer"
+  },
+  "test": {
+    "setup": [
+      "<div x-docsviewer><button class=\"docs-link btn-secondary\" src=\"docs/behaviors/fadein.md\">Fade in</button><div id=\"doc-viewer\" x-mdhtml></div></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "docs-viewer.js docsviewer() — every property here is one the behavior reads"
+  }
+}

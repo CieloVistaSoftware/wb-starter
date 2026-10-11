@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "json.schema.json",
+  "title": "Json",
+  "description": "x-json pretty-prints the JSON written between its tags, indented two spaces and syntax-highlighted. Invalid JSON shows \"Invalid JSON\" (x-json--invalid). It reads no attributes: the host's text is the data.",
+  "schemaFor": "json",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-json"
+  },
+  "test": {
+    "setup": [
+      "<div x-json>{\"name\":\"starter\",\"tags\":[\"zero\",\"build\"]}</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "semantics/json.js json() — every property here is one the behavior reads"
+  }
+}

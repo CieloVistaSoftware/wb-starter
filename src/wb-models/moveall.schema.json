@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "moveall.schema.json",
+  "title": "Moveall",
+  "description": "x-moveall is moveall(element, x, y) from move.js, a legacy helper that shifts an element by x and y pixels from code. Applied as an attribute it receives no offsets, so it only gives a static host position: relative (x-move--offset). It reads no attributes.",
+  "schemaFor": "moveall",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-moveall"
+  },
+  "test": {
+    "setup": [
+      "<div x-moveall>Test Content</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "move.js moveall() — every property here is one the behavior reads"
+  }
+}

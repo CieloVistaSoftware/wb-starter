@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fixed.schema.json",
+  "title": "Fixed",
+  "description": "x-fixed pins its host to a corner, edge centre or the centre of the viewport with position: fixed.",
+  "schemaFor": "fixed",
+  "kind": "decorator",
+  "properties": {
+    "position": {
+      "type": "string",
+      "description": "Where the host is pinned. Any other value falls back to bottom-right.",
+      "default": "bottom-right",
+      "enum": [
+        "top-left",
+        "top-right",
+        "top-center",
+        "bottom-left",
+        "bottom-right",
+        "bottom-center",
+        "center"
+      ],
+      "appliesClass": "x-fixed--{{value}}"
+    },
+    "offset": {
+      "type": "string",
+      "description": "Distance from the viewport edges, as any CSS length (`--x-fixed-offset`). Not used by center.",
+      "default": "1rem"
+    },
+    "zIndex": {
+      "type": "number",
+      "description": "Stacking order of the pinned host.",
+      "default": 1000
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-fixed"
+  },
+  "test": {
+    "setup": [
+      "<div x-fixed>Pinned</div>",
+      "<div x-fixed position=\"top-right\" offset=\"2rem\">Pinned</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "layouts.js fixed() — every property here is one the behavior reads"
+  }
+}

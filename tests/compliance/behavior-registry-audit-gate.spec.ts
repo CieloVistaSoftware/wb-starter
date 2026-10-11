@@ -85,6 +85,33 @@ const MORE = [{ selector: 'button-tooltip', behavior: 'tooltip' }];
   }
 });
 
+test('every behavior markup can reach declares a schema (#1841)', () => {
+  // 37 reachable behaviors had none -- no validation, no IntelliSense, and
+  // nothing for every-declared-attribute or permutation-compliance to sweep.
+  const { status, stdout, out } = runAudit(['--json']);
+  expect(status, out).toBe(0);
+  const result = JSON.parse(stdout);
+  expect(result.findings.selectorNoSchema, 'write src/wb-models/<name>.schema.json from the behavior\'s code').toEqual([]);
+  // A schema counts under its schemaFor (drawerLayout.schema.json declares
+  // drawer-layout), and a second registry name for the same function
+  // (sidebar-layout runs sidebarlayout()) is declared by that function's
+  // schema -- not by a copy that could drift from it.
+  expect(fs.existsSync(path.join(ROOT, 'src/wb-models/drawer-layout.schema.json'))).toBe(false);
+  expect(fs.existsSync(path.join(ROOT, 'src/wb-models/sidebar-layout.schema.json'))).toBe(false);
+});
+
+test('a reachable behavior with no schema fails the gate (#1841)', () => {
+  const scratch = scratchRoot();
+  try {
+    fs.rmSync(path.join(scratch, 'src/wb-models/hotkey.schema.json'));
+    const seeded = spawnSync(process.execPath, [AUDIT, '--root', scratch, '--gate'], { encoding: 'utf8' });
+    expect(seeded.stdout).toContain('NEW    selectorNoSchema: hotkey');
+    expect(seeded.status).toBe(1);
+  } finally {
+    fs.rmSync(scratch, { recursive: true, force: true });
+  }
+});
+
 test('the old second registries are gone: tag-map.js is the only selector source', () => {
   const lazySrc = fs.readFileSync(path.join(ROOT, 'src/core/wb-lazy.js'), 'utf8');
   expect(lazySrc).not.toMatch(/const\s+WB_LAZY_ONLY_(ATTRIBUTES|ELEMENTS)\s*=/);
