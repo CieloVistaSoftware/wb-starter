@@ -193,7 +193,7 @@ function partIsCovered(element, cls, part, parts) {
       // form beat. hero.css's golden rule is `.x-hero.x-hero--golden-ratio,
       // [x-hero]:where([goldenratio]...)`; the :where() twin is (0,1,0) against
       // (0,2,0), the hero's own min-height won, and a goldenRatio hero rendered
-      // 480x576 instead of 1.618. A tag alias still counts: a base card IS its
+      // 480x576 instead of 1.618. A tag alias still counts: a plain card IS its
       // <article> (a8a7362e), and `article` beside `.x-card--auto` is how
       // card.css says so.
       ok = !!alias && safeMatches(element, alias) && !weighsNothing(alias);
