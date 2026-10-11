@@ -18,7 +18,19 @@ import { setRule } from '../core/dynamic-style.js';
  *     </div>
  * -----------------------------------------------------------------------------
  */
+/**
+ * Hosts this module has built a dropdown on (#1847). A second dropdown() on
+ * the same host took the first run's trigger <button> and menu <div> for
+ * authored items and moved them into a NEW menu, while the first run's click
+ * listener stayed on the host, closed over the old, now-nested menu. That
+ * listener fired first and reported `index: -1`. The first run owns the host,
+ * as textarea.js's `enhanced` set does for its field; its cleanup releases it.
+ */
+const built = new WeakSet();
+
 export function dropdown(element, options = {}) {
+  if (built.has(element)) return () => {};
+  built.add(element);
   const config = {
     items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     label: options.label || element.getAttribute('label') || '',
@@ -257,6 +269,7 @@ export function dropdown(element, options = {}) {
   });
 
   return () => { 
+    built.delete(element);
     element.removeEventListener('click', clickHandler);
     document.removeEventListener('click', outsideClickHandler);
     element.removeEventListener('keydown', keyHandler);

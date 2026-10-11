@@ -36,6 +36,8 @@ import SchemaBuilder from './mvvm/schema-builder.js';
 import { aliasesFor } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
 import { applyDeclaredModifiers } from './declared-modifiers.js';
+// #1847: the one record of applied/pending/in-flight injections, shared with wb.js.
+import { appliedBehaviors, pendingInjections, inFlightInjections } from './runtime-shared.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
 // (or is '1' for everything). Was forced true|| for a while; reverted per
@@ -483,15 +485,14 @@ function keepAuthoredText(element, schema) {
   element.setAttribute(attr, text);
 }
 
-// Track applied behaviors for cleanup
-const applied = new WeakMap();
-
-// Track pending injections to prevent race conditions
-// Map<HTMLElement, Set<string>>
-const pendingInjections = new Map();
+// Track applied behaviors for cleanup, pending injections to prevent race
+// conditions (element -> Set<string>, imported as pendingInjections), and
 // element -> Map<behaviorName, Promise> settling when that injection finishes,
 // so a second inject() of an in-flight behavior can wait for it.
-const inFlight = new WeakMap();
+// #1847: shared with wb.js (runtime-shared.js). A page running both must not
+// apply one behavior twice because each runtime kept its own record.
+const applied = appliedBehaviors;
+const inFlight = inFlightInjections;
 let injectionTimeout = null;
 // #961/#962: the countable, awaitable view of the same in-flight work.
 // Same module wb.js uses — one contract, implemented once (#923/#951 are what
