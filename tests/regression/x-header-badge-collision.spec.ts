@@ -3,13 +3,14 @@ import { settlePage } from '../base';
 
 /**
  * <header icon="🚀" title="App" badge="v1.0"> rendered TWO rocket-ship
- * icons instead of one. Root cause: src/core/semantic-attributes.js's bare
- * `[badge]` selector (SEMANTIC_PROPERTY_ATTRIBUTES -- lets any element opt
+ * icons instead of one. Root cause: the bare `[badge]` selector built from
+ * src/core/tag-map.js's propertyMap (then semantic-attributes.js's
+ * SEMANTIC_PROPERTY_ATTRIBUTES -- lets any element opt
  * into feedback.js's badge() via a plain `badge="..."` attribute) matched
  * <header> too, since header.js only just gained its OWN badge handling
  * (renders it as a .x-header__badge--glass span in .x-header__right) -- exactly the
- * same collision the x-card family was already excluded for (see this
- * file's CARD_TAGS/CARD_TAG_EXCLUSIONS comment): the generic badge()
+ * same collision the x-card family was already excluded for (see
+ * tag-map.js's CARD_TAGS/CARD_TAG_EXCLUSIONS comment): the generic badge()
  * re-read the header's `icon` attribute and prepended its own
  * <span class="[x-badge]__icon">🚀</span> as the header's first child,
  * alongside header()'s own correctly-built <span class="x-header__icon">.

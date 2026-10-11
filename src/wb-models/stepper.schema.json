@@ -9,17 +9,22 @@
   "properties": {
     "min": {
       "type": "number",
-      "description": "Minimum value",
-      "default": 0
+      "description": "Lowest value − can reach. Absent: no lower bound.",
+      "default": null
     },
     "max": {
       "type": "number",
-      "description": "Maximum value",
-      "default": 0
+      "description": "Highest value + can reach. Absent: no upper bound.",
+      "default": null
     },
     "step": {
       "type": "number",
-      "description": "Step increment",
+      "description": "How much one − or + click changes the value.",
+      "default": 1
+    },
+    "value": {
+      "type": "number",
+      "description": "Starting value. On a <div> host, a number written between the tags wins over this; on an <input> host, the input's own value is used when this is absent.",
       "default": 0
     }
   },
@@ -31,6 +36,30 @@
     "description": "Adds increment/decrement controls to numeric inputs.",
     "src": "src/wb-viewmodels/stepper.js"
   },
-  "$view": [],
-  "$methods": {}
+  "$view": [
+    {
+      "name": "dec",
+      "tag": "button",
+      "required": true,
+      "class": "x-stepper__btn",
+      "description": "The − button (aria-label Decrease). Lowers the value by step, never below min."
+    },
+    {
+      "name": "value",
+      "tag": "span",
+      "createdWhen": "the host is not an <input>",
+      "description": "Shows the current value inside a <div x-stepper>. An <input x-stepper> holds the value itself instead: it is wrapped in a .x-stepper div between the two buttons and gets x-stepper__input."
+    },
+    {
+      "name": "inc",
+      "tag": "button",
+      "required": true,
+      "class": "x-stepper__btn",
+      "description": "The + button (aria-label Increase). Raises the value by step, never above max."
+    }
+  ],
+  "$methods": {},
+  "events": {
+    "wb:stepper:change": "Fired by stepper() on the host after − or + changes the value; detail.value is the new value."
+  }
 }

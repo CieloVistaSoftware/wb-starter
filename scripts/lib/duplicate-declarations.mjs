@@ -178,7 +178,7 @@ export function findDuplicates({ root = '.' } = {}) {
   }
 
   // ---- 2. duplicate keys in JS lookup tables ----------------------------
-  for (const rel of ['src/core/tag-map.js', 'src/core/semantic-attributes.js', 'src/wb-viewmodels/index.js']) {
+  for (const rel of ['src/core/tag-map.js', 'src/wb-viewmodels/index.js']) {
     const file = path.join(root, rel);
     if (!fs.existsSync(file)) continue;
     for (const d of duplicateJsObjectKeys(fs.readFileSync(file, 'utf8'))) {

@@ -9,8 +9,8 @@
   "properties": {
     "length": {
       "type": "integer",
-      "description": "Number of OTP digits",
-      "default": 0,
+      "description": "Number of single-digit boxes.",
+      "default": 6,
       "examples": [
         3,
         4,
@@ -28,6 +28,22 @@
     "description": "Renders a multi-input OTP field.",
     "src": "src/wb-viewmodels/otp.js"
   },
-  "$view": [],
-  "$methods": {}
+  "$view": [
+    {
+      "name": "input",
+      "tag": "input",
+      "required": true,
+      "description": "One box per digit, `length` of them: type=text, inputmode=numeric, maxlength=1. Typing a digit moves focus to the next box; Backspace in an empty box moves back."
+    }
+  ],
+  "$methods": {
+    "getValue": {
+      "description": "The code typed so far, the boxes' digits joined in order. Reached as element.wbOtp.getValue().",
+      "params": [],
+      "returns": "string"
+    }
+  },
+  "events": {
+    "wb:otp:input": "Fired by otp() on the host each time a box changes; detail.value is the code typed so far."
+  }
 }

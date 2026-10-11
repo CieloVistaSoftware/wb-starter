@@ -273,7 +273,7 @@ const NATIVE_MAP = (() => {
     // suppress the behavior (#746). A silent catch turned a typo into wrong
     // output rather than a crash.
     const src = readFileSync(resolve('src/core/tag-map.js'), 'utf8');
-    const i = src.indexOf('nativeMap');
+    const i = src.indexOf('export const nativeMap');
     const o = src.indexOf('{', i);
     let d = 0, e = -1;
     for (let k = o; k < src.length; k++) {

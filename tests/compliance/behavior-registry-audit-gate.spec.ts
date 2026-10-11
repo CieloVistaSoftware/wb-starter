@@ -2,11 +2,13 @@
  * The behavior registry audit runs in CI, and any new disagreement fails it (#831).
  *
  * scripts/audit-behavior-registry.mjs cross-checks every place a behavior can
- * be bound to a selector: tag-map.js's three maps, wb-lazy.js's tables,
- * SEMANTIC_PROPERTY_ATTRIBUTES, the [x-{name}] route wb-lazy.js computes from
- * index.js (#1642), behaviorModules and the schemas. It had a --gate flag and
- * nothing ran it, so WB_LAZY_ONLY_ATTRIBUTES grew from 42 keys to 45 while the
- * audit sat in package.json as `npm run audit:behavior-registry`.
+ * be bound to a selector -- tag-map.js's maps and aliases, the one registry
+ * since #831, and the [x-{name}] route wb-lazy.js computes from index.js
+ * (#1642) -- against behaviorModules and the schemas, and reports a STRAY TABLE
+ * when a selector is bound anywhere else under src/. It had a --gate flag and
+ * nothing ran it, so wb-lazy.js's own WB_LAZY_ONLY_ATTRIBUTES table grew from
+ * 42 keys to 45 while the audit sat in package.json as
+ * `npm run audit:behavior-registry`.
  *
  * The findings that remain are in the audit's REVIEWED list, each with the
  * reason it stays for now. --gate exits 1 on a finding that is not in the
@@ -49,31 +51,48 @@ test('the audit reads every source, including the computed x-{name} route', () =
   expect(result.computedOnly).toEqual(expect.arrayContaining(['sidebar', 'list', 'divider', 'hotkey']));
 });
 
-test('a new entry in the wb-lazy table fails the gate', () => {
-  // Copy just what the audit reads into a scratch root and add one line to
-  // WB_LAZY_ONLY_ATTRIBUTES: the #667 failure, a behavior registered in the
-  // second registry instead of tag-map.js (or left to the computed route).
+/** Copy just what the audit reads into a scratch root. */
+function scratchRoot(): string {
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'registry-audit-'));
+  fs.cpSync(path.join(ROOT, 'src/core'), path.join(scratch, 'src/core'), { recursive: true });
+  for (const rel of ['src/wb-viewmodels/index.js']) {
+    fs.mkdirSync(path.dirname(path.join(scratch, rel)), { recursive: true });
+    fs.copyFileSync(path.join(ROOT, rel), path.join(scratch, rel));
+  }
+  fs.cpSync(path.join(ROOT, 'src/wb-models'), path.join(scratch, 'src/wb-models'), { recursive: true });
+  return scratch;
+}
+
+test('a selector table outside tag-map.js fails the gate', () => {
+  // The #667 failure: a behavior registered in a second table beside
+  // tag-map.js. Seed the shape WB_LAZY_ONLY_ATTRIBUTES had, and a hard-coded
+  // mapping like the <button-tooltip> binding #921 removed.
+  const scratch = scratchRoot();
   try {
-    for (const rel of [
-      'src/core/tag-map.js', 'src/core/wb-lazy.js', 'src/core/semantic-attributes.js',
-      'src/core/replacement-guard.js', 'src/core/attribute-aliases.js', 'src/wb-viewmodels/index.js',
-    ]) {
-      fs.mkdirSync(path.dirname(path.join(scratch, rel)), { recursive: true });
-      fs.copyFileSync(path.join(ROOT, rel), path.join(scratch, rel));
-    }
-    fs.cpSync(path.join(ROOT, 'src/wb-models'), path.join(scratch, 'src/wb-models'), { recursive: true });
-
     const lazy = path.join(scratch, 'src/core/wb-lazy.js');
-    const src = fs.readFileSync(lazy, 'utf8');
-    const decl = 'export const WB_LAZY_ONLY_ATTRIBUTES = {';
-    expect(src).toContain(decl);
-    fs.writeFileSync(lazy, src.replace(decl, `${decl}\n  'x-divider': 'divider',`));
-
+    fs.writeFileSync(lazy, `${fs.readFileSync(lazy, 'utf8')}
+const SECOND_REGISTRY = {
+  'x-divider': 'divider',
+};
+const MORE = [{ selector: 'button-tooltip', behavior: 'tooltip' }];
+`);
     const seeded = spawnSync(process.execPath, [AUDIT, '--root', scratch, '--gate'], { encoding: 'utf8' });
-    expect(seeded.stdout).toContain('NEW    lazyOnly: divider');
+    expect(seeded.stdout).toContain('NEW    strayTable: src/core/wb-lazy.js: x-divider');
+    expect(seeded.stdout).toContain('NEW    strayTable: src/core/wb-lazy.js: button-tooltip');
     expect(seeded.status).toBe(1);
   } finally {
     fs.rmSync(scratch, { recursive: true, force: true });
+  }
+});
+
+test('the old second registries are gone: tag-map.js is the only selector source', () => {
+  const lazySrc = fs.readFileSync(path.join(ROOT, 'src/core/wb-lazy.js'), 'utf8');
+  expect(lazySrc).not.toMatch(/const\s+WB_LAZY_ONLY_(ATTRIBUTES|ELEMENTS)\s*=/);
+  expect(fs.existsSync(path.join(ROOT, 'src/core/semantic-attributes.js'))).toBe(false);
+  // Both runtimes read their selectors from tag-map.js and nowhere else.
+  for (const rel of ['src/core/wb.js', 'src/core/wb-lazy.js']) {
+    const src = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    expect(src, rel).toMatch(/from '\.\/tag-map\.js'/);
+    expect(src, rel).not.toMatch(/semantic-attributes|BEHAVIOR_ALIASES[^\n]*attribute-aliases/);
   }
 });

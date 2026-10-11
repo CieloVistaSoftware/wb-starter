@@ -60,29 +60,10 @@ export const ATTRIBUTE_ALIASES = Object.freeze({
   tooltip: { position: ['tooltip-position'], delay: ['tooltip-delay'], hideDelay: ['tooltip-hide-delay'] },
 });
 
-/**
- * Renamed behaviors: the old attribute name -> the behavior it now runs.
- * Keyed and valued without the `x-` prefix.
- *
- * A rename keeps the old spelling working for pages written against it, but
- * the old name is NOT a second behavior: it has no doc, schema or examples of
- * its own, and the inventories (tag-map.js, the reference docs, the behaviors
- * page) list only the new name. The two loaders read this table directly --
- * wb-lazy.js adds an `[x-old]` selector, wb-viewmodels/index.js registers the
- * old key -- so the alias is written here once and nowhere else.
- */
-export const BEHAVIOR_ALIASES = Object.freeze({
-  // #668: a highlight.js theme picker; its sync event was already
-  // x:codetheme:sync and its tests were already named code-theme-*.
-  codecontrol: 'codetheme',
-  // #1105: status-coloured text and window dots; "span" named an HTML
-  // element no native element maps to.
-  span: 'status',
-  // #830: John -- "an equivalent x-nav for injecting anywhere". <nav> gets
-  // navbar natively; x-nav is that same behavior on any other host. x-navbar
-  // stays the listed name, so the behaviors page shows navbar once.
-  nav: 'navbar',
-});
+// Renamed behaviors (x-codecontrol -> codetheme, x-span -> status,
+// x-nav -> navbar) are selector bindings, not property synonyms, so they live
+// in the behavior registry with every other binding: BEHAVIOR_ALIASES in
+// tag-map.js (#831).
 
 /**
  * Synonyms declared for one property. Never includes the `data-`/camelCase

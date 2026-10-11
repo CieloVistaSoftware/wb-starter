@@ -280,7 +280,7 @@ export function badge(element, options = {}) {
   // #448: skip the bare 'x-badge' token on a literal <span x-badge> host --
   // badge.css already has a dedicated `x-badge` tag rule for that case.
   // Still added for every OTHER host (the `badge="..."` semantic attribute
-  // on a plain element, per semantic-attributes.js), since badge.css's
+  // on a plain element, per tag-map.js's propertyMap), since badge.css's
   // `.x-badge` class rule still selects those.
   element.classList.add('x-badge');
   element.classList.add(`x-badge--${variant}`);

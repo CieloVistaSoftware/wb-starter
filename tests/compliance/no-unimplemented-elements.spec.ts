@@ -111,15 +111,15 @@ function readObjectLiteral(file: string, name: string): Record<string, string> {
 }
 
 /**
- * Every registry, not just the obvious one. Reading `tag-map.js` alone is how
- * the component migration missed 18 tags that `wb-lazy.js` registers on its
- * own — the tool written to find this class of bug had the bug.
+ * Every element registry. Reading `tag-map.js` alone is how the component
+ * migration missed 18 tags that `wb-lazy.js` once registered on its own — the
+ * tool written to find this class of bug had the bug. Since #831 tag-map.js is
+ * the only registry, and the registry audit fails if a table appears elsewhere.
  */
 function registeredElements(): Set<string> {
   const maps = [
     ['src/core/tag-map.js', 'elementMap'],
     ['src/core/tag-map.js', 'nativeMap'],
-    ['src/core/wb-lazy.js', 'WB_LAZY_ONLY_ELEMENTS'],
   ] as const;
 
   const out = new Set<string>();

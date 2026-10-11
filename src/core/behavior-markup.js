@@ -26,7 +26,7 @@
  *                                    load. `x-{name}` reaches `name` when the
  *                                    module exists -- the rule wb-lazy.js's
  *                                    knownBehaviorAttributes() applies too.
- *   - semantic-attributes.js         plain property attributes that attach a
+ *   - tag-map.js propertyMap         plain property attributes that attach a
  *                                    behavior (tooltip=, badge=, ripple, ...)
  *   - x-behavior="a b"               the generic dispatch attribute
  *
@@ -34,9 +34,8 @@
  * in Node (on text, for the regression specs), so the specs test the function
  * the viewer calls instead of a lookalike of it.
  */
-import { nativeMap, extensionMap } from './tag-map.js';
+import { nativeMap, extensionMap, propertyMap } from './tag-map.js';
 import { resolveBehaviorName } from '../wb-viewmodels/index.js';
-import { SEMANTIC_PROPERTY_ATTRIBUTES } from './semantic-attributes.js';
 import { DIRECTIVES } from './replacement-guard.js';
 
 /** x-{name} for a runtime switch (x-ignore, x-eager, ...), not a behavior. */
@@ -105,7 +104,7 @@ export function attributeBehaviorsFor(name, value = '') {
   if (typeof extensionMap[n] === 'string') return [extensionMap[n]];
   // resolveBehaviorName folds case: the parser has lowercased the name (#1195).
   if (n.startsWith('x-') && resolveBehaviorName(n.slice(2))) return [resolveBehaviorName(n.slice(2))];
-  if (typeof SEMANTIC_PROPERTY_ATTRIBUTES[n] === 'string') return [SEMANTIC_PROPERTY_ATTRIBUTES[n]];
+  if (typeof propertyMap[n] === 'string') return [propertyMap[n]];
   return [];
 }
 

@@ -28,7 +28,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { extensionMap, nativeMap } from '../src/core/tag-map.js';
-import { WB_LAZY_ONLY_ATTRIBUTES } from '../src/core/wb-lazy.js';
 import { isFillerDescription, jsdocSummary } from './lib/behavior-prose.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -37,11 +36,9 @@ const MODELS = path.join(ROOT, 'src', 'wb-models');
 const EXAMPLES = path.join(ROOT, 'data', 'behavior-examples.json');
 const CHECK = process.argv.includes('--check');
 
-// The x-* surface is split across TWO registries (#666): tag-map's extensionMap
-// and wb-lazy's WB_LAZY_ONLY_ATTRIBUTES. The page merges them the same way --
-// reading tag-map alone under-reported the list by a third (x-fadein, x-lightbox,
-// x-confirm, x-bounce and 30 others live only in the second one).
-const MERGED = { ...(WB_LAZY_ONLY_ATTRIBUTES || {}), ...extensionMap };
+// Every x-* attribute is in tag-map's extensionMap (#831 folded wb-lazy's second
+// table, WB_LAZY_ONLY_ATTRIBUTES, into it).
+const MERGED = extensionMap;
 
 /** The name the behaviors page fetches: the registry name, else the bare token. */
 function docNameFor(token) {

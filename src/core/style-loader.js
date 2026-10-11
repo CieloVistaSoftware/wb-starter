@@ -22,8 +22,7 @@
  * The compensating call and the classes are gone.
  */
 import { BEHAVIOR_CSS_MAP } from '../styles/behavior-css-manifest.js';
-import { BEHAVIOR_ALIASES } from './attribute-aliases.js';
-import { elementMap, nativeMap, extensionMap } from './tag-map.js';
+import { elementMap, nativeMap, extensionMap, BEHAVIOR_ALIASES } from './tag-map.js';
 import { behaviors } from '../wb-viewmodels/index.js';
 import { runtimeTracker } from './injection-tracker.js';
 

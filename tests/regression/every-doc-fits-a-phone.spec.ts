@@ -34,21 +34,14 @@ function allDocs(): string[] {
 }
 
 /**
- * Every behavior attribute the runtime knows (tag-map plus wb-lazy's
- * attribute-only list), so the sweep can wait for each live example in a doc
- * to finish building. A card measured before it builds is narrow and passes;
- * the same card built is the one a reader sees.
+ * Every behavior attribute the runtime knows (tag-map.js's extensionMap, the
+ * one registry since #831), so the sweep can wait for each live example in a
+ * doc to finish building. A card measured before it builds is narrow and
+ * passes; the same card built is the one a reader sees.
  */
 async function behaviorAttributes(): Promise<string[]> {
   const tag = await import(new URL('../../src/core/tag-map.js', import.meta.url).href);
-  let lazy: Record<string, unknown> = {};
-  try {
-    lazy = await import(new URL('../../src/core/wb-lazy.js', import.meta.url).href);
-  } catch { /* the tag map alone still covers the elements */ }
-  const names = Object.keys({
-    ...((lazy as { WB_LAZY_ONLY_ATTRIBUTES?: Record<string, string> }).WB_LAZY_ONLY_ATTRIBUTES || {}),
-    ...tag.extensionMap,
-  });
+  const names = Object.keys(tag.extensionMap);
   return names.filter((n) => /^x-[a-z][a-z0-9-]*$/.test(n));
 }
 

@@ -1,9 +1,21 @@
 /**
  * Tag-Map Registry
  * =================
- * Centralized mapping of element tags and selectors to behavior names.
- * Source: src/wb-models/*.schema.json (generated from schema-index.json)
- * Last Updated: 2026-02-13
+ * THE behavior registry: every selector that binds a behavior is declared
+ * here and nowhere else (#831). wb.js and wb-lazy.js both read it; neither
+ * keeps a table of its own. The maps:
+ *
+ *   elementMap        tag name      -> behavior   (empty since 4.0.0)
+ *   nativeMap         native selector -> behavior (auto-inject)
+ *   extensionMap      x-* attribute -> behavior
+ *   BEHAVIOR_ALIASES  renamed x- name -> the behavior it now runs
+ *   propertyMap       plain attribute (tooltip=, badge=) -> behavior
+ *   legacyLazyMap     [data-tooltip] -> tooltip, wb-lazy.js only
+ *
+ * A registered behavior that no map routes still answers to [x-{name}]: both
+ * runtimes compute that selector from wb-viewmodels/index.js (#1642).
+ * scripts/audit-behavior-registry.mjs --gate fails if a selector table
+ * appears anywhere else.
  */
 
 // ============================================================================
@@ -152,7 +164,7 @@ export const extensionMap = {
   // already worked via the <div x-stack>/<div x-cluster> TAG form (elementMap
   // above), but had no attribute-decoration form for applying them to an
   // arbitrary element -- unlike most other behaviors in this table. Canonical
-  // location (not wb-lazy.js's own WB_LAZY_ONLY_ATTRIBUTES table) so both
+  // location (not a table in wb-lazy.js, which no longer has one) so both
   // runtimes and any tooling reading getExtensionAttributes() pick it up.
   'x-stack': 'stack',
   'x-cluster': 'cluster',
@@ -304,7 +316,7 @@ export const extensionMap = {
   'x-tags': 'tags',
   'x-collapse': 'collapse',
   // x-copy makes the element itself the copy trigger -- distinct from the
-  // sibling 'x-copybutton' attribute (still wb-lazy.js-only, unmoved),
+  // sibling 'x-copybutton' attribute (further down this table),
   // which overlays a separate positioned copy button on any element. See
   // src/wb-viewmodels/copy.js.
   'x-copy': 'copy',
@@ -328,8 +340,186 @@ export const extensionMap = {
   // These add the same explicit, opt-in x-{name} form every other behavior
   // in this table gets.
   'x-form': 'form',
-  'x-label': 'label'
+  'x-label': 'label',
+
+  // #831: everything below lived in wb-lazy.js's WB_LAZY_ONLY_ATTRIBUTES, a
+  // second registry nothing but that runtime read. Anything that enumerated
+  // tag-map.js alone (the behaviors page, the docs list, every audit) missed
+  // these, and the table grew from 34 to 45 keys while #667 asked for it to
+  // shrink. Moved here in the table's own order, so wb-lazy.js binds them in
+  // the same sequence as before; that table is gone.
+  //
+  // mdhtml.js marks rendered code blocks with bare x-pre / x-code presence
+  // attributes and relies on WB.scan() picking them up (#322). <pre>, <code>,
+  // <kbd> and <img> also auto-inject the same behavior through nativeMap
+  // above; the x- form applies it to another host (#834).
+  'x-pre': 'pre',
+  'x-code': 'code',
+  'x-breadcrumb': 'breadcrumb',
+  'x-notify': 'notify',
+  'x-typewriter': 'typewriter',
+  'x-bounce': 'bounce',
+  'x-pulse': 'pulse',
+  // x-copybutton (#291) overlays a separate positioned copy button on any
+  // element; x-copy above makes the element itself the trigger.
+  'x-copybutton': 'copybutton',
+  'x-fadein': 'fadein',
+  'x-shake': 'shake',
+  // Entrance / attention-seeker animations and relative time (#138).
+  'x-slidein': 'slidein',
+  'x-zoomin': 'zoomin',
+  'x-wobble': 'wobble',
+  'x-tada': 'tada',
+  'x-jello': 'jello',
+  'x-heartbeat': 'heartbeat',
+  'x-flip': 'flip',
+  'x-flash': 'flash',
+  'x-relativetime': 'relativetime',
+  // <input type="password"> auto-injects this through nativeMap (#481).
+  'x-password': 'password',
+  // #1185: documented from 4.0.0.
+  'x-ul': 'ul',
+  'x-ol': 'ol',
+  'x-dl': 'dl',
+  'x-stepper': 'stepper',
+  'x-otp': 'otp',
+  // Not searchfield: x-searchfield above is the container-aware wrapper.
+  'x-search': 'search',
+  'x-clock': 'clock',
+  'x-countdown': 'countdown',
+  'x-pagination': 'pagination',
+  'x-steps': 'steps',
+  'x-kbd': 'kbd',
+  // #834: the element is <img>; docs/behaviors/img.md teaches x-img.
+  'x-img': 'img',
+  'x-popover': 'popover',
+  'x-confirm': 'confirm',
+  'x-prompt': 'prompt',
+  'x-lightbox': 'lightbox',
+  'x-share': 'share',
+  'x-print': 'print',
+  'x-fullscreen': 'fullscreen',
+  'x-truncate': 'truncate',
+  'x-masonry': 'masonry',
+  'x-autosize': 'autosize'
 };
+
+// ============================================================================
+// RENAMED BEHAVIORS (old x- name -> the behavior it now runs)
+// ============================================================================
+// Keyed and valued without the `x-` prefix. A rename keeps the old spelling
+// working for pages written against it, but the old name is NOT a second
+// behavior: it has no doc, schema or examples of its own, and the inventories
+// (the reference docs, the behaviors page) list only the new name.
+// wb-lazy.js binds `[x-old]`; wb-viewmodels/index.js registers the old key, so
+// wb.js's x-{name} route reaches it too. Moved here from attribute-aliases.js
+// (#831), so an alias is a registry entry like any other.
+
+export const BEHAVIOR_ALIASES = Object.freeze({
+  // #668: a highlight.js theme picker; its sync event was already
+  // x:codetheme:sync and its tests were already named code-theme-*.
+  codecontrol: 'codetheme',
+  // #1105: status-coloured text and window dots; "span" named an HTML
+  // element no native element maps to.
+  span: 'status',
+  // #830: John -- "an equivalent x-nav for injecting anywhere". <nav> gets
+  // navbar natively (nativeMap above); x-nav is that same behavior on any
+  // other host. x-navbar is the canonical name (extensionMap above), so the
+  // behaviors page lists navbar once.
+  nav: 'navbar',
+});
+
+// ============================================================================
+// LEGACY AUTO-INJECT (wb-lazy.js only)
+// ============================================================================
+// A bare data-attribute fallback that pre-dates x-tooltip. wb-lazy.js applies
+// it on its auto-inject path beside nativeMap; wb.js never has, and adding it
+// there would change what wb.js pages do, so it is its own map rather than a
+// nativeMap row. Moved here from a literal in wb-lazy.js (#831).
+
+export const legacyLazyMap = {
+  '[data-tooltip]': 'tooltip',
+};
+
+// ============================================================================
+// PROPERTY ATTRIBUTES (plain attribute name -> behavior, no x- prefix)
+// ============================================================================
+// <button tooltip="Hi">, <span badge="success">, <button ripple>,
+// <button toast-message="Saved">. A real, intentional feature, not legacy
+// syntax. Separate from extensionMap because the semantics differ: the
+// attribute carries no x- prefix, its VALUE is the behavior's content, and
+// two of them are excluded from hosts that own the same attribute (below).
+// Moved here from semantic-attributes.js (#831); both runtimes read it.
+
+export const propertyMap = {
+  tooltip: 'tooltip',
+  'toast-message': 'toast',
+  ripple: 'ripple',
+  badge: 'badge',
+};
+
+// Every x-card* family tag treats `badge` AND `tooltip` as its own component
+// props (composeCard renders `badge` as an internal .x-card__badge span, and
+// wires `tooltip`/`hoverText` straight to the same themed tooltip.js behavior
+// itself -- #283). The bare [badge]/[tooltip] selectors below would
+// otherwise also match these cards, double-applying feedback.js's badge()
+// on the card ROOT element (confirmed: a <article badge="NEW" variant="glass">
+// picked up x-badge/x-badge--glass classes and collapsed to fit-content
+// width instead of filling its grid column) -- and for `tooltip`, RACING
+// composeCard()'s own tooltip wiring: this generic auto-inject calls tooltip()
+// with no explicit content, so it falls back to reading the element's
+// `title` attribute chain and, as a side effect, strips the native `title`
+// attribute immediately. If that generic injection's dynamic import happened
+// to resolve before card behavior's, composeCard() would then read an
+// already-stripped `title` attribute and silently drop the card's heading
+// (confirmed live: <article title="…" tooltip="…"> intermittently rendered
+// with no header at all, depending on import timing). Excluded explicitly so
+// card components keep sole ownership of their own `badge`/`tooltip`
+// attributes.
+export const CARD_TAGS = [
+  'x-card', 'x-cardbutton', 'x-carddraggable', 'x-cardexpandable', 'x-cardfile',
+  'x-cardhero', 'x-cardhorizontal', 'x-cardimage', 'x-cardlink', 'x-card-link',
+  'x-cardminimizable', 'x-cardnotification', 'x-cardoverlay', 'x-cardportfolio',
+  'x-cardpricing', 'x-cardproduct', 'x-cardprofile', 'x-cardstats',
+  'x-cardtestimonial', 'x-cardvideo',
+];
+// #625/#626: the tag-based exclusion above only ever covered the x-card*
+// CUSTOM TAGS -- it has no way to recognize a semantic
+// <article x-behavior="card">/<article x-card>. Confirmed live:
+// docs/components/cards/card.md's "Card anatomy" example, rewritten to
+// <article x-behavior="card" badge="LIVE">, picked up x-badge/x-badge--live
+// classes on the ROOT element. Both attribute forms (x-card, and the
+// always-available generic x-behavior="card") are excluded too.
+const CARD_BEHAVIOR_NAMES = ['card']; // extend as more card variants migrate to semantic HTML + x-behavior
+// <article> is the third form, and the one the docs now use. It IS a card by
+// auto-injection (nativeMap above), so it owns its own `badge` exactly as
+// <x-card> and [x-card] do -- but it is not a card TAG and carries no x-card
+// attribute, so neither existing exclusion caught it.
+const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('')
+  + ':not(article)'
+  + CARD_BEHAVIOR_NAMES.map(b => `:not([x-behavior~="${b}"])`).join('')
+  + CARD_BEHAVIOR_NAMES.map(b => `:not([x-${b}])`).join('');
+
+const CARD_OWNED_ATTRIBUTES = ['badge', 'tooltip'];
+
+// <header> renders its OWN `badge` (header.js builds .x-header__badge in
+// .x-header__right), so the generic badge() must not also run on it: it
+// re-read the header's `icon` and prepended a second .x-badge__icon, and
+// used badge="v1.0" as a variant name (x-badge--v1.0 on the header root).
+// Badge-only: header has no tooltip handling of its own, so it keeps the
+// generic themed [tooltip].
+const BADGE_ONLY_EXCLUSIONS = ':not(header)';
+
+/**
+ * { selector, behavior } pairs, one per propertyMap entry, ready to feed
+ * straight into a `querySelectorAll(selector)` + inject loop.
+ */
+export const propertyMappings = Object.entries(propertyMap).map(([attr, behavior]) => ({
+  selector: CARD_OWNED_ATTRIBUTES.includes(attr)
+    ? `[${attr}]${CARD_TAG_EXCLUSIONS}${attr === 'badge' ? BADGE_ONLY_EXCLUSIONS : ''}`
+    : `[${attr}]`,
+  behavior,
+}));
 
 // ============================================================================
 // MERGED REGISTRY

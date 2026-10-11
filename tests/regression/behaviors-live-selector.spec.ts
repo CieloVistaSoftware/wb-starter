@@ -7,9 +7,9 @@ import { test, expect } from '../fixtures/offline';
  * That hand-verification caught eight real bugs, but pinned none of them. This
  * spec pins the ones that would silently regress:
  *
- *   - the list is built from BOTH x-* registries (tag-map's extensionMap and
- *     wb-lazy's WB_LAZY_ONLY_ATTRIBUTES). Reading tag-map alone under-reported
- *     the surface by a third and nothing errored (#667).
+ *   - the list covers every x-* attribute in tag-map's extensionMap, which
+ *     since #831 includes wb-lazy's old WB_LAZY_ONLY_ATTRIBUTES table. Reading
+ *     tag-map alone used to under-report the surface by a third (#667).
  *   - auto-injected behaviors are listed as their SEMANTIC ELEMENT, not a
  *     duplicated x-* attribute (<button>, not x-button).
  *   - every axis produces rows: variant enums, non-variant enums (position,
@@ -48,8 +48,7 @@ test.describe('Behaviors selector — structure (#664/#666)', () => {
       // page is /behaviors now (#1001), so a path with the name still on it
       // would ask for /behaviorssrc/....
       const tagMap: any = await import(new URL('src/core/tag-map.js', document.baseURI).href);
-      const lazy: any = await import(new URL('src/core/wb-lazy.js', document.baseURI).href);
-      const merged = { ...(lazy.WB_LAZY_ONLY_ATTRIBUTES || {}), ...tagMap.extensionMap };
+      const merged = tagMap.extensionMap;
 
       const labels = new Set(rows.map((r) => r.dataset.label));
       const attrs = new Set(rows.map((r) => r.dataset.browseToken));
@@ -64,8 +63,8 @@ test.describe('Behaviors selector — structure (#664/#666)', () => {
       return {
         rowCount: rows.length,
         malformed: malformed.length,
-        // wb-lazy-only attributes must be present -- reading tag-map alone
-        // omitted these entirely (#667).
+        // Once wb-lazy-only attributes must be present -- reading tag-map
+        // alone omitted these entirely before #831 moved them into it (#667).
         lazyOnlyPresent: ['x-fadein', 'x-lightbox', 'x-confirm', 'x-bounce'].filter((t) => attrs.has(t)),
         // Morphing forms are excluded.
         asForms: [...attrs].filter((a) => (a || '').startsWith('x-as-')),

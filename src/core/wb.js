@@ -145,8 +145,7 @@ import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
 import './click-confirm.js';
 import { Theme } from './theme.js';
-import { getNativeBehavior, nativeMap } from './tag-map.js';
-import { semanticPropertyMappings } from './semantic-attributes.js';
+import { getNativeBehavior, nativeMap, propertyMappings } from './tag-map.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
 // x-grid/x-demo/x-column/x-cluster/x-stack/x-row/x-search/x-accordion are all
@@ -661,13 +660,13 @@ const WB = {
     // Semantic property attributes (tooltip=, badge=, ripple, toast-message=)
     // -- a real, intentional feature for attaching a behavior directly to a
     // semantic element by plain property name, no x- prefix required. Shared
-    // with wb-lazy.js via semantic-attributes.js so both engines support the
+    // with wb-lazy.js via tag-map.js's propertyMap so both engines support the
     // same vocabulary; this loop was entirely missing here before (#354) --
     // wb-lazy.js's runtime supported these, this one silently didn't, with
     // no error. Unconditional (like the wb-* tag loop above), independent of
     // the autoInject setting: these are explicit per-element opt-ins, not a
     // native-tag guess.
-    semanticPropertyMappings.forEach(({ selector, behavior }) => {
+    propertyMappings.forEach(({ selector, behavior }) => {
       matchingElements(root, selector).forEach(el => {
         const htmlEl = /** @type {HTMLElement} */ (el);
         if (behaviors[behavior]) {
@@ -894,7 +893,7 @@ dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length
           // Semantic property attributes (tooltip=, badge=, ripple,
           // toast-message=) on the node itself and any descendant — see
           // scan()'s matching block for the full rationale (#354).
-          semanticPropertyMappings.forEach(({ selector, behavior }) => {
+          propertyMappings.forEach(({ selector, behavior }) => {
             if (behaviors[behavior]) {
               if (el.matches?.(selector)) WB.inject(el, behavior);
               el.querySelectorAll?.(selector).forEach(descendant => {

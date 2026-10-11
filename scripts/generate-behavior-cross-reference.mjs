@@ -6,7 +6,7 @@
  * The doc opened "A complete reference of all WB Behaviors" and had prose for
  * 50 of 185. The prose stays; the claim of completeness moves to a table this
  * script writes between the inventory markers: one row per behavior, read from
- * the registries (tag-map.js and wb-lazy.js, via scripts/lib/behavior-inventory.mjs),
+ * the registry (tag-map.js, via scripts/lib/behavior-inventory.mjs),
  * so a behavior with no prose is listed as such instead of silently missing.
  *
  *   node scripts/generate-behavior-cross-reference.mjs           # rewrite the table
@@ -35,7 +35,7 @@ export function buildInventory(doc) {
 
   // One row per behavior (the module name), with every way it is written.
   const rows = new Map();
-  for (const b of reachableBehaviors(ROOT, { includeLazy: true })) {
+  for (const b of reachableBehaviors(ROOT)) {
     const row = rows.get(b.name) || { name: b.name, tags: new Set(), attrs: new Set() };
     if (b.autoInjected) row.tags.add(b.key); else row.attrs.add('x-' + b.token);
     rows.set(b.name, row);
@@ -61,10 +61,9 @@ export function buildInventory(doc) {
     '## Inventory: every behavior',
     '',
     // Not phrased "N behaviors": behavior-docs-match-the-map.spec.ts polices
-    // that shape against tag-map.js alone, and this count also includes
-    // wb-lazy.js's attribute-only behaviors (#666). This number is generated
-    // and --check keeps it current, so it cannot go stale the way prose did.
-    `Rows: **${sorted.length}**, read from ${code('src/core/tag-map.js')} and ${code('src/core/wb-lazy.js')}. ` +
+    // that shape. This number is generated and --check keeps it current, so it
+    // cannot go stale the way prose did.
+    `Rows: **${sorted.length}**, read from ${code('src/core/tag-map.js')}. ` +
       `${documented} have a reference page in ${code('docs/behaviors/')}; ${detailed} also have a detailed section in this document. ` +
       'A behavior marked "undocumented" exists and works; it has no reference page yet.',
     '',
