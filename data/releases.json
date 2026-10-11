@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.501",
+      "date": "2026-10-10",
+      "summary": "Pressing End in the doc viewer now reaches the true bottom even when content keeps loading after the jump. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/466\" target=\"_blank\" rel=\"noopener\">#466</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1840\" target=\"_blank\" rel=\"noopener\">#1840</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>End keeps the reader on the bottom while the page is still growing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/466\" target=\"_blank\" rel=\"noopener\">#466</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1840\" target=\"_blank\" rel=\"noopener\">#1840</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/50724b7728ddf0079cc074dcc82e6ca03e2d12ee\" target=\"_blank\" rel=\"noopener\"><code>50724b7</code></a>",
+          "issues": [
+            466,
+            1840
+          ]
+        }
+      ],
+      "seeIt": "Open /public/doc-viewer.html?file=<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Findex.md\" target=\"_blank\" rel=\"noopener\">docs/index.md</a>, press End, then add content to #content from the console. Before: the page grows below you and you are left short. Now: the view follows it down, until you scroll yourself.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/50724b7728ddf0079cc074dcc82e6ca03e2d12ee\" target=\"_blank\" rel=\"noopener\"><code>50724b7</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.500",
       "date": "2026-10-10",
       "summary": "Pare the .md docs down to what a casual user needs; archive the rest <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1835\" target=\"_blank\" rel=\"noopener\">#1835</a>",
