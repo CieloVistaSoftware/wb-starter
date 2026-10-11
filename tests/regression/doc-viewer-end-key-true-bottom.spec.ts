@@ -97,4 +97,60 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
       return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
     }), { timeout: 10000 }).toBeLessThanOrEqual(5);
   });
+
+  // CI on #1838 (Windows): End landed on scrollTop 168731, then the page grew
+  // another 852px AFTER the handler's last check, and the reader sat 852px short
+  // for the rest of the 15s poll. The handler stopped tracking once the height
+  // had been still for END_SCROLL_QUIET_MS (200ms); a slow runner can leave a
+  // longer gap than that between one bit of growth and the next. Reproduced
+  // here by growing the page once the landing is done.
+  test('End keeps the reader on the bottom when the page grows after landing', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 855 });
+    await page.goto('/public/doc-viewer.html?file=docs/index.md', { waitUntil: 'load' });
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight > document.documentElement.clientHeight), { timeout: 20000 }).toBe(true);
+
+    const gap = () => page.evaluate(() => {
+      const el = document.documentElement;
+      return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
+    });
+    await page.keyboard.press('End');
+    await expect.poll(gap, { timeout: 10000 }).toBeLessThanOrEqual(5);
+    // The settle loop has finished and the page is following the bottom
+    // (html[data-end-scroll="following"]). Grow it the way CI saw it grow:
+    // content arriving under the reader, with no input.
+    await expect(page.locator('html')).toHaveAttribute('data-end-scroll', 'following', { timeout: 10000 });
+    await page.evaluate(() => {
+      const late = document.createElement('div');
+      late.style.height = '852px';
+      document.getElementById('content')!.append(late);
+    });
+    await expect.poll(gap, { timeout: 10000, message: 'End still lands on the true bottom after late growth' }).toBeLessThanOrEqual(5);
+  });
+
+  test('a reader who scrolls up after End is not pulled back down by later growth', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 855 });
+    await page.goto('/public/doc-viewer.html?file=docs/index.md', { waitUntil: 'load' });
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight > document.documentElement.clientHeight), { timeout: 20000 }).toBe(true);
+
+    await page.keyboard.press('End');
+    await expect.poll(() => page.evaluate(() => {
+      const el = document.documentElement;
+      return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
+    }), { timeout: 10000 }).toBeLessThanOrEqual(5);
+    await page.mouse.move(640, 400);
+    await page.mouse.wheel(0, -600);
+    await expect.poll(() => page.evaluate(() => {
+      const el = document.documentElement;
+      return el.scrollHeight - el.clientHeight - el.scrollTop;
+    }), { timeout: 5000 }).toBeGreaterThan(300);
+    const before = await page.evaluate(() => document.documentElement.scrollTop);
+    await page.evaluate(() => {
+      const late = document.createElement('div');
+      late.style.height = '852px';
+      document.getElementById('content')!.append(late);
+    });
+    // Give a follower every chance to (wrongly) move the reader.
+    await page.evaluate(() => new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(() => ok(null)))));
+    expect(await page.evaluate(() => document.documentElement.scrollTop), 'the reader stays where they scrolled to').toBe(before);
+  });
 });
