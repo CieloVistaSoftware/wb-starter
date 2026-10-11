@@ -55,3 +55,11 @@ Move them to `archive/`, keeping their original path (a one-off script in
 `scripts/` moves to the same name under `archive/scripts/`). Nothing is deleted, and nothing in `archive/`
 is loaded, tested or shipped. `archive/` is still in the public repo: archiving
 does not make a file private.
+
+Docs are the one exception (#1239): a retired doc moves to `docs/archive/`,
+keeping its path under `docs/` (a doc in the `_today` folder moves to
+`archive/_today` inside `docs/`). No manifest, catalog or search index lists it, and
+no user doc may link to it. A doc goes there only when nothing references it or
+another doc supersedes it; a maintainer doc that sessions, CLAUDE.md, gates or
+scripts read by path stays where it is, hidden from the Docs page catalog by its
+`audience` (`scripts/lib/doc-audience.mjs`).

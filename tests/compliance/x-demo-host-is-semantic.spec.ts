@@ -39,7 +39,7 @@ const MENTIONS_ALLOWED: Record<string, { max: number; why: string }> = {
     max: 1,
     why: '§1 host vocabulary (a ```text fence): `<div x-demo>` is the last-resort host the standard still allows',
   },
-  'docs/architecture/WB-PREFIX-AUDIT.md': { max: 1, why: 'a measured audit of the 4.0.0 rename: "268 with closers" was true of the tree it measured' },
+  'docs/archive/architecture/WB-PREFIX-AUDIT.md': { max: 1, why: 'archived (#1239); a measured audit of the 4.0.0 rename: "268 with closers" was true of the tree it measured' },
   'pages/behaviors.html': { max: 2, why: 'code comments recording history: "those 88 <div x-demo> blocks", and what the 4.0.0 rename produced' },
   'demos/playground.html': { max: 1, why: 'a code comment recording history: "53 <div x-demo> blocks used to live here"' },
   // Dated session records. Rewriting them would make them say something that
