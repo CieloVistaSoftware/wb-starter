@@ -42,7 +42,32 @@
     "setup": [
       "<div x-fixed>Pinned</div>",
       "<div x-fixed position=\"top-right\" offset=\"2rem\">Pinned</div>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "position": "top-left"
+        },
+        {
+          "position": "top-right"
+        },
+        {
+          "position": "top-center"
+        },
+        {
+          "position": "bottom-left"
+        },
+        {
+          "position": "bottom-right"
+        },
+        {
+          "position": "bottom-center"
+        },
+        {
+          "position": "center"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#1841)",

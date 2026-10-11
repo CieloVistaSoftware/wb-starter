@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T01:29:32.356Z",
+  "generatedAt": "2026-10-11T01:55:05.003Z",
   "count": 212,
   "schemas": [
     {
@@ -3617,7 +3617,29 @@
           "default": 1000
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "position": "top-left"
+        },
+        {
+          "position": "top-right"
+        },
+        {
+          "position": "top-center"
+        },
+        {
+          "position": "bottom-left"
+        },
+        {
+          "position": "bottom-right"
+        },
+        {
+          "position": "bottom-center"
+        },
+        {
+          "position": "center"
+        }
+      ],
       "_metadata": {
         "generatedBy": "written by hand (#1841)",
         "derivedFrom": "layouts.js fixed() — every property here is one the behavior reads"
@@ -6689,7 +6711,47 @@
           "default": ""
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "primary"
+        },
+        {
+          "variant": "secondary"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "variant": "warning"
+        },
+        {
+          "variant": "error"
+        },
+        {
+          "variant": "info"
+        },
+        {
+          "variant": "glass"
+        },
+        {
+          "variant": "gradient"
+        },
+        {
+          "size": "xs"
+        },
+        {
+          "size": "sm"
+        },
+        {
+          "size": "md"
+        },
+        {
+          "size": "lg"
+        }
+      ],
       "_metadata": {
         "generatedBy": "written by hand (#1841)",
         "derivedFrom": "feedback.js pill() — every property here is one the behavior reads"
@@ -8033,7 +8095,17 @@
           "default": ""
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "direction": "vertical"
+        },
+        {
+          "direction": "horizontal"
+        },
+        {
+          "direction": "both"
+        }
+      ],
       "_metadata": {
         "generatedBy": "written by hand (#1841)",
         "derivedFrom": "layouts.js scrollable() — every property here is one the behavior reads"
@@ -8690,7 +8762,20 @@
           ]
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "direction": "left"
+        },
+        {
+          "direction": "right"
+        },
+        {
+          "direction": "up"
+        },
+        {
+          "direction": "down"
+        }
+      ],
       "_metadata": {
         "generatedBy": "written by hand (#1841)",
         "derivedFrom": "effects.js slideout() — every property here is one the behavior reads"
@@ -9182,7 +9267,17 @@
           ]
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "position": "bottom"
+        },
+        {
+          "position": "top"
+        },
+        {
+          "position": "fixed"
+        }
+      ],
       "_metadata": {
         "generatedBy": "written by hand (#1841)",
         "derivedFrom": "navigation.js statusbar() — every property here is one the behavior reads"

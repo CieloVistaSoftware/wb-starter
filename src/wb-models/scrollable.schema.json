@@ -37,7 +37,20 @@
     "setup": [
       "<div x-scrollable max-height=\"6rem\">Long content that scrolls</div>",
       "<div x-scrollable direction=\"horizontal\" max-width=\"12rem\">Wide content that scrolls sideways</div>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "direction": "vertical"
+        },
+        {
+          "direction": "horizontal"
+        },
+        {
+          "direction": "both"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#1841)",

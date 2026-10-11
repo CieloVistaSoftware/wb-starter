@@ -28,7 +28,23 @@
     "setup": [
       "<button x-slideout>Click to slide out</button>",
       "<button x-slideout direction=\"right\">Click to slide out right</button>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "direction": "left"
+        },
+        {
+          "direction": "right"
+        },
+        {
+          "direction": "up"
+        },
+        {
+          "direction": "down"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#1841)",

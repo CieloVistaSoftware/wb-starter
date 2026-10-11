@@ -80,7 +80,50 @@
       "<span x-pill>New</span>",
       "<span x-pill variant=\"success\">Active</span>",
       "<span x-pill size=\"sm\" outline>Draft</span>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "primary"
+        },
+        {
+          "variant": "secondary"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "variant": "warning"
+        },
+        {
+          "variant": "error"
+        },
+        {
+          "variant": "info"
+        },
+        {
+          "variant": "glass"
+        },
+        {
+          "variant": "gradient"
+        },
+        {
+          "size": "xs"
+        },
+        {
+          "size": "sm"
+        },
+        {
+          "size": "md"
+        },
+        {
+          "size": "lg"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#1841)",

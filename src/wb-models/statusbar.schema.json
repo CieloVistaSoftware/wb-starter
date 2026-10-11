@@ -32,7 +32,20 @@
     "setup": [
       "<div x-statusbar items=\"Ready,Ln 1,UTF-8\"></div>",
       "<div x-statusbar items=\"Ready,UTF-8\" position=\"top\"></div>"
-    ]
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "position": "bottom"
+        },
+        {
+          "position": "top"
+        },
+        {
+          "position": "fixed"
+        }
+      ]
+    }
   },
   "_metadata": {
     "generatedBy": "written by hand (#1841)",
