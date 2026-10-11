@@ -114,7 +114,7 @@ attribute on a host.
 > label did not mean what it says. Renamed under **#465**: the architecture is
 > composition, so the vocabulary is too.
 
-<div x-demo>
+<figure x-demo>
 <article
   title="Hello">
   Content
@@ -130,7 +130,7 @@ attribute on a host.
   x-tooltip="Save changes">
   Save
 </button>
-</div>
+</figure>
 
 ---
 
@@ -325,21 +325,21 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 
 For a simple string list, CSV is fine:
 
-<div x-demo>
+<figure x-demo>
 <nav x-breadcrumb items="Home,Products,Shoes"></nav>
 <div x-steps items="Cart,Shipping,Payment" current="1"></div>
-</div>
+</figure>
 
 ### JSON Arrays
 
 When a value needs its own commas, or a row needs several values, pass JSON:
 
-<div x-demo>
+<figure x-demo>
 <table
   headers="City,Population"
   rows='[["Paris, France","2,102,650"],["Austin, Texas","979,882"]]'>
 </table>
-</div>
+</figure>
 
 ### Objects
 
@@ -348,13 +348,13 @@ An object is spread into one attribute per field, never passed whole:
 `user='{"name":"John","role":"Admin"}'`. That keeps every field in the schema,
 where it is documented and checked.
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardprofile
   name="John"
   role="Admin">
 </article>
-</div>
+</figure>
 
 ### External Data
 ```html-static
@@ -388,17 +388,17 @@ Extensions use `x-` prefix with optional value:
 
 ### Boolean Extensions (no value needed)
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple>Click me</button>
 <div x-draggable>Drag me</div>
-</div>
+</figure>
 
 ### Configured Extensions
 
 The value of the `x-` attribute is the behavior's main option; further options
 are plain attributes beside it:
 
-<div x-demo>
+<figure x-demo>
 <button x-tooltip="Save changes">Save</button>
 <button
   x-animate
@@ -406,7 +406,7 @@ are plain attributes beside it:
   duration="0.8s">
   Bounce
 </button>
-</div>
+</figure>
 
 ---
 
@@ -479,14 +479,14 @@ is about the ones we invent.
 
 `columns="3"` is a count; `items="Cart,Shipping,Payment"` is a list:
 
-<div x-demo>
+<figure x-demo>
 <div x-grid columns="3">
   <div>One</div>
   <div>Two</div>
   <div>Three</div>
 </div>
 <div x-steps items="Cart,Shipping,Payment"></div>
-</div>
+</figure>
 
 ### Boolean Attributes
 
@@ -551,14 +551,14 @@ up, down, flat, neutral
 
 ARIA attributes should pass through unchanged:
 
-<div x-demo>
+<figure x-demo>
 <section
   x-tabs
   aria-label="Account settings">
   <section title="Profile">Name and photo.</section>
   <section title="Security">Password and two-factor sign-in.</section>
 </section>
-</div>
+</figure>
 
 ### Behavior-Managed ARIA
 
@@ -577,13 +577,13 @@ Some ARIA attributes are set automatically by behaviors:
 Use `label` for visible label text, `aria-label` for a name only a screen
 reader hears, and `aria-labelledby` to point at another element's text:
 
-<div x-demo>
+<figure x-demo>
 <div x-switch label="Enable notifications"></div>
 <button aria-label="Close">✕</button>
 <section aria-labelledby="features-title">
   <h2 id="features-title">Features</h2>
 </section>
-</div>
+</figure>
 
 ---
 
@@ -605,7 +605,7 @@ Lengths carry their unit (`gap="1.5rem"`, `minWidth="160px"`), counts and
 values do not (`perPage="10"`, `value="75"`), and `duration` is milliseconds
 (`5000` is five seconds):
 
-<div x-demo>
+<figure x-demo>
 <div
   x-grid
   gap="1.5rem"
@@ -629,13 +629,13 @@ values do not (`perPage="10"`, `value="75"`), and `duration` is milliseconds
   duration="5000">
   Save
 </button>
-</div>
+</figure>
 
 ### Number Formatting
 
 Display values can include formatting - they're strings, not numbers:
 
-<div x-demo>
+<figure x-demo>
 <div
   x-cardstats
   value="$1,234.56"
@@ -655,7 +655,7 @@ Display values can include formatting - they're strings, not numbers:
   value="5"
   min="0"
   max="10">
-</div>
+</figure>
 
 ---
 
@@ -700,14 +700,14 @@ One implementation: `src/core/author-content.js` (`authorText`, `hasAuthorConten
 
 wb-starter is light DOM only — composition over inheritance, no Shadow DOM, no `<slot>` mechanism. Element children ARE the behavior's body content, exactly as authored:
 
-<div x-demo>
+<figure x-demo>
 <article title="Title">
   <p>This paragraph is the card's body content.</p>
 </article>
 <div x-alert variant="warning">
   <strong>Warning:</strong> This is the alert content.
 </div>
-</div>
+</figure>
 
 There's no named-slot equivalent for routing children into specific internal regions (a header area, a footer area, etc.) — that's what dedicated attributes are for (`heading`, `subheading`, `footer`, ...; see [Standard Custom Attributes](#standard-custom-attributes)). If a behavior needs to place content in more than one internal region, give it more than one attribute — never a `slot="…"` attribute.
 
@@ -761,7 +761,7 @@ Behaviors should expose CSS custom properties for theming:
 
 ### After (v3 — current standard)
 
-<div x-demo>
+<figure x-demo>
 <article
   title="Hello"
   elevated>
@@ -771,16 +771,16 @@ Behaviors should expose CSS custom properties for theming:
   variant="warning"
   message="Caution!">
 </div>
-</div>
+</figure>
 
 Modifier behaviors (applied to any element) didn't change — they were
 already the direct `x-{name}` form, not `x-behavior="{name}"`:
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple x-tooltip="Click me">
   Save
 </button>
-</div>
+</figure>
 
 ### Migration Checklist
 
@@ -879,7 +879,7 @@ name         attribute with DIFFERENT meaning?
 
 ### Cards
 
-<div x-demo>
+<figure x-demo>
 <article
   title="Welcome"
   subtitle="Get started"
@@ -909,11 +909,11 @@ name         attribute with DIFFERENT meaning?
   title="Photo Title"
   loading="lazy">
 </article>
-</div>
+</figure>
 
 ### Feedback
 
-<div x-demo>
+<figure x-demo>
 <div
   x-alert
   variant="warning"
@@ -936,11 +936,11 @@ name         attribute with DIFFERENT meaning?
   duration="3000">
   Save
 </button>
-</div>
+</figure>
 
 ### Navigation
 
-<div x-demo>
+<figure x-demo>
 <nav x-breadcrumb items="Home,Products,Shoes"></nav>
 <div
   x-tabs
@@ -960,11 +960,11 @@ name         attribute with DIFFERENT meaning?
   items="Cart,Shipping,Payment"
   current="1">
 </div>
-</div>
+</figure>
 
 ### Forms
 
-<div x-demo>
+<figure x-demo>
 <input
   placeholder="Enter your name"
   required
@@ -987,11 +987,11 @@ name         attribute with DIFFERENT meaning?
   max="100"
   value="50"
   step="5">
-</div>
+</figure>
 
 ### Media
 
-<div x-demo>
+<figure x-demo>
 <video
   src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
@@ -1005,11 +1005,11 @@ name         attribute with DIFFERENT meaning?
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg" alt="Glacier Point over Yosemite Valley">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg" alt="The tip of a fjord">
 </div>
-</div>
+</figure>
 
 ### Data Display
 
-<div x-demo>
+<figure x-demo>
 <table
   headers="Name,Email,Role"
   rows='[["Alice","alice@example.com","Admin"],["Bob","bob@example.com","User"]]'
@@ -1019,11 +1019,11 @@ name         attribute with DIFFERENT meaning?
   x-timeline
   items="Project Start,Beta Launch,Release">
 </div>
-</div>
+</figure>
 
 ### Extensions
 
-<div x-demo>
+<figure x-demo>
 <button
   x-ripple
   x-tooltip="Save your work">
@@ -1040,7 +1040,7 @@ name         attribute with DIFFERENT meaning?
   x-resizable>
   Drag and resize me
 </div>
-</div>
+</figure>
 
 ---
 

@@ -4,10 +4,10 @@
 
 ## Usage
 
-<div x-demo columns="2">
+<figure x-demo columns="2">
   <button variant="primary">Save</button>
   <button variant="secondary">Cancel</button>
-</div>
+</figure>
 
 ## Attributes
 

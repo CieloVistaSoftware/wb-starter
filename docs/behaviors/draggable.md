@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-draggable axis="both" style="display:inline-block;padding:1rem;border:1px dashed var(--border-color);background:var(--bg-secondary)">Drag me</div>
-</div>
+</figure>
 
 ## Attributes
 

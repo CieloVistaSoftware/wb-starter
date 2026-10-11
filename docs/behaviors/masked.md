@@ -11,13 +11,13 @@ license plates, etc). See [src/wb-viewmodels/masked.js](../../src/wb-viewmodels/
 `9` in the mask means "digit", `A` means "letter"; everything else is a
 literal separator inserted automatically as the user fills in slots:
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-masked mask="(999) 999-9999" placeholder="(000) 000-0000">
-</div>
+</figure>
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-masked mask="AA-9999" mask-placeholder="#">
-</div>
+</figure>
 
 ## Properties
 

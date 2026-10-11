@@ -27,27 +27,27 @@ renders the version. Reads a single source of truth
 
 ### Default
 
-<div x-demo>
+<figure x-demo>
 <span x-release></span>
-</div>
+</figure>
 
 ### Custom format showing the commit and build time
 
-<div x-demo>
+<figure x-demo>
 <span x-release format="{version} ({commit}) — built {built}"></span>
-</div>
+</figure>
 
 ### Non-interactive (no click-to-reload)
 
-<div x-demo>
+<figure x-demo>
 <span x-release reload="false"></span>
-</div>
+</figure>
 
 ### On a plain `<div>`
 
-<div x-demo>
+<figure x-demo>
 <div x-release></div>
-</div>
+</figure>
 
 ## CSS Classes
 

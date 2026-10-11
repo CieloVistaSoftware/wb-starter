@@ -24,12 +24,12 @@ If you want to **prevent** Auto Injection for a specific element, use the `x-ign
 
 This `<button>` gets the `button` behavior from its tag and `ripple` from its attribute; the `<nav>` does not become a WB navbar:
 
-<div x-demo>
+<figure x-demo>
 <button x-ripple>Click Me</button>
 <nav x-ignore>
   <a href="#">Just a link</a>
 </nav>
-</div>
+</figure>
 
 ---
 
@@ -76,11 +76,11 @@ The following HTML elements are automatically mapped to WB behaviors:
 ### 1. Card Behavior
 **Explicit (any other host):**
 
-<div x-demo>
+<figure x-demo>
 <section x-card title="Title">
   <p>Content</p>
 </section>
-</div>
+</figure>
 
 **Implicit (Auto Injection):**
 ```html
@@ -130,20 +130,20 @@ The following HTML elements are automatically mapped to WB behaviors:
 
 If you want to use a semantic element *without* the WB behavior, add the `x-ignore` attribute. This `<nav>` does not become a WB navbar:
 
-<div x-demo>
+<figure x-demo>
 <nav x-ignore>
   <a href="#">Just a link</a>
 </nav>
-</div>
+</figure>
 
 ## Overriding
 
 If you want to use a semantic element but apply a *different* behavior, name it with its attribute. This `<article>` is built by `cardhero` instead of the plain `card`, and renders one card, not two (#923):
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardhero
   title="Welcome"
   subtitle="Start with semantic HTML">
 </article>
-</div>
+</figure>

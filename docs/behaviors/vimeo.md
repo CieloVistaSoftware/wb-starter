@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-vimeo videoId="76979871"></div>
-</div>
+</figure>
 
 ## Attributes
 

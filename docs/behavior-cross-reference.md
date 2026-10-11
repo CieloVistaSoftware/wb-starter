@@ -234,17 +234,17 @@ These behaviors enhance the element while preserving its identity.
 
 Basic buttons - auto-styled:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button>Default Primary</button>
 <button type="submit">Submit Form</button>
 <button type="reset">Reset</button>
 </div>
-</div>
+</figure>
 
 All variants:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button variant="primary">Primary</button>
 <button variant="secondary">Secondary</button>
@@ -255,11 +255,11 @@ All variants:
 <button variant="link">Link Style</button>
 <button variant="outline">Outline</button>
 </div>
-</div>
+</figure>
 
 All sizes:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button size="xs">Extra Small</button>
 <button size="sm">Small</button>
@@ -267,11 +267,11 @@ All sizes:
 <button size="lg">Large</button>
 <button size="xl">Extra Large</button>
 </div>
-</div>
+</figure>
 
 With icons:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button icon="💾">Save</button>
 <button
@@ -286,20 +286,20 @@ With icons:
 </button>
 <button icon="←">Back</button>
 </div>
-</div>
+</figure>
 
 States:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button loading>Saving...</button>
 <button disabled>Disabled</button>
 </div>
-</div>
+</figure>
 
 Combined (variant + size + icon together):
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button
   variant="success"
@@ -321,17 +321,17 @@ Combined (variant + size + icon together):
   Confirm Order
 </button>
 </div>
-</div>
+</figure>
 
 **Button Group Example:**
 
-<div x-demo>
+<figure x-demo>
 <div x-flex gap="0.5rem">
   <button variant="outline">Cancel</button>
   <button variant="primary">Save Draft</button>
   <button variant="success">Publish</button>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -359,7 +359,7 @@ Combined (variant + size + icon together):
 
 Basic inputs - auto-styled:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <input
   type="text"
@@ -380,11 +380,11 @@ Basic inputs - auto-styled:
   type="tel"
   placeholder="(555) 123-4567">
 </div>
-</div>
+</figure>
 
 All sizes:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <input
   type="text"
@@ -407,11 +407,11 @@ All sizes:
   size="xl"
   placeholder="Extra large">
 </div>
-</div>
+</figure>
 
 Validation states:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <input
   type="email"
@@ -422,11 +422,11 @@ Validation states:
   variant="error"
   value="invalid-email">
 </div>
-</div>
+</figure>
 
 With prefix/suffix:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <input
   type="text"
@@ -454,11 +454,11 @@ With prefix/suffix:
   suffix="USD"
   placeholder="Amount">
 </div>
-</div>
+</figure>
 
 Clearable:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <input
   type="text"
@@ -474,11 +474,11 @@ Clearable:
   variant="error"
   placeholder="Fix this email">
 </div>
-</div>
+</figure>
 
 Combined (size + prefix + clearable together):
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <input
   type="text"
@@ -493,13 +493,13 @@ Combined (size + prefix + clearable together):
   size="lg"
   placeholder="99">
 </div>
-</div>
+</figure>
 
 **Form Field Examples:**
 
 Login form:
 
-<div x-demo>
+<figure x-demo>
 <form>
   <label>Email
     <input
@@ -519,11 +519,11 @@ Login form:
     Sign In
   </button>
 </form>
-</div>
+</figure>
 
 Price input:
 
-<div x-demo>
+<figure x-demo>
 <label>Product Price
   <input
     type="number"
@@ -532,18 +532,18 @@ Price input:
     placeholder="99"
     size="lg">
 </label>
-</div>
+</figure>
 
 Search with icon:
 
-<div x-demo>
+<figure x-demo>
 <input
   type="search"
   prefix="🔍"
   clearable
   size="lg"
   placeholder="Search documentation...">
-</div>
+</figure>
 
 ---
 
@@ -569,25 +569,25 @@ Search with icon:
 
 Basic collapsible:
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>What is WB Behaviors?</summary>
   <p>WB Behaviors is a behavior-based UI library that enhances semantic HTML.</p>
 </details>
-</div>
+</figure>
 
 Starts open:
 
-<div x-demo>
+<figure x-demo>
 <details open>
   <summary>Important Notice</summary>
   <p>This section is expanded by default so users see it immediately.</p>
 </details>
-</div>
+</figure>
 
 FAQ section:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <details>
   <summary>How do I install WB Behaviors?</summary>
@@ -602,11 +602,11 @@ FAQ section:
   <p>Absolutely. WB uses native HTML elements and adds ARIA attributes where needed.</p>
 </details>
 </div>
-</div>
+</figure>
 
 Nested details:
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>Product Categories</summary>
   <details>
@@ -626,11 +626,11 @@ Nested details:
     </ul>
   </details>
 </details>
-</div>
+</figure>
 
 With rich content:
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>View Code Example</summary>
   <pre><code>
@@ -639,11 +639,11 @@ function greet(name) {
 }
   </code></pre>
 </details>
-</div>
+</figure>
 
 Settings panel:
 
-<div x-demo>
+<figure x-demo>
 <details>
   <summary>Advanced Settings</summary>
   <label>
@@ -659,11 +659,11 @@ Settings panel:
     </select>
   </label>
 </details>
-</div>
+</figure>
 
 **Accordion Pattern (multiple details):**
 
-<div x-demo>
+<figure x-demo>
 <div x-stack class="accordion" gap="0.5rem">
   <details open>
     <summary>Step 1: Create Account</summary>
@@ -678,7 +678,7 @@ Settings panel:
     <p>Add your name, photo, and preferences.</p>
   </details>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -708,37 +708,37 @@ the popup itself, hidden until opened -- it is never the thing you click.)
 
 Basic modal:
 
-<div x-demo>
+<figure x-demo>
 <button x-modal
   modalTitle="Welcome!"
   modal-content="<p>Thanks for visiting our site.</p>">
   Show Welcome
 </button>
-</div>
+</figure>
 
 Confirmation dialog:
 
-<div x-demo>
+<figure x-demo>
 <button x-modal
   modalTitle="Delete Item?"
   modal-content="<p>This action cannot be undone. Are you sure?</p>">
   🗑️ Delete
 </button>
-</div>
+</figure>
 
 Form in dialog:
 
-<div x-demo>
+<figure x-demo>
 <button x-modal
   modalTitle="Sign In"
   modal-content='<label>Email <input type="email" placeholder="you@example.com"></label><label>Password <input type="password" placeholder="••••••••"></label>'>
   Sign In
 </button>
-</div>
+</figure>
 
 Image lightbox dialog:
 
-<div x-demo>
+<figure x-demo>
 <button x-modal
   modalTitle="Full Size Photo"
   modal-content='<img src="https://placehold.co/1200x800/1e293b/e2e8f0?text=Full+Size+Photo" alt="Full size photo">'>
@@ -746,27 +746,27 @@ Image lightbox dialog:
     src="https://placehold.co/200x150/1e293b/e2e8f0?text=Thumbnail"
     alt="Click to enlarge">
 </button>
-</div>
+</figure>
 
 Terms and conditions:
 
-<div x-demo>
+<figure x-demo>
 <button x-modal
   modalTitle="Terms of Service"
   modal-content='<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p><label><input type="checkbox"> I agree to the terms and conditions</label>'>
   📜 View Terms
 </button>
-</div>
+</figure>
 
 Settings dialog:
 
-<div x-demo>
+<figure x-demo>
 <button x-modal
   modalTitle="Settings"
   modal-content='<fieldset><legend>Notifications</legend><label><input type="checkbox" checked> Email notifications</label><label><input type="checkbox"> Push notifications</label><label><input type="checkbox" checked> Weekly digest</label></fieldset><fieldset><legend>Privacy</legend><label><input type="checkbox"> Show online status</label><label><input type="checkbox" checked> Allow search engines</label></fieldset>'>
   ⚙️ Settings
 </button>
-</div>
+</figure>
 
 ---
 
@@ -791,7 +791,7 @@ Settings dialog:
 
 Basic data table:
 
-<div x-demo>
+<figure x-demo>
 <table>
   <thead>
     <tr>
@@ -818,11 +818,11 @@ Basic data table:
     </tr>
   </tbody>
 </table>
-</div>
+</figure>
 
 With caption:
 
-<div x-demo>
+<figure x-demo>
 <table>
   <caption>Q4 2025 Sales Report</caption>
   <thead>
@@ -852,11 +852,11 @@ With caption:
     </tr>
   </tfoot>
 </table>
-</div>
+</figure>
 
 Pricing table:
 
-<div x-demo>
+<figure x-demo>
 <table>
   <thead>
     <tr>
@@ -893,11 +893,11 @@ Pricing table:
     </tr>
   </tbody>
 </table>
-</div>
+</figure>
 
 Schedule/calendar table:
 
-<div x-demo>
+<figure x-demo>
 <table>
   <thead>
     <tr>
@@ -936,11 +936,11 @@ Schedule/calendar table:
     </tr>
   </tbody>
 </table>
-</div>
+</figure>
 
 Status table with badges:
 
-<div x-demo>
+<figure x-demo>
 <table>
   <thead>
     <tr>
@@ -989,7 +989,7 @@ Status table with badges:
     </tr>
   </tbody>
 </table>
-</div>
+</figure>
 
 ---
 
@@ -1009,7 +1009,7 @@ Status table with badges:
 
 Contact form:
 
-<div x-demo>
+<figure x-demo>
 <form
   action="/contact"
   method="post">
@@ -1050,11 +1050,11 @@ Contact form:
     Send Message
   </button>
 </form>
-</div>
+</figure>
 
 Registration form:
 
-<div x-demo>
+<figure x-demo>
 <form
   action="/register"
   method="post">
@@ -1130,11 +1130,11 @@ Registration form:
     Create Account
   </button>
 </form>
-</div>
+</figure>
 
 Payment form:
 
-<div x-demo>
+<figure x-demo>
 <form
   action="/checkout"
   method="post">
@@ -1178,11 +1178,11 @@ Payment form:
     Pay $99.00
   </button>
 </form>
-</div>
+</figure>
 
 Search form:
 
-<div x-demo>
+<figure x-demo>
 <form
   action="/search"
   method="get">
@@ -1202,11 +1202,11 @@ Search form:
     </button>
   </div>
 </form>
-</div>
+</figure>
 
 Filter form:
 
-<div x-demo>
+<figure x-demo>
 <form>
   <fieldset>
     <legend>Price Range</legend>
@@ -1284,7 +1284,7 @@ Filter form:
     Clear All
   </button>
 </form>
-</div>
+</figure>
 
 ---
 
@@ -1303,18 +1303,18 @@ Filter form:
 
 Basic select:
 
-<div x-demo>
+<figure x-demo>
 <select>
   <option value="">Choose an option...</option>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
 </select>
-</div>
+</figure>
 
 With optgroups:
 
-<div x-demo>
+<figure x-demo>
 <select>
   <option value="">Select a car...</option>
   <optgroup label="Swedish Cars">
@@ -1327,11 +1327,11 @@ With optgroups:
     <option value="bmw">BMW</option>
   </optgroup>
 </select>
-</div>
+</figure>
 
 Country selector:
 
-<div x-demo>
+<figure x-demo>
 <select name="country">
   <option value="">Select country...</option>
   <option value="us">🇺🇸 United States</option>
@@ -1342,11 +1342,11 @@ Country selector:
   <option value="fr">🇫🇷 France</option>
   <option value="jp">🇯🇵 Japan</option>
 </select>
-</div>
+</figure>
 
 Multiple selection:
 
-<div x-demo>
+<figure x-demo>
 <select
   multiple
   size="5">
@@ -1358,11 +1358,11 @@ Multiple selection:
   <option value="vue">Vue</option>
   <option value="angular">Angular</option>
 </select>
-</div>
+</figure>
 
 With disabled options:
 
-<div x-demo>
+<figure x-demo>
 <select>
   <option value="">Choose a plan...</option>
   <option value="free">Free - $0/mo</option>
@@ -1373,11 +1373,11 @@ With disabled options:
     Enterprise - Contact Us
   </option>
 </select>
-</div>
+</figure>
 
 Date selectors:
 
-<div x-demo>
+<figure x-demo>
 <div x-flex gap="0.5rem">
   <select name="month">
     <option value="">Month</option>
@@ -1397,7 +1397,7 @@ Date selectors:
     <option value="2024">2024</option>
   </select>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -1417,23 +1417,23 @@ Date selectors:
 
 Basic textarea:
 
-<div x-demo>
+<figure x-demo>
 <textarea placeholder="Enter your message..."></textarea>
-</div>
+</figure>
 
 With character limit:
 
-<div x-demo>
+<figure x-demo>
 <textarea
   maxlength="500"
   counter
   placeholder="Write your bio (max 500 characters)...">
 </textarea>
-</div>
+</figure>
 
 Different sizes:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <textarea
   rows="3"
@@ -1444,21 +1444,21 @@ Different sizes:
   placeholder="Long description...">
 </textarea>
 </div>
-</div>
+</figure>
 
 Code input:
 
-<div x-demo>
+<figure x-demo>
 <textarea
   rows="15"
   style="font-family: monospace;"
   placeholder="// Paste your code here...">
 </textarea>
-</div>
+</figure>
 
 Various use cases:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <label> Product Description
   <textarea
@@ -1494,7 +1494,7 @@ Various use cases:
   </textarea>
 </label>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -1513,18 +1513,18 @@ Various use cases:
 
 Single checkbox:
 
-<div x-demo>
+<figure x-demo>
 <label>
   <input
     type="checkbox"
     name="subscribe">
     Subscribe to newsletter
 </label>
-</div>
+</figure>
 
 Terms agreement:
 
-<div x-demo>
+<figure x-demo>
 <label>
   <input
     type="checkbox"
@@ -1533,11 +1533,11 @@ Terms agreement:
     I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy
   </a>
 </label>
-</div>
+</figure>
 
 Checkbox group:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Select your interests:</legend>
   <label>
@@ -1576,11 +1576,11 @@ Checkbox group:
       Food & Cooking
   </label>
 </fieldset>
-</div>
+</figure>
 
 Settings toggles:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Notification Settings</legend>
   <label>
@@ -1610,11 +1610,11 @@ Settings toggles:
       Weekly digest
   </label>
 </fieldset>
-</div>
+</figure>
 
 Feature selection:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Select Features</legend>
   <label>
@@ -1647,14 +1647,14 @@ Feature selection:
       📤 Data Export
   </label>
 </fieldset>
-</div>
+</figure>
 
 Select-all pattern (the `toggleAll()`/indeterminate wiring is application JavaScript,
 not something the doc-viewer's sanitized renderer executes — the markup below
 shows the structural pattern; wiring `checkbox.indeterminate = true` is a
 one-line JS API left to your own code):
 
-<div x-demo>
+<figure x-demo>
 <label>
   <input
     type="checkbox"
@@ -1681,7 +1681,7 @@ one-line JS API left to your own code):
       Item 3
   </label>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -1699,11 +1699,11 @@ one-line JS API left to your own code):
 **Examples:**
 
 Each `<fieldset>` below is one grouped set of radios sharing a `name` — the whole
-group is the unit (one `<div x-demo>` per group, not one per `<input>`).
+group is the unit (one `<figure x-demo>` per group, not one per `<input>`).
 
 Basic radio group:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Choose a size:</legend>
   <label>
@@ -1736,11 +1736,11 @@ Basic radio group:
       Extra Large
   </label>
 </fieldset>
-</div>
+</figure>
 
 Payment method:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Payment Method</legend>
   <label>
@@ -1773,11 +1773,11 @@ Payment method:
       ₿ Cryptocurrency
   </label>
 </fieldset>
-</div>
+</figure>
 
 Shipping options:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Shipping Speed</legend>
   <label>
@@ -1802,11 +1802,11 @@ Shipping options:
       ✈️ Overnight - $24.99
   </label>
 </fieldset>
-</div>
+</figure>
 
 Rating scale:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>How satisfied are you?</legend>
   <label>
@@ -1845,11 +1845,11 @@ Rating scale:
       5 - Very Satisfied
   </label>
 </fieldset>
-</div>
+</figure>
 
 Pricing plans:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Choose Your Plan</legend>
   <label style="display: block; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem;">
@@ -1881,11 +1881,11 @@ Pricing plans:
     <small>Collaboration features for teams</small>
   </label>
 </fieldset>
-</div>
+</figure>
 
 Yes/No questions:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>Do you have prior experience?</legend>
   <label>
@@ -1903,11 +1903,11 @@ Yes/No questions:
       No
   </label>
 </fieldset>
-</div>
+</figure>
 
 Frequency selection:
 
-<div x-demo>
+<figure x-demo>
 <fieldset>
   <legend>How often do you exercise?</legend>
   <label>
@@ -1946,7 +1946,7 @@ Frequency selection:
       Never
   </label>
 </fieldset>
-</div>
+</figure>
 
 ---
 
@@ -1971,7 +1971,7 @@ wiring `input.addEventListener('input', ...)` is one line of your own JS.
 
 Basic range:
 
-<div x-demo>
+<figure x-demo>
 <label> Volume
   <input
     type="range"
@@ -1979,11 +1979,11 @@ Basic range:
     max="100"
     value="50">
 </label>
-</div>
+</figure>
 
 With output display:
 
-<div x-demo>
+<figure x-demo>
 <label> Brightness: <output id="brightnessValue">75</output>%
   <input
     type="range"
@@ -1991,11 +1991,11 @@ With output display:
     max="100"
     value="75">
 </label>
-</div>
+</figure>
 
 Price range:
 
-<div x-demo>
+<figure x-demo>
 <label> Max Price: $<output id="priceValue">500</output>
   <input
     type="range"
@@ -2004,11 +2004,11 @@ Price range:
     step="50"
     value="500">
 </label>
-</div>
+</figure>
 
 Rating slider:
 
-<div x-demo>
+<figure x-demo>
 <label> Rating: <output id="ratingValue">3</output> / 5
   <input
     type="range"
@@ -2017,11 +2017,11 @@ Rating slider:
     step="1"
     value="3">
 </label>
-</div>
+</figure>
 
 Temperature control:
 
-<div x-demo>
+<figure x-demo>
 <label> Temperature: <output id="tempValue">72</output>°F
   <input
     type="range"
@@ -2029,11 +2029,11 @@ Temperature control:
     max="85"
     value="72">
 </label>
-</div>
+</figure>
 
 Opacity slider:
 
-<div x-demo>
+<figure x-demo>
 <label> Opacity: <output id="opacityValue">100</output>%
   <input
     type="range"
@@ -2041,11 +2041,11 @@ Opacity slider:
     max="100"
     value="100">
 </label>
-</div>
+</figure>
 
 Zoom control:
 
-<div x-demo>
+<figure x-demo>
 <label style="display: flex; align-items: center; gap: 0.5rem;">
   <span>🔍-</span>
   <input
@@ -2056,11 +2056,11 @@ Zoom control:
     style="flex: 1;">
   <span>🔍+</span>
 </label>
-</div>
+</figure>
 
 Color hue picker:
 
-<div x-demo>
+<figure x-demo>
 <label> Hue: <output id="hueValue">180</output>°
   <input
     type="range"
@@ -2069,7 +2069,7 @@ Color hue picker:
     value="180"
     style="background: linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);">
 </label>
-</div>
+</figure>
 
 ---
 
@@ -2089,22 +2089,22 @@ Color hue picker:
 
 Basic progress:
 
-<div x-demo>
+<figure x-demo>
 <progress
   value="70"
   max="100">
 </progress>
-</div>
+</figure>
 
 Indeterminate (loading):
 
-<div x-demo>
+<figure x-demo>
 <progress></progress>
-</div>
+</figure>
 
 Various completion levels:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <label>Not started: <progress
     value="0"
@@ -2132,11 +2132,11 @@ Various completion levels:
   </progress>
 </label>
 </div>
-</div>
+</figure>
 
 File upload progress:
 
-<div x-demo>
+<figure x-demo>
 <div>
   <p>Uploading document.pdf...</p>
   <progress
@@ -2145,11 +2145,11 @@ File upload progress:
   </progress>
   <span>45%</span>
 </div>
-</div>
+</figure>
 
 Download progress:
 
-<div x-demo>
+<figure x-demo>
 <div>
   <p>Downloading update (125 MB / 500 MB)</p>
   <progress
@@ -2157,11 +2157,11 @@ Download progress:
     max="500">
   </progress>
 </div>
-</div>
+</figure>
 
 Step progress:
 
-<div x-demo>
+<figure x-demo>
 <div>
   <p>Step 2 of 4</p>
   <progress
@@ -2169,11 +2169,11 @@ Step progress:
     max="4">
   </progress>
 </div>
-</div>
+</figure>
 
 Course progress:
 
-<div x-demo>
+<figure x-demo>
 <div>
   <h3>JavaScript Fundamentals</h3>
   <p>12 of 20 lessons completed</p>
@@ -2182,11 +2182,11 @@ Course progress:
     max="20">
   </progress>
 </div>
-</div>
+</figure>
 
 Multiple progress bars (dashboard):
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
   <label>Storage Used (7.5 GB / 10 GB) <progress
       value="75"
@@ -2204,7 +2204,7 @@ Multiple progress bars (dashboard):
     </progress>
   </label>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -2223,7 +2223,7 @@ Multiple progress bars (dashboard):
 
 Inline code in text:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <p>Use the <code>console.log()</code> function to debug your code.</p>
 <p>The <code>Array.map()</code> method creates a new array.</p>
@@ -2231,34 +2231,34 @@ Inline code in text:
 <p>Run <code>npm install</code> to install dependencies.</p>
 <p>The <code>async/await</code> syntax makes asynchronous code easier to read.</p>
 </div>
-</div>
+</figure>
 
 Variable names:
 
-<div x-demo>
+<figure x-demo>
 <p>Store the result in <code>userData</code> variable.</p>
-</div>
+</figure>
 
 File paths:
 
-<div x-demo>
+<figure x-demo>
 <p>Configuration is in <code>/config/site.json</code>.</p>
-</div>
+</figure>
 
 Commands:
 
-<div x-demo>
+<figure x-demo>
 <p>Press <code>Ctrl+C</code> to copy.</p>
-</div>
+</figure>
 
 Multiple inline codes:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <p>Compare <code>==</code> (loose equality) vs <code>===</code> (strict equality).</p>
 <p>Use <code>let</code> for variables that change, <code>const</code> for constants.</p>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -2281,17 +2281,17 @@ Multiple inline codes:
 
 Basic code block:
 
-<div x-demo>
+<figure x-demo>
 <pre>
 function greet(name) {
   return `Hello, ${name}!`;
 }
 </pre>
-</div>
+</figure>
 
 With line numbers:
 
-<div x-demo>
+<figure x-demo>
 <pre line-numbers>
 const express = require('express');
 const app = express();
@@ -2302,11 +2302,11 @@ app.get('/', (req, res) => {
 
 app.listen(3000);
 </pre>
-</div>
+</figure>
 
 JavaScript example:
 
-<div x-demo>
+<figure x-demo>
 <pre language="javascript">
 // Fetch data from API
 async function fetchUsers() {
@@ -2315,11 +2315,11 @@ async function fetchUsers() {
   return users;
 }
 </pre>
-</div>
+</figure>
 
 HTML example:
 
-<div x-demo>
+<figure x-demo>
 <pre language="html">
 &lt;article&gt;
   &lt;header&gt;
@@ -2330,11 +2330,11 @@ HTML example:
   &lt;/main&gt;
 &lt;/article&gt;
 </pre>
-</div>
+</figure>
 
 CSS example:
 
-<div x-demo>
+<figure x-demo>
 <pre language="css">
 .card {
   display: flex;
@@ -2349,11 +2349,11 @@ CSS example:
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 </pre>
-</div>
+</figure>
 
 JSON example:
 
-<div x-demo>
+<figure x-demo>
 <pre language="json">
 {
   "name": "wb-starter",
@@ -2364,11 +2364,11 @@ JSON example:
   }
 }
 </pre>
-</div>
+</figure>
 
 Shell commands:
 
-<div x-demo>
+<figure x-demo>
 <pre language="bash">
 # Install dependencies
 npm install
@@ -2379,11 +2379,11 @@ npm run dev
 # Build for production
 npm run build
 </pre>
-</div>
+</figure>
 
 Terminal output:
 
-<div x-demo>
+<figure x-demo>
 <pre>
 $ npm test
 
@@ -2393,7 +2393,7 @@ $ npm test
 
   3 passing (42ms)
 </pre>
-</div>
+</figure>
 
 ---
 
@@ -2430,7 +2430,7 @@ These behaviors transform the element into a behavior.
 
 Basic semantic card:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <header>
     <h3>Getting Started</h3>
@@ -2442,11 +2442,11 @@ Basic semantic card:
     <a href="#">Read more →</a>
   </footer>
 </article>
-</div>
+</figure>
 
 Card with image:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <figure>
     <img
@@ -2464,11 +2464,11 @@ Card with image:
     <button variant="primary">Add to Cart</button>
   </footer>
 </article>
-</div>
+</figure>
 
 Glass variant:
 
-<div x-demo>
+<figure x-demo>
 <article variant="glass">
   <header>
     <h3>Glassmorphism Card</h3>
@@ -2477,11 +2477,11 @@ Glass variant:
     <p>Beautiful frosted glass effect with blur backdrop.</p>
   </main>
 </article>
-</div>
+</figure>
 
 Elevated card:
 
-<div x-demo>
+<figure x-demo>
 <article elevated>
   <header>
     <h3>Elevated Card</h3>
@@ -2490,11 +2490,11 @@ Elevated card:
     <p>This card has a stronger shadow for emphasis.</p>
   </main>
 </article>
-</div>
+</figure>
 
 Clickable card:
 
-<div x-demo>
+<figure x-demo>
 <article clickable>
   <header>
     <h3>Click Me!</h3>
@@ -2503,11 +2503,11 @@ Clickable card:
     <p>This entire card is clickable and interactive.</p>
   </main>
 </article>
-</div>
+</figure>
 
 Profile card:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <figure style="text-align: center; padding: 2rem;">
     <img
@@ -2528,11 +2528,11 @@ Profile card:
     <a href="#">LinkedIn</a>
   </footer>
 </article>
-</div>
+</figure>
 
 Blog post card:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <figure>
     <img
@@ -2551,11 +2551,11 @@ Blog post card:
     <span>By John Doe</span>
   </footer>
 </article>
-</div>
+</figure>
 
 Pricing card:
 
-<div x-demo>
+<figure x-demo>
 <article
   variant="glass"
   elevated>
@@ -2581,11 +2581,11 @@ Pricing card:
     </button>
   </footer>
 </article>
-</div>
+</figure>
 
 Feature card:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <header>
     <span style="font-size: 2rem;">🚀</span>
@@ -2595,11 +2595,11 @@ Feature card:
     <p>Optimized for performance with lazy loading and minimal JavaScript overhead.</p>
   </main>
 </article>
-</div>
+</figure>
 
 Notification/Alert card:
 
-<div x-demo>
+<figure x-demo>
 <article style="border-left: 4px solid var(--success);">
   <header>
     <h3>✓ Payment Successful</h3>
@@ -2611,11 +2611,11 @@ Notification/Alert card:
     <a href="#">View Order Details</a>
   </footer>
 </article>
-</div>
+</figure>
 
 Stat card:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <main style="text-align: center; padding: 2rem;">
     <p style="font-size: 3rem; font-weight: bold; margin: 0;">2,847</p>
@@ -2623,11 +2623,11 @@ Stat card:
     <p style="color: var(--success); font-size: 0.875rem;">↑ 12% from last month</p>
   </main>
 </article>
-</div>
+</figure>
 
 **Card Grid Example:**
 
-<div x-demo>
+<figure x-demo>
 <div x-grid minWidth="250px" gap="1.5rem">
   <article>
     <header>
@@ -2654,7 +2654,7 @@ Stat card:
     </main>
   </article>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -2680,7 +2680,7 @@ Stat card:
 
 Internal link card:
 
-<div x-demo>
+<figure x-demo>
 <article href="/docs/getting-started">
   <header>
     <h3>📚 Documentation</h3>
@@ -2689,11 +2689,11 @@ Internal link card:
     <p>Complete guide to using WB Behaviors.</p>
   </main>
 </article>
-</div>
+</figure>
 
 External link card:
 
-<div x-demo>
+<figure x-demo>
 <article
   href="https://github.com/x-framework"
   target="_blank">
@@ -2704,11 +2704,11 @@ External link card:
     <p>View source code, report issues, and contribute.</p>
   </main>
 </article>
-</div>
+</figure>
 
 Navigation cards:
 
-<div x-demo>
+<figure x-demo>
 <div x-grid columns="2" gap="1rem">
   <article href="/products">
     <header>
@@ -2747,11 +2747,11 @@ Navigation cards:
     </main>
   </article>
 </div>
-</div>
+</figure>
 
 Resource links:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <article
   href="https://docs.example.com"
@@ -2784,7 +2784,7 @@ Resource links:
   </main>
 </article>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -2811,7 +2811,7 @@ Resource links:
 
 Basic semantic navbar:
 
-<div x-demo>
+<figure x-demo>
 <nav>
   <a
     href="/"
@@ -2833,11 +2833,11 @@ Basic semantic navbar:
     </li>
   </ul>
 </nav>
-</div>
+</figure>
 
 With logo image:
 
-<div x-demo>
+<figure x-demo>
 <nav>
   <a href="/">
     <img
@@ -2860,32 +2860,32 @@ With logo image:
     </li>
   </ul>
 </nav>
-</div>
+</figure>
 
 Generated navbar (content built from `brand`/`items` attributes, no children needed).
 A bare `<nav>` is not auto-injected -- `nativeMap` has no `nav` entry -- so the
 generator runs only with `x-navbar` on it; without it the element stays empty:
 
-<div x-demo>
+<figure x-demo>
 <nav
   brand="WB Behaviors"
   items="Home, Features, Docs, Pricing, Contact">
 </nav>
-</div>
+</figure>
 
 Sticky navbar:
 
-<div x-demo>
+<figure x-demo>
 <nav
   brand="MySite"
   items="Home, About, Blog, Contact"
   sticky>
 </nav>
-</div>
+</figure>
 
 Full featured navbar:
 
-<div x-demo>
+<figure x-demo>
 <nav>
   <div style="display: flex; align-items: center; gap: 1rem;">
     <a
@@ -2921,11 +2921,11 @@ Full featured navbar:
       style="width: 32px; height: 32px; border-radius: 50%;">
   </div>
 </nav>
-</div>
+</figure>
 
 E-commerce navbar:
 
-<div x-demo>
+<figure x-demo>
 <nav>
   <a href="/">ShopName</a>
   <ul>
@@ -2952,11 +2952,11 @@ E-commerce navbar:
     <button variant="ghost">🛒 (3)</button>
   </div>
 </nav>
-</div>
+</figure>
 
 Documentation navbar:
 
-<div x-demo>
+<figure x-demo>
 <nav>
   <a href="/">
     <strong>WB Docs</strong>
@@ -2989,7 +2989,7 @@ Documentation navbar:
     </button>
   </div>
 </nav>
-</div>
+</figure>
 
 ---
 
@@ -3020,7 +3020,7 @@ Documentation navbar:
 
 Semantic sidebar:
 
-<div x-demo>
+<figure x-demo>
 <aside>
   <nav>
     <a
@@ -3034,11 +3034,11 @@ Semantic sidebar:
     <a href="#">⚙️ Settings</a>
   </nav>
 </aside>
-</div>
+</figure>
 
 Sidebar with sections:
 
-<div x-demo>
+<figure x-demo>
 <aside>
   <nav>
     <strong style="display: block; padding: 0.5rem; opacity: 0.7; font-size: 0.75rem;">MAIN</strong>
@@ -3055,11 +3055,11 @@ Sidebar with sections:
     <a href="#">Log out</a>
   </nav>
 </aside>
-</div>
+</figure>
 
 Documentation sidebar:
 
-<div x-demo>
+<figure x-demo>
 <aside>
   <nav>
     <strong>Getting Started</strong>
@@ -3080,11 +3080,11 @@ Documentation sidebar:
     <a href="#">JavaScript API</a>
   </nav>
 </aside>
-</div>
+</figure>
 
 Admin sidebar with icons:
 
-<div x-demo>
+<figure x-demo>
 <aside>
   <div style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
     <strong>Admin Panel</strong>
@@ -3102,11 +3102,11 @@ Admin sidebar with icons:
     <a href="#">🚪 Log out</a>
   </div>
 </aside>
-</div>
+</figure>
 
 **Layout with Sidebar:**
 
-<div x-demo>
+<figure x-demo>
 <div x-flex minHeight="100vh">
   <aside style="width: 240px; flex-shrink: 0;">
     <nav>
@@ -3120,7 +3120,7 @@ Admin sidebar with icons:
     <p>Main content goes here.</p>
   </main>
 </div>
-</div>
+</figure>
 
 ---
 
@@ -3320,7 +3320,7 @@ if (getConfig('autoInject')) {
 
 Basic 3-column grid:
 
-<div x-demo>
+<figure x-demo>
 <div x-grid
   columns="3"
   gap="1rem">
@@ -3328,11 +3328,11 @@ Basic 3-column grid:
   <div>Column 2</div>
   <div>Column 3</div>
 </div>
-</div>
+</figure>
 
 Responsive grid with min-width:
 
-<div x-demo>
+<figure x-demo>
 <div x-grid
   minWidth="250px"
   gap="2rem">
@@ -3341,37 +3341,37 @@ Responsive grid with min-width:
   <article>Card 3</article>
   <article>Card 4</article>
 </div>
-</div>
+</figure>
 
 ### x-flex / x-row
 
 Horizontal layout:
 
-<div x-demo>
+<figure x-demo>
 <div x-flex
   gap="1rem"
   justify="space-between">
   <div>Left</div>
   <div>Right</div>
 </div>
-</div>
+</figure>
 
 Button row (x-row is alias for flex):
 
-<div x-demo>
+<figure x-demo>
 <div x-flex
   gap="0.5rem"
   justify="flex-end">
   <button variant="ghost">Cancel</button>
   <button variant="primary">Save</button>
 </div>
-</div>
+</figure>
 
 ### x-stack / x-column
 
 Vertical stack:
 
-<div x-demo>
+<figure x-demo>
 <div x-stack gap="1rem">
   <input
     type="text"
@@ -3381,77 +3381,77 @@ Vertical stack:
     placeholder="Email">
   <button>Submit</button>
 </div>
-</div>
+</figure>
 
 x-column is alias for stack:
 
-<div x-demo>
+<figure x-demo>
 <div x-stack gap="1rem">
   <h3>Title</h3>
   <p>Content</p>
 </div>
-</div>
+</figure>
 
 ### x-container
 
 Centered content with max-width:
 
-<div x-demo>
+<figure x-demo>
 <div x-container
   maxWidth="800px"
   padding="2rem">
   <h1>Article Title</h1>
   <p>Content goes here...</p>
 </div>
-</div>
+</figure>
 
 Multi-column grid mode:
 
-<div x-demo>
+<figure x-demo>
 <div x-container
   columns="2"
   gap="2rem">
   <div>Left column</div>
   <div>Right column</div>
 </div>
-</div>
+</figure>
 
 ### x-center
 
 Max-width centering:
 
-<div x-demo>
+<figure x-demo>
 <div x-center maxWidth="600px">
   <h1>Centered Heading</h1>
 </div>
-</div>
+</figure>
 
 Intrinsic centering (based on content width):
 
-<div x-demo>
+<figure x-demo>
 <div x-center intrinsic>
   <button variant="primary">Centered Button</button>
 </div>
-</div>
+</figure>
 
 ### x-cover
 
 Full-screen hero with vertical centering:
 
-<div x-demo>
+<figure x-demo>
 <div x-cover minHeight="320px">
   <header>Logo</header>
   <h1>Main Content</h1>
   <p>This is vertically centered</p>
   <footer>Scroll down ↓</footer>
 </div>
-</div>
+</figure>
 
 ### x-sidebar
 
 Two-column layout with sidebar:
 
-<div x-demo>
+<figure x-demo>
 <div x-sidebarlayout
   side="left"
   sideWidth="250px"
@@ -3463,13 +3463,13 @@ Two-column layout with sidebar:
     <h1>Main Content</h1>
   </main>
 </div>
-</div>
+</figure>
 
 ### x-masonry
 
 Pinterest-style masonry:
 
-<div x-demo>
+<figure x-demo>
 <div x-masonry
   columns="3"
   gap="1rem">
@@ -3486,13 +3486,13 @@ Pinterest-style masonry:
     src="https://placehold.co/300x450/1e293b/e2e8f0?text=Tall+2"
     alt="">
 </div>
-</div>
+</figure>
 
 ### x-reel
 
 Horizontal scroll carousel:
 
-<div x-demo>
+<figure x-demo>
 <div x-reel
   itemWidth="300px"
   gap="1rem">
@@ -3501,39 +3501,39 @@ Horizontal scroll carousel:
   <article>Card 3</article>
   <article>Card 4</article>
 </div>
-</div>
+</figure>
 
 ### x-frame
 
 16:9 video frame:
 
-<div x-demo>
+<figure x-demo>
 <div x-frame ratio="16/9">
   <iframe src="about:blank" title="16:9 video frame placeholder"></iframe>
 </div>
-</div>
+</figure>
 
 Square avatar frame:
 
-<div x-demo>
+<figure x-demo>
 <div x-frame ratio="1/1">
   <img
     src="https://ui-avatars.com/api/?name=User&size=150&background=475569&color=fff"
     alt="User">
 </div>
-</div>
+</figure>
 
 ### x-sticky
 
 Sticky header:
 
-<div x-demo>
+<figure x-demo>
 <div x-sticky
   top="0"
   zIndex="100">
   <header>This stays at top when scrolling</header>
 </div>
-</div>
+</figure>
 
 ### x-drawer
 
@@ -3546,14 +3546,14 @@ panel built from those attributes. (An earlier version of this doc showed
 `<div x-drawer-layout>`, a different tag/behavior; see
 [Drawer Behaviors](behaviors/drawer.md).)
 
-<div x-demo>
+<figure x-demo>
 <div x-drawer
   position="left"
   width="250px"
   title="Menu">
   Click to open the navigation drawer
 </div>
-</div>
+</figure>
 
 ---
 
@@ -3563,37 +3563,37 @@ All card tags use `card-*` prefix for easy autocomplete and grouping:
 
 Basic card:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <h3>Card Title</h3>
   <p>Card content goes here.</p>
 </article>
-</div>
+</figure>
 
 Image card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardimage
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg/1280px-Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </div>
-</div>
+</figure>
 
 Profile card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardprofile
   avatar="https://ui-avatars.com/api/?name=Jane+Doe&size=150&background=475569&color=fff"
   name="Jane Doe"
   title="Senior Developer"
   bio="Full-stack developer with 10+ years experience.">
 </div>
-</div>
+</figure>
 
 Pricing card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardpricing
   plan="Pro"
   price="$29"
@@ -3602,11 +3602,11 @@ Pricing card:
   cta="Get Started"
   popular="true">
 </div>
-</div>
+</figure>
 
 Product card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardproduct
   image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Widget Pro"
@@ -3614,33 +3614,33 @@ Product card:
   rating="4.5"
   reviews="128">
 </div>
-</div>
+</figure>
 
 Stats card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardstats
   value="2,847"
   label="Active Users"
   change="+12%"
   trend="up">
 </div>
-</div>
+</figure>
 
 Testimonial card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardtestimonial
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
   avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg">
 </div>
-</div>
+</figure>
 
 Hero card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardhero
   title="Welcome"
   subtitle="Get started today"
@@ -3648,81 +3648,81 @@ Hero card:
   cta="Learn More"
   href="/start">
 </div>
-</div>
+</figure>
 
 Video card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardvideo
   src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Product Demo">
 </div>
-</div>
+</figure>
 
 File card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardfile
   filename="report.pdf"
   size="2.4 MB"
   icon="📄"
   href="/downloads/report.pdf">
 </div>
-</div>
+</figure>
 
 Notification card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardnotification
   type="success"
   title="Payment Received"
   message="Your payment of $99.00 was successful."
   time="2 minutes ago">
 </div>
-</div>
+</figure>
 
 Portfolio card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardportfolio
   image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
 </div>
-</div>
+</figure>
 
 Link card (clickable):
 
-<div x-demo>
+<figure x-demo>
 <div x-cardlink
   href="/docs"
   title="Documentation"
   description="Learn how to use the framework"
   icon="📚">
 </div>
-</div>
+</figure>
 
 Horizontal card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardhorizontal
   image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Article Title"
   description="Brief description of the article...">
 </div>
-</div>
+</figure>
 
 Overlay card:
 
-<div x-demo>
+<figure x-demo>
 <div x-cardoverlay
   image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </div>
-</div>
+</figure>
 
 ---
 
@@ -3732,7 +3732,7 @@ These work on ANY element and are always active:
 
 Tooltip on any element:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button tooltip="Save your work">💾 Save</button>
 <span tooltip="Click for more information">ℹ️</span>
@@ -3742,20 +3742,20 @@ Tooltip on any element:
   Home
 </a>
 </div>
-</div>
+</figure>
 
 Toast message on click:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <button toast-message="Copied to clipboard!">📋 Copy</button>
 <button toast-message="Item added to cart">🛒 Add to Cart</button>
 </div>
-</div>
+</figure>
 
 Ripple effect on any clickable element:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <div
   ripple
@@ -3768,11 +3768,11 @@ Ripple effect on any clickable element:
   Ripple Link
 </a>
 </div>
-</div>
+</figure>
 
 Badge on any element:
 
-<div x-demo>
+<figure x-demo>
 <div x-container>
 <span badge="3">🔔 Notifications</span>
 <button badge="New">✨ Features</button>
@@ -3782,7 +3782,7 @@ Badge on any element:
   📧 Inbox
 </a>
 </div>
-</div>
+</figure>
 
 ---
 

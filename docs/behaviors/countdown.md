@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-countdown to="2027-12-31"></div>
-</div>
+</figure>
 
 ## Attributes
 

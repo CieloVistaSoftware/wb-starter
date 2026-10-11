@@ -4,8 +4,8 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-fix-card>Fix #365: fix-card never upgraded</div>
-</div>
+</figure>
 
 <sub>Schema: [`fix-card.schema.json`](../../src/wb-models/fix-card.schema.json)</sub>

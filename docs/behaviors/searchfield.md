@@ -19,23 +19,23 @@ behavior in the same file.
 On a plain container, `searchField()` finds (or creates) a child `<input>`
 and wires the full search UI around it:
 
-<div x-demo>
+<figure x-demo>
 <div x-searchfield placeholder="Search docs..." variant="glass"></div>
-</div>
+</figure>
 
 The `<div x-searchfield>` custom tag is the same behavior, applied via the element
 map instead of the attribute:
 
-<div x-demo>
+<figure x-demo>
 <div x-searchfield placeholder="Search..." size="lg"></div>
-</div>
+</figure>
 
 Applied directly to a real `<input>`, it delegates straight to the plain
 `search()` behavior (no container is built):
 
-<div x-demo>
+<figure x-demo>
 <input type="text" x-searchfield placeholder="Search…" instant>
-</div>
+</figure>
 
 ## Properties
 

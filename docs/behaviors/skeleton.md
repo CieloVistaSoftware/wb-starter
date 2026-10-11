@@ -29,27 +29,27 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 
 ### Single line
 
-<div x-demo>
+<figure x-demo>
 <div x-skeleton variant="text"></div>
-</div>
+</figure>
 
 ### Multiple lines
 
-<div x-demo>
+<figure x-demo>
 <div x-skeleton variant="text" lines="3"></div>
-</div>
+</figure>
 
 ### Circle (e.g. an avatar placeholder)
 
-<div x-demo>
+<figure x-demo>
 <div x-skeleton variant="circle" width="48px" height="48px"></div>
-</div>
+</figure>
 
 ### Rectangle (e.g. an image placeholder)
 
-<div x-demo>
+<figure x-demo>
 <div x-skeleton variant="rect" height="150px"></div>
-</div>
+</figure>
 
 > `x-skeleton` on a non-`<div x-skeleton>` element still runs `skeleton()`, but only
 > gets the `.x-skeleton--{variant}` modifier class — the shimmer gradient and

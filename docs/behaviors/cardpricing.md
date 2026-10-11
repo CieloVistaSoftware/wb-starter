@@ -4,14 +4,14 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardpricing
   plan="Team"
   price="$18"
   period="per user / month"
   description="For teams that need shared history and SSO."
   features="Unlimited projects,Audit log,SSO,Priority support"></article>
-</div>
+</figure>
 
 ## Attributes
 

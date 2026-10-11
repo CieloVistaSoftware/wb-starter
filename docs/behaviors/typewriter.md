@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <p x-typewriter speed="45">Zero build. Real behaviors. Light DOM only.</p>
-</div>
+</figure>
 
 ## Attributes
 

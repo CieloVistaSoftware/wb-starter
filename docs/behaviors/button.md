@@ -4,19 +4,19 @@ A plain `<button>` gets the button styling: `variant` sets the colour, `size` th
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <button variant="primary" icon="download">Download report</button>
 <button variant="secondary" size="sm">Cancel</button>
 <button variant="primary" loading>Saving</button>
-</div>
+</figure>
 
 No attribute needed on `<button>`. Don't add `x-button` to it (#746).
 
 On another element, write `x-button`:
 
-<div x-demo>
+<figure x-demo>
 <div x-button variant="primary" icon="download">Download report</div>
-</div>
+</figure>
 
 `<button x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

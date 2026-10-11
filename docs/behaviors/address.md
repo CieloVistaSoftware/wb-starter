@@ -13,7 +13,7 @@ The `<address>` element provides contact information for a person, organization,
 
 ## Basic Usage
 
-<div x-demo>
+<figure x-demo>
 <article>
   <h3>Jane Smith</h3>
   <p>Freelance illustrator based in Portland, OR.</p>
@@ -22,7 +22,7 @@ The `<address>` element provides contact information for a person, organization,
     <a href="tel:+15035551234">+1 (503) 555-1234</a>
   </address>
 </article>
-</div>
+</figure>
 
 ## With a Physical Location
 
@@ -30,7 +30,7 @@ The `<address>` element provides contact information for a person, organization,
 to the nearest `<article>`/`<body>` ancestor, still not a general-purpose
 postal-address container:
 
-<div x-demo>
+<figure x-demo>
 <article>
   <h3>Acme Studio</h3>
   <address>
@@ -39,7 +39,7 @@ postal-address container:
     <a href="mailto:hello@acmestudio.example">hello@acmestudio.example</a>
   </address>
 </article>
-</div>
+</figure>
 
 ## Accessibility Considerations
 

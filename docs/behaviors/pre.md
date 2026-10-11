@@ -4,11 +4,11 @@ A plain `<pre>` gets a code block: syntax highlighting for `language`, line numb
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <pre>npm run test:compliance
   7591 passed
      82 failed</pre>
-</div>
+</figure>
 
 No attribute needed on `<pre>`. Don't add `x-pre` to it (#746).
 

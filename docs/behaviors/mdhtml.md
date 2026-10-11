@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-mdhtml src="/docs/behaviors/x-copy.md"></div>
-</div>
+</figure>
 
 ## Attributes
 

@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-stack gap="0.75rem" pad="1rem" radius="8px" bg="bg-secondary">
   <div>Queued</div>
   <div>Running</div>
   <div>Passed</div>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

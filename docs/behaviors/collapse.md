@@ -4,11 +4,11 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-collapse heading="Environment" expanded>
   <p>Node 24.13, Chrome 139, Windows 11.</p>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

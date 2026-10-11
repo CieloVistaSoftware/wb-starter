@@ -4,12 +4,12 @@ A plain `<figure>` gets image handling: clicking the image opens it in a lightbo
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <figure>
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge in fog">
   <figcaption>The 6am crossing, before the fog lifted.</figcaption>
 </figure>
-</div>
+</figure>
 
 No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 
@@ -19,27 +19,37 @@ No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 
 **Set the figure's `width`.** The image shrinks to fit and the caption wraps at the same width. A bare number is pixels; any CSS length works (`20rem`, `50%`). A figure never grows past its container.
 
-<div x-demo>
+<figure x-demo>
 <figure width="320">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge at sunset, in a 320 pixel figure">
   <figcaption>The whole figure, caption included, is 320 pixels wide.</figcaption>
 </figure>
-</div>
+</figure>
 
 **Set the image's shape on the `<img>`.** A figure has no height of its own: it is as tall as its image plus its caption. Give the image both `width` and `height`, or an `aspectRatio`, and it is cropped to that shape (see [Img](img.md#controlling-size)).
 
-<div x-demo>
+<figure x-demo>
 <figure width="240">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" width="240" height="240" alt="Suspension bridge at sunset, cropped square">
   <figcaption>Cropped to a 240 by 240 square.</figcaption>
 </figure>
-</div>
+</figure>
+
+**Make the whole figure a golden rectangle with `goldenRatio`.** The figure, image and caption together, is 1.618 times as wide as it is tall; the image takes the height the caption leaves and is cropped to it.
+
+<figure x-demo>
+<figure width="320" goldenRatio>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge at sunset, in a golden-rectangle figure">
+  <figcaption>Image and caption together make the golden rectangle.</figcaption>
+</figure>
+</figure>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `captionPosition` | `bottom` · `overlay` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
+| `goldenRatio` | `boolean` | `false` | Shape the whole figure, image and caption together as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The image is cropped to fill the space the caption leaves. Text sizes are unchanged. Bare attribute. |
 | `zoom` | `boolean` | `false` | Clicking the image opens it at full size. Bare attribute. |
 | `lightbox` | on unless `false` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
 | `caption` | text | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |

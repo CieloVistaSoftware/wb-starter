@@ -111,36 +111,36 @@ const DEMO_CATEGORY = {
 // small/representative — not full copies). Keep to 2-4 per category.
 const CATEGORY_EXAMPLES = {
   forms: [
-    `<div x-demo><input x-label="Full name:" type="text"></div>`,
-    `<div x-demo><textarea x-autosize placeholder="Type here and watch me grow...">Type here and watch me grow...</textarea></div>`,
-    `<div x-demo><fieldset x-fieldset><legend>Personal Info</legend><label>Name: <input type="text"></label></fieldset></div>`,
+    `<figure x-demo><input x-label="Full name:" type="text"></figure>`,
+    `<figure x-demo><textarea x-autosize placeholder="Type here and watch me grow...">Type here and watch me grow...</textarea></figure>`,
+    `<figure x-demo><fieldset x-fieldset><legend>Personal Info</legend><label>Name: <input type="text"></label></fieldset></figure>`,
   ],
   cards: [
-    `<div x-demo><article title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</article></div>`,
-    `<div x-demo><article title="Glass Card" subtitle="With badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</article></div>`,
+    `<figure x-demo><article title="Welcome" subtitle="Standard card" hoverable>This is a basic card with default styling.</article></figure>`,
+    `<figure x-demo><article title="Glass Card" subtitle="With badge" badge="NEW" variant="glass" clickable hoverable elevated>All features enabled.</article></figure>`,
   ],
   feedback: [
-    `<div x-demo><button x-toast message="Action saved successfully!" toast-variant="success">Show Toast</button></div>`,
-    `<div x-demo><button x-tooltip="Tooltip text" position="top">Hover me</button></div>`,
+    `<figure x-demo><button x-toast message="Action saved successfully!" toast-variant="success">Show Toast</button></figure>`,
+    `<figure x-demo><button x-tooltip="Tooltip text" position="top">Hover me</button></figure>`,
   ],
   effects: [
-    `<div x-demo><button x-ripple style="padding:0.75rem 1.5rem;">Click for Ripple</button></div>`,
-    `<div x-demo><div x-draggable style="width:60px;height:60px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:move;">Drag</div></div>`,
+    `<figure x-demo><button x-ripple style="padding:0.75rem 1.5rem;">Click for Ripple</button></figure>`,
+    `<figure x-demo><div x-draggable style="width:60px;height:60px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:move;">Drag</div></figure>`,
   ],
   media: [
-    `<div x-demo><img src="https://picsum.photos/id/1015/400/240" zoomable alt="River" style="width:100%;border-radius:8px;"></div>`,
-    `<div x-demo><audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio></div>`,
+    `<figure x-demo><img src="https://picsum.photos/id/1015/400/240" zoomable alt="River" style="width:100%;border-radius:8px;"></figure>`,
+    `<figure x-demo><audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio></figure>`,
   ],
   navigation: [
-    `<div x-demo><div x-tabs><div tab="Tab 1">Content for Tab 1</div><div tab="Tab 2">Content for Tab 2</div></div></div>`,
+    `<figure x-demo><div x-tabs><div tab="Tab 1">Content for Tab 1</div><div tab="Tab 2">Content for Tab 2</div></div></figure>`,
   ],
   data: [
-    `<div x-demo><span x-badge label="Done" variant="success"></span></div>`,
-    `<div x-demo><progress value="70" label="Loading..."></progress></div>`,
+    `<figure x-demo><span x-badge label="Done" variant="success"></span></figure>`,
+    `<figure x-demo><progress value="70" label="Loading..."></progress></figure>`,
   ],
   architecture: [
-    `<div x-demo><div x-themecontrol></div></div>`,
-    `<div x-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></div>`,
+    `<figure x-demo><div x-themecontrol></div></figure>`,
+    `<figure x-demo><div x-darkmode target="self" theme="dark" class="demos-forced-dark-demo"><strong>Forced Dark Mode</strong> — stays dark regardless of the global theme.</div></figure>`,
   ],
 };
 

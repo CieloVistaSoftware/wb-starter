@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <nav x-breadcrumb items="Home,Products,Electronics,Smartphones"></nav>
-</div>
+</figure>
 
 ## Attributes
 

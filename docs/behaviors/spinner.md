@@ -4,9 +4,9 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-spinner size="md" variant="primary" label="Loading results…"></div>
-</div>
+</figure>
 
 ## Attributes
 

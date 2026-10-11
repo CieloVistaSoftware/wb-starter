@@ -7,3 +7,24 @@
 .x-video .x-video__media {
   width: 100%;
 }
+
+/* goldenRatio (#477): the player is a landscape golden rectangle, width /
+   height = 1.618, the picture cropped to fill it. On a <video> host the
+   class is on the video itself; on a <div x-video> it is on the div and the
+   built <video> fills it.
+   The attribute form beside the class is for pages booted by wb-lazy.js
+   (the Behaviors page stage, demos/), whose inject() does not run
+   applyDeclaredModifiers(), so the class never lands there. :where() keeps
+   it no heavier than its host selector; "false" and "0" mean off, as in
+   applyDeclaredModifiers(). */
+.x-video--golden-ratio,
+:is(video, [x-video]):where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
+  aspect-ratio: var(--aspect-golden, 1.618);
+  object-fit: cover;
+}
+
+.x-video--golden-ratio > .x-video__media,
+[x-video]:where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) > .x-video__media {
+  height: 100%;
+  object-fit: cover;
+}

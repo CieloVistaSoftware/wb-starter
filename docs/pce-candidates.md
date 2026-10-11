@@ -14,7 +14,7 @@ went with them.
 One form is left. A behavior is either the semantic element itself (`<article>`
 is a card) or an `x-*` attribute on a host element:
 
-<div x-demo>
+<figure x-demo>
 <article
   x-cardprofile
   name="Sarah"
@@ -25,7 +25,7 @@ is a card) or an `x-*` attribute on a host element:
   value="1,234"
   label="Users">
 </article>
-</div>
+</figure>
 
 The old generic form, `x-behavior="cardprofile"`, is deprecated (#1642): write
 the named attribute.
@@ -228,9 +228,9 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 ### After (v3.0)
 
-<div x-demo>
+<figure x-demo>
 <article title="Hello">Content</article>
-</div>
+</figure>
 
 `<article>` is already a card, so it takes no `x-card` (#746, #967).
 

@@ -7,14 +7,14 @@ a reload.
 
 Click **Add to Cart** on the product below, then open the cart.
 
-<div x-demo columns="1">
+<figure x-demo columns="1">
 <div x-cart></div>
 <article x-cardproduct
   image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg/500px-S%C5%82uchawki_referencyjne_K-701_firmy_AKG.jpg"
   title="Field headphones"
   description="Closed-back, 32Ω, folds flat."
   price="$149"></article>
-</div>
+</figure>
 
 ## What it does
 

@@ -57,7 +57,8 @@ function liveTextOnly(src: string, isMd: boolean): string {
 function usesLiveEventsDemo(file: string, isMd: boolean): boolean {
   try {
     const live = liveTextOnly(fs.readFileSync(file, 'utf8'), isMd);
-    return /<div x-demo\b[^>]*\bevents\s*=/.test(live);
+    // #917: any host; the standard one is <figure x-demo>.
+    return /<(?:figure|div|section|article) x-demo\b[^>]*\bevents\s*=/.test(live);
   } catch {
     return false;
   }

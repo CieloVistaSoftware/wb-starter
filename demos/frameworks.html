@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Framework Integration Demo</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.493">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.493">
-  <link rel="stylesheet" href="../src/styles/pages/frameworks.css?v=1.0.493">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.497">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.497">
+  <link rel="stylesheet" href="../src/styles/pages/frameworks.css?v=1.0.497">
 </head>
 <body>
   <a href="../index.html" class="back-link">← Back to Home</a>
@@ -43,13 +43,13 @@
     <p>This button is rendered by React. The <code>x-*</code> behavior attributes are passed as standard props.</p>
 
     <!-- #324 / DEMOS-AND-DOCS-STANDARDS.md §25: intentionally NOT wrapped in
-         <div x-demo>. The live control below is React's *rendered output* -- the
+         <figure x-demo>. The live control below is React's *rendered output* -- the
          instructive source is the JSX-style React.createElement code in the
-         <pre> block underneath, which <div x-demo>'s HTML-source extraction has
+         <pre> block underneath, which <figure x-demo>'s HTML-source extraction has
          no way to represent (it would show this mount div/script, not the
          React behavior code a React developer would actually write). Both a
          live render AND its real source are still present, per §16 -- just
-         not paired by <div x-demo> specifically, which requires the two to be
+         not paired by <figure x-demo> specifically, which requires the two to be
          the same markup. -->
     <div id="react-root"></div>
 
@@ -126,7 +126,7 @@ root.render(e(ReactApp));</code></pre>
     <!-- #324 / DEMOS-AND-DOCS-STANDARDS.md §25: same reasoning as the React
          section above -- the live control is Vue's rendered template output;
          the instructive source (Vue SFC-style template + setup()) is shown in
-         the <pre> block below, which <div x-demo> cannot represent 1:1. -->
+         the <pre> block below, which <figure x-demo> cannot represent 1:1. -->
     <div id="vue-app">
       <div class="framework-mount framework-mount--vue">
         <h3>Vue Message: {{ message }}</h3>
@@ -223,9 +223,9 @@ root.render(e(ReactApp));</code></pre>
          esm.sh, then mounts the real resulting Svelte behavior. This is
          Svelte's own real compiler output, generated in-browser instead of
          ahead of time by a bundler -- no server build step, same "live
-         render + real source, not paired by <div x-demo>" pattern the
+         render + real source, not paired by <figure x-demo>" pattern the
          React/Vue sections above already use (§16), for the same reason:
-         <div x-demo> requires the rendered markup and its "source" to be
+         <figure x-demo> requires the rendered markup and its "source" to be
          identical, and compiled-Svelte-output is not 1:1 with hand-authored
          Svelte source. -->
     <div id="svelte-root" class="framework-mount framework-mount--svelte"></div>
@@ -547,12 +547,12 @@ function Counter() {
 
     <!-- #324: HTMX needs no build step -- the button below IS the real, executable
          markup a developer would author (plain HTML + hx-*/x-* attributes), so
-         <div x-demo> can render it live AND show its exact source, same as any other
+         <figure x-demo> can render it live AND show its exact source, same as any other
          behavior example (§1/§16) -- unlike the React/Vue/Svelte/Angular/SolidJS
          sections further down, which mount via framework-specific script/build
-         output that <div x-demo> cannot represent as one-to-one "source" (see the
+         output that <figure x-demo> cannot represent as one-to-one "source" (see the
          explanatory notes on those sections and DEMOS-AND-DOCS-STANDARDS.md §16). -->
-    <div x-demo>
+    <figure x-demo>
     <button
       hx-post="/clicked"
       hx-swap="outerHTML"
@@ -561,7 +561,7 @@ function Counter() {
       x-tooltip="I ripple locally, but fetch remotely!">
       Click Me (HTMX)
     </button>
-    </div>
+    </figure>
 
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script>

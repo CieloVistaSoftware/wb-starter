@@ -27,22 +27,22 @@ get too narrow.
 
 ### Default
 
-<div x-demo>
+<figure x-demo>
 <div x-switcher>
   <div>Item 1</div>
   <div>Item 2</div>
   <div>Item 3</div>
 </div>
-</div>
+</figure>
 
 ### Lower threshold (switches to a row sooner)
 
-<div x-demo>
+<figure x-demo>
 <div x-switcher threshold="15rem" gap="0.5rem">
   <div>Item 1</div>
   <div>Item 2</div>
 </div>
-</div>
+</figure>
 
 ## CSS Classes
 

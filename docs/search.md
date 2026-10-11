@@ -26,20 +26,20 @@ The search behavior supports multiple visual variants and sizes for different us
 
 ### Basic Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-searchfield placeholder="Search for content..."></div>
-</div>
+</figure>
 
 ### With Variants and Sizes
 
-<div x-demo>
+<figure x-demo>
 <div x-searchfield
   placeholder="Search tutorials..."
   variant="glass"
   size="lg"
   debounce="300">
 </div>
-</div>
+</figure>
 
 ### Listening for Search Events
 ```javascript

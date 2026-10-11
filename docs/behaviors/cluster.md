@@ -4,7 +4,7 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <div x-cluster gap="0.5rem">
   <span x-badge label="typescript"></span>
   <span x-badge label="playwright"></span>
@@ -12,7 +12,7 @@
   <span x-badge label="no-build"></span>
   <span x-badge label="composition"></span>
 </div>
-</div>
+</figure>
 
 ## Attributes
 

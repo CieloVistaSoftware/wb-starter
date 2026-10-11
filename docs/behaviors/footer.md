@@ -4,17 +4,17 @@ A plain `<footer>` gets a site footer built from its attributes: the `brand` nam
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></footer>
-</div>
+</figure>
 
 No attribute needed on `<footer>`. Don't add `x-footer` to it (#746).
 
 On another element, write `x-footer`:
 
-<div x-demo>
+<figure x-demo>
 <div x-footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></div>
-</div>
+</figure>
 
 `<footer x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

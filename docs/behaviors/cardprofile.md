@@ -4,13 +4,13 @@
 
 ## Usage
 
-<div x-demo>
+<figure x-demo>
 <article x-cardprofile
   name="Grace Hopper"
   role="Compiler pioneer"
   avatar="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg/330px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg"
   bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>
-</div>
+</figure>
 
 ## Attributes
 

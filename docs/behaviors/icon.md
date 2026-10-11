@@ -29,21 +29,21 @@ size option has nothing to size.
 
 ### Default size
 
-<div x-demo>
+<figure x-demo>
 <span x-icon>
   <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>
   Label text
 </span>
-</div>
+</figure>
 
 ### Larger icon, wider spacing
 
-<div x-demo>
+<figure x-demo>
 <span x-icon size="2em" space="1em">
   <svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16"></rect></svg>
   Larger icon with more space
 </span>
-</div>
+</figure>
 
 ## CSS Classes
 

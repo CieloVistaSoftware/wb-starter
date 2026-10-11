@@ -25,10 +25,10 @@ Code examples should prefer the **auto-inject format** using semantic HTML eleme
 
 Each code example should include an xs-font note explaining alternative syntax options.
 
-### Rule 4: Every renderable code example MUST use `<div x-demo>` — no static, un-rendered code fences
+### Rule 4: Every renderable code example MUST use `<figure x-demo>` — no static, un-rendered code fences
 
-A code example that shows real `x-*` behavior markup must be a LIVE `<div x-demo>` block, not
-a plain ` ```html ` fenced code block that only shows text. `<div x-demo>` renders the markup
+A code example that shows real `x-*` behavior markup must be a LIVE `<figure x-demo>` block, not
+a plain ` ```html ` fenced code block that only shows text. `<figure x-demo>` renders the markup
 for real AND auto-generates the formatted code sample (with copy button) from it — one
 source of truth, always in sync, never a hand-typed sample that silently drifts from what
 actually renders.
@@ -45,16 +45,16 @@ actually renders.
 
 ✅ **Correct** — live, rendered, the code sample generated from the real markup:
 
-<div x-demo>
+<figure x-demo>
 <article title="Hello" variant="elevated">
   <p>It just works.</p>
 </article>
-</div>
+</figure>
 
 The only exception: a block illustrating something that genuinely isn't renderable in
 isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference
 table, or intentionally-invalid markup demonstrating what NOT to do. Those stay as plain
-fenced code. If the block shows a real behavior/behavior usage, it must be `<div x-demo>`.
+fenced code. If the block shows a real behavior/behavior usage, it must be `<figure x-demo>`.
 
 ---
 
@@ -127,7 +127,7 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 
 ### Explicit Syntax
 
-<div x-demo>
+<figure x-demo>
 <div
   x-card
   title="My Card"
@@ -146,7 +146,7 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
   id="agree"
   name="terms"
   checked>
-</div>
+</figure>
 
 ---
 
@@ -208,7 +208,7 @@ multi-attribute tag onto one line.
 
 Short tags, one element per line; a long tag, one attribute per line:
 
-<div x-demo>
+<figure x-demo>
 <span x-badge label="New"></span>
 <span x-badge label="Done" variant="success"></span>
 <button
@@ -216,7 +216,7 @@ Short tags, one element per line; a long tag, one attribute per line:
   size="lg">
   Click Me
 </button>
-</div>
+</figure>
 
 ---
 

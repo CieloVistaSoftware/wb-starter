@@ -19,6 +19,12 @@
         "cosmic"
       ],
       "default": "default"
+    },
+    "goldenRatio": {
+      "type": "boolean",
+      "description": "Shape the hero band as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. Replaces the 400px minimum height; content taller than that still grows the band. Text sizes are unchanged. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-hero--golden-ratio"
     }
   },
   "$view": [],

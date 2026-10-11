@@ -167,10 +167,10 @@ This means:
 1. **Declaration:**
    - Add an x-* attribute to any element:
 
-     <div x-demo>
+     <figure x-demo>
      <button x-ripple x-tooltip="Save">Save</button>
      <span x-badge label="New"></span>
-     </div>
+     </figure>
 
 2. **Scanning:**
    - On page load, the bootstrapper scans the DOM for all x-* attributes.

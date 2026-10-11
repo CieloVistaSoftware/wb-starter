@@ -37,7 +37,10 @@ async function load() {
     .readdirSync(dir)
     .filter((f) => f.endsWith('.schema.json'))
     .map((file) => ({ file, json: JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8')) }))
-    .filter(({ json }) => json.schemaFor && !(NOT_COMPONENTS as Set<string>).has(json.schemaFor));
+    .filter(({ json }) => json.schemaFor && !(NOT_COMPONENTS as Set<string>).has(json.schemaFor))
+    // Only the component tier is a behavior (schema.schema.json's _schemaTypes);
+    // a base, definition or page schema carries no kind -- see the test below.
+    .filter(({ json }) => !json.schemaType || json.schemaType === 'component');
   return { selectorsOf, schemas };
 }
 
@@ -68,4 +71,38 @@ test('kind agrees with the tag map: element exactly when a native element maps o
     }
   }
   expect(wrong).toEqual([]);
+});
+
+test('non-behavior schemas (base, definition, page) carry no kind (#835)', () => {
+  // schema.schema.json's _schemaTypes: only the component tier is a behavior.
+  const dir = path.join(root, 'src', 'wb-models');
+  const stray: string[] = [];
+  const walk = (d: string) => {
+    for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
+      const full = path.join(d, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!entry.name.endsWith('.schema.json') || entry.name === 'schema.schema.json') continue;
+      const json = JSON.parse(fs.readFileSync(full, 'utf8'));
+      const behavior = !json.schemaType || json.schemaType === 'component';
+      if (!behavior && (json.kind !== undefined || json.element !== undefined)) stray.push(`${path.relative(root, full)} (${json.schemaType})`);
+    }
+  };
+  walk(dir);
+  expect(stray).toEqual([]);
+});
+
+test('data/schema-index.json carries each behavior schema\'s kind and element for the Behaviors page (#835)', async () => {
+  const { schemas } = await load();
+  const index = JSON.parse(fs.readFileSync(path.join(root, 'data', 'schema-index.json'), 'utf8'));
+  const byFile = new Map((index.schemas as Array<{ file: string; kind?: string; element?: string }>).map((e) => [e.file, e]));
+  const wrong: string[] = [];
+  for (const { file, json } of schemas) {
+    const entry = byFile.get(file);
+    if (!entry) continue;
+    if (entry.kind !== json.kind || entry.element !== json.element) {
+      wrong.push(`${file}: index has ${JSON.stringify({ kind: entry.kind, element: entry.element })}, schema has ${JSON.stringify({ kind: json.kind, element: json.element })}`);
+    }
+  }
+  expect(byFile.size, 'the index was read').toBeGreaterThan(100);
+  expect(wrong, 'run node scripts/build-schema-index.mjs').toEqual([]);
 });
