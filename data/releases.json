@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.497",
+      "date": "2026-10-10",
+      "summary": "Options like elevated, featured-tone and variant=&quot;cosmic&quot; now change how a behavior looks on demo pages and the behaviors page too, not only on wb.js pages. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1831\" target=\"_blank\" rel=\"noopener\">#1831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1837\" target=\"_blank\" rel=\"noopener\">#1837</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Wb-lazy pages apply declared modifier classes, through one shared applier</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1831\" target=\"_blank\" rel=\"noopener\">#1831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1837\" target=\"_blank\" rel=\"noopener\">#1837</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8a874966b01322f11bc1a118797f9c9e20683a1c\" target=\"_blank\" rel=\"noopener\"><code>8a87496</code></a>",
+          "issues": [
+            1831,
+            1837
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/test-harness.html\" target=\"_blank\" rel=\"noopener\">demos/test-harness.html</a> and run WB.scan on &lt;article x-card featured-tone=&quot;success&quot; title=&quot;T&quot;&gt;Body&lt;/article&gt;. Before: a plain card with no accent stripe. Now: the card gets .x-card--success and its green accent stripe.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8a874966b01322f11bc1a118797f9c9e20683a1c\" target=\"_blank\" rel=\"noopener\"><code>8a87496</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.496",
       "date": "2026-10-10",
       "summary": "Cards, heroes, images, videos and figures take a goldenRatio option that shapes them as a 1.618:1 landscape rectangle. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1830\" target=\"_blank\" rel=\"noopener\">#1830</a>",
