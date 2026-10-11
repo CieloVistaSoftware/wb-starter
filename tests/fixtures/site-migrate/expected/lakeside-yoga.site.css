@@ -1,0 +1,35 @@
+/* Proposed by site-migrate from lakeside-yoga.html: theme-token overrides measured from
+   the rendered source page. No rule of theirs is copied; every name below is
+   a token src/styles/themes.css defines. Review lakeside-yoga.migration.md, then merge
+   what you keep into styles/site.css.
+
+   They apply to every theme. To keep the theme switcher's other themes as
+   they are, put them under [data-theme="light"] (or "dark") instead.
+   The source is a light page: set data-theme="light" on <html> in index.html,
+   so the colours these tokens leave alone (cards, headers) match them.
+*/
+:root, [data-theme] {
+  /* Palette */
+  --bg-color: #fbfaf7; /* the page background (body) */
+  --text-primary: #1f2d3d; /* most of the text (7 elements, e.g. h2, li, p) */
+  --text-muted: #6b7a89; /* the quieter text (2 elements, e.g. p.caption, p) */
+  --primary: #2a7d6f; /* the filled buttons (1 element, e.g. a.btn) */
+  --bg-secondary: #eef4f2; /* the largest tinted area (2 elements, e.g. section#pricing, section#videos) */
+  --border-color: #d5dfdc; /* the bordered boxes (3 elements, e.g. div.card) */
+
+  /* Type scale */
+  --text-base: 1.0625rem; /* 17px, the size of most of the text (e.g. li, p) */
+  --text-sm: 0.875rem; /* 14px (e.g. small, p.caption) */
+  --text-lg: 1.25rem; /* 20px (e.g. p.lead, h4) */
+  --text-xl: 1.5rem; /* 24px (e.g. h3.pricing-card-title) */
+  --text-2xl: 1.875rem; /* 30px (e.g. h2) */
+  --text-3xl: 2.75rem; /* 44px (e.g. h1) */
+
+  /* Spacing */
+  --space-xs: 0.5rem; /* 8px, 16 uses (e.g. li, div.card-header, h3.pricing-card-title) */
+  --space-sm: 0.875rem; /* 14px, 2 uses (e.g. p.caption) */
+  --space-md: 1rem; /* 16px, 50 uses (e.g. div.container, h1, h2) */
+  --space-lg: 1.25rem; /* 20px, 2 uses (e.g. p.lead) */
+  --space-xl: 1.5rem; /* 24px, 18 uses (e.g. div.row, div.card, div.ratio) */
+  --space-2xl: 3rem; /* 48px, 10 uses (e.g. section#why, section#pricing, section#schedule) */
+}

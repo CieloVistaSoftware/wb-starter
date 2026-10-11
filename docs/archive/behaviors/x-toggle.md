@@ -1,6 +1,6 @@
 # x-toggle
 
-Toggles a CSS class on a target element (or itself). See [src/wb-viewmodels/toggle.js](../../src/wb-viewmodels/toggle.js).
+Toggles a CSS class on a target element (or itself). See [src/wb-viewmodels/toggle.js](../../../src/wb-viewmodels/toggle.js).
 
 - **Type:** Attribute
 - **Usage:** `[x-toggle]`
@@ -19,7 +19,7 @@ Distinct from the `switch`/`<div x-switch>` form behavior under Form Controls â€
 Dispatches `wb:toggle` (bubbles) with `detail: { active, targets, class }` on every toggle.
 
 ## Demo
-See [Interactive & Utility demos](../../demos/site/interactive.html#x-toggle-toggle-a-class-on-a-target-element).
+See [Interactive & Utility demos](../../../demos/site/interactive.html#x-toggle-toggle-a-class-on-a-target-element).
 
 ## Schema/Test
-[toggle.schema.json](../../src/wb-models/toggle.schema.json)
+[toggle.schema.json](../../../src/wb-models/toggle.schema.json)

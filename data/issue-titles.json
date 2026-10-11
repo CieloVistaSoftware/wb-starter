@@ -1252,5 +1252,8 @@
   "1818": "Nightly 2026-10-10: new test failures on main",
   "1822": "The local server's version falls behind the live site's: it pulls main only at start, and a badge update never refreshes the number it serves",
   "1831": "wb-lazy pages never apply declared modifier classes: an option like variant= works under wb.js but not on demos/ or the behaviors page",
-  "1832": "site-migrate v1: compliance run, theme tokens and asset copy for a proposed page"
+  "1832": "site-migrate v1: compliance run, theme tokens and asset copy for a proposed page",
+  "1841": "37 reachable behaviors have no schema: no validation, IntelliSense or permutation tests",
+  "1844": "x-validator: submit throws on its default error class, and it only reads data- attributes",
+  "1845": "slidein schema documents direction top/bottom, but only up/down animate"
 }

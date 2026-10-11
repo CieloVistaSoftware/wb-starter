@@ -4,7 +4,7 @@
 
 It is **assisted, not autonomous**. It does the mechanical part: plain HTML5 elements instead of `div` soup, WB Starter's behaviors instead of a framework's classes, and the old CSS and scripts dropped. The judgement stays with you. It never writes content of its own, and what it cannot classify stays in the page under a `TODO` comment for you to decide.
 
-> **v0 (#982):** one page at a time, read as the browser shows it. It is a prototype; [what it does not do yet](#what-it-does-not-do-yet) is listed below.
+> **v1 (#982, #1832):** one page at a time, read as the browser shows it. [What it does not do yet](#what-it-does-not-do-yet) is listed below.
 
 ## What you need
 
@@ -31,9 +31,10 @@ This writes nothing. It prints:
 
 - the **unclassified regions**: the parts it would not guess about;
 - the proposed **`config/site.json` entries**: the menu built from the old navigation, the company name, the footer copyright, and the page title and description;
+- the proposed **theme tokens**: the old page's colours, type sizes and spacing as overrides of WB Starter's own tokens (`--primary`, `--text-base`, `--space-md`, ...), measured from the page as the browser draws it. No rule of theirs is copied;
 - the **assets** the page uses;
-- the **checks** the proposal passed;
-- the **proposed page** itself.
+- the **checks** the proposal passed, and a **compliance run**: the proposal loaded into the site shell and measured with the rules of `semantic-element-fidelity`, `demo-layout-standards`, `no-element-overlap` and `no-data-attributes`;
+- the **proposed page** and the **proposed token stylesheet** themselves.
 
 ## 2. Write it
 
@@ -41,12 +42,14 @@ This writes nothing. It prints:
 node packages/site-migrate/bin/site-migrate.js old-site/index.html --out my-site --write
 ```
 
-This writes two files:
+This writes three files, and copies the assets:
 
 | File | What it is |
 |---|---|
 | `my-site/pages/home.html` | The proposed page (`index.html` becomes the home page; other pages keep their names) |
 | `my-site/home.migration.md` | The review list from step 1 |
+| `my-site/home.site.css` | The proposed theme tokens, to merge into `styles/site.css` |
+| `my-site/images/...` and the rest | Every asset found next to the old page, at the same relative path. Nothing is written outside `--out`. |
 
 Your input file is never changed. If `--write` would replace it, `site-migrate` stops and writes nothing.
 
@@ -57,8 +60,10 @@ Work through `home.migration.md`:
 1. **Unclassified regions.** For each one, decide what it is. The Riverbend sample has a styled banner ("Free delivery on Fridays…") and a `div` that opened a map on click. Each is in the page, word for word, under `<!-- TODO: unclassified -->`. Make it a real element, give it a behavior, or delete it.
 2. **Changes.** Read the *Why* of anything surprising. A card's heading becomes its `title` attribute, a testimonial's attribution becomes `author` and `role`, and an accordion becomes `<details>` elements.
 3. **Site shell.** Merge the proposed entries into your site's `config/site.json` by hand: `navigationMenu`, `branding.companyName`, `footerSettings.footerCopyrightText` and `searchEngineOptimization`. The navigation and footer are not in the page because the WB Starter shell builds them from that file.
-4. **Assets.** Copy the images and downloads it lists into your site.
-5. **Look at it.** Run `npm start` in your site and open the page.
+4. **Theme tokens.** Merge what you keep from `home.site.css` into `styles/site.css`. They override every theme; the file says which theme (light or dark) the old page was.
+5. **Assets.** `--write` copied what it found. Find the ones marked *missing* or *external* yourself.
+6. **Compliance run.** Anything marked FAIL in the Checks section names the spec whose rule the page breaks, and the elements.
+7. **Look at it.** Run `npm start` in your site and open the page.
 
 ## What it maps
 
@@ -69,6 +74,10 @@ Work through `home.migration.md`:
 | a testimonial or attributed quote | `<article x-cardtestimonial author="…" role="…">` with the quote between the tags |
 | an accordion | `<details>` / `<summary>` |
 | an image with a caption | `<figure>` / `<figcaption>` |
+| a pricing card | `<article x-cardpricing plan="…" price="…" period="…" features="…" cta="…">`, when every word fits an attribute; otherwise an ordinary card |
+| a YouTube or Vimeo player | `<div x-youtube url="…">` / `<div x-vimeo video-id="…">` |
+| a tab set | `<div x-tabs>` with one `<div tab-title="…">` per panel |
+| an inline SVG icon | `<span x-icon>` around the SVG; a bigger drawing stays under a `TODO` |
 | a row of grid columns | `<div x-grid columns="N">` |
 | layout wrappers (`.container`, `.col-*`) | removed; their content stays |
 | navigation, header, footer | proposed `config/site.json` entries |
@@ -78,7 +87,6 @@ Every `x-*` attribute it writes is checked against WB Starter's registry first. 
 
 ## What it does not do yet
 
-- Read the old CSS for theme tokens (colours, type scale, spacing).
-- Run the proposed page through the compliance suite.
-- Migrate a whole site, follow links, or copy assets.
-- Map pricing tables, carousels, tabs, video embeds or inline SVG. These are listed as unclassified.
+- Migrate a whole site or follow links: one page at a time.
+- Read hover and focus colours, fonts or shadows for theme tokens. Stylesheets from other sites (a CDN) do not load, so what they set is not measured.
+- Map carousels.
