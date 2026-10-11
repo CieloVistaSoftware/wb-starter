@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.508",
+      "date": "2026-10-11",
+      "summary": "X-validator now works with plain attributes, and submitting an invalid form focuses the first bad field instead of throwing. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1844\" target=\"_blank\" rel=\"noopener\">#1844</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1851\" target=\"_blank\" rel=\"noopener\">#1851</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-validator submits without throwing and reads plain attributes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1844\" target=\"_blank\" rel=\"noopener\">#1844</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1851\" target=\"_blank\" rel=\"noopener\">#1851</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a581636408876386a7c0a2edbe23da30ead19fab\" target=\"_blank\" rel=\"noopener\"><code>a581636</code></a>",
+          "issues": [
+            1844,
+            1851
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/validator-submit-and-plain-attributes.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/validator-submit-and-plain-attributes.spec.ts</a> --project=regression. Before: a &lt;form x-validator&gt; with validate=&quot;required&quot; fields submitted unchecked, and with data-validate the submit threw on &#39;.[x-error]&#39;. Now: the submit is blocked, the first invalid field is focused and outlined, and validateOn/showErrors/errorClass/successClass take effect.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a581636408876386a7c0a2edbe23da30ead19fab\" target=\"_blank\" rel=\"noopener\"><code>a581636</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.507",
       "date": "2026-10-10",
       "summary": "The Behaviors page&#39;s dropdown no longer reports option index -1 when a row is clicked before the page has finished loading. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1847\" target=\"_blank\" rel=\"noopener\">#1847</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1848\" target=\"_blank\" rel=\"noopener\">#1848</a>",
