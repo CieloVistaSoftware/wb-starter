@@ -6,9 +6,30 @@
   ],
   "releases": [
     {
-      "version": "1.0.501",
+      "version": "1.0.503",
       "date": "2026-10-10",
-      "summary": "Pressing End in the doc viewer now reaches the true bottom even when content keeps loading after the jump. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/466\" target=\"_blank\" rel=\"noopener\">#466</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1840\" target=\"_blank\" rel=\"noopener\">#1840</a>",
+      "summary": "The lazy-loading examples work when copied into another site. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Lazy&#39;s examples use remote images; the nav spec reads the audit&#39;s new count</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c8ebb350d48151c23af9b34ae33f4b8373aff8e2\" target=\"_blank\" rel=\"noopener\"><code>c8ebb35</code></a>",
+          "issues": [
+            1841
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/media-sources-are-remote.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/media-sources-are-remote.spec.ts</a>. Before: lazy.schema.json:41-42 flagged as local images. Now: passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c8ebb350d48151c23af9b34ae33f4b8373aff8e2\" target=\"_blank\" rel=\"noopener\"><code>c8ebb35</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.502",
+      "date": "2026-10-10",
+      "summary": "Pressing End in the doc viewer now reaches the true bottom even when content keeps loading after the jump. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/466\" target=\"_blank\" rel=\"noopener\">#466</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1840\" target=\"_blank\" rel=\"noopener\">#1840</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1835\" target=\"_blank\" rel=\"noopener\">#1835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1832\" target=\"_blank\" rel=\"noopener\">#1832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1838\" target=\"_blank\" rel=\"noopener\">#1838</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a>",
       "items": [
         {
           "kind": "fixed",
@@ -17,21 +38,7 @@
             466,
             1840
           ]
-        }
-      ],
-      "seeIt": "Open /public/doc-viewer.html?file=<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Findex.md\" target=\"_blank\" rel=\"noopener\">docs/index.md</a>, press End, then add content to #content from the console. Before: the page grows below you and you are left short. Now: the view follows it down, until you scroll yourself.",
-      "links": [
-        {
-          "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/50724b7728ddf0079cc074dcc82e6ca03e2d12ee\" target=\"_blank\" rel=\"noopener\"><code>50724b7</code></a>"
-        }
-      ]
-    },
-    {
-      "version": "1.0.500",
-      "date": "2026-10-10",
-      "summary": "Pare the .md docs down to what a casual user needs; archive the rest <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1835\" target=\"_blank\" rel=\"noopener\">#1835</a>",
-      "items": [
+        },
         {
           "kind": "changed",
           "html": "<strong>Move 15 unreferenced docs to docs/archive/</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1835\" target=\"_blank\" rel=\"noopener\">#1835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4660c1ad32bf8fc84b4b47105d7dabd65fe4950b\" target=\"_blank\" rel=\"noopener\"><code>4660c1a</code></a>",
@@ -39,20 +46,7 @@
             1239,
             1835
           ]
-        }
-      ],
-      "links": [
-        {
-          "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4660c1ad32bf8fc84b4b47105d7dabd65fe4950b\" target=\"_blank\" rel=\"noopener\"><code>4660c1a</code></a>"
-        }
-      ]
-    },
-    {
-      "version": "1.0.499",
-      "date": "2026-10-10",
-      "summary": "Site-migrate now runs the proposed page through four compliance checks, proposes theme tokens, copies the assets, and maps pricing tables, video embeds, tabs and SVG icons. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1832\" target=\"_blank\" rel=\"noopener\">#1832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1838\" target=\"_blank\" rel=\"noopener\">#1838</a>",
-      "items": [
+        },
         {
           "kind": "added",
           "html": "<strong>Site-migrate v1, a compliance run, theme tokens, asset copy and four more patterns</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1832\" target=\"_blank\" rel=\"noopener\">#1832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1838\" target=\"_blank\" rel=\"noopener\">#1838</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2b7e7c5d7dd0f75ce24ab460c065446355ef31f3\" target=\"_blank\" rel=\"noopener\"><code>2b7e7c5</code></a>",
@@ -60,21 +54,7 @@
             1832,
             1838
           ]
-        }
-      ],
-      "seeIt": "Run <code>node packages/site-migrate/bin/site-migrate.js <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/fixtures/site-migrate/lakeside/lakeside-yoga.html\" target=\"_blank\" rel=\"noopener\">tests/fixtures/site-migrate/lakeside/lakeside-yoga.html</a> --out out --write</code>. Before: pricing, videos, tabs and icons were unclassified, and there were no tokens, assets or compliance results. Now: it writes x-cardpricing, x-tabs, x-youtube, x-vimeo and x-icon, 18 theme tokens in lakeside-yoga.site.css and 4 copied assets, and reports 4 of 4 compliance checks passed.",
-      "links": [
-        {
-          "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2b7e7c5d7dd0f75ce24ab460c065446355ef31f3\" target=\"_blank\" rel=\"noopener\"><code>2b7e7c5</code></a>"
-        }
-      ]
-    },
-    {
-      "version": "1.0.498",
-      "date": "2026-10-10",
-      "summary": "A hero with goldenRatio renders as a 1.618 rectangle again. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a>",
-      "items": [
+        },
         {
           "kind": "fixed",
           "html": "<strong>A goldenRatio hero is golden again: a weightless alias never stands in for a class</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f55436c426b1d027ffd407c9daaeafc61d343795\" target=\"_blank\" rel=\"noopener\"><code>f55436c</code></a>",
@@ -82,20 +62,116 @@
             477,
             1843
           ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Port the plain-card comment wording from</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/799ac618fd1c4d04b434f785b6a4f8ba650af78c\" target=\"_blank\" rel=\"noopener\"><code>799ac61</code></a>",
+          "issues": [
+            831,
+            1843,
+            477
+          ]
         }
       ],
-      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/golden-ratio-shapes-the-host.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/golden-ratio-shapes-the-host.spec.ts</a>. Before: hero fails, 480x576 with no golden class. Now: all 6 pass.",
+      "seeIt": "Open /public/doc-viewer.html?file=<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Findex.md\" target=\"_blank\" rel=\"noopener\">docs/index.md</a>, press End, then add content to #content from the console. Before: the page grows below you and you are left short. Now: the view follows it down, until you scroll yourself.",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f55436c426b1d027ffd407c9daaeafc61d343795\" target=\"_blank\" rel=\"noopener\"><code>f55436c</code></a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4c18cda37b53300eb1df95dc8dc9c1d9b5452f67\" target=\"_blank\" rel=\"noopener\"><code>4c18cda</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.501",
+      "date": "2026-10-10",
+      "summary": "The new style-registry comment follows the repo&#39;s no-&quot;base&quot;-wording rule. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Port the plain-card comment wording from</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4ed760a4fb4c35b0d2827475b59c919e6507c3dc\" target=\"_blank\" rel=\"noopener\"><code>4ed760a</code></a>",
+          "issues": [
+            1841,
+            1843,
+            477
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-legacy-component-inheritance-docs.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-legacy-component-inheritance-docs.spec.ts</a>. Before: flags style-registry.js:196. Now: passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4ed760a4fb4c35b0d2827475b59c919e6507c3dc\" target=\"_blank\" rel=\"noopener\"><code>4ed760a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.500",
+      "date": "2026-10-10",
+      "summary": "A hero with goldenRatio renders as a 1.618 rectangle again. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Port fix: a goldenRatio hero is golden again: a weightless ... (a7aec8da)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d87180689bb346b62855ca433248909e0f7935c2\" target=\"_blank\" rel=\"noopener\"><code>d871806</code></a>",
+          "issues": [
+            831,
+            477
+          ]
+        }
+      ],
+      "seeIt": "Open the Docs page, and run <code>ls docs/archive</code>. Before: the catalog listed every .md in docs/, internal audits, plans and status records included. Now: it lists only the docs a user needs, and the maintainer and historical docs sit under docs/archive/ in their old folder structure.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e3756ca4f3d4b0ae0b0e9b36dae8a6bf58932357\" target=\"_blank\" rel=\"noopener\"><code>e3756ca</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.499",
+      "date": "2026-10-10",
+      "summary": "Every option value the new behavior schemas declare is now exercised by the permutation tests. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Give the new schemas&#39; enum options permutation coverage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5224a58f3a5d08e61095d5e65f4b54037fef78df\" target=\"_blank\" rel=\"noopener\"><code>5224a58</code></a>",
+          "issues": [
+            1841
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/test-coverage-compliance.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/test-coverage-compliance.spec.ts</a>. Before: 55 uncovered enum properties, over the ceiling of 50. Now: 49, and it passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5224a58f3a5d08e61095d5e65f4b54037fef78df\" target=\"_blank\" rel=\"noopener\"><code>5224a58</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.498",
+      "date": "2026-10-10",
+      "summary": "Every behavior you can write in markup now has a schema, and a new one cannot ship without one. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every reachable behavior declares a schema, and the registry audit gates it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a906be21e732f361662479b4578cb6e7e9c7a180\" target=\"_blank\" rel=\"noopener\"><code>a906be2</code></a>",
+          "issues": [
+            1841
+          ]
+        }
+      ],
+      "seeIt": "Run node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a>. Before: &quot;REACHABLE, NO SCHEMA — 37&quot; and --gate passed. Now: no such section, &quot;0 reachable behavior(s) with no schema&quot;, and deleting any one schema makes --gate exit 1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a906be21e732f361662479b4578cb6e7e9c7a180\" target=\"_blank\" rel=\"noopener\"><code>a906be2</code></a>"
         }
       ]
     },
     {
       "version": "1.0.497",
       "date": "2026-10-10",
-      "summary": "Options like elevated, featured-tone and variant=&quot;cosmic&quot; now change how a behavior looks on demo pages and the behaviors page too, not only on wb.js pages. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1831\" target=\"_blank\" rel=\"noopener\">#1831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1837\" target=\"_blank\" rel=\"noopener\">#1837</a>",
+      "summary": "Options like elevated, featured-tone and variant=&quot;cosmic&quot; now change how a behavior looks on demo pages and the behaviors page too, not only on wb.js pages. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1831\" target=\"_blank\" rel=\"noopener\">#1831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1837\" target=\"_blank\" rel=\"noopener\">#1837</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1830\" target=\"_blank\" rel=\"noopener\">#1830</a>",
       "items": [
         {
           "kind": "fixed",
@@ -104,21 +180,7 @@
             1831,
             1837
           ]
-        }
-      ],
-      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/test-harness.html\" target=\"_blank\" rel=\"noopener\">demos/test-harness.html</a> and run WB.scan on &lt;article x-card featured-tone=&quot;success&quot; title=&quot;T&quot;&gt;Body&lt;/article&gt;. Before: a plain card with no accent stripe. Now: the card gets .x-card--success and its green accent stripe.",
-      "links": [
-        {
-          "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8a874966b01322f11bc1a118797f9c9e20683a1c\" target=\"_blank\" rel=\"noopener\"><code>8a87496</code></a>"
-        }
-      ]
-    },
-    {
-      "version": "1.0.496",
-      "date": "2026-10-10",
-      "summary": "Cards, heroes, images, videos and figures take a goldenRatio option that shapes them as a 1.618:1 landscape rectangle. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1830\" target=\"_blank\" rel=\"noopener\">#1830</a>",
-      "items": [
+        },
         {
           "kind": "added",
           "html": "<strong>GoldenRatio makes card, hero, img, video and figure a 1.618 rectangle</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1830\" target=\"_blank\" rel=\"noopener\">#1830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f689a44b00341e9054db2b2c8f152de7130cb087\" target=\"_blank\" rel=\"noopener\"><code>f689a44</code></a>",
@@ -128,11 +190,32 @@
           ]
         }
       ],
-      "seeIt": "Open Behaviors (<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=behaviors\" target=\"_blank\" rel=\"noopener\">?page=behaviors</a>), pick card and choose the goldenRatio row. Before: no such option, and the card was as tall as its content. Now: the card is 1.618 times as wide as it is tall, footer on the bottom edge.",
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/test-harness.html\" target=\"_blank\" rel=\"noopener\">demos/test-harness.html</a> and run WB.scan on &lt;article x-card featured-tone=&quot;success&quot; title=&quot;T&quot;&gt;Body&lt;/article&gt;. Before: a plain card with no accent stripe. Now: the card gets .x-card--success and its green accent stripe.",
       "links": [
         {
           "label": "Code",
-          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f689a44b00341e9054db2b2c8f152de7130cb087\" target=\"_blank\" rel=\"noopener\"><code>f689a44</code></a>"
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9ed6c3ede05d60d8aba719c21864906c265cb94f\" target=\"_blank\" rel=\"noopener\"><code>9ed6c3e</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.496",
+      "date": "2026-10-10",
+      "summary": "Every behavior selector is now registered in one file, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a>, and the registry audit fails if one is added anywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One behavior registry -- every selector binding lives in tag-map.js</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1da960d9037ec2a6f8934e4227448195334fe570\" target=\"_blank\" rel=\"noopener\"><code>1da960d</code></a>",
+          "issues": [
+            831
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 5 split registrations and 37 lazy-only behaviors across three files. Now: one registry, 0 hard errors, 0 selectors bound outside tag-map.js.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1da960d9037ec2a6f8934e4227448195334fe570\" target=\"_blank\" rel=\"noopener\"><code>1da960d</code></a>"
         }
       ]
     },
