@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.503",
+      "date": "2026-10-10",
+      "summary": "Every behavior selector is now registered in one file, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a>, and the registry audit fails if one is added anywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One behavior registry -- every selector binding lives in tag-map.js</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f5dee7455fecea58bc351514e5fbf659edc8562b\" target=\"_blank\" rel=\"noopener\"><code>f5dee74</code></a>",
+          "issues": [
+            831,
+            1839
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 5 split registrations and 37 lazy-only behaviors across three files. Now: one registry, 0 hard errors, 0 selectors bound outside tag-map.js.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f5dee7455fecea58bc351514e5fbf659edc8562b\" target=\"_blank\" rel=\"noopener\"><code>f5dee74</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.502",
       "date": "2026-10-10",
       "summary": "The Releases page tells you how to see what version 1.0.500 changed. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1846\" target=\"_blank\" rel=\"noopener\">#1846</a>",
