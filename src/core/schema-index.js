@@ -3,7 +3,8 @@
  * once per page and shared by every reader (#1550).
  *
  * The index lists every behavior that HAS a schema, with its properties and
- * baseClass. wb.js reads it to apply declared modifiers (#770, #1147), and
+ * baseClass. declared-modifiers.js reads it to apply declared modifiers (#770,
+ * #1147, #1831), and
  * teach-by-example.js reads it to know whether a schema exists before asking
  * for one: 51 registered behaviors (x-lazy, x-datepicker, x-hotkey, ...) have
  * no *.schema.json, and fetching one by name for each was a 404 plus an
