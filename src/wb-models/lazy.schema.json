@@ -38,8 +38,8 @@
   },
   "test": {
     "setup": [
-      "<img x-lazy src=\"images/placeholder-mountain.svg\" alt=\"Mountain\">",
-      "<img x-lazy src=\"images/placeholder-forest.svg\" threshold=\"0.5\" alt=\"Forest\">"
+      "<img x-lazy src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Mountain\">",
+      "<img x-lazy src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1280px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg\" threshold=\"0.5\" alt=\"Forest trail\">"
     ]
   },
   "_metadata": {
