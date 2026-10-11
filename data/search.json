@@ -2745,7 +2745,7 @@
       "title": "slidein",
       "description": null,
       "headings": [],
-      "content": "# Slidein `x-slidein` slides the element in from the `direction` edge (`left`, `right`, `top` or `bottom`) over 0.5 s each time it is clicked. ## Usage Click to slide in ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `direction` | `left` · `right` · `top` · `bottom` | `left` | Edge the element slides in from: `left` (default), `right`, `top` or `bottom`. | Schema: [`slidein.schema.json`](../../src/wb-models/slidein.schema.json)",
+      "content": "# Slidein `x-slidein` slides the element in from the `direction` edge (`left`, `right`, `up` or `down`) over 0.5 s each time it is clicked. ## Usage Click to slide in ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `direction` | `left` · `right` · `up` · `down` | `left` | Edge the element slides in from: `left` (default), `right`, `up` (enters from below, moving up) or `down` (enters from above, moving down). | Schema: [`slidein.schema.json`](../../src/wb-models/slidein.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -15913,6 +15913,7 @@
       "docs/behaviors/navbar",
       "docs/behaviors/notify",
       "docs/behaviors/searchfield",
+      "docs/behaviors/slidein",
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
@@ -16314,6 +16315,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/countdown",
       "docs/behaviors/searchfield",
+      "docs/behaviors/slidein",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/linkedin-standards-article",
@@ -16762,6 +16764,7 @@
       "docs/behaviors/move",
       "docs/behaviors/range",
       "docs/behaviors/sidebarlayout",
+      "docs/behaviors/slidein",
       "docs/behaviors/stepper",
       "docs/behaviors/switcher",
       "docs/behaviors/table",
@@ -17001,6 +17004,7 @@
       "docs/behaviors/pagination",
       "docs/behaviors/prompt",
       "docs/behaviors/range",
+      "docs/behaviors/slidein",
       "docs/behaviors/stagelight",
       "docs/behaviors/stepper",
       "docs/behaviors/table",
@@ -22022,7 +22026,6 @@
       "docs/behaviors/footer",
       "docs/behaviors/popover",
       "docs/behaviors/resizable",
-      "docs/behaviors/slidein",
       "docs/behaviors/stack",
       "docs/behaviors/x-copybutton",
       "docs/home-page",
@@ -34076,7 +34079,6 @@
       "docs/behaviors/header",
       "docs/behaviors/popover",
       "docs/behaviors/scrollalong",
-      "docs/behaviors/slidein",
       "docs/behaviors/stack",
       "docs/behaviors/stagelight",
       "docs/behaviors/sticky",
@@ -34799,7 +34801,8 @@
     ],
     "moving": [
       "docs/architecture/proposals/proposed-custom-elements",
-      "docs/behaviors/rainbow"
+      "docs/behaviors/rainbow",
+      "docs/behaviors/slidein"
     ],
     "altogether": [
       "docs/architecture/proposals/proposed-custom-elements"
@@ -43059,7 +43062,8 @@
       "demos/site/learn-more"
     ],
     "enters": [
-      "docs/behaviors/fieldset"
+      "docs/behaviors/fieldset",
+      "docs/behaviors/slidein"
     ],
     "asking": [
       "docs/behaviors/fieldset",

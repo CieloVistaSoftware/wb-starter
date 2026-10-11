@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T03:52:32.046Z",
+  "generatedAt": "2026-10-11T04:20:02.250Z",
   "count": 212,
   "schemas": [
     {
@@ -8723,18 +8723,37 @@
       "file": "slidein.schema.json",
       "name": "slidein",
       "title": "Slidein",
-      "description": "On click, plays the slide-in-<dir> animation for 0.5s.",
+      "description": "On click, plays the x-slide-in-<direction> animation for 0.5s.",
       "tag": "x-slidein",
       "baseClass": "x-slidein",
       "kind": "decorator",
       "properties": {
         "direction": {
           "type": "string",
-          "description": "Edge the element slides in from: `left` (default), `right`, `top` or `bottom`.",
-          "default": "left"
+          "description": "Edge the element slides in from: `left` (default), `right`, `up` (enters from below, moving up) or `down` (enters from above, moving down).",
+          "default": "left",
+          "enum": [
+            "left",
+            "right",
+            "up",
+            "down"
+          ]
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "direction": "left"
+        },
+        {
+          "direction": "right"
+        },
+        {
+          "direction": "up"
+        },
+        {
+          "direction": "down"
+        }
+      ],
       "_metadata": {
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
