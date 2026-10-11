@@ -164,6 +164,7 @@ import { runtimeTracker, settledCall } from './injection-tracker.js';
 import {
   beginInFlight, failInjection, removeApplied, installReadiness,
   startObserving, stopObserving, commonInitOptions, bootDocument,
+  appliedBehaviors, pendingInjections, inFlightInjections,
 } from './runtime-shared.js';
 import { teachByExample } from './teach-by-example.js';
 
@@ -306,13 +307,14 @@ function getAutoInjectBehavior(element) {
 // #770/#1831: the declared-attribute applier (applyDeclaredModifiers) lives in
 // declared-modifiers.js, shared with wb-lazy.js so both runtimes apply it.
 
-// Track applied behaviors for cleanup
-const applied = new WeakMap();
-// Track pending injections to prevent re-entry
-const pending = new WeakMap();
-// element -> Map<behaviorName, Promise> settling when that injection finishes,
-// so a second inject() of an in-flight behavior can wait for it (see inject()).
-const inFlight = new WeakMap();
+// Track applied behaviors for cleanup, pending injections to prevent re-entry,
+// and element -> Map<behaviorName, Promise> settling when that injection
+// finishes, so a second inject() of an in-flight behavior can wait for it.
+// #1847: shared with wb-lazy.js (runtime-shared.js). A page running both must
+// not apply one behavior twice because each runtime kept its own record.
+const applied = appliedBehaviors;
+const pending = pendingInjections;
+const inFlight = inFlightInjections;
 // #961/#962: a COUNTABLE view of the same thing `pending` tracks. A WeakMap
 // cannot be counted, so "is WB still building?" was unanswerable from outside
 // and tests slept instead. Shared with wb-lazy.js — one contract, one file.
