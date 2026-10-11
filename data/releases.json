@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.496",
+      "date": "2026-10-10",
+      "summary": "Cards, heroes, images, videos and figures take a goldenRatio option that shapes them as a 1.618:1 landscape rectangle. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1830\" target=\"_blank\" rel=\"noopener\">#1830</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>GoldenRatio makes card, hero, img, video and figure a 1.618 rectangle</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1830\" target=\"_blank\" rel=\"noopener\">#1830</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f689a44b00341e9054db2b2c8f152de7130cb087\" target=\"_blank\" rel=\"noopener\"><code>f689a44</code></a>",
+          "issues": [
+            477,
+            1830
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=behaviors\" target=\"_blank\" rel=\"noopener\">?page=behaviors</a>), pick card and choose the goldenRatio row. Before: no such option, and the card was as tall as its content. Now: the card is 1.618 times as wide as it is tall, footer on the bottom edge.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f689a44b00341e9054db2b2c8f152de7130cb087\" target=\"_blank\" rel=\"noopener\"><code>f689a44</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.495",
       "date": "2026-10-10",
       "summary": "The Behaviors page decides which semantic rows to show from each schema&#39;s declared kind. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/835\" target=\"_blank\" rel=\"noopener\">#835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1825\" target=\"_blank\" rel=\"noopener\">#1825</a>",
