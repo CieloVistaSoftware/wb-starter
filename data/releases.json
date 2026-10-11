@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.506",
+      "date": "2026-10-10",
+      "summary": "X-slidein&#39;s docs and schema now offer only the directions that animate: left, right, up and down. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1845\" target=\"_blank\" rel=\"noopener\">#1845</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1850\" target=\"_blank\" rel=\"noopener\">#1850</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Slidein declares the directions it animates (left/right/up/down)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1845\" target=\"_blank\" rel=\"noopener\">#1845</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1850\" target=\"_blank\" rel=\"noopener\">#1850</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49c6670af43929f3fdb22b5edc0a3999d1931f3f\" target=\"_blank\" rel=\"noopener\"><code>49c6670</code></a>",
+          "issues": [
+            1845,
+            1850
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fslidein.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/slidein.md</a> or the slidein schema. Before: it offered <code>top</code> and <code>bottom</code>, and an element with either did not move when clicked. Now: it offers <code>up</code> and <code>down</code>, and every listed direction slides in.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49c6670af43929f3fdb22b5edc0a3999d1931f3f\" target=\"_blank\" rel=\"noopener\"><code>49c6670</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.505",
       "date": "2026-10-10",
       "summary": "The Releases page describes 1.0.504 as the schemas for 37 behaviors, not a repeat of 1.0.503. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1849\" target=\"_blank\" rel=\"noopener\">#1849</a>",
