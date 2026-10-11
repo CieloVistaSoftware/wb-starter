@@ -1255,5 +1255,6 @@
   "1832": "site-migrate v1: compliance run, theme tokens and asset copy for a proposed page",
   "1841": "37 reachable behaviors have no schema: no validation, IntelliSense or permutation tests",
   "1844": "x-validator: submit throws on its default error class, and it only reads data- attributes",
-  "1845": "slidein schema documents direction top/bottom, but only up/down animate"
+  "1845": "slidein schema documents direction top/bottom, but only up/down animate",
+  "1847": "x-dropdown select event reported index -1 once on CI (Behaviors stage, option 0)"
 }
