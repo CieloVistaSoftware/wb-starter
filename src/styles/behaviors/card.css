@@ -722,6 +722,25 @@ article[variant="elevated"],
   background: var(--bg-elevated);
 }
 
+/* goldenRatio (#477): the WHOLE card is the golden rectangle, landscape,
+   width / height = 1.618. The card is the box a designer places in a grid and
+   sizes, so it is the box the ratio describes; a card with no image has no
+   other box to give it to. The height follows the width the layout gives it,
+   the body (flex: 1, above) takes the slack so the footer sits on the bottom
+   edge, and content taller than the ratio still grows the card (aspect-ratio
+   keeps min-height: auto) instead of being clipped by overflow: hidden.
+   Type is untouched. Built by wb.js applyDeclaredModifiers() from the
+   schema's boolean, as x-card--golden-ratio.
+   The attribute form beside the class is for pages booted by wb-lazy.js
+   (the Behaviors page stage, demos/), whose inject() does not run
+   applyDeclaredModifiers(), so the class never lands there. :where() keeps
+   it no heavier than its host selector; "false" and "0" mean off, as in
+   applyDeclaredModifiers(). */
+.x-card--golden-ratio,
+:is(article, [x-card]):where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
+  aspect-ratio: var(--aspect-golden, 1.618);
+}
+
 /* #488: glass + elevated collide -- both `.x-card--glass` (background:
    var(--card-glass-bg), translucent) and `.x-card--elevated` (background:
    var(--bg-elevated), opaque) are single-class selectors at identical

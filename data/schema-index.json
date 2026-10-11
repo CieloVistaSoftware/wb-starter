@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T22:23:49.294Z",
+  "generatedAt": "2026-10-11T01:04:23.959Z",
   "count": 177,
   "schemas": [
     {
@@ -1262,6 +1262,12 @@
             "neutral"
           ],
           "default": "primary"
+        },
+        "goldenRatio": {
+          "type": "boolean",
+          "description": "Shape the whole card (header, body and footer together) as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. Content taller than that still grows the card rather than being cut off. Text sizes are unchanged. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-card--golden-ratio"
         }
       },
       "matrix": [
@@ -3217,6 +3223,12 @@
             "20rem",
             "50%"
           ]
+        },
+        "goldenRatio": {
+          "type": "boolean",
+          "description": "Shape the whole figure, image and caption together as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The image is cropped to fill the space the caption leaves. Text sizes are unchanged. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-figure--golden-ratio"
         }
       },
       "matrix": [],
@@ -4013,6 +4025,12 @@
             "cosmic"
           ],
           "default": "default"
+        },
+        "goldenRatio": {
+          "type": "boolean",
+          "description": "Shape the hero band as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. Replaces the 400px minimum height; content taller than that still grows the band. Text sizes are unchanged. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-hero--golden-ratio"
         }
       },
       "matrix": [
@@ -4821,6 +4839,12 @@
           "type": "number",
           "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspectRatio` wins over the pair.",
           "default": 0
+        },
+        "goldenRatio": {
+          "type": "boolean",
+          "description": "Shape the image as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The photo is cropped to fill it (`object-fit: cover`), never stretched. An explicit `aspectRatio`, or a `width` + `height` pair, wins over it. Text sizes are unchanged. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-img--golden-ratio"
         }
       },
       "matrix": [],
@@ -9680,6 +9704,12 @@
           "default": false,
           "visual": false,
           "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it, as in audio.schema.json (#773)."
+        },
+        "goldenRatio": {
+          "type": "boolean",
+          "description": "Shape the player as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The picture is cropped to fill it (`object-fit: cover`), never letterboxed. Text sizes are unchanged. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-video--golden-ratio"
         }
       },
       "matrix": [],

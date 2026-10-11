@@ -144,7 +144,9 @@
    one thing it exists to show. */
 [x-cardportfolio] .x-cardportfolio__name {
   margin: 0.75rem 0 0;
-  font-size: 1.6rem;
+  /* --text-lg (#477): 1.618rem, 25.9px -- the scale's step this heading was
+     already 0.3px short of at 1.6rem. */
+  font-size: var(--text-lg, 1.6rem);
   font-weight: 700;
   line-height: 1.2;
   color: var(--text-primary, #f9fafb);

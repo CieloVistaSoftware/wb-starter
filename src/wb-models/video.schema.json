@@ -43,6 +43,12 @@
       "default": false,
       "visual": false,
       "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it, as in audio.schema.json (#773)."
+    },
+    "goldenRatio": {
+      "type": "boolean",
+      "description": "Shape the player as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The picture is cropped to fill it (`object-fit: cover`), never letterboxed. Text sizes are unchanged. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-video--golden-ratio"
     }
   },
   "$view": [],

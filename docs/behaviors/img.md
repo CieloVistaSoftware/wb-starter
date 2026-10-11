@@ -42,6 +42,12 @@ An image has no `size` option. It is sized the way HTML already sizes images, wh
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg" width="200" aspectRatio="1/1" alt="Dachshund puppy, cropped square">
 </figure>
 
+**Make it a golden rectangle with `goldenRatio`.** The image becomes 1.618 times as wide as it is tall, cropped to fit (`object-fit: cover`). An explicit `aspectRatio`, or a `width` + `height` pair, wins over it.
+
+<figure x-demo>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg" width="240" goldenRatio alt="Dachshund puppy, cropped to a golden rectangle">
+</figure>
+
 Inside a card, let the card size the image: give the card a `size` and leave the image's `width` off.
 
 ## Attributes
@@ -53,6 +59,7 @@ Inside a card, let the card size the image: give the card a `size` and leave the
 | `width` | `number` | — | Width in pixels (the native attribute). On its own the height follows the photo's shape. With `height`, the two set the shape too and the image is cropped to it. Still shrinks to fit a narrower container. |
 | `height` | `number` | — | Height in pixels (the native attribute). Takes effect only together with `width`; on its own the site's `img { height: auto }` overrides it. An explicit `aspectRatio` wins over the pair. |
 | `aspectRatio` | ratio, e.g. `16/9` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
+| `goldenRatio` | `boolean` | `false` | Shape the image as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The photo is cropped to fill it (`object-fit: cover`), never stretched. An explicit `aspectRatio`, or a `width` + `height` pair, wins over it. Text sizes are unchanged. Bare attribute. |
 | `lazy` | `boolean` | `false` | Sets `loading="lazy"`, so the browser defers fetching until the image nears the viewport. Bare attribute. |
 | `data-lazy` | `boolean` | `false` | The `data-` spelling of `lazy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `lazy`. |
 | `zoomable` | `boolean` | `false` | Clicking the image opens it full-size in a lightbox. Bare attribute. |
