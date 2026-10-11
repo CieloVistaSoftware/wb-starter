@@ -188,12 +188,56 @@ function partIsCovered(element, cls, part, parts) {
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i] !== cls) continue;
       const alias = m[i + 1];
-      ok = !!alias && safeMatches(element, alias);
+      // An alias that weighs NOTHING -- a :where() group, or * -- does not
+      // stand in for the class: the twin selector loses to rules the class
+      // form beat. hero.css's golden rule is `.x-hero.x-hero--golden-ratio,
+      // [x-hero]:where([goldenratio]...)`; the :where() twin is (0,1,0) against
+      // (0,2,0), the hero's own min-height won, and a goldenRatio hero rendered
+      // 480x576 instead of 1.618. A tag alias still counts: a plain card IS its
+      // <article> (a8a7362e), and `article` beside `.x-card--auto` is how
+      // card.css says so.
+      ok = !!alias && safeMatches(element, alias) && !weighsNothing(alias);
       if (!ok) break;
     }
     if (ok) return true;
   }
   return false;
+}
+
+/**
+ * Does this simple-selector alias have zero specificity? Counts what CSS
+ * counts: :where() adds nothing, :is()/:not() weigh their heaviest item, *
+ * weighs nothing. Unparseable answers "yes" -- emitting the class is the safe
+ * direction.
+ */
+function weighsNothing(alias) {
+  try {
+    const [a, b, c] = weightOf(alias);
+    return a === 0 && b === 0 && c === 0;
+  } catch {
+    return true;
+  }
+}
+
+function weightOf(selector) {
+  let a = 0, b = 0, c = 0;
+  let rest = selector.replace(/:where\((?:[^()]|\([^()]*\))*\)/g, '');
+  rest = rest.replace(/:(?:is|not|has)\(((?:[^()]|\([^()]*\))*)\)/g, (_, inner) => {
+    let best = [0, 0, 0];
+    for (const item of splitSelectorList(inner)) {
+      const w = weightOf(item);
+      if (w[0] > best[0] || (w[0] === best[0] && (w[1] > best[1] || (w[1] === best[1] && w[2] > best[2])))) best = w;
+    }
+    a += best[0]; b += best[1]; c += best[2];
+    return '';
+  });
+  rest = rest.replace(/\[[^\]]*\]/g, () => { b++; return ''; });
+  rest = rest.replace(/#[\w-]+/g, () => { a++; return ''; });
+  rest = rest.replace(/\.[\w-]+/g, () => { b++; return ''; });
+  rest = rest.replace(/::[\w-]+/g, () => { c++; return ''; });
+  rest = rest.replace(/:[\w-]+/g, () => { b++; return ''; });
+  if (/^[a-zA-Z][\w-]*/.test(rest.trim())) c++;
+  return [a, b, c];
 }
 
 function safeMatches(element, selector) {
