@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.507",
+      "date": "2026-10-10",
+      "summary": "The Behaviors page&#39;s dropdown no longer reports option index -1 when a row is clicked before the page has finished loading. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1847\" target=\"_blank\" rel=\"noopener\">#1847</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1848\" target=\"_blank\" rel=\"noopener\">#1848</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One applied-behavior record for both runtimes; dropdown() builds once per host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1847\" target=\"_blank\" rel=\"noopener\">#1847</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1848\" target=\"_blank\" rel=\"noopener\">#1848</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9657873a22dc0d99ecb588a56a03e64fb4f54be4\" target=\"_blank\" rel=\"noopener\"><code>9657873</code></a>",
+          "issues": [
+            1847,
+            1848
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/dropdown-built-once-across-runtimes.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/dropdown-built-once-across-runtimes.spec.ts</a> --project=regression. Before: the stage dropdown had 2 triggers and 2 menus, and option 0 fired select twice, first with index -1. Now: one trigger, one menu, one select with index 0.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9657873a22dc0d99ecb588a56a03e64fb4f54be4\" target=\"_blank\" rel=\"noopener\"><code>9657873</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.506",
       "date": "2026-10-10",
       "summary": "X-slidein&#39;s docs and schema now offer only the directions that animate: left, right, up and down. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1845\" target=\"_blank\" rel=\"noopener\">#1845</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1850\" target=\"_blank\" rel=\"noopener\">#1850</a>",
