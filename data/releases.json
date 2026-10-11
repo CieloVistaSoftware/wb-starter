@@ -6,6 +6,49 @@
   ],
   "releases": [
     {
+      "version": "1.0.500",
+      "date": "2026-10-10",
+      "summary": "Pare the .md docs down to what a casual user needs; archive the rest <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1835\" target=\"_blank\" rel=\"noopener\">#1835</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Move 15 unreferenced docs to docs/archive/</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1835\" target=\"_blank\" rel=\"noopener\">#1835</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4660c1ad32bf8fc84b4b47105d7dabd65fe4950b\" target=\"_blank\" rel=\"noopener\"><code>4660c1a</code></a>",
+          "issues": [
+            1239,
+            1835
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4660c1ad32bf8fc84b4b47105d7dabd65fe4950b\" target=\"_blank\" rel=\"noopener\"><code>4660c1a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.499",
+      "date": "2026-10-10",
+      "summary": "Site-migrate now runs the proposed page through four compliance checks, proposes theme tokens, copies the assets, and maps pricing tables, video embeds, tabs and SVG icons. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1832\" target=\"_blank\" rel=\"noopener\">#1832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1838\" target=\"_blank\" rel=\"noopener\">#1838</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Site-migrate v1, a compliance run, theme tokens, asset copy and four more patterns</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1832\" target=\"_blank\" rel=\"noopener\">#1832</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1838\" target=\"_blank\" rel=\"noopener\">#1838</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2b7e7c5d7dd0f75ce24ab460c065446355ef31f3\" target=\"_blank\" rel=\"noopener\"><code>2b7e7c5</code></a>",
+          "issues": [
+            1832,
+            1838
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node packages/site-migrate/bin/site-migrate.js <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/fixtures/site-migrate/lakeside/lakeside-yoga.html\" target=\"_blank\" rel=\"noopener\">tests/fixtures/site-migrate/lakeside/lakeside-yoga.html</a> --out out --write</code>. Before: pricing, videos, tabs and icons were unclassified, and there were no tokens, assets or compliance results. Now: it writes x-cardpricing, x-tabs, x-youtube, x-vimeo and x-icon, 18 theme tokens in lakeside-yoga.site.css and 4 copied assets, and reports 4 of 4 compliance checks passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2b7e7c5d7dd0f75ce24ab460c065446355ef31f3\" target=\"_blank\" rel=\"noopener\"><code>2b7e7c5</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.498",
       "date": "2026-10-10",
       "summary": "A hero with goldenRatio renders as a 1.618 rectangle again. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a>",
