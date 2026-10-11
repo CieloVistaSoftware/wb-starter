@@ -15,6 +15,38 @@
   object-fit: cover;
 }
 
+/* goldenRatio (#477): a landscape golden rectangle, width / height = 1.618,
+   the photo cropped to fill it. One class on purpose: an explicit
+   aspect-ratio="" (or a width + height pair) arrives as a (0,2,0) generated
+   rule and wins, because the author named a shape.
+   The attribute form beside the class is for pages booted by wb-lazy.js
+   (the Behaviors page stage, demos/), whose inject() does not run
+   applyDeclaredModifiers(), so the class never lands there. :where() keeps
+   it no heavier than its host selector; "false" and "0" mean off, as in
+   applyDeclaredModifiers(). */
+.x-img--golden-ratio,
+:is(img, [x-img]):where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
+  aspect-ratio: var(--aspect-golden, 1.618);
+  object-fit: cover;
+}
+
+/* The whole figure, image and caption together, is the golden rectangle. The
+   image takes whatever height the caption leaves and is cropped to it. */
+.x-figure--golden-ratio,
+:is(figure, [x-figure]):where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
+  aspect-ratio: var(--aspect-golden, 1.618);
+  display: flex;
+  flex-direction: column;
+}
+
+.x-figure--golden-ratio > img,
+:is(figure, [x-figure]):where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) > img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+}
+
 .x-img.x-img--zoomable,
 .x-figure img.x-figure__zoomable {
   cursor: zoom-in;

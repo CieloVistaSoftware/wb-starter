@@ -16,8 +16,8 @@ test('img.md size examples: fixed 240px, fills its container, width+height crop,
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/img.md'));
   const imgs = page.locator('[x-demo] img[alt^="Dachshund puppy"]');
-  await expect(imgs).toHaveCount(4);
-  for (let i = 0; i < 4; i++) {
+  await expect(imgs).toHaveCount(5);
+  for (let i = 0; i < 5; i++) {
     await imgs.nth(i).scrollIntoViewIfNeeded();
     await expect.poll(() => imgs.nth(i).evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
   }
@@ -43,4 +43,9 @@ test('img.md size examples: fixed 240px, fills its container, width+height crop,
   const square = await box(3);
   expect(square.w).toBe(200);
   expect(square.h, 'aspect-ratio="1/1" crops it square').toBe(200);
+
+  // #477: goldenRatio crops it to a 1.618 rectangle.
+  const golden = await box(4);
+  expect(golden.w).toBe(240);
+  expect(Math.abs(golden.w / golden.h - 1.618), 'goldenRatio crops it to 1.618').toBeLessThan(0.02);
 });

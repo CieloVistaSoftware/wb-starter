@@ -7,8 +7,8 @@
     "errors": 0,
     "skipped": 0,
     "totalComponents": 69,
-    "totalSections": 215,
-    "totalDemos": 770
+    "totalSections": 216,
+    "totalDemos": 772
   },
   "pages": [
     {
@@ -20,13 +20,13 @@
       "filename": "cards.html",
       "componentCount": 19,
       "sectionCount": 68,
-      "totalDemos": 264,
+      "totalDemos": 265,
       "components": [
         {
           "name": "card",
           "status": "ok",
           "sections": 5,
-          "demos": 28
+          "demos": 29
         },
         {
           "name": "cardbutton",
@@ -476,8 +476,8 @@
       "status": "ok",
       "filename": "interactive.html",
       "componentCount": 8,
-      "sectionCount": 12,
-      "totalDemos": 14,
+      "sectionCount": 13,
+      "totalDemos": 15,
       "components": [
         {
           "name": "draggable",
@@ -518,8 +518,8 @@
         {
           "name": "hero",
           "status": "ok",
-          "sections": 2,
-          "demos": 5
+          "sections": 3,
+          "demos": 6
         },
         {
           "name": "views",

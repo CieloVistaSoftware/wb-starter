@@ -13,6 +13,23 @@
   overflow: hidden;
 }
 
+/* goldenRatio (#477): the band is a landscape golden rectangle, width / height
+   = 1.618, its height following its width. The 400px floor above would
+   override the ratio below 647px wide, so it gives way; content taller than
+   the ratio still grows the band. Two classes so it outranks [x-hero] (0,1,0)
+   wherever the two rules land; the attribute form ties [x-hero] and wins by
+   coming after it. Type is untouched.
+   The attribute form beside the class is for pages booted by wb-lazy.js
+   (the Behaviors page stage, demos/), whose inject() does not run
+   applyDeclaredModifiers(), so the class never lands there. :where() keeps
+   it no heavier than its host selector; "false" and "0" mean off, as in
+   applyDeclaredModifiers(). */
+.x-hero.x-hero--golden-ratio,
+[x-hero]:where([goldenratio]:not([goldenratio="false"], [goldenratio="0"]), [golden-ratio]:not([golden-ratio="false"], [golden-ratio="0"])) {
+  aspect-ratio: var(--aspect-golden, 1.618);
+  min-height: 0;
+}
+
 [x-cardhero]{
   /* Fill the container, NOT the viewport. The previous 100vw + negative-margin
      full-bleed broke the cardhero out of its grid cell and overlapped
