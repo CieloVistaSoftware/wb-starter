@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.502",
+      "date": "2026-10-10",
+      "summary": "The Releases page tells you how to see what version 1.0.500 changed. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1846\" target=\"_blank\" rel=\"noopener\">#1846</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Give release 1.0.500 the See it line its squash left out</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1239\" target=\"_blank\" rel=\"noopener\">#1239</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1846\" target=\"_blank\" rel=\"noopener\">#1846</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/622086158ffd9f08ff1fbec05b03368e1540e8c0\" target=\"_blank\" rel=\"noopener\"><code>6220861</code></a>",
+          "issues": [
+            1239,
+            1846
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/release-lines.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/release-lines.spec.ts</a>. Before: &quot;1.0.500: there is no See it line&quot;. Now: it passes, and Releases shows 1.0.500&#39;s steps.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/622086158ffd9f08ff1fbec05b03368e1540e8c0\" target=\"_blank\" rel=\"noopener\"><code>6220861</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.501",
       "date": "2026-10-10",
       "summary": "Pressing End in the doc viewer now reaches the true bottom even when content keeps loading after the jump. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/466\" target=\"_blank\" rel=\"noopener\">#466</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1840\" target=\"_blank\" rel=\"noopener\">#1840</a>",
