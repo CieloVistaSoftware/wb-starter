@@ -128,6 +128,9 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
   });
 
   test('a reader who scrolls up after End is not pulled back down by later growth', async ({ page }) => {
+    // CI on #1840 (Windows): a wheel right after landing was undone -- the
+    // settle loop was still running and re-targeted the bottom. Reader input
+    // now ends the whole End handling, not just the follow window.
     await page.setViewportSize({ width: 1280, height: 855 });
     await page.goto('/public/doc-viewer.html?file=docs/index.md', { waitUntil: 'load' });
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight > document.documentElement.clientHeight), { timeout: 20000 }).toBe(true);
@@ -137,13 +140,25 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
       const el = document.documentElement;
       return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
     }), { timeout: 10000 }).toBeLessThanOrEqual(5);
-    await page.mouse.move(640, 400);
-    await page.mouse.wheel(0, -600);
+    // Once End has landed and is following, the reader scrolls up with a key
+    // of their own. (A wheel would scroll whatever box is under the pointer.)
+    await expect(page.locator('html')).toHaveAttribute('data-end-scroll', 'following', { timeout: 10000 });
+    await page.keyboard.press('PageUp');
     await expect.poll(() => page.evaluate(() => {
       const el = document.documentElement;
       return el.scrollHeight - el.clientHeight - el.scrollTop;
     }), { timeout: 5000 }).toBeGreaterThan(300);
-    const before = await page.evaluate(() => document.documentElement.scrollTop);
+    // PageUp scrolls smoothly; read the position once it has come to rest.
+    const settled = () => page.evaluate(() => new Promise<number>((ok) => {
+      let last = -1;
+      const tick = () => {
+        const now = document.documentElement.scrollTop;
+        if (now === last) ok(now); else { last = now; requestAnimationFrame(tick); }
+      };
+      requestAnimationFrame(tick);
+    }));
+    await expect.poll(async () => (await settled()) === (await settled()), { timeout: 5000 }).toBe(true);
+    const before = await settled();
     await page.evaluate(() => {
       const late = document.createElement('div');
       late.style.height = '852px';
@@ -151,6 +166,31 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
     });
     // Give a follower every chance to (wrongly) move the reader.
     await page.evaluate(() => new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(() => ok(null)))));
-    expect(await page.evaluate(() => document.documentElement.scrollTop), 'the reader stays where they scrolled to').toBe(before);
+    expect(await settled(), 'the reader stays where they scrolled to').toBe(before);
+  });
+
+  test('a key pressed while End is still settling hands control back to the reader', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 855 });
+    await page.goto('/public/doc-viewer.html?file=docs/behavior-cross-reference.md', { waitUntil: 'load' });
+    await page.waitForSelector('[x-demo]', { timeout: 20000 });
+    // End starts building the 159 demos and settling; the reader changes their
+    // mind before it lands. Nothing may drag them to the bottom afterwards.
+    await page.keyboard.press('End');
+    await page.keyboard.press('Home');
+    const top = await page.evaluate(() => document.documentElement.scrollTop);
+    // The settle loop ends on its own within END_SCROLL_MAX_WAIT_MS; wait for
+    // the page to stop growing, then check the reader was left where they went.
+    await expect.poll(async () => {
+      const h1 = await page.evaluate(() => document.documentElement.scrollHeight);
+      await page.evaluate(() => new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(() => ok(null)))));
+      const h2 = await page.evaluate(() => document.documentElement.scrollHeight);
+      return h1 === h2;
+    }, { timeout: 20000 }).toBe(true);
+    await expect(page.locator('html')).not.toHaveAttribute('data-end-scroll', 'following');
+    const after = await page.evaluate(() => {
+      const el = document.documentElement;
+      return { scrollTop: el.scrollTop, max: el.scrollHeight - el.clientHeight };
+    });
+    expect(after.max - after.scrollTop, `End pulled the reader back down after Home (scrollTop ${after.scrollTop} of ${after.max}, was ${top})`).toBeGreaterThan(5000);
   });
 });
