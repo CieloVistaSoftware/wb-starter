@@ -44,6 +44,11 @@ const DATA = path.join(ROOT, 'data', 'releases.json');
 const CHECK_ONLY = process.argv.includes('--check');
 // How to recreate each version by hand, written from its issue's own body (#1533).
 const STEPS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'release-see-it.json'), 'utf8'));
+// A version whose squash message summarises the wrong change -- a stacked PR
+// squashed with its base PR's commit message (#1842 took #1839's) -- states what
+// it really changed here. Like release-see-it.json, keyed by version, and only
+// for a version whose generated summary is wrong; most versions need no entry.
+const SUMMARIES = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'release-summary.json'), 'utf8'));
 /** A steps line as HTML: escaped, `code` spans kept as code (commands, file names). */
 const stepsHtml = (text) => linkify(esc(text.charAt(0).toUpperCase() + text.slice(1)).replace(/`([^`]+)`/g, '<code>$1</code>'));
 const REPO_URL = 'https://github.com/CieloVistaSoftware/wb-starter';
@@ -175,6 +180,7 @@ spine.forEach((c, i) => {
   // Every place a summary names is a link, whichever source the text came from.
   summary = linkify(summary);
   const version = versionOf(count);
+  if (SUMMARIES[version]) summary = linkify(esc(upper(SUMMARIES[version])) + tail);
   const steps = STEPS[version] || followable;
   const entry = { version, date: releaseDate(last.date), summary, items };
   if (steps) entry.seeIt = stepsHtml(steps);

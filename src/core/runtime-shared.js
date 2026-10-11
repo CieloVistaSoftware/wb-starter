@@ -17,6 +17,30 @@ import { isReady, whenReady } from './ready-signal.js';
 import { latestWins } from './latest-wins.js';
 
 /**
+ * #1847: ONE record of what has been applied, and what is being applied, for
+ * both runtimes.
+ *
+ * Each runtime used to keep its own `applied`, pending and in-flight maps. A
+ * page can run both: pages/behaviors.html lives inside the site shell (wb.js)
+ * and imports wb-lazy.js for its live stage. Whatever wb.js's observer applied
+ * before wb-lazy.js had loaded was invisible to wb-lazy's maps, so its eager
+ * scan applied the same behavior to the same element again. For x-dropdown
+ * that built a second trigger and menu around the first, and the first run's
+ * listener reported `index: -1` (CI run 38106761271). One record means a
+ * behavior is applied once per element, whichever runtime gets there first.
+ *
+ * One module instance serves both runtimes: each imports './runtime-shared.js'
+ * relative to itself, so the URL is the same even when wb.js was loaded with a
+ * `?v=` query.
+ */
+/** element -> [{ name, cleanup }] for every behavior applied to it. */
+export const appliedBehaviors = new WeakMap();
+/** element -> Set of behavior names whose injection has started and not ended. */
+export const pendingInjections = new WeakMap();
+/** element -> Map<behaviorName, Promise> settling when that injection ends. */
+export const inFlightInjections = new WeakMap();
+
+/**
  * Record that `behaviorName` is being injected into `element`, so a second
  * caller can await the first instead of injecting twice.
  *

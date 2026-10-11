@@ -6,9 +6,55 @@
   ],
   "releases": [
     {
+      "version": "1.0.506",
+      "date": "2026-10-10",
+      "summary": "X-slidein&#39;s docs and schema now offer only the directions that animate: left, right, up and down. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1845\" target=\"_blank\" rel=\"noopener\">#1845</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1850\" target=\"_blank\" rel=\"noopener\">#1850</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Slidein declares the directions it animates (left/right/up/down)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1845\" target=\"_blank\" rel=\"noopener\">#1845</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1850\" target=\"_blank\" rel=\"noopener\">#1850</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49c6670af43929f3fdb22b5edc0a3999d1931f3f\" target=\"_blank\" rel=\"noopener\"><code>49c6670</code></a>",
+          "issues": [
+            1845,
+            1850
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fslidein.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/slidein.md</a> or the slidein schema. Before: it offered <code>top</code> and <code>bottom</code>, and an element with either did not move when clicked. Now: it offers <code>up</code> and <code>down</code>, and every listed direction slides in.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49c6670af43929f3fdb22b5edc0a3999d1931f3f\" target=\"_blank\" rel=\"noopener\"><code>49c6670</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.505",
+      "date": "2026-10-10",
+      "summary": "The Releases page describes 1.0.504 as the schemas for 37 behaviors, not a repeat of 1.0.503. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1849\" target=\"_blank\" rel=\"noopener\">#1849</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release 1.0.504 says what changed, not&#39;s summary</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1841\" target=\"_blank\" rel=\"noopener\">#1841</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1849\" target=\"_blank\" rel=\"noopener\">#1849</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab654cb1e4bef3374ed707750e29514895a6f42f\" target=\"_blank\" rel=\"noopener\"><code>ab654cb</code></a>",
+          "issues": [
+            1841,
+            1842,
+            1839,
+            1849
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=releases\" target=\"_blank\" rel=\"noopener\">pages/releases.html</a> and read 1.0.504. Before: the same &quot;one behavior registry&quot; summary as 1.0.503. Now: it says every reachable behavior has a schema, and its steps run the registry gate.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ab654cb1e4bef3374ed707750e29514895a6f42f\" target=\"_blank\" rel=\"noopener\"><code>ab654cb</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.504",
       "date": "2026-10-10",
-      "summary": "Every behavior selector is now registered in one file, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a>, and the registry audit fails if one is added anywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a>",
+      "summary": "Every behavior a page can reach now has a schema, so its options are validated, offered by IntelliSense and swept by the permutation tests, and the registry audit fails if a new behavior ships without one. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a>",
       "items": [
         {
           "kind": "fixed",
@@ -19,7 +65,7 @@
           ]
         }
       ],
-      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 5 split registrations and 37 lazy-only behaviors across three files. Now: one registry, 0 hard errors, 0 selectors bound outside tag-map.js.",
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: the report listed REACHABLE, NO SCHEMA — 37 behaviors, from backtotop to zoomout, with no validation or IntelliSense. Now: it ends with <code>0 reachable behavior(s) with no schema</code>, and src/wb-models/ has a schema for each, such as hotkey.schema.json and treeview.schema.json.",
       "links": [
         {
           "label": "Code",

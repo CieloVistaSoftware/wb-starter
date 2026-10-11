@@ -903,7 +903,7 @@
         {
           "file": "behaviors/slidein.md",
           "title": "Slidein",
-          "description": "x-slidein slides the element in from the direction edge (left, right, top or bottom) over 0.5 s each time it is clicked.",
+          "description": "x-slidein slides the element in from the direction edge (left, right, up or down) over 0.5 s each time it is clicked.",
           "modified": "2026-10-10"
         },
         {
