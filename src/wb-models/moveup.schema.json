@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "moveup.schema.json",
+  "title": "Moveup",
+  "description": "x-moveup is a button inside an x-move container: a click swaps the item holding it with the item above (one row up in a grid, the previous item in a list) and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+  "schemaFor": "moveup",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:reorder": {
+      "description": "Fired on the container after a swap.",
+      "detail": {
+        "items": "Element[]"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-moveup"
+  },
+  "test": {
+    "setup": [
+      "<div x-move><div class=\"moveable\">One <button x-moveup>↑</button></div><div class=\"moveable\">Two <button x-moveup>↑</button></div></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "move.js moveup() — every property here is one the behavior reads"
+  }
+}

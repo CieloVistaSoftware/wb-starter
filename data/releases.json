@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.504",
+      "date": "2026-10-10",
+      "summary": "Every behavior selector is now registered in one file, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a>, and the registry audit fails if one is added anywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One behavior registry -- every selector binding lives in tag-map.js</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5a525701d1fac58f8fc85bd7f3d36c7b6a6eb68e\" target=\"_blank\" rel=\"noopener\"><code>5a52570</code></a>",
+          "issues": [
+            831,
+            1842
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 5 split registrations and 37 lazy-only behaviors across three files. Now: one registry, 0 hard errors, 0 selectors bound outside tag-map.js.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5a525701d1fac58f8fc85bd7f3d36c7b6a6eb68e\" target=\"_blank\" rel=\"noopener\"><code>5a52570</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.503",
       "date": "2026-10-10",
       "summary": "Every behavior selector is now registered in one file, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a>, and the registry audit fails if one is added anywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1839\" target=\"_blank\" rel=\"noopener\">#1839</a>",

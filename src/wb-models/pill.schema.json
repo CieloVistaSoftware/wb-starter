@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pill.schema.json",
+  "title": "Pill",
+  "description": "x-pill is x-badge with the pill shape always on: a small fully rounded label for a status, count or category. It takes every badge option except pill.",
+  "schemaFor": "pill",
+  "kind": "decorator",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Pill text. The text between the tags wins; this fills an empty host.",
+      "default": ""
+    },
+    "variant": {
+      "type": "string",
+      "description": "Colour variant.",
+      "default": "default",
+      "enum": [
+        "default",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info",
+        "glass",
+        "gradient"
+      ],
+      "appliesClass": "x-badge--{{value}}"
+    },
+    "size": {
+      "type": "string",
+      "description": "Size. Unset is the badge's own size.",
+      "default": "md",
+      "enum": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "appliesClass": "x-badge--{{value}}"
+    },
+    "dot": {
+      "type": "boolean",
+      "description": "A small dot indicator, with the label beside it when there is one. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-badge--dot"
+    },
+    "outline": {
+      "type": "boolean",
+      "description": "Outline style: transparent background, coloured border. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-badge--outline"
+    },
+    "removable": {
+      "type": "boolean",
+      "description": "Adds a remove (×) button that takes the pill away. Bare attribute.",
+      "default": false
+    },
+    "glow": {
+      "type": "boolean",
+      "description": "A soft pulsing halo in the pill's own variant colour, to draw attention. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-badge--glow"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon or emoji shown before the label.",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-badge"
+  },
+  "test": {
+    "setup": [
+      "<span x-pill>New</span>",
+      "<span x-pill variant=\"success\">Active</span>",
+      "<span x-pill size=\"sm\" outline>Draft</span>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "primary"
+        },
+        {
+          "variant": "secondary"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "variant": "warning"
+        },
+        {
+          "variant": "error"
+        },
+        {
+          "variant": "info"
+        },
+        {
+          "variant": "glass"
+        },
+        {
+          "variant": "gradient"
+        },
+        {
+          "size": "xs"
+        },
+        {
+          "size": "sm"
+        },
+        {
+          "size": "md"
+        },
+        {
+          "size": "lg"
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "feedback.js pill() — every property here is one the behavior reads"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "slideout.schema.json",
+  "title": "Slideout",
+  "description": "x-slideout plays a slide-out animation on its host for 0.5s each time the host is clicked, leaving towards direction; a second click replays it.",
+  "schemaFor": "slideout",
+  "kind": "decorator",
+  "properties": {
+    "direction": {
+      "type": "string",
+      "description": "The edge the host slides out towards.",
+      "default": "left",
+      "enum": [
+        "left",
+        "right",
+        "up",
+        "down"
+      ]
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-slideout"
+  },
+  "test": {
+    "setup": [
+      "<button x-slideout>Click to slide out</button>",
+      "<button x-slideout direction=\"right\">Click to slide out right</button>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "direction": "left"
+        },
+        {
+          "direction": "right"
+        },
+        {
+          "direction": "up"
+        },
+        {
+          "direction": "down"
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js slideout() — every property here is one the behavior reads"
+  }
+}

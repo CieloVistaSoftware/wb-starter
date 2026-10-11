@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "scrollable.schema.json",
+  "title": "Scrollable",
+  "description": "x-scrollable makes its host scroll on the axes direction names, capped at maxHeight and maxWidth.",
+  "schemaFor": "scrollable",
+  "kind": "decorator",
+  "properties": {
+    "direction": {
+      "type": "string",
+      "description": "Which axes scroll: vertical, horizontal or both. Any other value adds no scrolling.",
+      "default": "both",
+      "enum": [
+        "vertical",
+        "horizontal",
+        "both"
+      ]
+    },
+    "maxHeight": {
+      "type": "string",
+      "description": "Largest height before the content scrolls vertically, as any CSS length. Used by vertical and both.",
+      "default": ""
+    },
+    "maxWidth": {
+      "type": "string",
+      "description": "Largest width before the content scrolls horizontally, as any CSS length. Used by horizontal and both.",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-scrollable"
+  },
+  "test": {
+    "setup": [
+      "<div x-scrollable max-height=\"6rem\">Long content that scrolls</div>",
+      "<div x-scrollable direction=\"horizontal\" max-width=\"12rem\">Wide content that scrolls sideways</div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "direction": "vertical"
+        },
+        {
+          "direction": "horizontal"
+        },
+        {
+          "direction": "both"
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "layouts.js scrollable() — every property here is one the behavior reads"
+  }
+}

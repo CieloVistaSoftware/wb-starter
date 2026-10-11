@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "zoomout.schema.json",
+  "title": "Zoomout",
+  "description": "x-zoomout plays the zoom-out (shrinking to nothing) animation on its host for 0.4s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+  "schemaFor": "zoomout",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-zoomout"
+  },
+  "test": {
+    "setup": [
+      "<button x-zoomout>Click to zoom out</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js zoomout() — every property here is one the behavior reads"
+  }
+}

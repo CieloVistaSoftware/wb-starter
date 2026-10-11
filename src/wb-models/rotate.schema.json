@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "rotate.schema.json",
+  "title": "Rotate",
+  "description": "x-rotate plays the rotate-in (half a turn, fading in) animation on its host for 0.6s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+  "schemaFor": "rotate",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-rotate"
+  },
+  "test": {
+    "setup": [
+      "<button x-rotate>Click to rotate</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js rotate() — every property here is one the behavior reads"
+  }
+}

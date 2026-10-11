@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "treeview.schema.json",
+  "title": "Treeview",
+  "description": "x-treeview builds a collapsible tree (role=\"tree\") from a JSON array of nodes. A node with children gets a ▶ toggle that opens and closes them, and each level is indented 1.5rem.",
+  "schemaFor": "treeview",
+  "kind": "decorator",
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "JSON array of nodes, each `{\"name\": \"...\", \"children\": [...]}`; children is optional and nests the same way.",
+      "default": "[]"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-treeview"
+  },
+  "test": {
+    "setup": [
+      "<div x-treeview items='[{\"name\":\"src\",\"children\":[{\"name\":\"core\"},{\"name\":\"styles\"}]},{\"name\":\"README.md\"}]'></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "navigation.js treeview() — every property here is one the behavior reads"
+  }
+}

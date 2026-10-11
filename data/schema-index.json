@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-11T02:54:17.176Z",
-  "count": 177,
+  "generatedAt": "2026-10-11T03:52:32.046Z",
+  "count": 212,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -452,6 +452,27 @@
         "icon": "👤",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "backtotop.schema.json",
+      "name": "backtotop",
+      "title": "Backtotop",
+      "description": "x-backtotop turns its host into a back-to-top control: hidden until the page has scrolled past threshold pixels, and a click scrolls the window smoothly to the top.",
+      "tag": "x-backtotop",
+      "baseClass": "x-backtotop",
+      "kind": "decorator",
+      "properties": {
+        "threshold": {
+          "type": "number",
+          "description": "How far the page must scroll, in pixels, before the control shows (`x-backtotop--visible`).",
+          "default": 300
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "navigation.js backtotop() — every property here is one the behavior reads"
       }
     },
     {
@@ -2384,6 +2405,21 @@
       "_metadata": {}
     },
     {
+      "file": "datepicker.schema.json",
+      "name": "datepicker",
+      "title": "Datepicker",
+      "description": "x-datepicker is a minimal shim: it marks its host with x-datepicker-init and sets its data-open flag to true the first time the host takes focus. It draws no calendar and reads no attributes; a native <input type=\"date\"> is the date picker.",
+      "tag": "x-datepicker",
+      "baseClass": "x-datepicker",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "semantics/datepicker.js datepicker() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "debug.schema.json",
       "name": "debug",
       "title": "Debug console",
@@ -2682,6 +2718,69 @@
         "icon": "🪟",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "diff.schema.json",
+      "name": "diff",
+      "title": "Diff",
+      "description": "x-diff is a minimal shim: it marks its host with x-diff-init and, when the host holds a .diff-before and a .diff-after child, appends a copy of both inside an x-diff--rendered wrapper. It reads no attributes; the two children are its input.",
+      "tag": "x-diff",
+      "baseClass": "x-diff",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "semantics/diff.js diff() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "divider.schema.json",
+      "name": "divider",
+      "title": "Divider",
+      "description": "x-divider marks its host as a separator (role=\"separator\"). With a label (the text between the tags, or text) and not vertical, it rebuilds the host as a rule, the label, and a rule.",
+      "tag": "x-divider",
+      "baseClass": "x-divider",
+      "kind": "decorator",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Label shown in the middle of the rule. The text between the tags wins; this fills an empty host. Ignored when vertical is set.",
+          "default": ""
+        },
+        "vertical": {
+          "type": "boolean",
+          "description": "A vertical separator, for a row of items. Bare attribute. A vertical divider shows no label.",
+          "default": false
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "feedback.js divider() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "docsviewer.schema.json",
+      "name": "docsviewer",
+      "title": "Docsviewer",
+      "description": "x-docsviewer wires a documentation browser: each .docs-link child loads its src into the #doc-viewer child (through that child's x-mdhtml when it is ready) and becomes the active (btn-primary) link. The host itself reads no attributes.",
+      "tag": "x-docsviewer",
+      "baseClass": "x-docsviewer",
+      "kind": "decorator",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Set on each .docs-link child, not on the host: the Markdown file that link loads into #doc-viewer.",
+          "default": "",
+          "scope": "child"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "docs-viewer.js docsviewer() — every property here is one the behavior reads"
       }
     },
     {
@@ -3041,6 +3140,37 @@
       }
     },
     {
+      "file": "empty.schema.json",
+      "name": "empty",
+      "title": "Empty",
+      "description": "x-empty renders an empty-state placeholder in its host: an icon, a message heading and an optional description line.",
+      "tag": "x-empty",
+      "baseClass": "x-empty",
+      "kind": "decorator",
+      "properties": {
+        "icon": {
+          "type": "string",
+          "description": "Icon or emoji shown above the message.",
+          "default": "∅"
+        },
+        "message": {
+          "type": "string",
+          "description": "The heading. The text between the tags wins; this fills an empty host.",
+          "default": "No data"
+        },
+        "description": {
+          "type": "string",
+          "description": "A smaller line under the heading. Left out when empty.",
+          "default": ""
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "semantics/empty.js empty() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "error.schema.json",
       "name": "error",
       "title": "Error Behavior",
@@ -3160,6 +3290,21 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "fadeout.schema.json",
+      "name": "fadeout",
+      "title": "Fadeout",
+      "description": "x-fadeout plays the fade-out (opaque to transparent) animation on its host for 0.5s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+      "tag": "x-fadeout",
+      "baseClass": "x-fadeout",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js fadeout() — every property here is one the behavior reads"
       }
     },
     {
@@ -3436,6 +3581,69 @@
       "properties": {},
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "fixed.schema.json",
+      "name": "fixed",
+      "title": "Fixed",
+      "description": "x-fixed pins its host to a corner, edge centre or the centre of the viewport with position: fixed.",
+      "tag": "x-fixed",
+      "baseClass": "x-fixed",
+      "kind": "decorator",
+      "properties": {
+        "position": {
+          "type": "string",
+          "description": "Where the host is pinned. Any other value falls back to bottom-right.",
+          "default": "bottom-right",
+          "enum": [
+            "top-left",
+            "top-right",
+            "top-center",
+            "bottom-left",
+            "bottom-right",
+            "bottom-center",
+            "center"
+          ],
+          "appliesClass": "x-fixed--{{value}}"
+        },
+        "offset": {
+          "type": "string",
+          "description": "Distance from the viewport edges, as any CSS length (`--x-fixed-offset`). Not used by center.",
+          "default": "1rem"
+        },
+        "zIndex": {
+          "type": "number",
+          "description": "Stacking order of the pinned host.",
+          "default": 1000
+        }
+      },
+      "matrix": [
+        {
+          "position": "top-left"
+        },
+        {
+          "position": "top-right"
+        },
+        {
+          "position": "top-center"
+        },
+        {
+          "position": "bottom-left"
+        },
+        {
+          "position": "bottom-right"
+        },
+        {
+          "position": "bottom-center"
+        },
+        {
+          "position": "center"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "layouts.js fixed() — every property here is one the behavior reads"
+      }
     },
     {
       "file": "flash.schema.json",
@@ -4616,6 +4824,27 @@
       }
     },
     {
+      "file": "hotkey.schema.json",
+      "name": "hotkey",
+      "title": "Hotkey",
+      "description": "x-hotkey binds a keyboard shortcut to its host: pressing key anywhere on the page flashes the host, fires wb:hotkey:triggered and clicks it. The shortcut is shown in a badge inside the host. Without key it shows a warning and does nothing.",
+      "tag": "x-hotkey",
+      "baseClass": "x-hotkey",
+      "kind": "decorator",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "The shortcut, as modifiers and a key joined by +, e.g. `ctrl+k` or `ctrl+shift+s`. Modifiers: ctrl (or control), alt, shift, meta (or cmd). Required.",
+          "default": ""
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "helpers.js hotkey() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "icon.schema.json",
       "name": "icon",
       "title": "Icon",
@@ -5106,6 +5335,21 @@
       }
     },
     {
+      "file": "json.schema.json",
+      "name": "json",
+      "title": "Json",
+      "description": "x-json pretty-prints the JSON written between its tags, indented two spaces and syntax-highlighted. Invalid JSON shows \"Invalid JSON\" (x-json--invalid). It reads no attributes: the host's text is the data.",
+      "tag": "x-json",
+      "baseClass": "x-json",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "semantics/json.js json() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "kbd.schema.json",
       "name": "kbd",
       "title": "Kbd",
@@ -5161,6 +5405,37 @@
       "_metadata": {}
     },
     {
+      "file": "lazy.schema.json",
+      "name": "lazy",
+      "title": "Lazy",
+      "description": "x-lazy defers an image: it sets the host's src (and srcset) only when the host scrolls into view, shows a placeholder box until then, and fires wb:lazy:loaded once the image has loaded. Without src it shows a warning.",
+      "tag": "x-lazy",
+      "baseClass": "x-lazy",
+      "kind": "decorator",
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "The image URL to load when the host comes into view. Required.",
+          "default": ""
+        },
+        "srcset": {
+          "type": "string",
+          "description": "A responsive srcset, set together with src.",
+          "default": ""
+        },
+        "threshold": {
+          "type": "number",
+          "description": "How much of the host, from 0 to 1, must be visible before the image loads.",
+          "default": 0.1
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "helpers.js lazy() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "lightbox.schema.json",
       "name": "lightbox",
       "title": "Lightbox",
@@ -5174,6 +5449,37 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "link.schema.json",
+      "name": "link",
+      "title": "Link",
+      "description": "x-link makes its host a checked link. An http(s) href opens in a new tab once it answers; a #id href scrolls smoothly to that element, offset pixels short of it. A target that does not exist, or a bare #, turns the link red (x-link--invalid) with the reason in its title.",
+      "tag": "x-link",
+      "baseClass": "x-link",
+      "kind": "decorator",
+      "properties": {
+        "href": {
+          "type": "string",
+          "description": "Where the link goes: an http(s) URL or a #id on this page.",
+          "default": "#"
+        },
+        "text": {
+          "type": "string",
+          "description": "Link text. The text between the tags wins; this fills an empty host.",
+          "default": "Link"
+        },
+        "offset": {
+          "type": "number",
+          "description": "Pixels to stop short of a #id target when scrolling, e.g. the height of a fixed header.",
+          "default": 0
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "navigation.js link() — every property here is one the behavior reads"
       }
     },
     {
@@ -5398,6 +5704,27 @@
       }
     },
     {
+      "file": "marquee.schema.json",
+      "name": "marquee",
+      "title": "Marquee",
+      "description": "x-marquee scrolls its content horizontally in an endless loop, as two copies of the content moving side by side.",
+      "tag": "x-marquee",
+      "baseClass": "x-marquee",
+      "kind": "decorator",
+      "properties": {
+        "speed": {
+          "type": "number",
+          "description": "Seconds one full loop takes (`--x-marquee-speed`). Larger is slower.",
+          "default": 30
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js marquee() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "masked.schema.json",
       "name": "masked",
       "title": "Masked Input Behavior",
@@ -5459,6 +5786,27 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "menu.schema.json",
+      "name": "menu",
+      "title": "Menu",
+      "description": "x-menu builds a vertical menu (role=\"menu\") from a comma-separated item list. Items are focusable, the arrow keys move between them, Enter or Space picks one, and a pick fires wb:menu:select.",
+      "tag": "x-menu",
+      "baseClass": "x-menu",
+      "kind": "decorator",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "Comma-separated items. Each is a label, or label:value to give it a separate value.",
+          "default": ""
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "navigation.js menu() — every property here is one the behavior reads"
       }
     },
     {
@@ -5576,6 +5924,81 @@
       "properties": {},
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "moveall.schema.json",
+      "name": "moveall",
+      "title": "Moveall",
+      "description": "x-moveall is moveall(element, x, y) from move.js, a legacy helper that shifts an element by x and y pixels from code. Applied as an attribute it receives no offsets, so it only gives a static host position: relative (x-move--offset). It reads no attributes.",
+      "tag": "x-moveall",
+      "baseClass": "x-moveall",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "move.js moveall() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "movedown.schema.json",
+      "name": "movedown",
+      "title": "Movedown",
+      "description": "x-movedown is a button inside an x-move container: a click swaps the item holding it with the item below (one row down in a grid, the next item in a list) and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+      "tag": "x-movedown",
+      "baseClass": "x-movedown",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "move.js movedown() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "moveleft.schema.json",
+      "name": "moveleft",
+      "title": "Moveleft",
+      "description": "x-moveleft is a button inside an x-move container: a click swaps the item holding it with the previous item and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+      "tag": "x-moveleft",
+      "baseClass": "x-moveleft",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "move.js moveleft() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "moveright.schema.json",
+      "name": "moveright",
+      "title": "Moveright",
+      "description": "x-moveright is a button inside an x-move container: a click swaps the item holding it with the next item and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+      "tag": "x-moveright",
+      "baseClass": "x-moveright",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "move.js moveright() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "moveup.schema.json",
+      "name": "moveup",
+      "title": "Moveup",
+      "description": "x-moveup is a button inside an x-move container: a click swaps the item holding it with the item above (one row up in a grid, the previous item in a list) and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+      "tag": "x-moveup",
+      "baseClass": "x-moveup",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "move.js moveup() — every property here is one the behavior reads"
+      }
     },
     {
       "file": "navbar.schema.json",
@@ -5916,6 +6339,21 @@
       }
     },
     {
+      "file": "offline.schema.json",
+      "name": "offline",
+      "title": "Offline",
+      "description": "x-offline shows the connection state in its host, \"🟢 Online\" or \"🔴 Offline\" (x-offline--online / x-offline--offline), and updates it as the browser goes on and offline. It reads no attributes and replaces the host's text.",
+      "tag": "x-offline",
+      "baseClass": "x-offline",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "helpers.js offline() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "ol.schema.json",
       "name": "ol",
       "title": "Ordered list",
@@ -6131,6 +6569,53 @@
       }
     },
     {
+      "file": "parallax.schema.json",
+      "name": "parallax",
+      "title": "Parallax",
+      "description": "x-parallax shifts its host vertically as the page scrolls, by an amount proportional to how far the host is from the bottom of the viewport.",
+      "tag": "x-parallax",
+      "baseClass": "x-parallax",
+      "kind": "decorator",
+      "properties": {
+        "speed": {
+          "type": "number",
+          "description": "How strongly the host moves with the scroll. 0 holds it still; larger moves it further.",
+          "default": 0.5
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js parallax() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "particle.schema.json",
+      "name": "particle",
+      "title": "Particle",
+      "description": "x-particle fills its host with small dots that float upward continuously, each at a random size, position and speed. Pressing the host gives press feedback (x-particle--pressed).",
+      "tag": "x-particle",
+      "baseClass": "x-particle",
+      "kind": "decorator",
+      "properties": {
+        "count": {
+          "type": "number",
+          "description": "How many dots float in the host.",
+          "default": 20
+        },
+        "color": {
+          "type": "string",
+          "description": "Dot colour, as any CSS colour (`--x-particle-color`). Empty uses the theme's primary colour.",
+          "default": ""
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js particle() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "password.schema.json",
       "name": "password",
       "title": "Password Behavior",
@@ -6153,6 +6638,124 @@
       },
       "matrix": [],
       "_metadata": {}
+    },
+    {
+      "file": "pill.schema.json",
+      "name": "pill",
+      "title": "Pill",
+      "description": "x-pill is x-badge with the pill shape always on: a small fully rounded label for a status, count or category. It takes every badge option except pill.",
+      "tag": "x-pill",
+      "baseClass": "x-pill",
+      "kind": "decorator",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Pill text. The text between the tags wins; this fills an empty host.",
+          "default": ""
+        },
+        "variant": {
+          "type": "string",
+          "description": "Colour variant.",
+          "default": "default",
+          "enum": [
+            "default",
+            "primary",
+            "secondary",
+            "success",
+            "warning",
+            "error",
+            "info",
+            "glass",
+            "gradient"
+          ],
+          "appliesClass": "x-badge--{{value}}"
+        },
+        "size": {
+          "type": "string",
+          "description": "Size. Unset is the badge's own size.",
+          "default": "md",
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "appliesClass": "x-badge--{{value}}"
+        },
+        "dot": {
+          "type": "boolean",
+          "description": "A small dot indicator, with the label beside it when there is one. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-badge--dot"
+        },
+        "outline": {
+          "type": "boolean",
+          "description": "Outline style: transparent background, coloured border. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-badge--outline"
+        },
+        "removable": {
+          "type": "boolean",
+          "description": "Adds a remove (×) button that takes the pill away. Bare attribute.",
+          "default": false
+        },
+        "glow": {
+          "type": "boolean",
+          "description": "A soft pulsing halo in the pill's own variant colour, to draw attention. Bare attribute.",
+          "default": false,
+          "appliesClass": "x-badge--glow"
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon or emoji shown before the label.",
+          "default": ""
+        }
+      },
+      "matrix": [
+        {
+          "variant": "default"
+        },
+        {
+          "variant": "primary"
+        },
+        {
+          "variant": "secondary"
+        },
+        {
+          "variant": "success"
+        },
+        {
+          "variant": "warning"
+        },
+        {
+          "variant": "error"
+        },
+        {
+          "variant": "info"
+        },
+        {
+          "variant": "glass"
+        },
+        {
+          "variant": "gradient"
+        },
+        {
+          "size": "xs"
+        },
+        {
+          "size": "sm"
+        },
+        {
+          "size": "md"
+        },
+        {
+          "size": "lg"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "feedback.js pill() — every property here is one the behavior reads"
+      }
     },
     {
       "file": "popover.schema.json",
@@ -7322,6 +7925,32 @@
       "_metadata": {}
     },
     {
+      "file": "reveal.schema.json",
+      "name": "reveal",
+      "title": "Reveal",
+      "description": "x-reveal hides its host until it scrolls into view, then fades it in (x-reveal--visible). Once revealed it stays visible.",
+      "tag": "x-reveal",
+      "baseClass": "x-reveal",
+      "kind": "decorator",
+      "properties": {
+        "threshold": {
+          "type": "number",
+          "description": "How much of the host, from 0 to 1, must be visible before it is revealed.",
+          "default": 0.1
+        },
+        "once": {
+          "type": "boolean",
+          "description": "Stop watching the host after the first reveal. once=\"false\" keeps watching, which looks the same, because nothing hides the host again.",
+          "default": true
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js reveal() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "ripple.schema.json",
       "name": "ripple",
       "title": "Ripple",
@@ -7360,6 +7989,36 @@
         "icon": "💧",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "rotate.schema.json",
+      "name": "rotate",
+      "title": "Rotate",
+      "description": "x-rotate plays the rotate-in (half a turn, fading in) animation on its host for 0.6s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+      "tag": "x-rotate",
+      "baseClass": "x-rotate",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js rotate() — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "rubberband.schema.json",
+      "name": "rubberband",
+      "title": "Rubberband",
+      "description": "x-rubberband plays the rubber-band (stretch and snap back) animation on its host for 1s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+      "tag": "x-rubberband",
+      "baseClass": "x-rubberband",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js rubberband() — every property here is one the behavior reads"
       }
     },
     {
@@ -7404,6 +8063,52 @@
       "_metadata": {
         "generatedBy": "written by hand (#879)",
         "derivedFrom": "src/wb-viewmodels/helpers.js — every property here is one the behavior reads"
+      }
+    },
+    {
+      "file": "scrollable.schema.json",
+      "name": "scrollable",
+      "title": "Scrollable",
+      "description": "x-scrollable makes its host scroll on the axes direction names, capped at maxHeight and maxWidth.",
+      "tag": "x-scrollable",
+      "baseClass": "x-scrollable",
+      "kind": "decorator",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "description": "Which axes scroll: vertical, horizontal or both. Any other value adds no scrolling.",
+          "default": "both",
+          "enum": [
+            "vertical",
+            "horizontal",
+            "both"
+          ]
+        },
+        "maxHeight": {
+          "type": "string",
+          "description": "Largest height before the content scrolls vertically, as any CSS length. Used by vertical and both.",
+          "default": ""
+        },
+        "maxWidth": {
+          "type": "string",
+          "description": "Largest width before the content scrolls horizontally, as any CSS length. Used by horizontal and both.",
+          "default": ""
+        }
+      },
+      "matrix": [
+        {
+          "direction": "vertical"
+        },
+        {
+          "direction": "horizontal"
+        },
+        {
+          "direction": "both"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "layouts.js scrollable() — every property here is one the behavior reads"
       }
     },
     {
@@ -8037,6 +8742,46 @@
       }
     },
     {
+      "file": "slideout.schema.json",
+      "name": "slideout",
+      "title": "Slideout",
+      "description": "x-slideout plays a slide-out animation on its host for 0.5s each time the host is clicked, leaving towards direction; a second click replays it.",
+      "tag": "x-slideout",
+      "baseClass": "x-slideout",
+      "kind": "decorator",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "description": "The edge the host slides out towards.",
+          "default": "left",
+          "enum": [
+            "left",
+            "right",
+            "up",
+            "down"
+          ]
+        }
+      },
+      "matrix": [
+        {
+          "direction": "left"
+        },
+        {
+          "direction": "right"
+        },
+        {
+          "direction": "up"
+        },
+        {
+          "direction": "down"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js slideout() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "slider.schema.json",
       "name": "slider",
       "title": "Slider",
@@ -8498,6 +9243,47 @@
       }
     },
     {
+      "file": "statusbar.schema.json",
+      "name": "statusbar",
+      "title": "Statusbar",
+      "description": "x-statusbar pins a status bar to the bottom (or top) of the viewport with a message area in the middle. Any wb:status:message event on the document shows its message there for its duration (3s by default), styled by its type (error, success).",
+      "tag": "x-statusbar",
+      "baseClass": "x-statusbar",
+      "kind": "decorator",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "Comma-separated items. The first half go left of the message area, the rest right. Empty keeps the host's own children.",
+          "default": ""
+        },
+        "position": {
+          "type": "string",
+          "description": "Edge the bar is pinned to. fixed is the same as bottom; any other value pins it nowhere.",
+          "default": "bottom",
+          "enum": [
+            "bottom",
+            "top",
+            "fixed"
+          ]
+        }
+      },
+      "matrix": [
+        {
+          "position": "bottom"
+        },
+        {
+          "position": "top"
+        },
+        {
+          "position": "fixed"
+        }
+      ],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "navigation.js statusbar() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "stepper.schema.json",
       "name": "stepper",
       "title": "Stepper Behavior",
@@ -8607,6 +9393,21 @@
         "icon": "📌",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "swing.schema.json",
+      "name": "swing",
+      "title": "Swing",
+      "description": "x-swing plays the swing (a pendulum rock that settles) animation on its host for 0.75s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+      "tag": "x-swing",
+      "baseClass": "x-swing",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js swing() — every property here is one the behavior reads"
       }
     },
     {
@@ -9277,6 +10078,21 @@
       }
     },
     {
+      "file": "timepicker.schema.json",
+      "name": "timepicker",
+      "title": "Timepicker",
+      "description": "x-timepicker is a minimal shim: it marks its host with x-timepicker-init and sets its data-open flag to true the first time the host takes focus. It draws no picker and reads no attributes; a native <input type=\"time\"> is the time picker.",
+      "tag": "x-timepicker",
+      "baseClass": "x-timepicker",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "semantics/timepicker.js timepicker() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "toast.schema.json",
       "name": "toast",
       "title": "Toast",
@@ -9559,6 +10375,27 @@
       }
     },
     {
+      "file": "treeview.schema.json",
+      "name": "treeview",
+      "title": "Treeview",
+      "description": "x-treeview builds a collapsible tree (role=\"tree\") from a JSON array of nodes. A node with children gets a ▶ toggle that opens and closes them, and each level is indented 1.5rem.",
+      "tag": "x-treeview",
+      "baseClass": "x-treeview",
+      "kind": "decorator",
+      "properties": {
+        "items": {
+          "type": "string",
+          "description": "JSON array of nodes, each `{\"name\": \"...\", \"children\": [...]}`; children is optional and nests the same way.",
+          "default": "[]"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "navigation.js treeview() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "truncate.schema.json",
       "name": "truncate",
       "title": "Truncate",
@@ -9661,6 +10498,28 @@
       "_metadata": {
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
+      }
+    },
+    {
+      "file": "validator.schema.json",
+      "name": "validator",
+      "title": "Validator",
+      "description": "x-validator validates the fields inside its host (usually a <form>) on blur: each field's validate rules are checked, a failing field gets aria-invalid and an error message after it, and a <form> host refuses to submit until every field passes, firing wb:validator:validate. Rules: required, email, url, number, integer, min:N, max:N, minLength:N, maxLength:N, pattern:REGEX, match:NAME. The host's own options are read only in their legacy data- spelling, so none is declared here.",
+      "tag": "x-validator",
+      "baseClass": "x-validator",
+      "kind": "decorator",
+      "properties": {
+        "validate": {
+          "type": "string",
+          "description": "Set on each field, not on the host: its rules, space-separated, e.g. `required email` or `minLength:8`.",
+          "default": "",
+          "scope": "child"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "validator.js validator() — every property here is one the behavior reads"
       }
     },
     {
@@ -9883,6 +10742,21 @@
       }
     },
     {
+      "file": "visible.schema.json",
+      "name": "visible",
+      "title": "Visible",
+      "description": "x-visible gives its host a show/hide switch for scripts: element.wbVisible.show(), hide() and toggle() add or remove x-visible--hidden. It reads no attributes and starts visible.",
+      "tag": "x-visible",
+      "baseClass": "x-visible",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "helpers.js visible() — every property here is one the behavior reads"
+      }
+    },
+    {
       "file": "behaviors.schema.json",
       "name": "behaviors",
       "title": "WB Behaviors Schema",
@@ -10072,6 +10946,21 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "zoomout.schema.json",
+      "name": "zoomout",
+      "title": "Zoomout",
+      "description": "x-zoomout plays the zoom-out (shrinking to nothing) animation on its host for 0.4s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+      "tag": "x-zoomout",
+      "baseClass": "x-zoomout",
+      "kind": "decorator",
+      "properties": {},
+      "matrix": [],
+      "_metadata": {
+        "generatedBy": "written by hand (#1841)",
+        "derivedFrom": "effects.js zoomout() — every property here is one the behavior reads"
       }
     }
   ]

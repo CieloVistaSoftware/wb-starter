@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "statusbar.schema.json",
+  "title": "Statusbar",
+  "description": "x-statusbar pins a status bar to the bottom (or top) of the viewport with a message area in the middle. Any wb:status:message event on the document shows its message there for its duration (3s by default), styled by its type (error, success).",
+  "schemaFor": "statusbar",
+  "kind": "decorator",
+  "properties": {
+    "items": {
+      "type": "string",
+      "description": "Comma-separated items. The first half go left of the message area, the rest right. Empty keeps the host's own children.",
+      "default": ""
+    },
+    "position": {
+      "type": "string",
+      "description": "Edge the bar is pinned to. fixed is the same as bottom; any other value pins it nowhere.",
+      "default": "bottom",
+      "enum": [
+        "bottom",
+        "top",
+        "fixed"
+      ]
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-statusbar"
+  },
+  "test": {
+    "setup": [
+      "<div x-statusbar items=\"Ready,Ln 1,UTF-8\"></div>",
+      "<div x-statusbar items=\"Ready,UTF-8\" position=\"top\"></div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {
+          "position": "bottom"
+        },
+        {
+          "position": "top"
+        },
+        {
+          "position": "fixed"
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "navigation.js statusbar() — every property here is one the behavior reads"
+  }
+}

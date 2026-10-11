@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "offline.schema.json",
+  "title": "Offline",
+  "description": "x-offline shows the connection state in its host, \"🟢 Online\" or \"🔴 Offline\" (x-offline--online / x-offline--offline), and updates it as the browser goes on and offline. It reads no attributes and replaces the host's text.",
+  "schemaFor": "offline",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-offline"
+  },
+  "test": {
+    "setup": [
+      "<span x-offline></span>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "helpers.js offline() — every property here is one the behavior reads"
+  }
+}
