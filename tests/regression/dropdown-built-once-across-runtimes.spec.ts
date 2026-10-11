@@ -37,7 +37,9 @@ import { test, expect } from '../fixtures/offline';
  */
 
 test.describe('#1847 — one dropdown per host, whichever runtime gets there first', () => {
-  test.use({ viewport: { width: 1280, height: 900 } });
+  // page.route() holds wb-lazy.js back; sw.js would answer that fetch itself
+  // and the hold would never apply (#1349).
+  test.use({ viewport: { width: 1280, height: 900 }, serviceWorkers: 'block' });
 
   test('Behaviors stage: a row rendered before wb-lazy.js loads still reports index 0 for option 0', async ({ page }) => {
     test.setTimeout(60_000);
