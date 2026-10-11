@@ -35,6 +35,7 @@ import {
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { aliasesFor } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
+import { applyDeclaredModifiers } from './declared-modifiers.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
 // (or is '1' for everything). Was forced true|| for a while; reverted per
@@ -778,6 +779,13 @@ const WB = {
         return null;
       }
       const cleanup = await behaviorFn(element, options);
+
+      // #770/#1831: apply the attributes the schema DECLARES, generically --
+      // the same shared applier wb.js calls at the same point. Without it a
+      // declared option (variant="cosmic", elevated) did nothing on any page
+      // that loads this runtime. Wrapped: a convenience layer must never
+      // break the injection itself.
+      try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
 
       // Track for cleanup
       // Re-fetch applied behaviors as they might have changed (though unlikely with pending lock)

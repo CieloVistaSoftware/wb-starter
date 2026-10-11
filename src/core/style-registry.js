@@ -2,7 +2,7 @@
  * Which class names the loaded stylesheets actually define.
  * -----------------------------------------------------------------------------
  * #885: two places independently mapped a declared enum property to a modifier
- * class -- wb.js's applyDeclaredModifiers() (#770) and schema-builder.js's
+ * class -- declared-modifiers.js's applyDeclaredModifiers() (#770) and schema-builder.js's
  * applyProperty(). Both were right for `size`/`variant`, which are style axes,
  * and wrong for `icon="star"` and `target="_self"`, which are values. The
  * result was `class="x-button x-button--star x-button--start x-button--primary
@@ -29,6 +29,8 @@
 
 let cache = null;
 let cachedSheetCount = -1;
+// class -> the selector lists (split into parts) of every rule that names it.
+let rulesByClass = null;
 
 /**
  * Does any loaded stylesheet define a rule using this class?
@@ -40,6 +42,7 @@ export function styleSheetDefinesClass(cls) {
     const sheets = document.styleSheets;
     if (cache === null || sheets.length !== cachedSheetCount) {
       const found = new Set();
+      const byClass = new Map();
       for (const sheet of Array.from(sheets)) {
         let rules;
         // A cross-origin sheet throws here. Skip it rather than treat it as
@@ -56,7 +59,14 @@ export function styleSheetDefinesClass(cls) {
         const walk = (list) => {
           for (const rule of Array.from(list)) {
             if (rule.selectorText) {
-              for (const m of rule.selectorText.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) found.add(m[1]);
+              let parts = null;
+              for (const m of rule.selectorText.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) {
+                found.add(m[1]);
+                parts = parts || splitSelectorList(rule.selectorText);
+                if (!byClass.has(m[1])) byClass.set(m[1], []);
+                const lists = byClass.get(m[1]);
+                if (lists[lists.length - 1] !== parts) lists.push(parts);
+              }
             }
             if (rule.cssRules && rule.cssRules.length) walk(rule.cssRules);
           }
@@ -64,6 +74,7 @@ export function styleSheetDefinesClass(cls) {
         walk(rules);
       }
       cache = found;
+      rulesByClass = byClass;
       cachedSheetCount = sheets.length;
     }
     return cache.has(cls);
@@ -77,5 +88,114 @@ export function styleSheetDefinesClass(cls) {
 /** Drop the cache — for tests that inject a stylesheet mid-run. */
 export function resetStyleRegistry() {
   cache = null;
+  rulesByClass = null;
   cachedSheetCount = -1;
+}
+
+/**
+ * Would adding this class to this element change nothing, because every rule
+ * that uses it already reaches the element through another selector in the
+ * SAME rule? (#1831)
+ *
+ * a8a7362e moved cards from class injection to specificity: card.css writes
+ * `.x-card--elevated, [elevated] { ... }`, `.x-card--glass:hover,
+ * [variant="glass"]:hover { ... }`, `.x-card--auto` beside `article` -- the
+ * class and the attribute are aliases in one rule, and the card is styled by
+ * the attribute it already carries. Stamping the class anyway is the
+ * "class injected after the fact" that commit removed. A class some rule
+ * styles ONLY by class (.x-hero--cosmic, .x-card--success for featured-tone,
+ * .x-cardnotification--elevated) still adds something, so it still lands.
+ *
+ * "Another selector in the same rule" is checked structurally: the other
+ * selector must be the same selector with the class swapped for a simple
+ * selector (`[elevated]`, `article`, `:is([x-card], ...)[variant="glass"]`)
+ * that the element matches -- so `.C:hover` is covered by `[a]:hover` but not
+ * by `[a]`, and `.C > *` by `[a] > *`. `:is(.C, [a])` inside one selector
+ * counts too. Anything unreadable answers "not covered": emitting a class a
+ * page may need is the safe direction.
+ *
+ * @param {Element} element
+ * @param {string} cls - class name, no leading dot
+ * @returns {boolean}
+ */
+export function classAddsNothing(element, cls) {
+  try {
+    if (!styleSheetDefinesClass(cls) || !rulesByClass) return false;
+    const lists = rulesByClass.get(cls);
+    if (!lists || !lists.length) return false;
+    return lists.every((parts) => parts.every((part) =>
+      !hasClassToken(part, cls) || partIsCovered(element, cls, part, parts)));
+  } catch {
+    return false;
+  }
+}
+
+/** Split a selector list on its top-level commas. */
+function splitSelectorList(text) {
+  const out = [];
+  let depth = 0, inStr = '', start = 0;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inStr) { if (c === inStr && text[i - 1] !== '\\') inStr = ''; continue; }
+    if (c === '"' || c === "'") inStr = c;
+    else if (c === '(' || c === '[') depth++;
+    else if (c === ')' || c === ']') depth--;
+    else if (c === ',' && depth === 0) { out.push(text.slice(start, i).trim()); start = i + 1; }
+  }
+  out.push(text.slice(start).trim());
+  return out;
+}
+
+const CLASS_TOKEN = /\.(-?[_a-zA-Z][\w-]*)/g;
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// A simple selector standing in for a class: a tag or *, an :is()/:where()
+// group, and/or attribute selectors.
+const TAG = '(?:[a-zA-Z][\\w-]*|\\*)';
+const IS = '(?::(?:is|where)\\((?:[^()]|\\([^()]*\\))*\\))';
+const ATTR = '(?:\\[[^\\]]+\\])';
+// Non-empty by construction, so `.a.b` against `[x][y]` splits one attribute
+// to each class instead of handing both to the first.
+const ALIAS = `(${TAG}${IS}?${ATTR}*|${IS}${ATTR}*|${ATTR}+)`;
+
+function hasClassToken(part, cls) {
+  for (const m of part.matchAll(CLASS_TOKEN)) if (m[1] === cls) return true;
+  return false;
+}
+
+function partIsCovered(element, cls, part, parts) {
+  // `:is(.C, [a])` / `:where(...)`: covered in place when a sibling item matches.
+  for (const m of part.matchAll(/:(?:is|where)\(((?:[^()]|\([^()]*\))*)\)/g)) {
+    const items = splitSelectorList(m[1]);
+    if (items.includes('.' + cls) && items.some((it) => it !== '.' + cls && safeMatches(element, it))) return true;
+  }
+  // A twin elsewhere in the rule: the same selector with each class token
+  // swapped for an alias. The alias in C's place must match the element.
+  const tokens = [];
+  let pattern = '';
+  let last = 0;
+  for (const m of part.matchAll(CLASS_TOKEN)) {
+    pattern += escapeRe(part.slice(last, m.index)) + ALIAS;
+    tokens.push(m[1]);
+    last = m.index + m[0].length;
+  }
+  pattern += escapeRe(part.slice(last));
+  const re = new RegExp('^' + pattern + '$');
+  for (const other of parts) {
+    if (other === part) continue;
+    const m = other.match(re);
+    if (!m) continue;
+    let ok = false;
+    for (let i = 0; i < tokens.length; i++) {
+      if (tokens[i] !== cls) continue;
+      const alias = m[i + 1];
+      ok = !!alias && safeMatches(element, alias);
+      if (!ok) break;
+    }
+    if (ok) return true;
+  }
+  return false;
+}
+
+function safeMatches(element, selector) {
+  try { return element.matches(selector); } catch { return false; }
 }

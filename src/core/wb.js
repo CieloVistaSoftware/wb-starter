@@ -140,7 +140,7 @@ import { markReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
 import { isComponentLandmark, COMPONENT_HOST } from './component-landmark.js';
-import { styleSheetDefinesClass } from './style-registry.js';
+import { applyDeclaredModifiers } from './declared-modifiers.js';
 import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
 import './click-confirm.js';
@@ -166,7 +166,6 @@ import {
   startObserving, stopObserving, commonInitOptions, bootDocument,
 } from './runtime-shared.js';
 import { teachByExample } from './teach-by-example.js';
-import { loadSchemaIndex as loadSharedSchemaIndex } from './schema-index.js';
 
 // Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
 try {
@@ -304,82 +303,8 @@ function getAutoInjectBehavior(element) {
   return candidate;
 }
 
-/**
- * #770: the declared-attribute applier.
- *
- * The schema index (data/schema-index.json) already lists every behavior's
- * properties and its baseClass. Enum and boolean properties render as a
- * modifier class -- exactly what button(), input() and select() write by hand
- * -- so do it once, for every behavior, instead of 101 times or not at all.
- *
- * Loaded lazily and cached, never awaited: blocking every injection on a
- * fetch is not worth it. It used to be a no-op until the index arrived, on the
- * promise that "the next scan applies it" -- but a scan skips elements it has
- * already built, so everything built on page load before the fetch landed
- * never got its modifiers (<div x-hero variant="cosmic"> stayed plain x-hero,
- * #1147). Those calls are queued now and applied the moment it arrives.
- */
-// The index itself is loaded by schema-index.js, shared with
-// teach-by-example.js (#1550); wb.js keeps the queue of elements built before
-// it arrived.
-let schemaIndex = null;
-const modifiersWaitingForIndex = [];
-
-function loadSchemaIndex() {
-  return loadSharedSchemaIndex().then((idx) => {
-    schemaIndex = idx;
-    for (const [element, behaviorName] of modifiersWaitingForIndex.splice(0)) {
-      try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
-    }
-    return schemaIndex;
-  });
-}
-
-/** `iconPosition` -> `icon-position`, which is what the DOM carries. */
-function attrNameFor(prop) {
-  return prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
-}
-
-function applyDeclaredModifiers(element, behaviorName) {
-  if (!schemaIndex) {
-    modifiersWaitingForIndex.push([element, behaviorName]);
-    loadSchemaIndex();
-    return;
-  }
-  const schema = schemaIndex[behaviorName];
-  const props = schema && schema.properties;
-  if (!props) return;
-
-  // Built, not written: the 4.0.0 prefix rename matched literal class
-  // names and could not see a template hole. Left as `wb-`, every
-  // behavior without an explicit baseClass emitted a class no stylesheet
-  // matches -- no error, just unstyled.
-  const base = schema.baseClass || `x-${behaviorName}`;
-  for (const [prop, def] of Object.entries(props)) {
-    if (!def || typeof def !== 'object') continue;
-    const attr = attrNameFor(prop);
-    const raw = element.getAttribute(attr) ?? element.getAttribute(prop);
-    if (raw === null) continue;
-
-    if (Array.isArray(def.enum) && def.enum.length) {
-      // Only a declared value becomes a class. A typo must not mint a class
-      // that silently matches no CSS and looks like it worked.
-      if (!def.enum.includes(raw)) continue;
-      // #885: only if some stylesheet actually defines it. `size`/`variant`
-      // do; `icon="star"` and `target="_self"` do not, and never did.
-      const cls = `${base}--${raw}`;
-      if (!styleSheetDefinesClass(cls)) continue;
-      element.classList.add(cls);
-    } else if (def.type === 'boolean') {
-      // "false"/"0" mean OFF (#747): a bare presence check reads the string
-      // "false" as true, which is the opposite of what the markup says.
-      if (raw === 'false' || raw === '0') continue;
-      const boolCls = `${base}--${attr}`;
-      if (!styleSheetDefinesClass(boolCls)) continue;
-      element.classList.add(boolCls);
-    }
-  }
-}
+// #770/#1831: the declared-attribute applier (applyDeclaredModifiers) lives in
+// declared-modifiers.js, shared with wb-lazy.js so both runtimes apply it.
 
 // Track applied behaviors for cleanup
 const applied = new WeakMap();

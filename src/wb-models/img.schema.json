@@ -49,6 +49,12 @@
       "type": "number",
       "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspectRatio` wins over the pair.",
       "default": 0
+    },
+    "goldenRatio": {
+      "type": "boolean",
+      "description": "Shape the image as a landscape golden rectangle: width / height = 1.618, through `aspect-ratio: var(--aspect-golden)`. The width stays whatever the layout gives it and the height follows. The photo is cropped to fill it (`object-fit: cover`), never stretched. An explicit `aspectRatio`, or a `width` + `height` pair, wins over it. Text sizes are unchanged. Bare attribute.",
+      "default": false,
+      "appliesClass": "x-img--golden-ratio"
     }
   },
   "$view": [],
