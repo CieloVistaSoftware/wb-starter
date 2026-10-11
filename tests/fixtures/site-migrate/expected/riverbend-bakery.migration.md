@@ -1,7 +1,7 @@
 # site-migrate report: riverbend-bakery.html
 
 Proposed page: `pages/riverbend-bakery.html`. It is a proposal: review every change below before you use it.
-site-migrate v0 maps one static page onto WB Starter markup. It does not port CSS or scripts, and it never writes
+site-migrate maps one static page onto WB Starter markup. It does not port CSS or scripts, and it never writes
 content of its own: what it cannot classify stays in the page, word for word, under a `TODO: unclassified` comment.
 
 ## Summary
@@ -9,8 +9,10 @@ content of its own: what it cannot classify stays in the page, word for word, un
 - 65 changes, each with its reason
 - 3 unclassified regions for a person to decide
 - 3 menu items and the page title proposed for `config/site.json`
-- 8 assets to copy
+- 2 theme tokens proposed in `riverbend-bakery.site.css`
+- 8 assets, 0 found and copied by `--write`
 - checks: all passed
+- compliance run: 4 of 4 passed
 
 ## Changes
 
@@ -324,7 +326,26 @@ Links in the navigation that are not pages, so they are not in the menu:
 - Visit (`#visit`): an anchor on this page, not a page
 - Instagram (`https://www.instagram.com/`): a link to another site, not a page of this one
 
+## Theme tokens: proposed `styles/site.css` overrides
+
+Measured from the computed styles of the rendered source page and mapped onto tokens that `src/styles/themes.css` defines.
+No rule of theirs is copied. `--write` writes them to `riverbend-bakery.site.css`; merge what you keep into `styles/site.css` by hand.
+
+| Token | Proposed | Measured from |
+|---|---|---|
+| `--bg-secondary` | `#3b2a1a` | the largest tinted area (1 element, e.g. div.jumbotron) |
+| `--space-sm` | `0.5rem` | 8px, 4 uses (e.g. div.promo-strip) |
+
+Measured, but not proposed:
+
+- --bg-color: the source does not set a page background
+- --text-primary: the source does not set a text colour on the page
+- --primary: the source gives no button or link a colour of its own
+- --text-base: the source leaves most of its text at the browser's 16px, which is the theme's 1rem already
+
 ## Assets
+
+`--write` copies every asset marked found into `--out`, at the same relative path: a page is loaded into the site's `index.html`, so its relative URLs resolve from there.
 
 | Kind | URL | Used by | Status |
 |---|---|---|---|
@@ -339,14 +360,27 @@ Links in the navigation that are not pages, so they are not in the menu:
 
 ## Checks
 
+The proposed page must pass these before anything is written:
+
 - PASS: every x-* attribute is in extensionMap: x-cardtestimonial, x-grid, x-hero
 - PASS: native elements that auto-inject a behavior (nativeMap): article → card, button → button, details → details, figure → figure, form → form, img → img, input → input, label → label, table → table, textarea → textarea
 - PASS: no class, style, data-* or on* attributes
 - PASS: no script, style, link or meta elements: the page is a fragment (Law 10)
 - PASS: every piece of text in the page is in the source page, word for word: nothing invented
 
-## Not done by v0
+### Compliance run
 
-- Theme tokens (palette, type scale, spacing) are not extracted from their CSS.
-- The proposed page is not yet run through the compliance suite.
+The proposed page, loaded into the site shell (the theme and stylesheets a new site's `index.html` loads, with the proposed tokens as `styles/site.css`, and the runtime) in headless Chromium at 1280x720, measured with the same rule as each spec. The rule comes from the module the spec imports.
+
+- PASS: no-data-attributes (`tests/compliance/no-data-attributes.spec.ts`): no data-* attributes (the spec allows only data-theme, data-code-width, data-x-expected-errors, which a page does not use)
+- PASS: semantic-element-fidelity (`tests/regression/semantic-element-fidelity.spec.ts`): all 3 elements whose schema promises a native element deliver it (details → <details>, table → <table>); each is that element already, so this holds by construction
+- PASS: demo-layout-standards (`tests/compliance/demo-layout-standards.spec.ts`): no text within 1rem of a content-panel edge. Its x-demo rules (§2, §7, §13 spacing) have nothing to measure: the page has no x-demo blocks, which the spec skips too
+- PASS: no-element-overlap (`tests/compliance/no-element-overlap.spec.ts`): no two painted elements overlap
+
+Not reproduced here: the specs run against every page in `pages/` and `demos/` on the dev server, inside the full site with its header, menu and footer; this run draws only `<main>`.
+
+## Not done yet
+
 - One page at a time; links between pages are not followed.
+- Hover and focus colours, fonts and shadows are not read for theme tokens, and stylesheets from other sites (a CDN)
+  do not load, so what they set is not measured.

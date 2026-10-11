@@ -13,88 +13,70 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "guides/migrate-an-existing-page.md",
-          "title": "How to Move an Existing Page onto WB Starter",
-          "description": "site-migrate: propose a WB Starter page for an existing page, with every change listed for review",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "V3-GUIDE.md",
           "title": "wb-starter v3 — Complete Guide",
           "description": "How to use wb-starter and how it works internally",
+          "modified": "2026-10-10"
+        },
+        {
+          "file": "guides/search-index.md",
+          "title": "Search Index",
+          "description": "Documentation for Search Index",
+          "modified": "2026-10-10"
+        },
+        {
+          "file": "guides/migrate-an-existing-page.md",
+          "title": "How to Move an Existing Page onto WB Starter",
+          "description": "site-migrate: propose a WB Starter page for an existing page, with every change listed for review",
           "modified": "2026-10-10"
         }
       ]
     },
     {
-      "name": "Claude Documentation",
-      "icon": "🤖",
+      "name": "How It Works",
+      "icon": "⚙️",
       "docs": [
         {
-          "file": "claude/PAGE-GENERATION.md",
-          "title": "Page Generation",
-          "description": "Claude page generation documentation",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "claude/README.md",
-          "title": "Claude README",
-          "description": "Claude documentation index",
-          "modified": "2026-08-05"
-        },
-        {
-          "file": "claude/TIER1-LAWS.md",
-          "title": "Tier 1 Laws",
-          "description": "Core architectural laws and principles",
-          "modified": "2026-10-04"
-        },
-        {
-          "file": "claude/TIER2-DOMAIN-GUIDES.md",
-          "title": "Tier 2 Domain Guides",
-          "description": "Domain-specific implementation guides",
-          "modified": "2026-09-28"
-        },
-        {
-          "file": "linkedin-standards-article.md",
-          "title": "Linkedin Standards Article",
-          "description": "Documentation for Linkedin Standards Article",
-          "modified": "2026-10-04"
-        },
-        {
-          "file": "linkedin-framework-agnostic.md",
-          "title": "The AI Architect (LinkedIn)",
-          "description": "Article: Why AI tools must be framework agnostic",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "linkedin-update-article.md",
-          "title": "wb-starter v3.0.3 Update (LinkedIn)",
-          "description": "Article: the v3.0.3 behavior set, zero build, and the Light DOM correction",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "standards/V3-STANDARDS.md",
-          "title": "V3 STANDARDS",
-          "description": "Documentation for V3 STANDARDS",
+          "file": "WB_BEHAVIOR_SYSTEM.md",
+          "title": "WB Behavior System",
+          "description": "Core behavior system documentation",
           "modified": "2026-10-10"
         },
         {
-          "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
-          "title": "Demos & Documentation Standards",
-          "description": "Rules for how every demo and .md doc shows behaviors and code: x-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first.",
+          "file": "auto-injection.md",
+          "title": "Auto-Injection",
+          "description": "Automatic behavior injection",
           "modified": "2026-10-10"
         },
         {
-          "file": "AI.md",
-          "title": "Why AI-Generated Answers Are So Often Off",
-          "description": "Why AI sounds smart yet is often subtly or confidently wrong — it predicts tokens, it does not know facts — and why AI output needs human scrutiny.",
-          "modified": "2026-07-04"
+          "file": "schema-first-architecture.md",
+          "title": "Schema-first-architecture",
+          "description": "Documentation for Schema-first-architecture",
+          "modified": "2026-08-26"
         },
         {
-          "file": "claude/TOOLING-INVENTORY.md",
-          "title": "Tooling Inventory — What This Repo Already Has",
-          "description": "Read this before writing any new tooling.",
-          "modified": "2026-10-01"
+          "file": "escape-hatches.md",
+          "title": "Escape Hatches",
+          "description": "Override and customize WB behavior behavior",
+          "modified": "2026-10-10"
+        },
+        {
+          "file": "performance.md",
+          "title": "Performance",
+          "description": "Documentation for Performance",
+          "modified": "2026-08-26"
+        }
+      ]
+    },
+    {
+      "name": "Styling",
+      "icon": "🎨",
+      "docs": [
+        {
+          "file": "themes.md",
+          "title": "Themes",
+          "description": "Theme system and customization",
+          "modified": "2026-08-26"
         }
       ]
     },
@@ -106,18 +88,6 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behavior-cross-reference.md",
-          "title": "Behavior Cross-Reference",
-          "description": "Relationships between every behavior",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "audio.md",
-          "title": "Audio",
-          "description": "Audio player behavior",
           "modified": "2026-10-10"
         },
         {
@@ -181,87 +151,15 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/x-behavior.md",
-          "title": "X-Behavior (deprecated)",
-          "description": "Deprecated generic behavior attribute: write x-name instead",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/x-collapse.md",
-          "title": "X-Collapse",
-          "description": "Collapse behavior",
-          "modified": "2026-09-27"
-        },
-        {
-          "file": "behaviors/x-copy.md",
-          "title": "X-Copy",
-          "description": "Copy to clipboard behavior",
-          "modified": "2026-10-06"
-        },
-        {
           "file": "behaviors/x-copybutton.md",
           "title": "X-Copybutton",
           "description": "Overlays a positioned copy button on any element",
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/x-draggable.md",
-          "title": "X-Draggable",
-          "description": "Draggable behavior",
-          "modified": "2026-09-27"
-        },
-        {
-          "file": "behaviors/x-effects.md",
-          "title": "X-Effects",
-          "description": "Animation effects behavior",
-          "modified": "2026-09-27"
-        },
-        {
-          "file": "behaviors/x-enhancements.md",
-          "title": "X-Enhancements",
-          "description": "Form enhancement behaviors",
-          "modified": "2026-09-27"
-        },
-        {
-          "file": "behaviors/x-resizable.md",
-          "title": "Resizable Behavior",
-          "description": "Drag-to-resize behavior",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "behaviors/x-darkmode.md",
-          "title": "Dark Mode Behavior",
-          "description": "Forces a theme on an element, independent of the global setting",
-          "modified": "2026-08-22"
-        },
-        {
-          "file": "behaviors/x-toggle.md",
-          "title": "Toggle Behavior",
-          "description": "Toggles a CSS class on a target element",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "properties.md",
-          "title": "Properties",
-          "description": "Behavior property reference",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "card.md",
-          "title": "Card (article behavior)",
-          "description": "x-card injects the article behavior — <article> renders a card",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/accordion.md",
           "title": "accordion",
           "description": "Turns a set of titled child sections into independently expandable/collapsible items.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/address.md",
-          "title": "<address> Element",
-          "description": "The <address> element provides contact information for a person, organization, or entity.",
           "modified": "2026-10-10"
         },
         {
@@ -274,12 +172,6 @@
           "file": "behaviors/articles.md",
           "title": "articles",
           "description": "Wraps a set of article-like children in a grid/list/masonry layout, with an optional heading and static pagination controls.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/aside.md",
-          "title": "<aside> Element",
-          "description": "The <aside> element represents content that is tangentially related to the content around it.",
           "modified": "2026-10-10"
         },
         {
@@ -304,12 +196,6 @@
           "file": "behaviors/badge.md",
           "title": "Badge",
           "description": "x-badge turns a <span> into a small coloured label: its text comes from label, its colour from variant, and pill, dot, outline and glow change its shape.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/blockquote.md",
-          "title": "<blockquote> Element",
-          "description": "The <blockquote> element represents an extended quotation from another source.",
           "modified": "2026-10-10"
         },
         {
@@ -556,12 +442,6 @@
           "file": "behaviors/darkmode.md",
           "title": "Dark Mode Toggle",
           "description": "x-darkmode sets data-theme=\"dark\" on the page as soon as it runs, and on a <button> each click then switches between dark and light.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/data.md",
-          "title": "<data> Element",
-          "description": "The <data> element links content with a machine-readable value.",
           "modified": "2026-10-10"
         },
         {
@@ -1135,12 +1015,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/time.md",
-          "title": "<time> Element",
-          "description": "The <time> element represents a specific period in time.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/timeline.md",
           "title": "Timeline",
           "description": "x-timeline draws a vertical timeline, one marker per entry in the comma-separated items.",
@@ -1205,396 +1079,6 @@
           "title": "Zoomin",
           "description": "x-zoomin grows the element from half size and transparent to full size over 0.4 s when clicked.",
           "modified": "2026-10-10"
-        }
-      ]
-    },
-    {
-      "name": "Styling",
-      "icon": "🎨",
-      "docs": [
-        {
-          "file": "themes.md",
-          "title": "Themes",
-          "description": "Theme system and customization",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "code-examples-standard.md",
-          "title": "Code Examples Standard",
-          "description": "Formatting rules for code examples",
-          "modified": "2026-10-10"
-        }
-      ]
-    },
-    {
-      "name": "Testing",
-      "icon": "🧪",
-      "docs": [
-        {
-          "file": "testing-strategy.md",
-          "title": "Testing Strategy",
-          "description": "How to test WB behaviors",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "test-schema-standard.md",
-          "title": "Schema Testing",
-          "description": "Schema-based testing approach",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "schema-test-value.md",
-          "title": "Schema Test Value",
-          "description": "Testing the schema test value",
-          "modified": "2026-09-28"
-        },
-        {
-          "file": "ANNOUNCE_TEST_POLICY.md",
-          "title": "Test Policy Announcement",
-          "description": "Testing policy and enforcement",
-          "modified": "2026-09-28"
-        },
-        {
-          "file": "testing-runbook.md",
-          "title": "Testing Runbook",
-          "description": "Step-by-step testing procedures",
-          "modified": "2026-10-02"
-        }
-      ]
-    },
-    {
-      "name": "Features",
-      "icon": "⚡",
-      "docs": [
-        {
-          "file": "auto-injection.md",
-          "title": "Auto-Injection",
-          "description": "Automatic behavior injection",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "inline-editing.md",
-          "title": "Inline Editing",
-          "description": "Content editing features",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "NOTES-V3-GUIDE.md",
-          "title": "Notes System",
-          "description": "Notes feature guide",
-          "modified": "2026-10-05"
-        },
-        {
-          "file": "guides/search-index.md",
-          "title": "Search Index",
-          "description": "Documentation for Search Index",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "property-viewer.md",
-          "title": "Property Viewer",
-          "description": "Documentation for the Unified Split View/Property Panel",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "search.md",
-          "title": "Search",
-          "description": "Search functionality documentation",
-          "modified": "2026-10-10"
-        }
-      ]
-    },
-    {
-      "name": "Planning",
-      "icon": "📋",
-      "docs": [
-        {
-          "file": "IMPROVEMENTS.md",
-          "title": "Improvements",
-          "description": "Planned improvements",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "semantic-audit.md",
-          "title": "Semantic Audit",
-          "description": "HTML audit results",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "audits/X-USAGE-AUDIT.md",
-          "title": "X USAGE AUDIT",
-          "description": "Documentation for X USAGE AUDIT",
-          "modified": "2026-10-02"
-        },
-        {
-          "file": "audits/HOST-CHILD-DISPATCH-AUDIT.md",
-          "title": "Host/Child Dispatch Audit",
-          "description": "Schema-built native elements vs. their behavior JS -- collision patterns and fixes (#360-#369)",
-          "modified": "2026-10-08"
-        },
-        {
-          "file": "audits/INLINE-STYLES-AUDIT.md",
-          "title": "Inline Styles Audit",
-          "description": "Tier-1 Law 9 violation -- 250+ inline styles across 33 wb-viewmodels files, filed as #370",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "MVVM-MIGRATION-PLAN.md",
-          "title": "MVVM MIGRATION PLAN",
-          "description": "Documentation for MVVM MIGRATION PLAN",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "MVVM-MIGRATION.md",
-          "title": "MVVM MIGRATION",
-          "description": "Documentation for MVVM MIGRATION",
-          "modified": "2026-10-10"
-        }
-      ]
-    },
-    {
-      "name": "Compliance",
-      "icon": "⚖️",
-      "docs": [
-        {
-          "file": "compliance/iso-42001-alignment.md",
-          "title": "Iso-42001-alignment",
-          "description": "Documentation for Iso-42001-alignment",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "BRANCH_PROTECTION.md",
-          "title": "Branch Protection",
-          "description": "Branch protection rules and policies",
-          "modified": "2026-02-06"
-        },
-        {
-          "file": "committing-fixes.md",
-          "title": "Committing Fixes",
-          "description": "Guidelines for committing fixes",
-          "modified": "2026-10-02"
-        },
-        {
-          "file": "npx-commands.md",
-          "title": "npx Commands",
-          "description": "Copy-paste commands and PowerShell notes",
-          "modified": "2026-09-28"
-        },
-        {
-          "file": "standards/REPO-LAYOUT.md",
-          "title": "Repo Layout",
-          "description": "Where every file goes: the root, folders, names, archive",
-          "modified": "2026-09-28"
-        }
-      ]
-    },
-    {
-      "name": "Standards",
-      "icon": "📐",
-      "docs": [
-        {
-          "file": "standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
-          "title": "A gate must be seen to fail",
-          "description": "A check that has never been observed failing is not evidence of anything.",
-          "modified": "2026-09-08"
-        },
-        {
-          "file": "standards/CSS-CLASS-CONVENTION.md",
-          "title": "CSS class convention — you can name the class without reading the code",
-          "description": "Convention over configuration.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "standards/ERROR-LOG-RETENTION.md",
-          "title": "Error Log Retention — 30 Days",
-          "description": "Rule, from John (2026-09-05): *\"all of our error logs must stay on the system for 30 days.\"* Stated after a session in which the test suite destroyed 26+…",
-          "modified": "2026-09-28"
-        },
-        {
-          "file": "standards/ISSUE-SIGNATURE-BLOCK.md",
-          "title": "The Signature Block",
-          "description": "Every issue carries one.",
-          "modified": "2026-09-29"
-        },
-        {
-          "file": "standards/RELEASE-PROCESS.md",
-          "title": "Release Process Standards",
-          "description": "Every version number this project shows anyone MUST be traceable to a written list of what it contains.",
-          "modified": "2026-10-05"
-        }
-      ]
-    },
-    {
-      "name": "Uncategorized",
-      "icon": "📄",
-      "docs": [
-        {
-          "file": "home-page.md",
-          "title": "Home Page",
-          "description": "Documentation for the home page layout",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "performance.md",
-          "title": "Performance",
-          "description": "Documentation for Performance",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "styles.md",
-          "title": "Styles",
-          "description": "Documentation for Styles",
-          "modified": "2026-10-08"
-        },
-        {
-          "file": "pce-candidates.md",
-          "title": "Pce-candidates",
-          "description": "Documentation for Pce-candidates",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "pricecard.md",
-          "title": "Pricecard",
-          "description": "Documentation for Pricecard",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "schema-first-architecture.md",
-          "title": "Schema-first-architecture",
-          "description": "Documentation for Schema-first-architecture",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "schema-first-audit-report.md",
-          "title": "Schema-first-audit-report",
-          "description": "Documentation for Schema-first-audit-report",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "INTELLISENSE-TOOLTIPS.md",
-          "title": "INTELLISENSE TOOLTIPS",
-          "description": "Documentation for INTELLISENSE TOOLTIPS",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "escape-hatches.md",
-          "title": "Escape Hatches",
-          "description": "Override and customize WB behavior behavior",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "mcp.md",
-          "title": "MCP Server",
-          "description": "MCP server configuration and usage",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "schema.md",
-          "title": "Schema Standards",
-          "description": "Standard structure and conventions for all JSON schemas",
-          "modified": "2026-08-30"
-        },
-        {
-          "file": "schema.migration.md",
-          "title": "Schema Migration Plan",
-          "description": "Step-by-step plan to migrate schemas to the new modular structure",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
-          "title": "X-Prefix Migration Phase 1",
-          "description": "Historical: X-prefix migration plan",
-          "modified": "2026-09-27"
-        },
-        {
-          "file": "architecture/proposals/proposed-custom-elements.md",
-          "title": "Proposed Custom Elements",
-          "description": "Architecture proposal for custom elements",
-          "modified": "2026-09-27"
-        },
-        {
-          "file": "architecture/proposals/v4-golden-ratio-layout-spec.md",
-          "title": "v4 Golden-Ratio Layout Spec (Proposal)",
-          "description": "Proposed golden-ratio-derived spacing scale, adapted from a real prior document",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "architecture/proposals/remove-wb-prefix-authoring-surface.md",
-          "title": "Proposal: Drop the wb- Tag Prefix from the Authoring Surface",
-          "description": "Proposal to author behaviors as plain HTML plus an x-* attribute instead of wb-* custom tags, keeping the wb- prefix internal to CSS/registry naming",
-          "modified": "2026-10-04"
-        },
-        {
-          "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
-          "title": "Attribute Naming Standard",
-          "description": "Standards for attribute naming conventions",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "architecture/standards/ERROR-MESSAGE.md",
-          "title": "Error Message Standard",
-          "description": "Error message format and conventions",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "architecture/standards/SCHEMA-SPECIFICATION.md",
-          "title": "Schema Specification",
-          "description": "Detailed schema specification standard",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "claude/SCHEMAS-GUIDE.md",
-          "title": "Schemas Guide",
-          "description": "Claude guide for working with schemas",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "claude/TIER3-REFERENCE.md",
-          "title": "Tier 3 Reference",
-          "description": "Tier 3 reference documentation",
-          "modified": "2026-10-04"
-        },
-        {
-          "file": "container-pattern.md",
-          "title": "Container Pattern",
-          "description": "Container pattern documentation",
-          "modified": "2026-08-26"
-        },
-        {
-          "file": "index.md",
-          "title": "Docs Index",
-          "description": "Documentation index page",
-          "modified": "2026-10-08"
-        },
-        {
-          "file": "semantic-standard.md",
-          "title": "Semantic Standard",
-          "description": "Semantic HTML standard documentation",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "wbservices.md",
-          "title": "WBServices",
-          "description": "WBServices pattern documentation",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "WB_BEHAVIOR_SYSTEM.md",
-          "title": "WB Behavior System",
-          "description": "Core behavior system documentation",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "architecture/WB-PREFIX-AUDIT.md",
-          "title": "wb- Prefix Audit",
-          "description": "Generated by: node scripts/audit-wb-prefix.mjs (re-run it; do not trust these numbers by hand) Measured at: 4.0.0, after behavior removal Scope: every…",
-          "modified": "2026-10-06"
-        },
-        {
-          "file": "architecture/solidjscomparison.md",
-          "title": "wb-starter compared to Solid.js",
-          "description": "Written 2026-08-30, from reading the source rather than from impressions.",
-          "modified": "2026-09-03"
         }
       ]
     }

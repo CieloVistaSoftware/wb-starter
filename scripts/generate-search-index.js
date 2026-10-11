@@ -160,6 +160,9 @@ function scanDirectory(dir, type, urlPattern) {
     if (stat.isDirectory()) continue;
     if (!file.endsWith('.html') && !file.endsWith('.md')) continue;
     if (file.startsWith('_')) continue;
+    // #1239: docs/archive/ holds docs nothing references any more; a search
+    // hit on one would surface exactly what the archive took out of view.
+    if (dir === 'docs' && /^archive[\\/]/.test(file)) continue;
     
     try {
       const content = fs.readFileSync(filePath, 'utf-8');

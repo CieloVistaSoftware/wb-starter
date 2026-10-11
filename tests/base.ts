@@ -162,7 +162,14 @@ export function getHtmlFiles(dir: string = ROOT): string[] {
  * Get all CSS files from a directory (recursive)
  */
 export function getCssFiles(dir: string = ROOT): string[] {
-  return getFiles(dir, ['.css']);
+  // #1832: tests/fixtures/site-migrate holds a sample of someone else's site
+  // (its own stylesheet, hardcoded colours and all) and the token overrides
+  // site-migrate proposes for it (<name>.site.css, which by design defines
+  // theme variables). Neither is this project's CSS, so the CSS rules skip
+  // them; tests/regression/site-migrate-*.spec.ts checks them. The proposed
+  // HTML pages stay under the HTML rules.
+  const migrateFixtures = path.join(ROOT, 'tests', 'fixtures', 'site-migrate') + path.sep;
+  return getFiles(dir, ['.css']).filter((f) => !f.startsWith(migrateFixtures));
 }
 
 /**

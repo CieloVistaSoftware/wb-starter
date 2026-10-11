@@ -1,6 +1,6 @@
 # x-resizable
 
-Makes an element resizable by dragging its edge/corner. See [src/wb-viewmodels/resizable.js](../../src/wb-viewmodels/resizable.js).
+Makes an element resizable by dragging its edge/corner. See [src/wb-viewmodels/resizable.js](../../../src/wb-viewmodels/resizable.js).
 
 - **Type:** Attribute
 - **Usage:** `[x-resizable]`
@@ -19,7 +19,7 @@ Adds a drag handle to the element's border (default: bottom-right corner) and le
 | `aspectRatio` | off | Lock width/height ratio while resizing |
 
 ## Demo
-See [Interactive & Utility demos](../../demos/site/interactive.html#resizable-resizable).
+See [Interactive & Utility demos](../../../demos/site/interactive.html#resizable-resizable).
 
 ## Schema/Test
-[resizable.schema.json](../../src/wb-models/resizable.schema.json)
+[resizable.schema.json](../../../src/wb-models/resizable.schema.json)

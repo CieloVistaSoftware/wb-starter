@@ -23,7 +23,7 @@
     <label for="docs-sort">Sort documents</label>
     <select id="docs-sort">
       <option value="newest" selected>Newest first</option>
-      <option value="created">By date created (every doc)</option>
+      <option value="created">By date created</option>
       <option value="category">By category</option>
     </select>
   </div>
@@ -160,14 +160,17 @@
     }
 
     // #1226 -- John: "I want to be able to see all docs by creation date
-    // somehow". Every doc in docs/, not only the curated list: read from
+    // somehow". Every USER doc in docs/ (#1239), not only the curated list: read from
     // data/docs-manifest.json, whose `created` (the commit that first added the
     // doc, through renames) scripts/update-docs-manifest.js writes from git.
     let allDocs = null;
     async function loadAllDocs() {
       try {
         const res = await fetch(siteRoot() + 'data/docs-manifest.json');
-        allDocs = res.ok ? ((await res.json()).files || []) : [];
+        // #1239: the reader-facing catalog lists user docs only. Maintainer
+        // docs (status, standards, agent docs, audits) carry
+        // audience "maintainer" and still open by their direct doc-viewer URL.
+        allDocs = res.ok ? ((await res.json()).files || []).filter((d) => d.audience === 'user') : [];
       } catch { allDocs = []; }
     }
 

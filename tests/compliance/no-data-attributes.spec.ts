@@ -2,6 +2,7 @@ import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { isLegacySyntaxFixture } from '../utils/legacy-syntax-fixtures';
+import { offenders } from '../../scripts/lib/data-attributes.mjs';
 
 /**
  * COMPLIANCE GATE (#224): ZERO data-* attributes on the live surface.
@@ -19,29 +20,9 @@ import { isLegacySyntaxFixture } from '../utils/legacy-syntax-fixtures';
  * state hooks (not component config), add them here explicitly with a comment —
  * nothing else is exempt.
  */
-// Framework state hooks, NOT wb-*/x-* behavior config. Each was already
-// ratified with verified reasoning in demos-no-legacy-data-attrs.spec.ts; this
-// list was left empty and so demanded renames that other specs assert against,
-// making the pair unsatisfiable (#895). The docstring above reserved exactly
-// this exemption — it just never propagated here.
-//
-//   data-theme             set on documentElement, read by darkmode.js, keyed
-//                          by 9 stylesheets. Root-element state, not config.
-//   data-code-width        CSS attribute-selector hook (x-demo[data-code-width]),
-//                          never read by JS. code-panel-width-compliance.spec.ts
-//                          and code-panel-50vw-min-width.spec.ts assert this
-//                          exact name — renaming regresses them (#550).
-//   data-x-expected-errors <html> flag read by error-logger.js.
-//                          expected-error-log-suppression.spec.ts asserts this
-//                          exact name — renaming regresses it (#550).
-//
-// Closed list. Behavior CONFIG in data-* form is still a failure; see #895 for
-// the per-behavior rename pass that is deliberately not covered here.
-const ALLOWED = new Set<string>([
-  'data-theme',
-  'data-code-width',
-  'data-x-expected-errors',
-]);
+// ALLOWED (the closed list of framework state hooks, each with its reason) and
+// offenders() live in scripts/lib/data-attributes.mjs, so site-migrate holds
+// the page it proposes to the same rule (#1832).
 
 const ROOT = process.cwd();
 
@@ -100,23 +81,6 @@ function scannedFiles(): string[] {
     if (fs.existsSync(path.join(ROOT, f))) out.push(f);
   }
   return [...new Set(out)];
-}
-
-// Extract offending data-* names. In HTML/MD, data-* appears as an attribute
-// (`data-x=` — real markup, escaped code samples, or CSS `[data-x=…]` selectors).
-// In JSON it appears either as a declared/name value (`"data-x"`) or inside an
-// embedded markup string (`data-x=`). Prose mentions ("use data-size to…") match
-// neither, so they don't false-positive.
-function offenders(content: string, isJson: boolean): string[] {
-  const re = isJson
-    ? /"(data-[a-z][a-z0-9-]*)"|\b(data-[a-z][a-z0-9-]*)=/gi
-    : /\b(data-[a-z][a-z0-9-]*)(?==)/gi;
-  const found: string[] = [];
-  for (const m of content.matchAll(re)) {
-    const name = (m[1] || m[2] || '').toLowerCase();
-    if (name && !ALLOWED.has(name)) found.push(name);
-  }
-  return [...new Set(found)].sort();
 }
 
 // The #224 purge landed, so per that issue's own red→fix→green workflow the

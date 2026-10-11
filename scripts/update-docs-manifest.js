@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { readGitDates as readGitDatesFrom, readGitCreated } from './lib/git-dates.mjs';
 import { fileURLToPath } from 'url';
+import { ARCHIVE_DIR, classifyDocs } from './lib/doc-audience.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,6 +44,9 @@ function getMarkdownFiles(dir, basePath = '') {
     if (entry.isDirectory()) {
       // Skip hidden directories and node_modules
       if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+      // #1239: docs/archive/ holds docs nothing references any more. They are
+      // not part of the doc set, so no manifest lists them.
+      if (`docs/${relativePath}` === ARCHIVE_DIR) continue;
       results.push(...getMarkdownFiles(fullPath, relativePath));
     } else if (entry.name.endsWith('.md')) {
       // Read first line for title
@@ -112,10 +116,16 @@ function stampCuratedDates() {
   }
 }
 
-function generateManifest() {
+async function generateManifest() {
   console.log('Scanning docs directory...');
   
   const files = getMarkdownFiles(DOCS_DIR);
+
+  // #1239: who each doc is for -- `user` (listed in the Docs page catalog) or
+  // `maintainer` (hidden from it, still opened by direct URL). The rule lives
+  // in scripts/lib/doc-audience.mjs; this file is where its answer is recorded.
+  const audience = await classifyDocs(ROOT, files.map((f) => f.path));
+  for (const file of files) file.audience = audience.get(file.path);
 
   // #1226: every doc's creation date, for the Docs page's "By date created"
   // view. From git (the commit that first added it); without full history the
@@ -154,6 +164,10 @@ function generateManifest() {
   // now MEANS something.
   const manifest = {
     totalFiles: files.length,
+    audiences: {
+      user: files.filter((f) => f.audience === 'user').length,
+      maintainer: files.filter((f) => f.audience === 'maintainer').length,
+    },
     categories: Object.keys(byCategory).sort(),
     byCategory,
     files: files.sort((a, b) => a.path.localeCompare(b.path, 'en'))
@@ -171,5 +185,5 @@ function generateManifest() {
   console.log(`Output: ${OUTPUT_FILE}`);
 }
 
-generateManifest();
+await generateManifest();
 stampCuratedDates();
