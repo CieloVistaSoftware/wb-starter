@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "moveleft.schema.json",
+  "title": "Moveleft",
+  "description": "x-moveleft is a button inside an x-move container: a click swaps the item holding it with the previous item and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+  "schemaFor": "moveleft",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:reorder": {
+      "description": "Fired on the container after a swap.",
+      "detail": {
+        "items": "Element[]"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-moveleft"
+  },
+  "test": {
+    "setup": [
+      "<div x-move><div class=\"moveable\">One <button x-moveleft>←</button></div><div class=\"moveable\">Two <button x-moveleft>←</button></div></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "move.js moveleft() — every property here is one the behavior reads"
+  }
+}

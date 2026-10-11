@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "datepicker.schema.json",
+  "title": "Datepicker",
+  "description": "x-datepicker is a minimal shim: it marks its host with x-datepicker-init and sets its data-open flag to true the first time the host takes focus. It draws no calendar and reads no attributes; a native <input type=\"date\"> is the date picker.",
+  "schemaFor": "datepicker",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-datepicker"
+  },
+  "test": {
+    "setup": [
+      "<input x-datepicker type=\"date\">"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "semantics/datepicker.js datepicker() — every property here is one the behavior reads"
+  }
+}

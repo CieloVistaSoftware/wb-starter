@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "lazy.schema.json",
+  "title": "Lazy",
+  "description": "x-lazy defers an image: it sets the host's src (and srcset) only when the host scrolls into view, shows a placeholder box until then, and fires wb:lazy:loaded once the image has loaded. Without src it shows a warning.",
+  "schemaFor": "lazy",
+  "kind": "decorator",
+  "properties": {
+    "src": {
+      "type": "string",
+      "description": "The image URL to load when the host comes into view. Required.",
+      "default": ""
+    },
+    "srcset": {
+      "type": "string",
+      "description": "A responsive srcset, set together with src.",
+      "default": ""
+    },
+    "threshold": {
+      "type": "number",
+      "description": "How much of the host, from 0 to 1, must be visible before the image loads.",
+      "default": 0.1
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:lazy:loaded": {
+      "description": "The image finished loading.",
+      "detail": {
+        "src": "string"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-lazy"
+  },
+  "test": {
+    "setup": [
+      "<img x-lazy src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Mountain\">",
+      "<img x-lazy src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg/1280px-Hiking_to_the_Ice_Lakes._San_Juan_National_Forest%2C_Colorado.jpg\" threshold=\"0.5\" alt=\"Forest trail\">"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "helpers.js lazy() — every property here is one the behavior reads"
+  }
+}

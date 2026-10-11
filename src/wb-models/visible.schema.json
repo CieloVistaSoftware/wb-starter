@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "visible.schema.json",
+  "title": "Visible",
+  "description": "x-visible gives its host a show/hide switch for scripts: element.wbVisible.show(), hide() and toggle() add or remove x-visible--hidden. It reads no attributes and starts visible.",
+  "schemaFor": "visible",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-visible"
+  },
+  "test": {
+    "setup": [
+      "<div x-visible>Shown until a script hides it</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "helpers.js visible() — every property here is one the behavior reads"
+  }
+}

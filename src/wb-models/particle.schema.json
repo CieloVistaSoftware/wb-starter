@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "particle.schema.json",
+  "title": "Particle",
+  "description": "x-particle fills its host with small dots that float upward continuously, each at a random size, position and speed. Pressing the host gives press feedback (x-particle--pressed).",
+  "schemaFor": "particle",
+  "kind": "decorator",
+  "properties": {
+    "count": {
+      "type": "number",
+      "description": "How many dots float in the host.",
+      "default": 20
+    },
+    "color": {
+      "type": "string",
+      "description": "Dot colour, as any CSS colour (`--x-particle-color`). Empty uses the theme's primary colour.",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-particle"
+  },
+  "test": {
+    "setup": [
+      "<div x-particle>Floating dots</div>",
+      "<div x-particle count=\"40\" color=\"gold\">Golden dots</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js particle() — every property here is one the behavior reads"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "hotkey.schema.json",
+  "title": "Hotkey",
+  "description": "x-hotkey binds a keyboard shortcut to its host: pressing key anywhere on the page flashes the host, fires wb:hotkey:triggered and clicks it. The shortcut is shown in a badge inside the host. Without key it shows a warning and does nothing.",
+  "schemaFor": "hotkey",
+  "kind": "decorator",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "The shortcut, as modifiers and a key joined by +, e.g. `ctrl+k` or `ctrl+shift+s`. Modifiers: ctrl (or control), alt, shift, meta (or cmd). Required.",
+      "default": ""
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:hotkey:triggered": {
+      "description": "The shortcut was pressed, just before the host is clicked.",
+      "detail": {
+        "key": "string"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-hotkey"
+  },
+  "test": {
+    "setup": [
+      "<button x-hotkey key=\"ctrl+k\">Search</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "helpers.js hotkey() — every property here is one the behavior reads"
+  }
+}

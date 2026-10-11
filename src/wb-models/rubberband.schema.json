@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "rubberband.schema.json",
+  "title": "Rubberband",
+  "description": "x-rubberband plays the rubber-band (stretch and snap back) animation on its host for 1s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+  "schemaFor": "rubberband",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-rubberband"
+  },
+  "test": {
+    "setup": [
+      "<button x-rubberband>Click to stretch</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js rubberband() — every property here is one the behavior reads"
+  }
+}

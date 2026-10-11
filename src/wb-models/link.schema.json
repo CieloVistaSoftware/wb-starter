@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "link.schema.json",
+  "title": "Link",
+  "description": "x-link makes its host a checked link. An http(s) href opens in a new tab once it answers; a #id href scrolls smoothly to that element, offset pixels short of it. A target that does not exist, or a bare #, turns the link red (x-link--invalid) with the reason in its title.",
+  "schemaFor": "link",
+  "kind": "decorator",
+  "properties": {
+    "href": {
+      "type": "string",
+      "description": "Where the link goes: an http(s) URL or a #id on this page.",
+      "default": "#"
+    },
+    "text": {
+      "type": "string",
+      "description": "Link text. The text between the tags wins; this fills an empty host.",
+      "default": "Link"
+    },
+    "offset": {
+      "type": "number",
+      "description": "Pixels to stop short of a #id target when scrolling, e.g. the height of a fixed header.",
+      "default": 0
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-link"
+  },
+  "test": {
+    "setup": [
+      "<a x-link href=\"#top\">Back to the top</a>",
+      "<a x-link href=\"#top\" offset=\"64\">Back to the top</a>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "navigation.js link() — every property here is one the behavior reads"
+  }
+}

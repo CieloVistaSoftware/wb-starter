@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fadeout.schema.json",
+  "title": "Fadeout",
+  "description": "x-fadeout plays the fade-out (opaque to transparent) animation on its host for 0.5s each time the host is clicked; a second click replays it. It reads no attributes: the animation and its duration are fixed in effects.js.",
+  "schemaFor": "fadeout",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-fadeout"
+  },
+  "test": {
+    "setup": [
+      "<button x-fadeout>Click to fade out</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js fadeout() — every property here is one the behavior reads"
+  }
+}

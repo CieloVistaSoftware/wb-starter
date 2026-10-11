@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "validator.schema.json",
+  "title": "Validator",
+  "description": "x-validator validates the fields inside its host (usually a <form>) on blur: each field's validate rules are checked, a failing field gets aria-invalid and an error message after it, and a <form> host refuses to submit until every field passes, firing wb:validator:validate. Rules: required, email, url, number, integer, min:N, max:N, minLength:N, maxLength:N, pattern:REGEX, match:NAME. The host's own options are read only in their legacy data- spelling, so none is declared here.",
+  "schemaFor": "validator",
+  "kind": "decorator",
+  "properties": {
+    "validate": {
+      "type": "string",
+      "description": "Set on each field, not on the host: its rules, space-separated, e.g. `required email` or `minLength:8`.",
+      "default": "",
+      "scope": "child"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:validator:validate": {
+      "description": "Fired after the whole form is validated, on submit or validate().",
+      "detail": {
+        "valid": "boolean"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-validator"
+  },
+  "test": {
+    "setup": [
+      "<form x-validator><input name=\"email\" validate=\"required email\"><button>Send</button></form>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "validator.js validator() — every property here is one the behavior reads"
+  }
+}

@@ -19,6 +19,9 @@
  *
  *   - a module and a schema, no selector  -> ships, unreachable, invisible
  *   - a selector, no module entry         -> resolves, then fails to load
+ *   - a selector and a module, no schema  -> works, undeclared: nothing
+ *                                            validates or sweeps its options
+ *                                            (a gate failure since #1841)
  *   - a selector table outside tag-map.js -> works, but a read of tag-map.js
  *                                            says it does not exist
  *
@@ -186,6 +189,13 @@ const REVIEWED = {
   },
   unreachable: {},
   strayTable: {},
+  // REACHABLE, NO SCHEMA (#1841). Informational until 37 behaviors got their
+  // schemas; now a behavior markup can reach must declare one, or it ships
+  // with no validation, no IntelliSense and nothing for the property sweeps
+  // (every-declared-attribute, permutation-compliance) to test. Empty, and
+  // meant to stay empty: write src/wb-models/<name>.schema.json from the
+  // behavior's code instead of adding a line here.
+  selectorNoSchema: {},
 };
 
 // Schemas that schema.schema.json's own _schemaTypes say are not behaviors.
@@ -256,6 +266,12 @@ function collect() {
     }
   }
 
+  // A schema declares its behavior twice: by FILE name and by schemaFor. They
+  // differ where the file is named for a behavior's public identifier
+  // (drawerLayout.schema.json, schemaFor drawer-layout -- docs/standards'
+  // repo layout says renaming the file renames the behavior). Counting the
+  // file name alone reported drawer-layout as schemaless while its schema sat
+  // on disk (#1841).
   const schemas = new Set();
   const notBehaviors = [];
   for (const f of fs.readdirSync(path.join(ROOT, 'src/wb-models')).filter((x) => x.endsWith('.schema.json'))) {
@@ -264,7 +280,24 @@ function collect() {
     try { schema = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/wb-models', f), 'utf8')); } catch { /* every-schema-parses owns that */ }
     const kind = schema.isBase ? 'base' : schema.schemaType;
     if (NON_BEHAVIOR_SCHEMA_TYPES.has(kind)) notBehaviors.push({ name, kind });
-    else schemas.add(name);
+    else {
+      schemas.add(name);
+      if (typeof schema.schemaFor === 'string') schemas.add(schema.schemaFor.replace(/^x-/, ''));
+    }
+  }
+
+  // A registry key that is a second NAME for another key's code -- same
+  // module, same export (index.js maps 'sidebar-layout' to layouts.js's
+  // sidebarlayout()) -- is declared by that key's schema. A copy of the
+  // schema under the second name would be a second declaration of one
+  // behavior, free to drift from the first (#1841).
+  const exportAliasesForSchemas = readObjectLiteral('src/wb-viewmodels/index.js', 'exportAliases') || {};
+  const implOf = (name) => `${behaviorModules[name]}#${exportAliasesForSchemas[name] || name}`;
+  const schemaVia = new Map();
+  for (const name of Object.keys(behaviorModules)) {
+    if (schemas.has(name)) continue;
+    const twin = Object.keys(behaviorModules).find((other) => other !== name && schemas.has(other) && implOf(other) === implOf(name));
+    if (twin) schemaVia.set(name, twin);
   }
 
   const attrIndex = {};
@@ -276,7 +309,7 @@ function collect() {
   const strays = findStrayTables(new Set([...Object.keys(behaviorModules), ...aliasTargets]));
 
   return {
-    selectors, behaviorModules, schemas, notBehaviors, missingMaps, computed, strays,
+    selectors, behaviorModules, schemas, schemaVia, notBehaviors, missingMaps, computed, strays,
     nativeMapRaw: maps.nativeMap || {}, attrIndex,
   };
 }
@@ -324,7 +357,7 @@ function findStrayTables(behaviorNames) {
 
 function audit() {
   const {
-    selectors, behaviorModules, schemas, notBehaviors, missingMaps, computed, strays,
+    selectors, behaviorModules, schemas, schemaVia, notBehaviors, missingMaps, computed, strays,
     nativeMapRaw, attrIndex,
   } = collect();
 
@@ -343,7 +376,7 @@ function audit() {
       sources: [...new Set(bound.map((b) => b.source))],
       computedOnly: bound.length > 0 && bound.every((b) => b.source === 'computed'),
       hasModule: Object.prototype.hasOwnProperty.call(behaviorModules, name),
-      hasSchema: schemas.has(name),
+      hasSchema: schemas.has(name) || schemaVia.has(name),
     });
   }
 
@@ -375,9 +408,11 @@ function audit() {
     // A second registry — a selector bound outside tag-map.js (#831).
     strayTable: strays,
 
+    // Gated (#1841): reachable from markup, so it must declare a schema.
+    selectorNoSchema: rows.filter((r) => r.selectors.length && !r.hasSchema),
+
     // Informational.
     schemaNoSelector: rows.filter((r) => r.hasSchema && !r.selectors.length),
-    selectorNoSchema: rows.filter((r) => r.selectors.length && !r.hasSchema),
   };
 
   // The gate's view: which findings are reviewed, which are new, which
@@ -471,8 +506,8 @@ function report(result) {
 
   if (findings.selectorNoSchema.length) {
     out.push(`REACHABLE, NO SCHEMA — ${findings.selectorNoSchema.length}: usable but undeclared,`);
-    out.push('  so no validation, no intellisense, no permutation tests.');
-    out.push('  ' + findings.selectorNoSchema.map((r) => r.behavior).join(', '));
+    out.push('  so no validation, no intellisense, no permutation tests. Write src/wb-models/<name>.schema.json (#1841).');
+    findings.selectorNoSchema.forEach((r) => out.push(`    ${r.behavior}${tag('selectorNoSchema', r)}`));
     out.push('');
   }
 
@@ -485,7 +520,8 @@ function report(result) {
 
   const hard = findings.unreachable.length + findings.noModule.length + findings.strayTable.length;
   out.push('─'.repeat(72));
-  out.push(`  ${hard} hard error(s)   ${findings.strayTable.length} selector(s) bound outside ${REGISTRY}`);
+  out.push(`  ${hard} hard error(s)   ${findings.strayTable.length} selector(s) bound outside ${REGISTRY}`
+    + `   ${findings.selectorNoSchema.length} reachable behavior(s) with no schema`);
   out.push(`  ${unreviewed.length} finding(s) not in REVIEWED   ${stale.length} REVIEWED entr${stale.length === 1 ? 'y' : 'ies'} no longer found`);
   unreviewed.forEach((u) => out.push(`    NEW    ${u.category}: ${u.key} — fix it, or add it to REVIEWED with a reason`));
   stale.forEach((s) => out.push(`    FIXED  ${s.category}: ${s.key} — delete its REVIEWED entry`));

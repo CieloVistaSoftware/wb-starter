@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "backtotop.schema.json",
+  "title": "Backtotop",
+  "description": "x-backtotop turns its host into a back-to-top control: hidden until the page has scrolled past threshold pixels, and a click scrolls the window smoothly to the top.",
+  "schemaFor": "backtotop",
+  "kind": "decorator",
+  "properties": {
+    "threshold": {
+      "type": "number",
+      "description": "How far the page must scroll, in pixels, before the control shows (`x-backtotop--visible`).",
+      "default": 300
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-backtotop"
+  },
+  "test": {
+    "setup": [
+      "<button x-backtotop>↑ Top</button>",
+      "<button x-backtotop threshold=\"100\">↑ Top</button>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "navigation.js backtotop() — every property here is one the behavior reads"
+  }
+}

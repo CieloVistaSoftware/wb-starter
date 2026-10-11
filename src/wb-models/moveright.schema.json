@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "moveright.schema.json",
+  "title": "Moveright",
+  "description": "x-moveright is a button inside an x-move container: a click swaps the item holding it with the next item and fires wb:reorder on the container. x-move wires it; it reads no attributes.",
+  "schemaFor": "moveright",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "events": {
+    "wb:reorder": {
+      "description": "Fired on the container after a swap.",
+      "detail": {
+        "items": "Element[]"
+      }
+    }
+  },
+  "compliance": {
+    "baseClass": "x-moveright"
+  },
+  "test": {
+    "setup": [
+      "<div x-move><div class=\"moveable\">One <button x-moveright>→</button></div><div class=\"moveable\">Two <button x-moveright>→</button></div></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "move.js moveright() — every property here is one the behavior reads"
+  }
+}

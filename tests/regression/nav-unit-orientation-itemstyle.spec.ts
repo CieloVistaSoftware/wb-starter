@@ -180,9 +180,12 @@ test.describe('declared', () => {
 
   test('the registry audit does not list sidebar or navbar as reachable without a schema', () => {
     const out = execFileSync('node', ['scripts/audit-behavior-registry.mjs'], { encoding: 'utf8' });
+    // #1841 gave every reachable behavior a schema, and the audit's summary
+    // line now counts them: "0 reachable behavior(s) with no schema". While any
+    // remain, the REACHABLE, NO SCHEMA list must still leave these two out.
+    expect(out, 'the audit reports how many reachable behaviors have no schema').toMatch(/\d+ reachable behavior\(s\) with no schema/);
     const section = out.split('REACHABLE, NO SCHEMA')[1]?.split('\n\n')[0] ?? '';
     const names = (section.split('\n').slice(2).join(' ').match(/[\w-]+/g) ?? []);
-    expect(names.length, 'the audit printed its REACHABLE, NO SCHEMA list').toBeGreaterThan(0);
     expect(names).not.toContain('sidebar');
     expect(names).not.toContain('navbar');
   });

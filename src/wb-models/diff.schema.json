@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "diff.schema.json",
+  "title": "Diff",
+  "description": "x-diff is a minimal shim: it marks its host with x-diff-init and, when the host holds a .diff-before and a .diff-after child, appends a copy of both inside an x-diff--rendered wrapper. It reads no attributes; the two children are its input.",
+  "schemaFor": "diff",
+  "kind": "decorator",
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-diff"
+  },
+  "test": {
+    "setup": [
+      "<div x-diff><pre class=\"diff-before\">- old line</pre><pre class=\"diff-after\">+ new line</pre></div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "semantics/diff.js diff() — every property here is one the behavior reads"
+  }
+}

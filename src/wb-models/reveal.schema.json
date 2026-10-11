@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "reveal.schema.json",
+  "title": "Reveal",
+  "description": "x-reveal hides its host until it scrolls into view, then fades it in (x-reveal--visible). Once revealed it stays visible.",
+  "schemaFor": "reveal",
+  "kind": "decorator",
+  "properties": {
+    "threshold": {
+      "type": "number",
+      "description": "How much of the host, from 0 to 1, must be visible before it is revealed.",
+      "default": 0.1
+    },
+    "once": {
+      "type": "boolean",
+      "description": "Stop watching the host after the first reveal. once=\"false\" keeps watching, which looks the same, because nothing hides the host again.",
+      "default": true
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-reveal"
+  },
+  "test": {
+    "setup": [
+      "<div x-reveal>Fades in when scrolled into view</div>",
+      "<div x-reveal threshold=\"0.5\">Fades in when half visible</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "written by hand (#1841)",
+    "derivedFrom": "effects.js reveal() — every property here is one the behavior reads"
+  }
+}
