@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.498",
+      "date": "2026-10-10",
+      "summary": "A hero with goldenRatio renders as a 1.618 rectangle again. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A goldenRatio hero is golden again: a weightless alias never stands in for a class</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/477\" target=\"_blank\" rel=\"noopener\">#477</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1843\" target=\"_blank\" rel=\"noopener\">#1843</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f55436c426b1d027ffd407c9daaeafc61d343795\" target=\"_blank\" rel=\"noopener\"><code>f55436c</code></a>",
+          "issues": [
+            477,
+            1843
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/golden-ratio-shapes-the-host.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/golden-ratio-shapes-the-host.spec.ts</a>. Before: hero fails, 480x576 with no golden class. Now: all 6 pass.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f55436c426b1d027ffd407c9daaeafc61d343795\" target=\"_blank\" rel=\"noopener\"><code>f55436c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.497",
       "date": "2026-10-10",
       "summary": "Options like elevated, featured-tone and variant=&quot;cosmic&quot; now change how a behavior looks on demo pages and the behaviors page too, not only on wb.js pages. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1831\" target=\"_blank\" rel=\"noopener\">#1831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1837\" target=\"_blank\" rel=\"noopener\">#1837</a>",
