@@ -1,0 +1,15 @@
+/* Proposed by site-migrate from riverbend-bakery.html: theme-token overrides measured from
+   the rendered source page. No rule of theirs is copied; every name below is
+   a token src/styles/themes.css defines. Review riverbend-bakery.migration.md, then merge
+   what you keep into styles/site.css.
+
+   They apply to every theme. To keep the theme switcher's other themes as
+   they are, put them under [data-theme="light"] (or "dark") instead.
+*/
+:root, [data-theme] {
+  /* Palette */
+  --bg-secondary: #3b2a1a; /* the largest tinted area (1 element, e.g. div.jumbotron) */
+
+  /* Spacing */
+  --space-sm: 0.5rem; /* 8px, 4 uses (e.g. div.promo-strip) */
+}

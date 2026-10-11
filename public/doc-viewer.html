@@ -464,11 +464,22 @@
     }
 
     const END_SCROLL_QUIET_MS = 200;
+    // See followBottom() below: how long End keeps the reader on a still-
+    // growing page, and the input that hands control back to the reader.
+    const END_FOLLOW_MS = 10000;
+    const READER_INPUT = ['wheel', 'touchstart', 'mousedown', 'keydown'];
+    let stopFollowing = null;
     const END_SCROLL_MAX_WAIT_MS = 8000;
     let scrollingToTrueEnd = false;
     async function scrollToTrueBottom() {
       if (scrollingToTrueEnd) return; // a press is already in flight — let it finish
       scrollingToTrueEnd = true;
+      // The reader can take over at any point -- while the demos build, during
+      // the settle loop, or after landing. From then on nothing here moves them.
+      let readerTookOver = false;
+      const takeOver = () => { readerTookOver = true; };
+      READER_INPUT.forEach((type) => window.addEventListener(type, takeOver, { capture: true, passive: true }));
+      if (stopFollowing) stopFollowing();
       try {
         await contentReady();
 
@@ -514,6 +525,7 @@
         // forever).
         const root = document.documentElement;
         const currentMax = () => Math.max(0, root.scrollHeight - root.clientHeight);
+        if (readerTookOver) return;
         let target = currentMax();
         window.scrollTo({ top: target, behavior: 'smooth' });
 
@@ -522,6 +534,7 @@
           let lastHeight = root.scrollHeight;
           let lastChangeAt = startedAt;
           function tick() {
+            if (readerTookOver) { resolve(); return; }
             const h = root.scrollHeight;
             if (h !== lastHeight) {
               lastHeight = h;
@@ -539,12 +552,50 @@
           }
           requestAnimationFrame(tick);
         });
+        if (readerTookOver) return;
         // A smooth scroll still in flight when growth stopped can stop short
         // of the last target; land exactly on the final bottom.
         if (Math.abs(currentMax() - root.scrollTop) > 1) window.scrollTo({ top: currentMax() });
+        followBottom();
       } finally {
+        READER_INPUT.forEach((type) => window.removeEventListener(type, takeOver, true));
         scrollingToTrueEnd = false;
       }
+    }
+
+    // The quiet window above ends the scroll once the height has been still
+    // for END_SCROLL_QUIET_MS -- but growth can resume after that. On a slow
+    // runner (CI on #1838, Windows) End landed on 168731, the page grew 852px
+    // more after the window had closed, and the reader sat 852px short for good.
+    // So after landing, stay on the bottom while the page keeps growing, for
+    // END_FOLLOW_MS, and stop the moment the reader does anything themselves
+    // (scrolls, touches, clicks, presses a key): End means "take me to the
+    // bottom", not "hold me there against my will".
+    // html[data-end-scroll="following"] says it is still following.
+    function followBottom() {
+      if (stopFollowing) stopFollowing();
+      const root = document.documentElement;
+      const currentMax = () => Math.max(0, root.scrollHeight - root.clientHeight);
+      let pinned = currentMax();
+      const observer = new ResizeObserver(() => {
+        const max = currentMax();
+        if (max > pinned) {
+          pinned = max;
+          window.scrollTo({ top: max });
+        }
+      });
+      const stop = () => {
+        observer.disconnect();
+        clearTimeout(timer);
+        READER_INPUT.forEach((type) => window.removeEventListener(type, stop, true));
+        delete root.dataset.endScroll;
+        stopFollowing = null;
+      };
+      const timer = setTimeout(stop, END_FOLLOW_MS);
+      READER_INPUT.forEach((type) => window.addEventListener(type, stop, { capture: true, passive: true }));
+      observer.observe(document.body);
+      root.dataset.endScroll = 'following';
+      stopFollowing = stop;
     }
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'End' || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
