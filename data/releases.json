@@ -41,6 +41,7 @@
           ]
         }
       ],
+      "seeIt": "Open the Docs page, and run <code>ls docs/archive</code>. Before: the catalog listed every .md in docs/, internal audits, plans and status records included. Now: it lists only the docs a user needs, and the maintainer and historical docs sit under docs/archive/ in their old folder structure.",
       "links": [
         {
           "label": "Code",
