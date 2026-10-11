@@ -8,7 +8,7 @@
     {
       "version": "1.0.504",
       "date": "2026-10-10",
-      "summary": "Every behavior selector is now registered in one file, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/core/tag-map.js\" target=\"_blank\" rel=\"noopener\">src/core/tag-map.js</a>, and the registry audit fails if one is added anywhere else. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a>",
+      "summary": "Every behavior a page can reach now has a schema, so its options are validated, offered by IntelliSense and swept by the permutation tests, and the registry audit fails if a new behavior ships without one. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/831\" target=\"_blank\" rel=\"noopener\">#831</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1842\" target=\"_blank\" rel=\"noopener\">#1842</a>",
       "items": [
         {
           "kind": "fixed",
@@ -19,7 +19,7 @@
           ]
         }
       ],
-      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: 5 split registrations and 37 lazy-only behaviors across three files. Now: one registry, 0 hard errors, 0 selectors bound outside tag-map.js.",
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-behavior-registry.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-behavior-registry.mjs</a> --gate</code>. Before: the report listed REACHABLE, NO SCHEMA — 37 behaviors, from backtotop to zoomout, with no validation or IntelliSense. Now: it ends with <code>0 reachable behavior(s) with no schema</code>, and src/wb-models/ has a schema for each, such as hotkey.schema.json and treeview.schema.json.",
       "links": [
         {
           "label": "Code",
