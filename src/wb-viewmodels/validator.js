@@ -5,20 +5,29 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  * Provides client-side validation for form inputs.
  * Supports required fields, email formats, patterns, and custom rules.
  * 
- * Helper Attribute: [x-validate]
- * -----------------------------------------------------------------------------
- * 
  * Usage:
- *   <input required type="email">
+ *   <form x-validator validateOn="blur input">
+ *     <input name="email" validate="required email">
+ *   </form>
  * -----------------------------------------------------------------------------
  * Form validation with customizable rules.
+ *
+ * #1844: the host's options are plain attributes (validateOn, showErrors,
+ * errorClass, successClass -- camelCase per ATTRIBUTE-NAMING-STANDARD, read
+ * through readAttr/readFlag so the dashed spelling works too), and the fields
+ * checked are the ones carrying a plain `validate`. They used to be read only
+ * off the element's dataset and only from fields with the data- spelling of
+ * `validate`, which the repo forbids, so the documented markup did nothing. The default error class was the literal
+ * '[x-error]', which is not a class name: submit built the selector
+ * '.[x-error]' from it and threw instead of focusing the first invalid field.
+ * The defaults are now the BEM modifiers validator.css styles.
  */
 export function validator(element, options = {}) {
   const config = {
-    validateOn: options.validateOn || element.dataset.validateOn || 'blur', // blur, change, input, submit
-    showErrors: options.showErrors ?? (element.dataset.showErrors !== 'false'),
-    errorClass: options.errorClass || element.dataset.errorClass || '[x-error]',
-    successClass: options.successClass || element.dataset.successClass || 'x-success',
+    validateOn: options.validateOn || readAttr(element, 'validateOn', 'blur'), // blur, change, input, submit
+    showErrors: options.showErrors ?? readFlag(element, 'showErrors', true),
+    errorClass: options.errorClass || readAttr(element, 'errorClass', 'x-validator__field--invalid'),
+    successClass: options.successClass || readAttr(element, 'successClass', 'x-validator__field--valid'),
     ...options
   };
 
@@ -43,9 +52,9 @@ export function validator(element, options = {}) {
     }
   };
 
-  // Parse validation rules from data attribute
+  // Parse a field's rules from its plain `validate` attribute (#1844).
   const parseRules = (input) => {
-    const ruleStr = readAttr(input, 'validate') || '';
+    const ruleStr = input.getAttribute('validate') || '';
     return ruleStr.split(/\s+/).filter(Boolean).map(rule => {
       const [name, param] = rule.split(':');
       return { name, param };
@@ -102,30 +111,25 @@ export function validator(element, options = {}) {
 
   // Get all validatable inputs
   const getInputs = () => {
-    return Array.from(element.querySelectorAll('[data-validate]'));
+    return Array.from(element.querySelectorAll('[validate]'));
   };
 
-  // Validate all inputs
-  const validateAll = () => {
-    const inputs = getInputs();
-    let allValid = true;
-    inputs.forEach(input => {
-      const inputErrorsAll = validateInput(input);
-      if (!showError(input, inputErrorsAll)) {
-        allValid = false;
-      }
-    });
+  // Validate all inputs; returns the fields that failed, in document order.
+  const checkAll = () => {
+    const invalid = getInputs().filter(input => !showError(input, validateInput(input)));
+    const allValid = invalid.length === 0;
     element.dispatchEvent(new CustomEvent('wb:validator:validate', {
       bubbles: true,
       detail: { valid: allValid }
     }));
-    return allValid;
+    return invalid;
   };
+  const validateAll = () => checkAll().length === 0;
 
   // Event handler for individual inputs
   const onInputEvent = (e) => {
     const input = e.target;
-    if (readFlag(input, 'validate')) {
+    if (input.hasAttribute && input.hasAttribute('validate')) {
       const inputErrorsEvt = validateInput(input);
       showError(input, inputErrorsEvt);
     }
@@ -133,22 +137,24 @@ export function validator(element, options = {}) {
 
   // Form submit handler
   const onSubmit = (e) => {
-    if (!validateAll()) {
+    const invalid = checkAll();
+    if (invalid.length) {
       e.preventDefault();
       e.stopPropagation();
-      
-      // Focus first invalid input
-      const firstInvalid = element.querySelector(`.${config.errorClass}`);
-      if (firstInvalid) firstInvalid.focus();
+
+      // Focus the first invalid field. Taken from the check itself rather than
+      // a selector built from errorClass: an author's class need not be a
+      // valid selector, and the old default '[x-error]' was not (#1844).
+      invalid[0].focus();
     }
   };
 
-  // Attach event handlers
-  const events = config.validateOn.split(/\s+/);
+  // Attach event handlers. In the capture phase: the fields' events are
+  // heard on the host, and blur -- the default -- does not bubble, so a
+  // bubbling listener never heard a field lose focus (#1844).
+  const events = config.validateOn.split(/\s+/).filter(evt => evt && evt !== 'submit');
   events.forEach(evt => {
-    if (evt !== 'submit') {
-      element.addEventListener(evt, onInputEvent);
-    }
+    element.addEventListener(evt, onInputEvent, true);
   });
 
   if (isForm) {
@@ -177,7 +183,7 @@ export function validator(element, options = {}) {
   return () => {
     element.classList.remove('x-validator');
     events.forEach(evt => {
-      element.removeEventListener(evt, onInputEvent);
+      element.removeEventListener(evt, onInputEvent, true);
     });
     if (isForm) {
       element.removeEventListener('submit', onSubmit);

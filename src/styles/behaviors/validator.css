@@ -13,3 +13,10 @@
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
+
+/* #1844: the field states validator() sets by default (errorClass /
+   successClass). The old default error class was the literal '[x-error]',
+   which is not a class name; these are the BEM modifiers on the field, as
+   form.css styles .x-form__field--invalid. */
+.x-validator__field--invalid { border-color: var(--danger-color, #ef4444); }
+.x-validator__field--valid { border-color: var(--success-color, #22c55e); }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T03:52:32.046Z",
+  "generatedAt": "2026-10-11T04:22:17.466Z",
   "count": 212,
   "schemas": [
     {
@@ -10504,11 +10504,39 @@
       "file": "validator.schema.json",
       "name": "validator",
       "title": "Validator",
-      "description": "x-validator validates the fields inside its host (usually a <form>) on blur: each field's validate rules are checked, a failing field gets aria-invalid and an error message after it, and a <form> host refuses to submit until every field passes, firing wb:validator:validate. Rules: required, email, url, number, integer, min:N, max:N, minLength:N, maxLength:N, pattern:REGEX, match:NAME. The host's own options are read only in their legacy data- spelling, so none is declared here.",
+      "description": "x-validator validates the fields inside its host (usually a <form>): each field's validate rules are checked when the host's validateOn events fire (blur by default), a failing field gets aria-invalid, the errorClass and an error message after it, and a <form> host refuses to submit until every field passes, focusing the first invalid field and firing wb:validator:validate. Rules: required, email, url, number, integer, min:N, max:N, minLength:N, maxLength:N, pattern:REGEX, match:NAME.",
       "tag": "x-validator",
       "baseClass": "x-validator",
       "kind": "decorator",
       "properties": {
+        "validateOn": {
+          "type": "string",
+          "description": "Which events on the fields re-check the field that fired them, space-separated: any of blur, change, input. A <form> host always checks every field on submit.",
+          "default": "blur",
+          "visual": false,
+          "visualReason": "Changes when a field is checked, not how anything looks until it is (#1844)."
+        },
+        "showErrors": {
+          "type": "boolean",
+          "description": "Show the first failing rule's message in a span.x-validator__error right after the field. Set showErrors=\"false\" to mark the field (aria-invalid, errorClass) without a message.",
+          "default": true,
+          "visual": false,
+          "visualReason": "Only a field that has failed a check shows its message (#1844)."
+        },
+        "errorClass": {
+          "type": "string",
+          "description": "Class put on a field that fails its rules (and taken off when it passes). The default is styled in validator.css with the danger border colour.",
+          "default": "x-validator__field--invalid",
+          "visual": false,
+          "visualReason": "Only a field that has failed a check carries it (#1844)."
+        },
+        "successClass": {
+          "type": "string",
+          "description": "Class put on a field that passes its rules once checked (and taken off when it fails). The default is styled in validator.css with the success border colour.",
+          "default": "x-validator__field--valid",
+          "visual": false,
+          "visualReason": "Only a field that has been checked carries it (#1844)."
+        },
         "validate": {
           "type": "string",
           "description": "Set on each field, not on the host: its rules, space-separated, e.g. `required email` or `minLength:8`.",
@@ -10518,7 +10546,7 @@
       },
       "matrix": [],
       "_metadata": {
-        "generatedBy": "written by hand (#1841)",
+        "generatedBy": "written by hand (#1841); host options declared in #1844",
         "derivedFrom": "validator.js validator() — every property here is one the behavior reads"
       }
     },
