@@ -34,6 +34,16 @@ test.describe('x-toast reads live attribute values on every click, not just at b
     // "Count is now 2", exactly as asserted here.
     await elementReady(button);
 
+    // #1852: keep every toast on screen until the final read. The demo sets no
+    // duration, so each toast auto-dismisses 3000 ms after its click (plus a
+    // 300 ms exit). On a loaded machine the three clicks and their waits can
+    // take longer than that, the first toast is already gone when allTextContents()
+    // runs, and the test reported 2 distinct toasts instead of 3. duration="0"
+    // means "stay until dismissed", and x-toast reads it at click time (#458),
+    // so setting it here covers all three clicks. React leaves it alone: it is
+    // not one of the button's props, so a re-render never touches it.
+    await button.evaluate((el) => el.setAttribute('duration', '0'));
+
     const expected = ['Count is now 1', 'Count is now 2', 'Count is now 3'];
     for (const text of expected) {
       await button.click();
@@ -44,6 +54,7 @@ test.describe('x-toast reads live attribute values on every click, not just at b
     // All three toasts are distinct -- none of them repeat the first
     // click's message, which is exactly the bug this test guards against
     // (before the fix, all three would read "Count is now 1").
+    await expect(button, 'React must not have stripped the duration pin (#1852)').toHaveAttribute('duration', '0');
     const allTexts = await page.locator('.x-toast__container .x-toast').allTextContents();
     expect(new Set(allTexts).size, 'each toast should show a distinct, current count').toBe(3);
   });
