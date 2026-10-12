@@ -230,7 +230,10 @@
       try {
         // #1433: live results are per-worker files the server merges with the
         // history in data/performance-results.json.
-        const res = await fetch('/api/performance-results');
+        // Resolve against this page, not the host root: on GitHub Pages the
+        // site lives under /wb-starter/, and '/api/...' hit the org root.
+        const res = await fetch(new URL('../api/performance-results', location.href));
+        if (!res.ok) throw new Error(`No performance results here (HTTP ${res.status}); they are served by the local dev server.`);
         const data = await res.json();
         
         // Process data for charts
@@ -354,7 +357,7 @@
         btn.classList.add('running');
         btnText.innerText = 'Test Suite Running...';
         
-        const res = await fetch('/api/run-perf-tests', { method: 'POST' });
+        const res = await fetch(new URL('../api/run-perf-tests', location.href), { method: 'POST' });
         const result = await res.json();
         
         console.log('Test Output:', result.output);

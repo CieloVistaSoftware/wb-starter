@@ -572,12 +572,12 @@
   async function poll() {
     try {
       const [statusRes, resultsRes, detailRes] = await Promise.all([
-        fetch('/data/test-status.json?' + Date.now()),
-        fetch('/data/test-results.json?' + Date.now()),
+        fetch(new URL('../data/test-status.json?' + Date.now(), location.href)),
+        fetch(new URL('../data/test-results.json?' + Date.now(), location.href)),
         // The RICH one. summary/status carry file+name only; this carries the
         // error text, and since #963 the stack frames and the failing source
         // line as well. It was written on every run and read by nothing.
-        fetch('/data/test-results/failures.json?' + Date.now()),
+        fetch(new URL('../data/test-results/failures.json?' + Date.now(), location.href)),
       ]);
 
       const note = (res, key) => {
