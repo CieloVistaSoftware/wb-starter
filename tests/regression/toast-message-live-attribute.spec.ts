@@ -35,17 +35,21 @@ test.describe('x-toast reads live attribute values on every click, not just at b
     await elementReady(button);
 
     const expected = ['Count is now 1', 'Count is now 2', 'Count is now 3'];
+    const seenTexts: string[] = [];
     for (const text of expected) {
       await button.click();
       const toasts = page.locator('.x-toast__container .x-toast');
       await expect(toasts.last(), `toast after clicking to reach "${text}"`).toHaveText(text, { timeout: 3000 });
+      // #1852: record each toast as it appears. The toasts auto-dismiss after
+      // their default 3000 ms, so re-reading all of them after the last click
+      // lost the first one whenever a loaded machine took over ~3.3 s.
+      seenTexts.push((await toasts.last().textContent()) ?? '');
     }
 
     // All three toasts are distinct -- none of them repeat the first
     // click's message, which is exactly the bug this test guards against
     // (before the fix, all three would read "Count is now 1").
-    const allTexts = await page.locator('.x-toast__container .x-toast').allTextContents();
-    expect(new Set(allTexts).size, 'each toast should show a distinct, current count').toBe(3);
+    expect(new Set(seenTexts).size, 'each toast should show a distinct, current count').toBe(3);
   });
 
   test('a plain element re-reads message/variant fresh on every click, not just the first', async ({ page }) => {
