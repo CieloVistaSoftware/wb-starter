@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.509",
+      "date": "2026-10-12",
+      "summary": "The React counter toast test failed now and then because the first toast vanished on its own before the test counted them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1852\" target=\"_blank\" rel=\"noopener\">#1852</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1853\" target=\"_blank\" rel=\"noopener\">#1853</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Pin the React counter&#39;s toasts so the first one cannot expire before the final read</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1852\" target=\"_blank\" rel=\"noopener\">#1852</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1853\" target=\"_blank\" rel=\"noopener\">#1853</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/435cdc1566656c80625e24b7be622864ccf149c0\" target=\"_blank\" rel=\"noopener\"><code>435cdc1</code></a>",
+          "issues": [
+            1852,
+            1853
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/toast-message-live-attribute.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/toast-message-live-attribute.spec.ts</a> --project=regression --repeat-each=10 --workers=4 on a busy machine. Before: about 1 run in 16 failed with &quot;each toast should show a distinct, current count, Expected: 3, Received: 2&quot;. Now: every run passes, because the test keeps all three toasts on screen until it has read them.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/435cdc1566656c80625e24b7be622864ccf149c0\" target=\"_blank\" rel=\"noopener\"><code>435cdc1</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.508",
       "date": "2026-10-11",
       "summary": "X-validator now works with plain attributes, and submitting an invalid form focuses the first bad field instead of throwing. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1844\" target=\"_blank\" rel=\"noopener\">#1844</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1851\" target=\"_blank\" rel=\"noopener\">#1851</a>",
