@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.517",
+      "date": "2026-10-12",
+      "summary": "Create-wb-starter could not publish a new release because its package.json still said 1.0.0, which npm already has. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1868\" target=\"_blank\" rel=\"noopener\">PR 1868</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Bump create-wb-starter to 1.0.1 so the Release workflow can publish it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9f23b608af9331341b9f9c0484da611b63a630ae\" target=\"_blank\" rel=\"noopener\"><code>9f23b60</code></a>",
+          "issues": [
+            1867
+          ]
+        }
+      ],
+      "seeIt": "Run node -p &quot;require(&#39;./packages/create-wb-starter/package.json&#39;).version&quot;. Before: it printed 1.0.0. Now: it prints 1.0.1, so the next release publishes create-wb-starter@1.0.1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b3292961347777508ad4c386011803c0c47fb93b\" target=\"_blank\" rel=\"noopener\"><code>b329296</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.516",
       "date": "2026-10-12",
       "summary": "Every dropdown example on the dropdown doc opened behind its own code panel, and the bottom-end example&#39;s menu ran past the left edge of the page content, where it was cut off. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a>",
