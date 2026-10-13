@@ -1,156 +1,25 @@
-name: Release
+name: Release (OIDC probe, branch only)
 
-# Every "release: X.Y.Z" commit on main gets its tag, its GitHub release and its
-# npm packages, without a person doing it by hand (#1182). `npm run ship` makes
-# the release commit; this finishes the release. Nothing here depends on who
-# pushed: it runs on every push to main and fills in whatever is missing, so a
-# release the tagging missed (1.0.0, 4.0.6) is completed by the next push.
-#
-# Every step says what it did or why it did nothing -- never a silent skip.
+# Diagnostic on branch claude/oidc-probe only (2026-10-13), never merged: asks
+# npm whether it accepts this workflow's OIDC identity for each package. Prints
+# npm's HTTP status and error text, never a token. Nothing is published.
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      npm_version:
-        description: 'Publish main to npm under this X.Y.Z (npm only: no tag, no commit). Empty = the normal release run.'
-        required: false
-        default: ''
+    branches: [ claude/oidc-probe ]
 
 permissions:
-  contents: write
-  # npm Trusted Publishing: npm accepts this run's OIDC identity in place of a
-  # token, so 2FA stays on for the account (npm restricts 2FA-bypass tokens).
+  contents: read
   id-token: write
 
-concurrency:
-  group: release
-  cancel-in-progress: false
-
 jobs:
-  release:
-    name: Tag, GitHub release, npm
+  probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Checkout (full history, for the release commits)
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-
-      # Trusted Publishing needs npm 11.5.1 or later.
-      - name: Use npm 11
-        run: npm install -g npm@11 && npm --version
-
-      # One tag that cannot be made must not stop the others, the GitHub releases
-      # or npm (first run, 2026-09-30: v1.0.0 was tagged, then v4.0.6 was refused
-      # and the job ended there). A git push of a tag whose commit carries older
-      # workflow files is refused to the Actions token ("without `workflows`
-      # permission"), so the tag API is tried next; a tag both refuse is named
-      # in a warning and the run goes on.
-      - name: Tag every release commit that has no tag
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Exchange the OIDC token with npm, per package
         run: |
-          git fetch --tags --force
-          git log --format='%H %s' origin/main | grep -E '^[0-9a-f]+ release: [0-9]+\.[0-9]+\.[0-9]+' | while read -r sha _ version _; do
-            tag="v${version}"
-            if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
-              echo "✓ ${tag} already tagged"
-            elif git tag "${tag}" "${sha}" && git push origin "refs/tags/${tag}" 2>push.err; then
-              echo "➕ tagged ${tag} at ${sha:0:8}"
-            elif gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/${tag}" -f sha="${sha}" >/dev/null 2>api.err; then
-              echo "➕ tagged ${tag} at ${sha:0:8} (tag API; git push was refused: $(tr '\n' ' ' < push.err))"
-            else
-              git tag -d "${tag}" >/dev/null 2>&1 || true
-              echo "::warning::${tag} could not be tagged at ${sha:0:8}. git push: $(tr '\n' ' ' < push.err) | tag API: $(tr '\n' ' ' < api.err)"
-            fi
-          done
-          git fetch --tags --force
-
-      - name: GitHub release for every version in data/releases.json
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          for version in $(node -p "require('./data/releases.json').releases.map(r => r.version).join(' ')"); do
-            tag="v${version}"
-            if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
-              echo "… ${tag}: no release commit on main yet, no GitHub release"
-            elif gh release view "${tag}" >/dev/null 2>&1; then
-              echo "✓ ${tag} GitHub release exists"
-            else
-              node scripts/release-notes.mjs "${version}" > notes.md
-              latest=$([ "${version}" = "$(node -p "require('./package.json').version")" ] && echo --latest || echo --latest=false)
-              gh release create "${tag}" --title "${version}" --notes-file notes.md --verify-tag ${latest}
-              echo "➕ GitHub release ${tag}"
-            fi
-          done
-
-      # npm's numbers may run behind the site's badge (John, 2026-10-13: "A,
-      # publish 1.0.1 to npm now"; they sync at the next minor release). A manual
-      # run with npm_version publishes main as it is now under that number. The
-      # number is set in package.json inside this job only: nothing is committed
-      # or tagged, so the badge and the Releases history are untouched. Main had
-      # a clean release gate first (2026-10-13: 54 WebKit-missing, 2 caused by
-      # the 1.0.1 entry itself, 1 load-only; none in the code).
-      - name: Publish main to npm under a chosen number
-        if: ${{ inputs.npm_version != '' && inputs.npm_version != null }}
-        env:
-          NPM_VERSION: ${{ inputs.npm_version }}
-        run: |
-          if ! [[ "${NPM_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error::npm_version must be X.Y.Z, got '${NPM_VERSION}'"; exit 1
-          fi
-          npm version "${NPM_VERSION}" --no-git-tag-version --allow-same-version >/dev/null
-          echo "Publishing main ($(git rev-parse --short HEAD)) as ${NPM_VERSION}"
-          for dir in . packages/create-wb-starter; do
-            name=$(node -p "require('./${dir}/package.json').name")
-            ver=$(node -p "require('./${dir}/package.json').version")
-            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
-              echo "✓ ${name}@${ver} already on npm"
-            else
-              (cd "${dir}" && npm publish --ignore-scripts --access public)
-              echo "➕ published ${name}@${ver}"
-            fi
-          done
-
-      - name: Publish both npm packages
-        if: ${{ inputs.npm_version == '' || inputs.npm_version == null }}
-        run: |
-          version=$(node -p "require('./package.json').version")
-          if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
-            echo "… ${version} has no release commit yet: nothing to publish"; exit 0
-          fi
-          # Publish only on the push that IS the release commit (or a manual run).
-          # Every later push to main still names the last release, and that code
-          # is behind main: 1.0.400 was 111 merges behind the site (2026-10-13).
-          if [ "${{ github.event_name }}" != "workflow_dispatch" ] && \
-             [ "$(git rev-parse "v${version}^{commit}")" != "$(git rev-parse HEAD)" ]; then
-            echo "… v${version} is not this push's commit: not publishing old code (run Release by hand to publish it anyway)"; exit 0
-          fi
-          # No token: npm trusts this workflow (release.yml in this repo)
-          # through each package's Trusted Publisher setting on npmjs.com.
-          # Publish the code the tag names, not whatever main holds now: main
-          # moves on after a release and still says the same version until the
-          # next one is cut.
-          pub="${RUNNER_TEMP}/publish-v${version}"
-          git worktree add --detach "${pub}" "v${version}"
-          echo "Publishing from v${version} ($(git rev-parse --short "v${version}^{commit}"))"
-          for dir in . packages/create-wb-starter; do
-            name=$(node -p "require('${pub}/${dir}/package.json').name")
-            ver=$(node -p "require('${pub}/${dir}/package.json').version")
-            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
-              echo "✓ ${name}@${ver} already on npm"
-            else
-              (cd "${pub}/${dir}" && npm publish --ignore-scripts --access public)
-              echo "➕ published ${name}@${ver}"
-            fi
+          id=$(curl -sS -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm:registry.npmjs.org" | node -p "JSON.parse(require('fs').readFileSync(0)).value")
+          for pkg in wb-starter create-wb-starter; do
+            code=$(curl -sS -o /tmp/r.json -w '%{http_code}' -X POST -H "Authorization: Bearer ${id}" "https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/${pkg}")
+            echo "${pkg}: HTTP ${code} $(node -e "try{const j=require('/tmp/r.json');console.log(j.token?'token issued (not shown)':JSON.stringify(j))}catch(e){console.log('(no JSON)')}")"
           done
