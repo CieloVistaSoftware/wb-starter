@@ -12,6 +12,11 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      npm_version:
+        description: 'Publish main to npm under this X.Y.Z (npm only: no tag, no commit). Empty = the normal release run.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -89,7 +94,36 @@ jobs:
             fi
           done
 
+      # npm's numbers may run behind the site's badge (John, 2026-10-13: "A,
+      # publish 1.0.1 to npm now"; they sync at the next minor release). A manual
+      # run with npm_version publishes main as it is now under that number. The
+      # number is set in package.json inside this job only: nothing is committed
+      # or tagged, so the badge and the Releases history are untouched. Main had
+      # a clean release gate first (2026-10-13: 54 WebKit-missing, 2 caused by
+      # the 1.0.1 entry itself, 1 load-only; none in the code).
+      - name: Publish main to npm under a chosen number
+        if: ${{ inputs.npm_version != '' && inputs.npm_version != null }}
+        env:
+          NPM_VERSION: ${{ inputs.npm_version }}
+        run: |
+          if ! [[ "${NPM_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::npm_version must be X.Y.Z, got '${NPM_VERSION}'"; exit 1
+          fi
+          npm version "${NPM_VERSION}" --no-git-tag-version --allow-same-version >/dev/null
+          echo "Publishing main ($(git rev-parse --short HEAD)) as ${NPM_VERSION}"
+          for dir in . packages/create-wb-starter; do
+            name=$(node -p "require('./${dir}/package.json').name")
+            ver=$(node -p "require('./${dir}/package.json').version")
+            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
+              echo "✓ ${name}@${ver} already on npm"
+            else
+              (cd "${dir}" && npm publish --ignore-scripts --access public)
+              echo "➕ published ${name}@${ver}"
+            fi
+          done
+
       - name: Publish both npm packages
+        if: ${{ inputs.npm_version == '' || inputs.npm_version == null }}
         run: |
           version=$(node -p "require('./package.json').version")
           if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
