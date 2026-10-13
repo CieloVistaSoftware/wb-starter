@@ -33,8 +33,9 @@ deliberately with `npm run ship` and resets the count to its new tag.
 
 John, 2026-10-13: npm should have what the live site serves (#1860). After every
 push to main, once "Stamp version on main" has stamped it,
-`.github/workflows/publish-npm.yml` publishes that commit as `wb-starter` and
-`create-wb-starter` under the badge's number (`scripts/publish-npm.mjs`). The
+`.github/workflows/publish-npm.yml` publishes that commit -- the root package
+and the scaffolder in `packages/` -- under the badge's number
+(`scripts/publish-npm.mjs`). The
 number is written into `package.json` for the publish only; nothing is committed
 back. It authenticates with npm trusted publishing, so there is no npm token, and
 it ends red unless npm then serves that number. `release.yml` no longer publishes

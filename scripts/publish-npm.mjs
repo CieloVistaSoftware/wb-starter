@@ -15,7 +15,7 @@
  *   node scripts/publish-npm.mjs --dry    # say what it would do, publish nothing
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { VERSION } from '../src/core/version.js';
@@ -23,7 +23,10 @@ import { versionNumber } from '../src/core/version-number.js';
 import { publishPlan } from './lib/npm-publish-plan.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PACKAGES = ['.', 'packages/create-wb-starter'];
+// The root package and every package under packages/ that is not private.
+const PACKAGES = ['.', ...readdirSync(path.join(ROOT, 'packages'))
+  .map((d) => path.join('packages', d))
+  .filter((d) => existsSync(path.join(ROOT, d, 'package.json')))];
 const DRY = process.argv.includes('--dry');
 
 const npm = (args, cwd = ROOT) => execFileSync('npm', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] }).trim();
@@ -54,7 +57,12 @@ console.log(`main is ${wanted} (stamped ${VERSION.commit}, release ${VERSION.rel
 let failed = 0;
 for (const dir of PACKAGES) {
   const cwd = path.join(ROOT, dir);
-  const { name } = JSON.parse(readFileSync(path.join(cwd, 'package.json'), 'utf8'));
+  const { name, private: isPrivate } = JSON.parse(readFileSync(path.join(cwd, 'package.json'), 'utf8'));
+  // npm's own "never publish" marker (packages/site-migrate is one).
+  if (isPrivate) {
+    console.log(`– ${name}: private, not published`);
+    continue;
+  }
   const plan = publishPlan(wanted, versionsOnNpm(name));
   if (plan.action === 'skip') {
     console.log(`✓ ${name}: ${plan.why}`);

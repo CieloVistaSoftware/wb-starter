@@ -3,13 +3,13 @@ name: Publish to npm
 # John, 2026-10-13: npm should have what the live site serves (#1860). The site
 # serves main, and its badge counts every push, so after every push -- once
 # "Stamp version on main" has stamped it -- the same commit is published to npm
-# under the badge's number: wb-starter and create-wb-starter.
+# under the badge's number: the root package and every package in packages/.
 #
 # Authentication is npm trusted publishing (GitHub OIDC): there is no npm token
 # to expire, be mis-scoped or leak, and npm's 2027 cutoff for 2FA-bypass tokens
 # does not apply. One-time setup on npmjs.com, for each package: Settings ->
-# Trusted publishing -> GitHub Actions, repository CieloVistaSoftware/wb-starter,
-# workflow publish-npm.yml.
+# Trusted publishing -> GitHub Actions, this repository, workflow
+# publish-npm.yml.
 #
 # The job ends red unless npm then serves that number (scripts/publish-npm.mjs).
 
