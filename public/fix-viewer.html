@@ -324,6 +324,7 @@
   
     /* Moved from style= attributes in generated markup: no inline styles anywhere (#779). */
     .fix-count__verified { opacity: 0.6; font-size: 0.8em; margin-left: 0.5rem; }
+    .fix-count__built { opacity: 0.6; font-size: 0.8em; margin-left: 0.5rem; color: inherit; }
     .empty-state.empty-state--error { color: var(--danger); }
   </style>
 </head>
@@ -438,7 +439,11 @@
           throw new Error('fixes data is not published here (' + response.status + ' for ' + url('data/fixes.json') + ')');
         }
         const data = await response.json();
-        
+        // #1861: the live site is static, so it has no /api/fixes. The stamp
+        // workflow writes the same traced table to data/fixes.json after every
+        // push to main (scripts/generate-fixes.mjs).
+        if (Array.isArray(data.rows) && data.rows.length) { renderTraced(data); return; }
+
         // Convert object to array
         const defaultDate = data.metadata?.lastUpdated || data.metadata?.created || new Date().toISOString();
         // #912 — the generator and the viewer speak different shapes.
@@ -646,14 +651,25 @@
       const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (ch) => (
         { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
       ));
+      // #1861: links are built here from the table's repo, a sha and a path, so
+      // the generated file stays small; a row that carries its own links (an
+      // /api/fixes cache from before #1861) keeps them.
+      const gh = 'https://github.com/' + t.repo;
       const c = t.counts || {};
       document.getElementById('fix-count').innerHTML =
         esc(c.traced) + ' issues traced <span class="fix-count__verified">('
         + esc(c.closed) + ' closed &middot; ' + esc(c.open) + ' open &middot; '
-        + esc(c.released) + ' released &middot; ' + esc(c.unreleased) + ' unreleased)</span>';
+        + esc(c.released) + ' released &middot; ' + esc(c.unreleased) + ' unreleased)</span>'
+        // Which commit the table describes, so a stale one says so.
+        + (t.builtFrom && t.builtFrom.sha
+          ? ' <a class="fix-count__built" href="' + esc(gh + '/commit/' + t.builtFrom.sha) + '" target="_blank" rel="noopener">as of <code>'
+            + esc(t.builtFrom.sha.slice(0, 8)) + '</code> ' + esc(String(t.builtFrom.date || '').slice(0, 10)) + '</a>'
+          : '');
 
       const rows = t.rows.map((r) => {
         const cm = r.commits[0] || {};
+        const commitUrl = cm.url || (cm.sha ? gh + '/commit/' + cm.sha : '#');
+        const issueUrl = r.url || gh + '/issues/' + r.number;
         const more = r.commits.length > 1
           ? ' <span class="fix-none">+' + (r.commits.length - 1) + '</span>'
           : '';
@@ -671,16 +687,16 @@
         // Every file the fix touched, clickable, pinned to that commit.
         const files = (r.files || []).length
           ? (r.files || []).map((f) =>
-              '<a class="fix-file" href="' + esc(f.url) + '" target="_blank" rel="noopener"><code>'
+              '<a class="fix-file" href="' + esc(f.url || gh + '/blob/' + f.sha + '/' + f.path) + '" target="_blank" rel="noopener"><code>'
               + esc(f.path) + '</code></a>').join('')
           : '<span class="fix-none">none recorded</span>';
 
         return '<tr>'
-          + '<td class="fix-cell--id"><a href="' + esc(r.url) + '" target="_blank" rel="noopener">#'
+          + '<td class="fix-cell--id"><a href="' + esc(issueUrl) + '" target="_blank" rel="noopener">#'
             + esc(r.number) + '</a></td>'
           + '<td>' + state + '</td>'
           + '<td class="fix-cell--title">' + pri + esc(r.title || '') + '</td>'
-          + '<td class="fix-cell--test"><a href="' + esc(cm.url || '#') + '" target="_blank" rel="noopener"><code>'
+          + '<td class="fix-cell--test"><a href="' + esc(commitUrl) + '" target="_blank" rel="noopener"><code>'
             + esc(cm.sha || '') + '</code></a>' + more
             + '<span class="fix-subject">' + esc(cm.subject || '') + '</span></td>'
           + '<td class="fix-cell--files">' + files + '</td>'

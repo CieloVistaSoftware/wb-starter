@@ -68,9 +68,14 @@ jobs:
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.
           node scripts/release-versions.mjs
+          # #1861: the live site is static and has no /api/fixes, so the Fix
+          # Viewer reads data/fixes.json. Written here from main's history,
+          # after release-versions.mjs, whose versions it names as releases.
+          node scripts/generate-fixes.mjs
           # stamp-version.js rewrites version.js AND the ?v= cache key in every
           # entry page (index.html, pages/, demos/); release-versions.mjs
-          # rewrites data/releases.json -- all of it is the stamp.
+          # rewrites data/releases.json, generate-fixes.mjs data/fixes.json --
+          # all of it is the stamp.
           if git diff --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "version.js already describes main: nothing to commit."
