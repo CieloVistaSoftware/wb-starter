@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.510",
+      "date": "2026-10-12",
+      "summary": "Progress bar heights and corner radii were fixed in px, so the bars stayed the same size when a reader raised their browser font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1856\" target=\"_blank\" rel=\"noopener\">PR 1856</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Progress bars size in rem, and the px gate holds 251</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/12e740dfde1b06bf9c21fe82c2d56a7f05022dc7\" target=\"_blank\" rel=\"noopener\"><code>12e740d</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, find the progress bars, and set the browser&#39;s default font size to 20px. Before: the bars kept their 4-16px heights. Now: they grow with the text (an md bar goes from 8px to 10px); at the default 16px nothing moves.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8f18f92364cb13ab3c3a7114ffb6c9f089c24bbe\" target=\"_blank\" rel=\"noopener\"><code>8f18f92</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.509",
       "date": "2026-10-12",
       "summary": "The React counter toast test failed now and then because the first toast vanished on its own before the test counted them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1852\" target=\"_blank\" rel=\"noopener\">#1852</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1853\" target=\"_blank\" rel=\"noopener\">#1853</a>",
