@@ -1,0 +1,25 @@
+name: OIDC probe
+
+# Diagnostic only (2026-10-13): does this repo's Actions grant an OIDC token?
+# Prints whether the token request variables exist and the token's non-secret
+# claims (repository, workflow_ref). Never prints the token. Deleted after use.
+
+on:
+  push:
+    branches: [ claude/oidc-probe ]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask GitHub for an OIDC token
+        run: |
+          if [ -z "${ACTIONS_ID_TOKEN_REQUEST_URL}" ]; then
+            echo "NO OIDC: ACTIONS_ID_TOKEN_REQUEST_URL is not set"; exit 1
+          fi
+          tok=$(curl -sS -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=npm:registry.npmjs.org" | node -p "JSON.parse(require('fs').readFileSync(0)).value")
+          echo "${tok}" | cut -d. -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{const c=JSON.parse(s+'}'.repeat(0));console.log('OIDC OK',{repository:c.repository,workflow_ref:c.workflow_ref,ref:c.ref})}catch(e){console.log('OIDC token received; claims not parsed')}})"
