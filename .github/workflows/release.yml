@@ -15,6 +15,9 @@ on:
 
 permissions:
   contents: write
+  # npm Trusted Publishing: npm accepts this run's OIDC identity in place of a
+  # token, so 2FA stays on for the account (npm restricts 2FA-bypass tokens).
+  id-token: write
 
 concurrency:
   group: release
@@ -35,8 +38,12 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+
+      # Trusted Publishing needs npm 11.5.1 or later.
+      - name: Use npm 11
+        run: npm install -g npm@11 && npm --version
 
       # One tag that cannot be made must not stop the others, the GitHub releases
       # or npm (first run, 2026-09-30: v1.0.0 was tagged, then v4.0.6 was refused
@@ -83,16 +90,14 @@ jobs:
           done
 
       - name: Publish to npm (wb-starter, create-wb-starter)
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           version=$(node -p "require('./package.json').version")
           if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
             echo "… ${version} has no release commit yet: nothing to publish"; exit 0
           fi
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "::warning::NPM_TOKEN is not set in the repository secrets, so npm was not published."; exit 0
-          fi
+          # No token: npm trusts this workflow (release.yml in
+          # CieloVistaSoftware/wb-starter) through each package's Trusted
+          # Publisher setting on npmjs.com.
           # Publish the code the tag names, not whatever main holds now: main
           # moves on after a release and still says the same version until the
           # next one is cut.
