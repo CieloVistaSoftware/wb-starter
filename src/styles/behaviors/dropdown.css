@@ -115,6 +115,11 @@
 .x-dropdown__menu--top-start    { bottom: 100%; left: 0; margin-bottom: var(--x-dropdown-offset, 0.25rem); }
 .x-dropdown__menu--top-end      { bottom: 100%; right: 0; margin-bottom: var(--x-dropdown-offset, 0.25rem); }
 
+/* #1862: a menu that would run past the edge of whatever clips it is moved
+   back inside, by just that much (dropdown.js measures it on open). `translate`
+   is its own property, so it adds to the fade-in's transform. */
+.x-dropdown__menu { translate: var(--x-dropdown-shift, 0px) 0; }
+
 .x-dropdown__menu.x-dropdown__menu--open {
   display: block;
   animation: x-fade-in 0.15s ease;
