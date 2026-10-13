@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.512",
+      "date": "2026-10-12",
+      "summary": "Two px gates counted two different numbers, and the old one only watched the &quot;likely convert&quot; px, which no longer means anything now that every px must become rem. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1857\" target=\"_blank\" rel=\"noopener\">PR 1857</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One px gate -- remove px-no-new-creep, px-total-only-shrinks replaces it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/66b6ada58a4b1b703e62fc678f88f76dbeceef17\" target=\"_blank\" rel=\"noopener\"><code>66b6ada</code></a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Docs+test: rem, never px, on every device type -- Tier-1 Law 19 and a total-px gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8c30dac5b2ab5e44acc59a35b1b4c2fb6e53fffe\" target=\"_blank\" rel=\"noopener\"><code>8c30dac</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test --project=compliance tests/compliance/px-*.spec.ts</code>. Before: two specs ran, px-no-new-creep (limit 264) and px-total-only-shrinks (limit 1163). Now: only px-total-only-shrinks runs, counting every px in src/.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/42303ac5cfcf6506c0ee4a7e10881f56d4f246ec\" target=\"_blank\" rel=\"noopener\"><code>42303ac</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.511",
       "date": "2026-10-12",
       "summary": "The test and performance dashboards were empty on the live site because their data only existed on a local machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1855\" target=\"_blank\" rel=\"noopener\">PR 1855</a>)",
