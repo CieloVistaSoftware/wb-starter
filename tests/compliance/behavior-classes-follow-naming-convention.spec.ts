@@ -238,6 +238,7 @@ const SKIP = [
   'data/releases.json',                                                  // release history
   'data/release-see-it.json',
   'data/issue-titles.json',
+  'data/fixes.json',                                                     // fix history, rebuilt from commit subjects on every push (#1869)
   'data/component-word-audit.json',                                      // quotes old test output verbatim
   // Generated from every doc, including history this scan leaves alone on
   // purpose (docs/schema-test-value.md quotes `x-dropdown-trigger`). The

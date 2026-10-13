@@ -58,74 +58,27 @@ for (const d of DIRS) walk(path.join(ROOT, d), files);
 const PX_RE = /([a-zA-Z-]+)\s*:\s*[^;{}\n]*?(-?[\d.]+)px/g;
 const MEDIA_RE = /@media[^{]*\d+px/;
 
-// A px value that has to stay px says so, on its own line, with the reason:
-//   font-size: max(16px, 1em); /* px-ok: iOS zooms an input under 16 device px */
-// It is listed under DEVICE_PX with that reason instead of counted against
-// the gate. A bare marker with no reason does not count.
-const PX_OK_RE = /px-ok:\s*(\S.{9,})/;
-
-// Comments are prose, not styles: "on a 390px phone" sizes nothing. Blank
-// them (keeping newlines, so line numbers hold) before scanning. Strings are
-// skipped over so a URL's `//` is not taken for a comment.
-function stripComments(text, isCss) {
-  let out = '';
-  let i = 0;
-  while (i < text.length) {
-    const c = text[i];
-    const n = text[i + 1];
-    if (c === '/' && n === '*') {
-      const end = text.indexOf('*/', i + 2);
-      const stop = end === -1 ? text.length : end + 2;
-      out += text.slice(i, stop).replace(/[^\n]/g, ' ');
-      i = stop;
-    } else if (!isCss && c === '/' && n === '/') {
-      const end = text.indexOf('\n', i);
-      const stop = end === -1 ? text.length : end;
-      out += ' '.repeat(stop - i);
-      i = stop;
-    } else if (c === '"' || c === "'" || c === '`') {
-      let j = i + 1;
-      while (j < text.length && text[j] !== c) j += text[j] === '\\' ? 2 : 1;
-      out += text.slice(i, j + 1);
-      i = j + 1;
-    } else {
-      out += c;
-      i++;
-    }
-  }
-  return out;
-}
-
-const byBucket = { LIKELY_CONVERT: {}, LIKELY_OK: {}, UNCLASSIFIED: {}, DEVICE_PX: {} };
-const totals = { LIKELY_CONVERT: 0, LIKELY_OK: 0, UNCLASSIFIED: 0, DEVICE_PX: 0, mediaBreakpoints: 0 };
-const devicePx = [];
+const byBucket = { LIKELY_CONVERT: {}, LIKELY_OK: {}, UNCLASSIFIED: {} };
+const totals = { LIKELY_CONVERT: 0, LIKELY_OK: 0, UNCLASSIFIED: 0, mediaBreakpoints: 0 };
 
 for (const abs of files) {
   const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
   const text = fs.readFileSync(abs, 'utf8');
-  const raw = text.split(/\r?\n/);
-  const lines = stripComments(text, path.extname(abs) === '.css').split(/\r?\n/);
-  lines.forEach((line, i) => {
+  const lines = text.split(/\r?\n/);
+  lines.forEach((line) => {
     if (MEDIA_RE.test(line)) { totals.mediaBreakpoints++; return; } // breakpoints stay px, don't double-count
-    const ok = PX_OK_RE.exec(raw[i] || '');
     PX_RE.lastIndex = 0;
     let m;
     while ((m = PX_RE.exec(line)) !== null) {
       const prop = m[1].toLowerCase();
       const value = parseFloat(m[2]);
       // 1px/2px hairlines on ANY property are conventionally allowed (borders,
-      // shadow offsets expressed via top/left tricks, etc.). So is a pill
-      // radius: 999px means "as round as it gets", which no unit changes.
-      const pill = prop === 'border-radius' && Math.abs(value) >= 999;
-      let bucket = LIKELY_CONVERT_PROPS.includes(prop) && Math.abs(value) > 2 && !pill
+      // shadow offsets expressed via top/left tricks, etc.)
+      const bucket = LIKELY_CONVERT_PROPS.includes(prop) && Math.abs(value) > 2
         ? 'LIKELY_CONVERT'
-        : LIKELY_OK_PROPS.includes(prop) || Math.abs(value) <= 2 || pill
+        : LIKELY_OK_PROPS.includes(prop) || Math.abs(value) <= 2
           ? 'LIKELY_OK'
           : 'UNCLASSIFIED';
-      if (bucket === 'LIKELY_CONVERT' && ok) {
-        bucket = 'DEVICE_PX';
-        devicePx.push({ file: rel, line: i + 1, value: `${m[2]}px`, reason: ok[1].replace(/\s*\*\/.*$/, '').trim() });
-      }
       totals[bucket]++;
       byBucket[bucket][rel] = (byBucket[bucket][rel] || 0) + 1;
     }
@@ -133,9 +86,9 @@ for (const abs of files) {
 }
 
 fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true });
-fs.writeFileSync(path.join(ROOT, 'data/px-audit.json'), JSON.stringify({ totals, byBucket, devicePx }, null, 2));
+fs.writeFileSync(path.join(ROOT, 'data/px-audit.json'), JSON.stringify({ totals, byBucket }, null, 2));
 
-console.log(`px-unit audit (#294) — ${totals.LIKELY_CONVERT} likely-convert, ${totals.DEVICE_PX} px-ok, ${totals.LIKELY_OK} likely-ok, ${totals.UNCLASSIFIED} unclassified, ${totals.mediaBreakpoints} media-breakpoint line(s) (excluded).\n`);
+console.log(`px-unit audit (#294) — ${totals.LIKELY_CONVERT} likely-convert, ${totals.LIKELY_OK} likely-ok, ${totals.UNCLASSIFIED} unclassified, ${totals.mediaBreakpoints} media-breakpoint line(s) (excluded).\n`);
 
 const top = (bucket, n = 20) =>
   Object.entries(byBucket[bucket]).sort((a, b) => b[1] - a[1]).slice(0, n);

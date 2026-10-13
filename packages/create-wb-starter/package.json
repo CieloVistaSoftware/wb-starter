@@ -1,6 +1,6 @@
 {
   "name": "create-wb-starter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Create a website that uses wb-starter: plain HTML, x-* behaviors, no build step.",
   "bin": {

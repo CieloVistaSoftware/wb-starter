@@ -569,16 +569,35 @@
   // "file › title" -> { error, stack, snippet } from the reporter's failures.json.
   let failureDetail = {};
 
+  // Where the data comes from. A local run writes data/ next to this page; the
+  // live site is static and has no local run, so there the page shows the last
+  // Nightly run, which nightly.yml publishes to the nightly-results branch.
+  const NIGHTLY_BASE = 'https://raw.githubusercontent.com/CieloVistaSoftware/wb-starter/nightly-results/';
+  let dataBase = new URL('../data/', location.href).href;
+  let nightlyStatus = null;
+
+  function dataUrl(file) {
+    return dataBase + file + '?' + Date.now();
+  }
+
   async function poll() {
     try {
       const [statusRes, resultsRes, detailRes] = await Promise.all([
-        fetch('/data/test-status.json?' + Date.now()),
-        fetch('/data/test-results.json?' + Date.now()),
+        fetch(dataUrl('test-status.json')),
+        fetch(dataUrl('test-results.json')),
         // The RICH one. summary/status carry file+name only; this carries the
         // error text, and since #963 the stack frames and the failing source
         // line as well. It was written on every run and read by nothing.
-        fetch('/data/test-results/failures.json?' + Date.now()),
+        fetch(dataUrl('test-results/failures.json')),
       ]);
+
+      // No local run here (the static site): switch to the published nightly
+      // results once, and stop polling -- they change once a day.
+      if (statusRes.status === 404 && dataBase !== NIGHTLY_BASE) {
+        dataBase = NIGHTLY_BASE;
+        clearInterval(pollTimer);
+        return poll();
+      }
 
       const note = (res, key) => {
         const lm = res && res.headers && res.headers.get('Last-Modified');
@@ -590,6 +609,7 @@
 
       if (statusRes.ok) {
         const status = await statusRes.json();
+        if (status.source === 'nightly') nightlyStatus = status;
         if (status.state) updateStatus(status);
       }
       if (resultsRes.ok) {
@@ -621,6 +641,12 @@
   function renderFreshness() {
     const el = document.getElementById('sourceFreshness');
     if (!el) return;
+    if (nightlyStatus) {
+      el.dataset.stale = 'false';
+      el.innerHTML = 'Last nightly run: ' + esc(WBTime.dateTime(nightlyStatus.completedAt))
+        + (nightlyStatus.runUrl ? ' · <a href="' + esc(nightlyStatus.runUrl) + '" target="_blank" rel="noopener">run details</a>' : '');
+      return;
+    }
     const now = Date.now();
     const parts = [];
     let stale = false;

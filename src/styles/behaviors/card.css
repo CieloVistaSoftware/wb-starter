@@ -395,31 +395,31 @@ article > header > data,
 .x-card[variant="xs"],
 article.x-card--xs {
   max-width: 12.5rem;
-  min-width: 160px; /* px-ok: card size floor; as rem it overflows a phone (see comment above) */
+  min-width: 160px;
 }:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--sm,
 .x-card.x-card--sm,
 .x-card[variant="sm"],
 article.x-card--sm {
   max-width: 18.75rem;
-  min-width: 220px; /* px-ok: card size floor; as rem it overflows a phone (see comment above) */
+  min-width: 220px;
 }:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--md,
 .x-card.x-card--md,
 .x-card[variant="md"],
 article.x-card--md {
   max-width: 25rem;
-  min-width: 320px; /* px-ok: card size floor; as rem it overflows a phone (see comment above) */
+  min-width: 320px;
 }:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--lg,
 .x-card.x-card--lg,
 .x-card[variant="lg"],
 article.x-card--lg {
   max-width: 32.5rem;
-  min-width: 420px; /* px-ok: card size floor; as rem it overflows a phone (see comment above) */
+  min-width: 420px;
 }:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--xl,
 .x-card.x-card--xl,
 .x-card[variant="xl"],
 article.x-card--xl {
   max-width: 40.625rem;
-  min-width: 540px; /* px-ok: card size floor; as rem it overflows a phone (see comment above) */
+  min-width: 540px;
 }:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--full,
 .x-card.x-card--full,
 .x-card[variant="full"],

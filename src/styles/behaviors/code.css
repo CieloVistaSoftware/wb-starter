@@ -130,7 +130,7 @@ pre > .x-code {
   padding: 0.1rem 0.3rem;
   border-radius: var(--radius-sm, 0.1875rem);
   cursor: pointer;
-  font-size: max(0.6rem, 12px); /* px-ok: 12px readability floor, whatever the root */
+  font-size: max(0.6rem, 12px); /* the 12px readability floor, as .x-pre__copy */
   line-height: 1;
   transition: background-color 0.2s ease;
 }
@@ -147,7 +147,7 @@ pre > .x-code {
    the listing. Qualified to 0,2,0 it stays the small corner control above. */
 .x-code__wrapper .x-code__copy {
   padding: 0.1rem 0.3rem;
-  font-size: max(0.6rem, 12px); /* px-ok: 12px readability floor, whatever the root */
+  font-size: max(0.6rem, 12px);
   line-height: 1;
   z-index: 10;
 }

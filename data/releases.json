@@ -6,6 +6,227 @@
   ],
   "releases": [
     {
+      "version": "1.0.520",
+      "date": "2026-10-12",
+      "summary": "Two compliance tests failed on main, and that also blocked npm run ship at Gate 1. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1875\" target=\"_blank\" rel=\"noopener\">PR 1875</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1874\" target=\"_blank\" rel=\"noopener\">#1874</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Compliance green on main again (fixes.json history, PACKAGE ceiling)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1874\" target=\"_blank\" rel=\"noopener\">#1874</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d95750148c5f9b09bb0b71f55f9ffbda26e418d1\" target=\"_blank\" rel=\"noopener\"><code>d957501</code></a>",
+          "issues": [
+            1874
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/wb-prefix-cannot-return.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/wb-prefix-cannot-return.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/behavior-classes-follow-naming-convention.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/behavior-classes-follow-naming-convention.spec.ts</a> --project=compliance. Before: 2 failed (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/fixes.json\" target=\"_blank\" rel=\"noopener\">data/fixes.json</a> x-pre-wrapper; PACKAGE 857 &gt; 855). Now: 17 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b93db94d8d73d7a0b5781599f3134f77fc329223\" target=\"_blank\" rel=\"noopener\"><code>b93db94</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.519",
+      "date": "2026-10-12",
+      "summary": "The Fix Viewer on the live site showed 13 hand-written fixes from 2026-02-16, because the site has no /api/fixes and nothing ever updated <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/fixes.json\" target=\"_blank\" rel=\"noopener\">data/fixes.json</a>. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The live Fix Viewer shows every traced fix, regenerated on every push</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4a9a688b1bf896e22130e6cdfef87d8e57ca31c8\" target=\"_blank\" rel=\"noopener\"><code>4a9a688</code></a>",
+          "issues": [
+            1861,
+            1869
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/fix-viewer.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/fix-viewer.html</a>. Before: &quot;13 fixes&quot; from February, with no issue states or releases. Now: about 460 issues traced, each with its open/closed state, the commit that fixed it, the files it changed and the version that took it live, and the count line says which commit the table was built from.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4a9a688b1bf896e22130e6cdfef87d8e57ca31c8\" target=\"_blank\" rel=\"noopener\"><code>4a9a688</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.518",
+      "date": "2026-10-12",
+      "summary": "Npm never received a release: the token publish failed with E404 (#1517), and publish-npm.yml failed too because npm trusts release.yml. npm now gets deliberate releases (1.0.1 first, John&#39;s choice), and create-wb-starter says when a newer version exists. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Npm releases via Trusted Publishing from release.yml; create-wb-starter update notice</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/788c4d65ce253941e5e2f0572d8d913d0df7c526\" target=\"_blank\" rel=\"noopener\"><code>788c4d6</code></a>",
+          "issues": [
+            1864
+          ]
+        }
+      ],
+      "seeIt": "After npm run ship -- --as 1.0.1, run npm view wb-starter version and npm view create-wb-starter version. Before: both printed 1.0.0. Now: both print 1.0.1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/788c4d65ce253941e5e2f0572d8d913d0df7c526\" target=\"_blank\" rel=\"noopener\"><code>788c4d6</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.517",
+      "date": "2026-10-12",
+      "summary": "Create-wb-starter could not publish a new release because its package.json still said 1.0.0, which npm already has. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1868\" target=\"_blank\" rel=\"noopener\">PR 1868</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Bump create-wb-starter to 1.0.1 so the Release workflow can publish it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9f23b608af9331341b9f9c0484da611b63a630ae\" target=\"_blank\" rel=\"noopener\"><code>9f23b60</code></a>",
+          "issues": [
+            1867
+          ]
+        }
+      ],
+      "seeIt": "Run node -p &quot;require(&#39;./packages/create-wb-starter/package.json&#39;).version&quot;. Before: it printed 1.0.0. Now: it prints 1.0.1, so the next release publishes create-wb-starter@1.0.1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b3292961347777508ad4c386011803c0c47fb93b\" target=\"_blank\" rel=\"noopener\"><code>b329296</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.516",
+      "date": "2026-10-12",
+      "summary": "Every dropdown example on the dropdown doc opened behind its own code panel, and the bottom-end example&#39;s menu ran past the left edge of the page content, where it was cut off. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>An open dropdown in a doc example is drawn above its code panel, and kept inside the box that would cut it off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2866f587e03ec81403e057e27685f87b371029d3\" target=\"_blank\" rel=\"noopener\"><code>2866f58</code></a>",
+          "issues": [
+            1862,
+            1866
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html\" target=\"_blank\" rel=\"noopener\">public/doc-viewer.html</a>?file=<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fdropdown.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/dropdown.md</a> and click &quot;Account&quot;, &quot;Actions&quot; and &quot;Menu&quot;. Before: each menu was drawn under the code panel below it, and Actions showed &quot;dit&quot;, &quot;up&quot;, &quot;ele&quot;. Now: every menu is drawn on top, whole, and Actions reads Edit, Duplicate, Delete.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2866f587e03ec81403e057e27685f87b371029d3\" target=\"_blank\" rel=\"noopener\"><code>2866f58</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.515",
+      "date": "2026-10-12",
+      "summary": "Npm only got a version when someone cut a release by hand, and its publish step never worked, so npm sat at 1.0.0 while the live site was at 1.0.512. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Publish every push to npm under the badge&#39;s number</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/38146bbd176a11193afcf814be72ed5f0c7a3ba1\" target=\"_blank\" rel=\"noopener\"><code>38146bb</code></a>",
+          "issues": [
+            1860,
+            1859
+          ]
+        }
+      ],
+      "seeIt": "After a push to main, run <code>npm view wb-starter version</code> and compare it with the version badge on <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a>. Before: npm said 1.0.0 while the badge said v1.0.512. Now: npm says the badge&#39;s number once publish-npm.yml finishes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/38146bbd176a11193afcf814be72ed5f0c7a3ba1\" target=\"_blank\" rel=\"noopener\"><code>38146bb</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.514",
+      "date": "2026-10-12",
+      "summary": "The effect behaviors (glow, bounce, shake, typewriter cursor, stage light) were sized in px, so their glows, offsets and the stage-light fixture ignored the reader&#39;s font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1858\" target=\"_blank\" rel=\"noopener\">PR 1858</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Effects size in rem -- every px in effects.css, and the px gate holds 253</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/254e5695668e5652ca535bb08e709191d94476b1\" target=\"_blank\" rel=\"noopener\"><code>254e569</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, find the glow and stagelight demos, and set the browser&#39;s default font size to 20px. Before: the glow radius and the stage light&#39;s 40px lamp stayed fixed. Now: they grow with the text (the lamp becomes 50px); at the default 16px nothing moves.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2cfa9c11fb2f38e4106c2ea8824ff6dd39ae6e84\" target=\"_blank\" rel=\"noopener\"><code>2cfa9c1</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.513",
+      "date": "2026-10-12",
+      "summary": "Src/wb-viewmodels/semantics/audio.js and tooltip.js inject CSS (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1863\" target=\"_blank\" rel=\"noopener\">PR 1863</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The audio player&#39;s controls and the tooltip size in rem</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5016ef715af291dbdb8b326b77fd48f23f3004f5\" target=\"_blank\" rel=\"noopener\"><code>5016ef7</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open a page with an x-audio player and a tooltip, and set the browser&#39;s default font size to 20px. Before: the seek thumb, volume thumb and tooltip arrow kept their pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/612699c9baee5f319438e173bef2ed0dad117e30\" target=\"_blank\" rel=\"noopener\"><code>612699c</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.512",
+      "date": "2026-10-12",
+      "summary": "Two px gates counted two different numbers, and the old one only watched the &quot;likely convert&quot; px, which no longer means anything now that every px must become rem. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1857\" target=\"_blank\" rel=\"noopener\">PR 1857</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One px gate -- remove px-no-new-creep, px-total-only-shrinks replaces it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/66b6ada58a4b1b703e62fc678f88f76dbeceef17\" target=\"_blank\" rel=\"noopener\"><code>66b6ada</code></a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Docs+test: rem, never px, on every device type -- Tier-1 Law 19 and a total-px gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8c30dac5b2ab5e44acc59a35b1b4c2fb6e53fffe\" target=\"_blank\" rel=\"noopener\"><code>8c30dac</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test --project=compliance tests/compliance/px-*.spec.ts</code>. Before: two specs ran, px-no-new-creep (limit 264) and px-total-only-shrinks (limit 1163). Now: only px-total-only-shrinks runs, counting every px in src/.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/42303ac5cfcf6506c0ee4a7e10881f56d4f246ec\" target=\"_blank\" rel=\"noopener\"><code>42303ac</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.511",
+      "date": "2026-10-12",
+      "summary": "The test and performance dashboards were empty on the live site because their data only existed on a local machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1855\" target=\"_blank\" rel=\"noopener\">PR 1855</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Publish nightly test and performance results for the static site&#39;s dashboards</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14171f2da140098ddd09db286fc3c0a3e9a1c627\" target=\"_blank\" rel=\"noopener\"><code>14171f2</code></a>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Resolve dashboard data/API URLs against the page, not the host root</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b11b0d0881b5e6e3ab30fd0ed3499328add0359f\" target=\"_blank\" rel=\"noopener\"><code>b11b0d0</code></a>"
+        }
+      ],
+      "seeIt": "After the next Nightly run, open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/test-dashboard.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/test-dashboard.html</a>. Before: zeros and 404s in the console. Now: the last nightly totals, failures and results with &quot;Last nightly run: &lt;time&gt; · run details&quot;; the performance dashboard shows its charts with no Run button.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b060996894745fedf1c1adfbb6d7f832e2e39e18\" target=\"_blank\" rel=\"noopener\"><code>b060996</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.510",
       "date": "2026-10-12",
       "summary": "Progress bar heights and corner radii were fixed in px, so the bars stayed the same size when a reader raised their browser font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1856\" target=\"_blank\" rel=\"noopener\">PR 1856</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",

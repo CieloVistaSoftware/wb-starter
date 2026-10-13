@@ -151,11 +151,31 @@ export function dropdown(element, options = {}) {
 
   let isOpen = false;
 
+  // #1862: a bottom-end menu wider than its trigger reaches left of it, and on
+  // a narrow column that ran past the content's edge, where it was cut off.
+  // The box that cuts it off is the nearest ancestor that clips horizontally,
+  // or the viewport. A menu that would cross either of its edges is moved back
+  // inside by exactly the overshoot, so it keeps its alignment wherever there
+  // is room (a menu wider than the box keeps its left edge in view).
+  const keepInside = () => {
+    setRule(menu, 'shift', null);
+    let bounds = { left: 0, right: document.documentElement.clientWidth };
+    for (let a = element.parentElement; a && a !== document.body; a = a.parentElement) {
+      if (getComputedStyle(a).overflowX !== 'visible') { bounds = a.getBoundingClientRect(); break; }
+    }
+    const r = menu.getBoundingClientRect();
+    let dx = 0;
+    if (r.right > bounds.right) dx = bounds.right - r.right;
+    if (r.left + dx < bounds.left) dx = bounds.left - r.left;
+    if (Math.round(dx)) setRule(menu, 'shift', { '--x-dropdown-shift': `${Math.round(dx)}px` });
+  };
+
   const toggle = () => {
     if (config.trigger === 'hover' && isOpen) return;
     isOpen = !isOpen;
     // Shown (with its fade-in) by .x-dropdown__menu--open (#779).
     menu.classList.toggle('x-dropdown__menu--open', isOpen);
+    if (isOpen) keepInside();
     element.classList.toggle('open', isOpen);
     (trigger || element).setAttribute('aria-expanded', String(isOpen));
     // #344: dropdown.schema.json declares open and close; only select fired.
