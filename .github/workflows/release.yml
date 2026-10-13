@@ -1,6 +1,6 @@
 name: Release (OIDC probe, branch only)
 
-# Diagnostic on branch claude/oidc-probe only (2026-10-13), never merged: asks
+# Diagnostic on branch claude/oidc-probe only (2026-10-13), never merged: asks Re-run after the npm settings were fixed.
 # npm whether it accepts this workflow's OIDC identity for each package. Prints
 # npm's HTTP status and error text, never a token. Nothing is published.
 
