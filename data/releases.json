@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.513",
+      "date": "2026-10-12",
+      "summary": "Src/wb-viewmodels/semantics/audio.js and tooltip.js inject CSS (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1863\" target=\"_blank\" rel=\"noopener\">PR 1863</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The audio player&#39;s controls and the tooltip size in rem</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5016ef715af291dbdb8b326b77fd48f23f3004f5\" target=\"_blank\" rel=\"noopener\"><code>5016ef7</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open a page with an x-audio player and a tooltip, and set the browser&#39;s default font size to 20px. Before: the seek thumb, volume thumb and tooltip arrow kept their pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/612699c9baee5f319438e173bef2ed0dad117e30\" target=\"_blank\" rel=\"noopener\"><code>612699c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.512",
       "date": "2026-10-12",
       "summary": "Two px gates counted two different numbers, and the old one only watched the &quot;likely convert&quot; px, which no longer means anything now that every px must become rem. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1857\" target=\"_blank\" rel=\"noopener\">PR 1857</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
