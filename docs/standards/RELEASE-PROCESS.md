@@ -29,17 +29,14 @@ what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). Th
 local edits or being behind GitHub are said in its tooltip. A release (below) is still cut
 deliberately with `npm run ship` and resets the count to its new tag.
 
-## npm gets every push (since 2026-10-13)
+## npm gets each release (2026-10-13)
 
-John, 2026-10-13: npm should have what the live site serves (#1860). After every
-push to main, once "Stamp version on main" has stamped it,
-`.github/workflows/publish-npm.yml` publishes that commit -- the root package
-and the scaffolder in `packages/` -- under the badge's number
-(`scripts/publish-npm.mjs`). The
-number is written into `package.json` for the publish only; nothing is committed
-back. It authenticates with npm trusted publishing, so there is no npm token, and
-it ends red unless npm then serves that number. `release.yml` no longer publishes
-to npm: its step never did (#1517).
+John, 2026-10-13: "B, go with 1.0.1". npm gets a version when a release is cut
+with `npm run ship`, not on every push. `release.yml` publishes it on the push
+that is the release commit itself, from that commit, with npm trusted
+publishing (no npm token). 1.0.1 was the first: it reset the badge so npm, the
+tag and the site name the same number. The publish-every-push workflow from
+#1860 was removed for this.
 
 ## 1. One number per release, never per commit
 
