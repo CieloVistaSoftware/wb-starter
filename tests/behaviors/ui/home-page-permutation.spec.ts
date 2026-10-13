@@ -113,16 +113,16 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   });
 
   // ═══════════════════════════════════════════════════════════════
-  // STATS — x-container > x-grid[columns=4] > x-cardstats ×4
+  // STATS — x-container > x-grid[columns=4] > x-cardstats ×6
   // ═══════════════════════════════════════════════════════════════
 
-  test('Stats: [x-cardstats] renders 4 instances', async ({ page }) => {
-    await expect(page.locator('[x-cardstats]')).toHaveCount(4);
+  test('Stats: [x-cardstats] renders 6 instances', async ({ page }) => {
+    await expect(page.locator('[x-cardstats]')).toHaveCount(6);
   });
 
   test('Stats: all have required attributes (value, label, icon)', async ({ page }) => {
     const stats = page.locator('[x-cardstats]');
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       await expect(stats.nth(i)).toHaveAttribute('value');
       await expect(stats.nth(i)).toHaveAttribute('label');
       await expect(stats.nth(i)).toHaveAttribute('icon');
@@ -131,7 +131,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Stats: renders expected text values', async ({ page }) => {
     const container = page.locator('[x-container]');
-    for (const text of ['100+', 'Behaviors', 'Light', 'DOM Only', 'Build Time', 'Standards']) {
+    for (const text of ['167', 'Behaviors', 'Themes', 'Dependencies', 'Light', 'DOM Only', 'Build Time', 'Standards']) {
       await expect(container).toContainText(text);
     }
   });
@@ -140,7 +140,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   // injected; x-hydrated is what cardstats sets once it has built.
   test('Stats: marked hydrated after hydration', async ({ page }) => {
     const stats = page.locator('[x-cardstats]');
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       await expect(stats.nth(i)).toHaveAttribute('x-hydrated', '1');
     }
   });
