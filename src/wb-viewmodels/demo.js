@@ -5,6 +5,7 @@ import { hasBehavior } from './index.js';
 import { getNativeBehavior } from '../core/tag-map.js';
 import { centralTime } from '../core/central-time.js';
 import { sliceOverBudget, nextSlice } from '../core/main-thread-budget.js';
+import { siteRoot } from '../core/site-root.js';
 
 /** Behaviors that fill their row by nature: a demo holding only one of them is full width (#1387). */
 const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero'];
@@ -195,26 +196,7 @@ function buildEventListenerCode(eventNames) {
         .join('\n\n');
 }
 
-// Site root that works from '/', '/demos/x.html', '/pages/x.html',
-// '/public/doc-viewer.html', '/tests/fixtures/x.html' — locally or under a
-// GitHub Pages sub-path.
-//
-// #454: 'tests/fixtures' was missing from this list. Pages living there
-// (e.g. cards-permutation-matrix.html) fell through to the fallback below,
-// which only strips the trailing filename — leaving siteRoot() as
-// '/tests/fixtures/' instead of '/'. Every doc-link feature keyed off this
-// (the docs/manifest.json fetch AND every generated ?file= doc-viewer href)
-// silently broke: the manifest fetch 404'd, so no doc ever resolved and no
-// Docs: link/badge was ever built, even though the page's <div x-demo> wrapping
-// was otherwise correct.
-function siteRoot() {
-    const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
-    // At the site root the path is a bare 'index.html' with no recognized
-    // directory segment for the regex above to match, so it's a no-op there
-    // — strip the trailing filename directly, which also covers the GitHub
-    // Pages sub-path case ('/wb-starter/index.html').
-    return stripped.replace(/[^/]*$/, '');
-}
+// siteRoot() lives in src/core/site-root.js: the file card needs it too.
 
 /**
  * Serialises every per-`<pre>` scan this module performs (#970, race #2).

@@ -5,7 +5,7 @@
 ## Usage
 
 <figure x-demo>
-<article x-cardfile filename="quarterly-report.pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
+<article x-cardfile filename="quarterly-report.pdf" size="2.4 MB" date="2026-08-14" href="files/quarterly-report.pdf"></article>
 </figure>
 
 ## One example per file type
@@ -13,31 +13,31 @@
 The icon comes from the filename's extension; there is no separate type attribute to write, or to get out of step with the name. An extension the table does not know gets the generic file icon.
 
 <figure x-demo>
-<article x-cardfile filename="quarterly-report.pdf" size="2.4 MB"></article>
+<article x-cardfile filename="quarterly-report.pdf" href="files/quarterly-report.pdf" size="2.4 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="meeting-notes.docx" size="480 KB"></article>
+<article x-cardfile filename="meeting-notes.docx" href="files/meeting-notes.docx" size="480 KB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="architecture-diagram.png" size="2.4 MB"></article>
+<article x-cardfile filename="architecture-diagram.png" href="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" size="2.4 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="product-walkthrough.mp4" size="58 MB"></article>
+<article x-cardfile filename="product-walkthrough.mp4" href="https://www.w3schools.com/html/mov_bbb.mp4" size="58 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="interview-recording.m4a" size="12 MB"></article>
+<article x-cardfile filename="interview-recording.mp3" href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" size="12 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="release-assets.zip" size="104 MB"></article>
+<article x-cardfile filename="release-assets.zip" href="files/release-assets.zip" size="104 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="sensor-capture.bin" size="31 MB"></article>
+<article x-cardfile filename="sensor-capture.bin" href="files/sensor-capture.bin" size="31 MB"></article>
 </figure>
 
 ## Attributes

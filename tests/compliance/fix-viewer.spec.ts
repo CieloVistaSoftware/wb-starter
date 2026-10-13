@@ -37,6 +37,9 @@
  */
 
 import { test, expect, type Page } from '../fixtures/offline';
+import { REPO } from '../../scripts/lib/fixes.mjs';
+
+const REPO_URL = `https://github.com/${REPO}`;
 
 /**
  * #1349 — AND THE PIN ABOVE ONLY WORKS WITH THE WORKER OUT OF THE WAY.
@@ -66,21 +69,21 @@ const TRACED = {
   counts: { traced: 3, closed: 2, open: 1, released: 2, unreleased: 1 },
   rows: [
     {
-      number: 101, url: 'https://github.com/CieloVistaSoftware/wb-starter/issues/101',
+      number: 101, url: `${REPO_URL}/issues/101`,
       title: 'Buttons lost their focus ring', state: 'closed', priority: 'priority:1',
       release: 'v4.0.2', closedAt: '2026-09-01T00:00:00Z',
       commits: [{ sha: 'aaaaaaaa', subject: 'fix(#101): restore the focus ring', url: 'https://example.invalid/aaaaaaaa' }],
       files: [{ path: 'src/styles/behaviors/button.css', url: 'https://example.invalid/aaaaaaaa/button.css' }],
     },
     {
-      number: 102, url: 'https://github.com/CieloVistaSoftware/wb-starter/issues/102',
+      number: 102, url: `${REPO_URL}/issues/102`,
       title: 'Table sort broke on dates', state: 'closed', release: 'v4.0.2',
       closedAt: '2026-09-02T00:00:00Z',
       commits: [{ sha: 'bbbbbbbb', subject: 'fix(#102): compare dates as dates', url: 'https://example.invalid/bbbbbbbb' }],
       files: [{ path: 'src/wb-viewmodels/semantics/table.js', url: 'https://example.invalid/bbbbbbbb/table.js' }],
     },
     {
-      number: 103, url: 'https://github.com/CieloVistaSoftware/wb-starter/issues/103',
+      number: 103, url: `${REPO_URL}/issues/103`,
       title: 'Still being worked on', state: 'open', release: null, closedAt: null,
       commits: [{ sha: 'cccccccc', subject: 'wip(#103)', url: 'https://example.invalid/cccccccc' }],
       files: [],
@@ -227,7 +230,7 @@ test.describe('Fix Viewer — fallback path (data/fixes.json)', () => {
     await expect(link).toHaveText('#1011');
     await expect(link).toHaveAttribute(
       'href',
-      'https://github.com/CieloVistaSoftware/wb-starter/issues/1011',
+      `${REPO_URL}/issues/1011`,
     );
   });
 
@@ -257,7 +260,7 @@ test.describe('Fix Viewer — fallback path (data/fixes.json)', () => {
  */
 test.describe('Fix Viewer — the live site (no /api/fixes, generated data/fixes.json)', () => {
   const GENERATED = {
-    repo: 'CieloVistaSoftware/wb-starter',
+    repo: REPO,
     builtFrom: { sha: 'dddddddddddddddddddddddddddddddddddddddd', date: '2026-10-13T02:00:00+00:00' },
     counts: { traced: 2, closed: 1, open: 1, released: 1, unreleased: 1 },
     releases: ['v1.0.400'],

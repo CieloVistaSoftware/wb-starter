@@ -151,6 +151,20 @@ function companionsFor(propName, props, context) {
   return out;
 }
 
+/**
+ * Attributes every variant and toggle demo of a behavior starts from, from the
+ * schema's optional `demo.base`. A required prop otherwise takes its schema
+ * default, which for some behaviors is a self-naming placeholder: the file
+ * card's variant demos read filename="this is the filename" and, with no
+ * href, downloaded nothing -- John: "every file card is supposed to download
+ * that file". The base gives them a real file. Values the loop sets after it
+ * (the variant itself, companions, other required props) still win.
+ */
+function demoBase(schema) {
+  const base = schema && schema.demo && schema.demo.base;
+  return base && typeof base === 'object' ? { ...base } : {};
+}
+
 function enumSectionHeading(propName) {
   return propName === 'variant' ? 'Variants' : `${propName} variants`;
 }
@@ -394,9 +408,9 @@ function generateComponentSections(schema) {
     const attrName = camelToKebab(propName);
     const sectionId = slugify(`${schema.schemaFor}-${attrName}-variants`);
     const demos = propDef.enum.map(val => {
-      const attrs = { [propName]: val, ...companionsFor(propName, props, { sectionId }) };
+      const attrs = { ...demoBase(schema), [propName]: val, ...companionsFor(propName, props, { sectionId }) };
       for (const [rk, rv] of Object.entries(props)) {
-        if (rv.required && rk !== propName) {
+        if (rv.required && rk !== propName && !(rk in attrs)) {
           attrs[rk] = samplePropValue(rk, rv);
         }
       }
@@ -426,9 +440,9 @@ function generateComponentSections(schema) {
   );
   if (boolProps.length > 0) {
     const demos = boolProps.map(([propName]) => {
-      const attrs = { [propName]: true };
+      const attrs = { ...demoBase(schema), [propName]: true };
       for (const [rk, rv] of Object.entries(props)) {
-        if (rv.required && rk !== propName) {
+        if (rv.required && rk !== propName && !(rk in attrs)) {
           attrs[rk] = samplePropValue(rk, rv);
         }
       }

@@ -128,13 +128,13 @@
     <h2>File Card</h2>
     <div id="demo-file" class="demo-section__grid demo-section__grid--cols-3">
     <figure x-demo id="demo-file-1" columns="1">
-      <div x-cardfile filename="quarterly-report.pdf" type="pdf" size="2.4 MB" date="2026-02-16"></div>
+      <div x-cardfile filename="quarterly-report.pdf" href="files/quarterly-report.pdf" type="pdf" size="2.4 MB" date="2026-02-16"></div>
     </figure>
     <figure x-demo id="demo-file-2" columns="1">
-      <div x-cardfile filename="team-photo.jpg" type="image" size="4.1 MB" date="2026-02-15"></div>
+      <div x-cardfile filename="team-photo.jpg" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg" type="image" size="4.1 MB" date="2026-02-15"></div>
     </figure>
     <figure x-demo id="demo-file-3" columns="1">
-      <div x-cardfile filename="backup.zip" type="zip" size="128 MB" date="2026-02-14"></div>
+      <div x-cardfile filename="backup.zip" href="files/backup.zip" type="zip" size="128 MB" date="2026-02-14"></div>
     </figure>
   </div>
 
@@ -507,37 +507,37 @@
   <section id="cardfile-file-card">
   <h2>📄 File Card</h2>
   <figure x-demo columns="1">
-    <article x-cardfile filename="quarterly-report.pdf">
+    <article x-cardfile filename="quarterly-report.pdf" href="files/quarterly-report.pdf">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile filename="meeting-notes.docx" size="480 KB">
+    <article x-cardfile filename="meeting-notes.docx" href="files/meeting-notes.docx" size="480 KB">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile filename="architecture-diagram.png" size="2.4 MB">
+    <article x-cardfile filename="architecture-diagram.png" href="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" size="2.4 MB">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile filename="product-walkthrough.mp4" size="58 MB">
+    <article x-cardfile filename="product-walkthrough.mp4" href="https://www.w3schools.com/html/mov_bbb.mp4" size="58 MB">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile filename="interview-recording.m4a" size="12 MB">
+    <article x-cardfile filename="interview-recording.mp3" href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" size="12 MB">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile filename="release-assets.zip" size="104 MB">
+    <article x-cardfile filename="release-assets.zip" href="files/release-assets.zip" size="104 MB">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile filename="sensor-capture.bin" size="31 MB">
+    <article x-cardfile filename="sensor-capture.bin" href="files/sensor-capture.bin" size="31 MB">
       This is example file card content.
     </article>
   </figure>
@@ -547,17 +547,17 @@
   <section id="cardfile-variant-variants">
   <h2>Variants</h2>
   <figure x-demo columns="1">
-    <article x-cardfile variant="default" filename="this is the filename">
+    <article x-cardfile filename="quarterly-report.pdf" href="files/quarterly-report.pdf" variant="default">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile variant="compact" filename="this is the filename">
+    <article x-cardfile filename="quarterly-report.pdf" href="files/quarterly-report.pdf" variant="compact">
       This is example file card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardfile variant="elevated" filename="this is the filename">
+    <article x-cardfile filename="quarterly-report.pdf" href="files/quarterly-report.pdf" variant="elevated">
       This is example file card content.
     </article>
   </figure>
@@ -972,12 +972,12 @@
   <section id="cardlink-target-variants">
   <h2>target variants</h2>
   <figure x-demo columns="1">
-    <article x-cardlink target="_self" href="https://example.com">
+    <article x-cardlink target="_self" href="#cardlink-target-variants">
       This is example link card content.
     </article>
   </figure>
   <figure x-demo columns="1">
-    <article x-cardlink target="_blank" href="https://example.com">
+    <article x-cardlink target="_blank" href="#cardlink-target-variants">
       This is example link card content.
     </article>
   </figure>
