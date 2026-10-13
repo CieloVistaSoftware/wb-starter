@@ -29,7 +29,7 @@ function injectStyles() {
       width: 1.125rem;
       height: 1.125rem;
       border: 1px solid var(--border-color);
-      border-radius: 4px;
+      border-radius: 0.25rem;
       background-color: var(--bg-primary);
       display: inline-flex;
       align-items: center;

@@ -1300,7 +1300,7 @@ export function cardhero(element, options = {}) {
     background: readOption(element, options, 'background'),
     overlay: readDefaultOnFlag(element, options, 'overlay'),
     xalign: readOption(element, options, 'xalign') || 'center',
-    height: readOption(element, options, 'height') || '400px',
+    height: readOption(element, options, 'height') || '25rem',
     cta: readOption(element, options, 'cta'),
     ctaHref: readOption(element, options, 'ctaHref'),
     ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || authoredAttr(element, 'cta-tooltip'),
@@ -2399,7 +2399,7 @@ export function cardoverlay(element, options = {}) {
     image: readOption(element, options, 'image'),
     position: readOption(element, options, 'position') || 'bottom',
     gradient: readDefaultOnFlag(element, options, 'gradient'),
-    height: readOption(element, options, 'height') || '300px',
+    height: readOption(element, options, 'height') || '18.75rem',
     // Neither was ever read here before -- xalign only existed on cardhero
     // (a different function), and variant only got composeCard's generic
     // x-card--{variant} class with no matching CSS for dark/light/blur.

@@ -85,7 +85,7 @@ const ERROR_DISPLAY_CSS = `
   width: 100%; height: 8rem; margin-top: 0.375rem; font: 0.6875rem/1.4 monospace;
   background: var(--x-error-display-code-bg); color: var(--x-error-display-code-text); border: 1px solid var(--x-error-display-accent); border-radius: 0.25rem; padding: 0.375rem;
 }
-.x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; }
+.x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; } /* px-ok: off-screen parking for a copy buffer, not a size */
 `;
 
 function ensureErrorDisplayStyles() {

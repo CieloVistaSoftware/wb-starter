@@ -279,7 +279,7 @@ export function drawer(element, options = {}) {
     title: options.title || element.getAttribute('title') || authoredAttr(element, 'drawer-title') || element.getAttribute('heading') || '',
     content: authoredContent || 'Drawer content',
     position: options.position || element.getAttribute('position') || 'right',
-    width: options.width || element.getAttribute('width') || '320px',
+    width: options.width || element.getAttribute('width') || '20rem',
     // height backs top/bottom positions (drawer.schema.json's `height`
     // property) the same way width backs left/right -- was missing
     // entirely before, so PATH B had no way to size a top/bottom panel.
@@ -661,7 +661,7 @@ export function sheet(element, options = {}) {
   const config = {
     title: options.title || authoredAttr(element, 'sheet-title') || element.getAttribute('heading') || 'Notes',
     content: options.content || authoredAttr(element, 'sheet-content') || element.getAttribute('description') || '',
-    width: options.width || element.getAttribute('width') || '320px',
+    width: options.width || element.getAttribute('width') || '20rem',
     minWidth: options.minWidth || authoredAttr(element, 'min-width') || '200px',
     maxWidth: options.maxWidth || authoredAttr(element, 'max-width') || '600px',
     ...options
@@ -672,7 +672,7 @@ export function sheet(element, options = {}) {
   // generated rule, plus a width the user dragged to.
   const sheetSize = (width = config.width) => onlyChanged(
     { width, minWidth: config.minWidth, maxWidth: config.maxWidth },
-    { width: '320px', minWidth: '200px', maxWidth: '600px' },
+    { width: '20rem', minWidth: '12.5rem', maxWidth: '37.5rem' },
   );
   let sheetEl = null;
   let backdropEl = null;

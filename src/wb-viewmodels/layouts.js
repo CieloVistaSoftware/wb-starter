@@ -341,7 +341,7 @@ export function sidebarlayout(element, options = {}) {
     gap: config.gap,
     '--x-sidebar-width': config.sideWidth,
     '--x-sidebar-content-min': config.contentMin,
-  }, { gap: '1rem', '--x-sidebar-width': '300px', '--x-sidebar-content-min': '50%' }));
+  }, { gap: '1rem', '--x-sidebar-width': '18.75rem', '--x-sidebar-content-min': '50%' }));
 
   const children = Array.from(element.children);
   let side = null;
@@ -657,8 +657,8 @@ export function icon(element, options = {}) {
 export function drawerLayout(element, options = {}) {
   const config = {
     position: readOption(element, options, 'position') || 'left',
-    width: readOption(element, options, 'width') || '250px',
-    height: readOption(element, options, 'height') || '250px',
+    width: readOption(element, options, 'width') || '15.625rem',
+    height: readOption(element, options, 'height') || '15.625rem',
     minWidth: readOption(element, options, 'minWidth') || '1.5rem',
     minHeight: options.minHeight || element.dataset.minHeight || authoredAttr(element, 'min-height') || '1.5rem',
     maxWidth: readOption(element, options, 'maxWidth') || '50vw',

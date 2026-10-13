@@ -2,22 +2,16 @@
  * #294: font-size/padding/margin/gap/border-radius/width/height that should
  * SCALE with the user's browser font-size setting must use rem, not px.
  *
- * A full project-wide conversion of every convertible property (padding,
- * margin, gap, border-radius, width/height, etc.) is real design +
- * verification work, not a mechanical pass; not fully attempted here.
- * `font-size` specifically WAS fully swept (every literal `font-size:Npx`
- * across src/pages/demos/docs converted to rem — see the dedicated
- * zero-tolerance gate in `font-size-no-px.spec.ts`), which is why the
- * baseline below dropped from the original audit's 774.
+ * Every convertible px in src/ is now rem (batches through #1865 and its
+ * follow-up), so this gate is zero-tolerance: it re-runs the audit and fails
+ * on any px in a convertible context (font-size, padding, margin, gap,
+ * border-radius, width/height, position, line-height; >2px; not in a comment;
+ * not a 999px pill radius).
  *
- * This gate implements the acceptance criteria's minimum bar for the
- * remaining (non-font-size) properties: no NEW px creep. It re-runs the
- * audit and fails only if the LIKELY_CONVERT count increases past the
- * recorded baseline — existing px is grandfathered in, new px in a
- * convertible context is not.
- *
- * To lower the baseline (after converting more files to rem), re-run the
- * audit script and update BASELINE below to match the new, lower count.
+ * px that genuinely has to stay px says so on its own line, with the reason:
+ *   font-size: max(16px, 1em); /* px-ok: iOS zooms an input under 16 device px *\/
+ * The audit lists those under DEVICE_PX in data/px-audit.json with their
+ * reasons, so every exception is visible in one place.
  */
 import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
@@ -50,7 +44,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // and the px that has to stay px says so with a reason (`px-ok:`), listed as
 // DEVICE_PX: the card size floors, the iOS 16px input floor, the 12px code
 // readability floors. What is left is JS.
-const BASELINE = 57;
+// 0: the JS converted too -- the CSS that behaviors write into <style> tags
+// (audio, tooltip, events, x-devconsole) and the size defaults they fall back
+// to (card, overlay, layouts, notes). Two off-screen copy buffers stay px with
+// `px-ok:`. Nothing is grandfathered any more: a new px in a convertible
+// context is rem, or it says why it is not.
+const BASELINE = 0;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
@@ -62,6 +61,6 @@ test('audit: no new px creep in convertible contexts (#294)', () => {
     `px usage in convertible contexts (font-size/padding/margin/gap/border-radius/width/height/position) grew from ${BASELINE} to ${current}. ` +
       `New CSS/inline styles should use rem, not px, for sizing that should scale with the user's font-size preference (#294). ` +
       `Run \`node scripts/audit-px-units.mjs\` to see what's new. If this growth is legitimate (e.g. a genuinely fixed-pixel value), ` +
-      `raise BASELINE in this test to the new count.`
+      `mark it on its line with /* px-ok: <reason> */ instead -- do not raise BASELINE.`
   ).toBeLessThanOrEqual(BASELINE);
 });
