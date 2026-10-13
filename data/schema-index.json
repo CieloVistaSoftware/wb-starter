@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T02:27:03.486Z",
+  "generatedAt": "2026-10-13T02:57:07.248Z",
   "count": 212,
   "schemas": [
     {
@@ -3414,7 +3414,7 @@
             "meeting-notes.docx",
             "architecture-diagram.png",
             "product-walkthrough.mp4",
-            "interview-recording.m4a",
+            "interview-recording.mp3",
             "release-assets.zip",
             "sensor-capture.bin"
           ]
@@ -3473,17 +3473,17 @@
         },
         {
           "filename": "architecture-diagram.png",
-          "href": "files/architecture-diagram.png",
+          "href": "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png",
           "size": "2.4 MB"
         },
         {
           "filename": "product-walkthrough.mp4",
-          "href": "files/product-walkthrough.mp4",
+          "href": "https://www.w3schools.com/html/mov_bbb.mp4",
           "size": "58 MB"
         },
         {
-          "filename": "interview-recording.m4a",
-          "href": "files/interview-recording.m4a",
+          "filename": "interview-recording.mp3",
+          "href": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "size": "12 MB"
         },
         {

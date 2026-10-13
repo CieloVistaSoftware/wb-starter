@@ -35,7 +35,9 @@ function fileCards(text: string) {
   return out;
 }
 
-test('every file card that names a file downloads that file from files/', () => {
+const MEDIA = /\.(mp3|mp4|wav|ogg|oga|webm|m4a|aac|flac|mov|svg|png|jpe?g|gif|webp|avif)$/i;
+
+test('every file card that names a file downloads that file', () => {
   const problems: string[] = [];
   let seen = 0;
   for (const src of SOURCES) {
@@ -45,9 +47,17 @@ test('every file card that names a file downloads that file from files/', () => 
       // must download that file.
       if (!card.filename) continue;
       seen++;
+      // Images, audio and video are never committed (#762, media-sources-are-
+      // remote.spec.ts), so those cards download a remote https file of the
+      // same type. Everything else downloads its own file from files/.
+      if (MEDIA.test(card.filename)) {
+        if (!card.href?.startsWith('https://')) problems.push(`${src}: media file card needs a remote https href -- ${card.tag}`);
+        else if (path.extname(card.href).toLowerCase() !== path.extname(card.filename).toLowerCase()) problems.push(`${src}: shows "${card.filename}" but downloads ${card.href}`);
+        continue;
+      }
       if (!card.href || !card.href.startsWith('files/')) { problems.push(`${src}: no files/ href -- ${card.tag}`); continue; }
       if (!existsSync(path.join(root, card.href))) problems.push(`${src}: ${card.href} does not exist`);
-      if (card.filename && path.basename(card.href) !== card.filename) problems.push(`${src}: shows "${card.filename}" but downloads ${card.href}`);
+      if (path.basename(card.href) !== card.filename) problems.push(`${src}: shows "${card.filename}" but downloads ${card.href}`);
     }
   }
   expect(seen, 'the sources should contain file card examples').toBeGreaterThan(20);

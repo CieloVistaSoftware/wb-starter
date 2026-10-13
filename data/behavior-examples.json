@@ -1172,9 +1172,9 @@
       "alternates": [
         "<article x-cardfile filename=\"quarterly-report.pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"files/quarterly-report.pdf\"></article>",
         "<article x-cardfile filename=\"meeting-notes.docx\" size=\"480 KB\" date=\"2026-08-21\" href=\"files/meeting-notes.docx\"></article>",
-        "<article x-cardfile filename=\"architecture-diagram.png\" size=\"1.1 MB\" date=\"2026-07-30\" href=\"files/architecture-diagram.png\"></article>",
-        "<article x-cardfile filename=\"product-walkthrough.mp4\" size=\"58 MB\" date=\"2026-06-12\" href=\"files/product-walkthrough.mp4\"></article>",
-        "<article x-cardfile filename=\"interview-recording.m4a\" size=\"12 MB\" date=\"2026-05-04\" href=\"files/interview-recording.m4a\"></article>",
+        "<article x-cardfile filename=\"architecture-diagram.png\" size=\"1.1 MB\" date=\"2026-07-30\" href=\"https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png\"></article>",
+        "<article x-cardfile filename=\"product-walkthrough.mp4\" size=\"58 MB\" date=\"2026-06-12\" href=\"https://www.w3schools.com/html/mov_bbb.mp4\"></article>",
+        "<article x-cardfile filename=\"interview-recording.mp3\" size=\"12 MB\" date=\"2026-05-04\" href=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\"></article>",
         "<article x-cardfile filename=\"release-assets.zip\" size=\"104 MB\" date=\"2026-09-01\" href=\"files/release-assets.zip\"></article>",
         "<article x-cardfile filename=\"sensor-capture.bin\" size=\"31 MB\" date=\"2026-09-08\" href=\"files/sensor-capture.bin\"></article>"
       ]

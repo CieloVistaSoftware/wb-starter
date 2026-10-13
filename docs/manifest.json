@@ -244,7 +244,7 @@
           "file": "behaviors/cardfile.md",
           "title": "File Card",
           "description": "x-cardfile renders a file entry as a card: an icon chosen from the extension of filename, the file size and date, and a download link to href.",
-          "modified": "2026-10-10"
+          "modified": "2026-10-12"
         },
         {
           "file": "behaviors/cardhero.md",

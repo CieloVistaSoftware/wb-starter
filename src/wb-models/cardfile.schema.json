@@ -26,7 +26,7 @@
         "meeting-notes.docx",
         "architecture-diagram.png",
         "product-walkthrough.mp4",
-        "interview-recording.m4a",
+        "interview-recording.mp3",
         "release-assets.zip",
         "sensor-capture.bin"
       ]
@@ -169,9 +169,9 @@
       "<div x-cardfile>Basic cardfile content</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\">filename=quarterly-report.pdf</div>",
       "<div x-cardfile filename=\"meeting-notes.docx\" href=\"files/meeting-notes.docx\">filename=meeting-notes.docx</div>",
-      "<div x-cardfile filename=\"architecture-diagram.png\" href=\"files/architecture-diagram.png\">filename=architecture-diagram.png</div>",
-      "<div x-cardfile filename=\"product-walkthrough.mp4\" href=\"files/product-walkthrough.mp4\">filename=product-walkthrough.mp4</div>",
-      "<div x-cardfile filename=\"interview-recording.m4a\" href=\"files/interview-recording.m4a\">filename=interview-recording.m4a</div>",
+      "<div x-cardfile filename=\"architecture-diagram.png\" href=\"https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png\">filename=architecture-diagram.png</div>",
+      "<div x-cardfile filename=\"product-walkthrough.mp4\" href=\"https://www.w3schools.com/html/mov_bbb.mp4\">filename=product-walkthrough.mp4</div>",
+      "<div x-cardfile filename=\"interview-recording.mp3\" href=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\">filename=interview-recording.mp3</div>",
       "<div x-cardfile filename=\"release-assets.zip\" href=\"files/release-assets.zip\">filename=release-assets.zip</div>",
       "<div x-cardfile filename=\"sensor-capture.bin\" href=\"files/sensor-capture.bin\">filename=sensor-capture.bin</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\" variant=\"default\">variant=default</div>",
@@ -193,17 +193,17 @@
         },
         {
           "filename": "architecture-diagram.png",
-          "href": "files/architecture-diagram.png",
+          "href": "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png",
           "size": "2.4 MB"
         },
         {
           "filename": "product-walkthrough.mp4",
-          "href": "files/product-walkthrough.mp4",
+          "href": "https://www.w3schools.com/html/mov_bbb.mp4",
           "size": "58 MB"
         },
         {
-          "filename": "interview-recording.m4a",
-          "href": "files/interview-recording.m4a",
+          "filename": "interview-recording.mp3",
+          "href": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "size": "12 MB"
         },
         {

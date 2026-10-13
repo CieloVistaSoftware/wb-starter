@@ -21,15 +21,15 @@ The icon comes from the filename's extension; there is no separate type attribut
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="architecture-diagram.png" href="files/architecture-diagram.png" size="2.4 MB"></article>
+<article x-cardfile filename="architecture-diagram.png" href="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" size="2.4 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="product-walkthrough.mp4" href="files/product-walkthrough.mp4" size="58 MB"></article>
+<article x-cardfile filename="product-walkthrough.mp4" href="https://www.w3schools.com/html/mov_bbb.mp4" size="58 MB"></article>
 </figure>
 
 <figure x-demo>
-<article x-cardfile filename="interview-recording.m4a" href="files/interview-recording.m4a" size="12 MB"></article>
+<article x-cardfile filename="interview-recording.mp3" href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" size="12 MB"></article>
 </figure>
 
 <figure x-demo>
