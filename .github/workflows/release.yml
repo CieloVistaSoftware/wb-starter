@@ -95,6 +95,13 @@ jobs:
           if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
             echo "… ${version} has no release commit yet: nothing to publish"; exit 0
           fi
+          # Publish only on the push that IS the release commit (or a manual run).
+          # Every later push to main still names the last release, and that code
+          # is behind main: 1.0.400 was 111 merges behind the site (2026-10-13).
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ] && \
+             [ "$(git rev-parse "v${version}^{commit}")" != "$(git rev-parse HEAD)" ]; then
+            echo "… v${version} is not this push's commit: not publishing old code (run Release by hand to publish it anyway)"; exit 0
+          fi
           # No token: npm trusts this workflow (release.yml in
           # CieloVistaSoftware/wb-starter) through each package's Trusted
           # Publisher setting on npmjs.com.
