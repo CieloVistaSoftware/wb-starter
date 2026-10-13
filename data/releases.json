@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.518",
+      "date": "2026-10-12",
+      "summary": "Npm never received a release: the token publish failed with E404 (#1517), and publish-npm.yml failed too because npm trusts release.yml. npm now gets deliberate releases (1.0.1 first, John&#39;s choice), and create-wb-starter says when a newer version exists. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Npm releases via Trusted Publishing from release.yml; create-wb-starter update notice</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/788c4d65ce253941e5e2f0572d8d913d0df7c526\" target=\"_blank\" rel=\"noopener\"><code>788c4d6</code></a>",
+          "issues": [
+            1864
+          ]
+        }
+      ],
+      "seeIt": "After npm run ship -- --as 1.0.1, run npm view wb-starter version and npm view create-wb-starter version. Before: both printed 1.0.0. Now: both print 1.0.1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/788c4d65ce253941e5e2f0572d8d913d0df7c526\" target=\"_blank\" rel=\"noopener\"><code>788c4d6</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.517",
       "date": "2026-10-12",
       "summary": "Create-wb-starter could not publish a new release because its package.json still said 1.0.0, which npm already has. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1868\" target=\"_blank\" rel=\"noopener\">PR 1868</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a>",
