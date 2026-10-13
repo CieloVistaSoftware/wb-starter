@@ -24,7 +24,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // 1163 on 2026-10-13 (origin/main a75d111f): 264 likely-convert + 662
 // likely-ok + 197 unclassified + 40 media-breakpoint lines.
 // 1150: progress.css converted (#1856, 13 values).
-const TOTAL_BASELINE = 1150;
+// 1119: effects.css converted (#1858, every px in the file).
+const TOTAL_BASELINE = 1119;
 
 test('audit: total px in src/ only shrinks -- rem on every device (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
