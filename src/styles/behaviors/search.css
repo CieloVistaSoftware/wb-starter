@@ -4,7 +4,7 @@
   display: inline-block;
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 25rem;
 }
 
 .x-search__wrapper {
@@ -16,7 +16,7 @@
   height: var(--x-search-height, 2.5rem);
   background: var(--x-search-bg, var(--bg-primary, #ffffff));
   border: var(--x-search-border, 1px solid var(--border-color, #d1d5db));
-  border-radius: var(--x-search-radius, 6px);
+  border-radius: var(--x-search-radius, 0.375rem);
   font-size: var(--x-search-font-size, 0.875rem);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }

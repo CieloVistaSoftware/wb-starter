@@ -102,7 +102,7 @@
 
 .x-details {
   border: 1px solid var(--border-color, #374151);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   overflow: hidden;
   background: var(--bg-primary, #111827);
 }
@@ -159,13 +159,13 @@
 
 .x-details[variant="bordered"] {
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md, 4px);
+  border-radius: var(--radius-md, 0.25rem);
 }
 
 .x-details[variant="filled"] {
   background: var(--bg-secondary);
   border: 1px solid transparent;   /* differs from default's 0 width */
-  border-radius: var(--radius-md, 4px);
+  border-radius: var(--radius-md, 0.25rem);
 }
 
 /* #779: the collapsed arrow, formerly icon.style.transform. Only toggled by

@@ -4,7 +4,7 @@
 
 body {
   padding: 2rem;
-  max-width: 1000px;
+  max-width: 62.5rem;
   margin: 0 auto;
   background: var(--bg-color);
   color: var(--text-primary);
@@ -14,7 +14,7 @@ section {
   margin-bottom: 3rem;
   padding: 2rem;
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   background: var(--bg-secondary);
 }
 
@@ -68,7 +68,7 @@ h2 {
 .framework-mount {
   padding: 1rem;
   border: 1px dashed var(--mount-accent, var(--border-color));
-  border-radius: 8px;
+  border-radius: 0.5rem;
   min-height: 2.5rem;
 }
 .framework-mount--vue { --mount-accent: #42b883; }
@@ -95,7 +95,7 @@ h2 {
 :not(pre) > code {
   background: rgba(0, 0, 0, 0.3);
   padding: 0.2rem 0.4rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-family: monospace;
 }
 

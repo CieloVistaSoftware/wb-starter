@@ -33,10 +33,10 @@
 .x-checkbox__box {
   position: relative;
   flex: none;
-  width: var(--x-checkbox-size, 18px);
-  height: var(--x-checkbox-size, 18px);
+  width: var(--x-checkbox-size, 1.125rem);
+  height: var(--x-checkbox-size, 1.125rem);
   border: var(--x-checkbox-border, 2px solid var(--border-color, #d1d5db));
-  border-radius: var(--x-checkbox-radius, 4px);
+  border-radius: var(--x-checkbox-radius, 0.25rem);
   /* --bg-surface never existed anywhere in themes.css -- this always
      bottomed out at the literal fallback anyway. Keeping white as the
      explicit default (an unchecked checkbox conventionally stays light

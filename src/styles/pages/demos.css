@@ -3,7 +3,7 @@
 /* Search wrapper */
 .grid-search-wrapper {
   margin-top: 1.5rem;
-  max-width: 500px;
+  max-width: 31.25rem;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -64,7 +64,7 @@
    CATEGORY_EXAMPLES.architecture) */
 .demos-forced-dark-demo {
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 /* Curated live <div x-demo> examples sit above a category's link-cards, giving

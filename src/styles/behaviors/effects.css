@@ -709,12 +709,12 @@ MARQUEE & RIPPLE
 
 .x-stagelight__source {
   position: absolute;
-  top: -10px;
-  left: calc(50% - 20px);
-  width: 40px;
-  height: 20px;
+  top: -0.625rem;
+  left: calc(50% - 1.25rem);
+  width: 2.5rem;
+  height: 1.25rem;
   background: var(--x-stagelight-fixture);
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 1.25rem 1.25rem;
   box-shadow: 0 0 10px var(--x-stagelight-color);
   z-index: 1;
 }
@@ -805,15 +805,15 @@ MARQUEE & RIPPLE
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
+  width: 6.25rem;
   pointer-events: auto;
 }
 
 .x-stagelight__housing {
-  width: 60px;
-  height: 80px;
+  width: 3.75rem;
+  height: 5rem;
   background: var(--x-stagelight-housing);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -826,8 +826,8 @@ MARQUEE & RIPPLE
 /* Light Emitter inside fixture */
 .x-stagelight__housing::after {
   content: '';
-  width: 40px; 
-  height: 40px;
+  width: 2.5rem; 
+  height: 2.5rem;
   background: var(--x-stagelight-color);
   border-radius: 50%;
   box-shadow: 0 0 20px var(--x-stagelight-color);

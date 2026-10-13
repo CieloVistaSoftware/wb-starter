@@ -159,15 +159,15 @@
    Example: <div x-demo style="--demo-code-max-width: 600px;">
    Presets: narrow (400px), normal (600px), wide (800px), full (100%) */
 :is([x-demo], .x-demo)[data-code-width="narrow"] .x-demo__code{
-  max-width: 400px;
+  max-width: 25rem;
 }
 
 :is([x-demo], .x-demo)[data-code-width="normal"] .x-demo__code{
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 
 :is([x-demo], .x-demo)[data-code-width="wide"] .x-demo__code{
-  max-width: 800px;
+  max-width: 50rem;
 }
 
 :is([x-demo], .x-demo)[data-code-width="full"] .x-demo__code{
@@ -585,7 +585,7 @@
   margin-top: 0.5rem;
   padding: 1rem;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm, 4px);
+  border-radius: var(--radius-sm, 0.25rem);
   background: var(--bg-secondary);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.8rem;

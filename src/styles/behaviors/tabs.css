@@ -77,7 +77,7 @@
 .x-tabs .x-tabs__panel, [x-tabs] .x-tabs__panel {
   padding: 1rem;
   border: 1px solid var(--border-color, #e0e0e0);
-  border-radius: var(--radius-md, 4px);
+  border-radius: var(--radius-md, 0.25rem);
   background: var(--bg-primary, #fff);
 }
 
@@ -124,7 +124,7 @@
 /* bordered -- the tab reads as a folder tab joined to the panel below. */
 .x-tabs--bordered .x-tabs__tab, [x-tabs][variant="bordered"] .x-tabs__tab {
   border: 1px solid transparent;
-  border-radius: var(--radius-md, 4px) var(--radius-md, 4px) 0 0;
+  border-radius: var(--radius-md, 0.25rem) var(--radius-md, 0.25rem) 0 0;
   margin-bottom: -1px;
 }
 .x-tabs--bordered .x-tabs__tab--active, [x-tabs][variant="bordered"] .x-tabs__tab--active {

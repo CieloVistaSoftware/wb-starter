@@ -45,7 +45,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // values) with every element on /?page=themes computing the same at 16px.
 // 491: pages/behaviors.css converted (17 values: radii and two 600px caps),
 // the first 6,000 elements of /?page=behaviors computing the same at 16px.
-const BASELINE = 251;
+// 57: the audit stopped counting comments (prose like "a 390px phone") and
+// pill radii (999px), every stylesheet in src/styles converted (141 values),
+// and the px that has to stay px says so with a reason (`px-ok:`), listed as
+// DEVICE_PX: the card size floors, the iOS 16px input floor, the 12px code
+// readability floors. What is left is JS.
+const BASELINE = 57;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });

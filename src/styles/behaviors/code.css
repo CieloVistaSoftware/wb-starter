@@ -31,7 +31,7 @@
      !important lets normal cascade rules decide, and lets a page-specific
      override win without escalating to !important of its own. */
   padding: 0.15rem 0.4rem;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   font-family: monospace;
   /* Was a hardcoded 0.8rem — every native <code> gets this class via
      auto-injection, including short inline snippets sitting next to normal
@@ -128,9 +128,9 @@ pre > .x-code {
   border: 1px solid var(--border-color, #374151);
   color: var(--text-secondary, #9ca3af);
   padding: 0.1rem 0.3rem;
-  border-radius: var(--radius-sm, 3px);
+  border-radius: var(--radius-sm, 0.1875rem);
   cursor: pointer;
-  font-size: max(0.6rem, 12px); /* the 12px readability floor, as .x-pre__copy */
+  font-size: max(0.6rem, 12px); /* px-ok: 12px readability floor, whatever the root */
   line-height: 1;
   transition: background-color 0.2s ease;
 }
@@ -147,7 +147,7 @@ pre > .x-code {
    the listing. Qualified to 0,2,0 it stays the small corner control above. */
 .x-code__wrapper .x-code__copy {
   padding: 0.1rem 0.3rem;
-  font-size: max(0.6rem, 12px);
+  font-size: max(0.6rem, 12px); /* px-ok: 12px readability floor, whatever the root */
   line-height: 1;
   z-index: 10;
 }
@@ -159,7 +159,7 @@ pre > .x-code {
   background: var(--primary, #6366f1);
   color: var(--text-on-accent, #fff);
   padding: 0.125rem 0.5rem;
-  border-radius: var(--radius-sm, 4px);
+  border-radius: var(--radius-sm, 0.25rem);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -174,7 +174,7 @@ pre > .x-code {
 .x-code--block {
   display: block;
   padding: 1rem;
-  border-radius: var(--radius-sm, 4px);
+  border-radius: var(--radius-sm, 0.25rem);
   border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
   /* No background or color here: a highlighted block belongs to its theme.
      `.x-code:not(.hljs)` above covers the unhighlighted case. */
@@ -225,7 +225,7 @@ pre > .x-code {
   vertical-align: baseline;
   max-width: 100%;
   border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
-  border-radius: var(--radius-sm, 4px);
+  border-radius: var(--radius-sm, 0.25rem);
   padding: 0.15em 0.3em;
 }
 

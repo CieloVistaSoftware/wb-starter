@@ -43,7 +43,7 @@
      fixed at the source (x-ignore opts a plain, non-navbar <header> out of
      this class entirely), but a real <header> with a long title/subtitle
      would hit the exact same clipping with a fixed height. */
-  min-height: 60px;
+  min-height: 3.75rem;
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
   gap: 1rem;

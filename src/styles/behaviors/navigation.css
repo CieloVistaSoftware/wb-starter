@@ -94,7 +94,7 @@ a:where(.x-sidebar .x-sidebar__item.x-sidebar__item--active) {
   position: absolute;
   top: 0;
   right: 0;
-  width: 12px;
+  width: 0.75rem;
   height: 100%;
   cursor: col-resize;
   background: transparent;
@@ -108,8 +108,8 @@ a:where(.x-sidebar .x-sidebar__item.x-sidebar__item--active) {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 4px;
-  height: 40px;
+  width: 0.25rem;
+  height: 2.5rem;
   background: var(--border-color);
   border-radius: 2px;
   opacity: 0.5;

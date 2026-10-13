@@ -20,7 +20,7 @@
   background: var(--bg-secondary, #1f2937);
   border: 1px solid var(--border-color, #374151);
   color: var(--text-secondary, #9ca3af);
-  border-radius: var(--radius-sm, 3px);
+  border-radius: var(--radius-sm, 0.1875rem);
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
