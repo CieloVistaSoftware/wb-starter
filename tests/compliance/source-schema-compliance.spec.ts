@@ -183,7 +183,7 @@ test.describe('Source-Schema: Card Border Compliance', () => {
     const cardCss = readFile(cardCssPath);
     const sharedRule = cardCss.match(/\.x-card,\s*\narticle,[^{]*\{([^}]*)\}/);
     expect(sharedRule, 'card.css must declare the shared `.x-card, article, …` rule').not.toBeNull();
-    expect(sharedRule![1], 'the shared card rule MUST set a border').toMatch(/\bborder:\s*1px solid/);
+    expect(sharedRule![1], 'the shared card rule MUST set a border').toMatch(/\bborder:\s*(?:1px|0\.0625rem) solid/);
   });
 });
 

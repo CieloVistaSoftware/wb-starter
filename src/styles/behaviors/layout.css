@@ -284,8 +284,8 @@
 }
 .x-imposter.x-imposter--breakout { position: fixed; }
 .x-imposter.x-imposter--contained {
-  max-width: calc(100% - var(--x-imposter-margin, 0) * 2);
-  max-height: calc(100% - var(--x-imposter-margin, 0) * 2);
+  max-width: calc(100% - var(--x-imposter-margin, 0rem) * 2);
+  max-height: calc(100% - var(--x-imposter-margin, 0rem) * 2);
   overflow: auto;
 }
 

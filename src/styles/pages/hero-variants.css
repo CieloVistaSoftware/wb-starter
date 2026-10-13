@@ -2,7 +2,7 @@
 
 /* Extracted from pages/hero-variants.html */
 @keyframes animStar {
-      from { transform: translateY(0); }
+      from { transform: translateY(0rem); }
       to { transform: translateY(-125rem); }
     }
 
@@ -104,7 +104,7 @@
 }
 .hv-stars {
   background: transparent;
-  box-shadow: 109rem 7.625rem #FFF , 8.375rem 82.5625rem #FFF , 5.75rem 53.6875rem #FFF , 104.875rem 83.3125rem #FFF , 41.625rem 999rem #FFF , 7.6875rem 28.5rem #FFF , 49.3125rem 7.6875rem #FFF , 28.5rem 49.3125rem #FFF , 20.0625rem 40.875rem #FFF , 61.6875rem 20.0625rem #FFF , 9.1875rem 16.125rem #FFF , 23.0625rem 9.1875rem #FFF , 16.125rem 23.0625rem #FFF , 9.9375rem 47.0625rem #FFF , 47.0625rem 9.9375rem #FFF , 53.25rem 60.1875rem #FFF , 60.1875rem 53.25rem #FFF , 77.125rem 35.4375rem #FFF , 35.4375rem 77.125rem #FFF , 55.625rem 7.6875rem #FFF;
+  box-shadow: 109rem 7.625rem #FFF , 8.375rem 82.5625rem #FFF , 5.75rem 53.6875rem #FFF , 104.875rem 83.3125rem #FFF , 41.625rem 62.4375rem #FFF , 7.6875rem 28.5rem #FFF , 49.3125rem 7.6875rem #FFF , 28.5rem 49.3125rem #FFF , 20.0625rem 40.875rem #FFF , 61.6875rem 20.0625rem #FFF , 9.1875rem 16.125rem #FFF , 23.0625rem 9.1875rem #FFF , 16.125rem 23.0625rem #FFF , 9.9375rem 47.0625rem #FFF , 47.0625rem 9.9375rem #FFF , 53.25rem 60.1875rem #FFF , 60.1875rem 53.25rem #FFF , 77.125rem 35.4375rem #FFF , 35.4375rem 77.125rem #FFF , 55.625rem 7.6875rem #FFF;
 }
 .hv-stars--1 { width: 0.0625rem; height: 0.0625rem; animation: animStar 50s linear infinite; }
 .hv-stars--2 { width: 0.125rem; height: 0.125rem; animation: animStar 100s linear infinite; }

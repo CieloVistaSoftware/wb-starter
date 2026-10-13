@@ -43,7 +43,7 @@
   height: 1.5rem;
   background: var(--bg-tertiary);
   border: 0.0625rem solid var(--border-color);
-  border-radius: 999rem;
+  border-radius: 62.4375rem;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 

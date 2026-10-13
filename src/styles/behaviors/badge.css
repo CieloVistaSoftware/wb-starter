@@ -92,7 +92,7 @@
 .x-badge--lg { padding: 0.375rem 0.75rem; font-size: 1rem; }
 
 /* Pill */
-.x-badge--pill { border-radius: 9999rem; }
+.x-badge--pill { border-radius: 624.9375rem; }
 
 /* Dot — collapses the whole element into a small colored circle. Scoped off
    of `.x-badge--removable` (#415) and, since #631, off of any dot badge

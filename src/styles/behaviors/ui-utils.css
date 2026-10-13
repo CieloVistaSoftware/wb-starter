@@ -96,7 +96,7 @@
    selected, never on screen. */
 .x-copy__buffer {
   position: fixed;
-  left: -9999rem;
+  left: -624.9375rem;
 }
 
 /* x-repeater (#779): the wrapper contributes no box, so the repeated children

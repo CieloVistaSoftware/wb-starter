@@ -113,7 +113,7 @@
 }
 .x-tabs--pills .x-tabs__tab, [x-tabs][variant="pills"] .x-tabs__tab {
   border-bottom: none;
-  border-radius: 999rem;
+  border-radius: 62.4375rem;
   margin-bottom: 0;
 }
 .x-tabs--pills .x-tabs__tab--active, [x-tabs][variant="pills"] .x-tabs__tab--active {

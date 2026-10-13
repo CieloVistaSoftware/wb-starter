@@ -161,7 +161,7 @@
      50vw floor for pages that want a wider code panel on purpose --
      unaffected by this change, since it sets the variable itself rather
      than relying on the fallback. */
-  min-width: min(var(--demo-code-min-width, 0), 90vw);
+  min-width: min(var(--demo-code-min-width, 0rem), 90vw);
   overflow-x: auto;
 }
 
@@ -288,7 +288,7 @@
 :is([x-demo], .x-demo):has(> .x-demo__grid--cols-1 > :only-child){
   width: var(--x-demo-shrink-width, fit-content);
   max-width: 100%;
-  min-width: min(var(--demo-code-min-width, 0), 90vw);
+  min-width: min(var(--demo-code-min-width, 0rem), 90vw);
 }
 
 /* "All x-demo code must show all the code up to 50% vw" (owner, 2026-08-07),

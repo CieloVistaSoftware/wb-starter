@@ -152,7 +152,7 @@
   display: inline-block;
   margin-bottom: 0.75rem;
   padding: 0.3rem 0.9rem;
-  border-radius: 999rem;
+  border-radius: 62.4375rem;
   /* The frosted surface is x-glass (#1236); its tint, blur and edge for this
      pill are set in themes.css. */
   font-size: 0.78rem;
@@ -618,9 +618,9 @@
      nebula stays put. */
   animation: none;
   background:
-    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0, transparent 40%),
-    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0, transparent 40%),
-    radial-gradient(at 50% 50%, hsla(var(--hue-primary), calc(var(--saturation-primary) * 1%), calc(var(--lightness-primary) * 1%), 0.2) 0, transparent 50%);
+    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0rem, transparent 40%),
+    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0rem, transparent 40%),
+    radial-gradient(at 50% 50%, hsla(var(--hue-primary), calc(var(--saturation-primary) * 1%), calc(var(--lightness-primary) * 1%), 0.2) 0rem, transparent 50%);
 }
 
 /* Lift the content above the nebula -- but not x-cardhero's legibility scrim

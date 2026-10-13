@@ -49,7 +49,7 @@ test.describe('#293 — .site__nav CSS default must stay hidden, not the visible
   });
 
   test('a min-width media query restores the sidebar for desktop/tablet', () => {
-    const minWidthBlockMatch = css.match(/@media\s*\(min-width:\s*\d+px\)\s*\{[^}]*\.site__nav\s*\{[^}]*display:\s*flex/);
+    const minWidthBlockMatch = css.match(/@media\s*\(min-width:\s*[\d.]+(?:px|rem|em)\)\s*\{[^}]*\.site__nav\s*\{[^}]*display:\s*flex/);
     expect(minWidthBlockMatch, 'expected a @media (min-width: ...) block restoring .site__nav to display:flex for large screens').not.toBeNull();
   });
 

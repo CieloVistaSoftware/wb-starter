@@ -166,7 +166,7 @@ li:last-child { margin-bottom: 0; }
  * Defaults to 0 so standalone pages with no .site__header aren't pushed
  * down for a header that doesn't exist. */
 :root {
-  --site-header-height: 0;
+  --site-header-height: 0rem;
 }
 body:has(.site__header) {
   --site-header-height: 4rem;
@@ -583,7 +583,7 @@ body > button[x-copy] {
    downward slide, so .site__body's flex-basis genuinely grows. */
 .site__footer--hidden {
   transform: translateY(100%);
-  margin-top: calc(-1 * var(--site-footer-collapse-height, 0));
+  margin-top: calc(-1 * var(--site-footer-collapse-height, 0rem));
 }
 
 .footer__content {

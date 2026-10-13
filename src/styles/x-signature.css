@@ -34,9 +34,9 @@
   --x-gradient-cosmic: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   
   /* Mesh gradients for backgrounds - Theme-aware */
-  --x-mesh-1: radial-gradient(at 40% 20%, hsla(var(--hue-primary), 100%, 74%, 0.3) 0, transparent 50%),
-               radial-gradient(at 80% 0%, hsla(calc(var(--hue-primary) + 60), 100%, 56%, 0.2) 0, transparent 50%),
-               radial-gradient(at 0% 50%, hsla(calc(var(--hue-primary) - 60), 85%, 63%, 0.2) 0, transparent 50%);
+  --x-mesh-1: radial-gradient(at 40% 20%, hsla(var(--hue-primary), 100%, 74%, 0.3) 0rem, transparent 50%),
+               radial-gradient(at 80% 0%, hsla(calc(var(--hue-primary) + 60), 100%, 56%, 0.2) 0rem, transparent 50%),
+               radial-gradient(at 0% 50%, hsla(calc(var(--hue-primary) - 60), 85%, 63%, 0.2) 0rem, transparent 50%);
   
   /* ═══════════════════════════════════════════════════════════════
      GLASSMORPHISM
@@ -842,10 +842,10 @@
 
 .x-hero--mesh::before {
   background: 
-    radial-gradient(at 0% 0%, hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.4) 0, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(calc(var(--hue-primary) - 60), 80%, 50%, 0.3) 0, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(calc(var(--hue-primary) + 60), 80%, 70%, 0.3) 0, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(calc(var(--hue-primary) + 120), 100%, 60%, 0.3) 0, transparent 50%);
+    radial-gradient(at 0% 0%, hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.4) 0rem, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(calc(var(--hue-primary) - 60), 80%, 50%, 0.3) 0rem, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(calc(var(--hue-primary) + 60), 80%, 70%, 0.3) 0rem, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(calc(var(--hue-primary) + 120), 100%, 60%, 0.3) 0rem, transparent 50%);
   opacity: 1;
   animation: x-mesh-shift 15s ease-in-out infinite;
 }
@@ -889,9 +889,9 @@
 
 .x-hero--cosmic::before {
   background: 
-    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0, transparent 40%),
-    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0, transparent 40%),
-    radial-gradient(at 50% 50%, hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2) 0, transparent 50%);
+    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0rem, transparent 40%),
+    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0rem, transparent 40%),
+    radial-gradient(at 50% 50%, hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2) 0rem, transparent 50%);
   opacity: 1;
 }
 

@@ -22,14 +22,14 @@
   .issues-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
   .issue-row { border: 0.0625rem solid var(--border-color); border-radius: 0.5rem; background: var(--bg-secondary); overflow: hidden; }
   .issue-row__summary { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; }
-  .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 999rem; white-space: nowrap; }
+  .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 62.4375rem; white-space: nowrap; }
   .issue-row__state--open { background: color-mix(in srgb, var(--success-color) 25%, transparent); color: var(--success-color); }
   .issue-row__state--in-progress { background: color-mix(in srgb, var(--warning-color) 25%, transparent); color: var(--warning-color); }
   .issue-row__state--closed { background: color-mix(in srgb, var(--info-color) 25%, transparent); color: var(--info-color); }
   .issue-row__number { color: var(--text-secondary); font-family: monospace; }
   .issue-row__title { flex: 1; font-weight: 600; }
   .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-  .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999rem; background: var(--bg-tertiary); color: var(--text-secondary); }
+  .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 62.4375rem; background: var(--bg-tertiary); color: var(--text-secondary); }
   .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 0.0625rem solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
   /* Rendered markdown (x-mdhtml) needs normal HTML flow, not the raw-text
      pre-wrap this div used before -- headings/lists/code blocks would
@@ -100,7 +100,7 @@
   display: inline-block;
   margin-right: var(--space-xs, 0.25rem);
   padding: 0.1em 0.6em;
-  border-radius: 999rem;
+  border-radius: 62.4375rem;
   background: var(--success-color);
   color: var(--bg-primary);
   font-size: 0.8em;
