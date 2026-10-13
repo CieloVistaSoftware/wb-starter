@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.526",
+      "date": "2026-10-13",
+      "summary": "Release run #460 was started by hand with npm_version empty, fell through to the tag path and published the old v1.0.400 to npm instead of 1.0.1. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1879\" target=\"_blank\" rel=\"noopener\">#1879</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A hand-started run with npm_version empty publishes nothing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1879\" target=\"_blank\" rel=\"noopener\">#1879</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7ac213183799757a7c4e5ea54fc94ee798ed759f\" target=\"_blank\" rel=\"noopener\"><code>7ac2131</code></a>",
+          "issues": [
+            1879
+          ]
+        }
+      ],
+      "seeIt": "Open Actions, Release, Run workflow and leave npm_version empty. Before: it published the last release tag (v1.0.400). Now: it publishes nothing and warns that npm_version was empty.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7ac213183799757a7c4e5ea54fc94ee798ed759f\" target=\"_blank\" rel=\"noopener\"><code>7ac2131</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.525",
       "date": "2026-10-13",
       "summary": "The batch&#39;s converter wrote 0px as a bare 0, so (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1878\" target=\"_blank\" rel=\"noopener\">PR 1878</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
