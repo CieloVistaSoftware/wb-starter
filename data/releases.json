@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.524",
+      "date": "2026-10-12",
+      "summary": "The CSS that behaviors write into &lt;style&gt; tags (audio, tooltip, (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1865\" target=\"_blank\" rel=\"noopener\">PR 1865</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The JS converts too, and the px gate is zero-tolerance</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1b599131863257558a2e20f07dfea19bb7e2748e\" target=\"_blank\" rel=\"noopener\"><code>1b59913</code></a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every stylesheet in src/styles sizes in rem; px that must stay px says why</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/bcd1f94dd9561d7d8146c9950021d1bcb79a32ad\" target=\"_blank\" rel=\"noopener\"><code>bcd1f94</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-px-units.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-px-units.mjs</a>. Before: 57 likely-convert. Now: 0 likely-convert, 14 px-ok, each listed with its reason under devicePx in <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/px-audit.json\" target=\"_blank\" rel=\"noopener\">data/px-audit.json</a>.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/07ae94979d872aa1d0c3602922c058d2e8d1358e\" target=\"_blank\" rel=\"noopener\"><code>07ae949</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.523",
       "date": "2026-10-12",
       "summary": "Npm&#39;s first release is to be 1.0.1 (John, 2026-10-13), but npm run ship -- --as 1.0.1 cannot cut it: the Releases history already holds 1.0.2-1.0.517, so a 1.0.1 tag would run the badge backwards and reuse those numbers. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1876\" target=\"_blank\" rel=\"noopener\">#1876</a>",
