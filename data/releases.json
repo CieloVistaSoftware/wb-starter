@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.523",
+      "date": "2026-10-12",
+      "summary": "Npm&#39;s first release is to be 1.0.1 (John, 2026-10-13), but npm run ship -- --as 1.0.1 cannot cut it: the Releases history already holds 1.0.2-1.0.517, so a 1.0.1 tag would run the badge backwards and reuse those numbers. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1876\" target=\"_blank\" rel=\"noopener\">#1876</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A manual Release run can publish main to npm under a chosen number</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1876\" target=\"_blank\" rel=\"noopener\">#1876</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/051eb26d7dde11898cff21e607c0eb5d3d905e4c\" target=\"_blank\" rel=\"noopener\"><code>051eb26</code></a>",
+          "issues": [
+            1876
+          ]
+        }
+      ],
+      "seeIt": "Open Actions, Release, Run workflow, enter 1.0.1 in npm_version, then run npm view wb-starter version. Before: there was no npm_version field and npm said 1.0.0. Now: the run publishes main as 1.0.1, with no tag or commit, and the badge keeps counting.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/051eb26d7dde11898cff21e607c0eb5d3d905e4c\" target=\"_blank\" rel=\"noopener\"><code>051eb26</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.522",
       "date": "2026-10-12",
       "summary": "Two sessions changed npm publishing at the same time, and John was walked through npm setup for a workflow that had already been deleted. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1873\" target=\"_blank\" rel=\"noopener\">PR 1873</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1872\" target=\"_blank\" rel=\"noopener\">#1872</a>",
