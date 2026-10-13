@@ -14,12 +14,13 @@ on:
   workflow_dispatch:
     inputs:
       npm_version:
-        description: 'Publish main to npm under this X.Y.Z (npm only: no tag, no commit). Empty = the normal release run.'
+        description: 'Release: publish main to npm as this X.Y.Z (both packages). Must be higher than npm has.'
         required: false
         default: ''
 
 permissions:
   contents: write
+  actions: write   # start the stamp workflow after a release (#1882)
   # npm Trusted Publishing: npm accepts this run's OIDC identity in place of a
   # token, so 2FA stays on for the account (npm restricts 2FA-bypass tokens).
   id-token: write
@@ -94,68 +95,45 @@ jobs:
             fi
           done
 
-      # npm's numbers may run behind the site's badge (John, 2026-10-13: "A,
-      # publish 1.0.1 to npm now"; they sync at the next minor release). A manual
-      # run with npm_version publishes main as it is now under that number. The
-      # number is set in package.json inside this job only: nothing is committed
-      # or tagged, so the badge and the Releases history are untouched. Main had
-      # a clean release gate first (2026-10-13: 54 WebKit-missing, 2 caused by
-      # the 1.0.1 entry itself, 1 load-only; none in the code).
-      - name: Publish main to npm under a chosen number
+      # #1882 -- John, 2026-10-13: "all i want is npm.js to drive our release
+      # numbering ... in sync forever" (both packages). A release is a hand-started run with npm_version: both
+      # packages are published from main under that one number, which must be
+      # higher than what npm has for either. Nothing is committed or tagged;
+      # the site badge reads npm's number (scripts/stamp-version.js), and the
+      # stamp workflow is started at the end so the badge shows it at once.
+      - name: Publish both packages to npm under npm_version
         if: ${{ inputs.npm_version != '' && inputs.npm_version != null }}
         env:
           NPM_VERSION: ${{ inputs.npm_version }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if ! [[ "${NPM_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::error::npm_version must be X.Y.Z, got '${NPM_VERSION}'"; exit 1
           fi
-          npm version "${NPM_VERSION}" --no-git-tag-version --allow-same-version >/dev/null
-          echo "Publishing main ($(git rev-parse --short HEAD)) as ${NPM_VERSION}"
-          for dir in . packages/create-wb-starter; do
-            name=$(node -p "require('./${dir}/package.json').name")
-            ver=$(node -p "require('./${dir}/package.json').version")
-            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
-              echo "✓ ${name}@${ver} already on npm"
-            else
-              (cd "${dir}" && npm publish --ignore-scripts --access public)
-              echo "➕ published ${name}@${ver}"
+          for name in wb-starter create-wb-starter; do
+            current=$(npm view "${name}" version 2>/dev/null || echo 0.0.0)
+            highest=$(printf '%s\n%s\n' "${current}" "${NPM_VERSION}" | sort -V | tail -1)
+            if [ "${NPM_VERSION}" = "${current}" ] || [ "${highest}" != "${NPM_VERSION}" ]; then
+              echo "::error::npm_version ${NPM_VERSION} must be higher than ${name}'s ${current} on npm"; exit 1
             fi
           done
+          echo "Publishing main ($(git rev-parse --short HEAD)) as ${NPM_VERSION}, both packages"
+          for dir in . packages/create-wb-starter; do
+            (cd "${dir}" && npm version "${NPM_VERSION}" --no-git-tag-version --allow-same-version >/dev/null \
+              && npm publish --ignore-scripts --access public)
+            echo "➕ published $(node -p "require('./${dir}/package.json').name")@${NPM_VERSION}"
+          done
+          gh workflow run stamp-version-on-main.yml --ref main \
+            && echo "Started the stamp workflow, so the site badge shows ${NPM_VERSION}" \
+            || echo "::warning::could not start the stamp workflow; the badge updates on the next push to main"
 
-      - name: Publish both npm packages
+      # A push to main never publishes to npm (#1882): npm's number only moves
+      # when someone runs Release with npm_version.
+      - name: npm
         if: ${{ inputs.npm_version == '' || inputs.npm_version == null }}
         run: |
-          version=$(node -p "require('./package.json').version")
-          if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
-            echo "… ${version} has no release commit yet: nothing to publish"; exit 0
-          fi
-          # Publish only on the push that IS the release commit (or a manual run).
-          # Every later push to main still names the last release, and that code
-          # is behind main: 1.0.400 was 111 merges behind the site (2026-10-13).
-          # A hand-started run publishes only the number typed into npm_version
-          # (the step above). With the box empty it publishes nothing: run #460
-          # (2026-10-13) had it empty and put the old v1.0.400 on npm.
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "::warning::npm_version was empty, so nothing was published. Run Release again and type the version (e.g. 1.0.1) in npm_version."; exit 0
+            echo "::warning::npm_version was empty, so nothing was published. Run Release again and type the next version in npm_version."
+          else
+            echo "… a push to main does not publish to npm; run Release with npm_version to release"
           fi
-          if [ "$(git rev-parse "v${version}^{commit}")" != "$(git rev-parse HEAD)" ]; then
-            echo "… v${version} is not this push's commit: not publishing old code"; exit 0
-          fi
-          # No token: npm trusts this workflow (release.yml in this repo)
-          # through each package's Trusted Publisher setting on npmjs.com.
-          # Publish the code the tag names, not whatever main holds now: main
-          # moves on after a release and still says the same version until the
-          # next one is cut.
-          pub="${RUNNER_TEMP}/publish-v${version}"
-          git worktree add --detach "${pub}" "v${version}"
-          echo "Publishing from v${version} ($(git rev-parse --short "v${version}^{commit}"))"
-          for dir in . packages/create-wb-starter; do
-            name=$(node -p "require('${pub}/${dir}/package.json').name")
-            ver=$(node -p "require('${pub}/${dir}/package.json').version")
-            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
-              echo "✓ ${name}@${ver} already on npm"
-            else
-              (cd "${pub}/${dir}" && npm publish --ignore-scripts --access public)
-              echo "➕ published ${name}@${ver}"
-            fi
-          done

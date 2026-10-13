@@ -1,5 +1,5 @@
 import { VERSION } from '../core/version.js';
-import { versionNumber } from '../core/version-number.js';
+import { versionNumber, displayVersion } from '../core/version-number.js';
 import { removeServiceWorkers } from '../core/service-worker.js';
 import { centralDateTime } from '../core/central-time.js';
 
@@ -86,7 +86,9 @@ export function release(element, options = {}) {
   // John, 2026-10-02: "1.0.what the latest push is e.g. 1.0.41 simple." The
   // number is computed in one place (src/core/version-number.js) so every
   // display of it agrees.
-  const { number: shownVersion, release: releaseName, since: ahead } = versionNumber(VERSION);
+  const { number: pushNumber, release: releaseName, since: ahead } = versionNumber(VERSION);
+  // #1882: the badge shows npm's version; the push count goes in the tooltip.
+  const shownVersion = displayVersion(VERSION);
 
   // BEHIND is not rolled into the number on purpose. Being behind does not make
   // a newer build; it makes a STALE one, and counting it would read as
@@ -106,8 +108,9 @@ export function release(element, options = {}) {
 
   // "Commit", not "Build": nothing is built (John: "I thought we didn't do
   // builds?"). It is the git commit these files are, and when it was stamped.
-  element.title = `Commit ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
-    + (ahead ? ` · ${ahead} push${ahead === 1 ? '' : 'es'} to main since v${releaseName}` : '')
+  element.title = (VERSION.npm ? `On npm: ${VERSION.npm} (both packages) · build ${pushNumber} · ` : '')
+    + `Commit ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
+    + (!VERSION.npm && ahead ? ` · ${ahead} push${ahead === 1 ? '' : 'es'} to main since v${releaseName}` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
     + (VERSION.dirty ? ` · uncommitted local edits${editedList(VERSION)} — these files are not ${shownVersion} as committed` : '')
