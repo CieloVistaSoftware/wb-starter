@@ -89,7 +89,7 @@ jobs:
             fi
           done
 
-      - name: Publish to npm (wb-starter, create-wb-starter)
+      - name: Publish both npm packages
         run: |
           version=$(node -p "require('./package.json').version")
           if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
