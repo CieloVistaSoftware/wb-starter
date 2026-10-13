@@ -244,6 +244,9 @@ const SKIP = [
   // version-stamp bot regenerates it on main, which put the retired name back
   // after #1719 and turned main red. Its sources are scanned where it matters.
   'data/search.json',
+  // #1869: the traced fix history, regenerated on every push from issue and
+  // commit text that quotes the names as they were when the fix landed.
+  'data/fixes.json',
 ];
 const SCANNED = /\.(js|mjs|ts|css|html|md|json)$/;
 
