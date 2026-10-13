@@ -5,8 +5,9 @@
  * It replaces `px-no-new-creep.spec.ts`, which only counted px in the
  * properties the audit buckets as LIKELY_CONVERT. That left every other
  * px -- borders, shadows, blurs, transforms, media-query breakpoints, the
- * UNCLASSIFIED bucket -- free to grow, as if px were allowed there. It is not. This gate counts
- * EVERY px the audit finds in src/ and fails if the total grows.
+ * UNCLASSIFIED bucket -- free to grow, as if px were allowed there. It is
+ * not. This gate counts EVERY px the audit finds in src/ and fails if the
+ * total grows.
  *
  * The count may only go down. Convert a file, re-run
  * `node scripts/audit-px-units.mjs`, and lower TOTAL_BASELINE to the new
@@ -22,7 +23,8 @@ import { fileURLToPath } from 'url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 // 1163 on 2026-10-13 (origin/main a75d111f): 264 likely-convert + 662
 // likely-ok + 197 unclassified + 40 media-breakpoint lines.
-const TOTAL_BASELINE = 1163;
+// 1150: progress.css converted (#1856, 13 values).
+const TOTAL_BASELINE = 1150;
 
 test('audit: total px in src/ only shrinks -- rem on every device (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
