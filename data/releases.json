@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.511",
+      "date": "2026-10-12",
+      "summary": "The test and performance dashboards were empty on the live site because their data only existed on a local machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1855\" target=\"_blank\" rel=\"noopener\">PR 1855</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Publish nightly test and performance results for the static site&#39;s dashboards</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14171f2da140098ddd09db286fc3c0a3e9a1c627\" target=\"_blank\" rel=\"noopener\"><code>14171f2</code></a>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Resolve dashboard data/API URLs against the page, not the host root</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b11b0d0881b5e6e3ab30fd0ed3499328add0359f\" target=\"_blank\" rel=\"noopener\"><code>b11b0d0</code></a>"
+        }
+      ],
+      "seeIt": "After the next Nightly run, open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/test-dashboard.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/test-dashboard.html</a>. Before: zeros and 404s in the console. Now: the last nightly totals, failures and results with &quot;Last nightly run: &lt;time&gt; · run details&quot;; the performance dashboard shows its charts with no Run button.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b060996894745fedf1c1adfbb6d7f832e2e39e18\" target=\"_blank\" rel=\"noopener\"><code>b060996</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.510",
       "date": "2026-10-12",
       "summary": "Progress bar heights and corner radii were fixed in px, so the bars stayed the same size when a reader raised their browser font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1856\" target=\"_blank\" rel=\"noopener\">PR 1856</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
