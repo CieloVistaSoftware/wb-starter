@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.515",
+      "date": "2026-10-12",
+      "summary": "Npm only got a version when someone cut a release by hand, and its publish step never worked, so npm sat at 1.0.0 while the live site was at 1.0.512. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Publish every push to npm under the badge&#39;s number</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/38146bbd176a11193afcf814be72ed5f0c7a3ba1\" target=\"_blank\" rel=\"noopener\"><code>38146bb</code></a>",
+          "issues": [
+            1860,
+            1859
+          ]
+        }
+      ],
+      "seeIt": "After a push to main, run <code>npm view wb-starter version</code> and compare it with the version badge on <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a>. Before: npm said 1.0.0 while the badge said v1.0.512. Now: npm says the badge&#39;s number once publish-npm.yml finishes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/38146bbd176a11193afcf814be72ed5f0c7a3ba1\" target=\"_blank\" rel=\"noopener\"><code>38146bb</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.514",
       "date": "2026-10-12",
       "summary": "The effect behaviors (glow, bounce, shake, typewriter cursor, stage light) were sized in px, so their glows, offsets and the stage-light fixture ignored the reader&#39;s font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1858\" target=\"_blank\" rel=\"noopener\">PR 1858</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
