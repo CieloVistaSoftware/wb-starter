@@ -20,7 +20,7 @@ const PAGE_ALIASES = { 'whats-new': 'releases' };
 // the right discriminator between "phone, sideways" and "anything
 // wider-screened, sideways." Outside this condition the bar just
 // stays put, same as before this feature existed.
-const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
+const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 31.25rem)').matches;
 
 /**
  * Hide `bar` (add `hiddenClass`) while #siteBody scrolls down and show it on

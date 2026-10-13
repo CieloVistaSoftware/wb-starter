@@ -18,8 +18,8 @@ body {
 
 /* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  outline: 0.125rem solid var(--color-primary);
+  outline-offset: 0.125rem;
 }
 
 /* Remove default button styles */

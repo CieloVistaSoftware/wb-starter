@@ -2,23 +2,23 @@
 
 /* Extracted from pages/hero-variants.html */
 @keyframes animStar {
-      from { transform: translateY(0px); }
-      to { transform: translateY(-2000px); }
+      from { transform: translateY(0); }
+      to { transform: translateY(-125rem); }
     }
 
 @keyframes grid-move {
       0% { background-position: 0 0; }
-      100% { background-position: 0 1000px; }
+      100% { background-position: 0 62.5rem; }
     }
 
 @keyframes aurora-expand {
       0% { transform: scale(1); filter: blur(0); }
-      100% { transform: scale(2); filter: blur(20px); }
+      100% { transform: scale(2); filter: blur(1.25rem); }
     }
 
 @keyframes mesh-blob {
       0% { transform: translate(0, 0) rotate(0deg); }
-      100% { transform: translate(-20px, 20px) rotate(10deg); }
+      100% { transform: translate(-1.25rem, 1.25rem) rotate(10deg); }
     }
 
 @keyframes gradient-bg {
@@ -95,7 +95,7 @@
 .x-hero--split .hv-split-col { flex: 1; }
 .x-hero--split .hv-flush-left { margin-left: 0; }
 .x-hero--split .hv-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-.x-hero--split .x-hero__visual .hv-split-img { width: 100%; border-radius: 0.75rem; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+.x-hero--split .x-hero__visual .hv-split-img { width: 100%; border-radius: 0.75rem; box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.2); }
 
 /* 4. Particles */
 .x-hero.hv-particles-bg {
@@ -104,17 +104,17 @@
 }
 .hv-stars {
   background: transparent;
-  box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF , 1678px 1333px #FFF , 666px 999px #FFF , 123px 456px #FFF , 789px 123px #FFF , 456px 789px #FFF , 321px 654px #FFF , 987px 321px #FFF , 147px 258px #FFF , 369px 147px #FFF , 258px 369px #FFF , 159px 753px #FFF , 753px 159px #FFF , 852px 963px #FFF , 963px 852px #FFF , 1234px 567px #FFF , 567px 1234px #FFF , 890px 123px #FFF;
+  box-shadow: 109rem 7.625rem #FFF , 8.375rem 82.5625rem #FFF , 5.75rem 53.6875rem #FFF , 104.875rem 83.3125rem #FFF , 41.625rem 999rem #FFF , 7.6875rem 28.5rem #FFF , 49.3125rem 7.6875rem #FFF , 28.5rem 49.3125rem #FFF , 20.0625rem 40.875rem #FFF , 61.6875rem 20.0625rem #FFF , 9.1875rem 16.125rem #FFF , 23.0625rem 9.1875rem #FFF , 16.125rem 23.0625rem #FFF , 9.9375rem 47.0625rem #FFF , 47.0625rem 9.9375rem #FFF , 53.25rem 60.1875rem #FFF , 60.1875rem 53.25rem #FFF , 77.125rem 35.4375rem #FFF , 35.4375rem 77.125rem #FFF , 55.625rem 7.6875rem #FFF;
 }
-.hv-stars--1 { width: 1px; height: 1px; animation: animStar 50s linear infinite; }
-.hv-stars--2 { width: 2px; height: 2px; animation: animStar 100s linear infinite; }
+.hv-stars--1 { width: 0.0625rem; height: 0.0625rem; animation: animStar 50s linear infinite; }
+.hv-stars--2 { width: 0.125rem; height: 0.125rem; animation: animStar 100s linear infinite; }
 .hv-stars--3 { width: 0.1875rem; height: 0.1875rem; animation: animStar 150s linear infinite; }
 .x-hero--particles .hv-orb--particles {
   width: 25rem; height: 25rem; top: 50%; left: 50%;
   transform: translate(-50%, -50%); opacity: 0.4; z-index: 1;
 }
 .x-hero--particles .hv-particles-card {
-  padding: 3rem; border-radius: 1.5rem; backdrop-filter: blur(10px);
+  padding: 3rem; border-radius: 1.5rem; backdrop-filter: blur(0.625rem);
   z-index: 2; position: relative;
 }
 
@@ -124,27 +124,27 @@
 }
 .x-hero--diagonal .hv-orb--diagonal { width: 21.875rem; height: 21.875rem; top: -3.125rem; right: 10%; opacity: 0.6; }
 .x-hero--diagonal .hv-diagonal-content { text-align: left; max-width: 75rem; padding-left: 4rem; }
-.x-hero--diagonal .hv-diagonal-title { text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-.x-hero--diagonal .hv-diagonal-subtitle { margin-left: 0; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+.x-hero--diagonal .hv-diagonal-title { text-shadow: 0 0.125rem 0.625rem rgba(0,0,0,0.5); }
+.x-hero--diagonal .hv-diagonal-subtitle { margin-left: 0; text-shadow: 0 0.0625rem 0.25rem rgba(0,0,0,0.5); }
 
 /* 6. Waves */
 .x-hero--waves .hv-waves-card {
   padding: 3rem; border-radius: 1.5rem; background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(12px); z-index: 2; position: relative;
+  backdrop-filter: blur(0.75rem); z-index: 2; position: relative;
 }
 
 /* 7. Grid */
-.x-hero.hv-grid-bg { background: #000; position: relative; overflow: hidden; perspective: 500px; }
+.x-hero.hv-grid-bg { background: #000; position: relative; overflow: hidden; perspective: 31.25rem; }
 .x-hero--grid .hv-grid-floor {
   position: absolute;
   top: 0; left: -50%; width: 200%; height: 200%;
   background:
-    linear-gradient(transparent 0%, rgba(0,255,0,0.4) 2px, transparent 3px),
-    linear-gradient(90deg, transparent 0%, rgba(0,255,0,0.4) 2px, transparent 3px);
-  background-size: 50px 50px;
-  transform: rotateX(60deg) translateY(-100px) translateZ(-200px);
+    linear-gradient(transparent 0%, rgba(0,255,0,0.4) 0.125rem, transparent 0.1875rem),
+    linear-gradient(90deg, transparent 0%, rgba(0,255,0,0.4) 0.125rem, transparent 0.1875rem);
+  background-size: 3.125rem 3.125rem;
+  transform: rotateX(60deg) translateY(-6.25rem) translateZ(-12.5rem);
   animation: grid-move 20s linear infinite;
-  box-shadow: 0 0 100px rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 6.25rem rgba(0, 255, 0, 0.2);
 }
 .x-hero--grid .hv-grid-glow {
   position: absolute;
@@ -154,17 +154,17 @@
 }
 .x-hero--grid .hv-grid-card {
   position: relative; z-index: 2; padding: 3rem; border-radius: 1rem;
-  border: 1px solid rgba(0, 255, 0, 0.5); background: rgba(0, 20, 0, 0.8);
-  box-shadow: 0 0 30px rgba(0,255,0,0.2);
+  border: 0.0625rem solid rgba(0, 255, 0, 0.5); background: rgba(0, 20, 0, 0.8);
+  box-shadow: 0 0 1.875rem rgba(0,255,0,0.2);
 }
-.x-hero--grid .hv-grid-badge { margin-bottom: 1rem; background: #003300; color: #00ff00; border: 1px solid #00ff00; }
-.x-hero--grid .hv-grid-title { font-family: 'Courier New', monospace; letter-spacing: -2px; text-shadow: 0 0 10px #00ff00; }
+.x-hero--grid .hv-grid-badge { margin-bottom: 1rem; background: #003300; color: #00ff00; border: 0.0625rem solid #00ff00; }
+.x-hero--grid .hv-grid-title { font-family: 'Courier New', monospace; letter-spacing: -0.125rem; text-shadow: 0 0 0.625rem #00ff00; }
 .x-hero--grid .hv-grid-title-accent {
   background: linear-gradient(to right, #00ff00, #ccffcc);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.x-hero--grid .hv-grid-subtitle { font-family: monospace; color: #ccffcc; text-shadow: 0 0 5px #00ff00; }
-.x-hero--grid .hv-grid-btn { background: #003300; border: 1px solid #00ff00; color: #00ff00; box-shadow: 0 0 15px #00ff00; }
+.x-hero--grid .hv-grid-subtitle { font-family: monospace; color: #ccffcc; text-shadow: 0 0 0.3125rem #00ff00; }
+.x-hero--grid .hv-grid-btn { background: #003300; border: 0.0625rem solid #00ff00; color: #00ff00; box-shadow: 0 0 0.9375rem #00ff00; }
 
 /* 8. Spotlight */
 .x-hero.hv-spotlight-bg { position: relative; background: #000; }
@@ -184,15 +184,15 @@
   position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 37.5rem; height: 100%;
   background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 80%);
-  filter: blur(50px);
+  filter: blur(3.125rem);
   pointer-events: none;
   z-index: 1;
 }
 .x-hero--spotlight .hv-spotlight-content { position: relative; z-index: 2; text-align: center; }
 .x-hero--spotlight .hv-spotlight-badge {
-  margin-bottom: 1rem; align-self: center; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+  margin-bottom: 1rem; align-self: center; background: rgba(255,255,255,0.2); border: 0.0625rem solid rgba(255,255,255,0.4);
 }
-.x-hero--spotlight .hv-spotlight-title { text-shadow: 0 0 30px rgba(255,255,255,0.5); }
+.x-hero--spotlight .hv-spotlight-title { text-shadow: 0 0 1.875rem rgba(255,255,255,0.5); }
 .x-hero--spotlight .hv-spotlight-title-accent {
   background: linear-gradient(to right, #fff, #ccc);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -203,7 +203,7 @@
 /* 9. Aurora */
 .x-hero--aurora .hv-aurora-card {
   padding: 3rem; border-radius: 1.5rem; background: rgba(0,0,0,0.2);
-  backdrop-filter: blur(5px); z-index: 2; position: relative;
+  backdrop-filter: blur(0.3125rem); z-index: 2; position: relative;
 }
 
 /* 10. Mesh */
@@ -221,7 +221,7 @@
   background:
     radial-gradient(circle at 50% 50%, rgba(76, 29, 149, 0.5), transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(219, 39, 119, 0.5), transparent 40%);
-  filter: blur(60px);
+  filter: blur(3.75rem);
   animation: mesh-blob 10s infinite alternate;
 }
 .x-hero--mesh .hv-raised { position: relative; z-index: 2; }
@@ -262,7 +262,7 @@
 .hv-reference__title { text-align: center; margin-bottom: 2rem; }
 .hv-reference__panel { padding: 2rem; border-radius: 1rem; }
 .hv-ref-table { width: 100%; border-collapse: collapse; }
-.hv-ref-table thead tr { border-bottom: 1px solid var(--x-glass-border); }
+.hv-ref-table thead tr { border-bottom: 0.0625rem solid var(--x-glass-border); }
 .hv-ref-table th { text-align: left; padding: 1rem; }
 .hv-ref-table td { padding: 1rem; }
 .hv-ref-table td:nth-child(2) { font-family: monospace; color: var(--primary); }

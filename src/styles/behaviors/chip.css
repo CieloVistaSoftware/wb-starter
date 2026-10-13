@@ -16,7 +16,7 @@
   gap: 0.25rem;
   padding: 0.25rem 0.75rem;
   min-height: 1.5rem;
-  border-radius: 999px;
+  border-radius: 999rem;
   font-size: 0.875rem;
   font-weight: 500;
   background: var(--bg-tertiary, #374151);
@@ -41,7 +41,7 @@
 /* Outlined — border instead of filled background */
 .x-chip--outlined {
   background: transparent;
-  border: 1px solid var(--border-color, #4b5563);
+  border: 0.0625rem solid var(--border-color, #4b5563);
   color: var(--text-primary, #f9fafb);
 }
 .x-chip--outlined.x-chip--primary { border-color: var(--primary, #6366f1); color: var(--primary, #6366f1); }

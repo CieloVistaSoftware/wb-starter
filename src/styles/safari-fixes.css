@@ -73,8 +73,8 @@
 
 /* Safari Backdrop Filter: Needs webkit prefix */
 .backdrop-blur {
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(0.625rem);
+  backdrop-filter: blur(0.625rem);
 }
 
 /* Safari Input Zoom Prevention: Prevents zoom on focus for inputs < 16px */

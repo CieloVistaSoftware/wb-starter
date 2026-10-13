@@ -26,11 +26,11 @@
 
 .x-card__overlay-content--light { background: rgba(255,255,255,0.85); color: var(--overlay-light-text, #111827); }
 
-.x-card__overlay-content--blur { background: rgba(0,0,0,0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.x-card__overlay-content--blur { background: rgba(0,0,0,0.35); backdrop-filter: blur(0.5rem); -webkit-backdrop-filter: blur(0.5rem); }
 
-.x-card__title.x-card__overlay-title { margin: 0; font-size: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.x-card__title.x-card__overlay-title { margin: 0; font-size: 1.5rem; text-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.5); }
 
-.x-card__subtitle.x-card__overlay-subtitle { margin: 0.5rem 0; opacity: 0.9; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+.x-card__subtitle.x-card__overlay-subtitle { margin: 0.5rem 0; opacity: 0.9; text-shadow: 0 0.0625rem 0.125rem rgba(0,0,0,0.5); }
 
 /* Overlay card: #635's no-repeat, which cardoverlay() wrote inline. */
 [x-cardoverlay][x-cardoverlay] {

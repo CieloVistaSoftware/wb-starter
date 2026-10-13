@@ -46,7 +46,7 @@
    attribute is present. An outline-style ring keeps every size honest, which
    matters because the size rules above are pixel-exact and asserted as such. */
 :is([x-avatar], .x-avatar)[bordered] {
-  border: 2px solid var(--avatar-border, var(--border-color, rgba(255, 255, 255, 0.25)));
+  border: 0.125rem solid var(--avatar-border, var(--border-color, rgba(255, 255, 255, 0.25)));
   box-sizing: content-box;
 }
 
@@ -65,7 +65,7 @@
   width: 37.5%;
   height: 37.5%;
   border-radius: 50%;
-  border: 2px solid var(--bg-primary, #1f2937);
+  border: 0.125rem solid var(--bg-primary, #1f2937);
 }
 
 .x-avatar__status--online  { background: var(--success-color); }

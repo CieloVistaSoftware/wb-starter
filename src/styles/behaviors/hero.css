@@ -152,7 +152,7 @@
   display: inline-block;
   margin-bottom: 0.75rem;
   padding: 0.3rem 0.9rem;
-  border-radius: 999px;
+  border-radius: 999rem;
   /* The frosted surface is x-glass (#1236); its tint, blur and edge for this
      pill are set in themes.css. */
   font-size: 0.78rem;
@@ -190,7 +190,7 @@
   overflow-wrap: normal;
   word-break: normal;
   color: var(--text-on-accent, #fff);
-  text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
+  text-shadow: 0 0.125rem 0.875rem hsl(var(--overlay-dark-hsl) / 0.35);
 }
 
 [x-cardhero] .x-card__subtitle.x-card__hero-subtitle{
@@ -201,7 +201,7 @@
   word-break: normal;
   color: var(--text-on-accent, #fff);
   opacity: 0.94;
-  text-shadow: 0 1px 8px hsl(var(--overlay-dark-hsl) / 0.3);
+  text-shadow: 0 0.0625rem 0.5rem hsl(var(--overlay-dark-hsl) / 0.3);
 }
 
 /* CTA group + buttons. */
@@ -236,9 +236,9 @@
 [x-cardhero] .x-hero-cta--primary{
   background: var(--text-on-accent, #fff);
   color: var(--primary);
-  box-shadow: 0 12px 30px hsl(var(--overlay-dark-hsl) / 0.35);
+  box-shadow: 0 0.75rem 1.875rem hsl(var(--overlay-dark-hsl) / 0.35);
 }
-[x-cardhero] .x-hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 42px hsl(var(--overlay-dark-hsl) / 0.45); }
+[x-cardhero] .x-hero-cta--primary:hover { transform: translateY(-0.125rem); box-shadow: 0 1.125rem 2.625rem hsl(var(--overlay-dark-hsl) / 0.45); }
 /* The secondary CTA carries the scene behind it: it is x-glass (#1236, set by
    card.js), so the see-through fill, edge and softening come from glass.css.
    The hero's own choices for it (on-accent white as the tint, a 1.5px edge)
@@ -248,9 +248,9 @@
 [x-cardhero] .x-hero-cta--secondary{
   color: var(--text-on-accent, #fff);
 }
-[x-cardhero] .x-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }
+[x-cardhero] .x-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-0.125rem); }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
 [x-cardhero] .x-card__cta-group { flex-direction: column; align-items: stretch; width: 100%; }
 [x-cardhero] .x-hero-cta { width: 100%; }
 }
@@ -281,24 +281,24 @@
    trickery needed; a plain 'cover'/'no-repeat' applies to every layer. */
 [x-cardhero].x-cardhero--cosmic:not([background]){
   background-image:
-    radial-gradient(circle at 6% 12%,  hsl(var(--overlay-light-hsl) / 0.55) 0 1px, transparent 1px),
-    radial-gradient(circle at 14% 55%, hsl(var(--overlay-light-hsl) / 0.85) 0 1px, transparent 1px),
-    radial-gradient(circle at 22% 82%, hsl(var(--overlay-light-hsl) / 0.4)  0 1px, transparent 1px),
-    radial-gradient(circle at 29% 24%, hsl(var(--overlay-light-hsl) / 0.7) 0 1px, transparent 1px),
-    radial-gradient(circle at 35% 68%, hsl(var(--overlay-light-hsl) / 0.5) 0 1px, transparent 1px),
-    radial-gradient(circle at 41% 8%,  hsl(var(--overlay-light-hsl) / 0.9) 0 1px, transparent 1px),
-    radial-gradient(circle at 48% 45%, hsl(var(--overlay-light-hsl) / 0.6) 0 1px, transparent 1px),
-    radial-gradient(circle at 54% 91%, hsl(var(--overlay-light-hsl) / 0.75) 0 1px, transparent 1px),
-    radial-gradient(circle at 61% 18%, hsl(var(--overlay-light-hsl) / 0.45) 0 1px, transparent 1px),
-    radial-gradient(circle at 67% 60%, hsl(var(--overlay-light-hsl) / 0.8) 0 1px, transparent 1px),
-    radial-gradient(circle at 73% 35%, hsl(var(--overlay-light-hsl) / 0.55) 0 1px, transparent 1px),
-    radial-gradient(circle at 79% 78%, hsl(var(--overlay-light-hsl) / 0.65) 0 1px, transparent 1px),
-    radial-gradient(circle at 85% 15%, hsl(var(--overlay-light-hsl) / 0.9) 0 1px, transparent 1px),
-    radial-gradient(circle at 91% 50%, hsl(var(--overlay-light-hsl) / 0.5) 0 1px, transparent 1px),
-    radial-gradient(circle at 96% 88%, hsl(var(--overlay-light-hsl) / 0.7) 0 1px, transparent 1px),
-    radial-gradient(circle at 12% 38%, hsl(var(--overlay-light-hsl) / 0.6) 0 1px, transparent 1px),
-    radial-gradient(circle at 58% 70%, hsl(var(--overlay-light-hsl) / 0.4) 0 1px, transparent 1px),
-    radial-gradient(circle at 88% 30%, hsl(var(--overlay-light-hsl) / 0.85) 0 1px, transparent 1px),
+    radial-gradient(circle at 6% 12%,  hsl(var(--overlay-light-hsl) / 0.55) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 14% 55%, hsl(var(--overlay-light-hsl) / 0.85) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 22% 82%, hsl(var(--overlay-light-hsl) / 0.4)  0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 29% 24%, hsl(var(--overlay-light-hsl) / 0.7) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 35% 68%, hsl(var(--overlay-light-hsl) / 0.5) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 41% 8%,  hsl(var(--overlay-light-hsl) / 0.9) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 48% 45%, hsl(var(--overlay-light-hsl) / 0.6) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 54% 91%, hsl(var(--overlay-light-hsl) / 0.75) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 61% 18%, hsl(var(--overlay-light-hsl) / 0.45) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 67% 60%, hsl(var(--overlay-light-hsl) / 0.8) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 73% 35%, hsl(var(--overlay-light-hsl) / 0.55) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 79% 78%, hsl(var(--overlay-light-hsl) / 0.65) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 85% 15%, hsl(var(--overlay-light-hsl) / 0.9) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 91% 50%, hsl(var(--overlay-light-hsl) / 0.5) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 96% 88%, hsl(var(--overlay-light-hsl) / 0.7) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 12% 38%, hsl(var(--overlay-light-hsl) / 0.6) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 58% 70%, hsl(var(--overlay-light-hsl) / 0.4) 0 0.0625rem, transparent 0.0625rem),
+    radial-gradient(circle at 88% 30%, hsl(var(--overlay-light-hsl) / 0.85) 0 0.0625rem, transparent 0.0625rem),
     radial-gradient(150% 150% at 10% 10%, hsl(var(--hue-primary, 240) 90% 55% / 0.9), transparent 50%),
     radial-gradient(150% 150% at 90% 30%, hsl(calc(var(--hue-primary, 240) + 90) 85% 50% / 0.85), transparent 55%),
     radial-gradient(150% 150% at 50% 100%, hsl(calc(var(--hue-primary, 240) + 200) 80% 45% / 0.8), transparent 60%),
@@ -505,29 +505,29 @@
 [x-hero] .cta-button--primary, [x-hero] button[data-primary]{
   background: white;
   color: #667eea;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.3);
 }
 
 [x-hero] .cta-button--primary:hover, [x-hero] button[data-primary]:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.9375rem 2.5rem rgba(0, 0, 0, 0.4);
 }
 
 [x-hero] .cta-button--secondary, [x-hero] button[data-secondary]{
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
+  border: 0.125rem solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(0.625rem);
 }
 
 [x-hero] .cta-button--secondary:hover, [x-hero] button[data-secondary]:hover{
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   [x-hero]{
     min-height: 18.75rem;
   }
@@ -559,7 +559,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   [x-hero]{
     min-height: 15.625rem;
   }
@@ -618,9 +618,9 @@
      nebula stays put. */
   animation: none;
   background:
-    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0px, transparent 40%),
-    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0px, transparent 40%),
-    radial-gradient(at 50% 50%, hsla(var(--hue-primary), calc(var(--saturation-primary) * 1%), calc(var(--lightness-primary) * 1%), 0.2) 0px, transparent 50%);
+    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0, transparent 40%),
+    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0, transparent 40%),
+    radial-gradient(at 50% 50%, hsla(var(--hue-primary), calc(var(--saturation-primary) * 1%), calc(var(--lightness-primary) * 1%), 0.2) 0, transparent 50%);
 }
 
 /* Lift the content above the nebula -- but not x-cardhero's legibility scrim

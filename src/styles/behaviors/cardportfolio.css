@@ -99,7 +99,7 @@
   width: var(--x-portfolio-avatar-size, 7.5rem);
   height: var(--x-portfolio-avatar-size, 7.5rem);
   border-radius: 50%;
-  border: 4px solid var(--bg-secondary, #1f2937);
+  border: 0.25rem solid var(--bg-secondary, #1f2937);
   object-fit: cover;
   font-size: 2rem;
   font-weight: 700;
@@ -122,7 +122,7 @@
   aspect-ratio: 1;
   box-sizing: border-box;
   border-radius: 50%;
-  border: 3px solid var(--bg-secondary, #1f2937);
+  border: 0.1875rem solid var(--bg-secondary, #1f2937);
   background: var(--x-portfolio-status, var(--text-secondary));
   cursor: help;
 }
@@ -183,8 +183,8 @@
   gap: 0.45rem;
   margin: 0.75rem 0 0;
   padding: 0.25rem 0.75rem;
-  border-radius: 62.4375rem;
-  border: 1px solid var(--x-portfolio-status);
+  border-radius: 999rem;
+  border: 0.0625rem solid var(--x-portfolio-status);
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.4;
@@ -241,12 +241,12 @@
 .x-cardportfolio--compact .x-cardportfolio__avatar {
   width: 4rem;
   height: 4rem;
-  border-width: 3px;
+  border-width: 0.1875rem;
   font-size: 1.25rem;
 }
 
 .x-cardportfolio--compact .x-cardportfolio__availability {
-  border-width: 2px;
+  border-width: 0.125rem;
 }
 
 .x-cardportfolio--compact .x-cardportfolio__name {
@@ -386,7 +386,7 @@
    Descendant selectors (0,3,0): the target is the PART, never the card. ── */
 [x-cardportfolio].x-card--xs > .x-cardportfolio__cover { height: 4rem; }
 
-[x-cardportfolio].x-card--xs .x-cardportfolio__avatar { width: 3.5rem; height: 3.5rem; border-width: 2px; font-size: 1.1rem; }
+[x-cardportfolio].x-card--xs .x-cardportfolio__avatar { width: 3.5rem; height: 3.5rem; border-width: 0.125rem; font-size: 1.1rem; }
 
 [x-cardportfolio].x-card--xs .x-cardportfolio__name { font-size: 1rem; }
 
@@ -396,7 +396,7 @@
 
 [x-cardportfolio].x-card--sm > .x-cardportfolio__cover { height: 5.5rem; }
 
-[x-cardportfolio].x-card--sm .x-cardportfolio__avatar { width: 4.5rem; height: 4.5rem; border-width: 3px; font-size: 1.4rem; }
+[x-cardportfolio].x-card--sm .x-cardportfolio__avatar { width: 4.5rem; height: 4.5rem; border-width: 0.1875rem; font-size: 1.4rem; }
 
 [x-cardportfolio].x-card--sm .x-cardportfolio__name { font-size: 1.2rem; }
 
@@ -507,7 +507,7 @@
   padding:0.35rem 0.75rem;
   background:var(--bg-tertiary);
   color:var(--text-primary);
-  border-radius:62.4375rem;
+  border-radius:999rem;
   font-size:0.85rem;
 }
 
@@ -591,7 +591,7 @@
 
 [x-cardportfolio] .x-cardportfolio__project-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(12.5rem,1fr));
   gap:1rem;
 }
 
@@ -646,7 +646,7 @@
 
 [x-cardportfolio] .x-cardportfolio__contact {
   padding:1rem 1.5rem;
-  border-top:1px solid var(--border-color);
+  border-top:0.0625rem solid var(--border-color);
   font-style:normal;
   display:flex;
   flex-wrap:wrap;
@@ -665,7 +665,7 @@
 
 [x-cardportfolio] .x-cardportfolio__social {
   padding:1rem 1.5rem;
-  border-top:1px solid var(--border-color);
+  border-top:0.0625rem solid var(--border-color);
   display:flex;
   justify-content:center;
   gap:0.75rem;
@@ -686,7 +686,7 @@
 
 [x-cardportfolio] .x-cardportfolio__footer {
   padding:1rem 1.5rem;
-  border-top:1px solid var(--border-color);
+  border-top:0.0625rem solid var(--border-color);
 }
 
 [x-cardportfolio] .x-cardportfolio__exp-item {
@@ -694,7 +694,7 @@
 }
 
 [x-cardportfolio] .x-cardportfolio__exp-item--divided {
-  border-top: 1px solid var(--border-color);
+  border-top: 0.0625rem solid var(--border-color);
 }
 
 [x-cardportfolio] .x-cardportfolio__skill-name {
@@ -716,8 +716,8 @@
 /* Hover states that were onmouseenter/onmouseleave handlers writing
    element.style. */
 [x-cardportfolio] .x-cardportfolio__project:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.2);
 }
 
 [x-cardportfolio] .x-cardportfolio__social-link:hover {
@@ -727,5 +727,5 @@
 
 [x-cardportfolio] .x-cardportfolio__cta:hover {
   background: var(--primary-hover, #4f46e5);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }

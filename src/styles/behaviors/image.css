@@ -70,7 +70,7 @@
   max-height: 90vh;
   object-fit: contain;
   border-radius: 0.5rem;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 1.5625rem 3.125rem rgba(0,0,0,0.5);
 }
 
 /* caption-position="overlay": the caption is a bar painted over the image's

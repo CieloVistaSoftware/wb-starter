@@ -1,5 +1,6 @@
 import { readFlag, readOption, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
+import { lengthToPx } from '../core/length-to-px.js';
 /**
  * Overlay Behaviors
  * -----------------------------------------------------------------------------
@@ -197,7 +198,7 @@ function drawerSize(config) {
   const vertical = config.position === 'top' || config.position === 'bottom';
   return vertical
     ? onlyChanged({ '--x-drawer-height': config.height }, { '--x-drawer-height': 'auto' })
-    : onlyChanged({ '--x-drawer-width': config.width }, { '--x-drawer-width': '320px' });
+    : onlyChanged({ '--x-drawer-width': config.width }, { '--x-drawer-width': '20rem' });
 }
 
 /**
@@ -662,8 +663,8 @@ export function sheet(element, options = {}) {
     title: options.title || authoredAttr(element, 'sheet-title') || element.getAttribute('heading') || 'Notes',
     content: options.content || authoredAttr(element, 'sheet-content') || element.getAttribute('description') || '',
     width: options.width || element.getAttribute('width') || '20rem',
-    minWidth: options.minWidth || authoredAttr(element, 'min-width') || '200px',
-    maxWidth: options.maxWidth || authoredAttr(element, 'max-width') || '600px',
+    minWidth: options.minWidth || authoredAttr(element, 'min-width') || '12.5rem',
+    maxWidth: options.maxWidth || authoredAttr(element, 'max-width') || '37.5rem',
     ...options
   };
 
@@ -721,8 +722,8 @@ export function sheet(element, options = {}) {
     document.addEventListener('mousemove', (e) => {
       if (!isResizing || !sheetEl) return;
       const newWidth = e.clientX;
-      const min = parseInt(config.minWidth);
-      const max = parseInt(config.maxWidth);
+      const min = lengthToPx(config.minWidth, 200);
+      const max = lengthToPx(config.maxWidth, 600);
       if (newWidth >= min && newWidth <= max) {
         setRule(sheetEl, 'size', sheetSize(`${newWidth}px`));
       }

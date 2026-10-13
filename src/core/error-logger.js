@@ -43,13 +43,13 @@ const ERROR_DISPLAY_CSS = `
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  border: 1px solid var(--x-error-display-accent);
+  box-shadow: 0 0.25rem 1.25rem rgba(0,0,0,0.5);
+  border: 0.0625rem solid var(--x-error-display-accent);
   z-index: 99999;
 }
 #x-error-display[hidden] { display: none; }
 #x-error-display .x-error-display__bar {
-  padding: 0.625rem 0.75rem; background: var(--x-error-display-head-bg); border-bottom: 1px solid var(--x-error-display-rule);
+  padding: 0.625rem 0.75rem; background: var(--x-error-display-head-bg); border-bottom: 0.0625rem solid var(--x-error-display-rule);
   display: flex; justify-content: space-between; align-items: center;
   border-radius: 0.5rem 0.5rem 0 0; position: sticky; top: 0;
 }
@@ -66,7 +66,7 @@ const ERROR_DISPLAY_CSS = `
 #x-error-display .x-error-display__list { padding: 0.5rem; }
 #x-error-display .x-error-display__item {
   padding: 0.5rem 0.625rem; margin-bottom: 0.375rem; background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid var(--x-error-display-accent); border-radius: 0 0.25rem 0.25rem 0; word-break: break-word;
+  border-left: 0.1875rem solid var(--x-error-display-accent); border-radius: 0 0.25rem 0.25rem 0; word-break: break-word;
 }
 #x-error-display .x-error-display__item-head { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
 #x-error-display .x-error-display__item-title { color: var(--x-error-display-accent); }
@@ -83,9 +83,9 @@ const ERROR_DISPLAY_CSS = `
 }
 #x-error-display .x-error-display__fallback {
   width: 100%; height: 8rem; margin-top: 0.375rem; font: 0.6875rem/1.4 monospace;
-  background: var(--x-error-display-code-bg); color: var(--x-error-display-code-text); border: 1px solid var(--x-error-display-accent); border-radius: 0.25rem; padding: 0.375rem;
+  background: var(--x-error-display-code-bg); color: var(--x-error-display-code-text); border: 0.0625rem solid var(--x-error-display-accent); border-radius: 0.25rem; padding: 0.375rem;
 }
-.x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; }
+.x-error-display__copybuf { position: fixed; top: 0; left: -624.9375rem; opacity: 0; }
 `;
 
 function ensureErrorDisplayStyles() {

@@ -68,7 +68,7 @@ table.x-table {
      stays matched to th so header/body row padding doesn't visibly split. */
   padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
 }
 
 [x-table] th,
@@ -108,16 +108,16 @@ table.x-table {
 [x-table] tbody tr.active,
 .x-table tbody tr.active {
   background-color: var(--bg-tertiary);
-  border-left: 3px solid var(--primary);
+  border-left: 0.1875rem solid var(--primary);
 }
 
 .x-table--bordered {
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
 }
 
 .x-table--bordered th,
 .x-table--bordered td {
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
 }
 
 .x-table--compact th,
@@ -132,7 +132,7 @@ table.x-table {
   width: 100%;
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.75rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.25rem;
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -140,8 +140,8 @@ table.x-table {
 }
 
 .x-table__search:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 1px;
+  outline: 0.125rem solid var(--primary);
+  outline-offset: 0.0625rem;
 }
 
 /* Sort indicators (from components.css) */
@@ -165,7 +165,7 @@ table.x-table {
   justify-content: flex-end;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-top: none;
   background-color: var(--bg-primary);
 }
@@ -178,7 +178,7 @@ table.x-table {
 
 .x-table__pager-btn {
   padding: 0.375rem 0.875rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.25rem;
   background-color: var(--bg-tertiary);
   color: var(--text-primary);

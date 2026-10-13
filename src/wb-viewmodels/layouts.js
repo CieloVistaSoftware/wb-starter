@@ -69,8 +69,8 @@ export function grid(element, options = {}) {
   } else {
     // Smart default: auto-fit with sensible min-width based on column count
     // This is mobile-first — columns collapse naturally on small screens
-    const defaultMins = { '2': '280px', '3': '250px', '4': '200px', '5': '180px', '6': '150px' };
-    const autoMin = defaultMins[config.columns] || '250px';
+    const defaultMins = { '2': '17.5rem', '3': '15.625rem', '4': '12.5rem', '5': '11.25rem', '6': '9.375rem' };
+    const autoMin = defaultMins[config.columns] || '15.625rem';
     gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
   }
 
@@ -91,7 +91,7 @@ export function grid(element, options = {}) {
     background: themeColor(config.background),
   }, {
     gap: '1rem',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(15.625rem, 100%), 1fr))',
   }));
 
   if (config.altRows) {
@@ -195,10 +195,10 @@ export function container(element, options = {}) {
   } else {
     // GRID MODE: Multiple columns (mobile-first with auto-fit)
     element.classList.add('x-container--grid');
-    const defaultMins = { 2: '280px', 3: '250px', 4: '200px', 5: '180px', 6: '150px' };
-    const autoMin = defaultMins[config.columns] || '250px';
+    const defaultMins = { 2: '17.5rem', 3: '15.625rem', 4: '12.5rem', 5: '11.25rem', 6: '9.375rem' };
+    const autoMin = defaultMins[config.columns] || '15.625rem';
     decls.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
-    defaults.gridTemplateColumns = 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))';
+    defaults.gridTemplateColumns = 'repeat(auto-fit, minmax(min(15.625rem, 100%), 1fr))';
   }
 
   // Apply max-width if set
@@ -327,7 +327,7 @@ export function center(element, options = {}) {
 export function sidebarlayout(element, options = {}) {
   const config = {
     side: options.side || element.dataset.side || element.getAttribute('side') || 'left',
-    sideWidth: options.sideWidth || element.dataset.sideWidth || authoredAttr(element, 'side-width') || '300px',
+    sideWidth: options.sideWidth || element.dataset.sideWidth || authoredAttr(element, 'side-width') || '18.75rem',
     contentMin: options.contentMin || element.dataset.contentMin || authoredAttr(element, 'content-min') || '50%',
     gap: readOption(element, options, 'gap') || '1rem',
     ...options

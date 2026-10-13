@@ -13,14 +13,14 @@ body {
 section {
   margin-bottom: 3rem;
   padding: 2rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.75rem;
   background: var(--bg-secondary);
 }
 
 h2 {
   margin-top: 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -34,7 +34,7 @@ h2 {
 
 .advantages-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
   gap: 1.5rem;
 }
 
@@ -67,7 +67,7 @@ h2 {
    matching each section's existing .badge-* color. */
 .framework-mount {
   padding: 1rem;
-  border: 1px dashed var(--mount-accent, var(--border-color));
+  border: 0.0625rem dashed var(--mount-accent, var(--border-color));
   border-radius: 0.5rem;
   min-height: 2.5rem;
 }
@@ -79,7 +79,7 @@ h2 {
 .framework-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  border-radius: 999px;
+  border-radius: 999rem;
   font-size: 0.8rem;
   font-weight: bold;
   margin-bottom: 1rem;

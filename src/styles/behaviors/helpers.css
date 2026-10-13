@@ -42,8 +42,8 @@
   font-family: monospace;
 }
 .x-hotkey.x-hotkey--triggered {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
+  outline: 0.1875rem solid var(--primary);
+  outline-offset: 0.125rem;
   background: var(--primary);
   color: white;
 }
@@ -129,8 +129,8 @@
   padding: 1rem 1.5rem;
   font-size: 2rem;
   letter-spacing: 0.15em;
-  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
-  border: 2px solid var(--clock--led-border, #333);
+  text-shadow: 0 0 0.625rem #0f0, 0 0 1.25rem #0f0;
+  border: 0.125rem solid var(--clock--led-border, #333);
 }
 
 /* ── offline ──────────────────────────────────────────────────────────── */
@@ -168,7 +168,7 @@
   font-family: monospace;
   font-size: 0.75rem;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  box-shadow: 0 0.25rem 1.25rem rgba(0,0,0,0.5);
   z-index: 99999;
 }
 .x-debug--bottom-right { bottom: 1rem; right: 1rem; }
@@ -179,7 +179,7 @@
 .x-debug .x-debug__header {
   padding: 0.5rem 0.75rem;
   background: var(--debug__header-bg, #1a1a1a);
-  border-bottom: 1px solid var(--debug__header-border, #333);
+  border-bottom: 0.0625rem solid var(--debug__header-border, #333);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -194,7 +194,7 @@
   background: var(--debug__clear-bg, #333);
   border: none;
   color: var(--debug__clear-fg, #fff);
-  padding: 2px 0.5rem;
+  padding: 0.125rem 0.5rem;
   border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.6875rem;
@@ -206,7 +206,7 @@
   padding: 0.375rem 0.5rem;
   margin-bottom: 0.25rem;
   background: rgba(255,255,255,0.05);
-  border-left: 3px solid currentColor;
+  border-left: 0.1875rem solid currentColor;
   border-radius: 0 0.25rem 0.25rem 0;
   word-break: break-word;
 }

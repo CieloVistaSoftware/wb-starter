@@ -732,7 +732,7 @@ function injectAudioStyles() {
     .x-audio__eq-slider::-webkit-slider-runnable-track {
       width: 100%; height: 0.5rem;
       background: linear-gradient(90deg, rgba(99,102,241,0.2) 0%, rgba(139,92,246,0.3) 50%, rgba(99,102,241,0.2) 100%);
-      border-radius: 0.25rem; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.25rem; border: 0.0625rem solid rgba(255,255,255,0.1);
     }
     .x-audio__eq-slider::-moz-range-track {
       width: 100%; height: 0.5rem; background: rgba(99,102,241,0.2); border-radius: 0.25rem;
@@ -743,47 +743,47 @@ function injectAudioStyles() {
       background: radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
                   radial-gradient(ellipse 80% 60% at 40% 30%, rgba(147,197,253,0.5) 0%, transparent 40%),
                   var(--x-audio-knob);
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 12px rgba(99,102,241,0.3), inset 0 1px 2px rgba(255,255,255,0.8);
+      border: 0.0625rem solid rgba(255,255,255,0.3);
+      box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.5), 0 0 0.75rem rgba(99,102,241,0.3), inset 0 0.0625rem 0.125rem rgba(255,255,255,0.8);
       transition: all 0.1s ease;
     }
     .x-audio__eq-slider::-webkit-slider-thumb:hover {
       transform: scale(1.15);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 20px rgba(99,102,241,0.5), inset 0 1px 2px rgba(255,255,255,0.9);
+      box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.6), 0 0 1.25rem rgba(99,102,241,0.5), inset 0 0.0625rem 0.125rem rgba(255,255,255,0.9);
     }
     .x-audio__eq-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.1); }
     .x-audio__eq-slider::-moz-range-thumb {
       width: 1.25rem; height: 1.25rem; border-radius: 50%; cursor: grab;
       background: var(--x-audio-knob-flat);
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 12px rgba(99,102,241,0.3);
+      border: 0.0625rem solid rgba(255,255,255,0.3);
+      box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.5), 0 0 0.75rem rgba(99,102,241,0.3);
     }
     .x-audio__master-vol {
       -webkit-appearance: none; appearance: none;
       background: var(--x-audio-volume-track);
-      border-radius: 0.25rem; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.25rem; border: 0.0625rem solid rgba(255,255,255,0.1);
     }
     .x-audio__master-vol::-webkit-slider-thumb {
       -webkit-appearance: none; width: 1.125rem; height: 1.125rem; border-radius: 50%;
       background: radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
                   var(--x-audio-volume-thumb);
-      border: 2px solid rgba(59,130,246,0.5);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 15px rgba(59,130,246,0.4); cursor: pointer;
+      border: 0.125rem solid rgba(59,130,246,0.5);
+      box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.4), 0 0 0.9375rem rgba(59,130,246,0.4); cursor: pointer;
     }
     .x-audio__master-vol::-webkit-slider-thumb:hover {
       transform: scale(1.1);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 25px rgba(59,130,246,0.6);
+      box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.5), 0 0 1.5625rem rgba(59,130,246,0.6);
     }
     .x-audio__master-vol::-moz-range-thumb {
       width: 1.125rem; height: 1.125rem; border-radius: 50%;
       background: var(--x-audio-volume-thumb-flat);
-      border: 2px solid rgba(59,130,246,0.5);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
+      border: 0.125rem solid rgba(59,130,246,0.5);
+      box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.4); cursor: pointer;
     }
     /* #1014: [data-theme] plus the class already outranks .x-audio in audio.css. */
     [data-theme="light"] .x-audio {
       background: var(--x-audio-body-light);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 0.625rem 2.5rem rgba(0,0,0,0.15);
     }
     [data-theme="light"] .x-audio__eq-container { background: rgba(0,0,0,0.05); }
   `;

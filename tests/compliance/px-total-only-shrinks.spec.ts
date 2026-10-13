@@ -28,7 +28,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // 940: the likely-convert px in 49 more stylesheets and the CSS that 10 JS
 // files write (tooltip, audio, events, x-devconsole, card, overlay, layouts,
 // notes, button, checkbox) converted (#1865, 179 values).
-const TOTAL_BASELINE = 940;
+// 102: every px left in src/styles (borders, shadows, transforms, breakpoints)
+// and in the CSS strings JS writes converted; the clamps that compared those
+// sizes with pointer px read them through src/core/length-to-px.js. What is
+// left is prose in comments, the card/iOS/12px floors, and APIs that only take
+// px (IntersectionObserver rootMargin, a measured clientWidth).
+const TOTAL_BASELINE = 102;
 
 test('audit: total px in src/ only shrinks -- rem on every device (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });

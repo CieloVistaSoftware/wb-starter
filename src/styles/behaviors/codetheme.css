@@ -23,7 +23,7 @@
 }
 
 .x-codetheme .x-codetheme__select {
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-sm, 0.25rem);
   background: var(--bg-primary);
   color: var(--text-primary);

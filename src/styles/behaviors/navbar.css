@@ -17,9 +17,9 @@
   
   /* Glassmorphism Base */
   background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  backdrop-filter: blur(0.625rem);
+  -webkit-backdrop-filter: blur(0.625rem);
+  border-bottom: 0.0625rem solid rgba(99, 102, 241, 0.2);
   
   /* Smooth transitions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -33,10 +33,10 @@
 
 :is([x-navbar], .x-navbar--site).scrolled{
   background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4),
-              inset 0 1px 0 rgba(99, 102, 241, 0.3);
+  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(1.25rem);
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.4),
+              inset 0 0.0625rem 0 rgba(99, 102, 241, 0.3);
 }
 
 /* ============================================================================
@@ -52,7 +52,7 @@
   color: #fff;
   font-weight: 700;
   font-size: 1.25rem;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03125rem;
   transition: all 0.3s ease;
   flex-shrink: 0;
 }
@@ -68,12 +68,12 @@
 :is([x-navbar], .x-navbar--site) a[href="#home"]:hover,
 :is([x-navbar], .x-navbar--site) a:first-of-type:hover{
   color: #6366f1;
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
 }
 
 :is([x-navbar], .x-navbar--site) a[href="#home"]:hover img,
 :is([x-navbar], .x-navbar--site) a:first-of-type:hover img{
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 1.25rem rgba(99, 102, 241, 0.5);
   transform: scale(1.05);
 }
 
@@ -111,14 +111,14 @@
   bottom: 0;
   left: -100%;
   width: 100%;
-  height: 2px;
+  height: 0.125rem;
   background: linear-gradient(90deg, #6366f1, #8b5cf6);
   transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 :is([x-navbar], .x-navbar--site) a:not(:first-of-type):hover{
   color: #fff;
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
 }
 
 :is([x-navbar], .x-navbar--site) a:not(:first-of-type):hover::after{
@@ -159,24 +159,24 @@
   
   /* Smooth transitions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4),
-              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0.25rem 0.9375rem rgba(99, 102, 241, 0.4),
+              inset 0 0.0625rem 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Hover state - scale + glow */
 .navbar-cta:hover,
 :is([x-navbar], .x-navbar--site) button:hover{
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6),
-              inset 0 1px 0 rgba(255, 255, 255, 0.3),
-              0 0 20px rgba(99, 102, 241, 0.5);
+  transform: translateY(-0.1875rem) scale(1.05);
+  box-shadow: 0 0.5rem 1.5625rem rgba(99, 102, 241, 0.6),
+              inset 0 0.0625rem 0 rgba(255, 255, 255, 0.3),
+              0 0 1.25rem rgba(99, 102, 241, 0.5);
 }
 
 /* Active/Click state */
 .navbar-cta:active,
 :is([x-navbar], .x-navbar--site) button:active{
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  transform: translateY(-0.0625rem) scale(1.02);
+  box-shadow: 0 0.25rem 0.9375rem rgba(99, 102, 241, 0.4);
 }
 
 /* Animated background shimmer */
@@ -213,7 +213,7 @@
    RESPONSIVE DESIGN
    ============================================================================ */
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   :is([x-navbar], .x-navbar--site){
     padding: 0.75rem 1rem;
     gap: 1rem;
@@ -241,7 +241,7 @@
   font-size: 0.65rem;
   color: rgba(99, 102, 241, 0.7);
   font-weight: 400;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03125rem;
   text-transform: uppercase;
   margin-top: 0.25rem;
 }
@@ -250,7 +250,7 @@
    FALLBACK FOR BROWSERS WITHOUT BACKDROP-FILTER
    ============================================================================ */
 
-@supports not (backdrop-filter: blur(1px)) {
+@supports not (backdrop-filter: blur(0.0625rem)) {
   :is([x-navbar], .x-navbar--site){
     background: rgba(15, 23, 42, 0.95);
   }
@@ -281,12 +281,12 @@
 :is([x-navbar], .x-navbar--site)[variant="dark"] {
   background: var(--bg-tertiary);
   color: var(--text-primary);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
 }
 
 :is([x-navbar], .x-navbar--site)[variant="transparent"] {
   background: transparent;
-  border-bottom: 1px solid transparent;
+  border-bottom: 0.0625rem solid transparent;
 }
 
 /* Base appearance, moved out of navigation.js's inline writes (#903). */

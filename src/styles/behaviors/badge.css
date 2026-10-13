@@ -29,7 +29,7 @@
      light text-color used as a background (which gave white-on-light). */
   background: var(--badge-gray-bg);
   color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   line-height: 1.4;
 }
 
@@ -67,10 +67,10 @@
   position: relative;
   isolation: isolate;
   background: var(--badge-glass-bg);
-  border: 1px solid var(--badge-glass-border);
+  border: 0.0625rem solid var(--badge-glass-border);
   color: var(--text-primary);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
 }
 .x-badge--glass::before {
   content: '';
@@ -92,7 +92,7 @@
 .x-badge--lg { padding: 0.375rem 0.75rem; font-size: 1rem; }
 
 /* Pill */
-.x-badge--pill { border-radius: 9999px; }
+.x-badge--pill { border-radius: 9999rem; }
 
 /* Dot — collapses the whole element into a small colored circle. Scoped off
    of `.x-badge--removable` (#415) and, since #631, off of any dot badge
@@ -137,7 +137,7 @@
 /* Outline */
 .x-badge--outline {
   background: transparent;
-  border: 1px solid currentColor;
+  border: 0.0625rem solid currentColor;
 }
 .x-badge--outline.x-badge--primary { color: var(--primary); }
 .x-badge--outline.x-badge--success { color: var(--success-color); }

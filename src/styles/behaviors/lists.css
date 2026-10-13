@@ -75,7 +75,7 @@
 .x-ol.x-ol--timeline {
   list-style-type: none;
   padding-left: 2rem;
-  border-left: 2px solid var(--border-color);
+  border-left: 0.125rem solid var(--border-color);
 }
 .x-ol--timeline > .x-ol__item {
   position: relative;
@@ -89,7 +89,7 @@
   height: 0.75rem;
   border-radius: 50%;
   background: var(--primary);
-  border: 2px solid var(--bg-primary, #111827);
+  border: 0.125rem solid var(--bg-primary, #111827);
 }
 
 /* ── dl ───────────────────────────────────────────────────────────────── */
@@ -104,7 +104,7 @@
   align-items: start;
 }
 .x-dl.x-dl--bordered {
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md, 0.375rem);
   padding: 1rem;
 }

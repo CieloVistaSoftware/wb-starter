@@ -30,7 +30,7 @@
      schema $view built an inner trigger over the authored text; with that
      $view gone (it wiped authored menus, #701) the host is measured. */
   padding: 1rem;
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   border-radius: 0.375rem;
   cursor: pointer;
   background: var(--bg-secondary, #1f2937);
@@ -42,7 +42,7 @@
   top: 100%;
   left: 0;
   background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.375rem;
   min-width: 7.5rem;
   display: none;
@@ -74,7 +74,7 @@
 
 .x-dropdown .x-dropdown__trigger {
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.375rem;
   padding: 0.5rem 1rem;
   color: var(--text-primary, inherit);
@@ -93,7 +93,7 @@
 .x-dropdown__menu {
   position: absolute;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.5rem;
   min-width: 9.375rem;
   /* #707 -- John: "the rendered element must be fluid to what it's showing".
@@ -103,7 +103,7 @@
      it from ever running past the viewport. */
   width: max-content;
   max-width: min(90vw, 32rem);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.625rem 1.5625rem rgba(0, 0, 0, 0.2);
   display: none;
   z-index: 1000;
   overflow: hidden;
@@ -118,7 +118,7 @@
 /* #1862: a menu that would run past the edge of whatever clips it is moved
    back inside, by just that much (dropdown.js measures it on open). `translate`
    is its own property, so it adds to the fade-in's transform. */
-.x-dropdown__menu { translate: var(--x-dropdown-shift, 0px) 0; }
+.x-dropdown__menu { translate: var(--x-dropdown-shift, 0) 0; }
 
 .x-dropdown__menu.x-dropdown__menu--open {
   display: block;

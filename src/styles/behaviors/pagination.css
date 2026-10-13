@@ -27,7 +27,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-md, 0.375rem);
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   background: var(--bg-tertiary, #374151);
   color: var(--text-primary, #f9fafb);
   cursor: pointer;

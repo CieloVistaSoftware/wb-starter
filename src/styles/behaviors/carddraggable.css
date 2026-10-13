@@ -6,7 +6,7 @@
  * selector here needs [x-carddraggable] or a class only carddraggable() stamps.
  */
 
-/* ═══════════════════════════════════════════════════════════════════════════ DRAGGABLE CARD — carddraggable(), card.js. Moved here from inline styles (Law 9 migration, #370). left/top stay inline in card.js -- genuinely dynamic, continuously updated during a real-time mouse/touch drag. ═══════════════════════════════════════════════════════════════════════════ */ .x-card__drag-handle { padding: 1rem; border-bottom: 1px solid var(--border-color); background: var(--bg-tertiary); cursor: grab; display: flex; align-items: center; gap: 0.5rem; }
+/* ═══════════════════════════════════════════════════════════════════════════ DRAGGABLE CARD — carddraggable(), card.js. Moved here from inline styles (Law 9 migration, #370). left/top stay inline in card.js -- genuinely dynamic, continuously updated during a real-time mouse/touch drag. ═══════════════════════════════════════════════════════════════════════════ */ .x-card__drag-handle { padding: 1rem; border-bottom: 0.0625rem solid var(--border-color); background: var(--bg-tertiary); cursor: grab; display: flex; align-items: center; gap: 0.5rem; }
 
 .x-card__drag-handle-icon { opacity: 0.5; }
 
@@ -29,7 +29,7 @@
    so the handle keeps its flex row, padding and title margin. */
 [x-carddraggable][x-carddraggable] > .x-card__drag-handle {
   padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
   background: var(--bg-tertiary);
   cursor: grab;
   display: flex;

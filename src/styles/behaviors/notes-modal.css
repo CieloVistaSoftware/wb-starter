@@ -21,7 +21,7 @@
   border-radius: 0.75rem;
   min-width: 21.25rem;
   max-width: 90vw;
-  box-shadow: 0 8px 32px #000a;
+  box-shadow: 0 0.5rem 2rem #000a;
 }
 .x-notes-modal.x-notes-modal--open {
   display: block;
@@ -151,7 +151,7 @@ body.x-notes-modal-resizing {
   max-width: 90vw;
   max-height: 80vh;
   overflow: auto;
-  box-shadow: 0 8px 32px #000a;
+  box-shadow: 0 0.5rem 2rem #000a;
   position: relative;
 }
 .x-notes-modal .x-notes-modal__issues-title {
@@ -184,7 +184,7 @@ body.x-notes-modal-resizing {
 }
 .x-notes-modal .x-notes-modal__table th {
   padding: 0.5rem 0.7rem;
-  border-bottom: 1px solid var(--notes-modal__table-border, #444);
+  border-bottom: 0.0625rem solid var(--notes-modal__table-border, #444);
 }
 .x-notes-modal .x-notes-modal__table td {
   padding: 0.5rem 0.7rem;

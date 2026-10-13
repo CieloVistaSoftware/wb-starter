@@ -18,14 +18,14 @@
 /* Exit transition - fade out and slide up */
 .page--exit {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-0.625rem);
   pointer-events: none;
 }
 
 /* Enter transition - start state (fade in from below) */
 .page--enter {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(1.25rem);
 }
 
 /* Enter transition - active state */
@@ -90,7 +90,7 @@
   width: 3.75rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .site__nav {
     transform: translateX(0);
     transition: transform 0.3s ease;
@@ -158,7 +158,7 @@
 }
 
 .footer__social-link:hover {
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
   opacity: 1;
 }
 
@@ -218,7 +218,7 @@
 
 .error__retry:hover {
   background: var(--primary-hover, #5558e3);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 .error__retry:active {
@@ -232,10 +232,10 @@
 
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   padding: 0;
-  margin: -1px;
+  margin: -0.0625rem;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;

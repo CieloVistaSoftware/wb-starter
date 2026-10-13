@@ -185,7 +185,7 @@ function renderFixCard(host, card, fix) {
   const codeBlocks = host.querySelectorAll('.fix-code-block');
   codeBlocks.forEach(block => mdhtml(block));
 
-  // Let CSS handle max-height constraints (750px in injected styles)
+  // Let CSS handle max-height constraints (46.875rem in injected styles)
   // this.style.maxHeight is NOT overridden here to respect the CSS limit
 
   // Ensure the main content area expands

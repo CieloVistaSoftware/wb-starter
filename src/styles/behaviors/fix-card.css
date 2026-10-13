@@ -140,14 +140,14 @@
         
         .glow-red {
           color: var(--danger-color, #ef4444);
-          text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+          text-shadow: 0 0 0.5rem rgba(255, 0, 0, 0.5);
           font-weight: 600;
           animation: pulse-red 2s infinite;
         }
         @keyframes pulse-red {
-          0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
-          50% { text-shadow: 0 0 12px rgba(255, 0, 0, 0.7); }
-          100% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
+          0% { text-shadow: 0 0 0.3125rem rgba(255, 0, 0, 0.4); }
+          50% { text-shadow: 0 0 0.75rem rgba(255, 0, 0, 0.7); }
+          100% { text-shadow: 0 0 0.3125rem rgba(255, 0, 0, 0.4); }
         }
 
 /* =============================================================================
@@ -208,7 +208,7 @@
   gap: 1rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
 }
 
 .x-fixcard .meta-item {
@@ -240,14 +240,14 @@
 
 .x-fixcard .detail-content.violation {
   color: var(--danger);
-  border: 1px dashed var(--danger);
+  border: 0.0625rem dashed var(--danger);
   background: var(--violation-bg, rgba(239, 68, 68, 0.1));
 }
 
 .x-fixcard .fix-enhancement-link {
   color: var(--primary);
   text-decoration: none;
-  border-bottom: 1px dashed var(--primary);
+  border-bottom: 0.0625rem dashed var(--primary);
 }
 
 .x-fixcard code.fix-file.fix-file {

@@ -19,14 +19,14 @@
   font-size: 3rem;
   margin: 0 0 0.5rem 0;
   font-weight: 700;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 0.125rem 0.125rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 .services-hero-banner p {
   font-size: 1.3rem;
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0.0625rem 0.0625rem 0.25rem rgba(0, 0, 0, 0.5);
 }
 
 .services-container {
@@ -37,7 +37,7 @@
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -46,14 +46,14 @@
   padding: 2rem;
   background: var(--bg-secondary);
   border-radius: 0.75rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .services-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+  transform: translateY(-0.5rem);
+  box-shadow: 0 0.9375rem 2.5rem rgba(102, 126, 234, 0.2);
 }
 
 .services-card h3 {
@@ -74,7 +74,7 @@
   padding: 3rem 2rem;
   border-radius: 0.75rem;
   margin-top: 4rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
 }
 
 .services-cta-section h2 {
@@ -104,12 +104,12 @@
 }
 
 .services-cta-link:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+  transform: translateY(-0.1875rem);
+  box-shadow: 0 0.9375rem 2.5rem rgba(99, 102, 241, 0.4);
 }
 
 /* MOBILE-FIRST: Responsive overrides for services page */
-@media (max-width: 600px) {
+@media (max-width: 37.5rem) {
   .services-hero-banner,
   .services-container,
   .services-grid,

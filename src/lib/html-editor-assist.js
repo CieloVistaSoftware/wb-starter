@@ -107,7 +107,7 @@ function caretPoint(textarea, pos) {
   const mirror = document.createElement('div');
   // The copy's layout comes from a generated rule, never its style attribute
   // (no inline styles, #779): the textarea's own font, padding and wrapping.
-  const decls = { position: 'absolute', visibility: 'hidden', top: '0', left: '-9999px', width: `${textarea.clientWidth}px` };
+  const decls = { position: 'absolute', visibility: 'hidden', top: '0', left: '-624.9375rem', width: `${textarea.clientWidth}px` };
   for (const p of ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'tabSize',
     'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderTopWidth', 'borderLeftWidth',
     'boxSizing', 'whiteSpace', 'overflowWrap']) {

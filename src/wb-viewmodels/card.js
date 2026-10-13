@@ -2431,7 +2431,7 @@ export function cardoverlay(element, options = {}) {
   // reset background-repeat to `repeat`, and a sub-pixel gap at a cover-
   // scaled edge then tiled a sliver of the image into it. No-repeat is part
   // of the overlay rule now (card.css, #779 section).
-  if (config.height !== '300px') setRule(element, 'overlay-height', { '--overlay-height': config.height });
+  if (config.height !== '18.75rem') setRule(element, 'overlay-height', { '--overlay-height': config.height });
   if (config.image) {
     setRule(element, 'overlay-image', { backgroundImage: `url(${config.image})` }, { weight: 3 });
   }
@@ -2485,7 +2485,7 @@ export function cardexpandable(element, options = {}) {
     // so <div x-cardexpandable expanded> (what every demo actually writes) was
     // silently ignored and always rendered collapsed.
     expanded: readOnFlag(element, options, 'expanded'),
-    maxHeight: readOption(element, options, 'maxHeight') || '100px',
+    maxHeight: readOption(element, options, 'maxHeight') || '6.25rem',
     // #435: a pixel maxHeight truncates text mid-line, which looks broken
     // for arbitrary content -- `lines` clamps to exactly N full lines via
     // CSS line-clamp instead. An alternative to maxHeight, not a

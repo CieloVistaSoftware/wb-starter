@@ -38,7 +38,7 @@
 .x-tabs .x-tabs__nav, [x-tabs] .x-tabs__nav {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid var(--border-color, #374151);
+  border-bottom: 0.0625rem solid var(--border-color, #374151);
   margin-bottom: 0.5rem;
 }
 
@@ -51,8 +51,8 @@
   padding: 0.25rem 0.75rem;
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
+  border-bottom: 0.125rem solid transparent;
+  margin-bottom: -0.0625rem;
   cursor: pointer;
   color: inherit;
   font-size: 0.8rem;
@@ -70,13 +70,13 @@
 
 .x-tabs .x-tabs__tab:hover:not(.x-tabs__tab--active), [x-tabs] .x-tabs__tab:hover:not(.x-tabs__tab--active) { opacity: 0.9; }
 .x-tabs .x-tabs__tab:focus-visible, [x-tabs] .x-tabs__tab:focus-visible {
-  outline: 2px solid var(--primary, #6366f1);
-  outline-offset: -2px;
+  outline: 0.125rem solid var(--primary, #6366f1);
+  outline-offset: -0.125rem;
 }
 
 .x-tabs .x-tabs__panel, [x-tabs] .x-tabs__panel {
   padding: 1rem;
-  border: 1px solid var(--border-color, #e0e0e0);
+  border: 0.0625rem solid var(--border-color, #e0e0e0);
   border-radius: var(--radius-md, 0.25rem);
   background: var(--bg-primary, #fff);
 }
@@ -113,7 +113,7 @@
 }
 .x-tabs--pills .x-tabs__tab, [x-tabs][variant="pills"] .x-tabs__tab {
   border-bottom: none;
-  border-radius: 999px;
+  border-radius: 999rem;
   margin-bottom: 0;
 }
 .x-tabs--pills .x-tabs__tab--active, [x-tabs][variant="pills"] .x-tabs__tab--active {
@@ -123,9 +123,9 @@
 
 /* bordered -- the tab reads as a folder tab joined to the panel below. */
 .x-tabs--bordered .x-tabs__tab, [x-tabs][variant="bordered"] .x-tabs__tab {
-  border: 1px solid transparent;
+  border: 0.0625rem solid transparent;
   border-radius: var(--radius-md, 0.25rem) var(--radius-md, 0.25rem) 0 0;
-  margin-bottom: -1px;
+  margin-bottom: -0.0625rem;
 }
 .x-tabs--bordered .x-tabs__tab--active, [x-tabs][variant="bordered"] .x-tabs__tab--active {
   border-color: var(--border-color, #374151);
@@ -142,14 +142,14 @@
 .x-tabs--vertical .x-tabs__nav, [x-tabs][vertical] .x-tabs__nav {
   flex-direction: column;
   border-bottom: none;
-  border-right: 1px solid var(--border-color, #374151);
+  border-right: 0.0625rem solid var(--border-color, #374151);
   margin-bottom: 0;
 }
 .x-tabs--vertical .x-tabs__tab, [x-tabs][vertical] .x-tabs__tab {
   border-bottom: none;
-  border-right: 2px solid transparent;
+  border-right: 0.125rem solid transparent;
   margin-bottom: 0;
-  margin-right: -1px;
+  margin-right: -0.0625rem;
   text-align: left;
 }
 .x-tabs--vertical .x-tabs__tab--active, [x-tabs][vertical] .x-tabs__tab--active {
