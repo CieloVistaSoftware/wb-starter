@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.516",
+      "date": "2026-10-12",
+      "summary": "Every dropdown example on the dropdown doc opened behind its own code panel, and the bottom-end example&#39;s menu ran past the left edge of the page content, where it was cut off. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>An open dropdown in a doc example is drawn above its code panel, and kept inside the box that would cut it off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2866f587e03ec81403e057e27685f87b371029d3\" target=\"_blank\" rel=\"noopener\"><code>2866f58</code></a>",
+          "issues": [
+            1862,
+            1866
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html\" target=\"_blank\" rel=\"noopener\">public/doc-viewer.html</a>?file=<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fdropdown.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/dropdown.md</a> and click &quot;Account&quot;, &quot;Actions&quot; and &quot;Menu&quot;. Before: each menu was drawn under the code panel below it, and Actions showed &quot;dit&quot;, &quot;up&quot;, &quot;ele&quot;. Now: every menu is drawn on top, whole, and Actions reads Edit, Duplicate, Delete.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2866f587e03ec81403e057e27685f87b371029d3\" target=\"_blank\" rel=\"noopener\"><code>2866f58</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.515",
       "date": "2026-10-12",
       "summary": "Npm only got a version when someone cut a release by hand, and its publish step never worked, so npm sat at 1.0.0 while the live site was at 1.0.512. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a>",

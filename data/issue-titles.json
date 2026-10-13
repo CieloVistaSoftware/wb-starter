@@ -1260,5 +1260,6 @@
   "1852": "toast-message-live-attribute.spec.ts: React counter test flakes when the first toast auto-dismisses before the final read",
   "1860": "Publish every push to npm under the badge's number, with trusted publishing instead of NPM_TOKEN",
   "1861": "The live fix viewer shows 13 fixes from February: /api/fixes does not exist on GitHub Pages and the data/fixes.json fallback was never updated",
-  "1862": "Dropdown menus in doc examples open behind the code panel: the demo grid's contain:layout traps the menu's z-index"
+  "1862": "Dropdown menus in doc examples open behind the code panel: the demo grid's contain:layout traps the menu's z-index",
+  "1867": "create-wb-starter cannot publish a new release: package.json still says 1.0.0"
 }
