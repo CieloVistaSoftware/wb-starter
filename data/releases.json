@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.514",
+      "date": "2026-10-12",
+      "summary": "The effect behaviors (glow, bounce, shake, typewriter cursor, stage light) were sized in px, so their glows, offsets and the stage-light fixture ignored the reader&#39;s font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1858\" target=\"_blank\" rel=\"noopener\">PR 1858</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Effects size in rem -- every px in effects.css, and the px gate holds 253</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/254e5695668e5652ca535bb08e709191d94476b1\" target=\"_blank\" rel=\"noopener\"><code>254e569</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, find the glow and stagelight demos, and set the browser&#39;s default font size to 20px. Before: the glow radius and the stage light&#39;s 40px lamp stayed fixed. Now: they grow with the text (the lamp becomes 50px); at the default 16px nothing moves.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2cfa9c11fb2f38e4106c2ea8824ff6dd39ae6e84\" target=\"_blank\" rel=\"noopener\"><code>2cfa9c1</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.513",
       "date": "2026-10-12",
       "summary": "Src/wb-viewmodels/semantics/audio.js and tooltip.js inject CSS (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1863\" target=\"_blank\" rel=\"noopener\">PR 1863</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
