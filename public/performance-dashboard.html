@@ -226,14 +226,22 @@
   </div>
 
   <script>
+    const NIGHTLY_PERF_URL = 'https://raw.githubusercontent.com/CieloVistaSoftware/wb-starter/nightly-results/performance-results.json';
+
     async function loadData() {
       try {
         // #1433: live results are per-worker files the server merges with the
         // history in data/performance-results.json.
         // Resolve against this page, not the host root: on GitHub Pages the
         // site lives under /wb-starter/, and '/api/...' hit the org root.
-        const res = await fetch(new URL('../api/performance-results', location.href));
-        if (!res.ok) throw new Error(`No performance results here (HTTP ${res.status}); they are served by the local dev server.`);
+        // The live site is static and has no /api; there, read the results
+        // the Nightly run publishes to the nightly-results branch.
+        let res = await fetch(new URL('../api/performance-results', location.href));
+        if (res.status === 404) {
+          res = await fetch(NIGHTLY_PERF_URL + '?' + Date.now());
+          document.getElementById('runBtn').hidden = true;
+        }
+        if (!res.ok) throw new Error(`No performance results (HTTP ${res.status}).`);
         const data = await res.json();
         
         // Process data for charts
