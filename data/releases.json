@@ -6,6 +6,98 @@
   ],
   "releases": [
     {
+      "version": "1.0.515",
+      "date": "2026-10-12",
+      "summary": "Npm only got a version when someone cut a release by hand, and its publish step never worked, so npm sat at 1.0.0 while the live site was at 1.0.512. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Publish every push to npm under the badge&#39;s number</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/38146bbd176a11193afcf814be72ed5f0c7a3ba1\" target=\"_blank\" rel=\"noopener\"><code>38146bb</code></a>",
+          "issues": [
+            1860,
+            1859
+          ]
+        }
+      ],
+      "seeIt": "After a push to main, run <code>npm view wb-starter version</code> and compare it with the version badge on <a href=\"https://cielovistasoftware.github.io/wb-starter/\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/</a>. Before: npm said 1.0.0 while the badge said v1.0.512. Now: npm says the badge&#39;s number once publish-npm.yml finishes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/38146bbd176a11193afcf814be72ed5f0c7a3ba1\" target=\"_blank\" rel=\"noopener\"><code>38146bb</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.514",
+      "date": "2026-10-12",
+      "summary": "The effect behaviors (glow, bounce, shake, typewriter cursor, stage light) were sized in px, so their glows, offsets and the stage-light fixture ignored the reader&#39;s font size. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1858\" target=\"_blank\" rel=\"noopener\">PR 1858</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Effects size in rem -- every px in effects.css, and the px gate holds 253</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/254e5695668e5652ca535bb08e709191d94476b1\" target=\"_blank\" rel=\"noopener\"><code>254e569</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open /?page=behaviors, find the glow and stagelight demos, and set the browser&#39;s default font size to 20px. Before: the glow radius and the stage light&#39;s 40px lamp stayed fixed. Now: they grow with the text (the lamp becomes 50px); at the default 16px nothing moves.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2cfa9c11fb2f38e4106c2ea8824ff6dd39ae6e84\" target=\"_blank\" rel=\"noopener\"><code>2cfa9c1</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.513",
+      "date": "2026-10-12",
+      "summary": "Src/wb-viewmodels/semantics/audio.js and tooltip.js inject CSS (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1863\" target=\"_blank\" rel=\"noopener\">PR 1863</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The audio player&#39;s controls and the tooltip size in rem</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5016ef715af291dbdb8b326b77fd48f23f3004f5\" target=\"_blank\" rel=\"noopener\"><code>5016ef7</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Open a page with an x-audio player and a tooltip, and set the browser&#39;s default font size to 20px. Before: the seek thumb, volume thumb and tooltip arrow kept their pixel size while the text grew. Now: they grow with the text.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/612699c9baee5f319438e173bef2ed0dad117e30\" target=\"_blank\" rel=\"noopener\"><code>612699c</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.512",
+      "date": "2026-10-12",
+      "summary": "Two px gates counted two different numbers, and the old one only watched the &quot;likely convert&quot; px, which no longer means anything now that every px must become rem. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1857\" target=\"_blank\" rel=\"noopener\">PR 1857</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One px gate -- remove px-no-new-creep, px-total-only-shrinks replaces it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/66b6ada58a4b1b703e62fc678f88f76dbeceef17\" target=\"_blank\" rel=\"noopener\"><code>66b6ada</code></a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Docs+test: rem, never px, on every device type -- Tier-1 Law 19 and a total-px gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8c30dac5b2ab5e44acc59a35b1b4c2fb6e53fffe\" target=\"_blank\" rel=\"noopener\"><code>8c30dac</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test --project=compliance tests/compliance/px-*.spec.ts</code>. Before: two specs ran, px-no-new-creep (limit 264) and px-total-only-shrinks (limit 1163). Now: only px-total-only-shrinks runs, counting every px in src/.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/42303ac5cfcf6506c0ee4a7e10881f56d4f246ec\" target=\"_blank\" rel=\"noopener\"><code>42303ac</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.511",
       "date": "2026-10-12",
       "summary": "The test and performance dashboards were empty on the live site because their data only existed on a local machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1855\" target=\"_blank\" rel=\"noopener\">PR 1855</a>)",

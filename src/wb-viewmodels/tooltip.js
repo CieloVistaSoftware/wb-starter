@@ -34,7 +34,7 @@ function injectStyles() {
       padding: 0.5rem 0.75rem;
       background: var(--bg-tertiary);
       color: var(--text-primary);
-      border-radius: 6px;
+      border-radius: 0.375rem;
       font-size: 0.8rem;
       /* maxWidth (#1107). The schema declares maxWidth (default 200px) and a
          --x-tooltip-max-width CSS API variable; neither reached the element,
@@ -65,8 +65,8 @@ function injectStyles() {
     }
     .x-tooltip__arrow {
       position: absolute;
-      width: 8px;
-      height: 8px;
+      width: 0.5rem;
+      height: 0.5rem;
       background: var(--bg-tertiary);
       transform: rotate(45deg);
     }
@@ -76,39 +76,39 @@ function injectStyles() {
     .x-tooltip--top .x-tooltip__arrow,
     .x-tooltip--top-start .x-tooltip__arrow,
     .x-tooltip--top-end .x-tooltip__arrow {
-      bottom: -4px;
+      bottom: -0.25rem;
       left: 50%;
-      margin-left: -4px;
+      margin-left: -0.25rem;
     }
     .x-tooltip--bottom .x-tooltip__arrow,
     .x-tooltip--bottom-start .x-tooltip__arrow,
     .x-tooltip--bottom-end .x-tooltip__arrow {
-      top: -4px;
+      top: -0.25rem;
       left: 50%;
-      margin-left: -4px;
+      margin-left: -0.25rem;
     }
     /* start/end align the tooltip's edge with the trigger's edge, so the arrow
        moves to that edge too rather than staying centred over nothing. */
     .x-tooltip--top-start .x-tooltip__arrow,
     .x-tooltip--bottom-start .x-tooltip__arrow {
-      left: 12px;
+      left: 0.75rem;
       margin-left: 0;
     }
     .x-tooltip--top-end .x-tooltip__arrow,
     .x-tooltip--bottom-end .x-tooltip__arrow {
       left: auto;
-      right: 12px;
+      right: 0.75rem;
       margin-left: 0;
     }
     .x-tooltip--left .x-tooltip__arrow {
-      right: -4px;
+      right: -0.25rem;
       top: 50%;
-      margin-top: -4px;
+      margin-top: -0.25rem;
     }
     .x-tooltip--right .x-tooltip__arrow {
-      left: -4px;
+      left: -0.25rem;
       top: 50%;
-      margin-top: -4px;
+      margin-top: -0.25rem;
     }
     .x-tooltip--dark {
       background: var(--x-tooltip-dark-bg);

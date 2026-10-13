@@ -2,7 +2,7 @@
   "css": [
     "css-oop-compliance.spec.ts",
     "proposed-css-architecture.spec.ts",
-    "px-no-new-creep.spec.ts",
+    "px-total-only-shrinks.spec.ts",
     "demo-container-spacing.spec.ts",
     "footer-viewport-anchor.spec.ts",
     "header-footer-full-width.spec.ts",

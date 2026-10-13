@@ -1259,5 +1259,6 @@
   "1847": "x-dropdown select event reported index -1 once on CI (Behaviors stage, option 0)",
   "1852": "toast-message-live-attribute.spec.ts: React counter test flakes when the first toast auto-dismisses before the final read",
   "1860": "Publish every push to npm under the badge's number, with trusted publishing instead of NPM_TOKEN",
-  "1861": "The live fix viewer shows 13 fixes from February: /api/fixes does not exist on GitHub Pages and the data/fixes.json fallback was never updated"
+  "1861": "The live fix viewer shows 13 fixes from February: /api/fixes does not exist on GitHub Pages and the data/fixes.json fallback was never updated",
+  "1862": "Dropdown menus in doc examples open behind the code panel: the demo grid's contain:layout traps the menu's z-index"
 }
