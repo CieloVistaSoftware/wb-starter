@@ -1266,5 +1266,8 @@
   "1872": "Two sessions changed the npm release at the same time, and neither checked for the other",
   "1874": "Compliance is red on main: data/fixes.json trips the retired-class scan, and PACKAGE is at 857 against its 855 ceiling",
   "1877": "With JavaScript off the live site shows only \"Loading...\" -- the \"renders as semantic HTML anyway\" promise does not hold",
-  "1880": "x-gallery squeezes every photo into a 50px-tall strip: gallery.css fixes img height at 3.125rem"
+  "1880": "x-gallery squeezes every photo into a 50px-tall strip: gallery.css fixes img height at 3.125rem",
+  "1882": "The site badge says v1.0.527 while npm says 1.0.1: sync both at 1.1.0 and show the npm version in the badge",
+  "1884": "Home \"By the Numbers\" says 100+ Behaviors while the hero and the Behaviors page say 167; add two more facts",
+  "1886": "Live Error Log: no way back to the site, a false \"Great job!\", a 404 on every visit, and buttons that call a server that isn't there"
 }

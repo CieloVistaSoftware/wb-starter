@@ -21,6 +21,17 @@ export function versionNumber(stamp) {
 }
 
 /**
+ * The version the site SHOWS (#1882). John, 2026-10-13: "all i want is npm.js
+ * to drive our release numbering" for both packages, "in sync forever". The badge shows the version npm has
+ * (`npm`, stamped from the registry by scripts/stamp-version.js); the push
+ * count stays in versionNumber() for cache keys and error reports, where every
+ * push must differ. A stamp without `npm` (offline, or older) shows the count.
+ */
+export function displayVersion(stamp) {
+  return stamp.npm || versionNumber(stamp).number;
+}
+
+/**
  * Order two version numbers ("1.0.448") numerically, segment by segment:
  * negative when `a` is older, positive when newer, 0 when equal (#1773).
  * A missing version sorts before every recorded one -- entries logged before

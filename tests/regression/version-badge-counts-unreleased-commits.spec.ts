@@ -82,3 +82,11 @@ test('the tooltip says Commit, not Build, and names the edited files', async ({ 
   await expect(badge).not.toHaveAttribute('title', /Build/);
   await expect(badge).toHaveAttribute('title', /uncommitted local edits in src\/a\.js, README\.md \(\+2 more\)/);
 });
+
+// #1882: npm drives the number. With npm's version in the stamp, the badge
+// shows it, and the push count moves to the tooltip.
+test('with an npm version stamped, the badge shows npm\'s number', async ({ page }) => {
+  const badge = await badgeFor(page, 0, { release: '1.0.400', sinceRelease: 127, npm: '1.0.1' });
+  await expect(badge).toHaveText('v1.0.1');
+  await expect(badge).toHaveAttribute('title', /^On npm: 1\.0\.1 \(both packages\) · build 1\.0\.527 · Commit abc1234/);
+});

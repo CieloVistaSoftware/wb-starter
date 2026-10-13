@@ -112,6 +112,14 @@ export async function pickBehavior(page: Page, token: string): Promise<void> {
     && !!document.querySelector('#behaviors-live-code pre code.hljs')
     && (document.getElementById('behaviors-live-example')?.children.length ?? 0) > 0);
   if (alreadyShown) return;
+  // Selected but still rendering (CI, #1883: timed out here once on Windows):
+  // clicking it again re-renders the same markup, so the "markup changed" wait
+  // below never ends. Wait for that render to finish instead.
+  const selected = await rows.first().evaluate((row) => row.getAttribute('aria-current') === 'true');
+  if (selected) {
+    await page.waitForFunction(() => !!document.querySelector('#behaviors-live-code pre code.hljs')
+      && (document.getElementById('behaviors-live-example')?.children.length ?? 0) > 0, null, { timeout: 20000 });
+  } else {
   const before = await page.evaluate(
     () => document.getElementById('behaviors-live-example')?.innerHTML ?? '',
   );
@@ -127,6 +135,7 @@ export async function pickBehavior(page: Page, token: string): Promise<void> {
     before,
     { timeout: 20000 },
   );
+  }
   // The render barrier above can be met by a render that is then replaced:
   // measured on x-dropdown under 4 workers, 2 runs in 4 found the host
   // un-upgraded (raw <button>s, no .x-dropdown__menu) right after it, and

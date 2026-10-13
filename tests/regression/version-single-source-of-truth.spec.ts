@@ -54,8 +54,8 @@ test('?page=behaviors: the header shows the real stamped version, not a stale li
     // The number every display shows (src/core/version-number.js, #1243):
     // the tag's patch plus the commits since it, e.g. v1.0.0 + 41 -> 1.0.41.
     const { VERSION } = await import('/src/core/version.js');
-    const { versionNumber } = await import('/src/core/version-number.js');
-    return versionNumber(VERSION).number;
+    const { displayVersion } = await import('/src/core/version-number.js');
+    return displayVersion(VERSION);
   });
 
   await expect(page.locator('#headerVersion[x-release]')).toContainText(`v${version}`);
@@ -71,8 +71,8 @@ test('demos/landing-page-showcase.html: hero badge shows the real stamped versio
     // The number every display shows (src/core/version-number.js, #1243):
     // the tag's patch plus the commits since it, e.g. v1.0.0 + 41 -> 1.0.41.
     const { VERSION } = await import('/src/core/version.js');
-    const { versionNumber } = await import('/src/core/version-number.js');
-    return versionNumber(VERSION).number;
+    const { displayVersion } = await import('/src/core/version-number.js');
+    return displayVersion(VERSION);
   });
 
   const badge = page.locator('#lp-version-badge');

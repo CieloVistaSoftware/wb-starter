@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.529",
+      "date": "2026-10-13",
+      "summary": "The site badge said v1.0.527 while npm said 1.0.1, and nothing kept wb-starter and create-wb-starter on the same number. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1882\" target=\"_blank\" rel=\"noopener\">#1882</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1883\" target=\"_blank\" rel=\"noopener\">#1883</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Npm drives the version: the site badge shows npm&#39;s number, both packages share it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1882\" target=\"_blank\" rel=\"noopener\">#1882</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1883\" target=\"_blank\" rel=\"noopener\">#1883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a6d6e3a1c82d13a3d30ed76d20189397407e4d70\" target=\"_blank\" rel=\"noopener\"><code>a6d6e3a</code></a>",
+          "issues": [
+            1882,
+            1883
+          ]
+        }
+      ],
+      "seeIt": "Open the live site and look at the version badge in the header, then hover it. Before: v1.0.527, with no npm version anywhere. Now: v1.0.1, the version on npm, and the tooltip reads On npm: 1.0.1 (both packages) with the build number.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a6d6e3a1c82d13a3d30ed76d20189397407e4d70\" target=\"_blank\" rel=\"noopener\"><code>a6d6e3a</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.528",
+      "date": "2026-10-13",
+      "summary": "On GitHub Pages the Error Log had no way back to the site, said No errors found. Great job! with no log present, requested <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/errors.json\" target=\"_blank\" rel=\"noopener\">data/errors.json</a> (404) on every visit, and Clear Log POSTed to an API a static host does not have. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1886\" target=\"_blank\" rel=\"noopener\">#1886</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1887\" target=\"_blank\" rel=\"noopener\">#1887</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The live Error Log links back to the site, stops claiming Great job, and stops requesting what a static host lacks</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1886\" target=\"_blank\" rel=\"noopener\">#1886</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1887\" target=\"_blank\" rel=\"noopener\">#1887</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a80e991eea0518953646896fd68c1597e1243c24\" target=\"_blank\" rel=\"noopener\"><code>a80e991</code></a>",
+          "issues": [
+            1886,
+            1887
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/errors-viewer.html</a>. Before: Great job!, no link back, and a 404 in the console. Now: a Back to site link, This browser has logged no errors on this site. There is no server log here (static site)., and no 404.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a80e991eea0518953646896fd68c1597e1243c24\" target=\"_blank\" rel=\"noopener\"><code>a80e991</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.527",
       "date": "2026-10-13",
       "summary": "X-gallery fixed every image at 3.125rem (50px) tall, so in a real column a photo showed as a thin strip (389x50 in a 3-column gallery at 1400px) and sites had to add their own CSS. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1880\" target=\"_blank\" rel=\"noopener\">#1880</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1881\" target=\"_blank\" rel=\"noopener\">#1881</a>",

@@ -26,8 +26,13 @@ test('page fragments are fetched with the 1.0.N cache key', async ({ page }) => 
   page.on('console', (m) => logs.push(m.text()));
   await page.goto('/?page=releases');
   await expect(page.locator('#releases-list')).toHaveAttribute('rendered', '1', { timeout: 15_000 });
-  const shown = (await page.locator('[x-release]').first().textContent())!.trim().replace(/^v/, '');
+  // The badge shows the npm version (#1882); the cache key stays the per-push 1.0.N.
+  const shown = await page.evaluate(async () => {
+    const { VERSION } = await import('/src/core/version.js');
+    const { versionNumber } = await import('/src/core/version-number.js');
+    return versionNumber(VERSION).number;
+  });
   expect(keys.length, 'a page fragment was fetched').toBeGreaterThan(0);
   for (const k of keys) expect(k).toBe(shown);
-  expect(logs.find((l) => l.includes('wb-starter starting')), 'console names the badge number').toContain(`v${shown} `);
+  expect(logs.find((l) => l.includes('wb-starter starting')), 'console names the build number').toContain(`v${shown} `);
 });

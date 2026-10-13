@@ -180,7 +180,23 @@ const versionPath = LOCAL
   ? path.join(root, '.local', 'src', 'core', 'version.js')
   : path.join(root, 'src', 'core', 'version.js');
 if (LOCAL) mkdirSync(path.dirname(versionPath), { recursive: true });
-const next = { version: pkg.version, commit, builtAt, ...tree };
+// #1882: npm drives the release number. The badge shows the version npm has
+// for this package; it is read from the registry here (main's stamp workflow,
+// and npm start when online). Offline, the last stamped value is kept.
+async function npmVersion() {
+  try {
+    const res = await fetch(`https://registry.npmjs.org/${pkg.name}/latest`, { signal: globalThis.AbortSignal.timeout(5000) });
+    if (!res.ok) return null;
+    const { version } = await res.json();
+    return /^\d+\.\d+\.\d+$/.test(version) ? version : null;
+  } catch {
+    return null;
+  }
+}
+let previousNpm = null;
+try { previousNpm = JSON.parse(readFileSync(versionPath, 'utf8').match(/export const VERSION = ({[\s\S]*?});/)[1]).npm || null; } catch { /* none yet */ }
+const npm = (await npmVersion()) || previousNpm;
+const next = { version: pkg.version, commit, builtAt, ...tree, ...(npm ? { npm } : {}) };
 
 let previous = null;
 try {
@@ -217,7 +233,7 @@ const flags = [
   tree.ahead ? `${tree.ahead} ahead` : '',
   tree.dirty ? 'dirty' : '',
 ].filter(Boolean).join(', ');
-console.log(`[stamp-version] v${versionNumber({ version: pkg.version, ...tree }).number} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
+console.log(`[stamp-version] v${versionNumber({ version: pkg.version, ...tree }).number}${npm ? ` (npm ${npm})` : ''} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
 if (tree.behind) {
   console.log(`[stamp-version] ⚠  This tree is ${tree.behind} commits behind ${tree.upstream}.`);
   console.log(`[stamp-version] ⚠  What you see on :3000 is NOT the latest code.`);
