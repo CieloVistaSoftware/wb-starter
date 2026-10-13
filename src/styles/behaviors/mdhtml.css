@@ -56,7 +56,7 @@
   font-size: 2rem;
   margin: 0 0 1.5rem;
   color: var(--text-primary);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
   padding-bottom: 0.5rem;
 }
 
@@ -220,7 +220,7 @@
 .x-mdhtml td {
   padding: 0.5rem;
   text-align: left;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   /* overflow-wrap:anywhere permits breaking ANYWHERE, including mid-word/
      mid-character, whenever a column is narrower than its content --
      exactly what broke "Part"/"Type"/"Category" headers into one letter
@@ -295,7 +295,7 @@
 
 [x-mdhtml] blockquote,
 .x-mdhtml blockquote {
-  border-left: 4px solid var(--primary);
+  border-left: 0.25rem solid var(--primary);
   margin: 0 0 1.5rem 0;
   padding-left: 1rem;
   color: var(--text-muted);

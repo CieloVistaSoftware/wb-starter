@@ -147,7 +147,8 @@ test('the card hero\'s "Read the Guide" is x-glass and looks exactly as before',
   expect(got.cls).toMatch(/\bx-glass\b/);
   // The values hero.css hand-wrote before x-glass existed.
   expect(got.background.replace(/\s/g, '')).toMatch(/^(rgba\(255,255,255,0\.14\)|color\(srgb111\/0\.14\))$/);
-  expect(got.edgeWidth).toBe('1.5px');
+  // 1.5px, written in rem since #294 (Law 19): 1.5 / 16.
+  expect(got.edgeWidth).toMatch(/^(1\.5px|0\.09375rem)$/);
   expect(got.borderColor.replace(/\s/g, '')).toMatch(/^(rgba\(255,255,255,0\.4\)|color\(srgb111\/0\.4\))$/);
   expect(got.backdrop).toBe('blur(8px)');
 });

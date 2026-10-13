@@ -1,5 +1,6 @@
 import { readAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule, onlyChanged } from '../core/dynamic-style.js';
+import { lengthToPx } from '../core/length-to-px.js';
 import { centralDateTime } from '../core/central-time.js';
 /**
  * Notes Behavior
@@ -41,8 +42,8 @@ export function notes(element, options = {}) {
   const config = {
     position: options.position || element.getAttribute('position') || readAttr(element, 'position') || 'left',
     maxWidth: options.maxWidth || authoredAttr(element, 'max-width') || readAttr(element, 'maxWidth') || '50vw',
-    minWidth: options.minWidth || authoredAttr(element, 'min-width') || readAttr(element, 'minWidth') || '200px',
-    defaultWidth: options.defaultWidth || authoredAttr(element, 'default-width') || readAttr(element, 'defaultWidth') || '320px',
+    minWidth: options.minWidth || authoredAttr(element, 'min-width') || readAttr(element, 'minWidth') || '12.5rem',
+    defaultWidth: options.defaultWidth || authoredAttr(element, 'default-width') || readAttr(element, 'defaultWidth') || '20rem',
     autoSave: options.autoSave ?? (authoredAttr(element, 'auto-save') !== 'false' && readAttr(element, 'autoSave') !== 'false'),
     savePath: options.savePath || authoredAttr(element, 'save-path') || element.dataset.savePath || NOTES_FILE_PATH,
     placeholder: options.placeholder || element.getAttribute('placeholder') || readAttr(element, 'placeholder') || 'Add your notes here...',
@@ -513,7 +514,7 @@ export function notes(element, options = {}) {
       newWidth = startWidth + (e.clientX - startX);
     }
     const maxPx = window.innerWidth * 0.5;
-    const minPx = parseInt(config.minWidth);
+    const minPx = lengthToPx(config.minWidth, 200);
     newWidth = Math.max(minPx, Math.min(maxPx, newWidth));
     setDrawerWidth(newWidth + 'px');
   };

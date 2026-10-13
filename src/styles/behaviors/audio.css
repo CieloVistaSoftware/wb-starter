@@ -16,10 +16,10 @@
   border-radius: 1rem;
   padding: 1.25rem;
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+    0 0.625rem 2.5rem rgba(0, 0, 0, 0.4),
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.05),
+    inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.3);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.05);
 }
 
 /* Native audio element styling */
@@ -63,7 +63,7 @@
   margin-bottom: 0.75rem;
   background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.15) 100%);
   border-radius: 0.625rem;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 0.0625rem solid rgba(255,255,255,0.06);
 }
 
 /* Play/Pause Button */
@@ -72,7 +72,7 @@
   height: var(--x-audio-play-size, 3rem);
   min-width: var(--x-audio-play-size, 3rem);
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.15);
+  border: 0.125rem solid rgba(255,255,255,0.15);
   background: linear-gradient(145deg, #2a2a3a 0%, #1a1a28 100%);
   color: var(--primary, #6366f1);
   font-size: 1.25rem;
@@ -82,15 +82,15 @@
   justify-content: center;
   transition: all 0.2s ease;
   box-shadow:
-    0 2px 8px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.1);
+    0 0.125rem 0.5rem rgba(0,0,0,0.4),
+    inset 0 0.0625rem 0 rgba(255,255,255,0.1);
 }
 
 .x-audio__play-btn:hover {
   border-color: var(--primary, #6366f1);
   box-shadow:
-    0 4px 16px rgba(99,102,241,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+    0 0.25rem 1rem rgba(99,102,241,0.3),
+    inset 0 0.0625rem 0 rgba(255,255,255,0.15);
   transform: scale(1.05);
 }
 
@@ -103,33 +103,33 @@
   border-color: rgba(34,197,94,0.6);
   background: linear-gradient(145deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.08) 100%);
   box-shadow:
-    0 2px 8px rgba(0,0,0,0.4),
-    0 0 12px rgba(34,197,94,0.3),
-    0 0 24px rgba(34,197,94,0.2),
-    0 0 40px rgba(34,197,94,0.1),
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    inset 0 0 8px rgba(34,197,94,0.1);
+    0 0.125rem 0.5rem rgba(0,0,0,0.4),
+    0 0 0.75rem rgba(34,197,94,0.3),
+    0 0 1.5rem rgba(34,197,94,0.2),
+    0 0 2.5rem rgba(34,197,94,0.1),
+    inset 0 0.0625rem 0 rgba(255,255,255,0.1),
+    inset 0 0 0.5rem rgba(34,197,94,0.1);
   animation: audio-playing-pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes audio-playing-pulse {
   0%, 100% {
     box-shadow:
-      0 2px 8px rgba(0,0,0,0.4),
-      0 0 12px rgba(34,197,94,0.3),
-      0 0 24px rgba(34,197,94,0.2),
-      0 0 40px rgba(34,197,94,0.1),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      inset 0 0 8px rgba(34,197,94,0.1);
+      0 0.125rem 0.5rem rgba(0,0,0,0.4),
+      0 0 0.75rem rgba(34,197,94,0.3),
+      0 0 1.5rem rgba(34,197,94,0.2),
+      0 0 2.5rem rgba(34,197,94,0.1),
+      inset 0 0.0625rem 0 rgba(255,255,255,0.1),
+      inset 0 0 0.5rem rgba(34,197,94,0.1);
   }
   50% {
     box-shadow:
-      0 2px 8px rgba(0,0,0,0.4),
-      0 0 16px rgba(34,197,94,0.4),
-      0 0 32px rgba(34,197,94,0.25),
-      0 0 50px rgba(34,197,94,0.15),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      inset 0 0 12px rgba(34,197,94,0.15);
+      0 0.125rem 0.5rem rgba(0,0,0,0.4),
+      0 0 1rem rgba(34,197,94,0.4),
+      0 0 2rem rgba(34,197,94,0.25),
+      0 0 3.125rem rgba(34,197,94,0.15),
+      inset 0 0.0625rem 0 rgba(255,255,255,0.1),
+      inset 0 0 0.75rem rgba(34,197,94,0.15);
   }
 }
 
@@ -140,11 +140,11 @@
   background: var(--x-audio-display-bg, linear-gradient(180deg, #1a1200 0%, #0d0900 100%));
   border-radius: 0.375rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(232,160,32,0.15);
+  border: 0.0625rem solid rgba(232,160,32,0.15);
   box-shadow:
-    inset 0 2px 8px rgba(0,0,0,0.8),
-    inset 0 0 20px rgba(0,0,0,0.4),
-    0 1px 0 rgba(255,255,255,0.05);
+    inset 0 0.125rem 0.5rem rgba(0,0,0,0.8),
+    inset 0 0 1.25rem rgba(0,0,0,0.4),
+    0 0.0625rem 0 rgba(255,255,255,0.05);
   overflow: hidden;
 }
 
@@ -153,7 +153,7 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--x-audio-display-color, #e8a020);
-  text-shadow: var(--x-audio-display-glow, 0 0 8px rgba(232,160,32,0.4));
+  text-shadow: var(--x-audio-display-glow, 0 0 0.5rem rgba(232,160,32,0.4));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -182,7 +182,7 @@
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.65rem;
   color: rgba(232,160,32,0.6);
-  text-shadow: 0 0 4px rgba(232,160,32,0.2);
+  text-shadow: 0 0 0.25rem rgba(232,160,32,0.2);
   margin-top: 0.15rem;
   letter-spacing: 0.1em;
 }
@@ -230,10 +230,10 @@
     var(--bg-tertiary) 50%,
     var(--bg-color) 100%);
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.08);
   box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2),
+    inset 0 -0.0625rem 0 rgba(255, 255, 255, 0.05);
   align-items: center;
   font-size: 0.8rem;
 }
@@ -287,11 +287,11 @@
     var(--bg-primary) 60%,
     var(--bg-tertiary) 100%);
   border-radius: 0.625rem;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 0.0625rem solid rgba(0, 0, 0, 0.5);
   box-shadow: 
-    inset 0 2px 6px rgba(0, 0, 0, 0.6),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 1px 0 rgba(255, 255, 255, 0.05);
+    inset 0 0.125rem 0.375rem rgba(0, 0, 0, 0.6),
+    inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.03),
+    0 0.0625rem 0 rgba(255, 255, 255, 0.05);
 }
 
 /* =============================================================================
@@ -320,13 +320,13 @@
       var(--surface-deepest, #585878) 100%);
   
   /* 3D depth and polish */
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
   box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.4),
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.2),
-    inset 0 2px 4px rgba(255, 255, 255, 0.8),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    0 0.25rem 0.5rem rgba(0, 0, 0, 0.4),
+    0 0.125rem 0.25rem rgba(0, 0, 0, 0.3),
+    0 0.5rem 1rem rgba(0, 0, 0, 0.2),
+    inset 0 0.125rem 0.25rem rgba(255, 255, 255, 0.8),
+    inset 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   
   transition: all 0.15s ease;
 }
@@ -334,12 +334,12 @@
 .x-audio__eq input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.1);
   box-shadow: 
-    0 6px 12px rgba(0, 0, 0, 0.5),
-    0 3px 6px rgba(0, 0, 0, 0.4),
-    0 10px 20px rgba(0, 0, 0, 0.25),
-    inset 0 2px 4px rgba(255, 255, 255, 0.9),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.15),
-    0 0 20px rgba(99, 102, 241, 0.3);
+    0 0.375rem 0.75rem rgba(0, 0, 0, 0.5),
+    0 0.1875rem 0.375rem rgba(0, 0, 0, 0.4),
+    0 0.625rem 1.25rem rgba(0, 0, 0, 0.25),
+    inset 0 0.125rem 0.25rem rgba(255, 255, 255, 0.9),
+    inset 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.15),
+    0 0 1.25rem rgba(99, 102, 241, 0.3);
 }
 
 .x-audio__eq input[type="range"]::-webkit-slider-thumb:active {
@@ -359,11 +359,11 @@
     var(--bg-primary) 60%,
     var(--bg-tertiary) 100%);
   border-radius: 0.625rem;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 0.0625rem solid rgba(0, 0, 0, 0.5);
   box-shadow: 
-    inset 0 2px 6px rgba(0, 0, 0, 0.6),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 1px 0 rgba(255, 255, 255, 0.05);
+    inset 0 0.125rem 0.375rem rgba(0, 0, 0, 0.6),
+    inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.03),
+    0 0.0625rem 0 rgba(255, 255, 255, 0.05);
 }
 
 /* =============================================================================
@@ -374,7 +374,7 @@
   height: 1.5rem;
   border-radius: 50%;
   cursor: grab;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.3);
   
   background: 
     radial-gradient(ellipse 60% 40% at 30% 25%, rgba(255, 255, 255, 0.9) 0%, transparent 50%),
@@ -389,11 +389,11 @@
       var(--surface-deepest, #585878) 100%);
   
   box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.4),
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.2),
-    inset 0 2px 4px rgba(255, 255, 255, 0.8),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    0 0.25rem 0.5rem rgba(0, 0, 0, 0.4),
+    0 0.125rem 0.25rem rgba(0, 0, 0, 0.3),
+    0 0.5rem 1rem rgba(0, 0, 0, 0.2),
+    inset 0 0.125rem 0.25rem rgba(255, 255, 255, 0.8),
+    inset 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   
   transition: all 0.15s ease;
 }
@@ -458,7 +458,7 @@
    ============================================================================= */
 .x-audio__eq label span:first-child {
   font-size: 1.25rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 0.125rem 0.25rem rgba(0, 0, 0, 0.3));
 }
 
 /* Value display */
@@ -478,9 +478,9 @@
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, var(--success-color), var(--success-color-dark, #16a34a));
   box-shadow: 
-    0 0 8px var(--success-color),
-    0 0 16px var(--success-color-light, rgba(74,222,128,0.5)),
-    inset 0 1px 2px var(--text-primary);
+    0 0 0.5rem var(--success-color),
+    0 0 1rem var(--success-color-light, rgba(74,222,128,0.5)),
+    inset 0 0.0625rem 0.125rem var(--text-primary);
   animation: led-pulse 2s ease-in-out infinite;
 }
 
@@ -492,7 +492,7 @@
 /* =============================================================================
    RESPONSIVE
    ============================================================================= */
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .x-audio__eq {
     flex-direction: column;
     gap: 1rem;
@@ -509,9 +509,9 @@
 [data-theme="light"] .x-audio {
   background: linear-gradient(145deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    0 0.625rem 2.5rem rgba(0, 0, 0, 0.15),
+    inset 0 0.0625rem 0 rgba(255, 255, 255, 0.8),
+    inset 0 -0.0625rem 0 rgba(0, 0, 0, 0.1);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -522,8 +522,8 @@
     rgba(240, 240, 245, 0.8) 100%);
   border-color: rgba(0, 0, 0, 0.1);
   box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.05),
-    0 1px 0 rgba(255, 255, 255, 0.8);
+    inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05),
+    0 0.0625rem 0 rgba(255, 255, 255, 0.8);
 }
 
 [data-theme="light"] .x-audio__eq label {
@@ -538,8 +538,8 @@
     var(--bg-color) 100%);
   border-color: rgba(0, 0, 0, 0.2);
   box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.15),
-    0 1px 0 rgba(255, 255, 255, 0.8);
+    inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15),
+    0 0.0625rem 0 rgba(255, 255, 255, 0.8);
 }
 
 /* =============================================================================
@@ -558,8 +558,8 @@
   background: linear-gradient(145deg, #0a0a12 0%, #12121c 50%, #0a0a10 100%);
   border-radius: 1rem;
   padding: 1.25rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0.625rem 2.5rem rgba(0, 0, 0, 0.6), inset 0 0.0625rem 0 rgba(255, 255, 255, 0.03);
+  border: 0.0625rem solid rgba(255, 255, 255, 0.05);
   /* #295: never wider than its container -- a flat 20rem (360px at the
      site's 18px root) ran past a 375px phone's content column. */
   min-width: min(20rem, 100%);
@@ -584,8 +584,8 @@ audio.x-audio__native--hidden {
   border-radius: 0.75rem;
   padding: 1rem;
   margin-top: 0.75rem;
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+  border: 0.0625rem solid rgba(255,255,255,0.05);
+  box-shadow: inset 0 0.125rem 0.5rem rgba(0,0,0,0.4);
 }
 .x-audio__eq-header {
   display: flex;
@@ -607,14 +607,14 @@ audio.x-audio__native--hidden {
   gap: 0.5rem;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 0.0625rem solid rgba(255,255,255,0.1);
 }
 /* Scoped: themes.css's `[data-theme] button` (0,1,1) beats a single class. */
 .x-audio__eq-presets > .x-audio__eq-preset {
   padding: 0.35rem 0.75rem;
   font-size: 0.7rem;
   background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 0.0625rem solid rgba(255,255,255,0.2);
   border-radius: 0.25rem;
   color: #fff;
   cursor: pointer;
@@ -644,7 +644,7 @@ audio.x-audio__native--hidden {
   color: #6366f1;
   font-weight: 600;
   height: 1rem;
-  text-shadow: 0 0 8px rgba(99,102,241,0.5);
+  text-shadow: 0 0 0.5rem rgba(99,102,241,0.5);
 }
 .x-audio__eq-slider-wrap {
   position: relative;
@@ -661,7 +661,7 @@ audio.x-audio__native--hidden {
   background: linear-gradient(180deg, #22c55e 0%, #84cc16 20%, #eab308 40%, #f97316 60%, #ef4444 80%, #dc2626 100%);
   border-radius: 0.25rem;
   opacity: 0.3;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 0.25rem rgba(0,0,0,0.5);
 }
 /* The fill's height is the band's gain: a generated rule per change. */
 .x-audio__eq-fill {
@@ -671,7 +671,7 @@ audio.x-audio__native--hidden {
   bottom: 0;
   background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
   border-radius: 0.25rem;
-  box-shadow: 0 0 10px rgba(99,102,241,0.5);
+  box-shadow: 0 0 0.625rem rgba(99,102,241,0.5);
   transition: height 0.1s ease;
 }
 /* After the first change a band carries its state: boost / cut / flat. */

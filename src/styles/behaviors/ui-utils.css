@@ -8,7 +8,7 @@
 
 /* Divider */
 .x-divider {
-  height: 1px;
+  height: 0.0625rem;
   background: var(--border-color);
   margin: 0.75rem 0;
 }
@@ -35,7 +35,7 @@
   color: var(--text-secondary);
   background: var(--bg-secondary, rgba(0,0,0,0.02));
   border-radius: var(--radius-md, 0.5rem);
-  border: 1px dashed var(--border-color, rgba(0,0,0,0.1));
+  border: 0.0625rem dashed var(--border-color, rgba(0,0,0,0.1));
 }
 
 .x-empty > .x-empty__icon {
@@ -73,9 +73,9 @@
   color: var(--text-primary, #374151);
   vertical-align: middle;
   background-color: var(--bg-secondary, #f3f4f6);
-  border: 1px solid var(--border-color, #d1d5db);
+  border: 0.0625rem solid var(--border-color, #d1d5db);
   border-radius: 0.25rem;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 0.0625rem 0 rgba(0,0,0,0.1);
 }
 
 /* x-copy (#779): copy.js used to write these onto element.style. Kept here,

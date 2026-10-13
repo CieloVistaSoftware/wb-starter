@@ -1,7 +1,7 @@
 /* <mark> highlight — theme-driven background, no hardcoded literals (#284). */
 .x-mark {
   padding: 0.1em 0.2em;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   color: inherit;
   background-color: color-mix(in srgb, var(--warning-color) 45%, transparent);
 }

@@ -161,7 +161,7 @@
      50vw floor for pages that want a wider code panel on purpose --
      unaffected by this change, since it sets the variable itself rather
      than relying on the fallback. */
-  min-width: min(var(--demo-code-min-width, 0px), 90vw);
+  min-width: min(var(--demo-code-min-width, 0rem), 90vw);
   overflow-x: auto;
 }
 
@@ -288,7 +288,7 @@
 :is([x-demo], .x-demo):has(> .x-demo__grid--cols-1 > :only-child){
   width: var(--x-demo-shrink-width, fit-content);
   max-width: 100%;
-  min-width: min(var(--demo-code-min-width, 0px), 90vw);
+  min-width: min(var(--demo-code-min-width, 0rem), 90vw);
 }
 
 /* "All x-demo code must show all the code up to 50% vw" (owner, 2026-08-07),
@@ -308,7 +308,7 @@
    one of which later leaves) matched the shape and kept the cap forever.
    The block's OWN panels only (child combinators), never a nested demo's.
    Desktop only: below 700px the panel is full width (§26). */
-@media (min-width: 701px) {
+@media (min-width: 43.8125rem) {
   /* :not([data-code-width]) -- an authored width (§28 narrow/normal/wide) is
      the author's answer already; this provisional cap outranked it for the
      whole measurement, so a narrow panel painted at 50vw (640px at 1280). */
@@ -382,7 +382,7 @@
    its code-panel child -- stay full width, so the page's horizontal
    footprint holds constant across every demo. NOT applied above 700px; see
    the desktop rule above for why. */
-@media (max-width: 700px) {
+@media (max-width: 43.75rem) {
   /* John: "the margins are still not right on our x-demos... change the
      left and right gaps to be .5rem for mobile." Left/right only -- the
      base rule's 1rem vertical spacing (between stacked demos) stays, this
@@ -444,7 +444,7 @@
    4+ columns to a single column at the same 1024px breakpoint every other
    tier used — that looked cramped/needlessly tall on real tablet-width
    screens, which can comfortably fit 2 columns. */
-@media (max-width: 1024px) {
+@media (max-width: 64rem) {
   .x-demo__grid--cols-4,
   .x-demo__grid--cols-5,
   .x-demo__grid--cols-6 {
@@ -452,7 +452,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 43.75rem) {
   .x-demo__grid--cols-2,
   .x-demo__grid--cols-3,
   .x-demo__grid--cols-4,
@@ -529,7 +529,7 @@
   height: 1.5rem;
   border-radius: 50%;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   color: var(--text-secondary);
   font-size: 0.75rem;
   line-height: 1;
@@ -594,7 +594,7 @@
 .x-demo__events-log {
   margin-top: 0.5rem;
   padding: 1rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-sm, 0.25rem);
   background: var(--bg-secondary);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -612,7 +612,7 @@
 
 .x-demo__events-log-entry {
   padding: 0.15rem 0;
-  border-bottom: 1px dashed var(--border-color);
+  border-bottom: 0.0625rem dashed var(--border-color);
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }

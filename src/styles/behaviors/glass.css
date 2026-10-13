@@ -22,11 +22,11 @@
 
 [x-glass].x-glass {
   background: color-mix(in srgb, var(--glass-tint, currentColor) 14%, transparent);
-  border: var(--x-glass-edge-width, 1px) solid color-mix(in srgb, var(--glass-tint, currentColor) 40%, transparent);
+  border: var(--x-glass-edge-width, 0.0625rem) solid color-mix(in srgb, var(--glass-tint, currentColor) 40%, transparent);
   /* A small softening so text on the element stays readable over a busy
      scene. The scene passing through is the effect; the blur is a detail. */
-  -webkit-backdrop-filter: blur(var(--x-glass-blur, 8px));
-  backdrop-filter: blur(var(--x-glass-blur, 8px));
+  -webkit-backdrop-filter: blur(var(--x-glass-blur, 0.5rem));
+  backdrop-filter: blur(var(--x-glass-blur, 0.5rem));
 }
 
 /* amount — how much of the scene comes through. Capped at a 30% tint: past

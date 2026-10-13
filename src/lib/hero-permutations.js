@@ -30,7 +30,7 @@ const CONTENT = [
 ];
 const VARIANTS = ['default', 'cosmic', 'split', 'minimal', 'gradient'];
 const XALIGNS = ['center', 'left', 'right'];
-const HEIGHTS = ['320px', '380px', '440px', '500px'];
+const HEIGHTS = ['20rem', '23.75rem', '27.5rem', '31.25rem'];
 const BGS = [
   null, null,
   'linear-gradient(135deg, var(--success-color), var(--info-color))',

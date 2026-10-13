@@ -30,7 +30,7 @@
   cursor: pointer;
   padding: 1rem;
   background: var(--bg-tertiary, #374151);
-  border: 1px solid var(--border-color, #4b5563);
+  border: 0.0625rem solid var(--border-color, #4b5563);
   border-radius: 0.375rem;
   display: inline-flex;
   align-items: center;

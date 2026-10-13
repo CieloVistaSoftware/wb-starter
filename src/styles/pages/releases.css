@@ -19,7 +19,7 @@
 .releases__release,
 .releases__history {
   padding: 1.25rem 1.5rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md, 0.5rem);
   background: var(--bg-secondary);
 }
@@ -107,7 +107,7 @@
 
 .releases__dated {
   padding-top: 0.5rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 0.0625rem solid var(--border-color);
 }
 
 /* Issue references must READ as links (moved from site.css's old What's New
@@ -122,5 +122,5 @@
 
 .releases a:hover,
 .releases a:focus-visible {
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 0.125rem;
 }

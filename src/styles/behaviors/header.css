@@ -45,7 +45,7 @@
      would hit the exact same clipping with a fixed height. */
   min-height: 3.75rem;
   background: var(--bg-primary);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
   gap: 1rem;
   font-size: 0.8em; /* 20% smaller text */
 }
@@ -121,7 +121,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   [x-header],
   .x-header {
     /* §13 again: narrowing the horizontal gutter on small screens is fine,

@@ -85,10 +85,10 @@ const CODE_THEMES = [
 
 // Size configurations
 const SIZES = {
-  xs: { fontSize: '0.65rem', padding: '0.2rem 1.25rem 0.2rem 0.4rem', minWidth: '80px', arrowSize: '8' },
-  sm: { fontSize: '0.75rem', padding: '0.3rem 1.5rem 0.3rem 0.5rem', minWidth: '100px', arrowSize: '10' },
-  md: { fontSize: '0.875rem', padding: '0.5rem 2rem 0.5rem 0.75rem', minWidth: '140px', arrowSize: '12' },
-  lg: { fontSize: '1rem', padding: '0.625rem 2.25rem 0.625rem 1rem', minWidth: '160px', arrowSize: '14' }
+  xs: { fontSize: '0.65rem', padding: '0.2rem 1.25rem 0.2rem 0.4rem', minWidth: '5rem', arrowSize: '8' },
+  sm: { fontSize: '0.75rem', padding: '0.3rem 1.5rem 0.3rem 0.5rem', minWidth: '6.25rem', arrowSize: '10' },
+  md: { fontSize: '0.875rem', padding: '0.5rem 2rem 0.5rem 0.75rem', minWidth: '8.75rem', arrowSize: '12' },
+  lg: { fontSize: '1rem', padding: '0.625rem 2.25rem 0.625rem 1rem', minWidth: '10rem', arrowSize: '14' }
 };
 
 // Global event for syncing all codetheme instances

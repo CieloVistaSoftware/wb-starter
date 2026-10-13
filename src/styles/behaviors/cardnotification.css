@@ -14,7 +14,7 @@
   gap: 0.75rem;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════ NOTIFICATION CARD - Variant colors via CSS (not inline styles) Schema: cardnotification.schema.json  |  Behavior: card.js → cardnotification() ═══════════════════════════════════════════════════════════════════════════ */[x-cardnotification]{ display: flex; flex-direction: row; align-items: flex-start; gap: 0.75rem; padding: 0.875rem 1rem; border-left: 4px solid var(--border-color); border-radius: var(--radius-lg, 0.5rem); background: var(--bg-secondary); overflow: visible; }
+/* ═══════════════════════════════════════════════════════════════════════════ NOTIFICATION CARD - Variant colors via CSS (not inline styles) Schema: cardnotification.schema.json  |  Behavior: card.js → cardnotification() ═══════════════════════════════════════════════════════════════════════════ */[x-cardnotification]{ display: flex; flex-direction: row; align-items: flex-start; gap: 0.75rem; padding: 0.875rem 1rem; border-left: 0.25rem solid var(--border-color); border-radius: var(--radius-lg, 0.5rem); background: var(--bg-secondary); overflow: visible; }
 
 /* Icon: colored circle with letter */ .x-cardnotification__icon { display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; flex-shrink: 0; font-weight: 700; font-size: 0.9rem; font-style: italic; color: var(--text-primary); background: var(--text-secondary); }
 

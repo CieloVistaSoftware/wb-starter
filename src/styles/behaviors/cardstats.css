@@ -133,7 +133,7 @@ article[x-cardstats] > header,
 
 /* cardstats `color` — accent stripe + icon tint. The value itself arrives as
    the --x-stats-accent custom property set by cardstats() (card.js). */
-[x-cardstats].x-cardstats--accent { border-top: 3px solid var(--x-stats-accent); }
+[x-cardstats].x-cardstats--accent { border-top: 0.1875rem solid var(--x-stats-accent); }
 
 [x-cardstats].x-cardstats--accent .x-card__icon { color: var(--x-stats-accent); }
 
@@ -141,7 +141,7 @@ article[x-cardstats] > header,
    on x-error and adds this class). It used to render exactly like a healthy
    card. Same accent as variant="danger", plus the message itself. */
 [x-cardstats].x-cardstats--error {
-  border-left: 4px solid var(--danger-color);
+  border-left: 0.25rem solid var(--danger-color);
 }
 
 [x-cardstats].x-cardstats--error::after {

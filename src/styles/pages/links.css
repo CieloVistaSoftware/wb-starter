@@ -32,7 +32,7 @@
   }
 
   /* MOBILE-FIRST: Responsive overrides for links page */
-  @media (max-width: 600px) {
+  @media (max-width: 37.5rem) {
     .links-content-area,
     .links-container,
     .links-add-form-card,

@@ -46,13 +46,13 @@ const BUTTON_CSS = `
 x-button,
 .x-button {
 display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 0.375rem);
+  gap: 0.5rem; border: 0.0625rem solid transparent; border-radius: var(--radius-md, 0.375rem);
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
   line-height: 1.5; text-decoration: none; user-select: none;
   font-family: inherit; font-size: inherit; color: inherit;
   background: var(--bg-secondary); padding: 1rem 1rem;
 }
-x-button:focus-visible, .x-button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+x-button:focus-visible, .x-button:focus-visible { outline: 0.125rem solid var(--primary); outline-offset: 0.125rem; }
 x-button[disabled]{ opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 /* Sizes */
@@ -95,7 +95,7 @@ x-button[loading] { cursor: not-allowed; opacity: 0.7; }
 /* #669: icon-only collapses to a square around its icon; full-width spans its
    container. Both were declared in the schema with no implementation. */
 .x-button--icon-only { padding: 1rem; aspect-ratio: 1; }
-.x-button--icon-only > *:not(svg):not(.x-button__icon) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.x-button--icon-only > *:not(svg):not(.x-button__icon) { position: absolute; width: 0.0625rem; height: 0.0625rem; overflow: hidden; clip-path: inset(50%); }
 .x-button--full-width { width: 100%; display: flex; }
 .x-button:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 

@@ -45,7 +45,7 @@ function injectStyles() {
          says to the person reading the docs. */
       box-sizing: border-box;
       max-width: var(--x-tooltip-max-width, 12.5rem);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.3);
       opacity: 0;
       transform: scale(0.95);
       transition: opacity 0.15s, transform 0.15s;
@@ -248,7 +248,7 @@ export async function tooltip(element, options = {}) {
     // anywhere, so the tooltip always closed before you could reach it.
     interactive: optFlag(options.interactive, 'interactive', false),
     // maxWidth (#1107). Declared default 200px and never applied.
-    maxWidth: options.maxWidth || readAttr(element, 'maxWidth', '200px'),
+    maxWidth: options.maxWidth || readAttr(element, 'maxWidth', '12.5rem'),
     customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? authoredAttr(element, 'tooltip-class') ?? '',
   };
 

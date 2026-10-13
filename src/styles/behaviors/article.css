@@ -28,7 +28,7 @@
 }
 
 .x-articles--grid > article {
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   border-radius: var(--radius-lg, 0.5rem);
   padding: 1rem;
   background: var(--bg-secondary, #1f2937);
@@ -42,7 +42,7 @@
 
 .x-articles--list > article {
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color, #374151);
+  border-bottom: 0.0625rem solid var(--border-color, #374151);
 }
 
 .x-articles--masonry {
@@ -68,7 +68,7 @@
   font-size: 0.875rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .x-articles--grid {
     grid-template-columns: 1fr;
   }

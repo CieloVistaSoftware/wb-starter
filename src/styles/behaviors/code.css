@@ -125,7 +125,7 @@ pre > .x-code {
   top: 0.25rem;
   right: 0.25rem;
   background: var(--bg-secondary, #1f2937);
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   color: var(--text-secondary, #9ca3af);
   padding: 0.1rem 0.3rem;
   border-radius: var(--radius-sm, 0.1875rem);
@@ -175,7 +175,7 @@ pre > .x-code {
   display: block;
   padding: 1rem;
   border-radius: var(--radius-sm, 0.25rem);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.1));
   /* No background or color here: a highlighted block belongs to its theme.
      `.x-code:not(.hljs)` above covers the unhighlighted case. */
   white-space: pre-wrap;
@@ -224,7 +224,7 @@ pre > .x-code {
   overflow: hidden;
   vertical-align: baseline;
   max-width: 100%;
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border: 0.0625rem solid var(--border-color, rgba(255, 255, 255, 0.1));
   border-radius: var(--radius-sm, 0.25rem);
   padding: 0.15em 0.3em;
 }
@@ -268,7 +268,7 @@ pre > .x-code {
    the surrounding baseline to within ~1px (bottom/text-bottom/baseline
    measured 2-10px off, the last because a scroll container's baseline is its
    bottom edge). Paired with .hljs for the same cascade reason as above. */
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .x-code--inline.hljs,
   .x-code--inline {
     display: inline-block;

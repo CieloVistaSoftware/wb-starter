@@ -132,7 +132,7 @@ test.describe('.x-card glass variant: backdrop-filter fallback (#351)', () => {
           if (
             r instanceof CSSSupportsRule &&
             r.conditionText &&
-            r.conditionText.replace(/\s+/g, ' ').trim() === 'not (backdrop-filter: blur(1px))'
+            /^not \(backdrop-filter: blur\((?:1px|0\.0625rem)\)\)$/.test(r.conditionText.replace(/\s+/g, ' ').trim())
           ) {
             result.found = true;
             for (const inner of Array.from(r.cssRules) as CSSStyleRule[]) {

@@ -23,7 +23,7 @@
   color: var(--text-primary);
   background-color: var(--bg-primary);
   background-clip: padding-box;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md, 0.375rem);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -36,7 +36,7 @@ select,
 textarea {
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md, 0.375rem);
 }
 
@@ -53,7 +53,7 @@ textarea {
   /* A <select> ignores line-height for its own box, so padding alone comes
      out 5px short of .x-input: match the input's line + padding + border. */
   box-sizing: border-box;
-  min-height: calc(1.5em + 1rem + 2px);
+  min-height: calc(1.5em + 1rem + 0.125rem);
 }
 
 /* date/time/datetime-local/week/month's native calendar/clock picker icon
@@ -75,7 +75,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 .x-textarea:focus, [x-select]:focus{
   border-color: var(--primary);
   outline: 0;
-  box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
+  box-shadow: 0 0 0 0.1875rem hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
 }
 
 .x-input::placeholder,
@@ -132,7 +132,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 .x-input--success:focus,
 .x-textarea--success:focus,
 .x-select--success:focus {
-  box-shadow: 0 0 0 3px hsla(142, 76%, 45%, 0.2);
+  box-shadow: 0 0 0 0.1875rem hsla(142, 76%, 45%, 0.2);
 }
 
 .x-input--warning,
@@ -149,7 +149,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 .x-input--error:focus,
 .x-textarea--error:focus,
 .x-select--error:focus {
-  box-shadow: 0 0 0 3px hsla(0, 84%, 60%, 0.2);
+  box-shadow: 0 0 0 0.1875rem hsla(0, 84%, 60%, 0.2);
 }
 
 /* Checkbox & Radio -- the bare INPUT only. .x-checkbox is also the class of
@@ -202,10 +202,10 @@ input.x-radio.x-radio--lg { width: 1.5em; height: 1.5em; }
 /* Validation variants via raw data-variant attribute (issue #133) */
 input[data-variant="success"],
 textarea[data-variant="success"],
-select[data-variant="success"] { border: 1px solid var(--success-color); }
+select[data-variant="success"] { border: 0.0625rem solid var(--success-color); }
 input[data-variant="error"],
 textarea[data-variant="error"],
-select[data-variant="error"] { border: 1px solid var(--danger-color); }
+select[data-variant="error"] { border: 0.0625rem solid var(--danger-color); }
 
 /* -----------------------------------------------------------------------------
  * Native form controls — theme-aware defaults (#191)
@@ -220,7 +220,7 @@ textarea,
 select {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md, 0.375rem);
 }
 input:where(:not([type="range"]):not([type="checkbox"]):not([type="radio"]))::placeholder,
@@ -264,7 +264,7 @@ input[type="radio"] {
   box-sizing: border-box;
   margin-bottom: 0.25rem;
   padding: 0.375rem 0.625rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-sm, 0.25rem); /* the shared token, in rem (#294) */
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -302,8 +302,8 @@ input[type="radio"] {
 
 /* Keyboard users must be able to see it. `all: unset` drops the UA outline. */
 .x-select__clear:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: 0.125rem solid var(--accent);
+  outline-offset: 0.0625rem;
 }
 
 /* ---------------------------------------------------------------------------
@@ -472,19 +472,19 @@ input[type="radio"] {
   white-space: nowrap;
   color: var(--text-secondary);
   background-color: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
 }
 
 .x-inputgroup__prepend {
   border-inline-end-width: 0;
-  border-start-start-radius: var(--radius-md, 6px);
-  border-end-start-radius: var(--radius-md, 6px);
+  border-start-start-radius: var(--radius-md, 0.375rem);
+  border-end-start-radius: var(--radius-md, 0.375rem);
 }
 
 .x-inputgroup__append {
   border-inline-start-width: 0;
-  border-start-end-radius: var(--radius-md, 6px);
-  border-end-end-radius: var(--radius-md, 6px);
+  border-start-end-radius: var(--radius-md, 0.375rem);
+  border-end-end-radius: var(--radius-md, 0.375rem);
 }
 
 /* The control's own corners against an addon: the control itself, or the
@@ -523,6 +523,6 @@ input[type="radio"] {
   box-sizing: border-box;
   cursor: pointer;
   background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: var(--radius-md, 0.375rem);
 }

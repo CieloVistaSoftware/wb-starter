@@ -155,7 +155,7 @@ function getErrorContainer() {
       }
       .x-error-module {
         background: rgba(255,255,255,0.15);
-        padding: 2px 6px;
+        padding: 0.125rem 0.375rem;
         border-radius: 0.1875rem;
         font-family: monospace;
         font-size: 0.6875rem;
@@ -177,11 +177,11 @@ function getErrorContainer() {
         pointer-events: none;
       }
       #x-events-container .x-error-toast {
-        border-left: 4px solid;
+        border-left: 0.25rem solid;
         color: white;
         padding: 0.875rem 1rem;
         border-radius: 0.5rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.4);
         pointer-events: auto;
         max-width: 100%;
       }
@@ -191,12 +191,12 @@ function getErrorContainer() {
       #x-events-container .x-error-toast--success { background: rgba(22, 163, 74, 0.97); border-left-color: var(--x-event-toast-success-edge); }
       #x-events-container .x-error-toast__head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
       #x-events-container .x-error-toast__icon { font-size: 1.2rem; }
-      #x-events-container .x-error-toast__label { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.5px; }
+      #x-events-container .x-error-toast__label { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.03125rem; }
       #x-events-container .x-error-toast__line { opacity: 0.7; font-size: 0.6875rem; }
       #x-events-container .x-error-copy-btn {
         margin-left: auto; margin-right: 0.5rem; background: rgba(255,255,255,0.2);
-        border: 1px solid rgba(255,255,255,0.4); color: white; cursor: pointer;
-        font-size: 0.6875rem; padding: 2px 8px; border-radius: 0.25rem;
+        border: 0.0625rem solid rgba(255,255,255,0.4); color: white; cursor: pointer;
+        font-size: 0.6875rem; padding: 0.125rem 0.5rem; border-radius: 0.25rem;
       }
       #x-events-container .x-error-copy-btn--copied { background: rgba(34, 197, 94, 0.4); }
       #x-events-container .x-error-toast__close {

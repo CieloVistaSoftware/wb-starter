@@ -8,7 +8,7 @@
   position: relative;
   display: block;
   background-color: var(--bg-code, #1e1e1e);
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   border-radius: var(--radius-md, 0.375rem);
   margin-bottom: 1rem;
   min-height: 2.5rem;
@@ -67,7 +67,7 @@
   position: absolute;
   top: 0.25rem;
   background: var(--bg-secondary, #1f2937);
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   color: var(--text-secondary, #9ca3af);
   border-radius: var(--radius-sm, 0.1875rem);
   cursor: pointer;
@@ -132,7 +132,7 @@
   line-height: 1.5; /* Must match .x-pre--has-line-numbers's line-height */
   text-align: right;
   user-select: none;
-  border-right: 1px solid var(--border-color, #374151);
+  border-right: 0.0625rem solid var(--border-color, #374151);
   width: 2rem;
   min-width: 2rem;
   box-sizing: border-box;

@@ -1,6 +1,7 @@
 import { readAttr } from '../core/read-attr.js';
 import { authorText } from '../core/author-content.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
+import { lengthToPx } from '../core/length-to-px.js';
 import { themeColor } from '../core/theme-color.js';
 /**
  * Stage Light Component
@@ -24,7 +25,7 @@ export default function stagelight(element, options = {}) {
   const config = {
     variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || 'beam',
     color: options.color || element.getAttribute('color') || readAttr(element, 'color') || '',
-    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || '300px',
+    size: options.size || element.getAttribute('size') || readAttr(element, 'size') || '18.75rem',
     intensity: options.intensity || element.getAttribute('intensity') || readAttr(element, 'intensity') || '0.5',
     speed: options.speed || element.getAttribute('speed') || readAttr(element, 'speed') || '3s',
     target: options.target || element.getAttribute('target') || readAttr(element, 'target') || 'mouse',
@@ -88,7 +89,7 @@ export default function stagelight(element, options = {}) {
   // #790: a theme name (color="primary") or any CSS colour; none set leaves
   // the theme's --x-stagelight-light in charge.
   if (config.color) vars['--x-stagelight-color'] = themeColor(config.color);
-  if (config.size !== '300px') vars['--x-stagelight-size'] = config.size;
+  if (config.size !== '18.75rem') vars['--x-stagelight-size'] = config.size;
   if (config.speed !== '3s') vars['--speed'] = config.speed;
   setRule(element, 'vars', vars);
   const setIntensity = (i) => setRule(element, 'intensity',
@@ -120,7 +121,7 @@ export default function stagelight(element, options = {}) {
     // 0.35 of the smaller side leaves room for the ~50px falloff plus margin.
     // Standalone the box is the viewport, where the author's size is almost
     // always the smaller value and therefore wins unchanged.
-    const configuredPx = parseFloat(config.size) || 300;
+    const configuredPx = lengthToPx(config.size, 300) || 300;
     const syncRadius = () => {
       const r = overlay.getBoundingClientRect();
       const limit = Math.min(r.width, r.height) * 0.35;

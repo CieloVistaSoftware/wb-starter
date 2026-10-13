@@ -29,8 +29,8 @@
 .x-switch__input {
   position: absolute;
   opacity: 0;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   margin: 0;
   pointer-events: none;
 }
@@ -42,8 +42,8 @@
   width: 3rem;
   height: 1.5rem;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
+  border: 0.0625rem solid var(--border-color);
+  border-radius: 62.4375rem;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 
@@ -69,7 +69,7 @@
   transform: translate(1.45rem, -50%);
 }
 .x-switch__input:focus-visible ~ .x-switch__track {
-  box-shadow: 0 0 0 2px var(--primary);
+  box-shadow: 0 0 0 0.125rem var(--primary);
 }
 .x-switch__input:disabled ~ .x-switch__track {
   opacity: 0.5;

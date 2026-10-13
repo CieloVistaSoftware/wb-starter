@@ -20,7 +20,7 @@
   width: 100%;
   padding: 0.75rem 1rem;
   background: var(--bg-secondary, #1f2937);
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   border-radius: 0.375rem;
   cursor: pointer;
   color: inherit;
@@ -58,7 +58,7 @@
      matches the trigger's own 1rem horizontal inset, so the trigger's label
      and the content text stay on the same left edge. */
   padding: var(--space-md, 1rem);
-  border: 1px solid var(--border-color, #374151);
+  border: 0.0625rem solid var(--border-color, #374151);
   border-top: none;
   border-radius: 0 0 0.375rem 0.375rem;
   background: var(--bg-primary, #111827);

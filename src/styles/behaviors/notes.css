@@ -8,7 +8,7 @@
    ('x-notes') that just duplicated the <div x-notes> tag name. */
 [x-notes]{
   --notes-max-width: 50vw;
-  --notes-min-width: 200px;
+  --notes-min-width: 12.5rem;
   /* default-width="320px" -- notes.js used to write it inline (#779). */
   width: 20rem;
 }
@@ -47,12 +47,12 @@
   min-width: var(--notes-min-width);
   max-width: var(--notes-max-width);
   background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   display: flex;
   flex-direction: column;
   z-index: 999;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  box-shadow: var(--shadow-xl, 0 0 30px rgba(0, 0, 0, 0.4));
+  box-shadow: var(--shadow-xl, 0 0 1.875rem rgba(0, 0, 0, 0.4));
 }
 
 /* Left position */
@@ -144,8 +144,8 @@
   right: 0.25rem;
   width: 0.5rem;
   height: 0.5rem;
-  border-right: 2px solid var(--text-muted);
-  border-bottom: 2px solid var(--text-muted);
+  border-right: 0.125rem solid var(--text-muted);
+  border-bottom: 0.125rem solid var(--text-muted);
 }
 
 /* Resize handle */
@@ -169,7 +169,7 @@
      panel's top edge than to its sides (tests/components/notes.spec.ts pins
      the 0.5rem gap). Bottom stays 0.375rem -- the border already separates it. */
   padding: 0.5rem 0.5rem 0.375rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
   background: var(--bg-secondary);
   flex-shrink: 0;
   gap: 0.25rem;
@@ -206,7 +206,7 @@
    button existed in the DOM the whole time, just visually unreadable). */
 .x-notes__btn-row {
   display: flex;
-  gap: 1px;
+  gap: 0.0625rem;
   flex-wrap: wrap;
 }
 
@@ -217,7 +217,7 @@
   padding: 0 0.375rem;
   white-space: nowrap;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.1875rem;
   cursor: pointer;
   font-size: 0.7rem;
@@ -258,7 +258,7 @@
   flex-shrink: 0;
   width: 1.5rem;
   height: 1.5rem;
-  border: 1px solid transparent;
+  border: 0.0625rem solid transparent;
   border-radius: 0.25rem;
   background: transparent;
   color: var(--text-secondary);
@@ -304,7 +304,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.375rem 0.5rem;
-  border-top: 1px solid var(--border-color);
+  border-top: 0.0625rem solid var(--border-color);
   background: var(--bg-secondary);
   min-height: 2rem;
   flex-shrink: 0;
@@ -340,7 +340,7 @@
 
 /* Element picker: the hovered candidate, and the crosshair while picking. */
 .x-notes__pick-target {
-  outline: 2px solid var(--primary);
+  outline: 0.125rem solid var(--primary);
 }
 
 body.x-notes--picking {
@@ -367,13 +367,13 @@ body.x-notes--picking {
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--border-color);
+  box-shadow: 0 1.5625rem 3.125rem -0.75rem rgba(0, 0, 0, 0.5);
+  border: 0.0625rem solid var(--border-color);
 }
 
 .x-notes__lookup-header {
   padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 0.0625rem solid var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -407,7 +407,7 @@ body.x-notes--picking {
   width: 100%;
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   background: var(--bg-primary);
   color: var(--text-primary);
   font-size: 0.875rem;
@@ -431,7 +431,7 @@ body.x-notes--picking {
   width: 100%;
   text-align: left;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 0.0625rem solid var(--border-color);
   border-radius: 0.375rem;
   padding: 0.6rem 0.75rem;
   margin-bottom: 0.4rem;
