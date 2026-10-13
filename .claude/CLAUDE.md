@@ -125,6 +125,17 @@ via our issues view."
 3. **No work without an issue.** A request with no issue gets one filed first (with its Signature block), then labelled.
 4. **When the fix merges** (or the work stops), take the label off. Closing via `Fixes #N` closes it; remove the label anyway so the tab stays truthful.
 
+## Before touching release, CI or publishing — check nobody else has it
+
+John, 2026-10-12, after two sessions changed npm publishing at the same time
+(#1872): "this was a cluster fuck". In about 90 minutes, #1859 added
+`publish-npm.yml`, #1864 removed it again, and John was talked through npm
+tokens and trusted publishers for a workflow that had already been deleted.
+
+1. **Before changing** anything in `.github/workflows/`, `scripts/ship.mjs`, `scripts/release*.mjs`, a `package.json` version or npm settings, list the open PRs and the `status:in-progress` issues and look for the same area.
+2. **If another session has it,** don't start. Tell John which PR or issue it is and ask whether to wait, help, or take it over.
+3. **Before giving John a step to do by hand** (npm, GitHub settings, a secret), fetch `main` again and check the file the step depends on still says what you think. Never base an instruction on a copy of the workflow you read earlier.
+
 ## When idle — work the open issues
 
 John, 2026-10-06: "always work on open issues when idle" (#1627). Idle means
