@@ -109,22 +109,13 @@ if (-not (Select-String -Path styles/site.css -Pattern 'Minnesota page' -Quiet))
 '@ | Add-Content -Encoding utf8 styles/site.css
 }
 
-# 4. The photos (Wikimedia Commons; credits are on the page)
-$photos = @{
-  'split-rock-lighthouse' = 'c/c4/Split_Rock_Light_Station.jpg/1280px-Split_Rock_Light_Station.jpg'
-  'north-shore' = '3/3e/Lake_Superior_North_Shore_Minnesota_Tony_Webster_19283970576.jpg/1280px-Lake_Superior_North_Shore_Minnesota_Tony_Webster_19283970576.jpg'
-  'gooseberry-falls' = 'b/be/Middle_Gooseberry_Falls%2C_Gooseberry_Falls_State_Park%2C_Minnesota.jpg/1280px-Middle_Gooseberry_Falls%2C_Gooseberry_Falls_State_Park%2C_Minnesota.jpg'
-  'boundary-waters' = '4/4e/BWCA_Canoe_Outing_-_001.jpg/1280px-BWCA_Canoe_Outing_-_001.jpg'
-  'itasca-headwaters' = 'f/f6/Mississippi_Headwaters_at_Lake_Itasca.jpg/1280px-Mississippi_Headwaters_at_Lake_Itasca.jpg'
-  'enger-park-fall' = '3/37/Fall_Colors_at_Enger_Park%2C_Duluth%2C_Minnesota_%2825010489549%29.jpg/1280px-Fall_Colors_at_Enger_Park%2C_Duluth%2C_Minnesota_%2825010489549%29.jpg'
-  'aerial-lift-bridge' = '5/57/AerialLiftBridgeNight.jpg/1280px-AerialLiftBridgeNight.jpg'
-  'minnehaha-falls' = 'b/be/Redoneminnehaha.jpg/1280px-Redoneminnehaha.jpg'
-  'minneapolis-skyline' = '4/47/Sunset_over_the_Minneapolis_skyline._%2823906034652%29.jpg/1280px-Sunset_over_the_Minneapolis_skyline._%2823906034652%29.jpg'
-}
-foreach ($name in $photos.Keys) {
-  $url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/' + $photos[$name]
-  Invoke-WebRequest -Uri $url -OutFile "assets/minnesota/$name.jpg" -UserAgent 'wb-starter-site/1.0'
+# 4. The photos (from Wikimedia Commons, copied to the wb-starter repo; credits are on the page)
+$base = 'https://raw.githubusercontent.com/CieloVistaSoftware/wb-starter/claude/minnesota-example/examples/minnesota/'
+$names = 'split-rock-lighthouse','north-shore','gooseberry-falls','boundary-waters','itasca-headwaters','enger-park-fall','aerial-lift-bridge','minnehaha-falls','minneapolis-skyline'
+foreach ($name in $names) {
+  $out = "assets/minnesota/$name.jpg"
+  if ((Test-Path $out) -and ((Get-Item $out).Length -gt 10000)) { Write-Host "  already have $name.jpg"; continue }
+  Invoke-WebRequest -Uri ($base + $name + '.jpg') -OutFile $out
   Write-Host "  downloaded $name.jpg"
-  Start-Sleep -Seconds 2
 }
 Write-Host 'Done. Reload http://localhost:3000 and open Minnesota in the menu.'
