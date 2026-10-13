@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.520",
+      "date": "2026-10-12",
+      "summary": "Two compliance tests failed on main, and that also blocked npm run ship at Gate 1. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1875\" target=\"_blank\" rel=\"noopener\">PR 1875</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1874\" target=\"_blank\" rel=\"noopener\">#1874</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Compliance green on main again (fixes.json history, PACKAGE ceiling)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1874\" target=\"_blank\" rel=\"noopener\">#1874</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d95750148c5f9b09bb0b71f55f9ffbda26e418d1\" target=\"_blank\" rel=\"noopener\"><code>d957501</code></a>",
+          "issues": [
+            1874
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/wb-prefix-cannot-return.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/wb-prefix-cannot-return.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/behavior-classes-follow-naming-convention.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/behavior-classes-follow-naming-convention.spec.ts</a> --project=compliance. Before: 2 failed (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/fixes.json\" target=\"_blank\" rel=\"noopener\">data/fixes.json</a> x-pre-wrapper; PACKAGE 857 &gt; 855). Now: 17 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b93db94d8d73d7a0b5781599f3134f77fc329223\" target=\"_blank\" rel=\"noopener\"><code>b93db94</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.519",
       "date": "2026-10-12",
       "summary": "The Fix Viewer on the live site showed 13 hand-written fixes from 2026-02-16, because the site has no /api/fixes and nothing ever updated <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/fixes.json\" target=\"_blank\" rel=\"noopener\">data/fixes.json</a>. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a>",
