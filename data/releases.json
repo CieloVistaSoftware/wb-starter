@@ -6,6 +6,92 @@
   ],
   "releases": [
     {
+      "version": "1.0.519",
+      "date": "2026-10-12",
+      "summary": "The Fix Viewer on the live site showed 13 hand-written fixes from 2026-02-16, because the site has no /api/fixes and nothing ever updated <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/fixes.json\" target=\"_blank\" rel=\"noopener\">data/fixes.json</a>. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The live Fix Viewer shows every traced fix, regenerated on every push</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4a9a688b1bf896e22130e6cdfef87d8e57ca31c8\" target=\"_blank\" rel=\"noopener\"><code>4a9a688</code></a>",
+          "issues": [
+            1861,
+            1869
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/fix-viewer.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/fix-viewer.html</a>. Before: &quot;13 fixes&quot; from February, with no issue states or releases. Now: about 460 issues traced, each with its open/closed state, the commit that fixed it, the files it changed and the version that took it live, and the count line says which commit the table was built from.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4a9a688b1bf896e22130e6cdfef87d8e57ca31c8\" target=\"_blank\" rel=\"noopener\"><code>4a9a688</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.518",
+      "date": "2026-10-12",
+      "summary": "Npm never received a release: the token publish failed with E404 (#1517), and publish-npm.yml failed too because npm trusts release.yml. npm now gets deliberate releases (1.0.1 first, John&#39;s choice), and create-wb-starter says when a newer version exists. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Npm releases via Trusted Publishing from release.yml; create-wb-starter update notice</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/788c4d65ce253941e5e2f0572d8d913d0df7c526\" target=\"_blank\" rel=\"noopener\"><code>788c4d6</code></a>",
+          "issues": [
+            1864
+          ]
+        }
+      ],
+      "seeIt": "After npm run ship -- --as 1.0.1, run npm view wb-starter version and npm view create-wb-starter version. Before: both printed 1.0.0. Now: both print 1.0.1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/788c4d65ce253941e5e2f0572d8d913d0df7c526\" target=\"_blank\" rel=\"noopener\"><code>788c4d6</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.517",
+      "date": "2026-10-12",
+      "summary": "Create-wb-starter could not publish a new release because its package.json still said 1.0.0, which npm already has. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1868\" target=\"_blank\" rel=\"noopener\">PR 1868</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Bump create-wb-starter to 1.0.1 so the Release workflow can publish it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1867\" target=\"_blank\" rel=\"noopener\">#1867</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9f23b608af9331341b9f9c0484da611b63a630ae\" target=\"_blank\" rel=\"noopener\"><code>9f23b60</code></a>",
+          "issues": [
+            1867
+          ]
+        }
+      ],
+      "seeIt": "Run node -p &quot;require(&#39;./packages/create-wb-starter/package.json&#39;).version&quot;. Before: it printed 1.0.0. Now: it prints 1.0.1, so the next release publishes create-wb-starter@1.0.1.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b3292961347777508ad4c386011803c0c47fb93b\" target=\"_blank\" rel=\"noopener\"><code>b329296</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.516",
+      "date": "2026-10-12",
+      "summary": "Every dropdown example on the dropdown doc opened behind its own code panel, and the bottom-end example&#39;s menu ran past the left edge of the page content, where it was cut off. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>An open dropdown in a doc example is drawn above its code panel, and kept inside the box that would cut it off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1862\" target=\"_blank\" rel=\"noopener\">#1862</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1866\" target=\"_blank\" rel=\"noopener\">#1866</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2866f587e03ec81403e057e27685f87b371029d3\" target=\"_blank\" rel=\"noopener\"><code>2866f58</code></a>",
+          "issues": [
+            1862,
+            1866
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html\" target=\"_blank\" rel=\"noopener\">public/doc-viewer.html</a>?file=<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fdropdown.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/dropdown.md</a> and click &quot;Account&quot;, &quot;Actions&quot; and &quot;Menu&quot;. Before: each menu was drawn under the code panel below it, and Actions showed &quot;dit&quot;, &quot;up&quot;, &quot;ele&quot;. Now: every menu is drawn on top, whole, and Actions reads Edit, Duplicate, Delete.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2866f587e03ec81403e057e27685f87b371029d3\" target=\"_blank\" rel=\"noopener\"><code>2866f58</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.515",
       "date": "2026-10-12",
       "summary": "Npm only got a version when someone cut a release by hand, and its publish step never worked, so npm sat at 1.0.0 while the live site was at 1.0.512. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1860\" target=\"_blank\" rel=\"noopener\">#1860</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1859\" target=\"_blank\" rel=\"noopener\">#1859</a>",

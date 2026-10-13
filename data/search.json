@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 297,
-    "totalWords": 5792
+    "totalWords": 5789
   },
   "documents": [
     {
@@ -319,7 +319,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.515\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.515\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.519\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.519\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-12"
@@ -3676,7 +3676,7 @@
       "title": "RELEASE-PROCESS",
       "description": null,
       "headings": [],
-      "content": "# Release Process Standards **Every version number this project shows anyone MUST be traceable to a written list of what it contains.** A version number is a promise that a specific, testable thing shipped. If you cannot answer \"what is in 3.0.61?\" by reading one page, the number is noise. This exists because it was broken. Between 2026-08-19 and 2026-08-20 the version went 3.0.36 → 3.0.60 — 24 bumps, 16 of them in one day — with the last What's New entry dated 2026-08-19. The result could not be tested: given a version number there was no way to learn what was in it, and given a build no way to know its number was unique. --- ## The number on the badge (since 2026-10-02) John: \"I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple.\" The version badge shows the last release tag with its patch moved on by the **pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John, 2026-10-02: \"count pushes not commits\" -- counting commits made it jump by three per push. A push is one first-parent commit on main; the stamp workflow's own `chore(version): stamp` commit belongs to the push it stamps (`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89` commit (`ANCHOR` in that file), so it never went backwards; a release tag cut after it takes over. It is counted by git from the tag (`scripts/stamp-version.js`), so the same commit shows the same number on port 3000 and on the live site. Every version is listed on the Releases page with what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks; local edits or being behind GitHub are said in its tooltip. A release (below) is still cut deliberately with `npm run ship` and resets the count to its new tag. ## npm gets every push (since 2026-10-13) John, 2026-10-13: npm should have what the live site serves (#1860). After every push to main, once \"Stamp version on main\" has stamped it, `.github/workflows/publish-npm.yml` publishes that commit -- the root package and the scaffolder in `packages/` -- under the badge's number (`scripts/publish-npm.mjs`). The number is written into `package.json` for the publish only; nothing is committed back. It authenticates with npm trusted publishing, so there is no npm token, and it ends red unless npm then serves that number. `release.yml` no longer publishes to npm: its step never did (#1517). ## 1. One number per release, never per commit A release number changes **once, on `main`, when something is being released**. It does not change on every commit. The failure mode this replaces: `.husky/pre-commit` ran `npm version patch` on every commit. Because branch commits bump and squash-merges collapse them, the numbers that reached `main` were both **ambiguous** and **phantom**: | Symptom | Actual measurement | |---|---| | One number, several builds | `3.0.55` = two commits (#722, #733); `3.0.44` = three; `3.0.35` = ~40 | | Numbers that never shipped | `3.0.56`, `3.0.58`, `3.0.59`, `3.0.60` — feature branches only | | Working copy ahead of reality | local read `3.0.60` while `main` was `3.0.57` | Neither is testable. Both are prevented by bumping once, on `main`. ## 2. Cache-busting is a different job — give it its own stamp The `?v=` query strings in `index.html` genuinely must change on every commit, or browsers serve stale assets. **That need is what drove the per-commit bump, and it does not require the semver version.** - `?v=` and any other cache-bust token use the **commit hash or a build counter**. Change freely, every commit, no ceremony. - `package.json` `version` is the **release number**. Changes only under rule 1. `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value from the semver version. ## 3. A release is not done until the Releases page names it `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what the site says is live, so it is the only thing anyone can test against. (Until 1.0 this was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new` still forwards to `?page=releases`.) A release commit MUST contain, together, in one commit: 1. the `version` bump in `package.json` and `package-lock.json` 2. the stamped `src/core/version.js` 3. a `data/releases.json` entry **whose `version` is that exact version number**, listing what it added, fixed and changed Shipping any one of those without the others is the defect this document exists to prevent. `npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and `scripts/release.mjs` gate 2 refuses a release the file does not name. ## 3a. Every version says what the issue was and how to see the change John, 2026-10-05, on the Releases page: \"This page tells me nothing. one of these lines should be a summary of the issue, the other what to do to see the chang",
+      "content": "# Release Process Standards **Every version number this project shows anyone MUST be traceable to a written list of what it contains.** A version number is a promise that a specific, testable thing shipped. If you cannot answer \"what is in 3.0.61?\" by reading one page, the number is noise. This exists because it was broken. Between 2026-08-19 and 2026-08-20 the version went 3.0.36 → 3.0.60 — 24 bumps, 16 of them in one day — with the last What's New entry dated 2026-08-19. The result could not be tested: given a version number there was no way to learn what was in it, and given a build no way to know its number was unique. --- ## The number on the badge (since 2026-10-02) John: \"I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple.\" The version badge shows the last release tag with its patch moved on by the **pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John, 2026-10-02: \"count pushes not commits\" -- counting commits made it jump by three per push. A push is one first-parent commit on main; the stamp workflow's own `chore(version): stamp` commit belongs to the push it stamps (`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89` commit (`ANCHOR` in that file), so it never went backwards; a release tag cut after it takes over. It is counted by git from the tag (`scripts/stamp-version.js`), so the same commit shows the same number on port 3000 and on the live site. Every version is listed on the Releases page with what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks; local edits or being behind GitHub are said in its tooltip. A release (below) is still cut deliberately with `npm run ship` and resets the count to its new tag. ## npm gets each release (2026-10-13) John, 2026-10-13: \"B, go with 1.0.1\". npm gets a version when a release is cut with `npm run ship`, not on every push. `release.yml` publishes it on the push that is the release commit itself, from that commit, with npm trusted publishing (no npm token). 1.0.1 was the first: it reset the badge so npm, the tag and the site name the same number. The publish-every-push workflow from #1860 was removed for this. ## 1. One number per release, never per commit A release number changes **once, on `main`, when something is being released**. It does not change on every commit. The failure mode this replaces: `.husky/pre-commit` ran `npm version patch` on every commit. Because branch commits bump and squash-merges collapse them, the numbers that reached `main` were both **ambiguous** and **phantom**: | Symptom | Actual measurement | |---|---| | One number, several builds | `3.0.55` = two commits (#722, #733); `3.0.44` = three; `3.0.35` = ~40 | | Numbers that never shipped | `3.0.56`, `3.0.58`, `3.0.59`, `3.0.60` — feature branches only | | Working copy ahead of reality | local read `3.0.60` while `main` was `3.0.57` | Neither is testable. Both are prevented by bumping once, on `main`. ## 2. Cache-busting is a different job — give it its own stamp The `?v=` query strings in `index.html` genuinely must change on every commit, or browsers serve stale assets. **That need is what drove the per-commit bump, and it does not require the semver version.** - `?v=` and any other cache-bust token use the **commit hash or a build counter**. Change freely, every commit, no ceremony. - `package.json` `version` is the **release number**. Changes only under rule 1. `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value from the semver version. ## 3. A release is not done until the Releases page names it `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what the site says is live, so it is the only thing anyone can test against. (Until 1.0 this was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new` still forwards to `?page=releases`.) A release commit MUST contain, together, in one commit: 1. the `version` bump in `package.json` and `package-lock.json` 2. the stamped `src/core/version.js` 3. a `data/releases.json` entry **whose `version` is that exact version number**, listing what it added, fixed and changed Shipping any one of those without the others is the defect this document exists to prevent. `npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and `scripts/release.mjs` gate 2 refuses a release the file does not name. ## 3a. Every version says what the issue was and how to see the change John, 2026-10-05, on the Releases page: \"This page tells me nothing. one of these lines should be a summary of the issue, the other what to do to see the change\" (#1533). Each commit to `main` is a new release, and each one shows: 1. **The issue, in plain English.** The commit's `Summary:` line. Without one, the title of the issue the commit ci",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-12"
@@ -6562,7 +6562,7 @@
     "503": [
       "docs/behaviors/address"
     ],
-    "515": [
+    "519": [
       "pages/home"
     ],
     "540": [
@@ -6831,7 +6831,7 @@
     "1344": [
       "docs/behaviors/table"
     ],
-    "1517": [
+    "1533": [
       "docs/standards/RELEASE-PROCESS"
     ],
     "1598": [
@@ -8265,6 +8265,7 @@
       "docs/index",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "demos/frameworks",
       "demos/landing-page-showcase",
@@ -8400,7 +8401,6 @@
       "docs/guides/migrate-an-existing-page",
       "docs/schema.migration",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/content"
@@ -9868,7 +9868,8 @@
       "docs/behaviors/cart",
       "docs/behaviors/progress",
       "docs/behaviors/searchfield",
-      "docs/home-page"
+      "docs/home-page",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "use": [
       "pages/ai-permutation-test",
@@ -13350,7 +13351,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -14197,7 +14197,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/wbservices",
       "demos/frameworks"
@@ -14272,7 +14271,6 @@
       "docs/npx-commands",
       "docs/schema-test-value",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/styles",
       "docs/testing-strategy",
@@ -17405,7 +17403,6 @@
       "docs/behaviors/glass",
       "docs/behaviors/rainbow",
       "docs/claude/TIER1-LAWS",
-      "docs/standards/RELEASE-PROCESS",
       "demos/site/content"
     ],
     "000px": [
@@ -18763,8 +18760,7 @@
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
       "docs/behaviors/youtube",
-      "docs/index",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/index"
     ],
     "traditional": [
       "pages/docs",
@@ -18783,6 +18779,7 @@
       "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "demos/charity-food",
       "demos/standalone"
@@ -23006,6 +23003,7 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
@@ -23217,6 +23215,7 @@
       "docs/schema-test-value",
       "docs/semantic-standard",
       "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/site/interactive"
     ],
@@ -27864,7 +27863,6 @@
       "docs/behaviors/status",
       "docs/escape-hatches",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject"
     ],
     "elegance": [
@@ -28248,6 +28246,7 @@
       "docs/index",
       "docs/mcp",
       "docs/npx-commands",
+      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook",
       "demos/site/content"
     ],
@@ -28881,7 +28880,6 @@
       "docs/committing-fixes",
       "docs/guides/create-a-website",
       "docs/mcp",
-      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook",
       "demos/schema-first-architecture"
     ],
@@ -29262,6 +29260,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "demos/mdhtml-pre-debug",
       "demos/pre-debug"
     ],
@@ -31073,6 +31072,7 @@
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook"
     ],
@@ -32120,7 +32120,6 @@
       "docs/MVVM-MIGRATION",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/landing-page-showcase",
       "demos/schema-first-architecture"
@@ -32992,7 +32991,6 @@
       "docs/compliance/iso-42001-alignment",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles"
     ],
     "dragged": [
@@ -33290,7 +33288,6 @@
       "docs/behaviors/share",
       "docs/behaviors/stagelight",
       "docs/inline-editing",
-      "docs/standards/RELEASE-PROCESS",
       "demos/charity-food",
       "demos/frameworks",
       "demos/site/cards",
@@ -41523,7 +41520,8 @@
       "docs/behaviors/cardportfolio"
     ],
     "english": [
-      "docs/behaviors/cardportfolio"
+      "docs/behaviors/cardportfolio",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "spanish": [
       "docs/behaviors/cardportfolio"
@@ -43699,8 +43697,7 @@
     ],
     "committed": [
       "docs/behaviors/input",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "getvalue": [
       "docs/behaviors/input",
@@ -46879,8 +46876,7 @@
       "docs/guides/migrate-an-existing-page"
     ],
     "packages": [
-      "docs/guides/migrate-an-existing-page",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/guides/migrate-an-existing-page"
     ],
     "chromium": [
       "docs/guides/migrate-an-existing-page"
@@ -49062,12 +49058,6 @@
     "chore": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "scaffolder": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "authenticates": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
     "bump": [
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -49116,9 +49106,6 @@
       "docs/standards/RELEASE-PROCESS"
     ],
     "3a": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "chang": [
       "docs/standards/RELEASE-PROCESS"
     ],
     "putting": [

@@ -248,3 +248,58 @@ test.describe('Fix Viewer — fallback path (data/fixes.json)', () => {
     await expect(page.locator('table.fix-table thead th', { hasText: 'Issue' })).toHaveCount(1);
   });
 });
+
+/**
+ * #1861 — the live site. It is static, so /api/fixes is a 404 there, and the
+ * viewer read data/fixes.json: 13 hand-written rows from 2026-02-16. The stamp
+ * workflow now writes the traced table to that file (scripts/generate-fixes.mjs),
+ * without links, to keep it small; the page builds them.
+ */
+test.describe('Fix Viewer — the live site (no /api/fixes, generated data/fixes.json)', () => {
+  const GENERATED = {
+    repo: 'CieloVistaSoftware/wb-starter',
+    builtFrom: { sha: 'dddddddddddddddddddddddddddddddddddddddd', date: '2026-10-13T02:00:00+00:00' },
+    counts: { traced: 2, closed: 1, open: 1, released: 1, unreleased: 1 },
+    releases: ['v1.0.400'],
+    rows: [
+      {
+        number: 1862, title: 'Dropdown examples open behind the code panel', state: 'closed',
+        closedAt: '2026-10-13T02:00:00Z', priority: 'priority:2', release: 'v1.0.516',
+        commits: [{ sha: 'eeeeeeeeee', subject: 'fix(#1862): draw the open menu on top', release: 'v1.0.516' }],
+        files: [{ path: 'src/styles/behaviors/demo.css', sha: 'eeeeeeeeee' }],
+      },
+      {
+        number: 1861, title: 'Fix viewer has not been maintained', state: 'open',
+        closedAt: null, priority: 'priority:3', release: null,
+        commits: [{ sha: 'ffffffffff', subject: 'wip(#1861)', release: null }],
+        files: [],
+      },
+    ],
+  };
+
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/api/fixes', (route) => route.fulfill({ status: 404, contentType: 'text/html', body: '<h1>404</h1>' }));
+    await page.route('**/data/fixes.json*', (route) => route.fulfill({ json: GENERATED }));
+    await page.goto('/public/fix-viewer.html');
+    await page.waitForSelector('table.fix-table tbody tr', { timeout: 30_000 });
+  });
+
+  test('renders the traced table, one row per issue, with its release', async ({ page }) => {
+    await expect(page.locator('table.fix-table tbody tr')).toHaveCount(2);
+    await expect(page.locator('.fix-rel', { hasText: 'v1.0.516' })).toHaveCount(1);
+    await expect(page.locator('#fix-count')).toContainText('2 issues traced');
+  });
+
+  test('the issue, the commit and every file are links built from the repo', async ({ page }) => {
+    const gh = `https://github.com/${GENERATED.repo}`;
+    await expect(page.locator('td.fix-cell--id a').first()).toHaveAttribute('href', `${gh}/issues/1862`);
+    await expect(page.locator('td.fix-cell--test a').first()).toHaveAttribute('href', `${gh}/commit/eeeeeeeeee`);
+    await expect(page.locator('a.fix-file')).toHaveAttribute('href', `${gh}/blob/eeeeeeeeee/src/styles/behaviors/demo.css`);
+  });
+
+  test('the count line says which commit the table describes', async ({ page }) => {
+    const built = page.locator('#fix-count .fix-count__built');
+    await expect(built).toContainText('dddddddd');
+    await expect(built).toContainText('2026-10-13');
+  });
+});

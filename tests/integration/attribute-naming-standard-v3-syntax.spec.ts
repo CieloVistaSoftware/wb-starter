@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settlePage } from '../base';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -65,7 +66,12 @@ test.describe('ATTRIBUTE-NAMING-STANDARD.md shows no custom-element tags (#255, 
     // "WB-Starter" arrives as "WB‑Starter", and a literal-hyphen substring
     // match never matches. Compare the text with hyphens folded back.
     const text = async () => ((await page.locator('#content').textContent()) || '').replace(/\u2011/g, '-');
-    await expect.poll(text).toContain('WB-Starter Attribute Naming Standard');
+    // Waited on the way every doc-viewer spec waits: the page settled, then the
+    // render. The default 5 s poll ran out as the first test on a cold Windows
+    // runner, with the page still reading "Loading documentation..." (PR #1869
+    // CI, 2026-10-13); the same spec passed 15 of 15 runs warm.
+    await settlePage(page);
+    await expect.poll(text, { timeout: 20_000 }).toContain('WB-Starter Attribute Naming Standard');
     expect(await text()).not.toContain('404');
     // The doc shows the attribute form on a neutral host (`<div x-cardpricing>`);
     // it no longer writes the bare `[x-cardpricing]` selector form this looked for.

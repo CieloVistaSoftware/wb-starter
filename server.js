@@ -17,6 +17,7 @@ const execFileAsync = promisify(execFile);
 import { marked } from 'marked';
 import { updateToLatest, keepUpToDate } from './scripts/lib/pull-latest.mjs';
 import { mergeIntoLog } from './scripts/lib/error-log-merge.mjs';
+import { fetchIssues, traceFixes } from './scripts/lib/fixes.mjs';
 import { FOLDER_PAGES } from './src/core/routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -941,12 +942,10 @@ function readIssuesCache() {
 // not a nicety — it is what removed `#6366` (a four-digit number in a commit
 // body that was never an issue) from the table without special-casing it.
 //
-// data/fixes.json cannot answer any of this at any formatting: 13 hand-written
-// entries with no issue number and no version. The answer lives in git — a
-// commit cites its issue, and the EARLIEST tag containing that commit is the
-// release it shipped in. Releases had to exist first: 4.0.0 and 4.0.1 shipped
-// untagged, so nothing recent could be traced until they were tagged
-// retroactively.
+// The answer lives in git -- a commit cites its issue, and the version that
+// took the commit live is its release. How the table is built is in
+// scripts/lib/fixes.mjs; the stamp workflow writes the same table to
+// data/fixes.json for the static site (#1861).
 // #1054: this route was measured at 8.2s and 10.6s returning 3.86MB, recomputed
 // from scratch on every load, and the Fix Viewer paints nothing until it
 // resolves — John read that as "it's just hanging". It was not hanging; it was
@@ -980,139 +979,12 @@ function headSha(rootDir) {
 let fixesRefresh = null;
 
 async function computeFixes(head) {
-  const US = String.fromCharCode(31);
-  const RS = String.fromCharCode(30);
-  const NL = String.fromCharCode(10);
-  const git = (args) => {
-    try {
-      return execFileSync('git', args, {
-        cwd: rootDir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000,
-      });
-    } catch { return ''; }
-  };
-
-  // 1. THE ISSUES — the source of truth. Everything below is filtered by this.
-  const meta = new Map();
-  try {
-    const { stdout: out } = await execFileAsync(
-      'gh',
-      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
-       '--json', 'number,title,state,url,closedAt,labels'],
-      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
-    );
-    for (const i of JSON.parse(out)) meta.set(i.number, i);
-  } catch (e) {
-    console.warn('[Fixes] gh issue list failed:', e.message);
-  }
-
-  // 2. Releases, oldest first, so the first tag containing a commit is the
-  //    release it shipped in.
-  const tags = git(['tag', '--list', 'v*', '--sort=v:refname'])
-    .split(NL).map((t) => t.trim()).filter(Boolean);
-  const tagSets = tags.map((t) => [t, new Set(git(['rev-list', t]).split(NL).filter(Boolean))]);
-  const releaseOf = (sha) => (tagSets.find(([, set]) => set.has(sha)) || [null])[0];
-
-  // 3. Commits, credited only to issues that exist.
-  //
-  // ONE log pass with --name-only carries the changed files inline. With
-  // --name-only git prints the file list AFTER the formatted record, so once
-  // split on RS the files for record N arrive at the head of chunk N+1 — which
-  // is why the leading lines of each chunk are attributed to the previous sha.
-  const byIssue = new Map();
-  const filesBySha = new Map();
-  const rawLog = git(['log', '--all', '--max-count=4000', '--name-only', `--format=%H${US}%s${US}%b${RS}`]);
-  const chunks = rawLog.split(RS);
-  const shaOrder = [];
-  const parsed = chunks.map((chunk) => {
-    const lines = chunk.split(NL);
-    const leading = [];
-    let i = 0;
-    for (; i < lines.length; i++) {
-      const candidate = lines[i].split(US)[0].trim();
-      if (/^[0-9a-f]{40}$/.test(candidate)) break;
-      if (lines[i].trim()) leading.push(lines[i].trim());
-    }
-    const rec = lines.slice(i).join(NL);
-    return { leading, rec };
-  });
-  parsed.forEach((p, idx) => {
-    // `leading` belongs to the PREVIOUS record's commit.
-    if (idx > 0 && shaOrder[idx - 1]) filesBySha.set(shaOrder[idx - 1], p.leading);
-    const [sha] = p.rec.replace(/^\s+/, '').split(US);
-    shaOrder[idx] = /^[0-9a-f]{40}$/.test(sha) ? sha : null;
-  });
-
-  for (const { rec: entry } of parsed) {
-    if (!entry.trim()) continue;
-    const [sha, subject = '', body = ''] = entry.replace(/^\s+/, '').split(US);
-    if (!/^[0-9a-f]{40}$/.test(sha)) continue;
-
-    const cited = new Set(
-      [...`${subject} ${body}`.matchAll(/#(\d{3,4})(?!\d)/g)]
-        .map((m) => Number(m[1]))
-        .filter((n) => meta.has(n)),   // the issue list decides, not the text
-    );
-    if (!cited.size) continue;
-
-    // Files this commit touched, linked at THIS sha so the link shows the code
-    // as it was when the fix landed, not as it is now.
-    //
-    // Read from the ONE log pass below, not `git show` per commit: that spawned
-    // a subprocess for every commit citing an issue — hundreds of them — and the
-    // page simply never finished loading.
-    const files = (filesBySha.get(sha) || []).slice(0, 40);
-
-    for (const n of cited) {
-      if (!byIssue.has(n)) byIssue.set(n, []);
-      byIssue.get(n).push({
-        sha: sha.slice(0, 8),
-        url: `https://github.com/${ISSUES_REPO}/commit/${sha}`,
-        subject,
-        release: releaseOf(sha),
-        files: files.map((f) => ({
-          path: f,
-          url: `https://github.com/${ISSUES_REPO}/blob/${sha}/${f}`,
-        })),
-      });
-    }
-  }
-
-  const rows = [...byIssue.entries()].map(([number, commits]) => {
-    const i = meta.get(number) || {};
-    const files = [];
-    const seen = new Set();
-    for (const c of commits) {
-      for (const f of c.files) {
-        if (seen.has(f.path)) continue;
-        seen.add(f.path);
-        files.push(f);
-      }
-    }
-    return {
-      number,
-      title: i.title || null,
-      state: (i.state || 'unknown').toLowerCase(),
-      url: i.url || `https://github.com/${ISSUES_REPO}/issues/${number}`,
-      closedAt: i.closedAt || null,
-      priority: (i.labels || []).map((l) => l.name).find((n) => /^priority:[1-5]$/.test(n)) || null,
-      commits,
-      files: files.slice(0, 25),
-      release: commits.map((c) => c.release).filter(Boolean).sort()[0] || null,
-    };
-  }).sort((a, b) => b.number - a.number);
-
-  const payload = {
-    generatedAt: new Date().toISOString(),
-    counts: {
-      traced: rows.length,
-      released: rows.filter((r) => r.release).length,
-      unreleased: rows.filter((r) => !r.release).length,
-      open: rows.filter((r) => r.state === 'open').length,
-      closed: rows.filter((r) => r.state === 'closed').length,
-    },
-    releases: tags,
-    rows,
-  };
+  // #1861: the same table the live site reads from data/fixes.json, built by
+  // the same code (scripts/lib/fixes.mjs), so port 3000 and the site agree.
+  const issues = await fetchIssues(ISSUES_REPO);
+  if (!issues) console.warn('[Fixes] could not read the issue list from GitHub');
+  const payload = traceFixes({ root: rootDir, issues: issues || [], repo: ISSUES_REPO });
+  const { rows } = payload;
 
   // Written only when there is something to write. Caching an empty result
   // would pin a failed `gh` call (rate limit, network, not logged in) into the

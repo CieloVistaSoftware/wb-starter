@@ -51,6 +51,16 @@
   overflow: visible;
 }
 
+/* #1862: lifting the clip was not enough -- the menu still opened BEHIND the
+   example's source panel. `.x-demo__grid` has `contain: layout` (#647), which
+   makes it a stacking context, so the menu's z-index only counts inside the
+   grid, and the <pre> after it paints over the open menu. While a menu inside
+   is open, the grid itself is lifted above its siblings. */
+.x-demo__grid:has(.x-dropdown__menu--open) {
+  position: relative;
+  z-index: 20;
+}
+
 /* #832: backdrop-filter blurs what is painted behind the element, and a demo
    stage is a flat colour -- blurring it returns the same colour, so a glass
    card's blur could not show on any device, and a report that glass "does
