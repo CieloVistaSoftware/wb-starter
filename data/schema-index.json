@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T04:49:14.916Z",
+  "generatedAt": "2026-10-13T02:27:03.486Z",
   "count": 212,
   "schemas": [
     {
@@ -3455,32 +3455,45 @@
           "appliesAttribute": "x-tooltip"
         }
       },
+      "demo": {
+        "base": {
+          "filename": "quarterly-report.pdf",
+          "href": "files/quarterly-report.pdf"
+        }
+      },
       "matrix": [
         {
-          "filename": "quarterly-report.pdf"
+          "filename": "quarterly-report.pdf",
+          "href": "files/quarterly-report.pdf"
         },
         {
           "filename": "meeting-notes.docx",
+          "href": "files/meeting-notes.docx",
           "size": "480 KB"
         },
         {
           "filename": "architecture-diagram.png",
+          "href": "files/architecture-diagram.png",
           "size": "2.4 MB"
         },
         {
           "filename": "product-walkthrough.mp4",
+          "href": "files/product-walkthrough.mp4",
           "size": "58 MB"
         },
         {
           "filename": "interview-recording.m4a",
+          "href": "files/interview-recording.m4a",
           "size": "12 MB"
         },
         {
           "filename": "release-assets.zip",
+          "href": "files/release-assets.zip",
           "size": "104 MB"
         },
         {
           "filename": "sensor-capture.bin",
+          "href": "files/sensor-capture.bin",
           "size": "31 MB"
         }
       ],

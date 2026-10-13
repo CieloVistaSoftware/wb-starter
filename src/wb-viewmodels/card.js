@@ -2,6 +2,7 @@ import { readFlag, readAttr, readOption, authoredAttr } from '../core/read-attr.
 import { authorHTML, authorText } from '../core/author-content.js';
 import { READY_ATTRIBUTE } from '../core/ready-signal.js';
 import { setRule } from '../core/dynamic-style.js';
+import { fromSiteRoot } from '../core/site-root.js';
 /**
  * Card Behavior + Variants
  * -----------------------------------------------------------------------------
@@ -2140,7 +2141,14 @@ export function cardfile(element, options = {}) {
   // page, so every card downloaded the current page itself (as .htm)
   // regardless of the declared file-type. No href means nothing real to
   // download, so the card isn't made clickable at all.
-  const downloadUrl = config.href;
+  //
+  // An href of "#" (or an empty one) names no file: it used to make the card
+  // look downloadable and then "download" the page the card sat on. And a
+  // site-relative href ("files/report.pdf") is resolved from the site root,
+  // so the same card downloads the same file from every page that shows it
+  // (the docs, the playground, demos/site/), locally and on GitHub Pages.
+  const rawHref = String(config.href || '').trim();
+  const downloadUrl = rawHref && rawHref !== '#' ? fromSiteRoot(rawHref) : '';
   if (config.downloadable && downloadUrl) {
     cardPart(element, 'span', 'x-card__file-download', '⬇️');
 

@@ -158,49 +158,62 @@
       "description": "Meta text color"
     }
   },
+  "demo": {
+    "base": {
+      "filename": "quarterly-report.pdf",
+      "href": "files/quarterly-report.pdf"
+    }
+  },
   "test": {
     "setup": [
       "<div x-cardfile>Basic cardfile content</div>",
-      "<div x-cardfile filename=\"quarterly-report.pdf\">filename=quarterly-report.pdf</div>",
-      "<div x-cardfile filename=\"meeting-notes.docx\">filename=meeting-notes.docx</div>",
-      "<div x-cardfile filename=\"architecture-diagram.png\">filename=architecture-diagram.png</div>",
-      "<div x-cardfile filename=\"product-walkthrough.mp4\">filename=product-walkthrough.mp4</div>",
-      "<div x-cardfile filename=\"interview-recording.m4a\">filename=interview-recording.m4a</div>",
-      "<div x-cardfile filename=\"release-assets.zip\">filename=release-assets.zip</div>",
-      "<div x-cardfile filename=\"sensor-capture.bin\">filename=sensor-capture.bin</div>",
-      "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"default\">variant=default</div>",
-      "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"compact\">variant=compact</div>",
-      "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"elevated\">variant=elevated</div>",
-      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"#\" downloadable>with downloadable</div>",
-      "<div x-cardfile filename=\"quarterly-report.pdf\"></div>"
+      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\">filename=quarterly-report.pdf</div>",
+      "<div x-cardfile filename=\"meeting-notes.docx\" href=\"files/meeting-notes.docx\">filename=meeting-notes.docx</div>",
+      "<div x-cardfile filename=\"architecture-diagram.png\" href=\"files/architecture-diagram.png\">filename=architecture-diagram.png</div>",
+      "<div x-cardfile filename=\"product-walkthrough.mp4\" href=\"files/product-walkthrough.mp4\">filename=product-walkthrough.mp4</div>",
+      "<div x-cardfile filename=\"interview-recording.m4a\" href=\"files/interview-recording.m4a\">filename=interview-recording.m4a</div>",
+      "<div x-cardfile filename=\"release-assets.zip\" href=\"files/release-assets.zip\">filename=release-assets.zip</div>",
+      "<div x-cardfile filename=\"sensor-capture.bin\" href=\"files/sensor-capture.bin\">filename=sensor-capture.bin</div>",
+      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\" variant=\"default\">variant=default</div>",
+      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\" variant=\"compact\">variant=compact</div>",
+      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\" variant=\"elevated\">variant=elevated</div>",
+      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\" downloadable>with downloadable</div>",
+      "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"files/quarterly-report.pdf\"></div>"
     ],
     "matrix": {
       "combinations": [
         {
-          "filename": "quarterly-report.pdf"
+          "filename": "quarterly-report.pdf",
+          "href": "files/quarterly-report.pdf"
         },
         {
           "filename": "meeting-notes.docx",
+          "href": "files/meeting-notes.docx",
           "size": "480 KB"
         },
         {
           "filename": "architecture-diagram.png",
+          "href": "files/architecture-diagram.png",
           "size": "2.4 MB"
         },
         {
           "filename": "product-walkthrough.mp4",
+          "href": "files/product-walkthrough.mp4",
           "size": "58 MB"
         },
         {
           "filename": "interview-recording.m4a",
+          "href": "files/interview-recording.m4a",
           "size": "12 MB"
         },
         {
           "filename": "release-assets.zip",
+          "href": "files/release-assets.zip",
           "size": "104 MB"
         },
         {
           "filename": "sensor-capture.bin",
+          "href": "files/sensor-capture.bin",
           "size": "31 MB"
         }
       ]
