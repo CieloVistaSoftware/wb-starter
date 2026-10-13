@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.527",
+      "date": "2026-10-13",
+      "summary": "X-gallery fixed every image at 3.125rem (50px) tall, so in a real column a photo showed as a thin strip (389x50 in a 3-column gallery at 1400px) and sites had to add their own CSS. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1880\" target=\"_blank\" rel=\"noopener\">#1880</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1881\" target=\"_blank\" rel=\"noopener\">#1881</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-gallery thumbnails keep a 4:3 photo shape instead of 50px strips</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1880\" target=\"_blank\" rel=\"noopener\">#1880</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1881\" target=\"_blank\" rel=\"noopener\">#1881</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/be1f955f764ee50c90a84e7b81cf74ef030a33c5\" target=\"_blank\" rel=\"noopener\"><code>be1f955</code></a>",
+          "issues": [
+            1880,
+            1881
+          ]
+        }
+      ],
+      "seeIt": "Put &lt;div x-gallery columns=&quot;3&quot;&gt; around a few photos and open the page. Before: each thumbnail was a 50px-tall strip cut from the middle of the photo. Now: each thumbnail is a 4:3 tile of the photo, and style=&quot;--x-gallery-ratio: 1 / 1&quot; makes them square.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/be1f955f764ee50c90a84e7b81cf74ef030a33c5\" target=\"_blank\" rel=\"noopener\"><code>be1f955</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.526",
       "date": "2026-10-13",
       "summary": "Release run #460 was started by hand with npm_version empty, fell through to the tag path and published the old v1.0.400 to npm instead of 1.0.1. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1879\" target=\"_blank\" rel=\"noopener\">#1879</a>",

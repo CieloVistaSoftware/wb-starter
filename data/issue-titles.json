@@ -1265,5 +1265,6 @@
   "1870": "File cards show a download arrow but download nothing: every example's href is \"#\", example.com, or missing",
   "1872": "Two sessions changed the npm release at the same time, and neither checked for the other",
   "1874": "Compliance is red on main: data/fixes.json trips the retired-class scan, and PACKAGE is at 857 against its 855 ceiling",
-  "1877": "With JavaScript off the live site shows only \"Loading...\" -- the \"renders as semantic HTML anyway\" promise does not hold"
+  "1877": "With JavaScript off the live site shows only \"Loading...\" -- the \"renders as semantic HTML anyway\" promise does not hold",
+  "1880": "x-gallery squeezes every photo into a 50px-tall strip: gallery.css fixes img height at 3.125rem"
 }
