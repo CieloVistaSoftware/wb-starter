@@ -2,10 +2,10 @@
  * #294: rem, never px -- on every device type (John, 2026-10-13: "rem is
  * preferred measurement for all device types not px").
  *
- * `px-no-new-creep.spec.ts` only counts px in the properties the audit
- * buckets as LIKELY_CONVERT. That left every other px -- borders, shadows,
- * blurs, transforms, media-query breakpoints, the UNCLASSIFIED bucket --
- * free to grow, as if px were allowed there. It is not. This gate counts
+ * It replaces `px-no-new-creep.spec.ts`, which only counted px in the
+ * properties the audit buckets as LIKELY_CONVERT. That left every other
+ * px -- borders, shadows, blurs, transforms, media-query breakpoints, the
+ * UNCLASSIFIED bucket -- free to grow, as if px were allowed there. It is not. This gate counts
  * EVERY px the audit finds in src/ and fails if the total grows.
  *
  * The count may only go down. Convert a file, re-run

@@ -8,7 +8,7 @@ import * as path from 'path';
  * scales with the root font-size (see #293's mobile 18px root bump);
  * `px` never does.
  *
- * This is a zero-tolerance gate (unlike `px-no-new-creep.spec.ts`, which
+ * This is a zero-tolerance gate (unlike `px-total-only-shrinks.spec.ts`, which
  * grandfathers in the pre-existing broader px/rem backlog for
  * padding/margin/gap/etc.): every literal `font-size: Npx` / `font-size:Npx`
  * declaration in CSS, HTML, and JS (inline styles / cssText / template

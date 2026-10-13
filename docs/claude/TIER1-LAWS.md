@@ -337,9 +337,10 @@ blurs, transform offsets and media-query breakpoints. There is no
 - **A layout that overflows in rem is a layout bug.** Fix the layout; never
   put the value back in px.
 
-Guard tests: `tests/compliance/px-total-only-shrinks.spec.ts` (every px in
-`src/`; the count only goes down) and `px-no-new-creep.spec.ts`. Lower their
-baselines as files convert; never raise them.
+Guard test: `tests/compliance/px-total-only-shrinks.spec.ts` counts every px
+in `src/`, and the count only goes down. Lower its baseline as files convert;
+never raise it. (It replaced `px-no-new-creep.spec.ts`, which counted only
+the "likely convert" px.)
 
 ---
 
