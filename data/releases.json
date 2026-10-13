@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.529",
+      "date": "2026-10-13",
+      "summary": "The site badge said v1.0.527 while npm said 1.0.1, and nothing kept wb-starter and create-wb-starter on the same number. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1882\" target=\"_blank\" rel=\"noopener\">#1882</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1883\" target=\"_blank\" rel=\"noopener\">#1883</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Npm drives the version: the site badge shows npm&#39;s number, both packages share it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1882\" target=\"_blank\" rel=\"noopener\">#1882</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1883\" target=\"_blank\" rel=\"noopener\">#1883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a6d6e3a1c82d13a3d30ed76d20189397407e4d70\" target=\"_blank\" rel=\"noopener\"><code>a6d6e3a</code></a>",
+          "issues": [
+            1882,
+            1883
+          ]
+        }
+      ],
+      "seeIt": "Open the live site and look at the version badge in the header, then hover it. Before: v1.0.527, with no npm version anywhere. Now: v1.0.1, the version on npm, and the tooltip reads On npm: 1.0.1 (both packages) with the build number.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a6d6e3a1c82d13a3d30ed76d20189397407e4d70\" target=\"_blank\" rel=\"noopener\"><code>a6d6e3a</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.528",
       "date": "2026-10-13",
       "summary": "On GitHub Pages the Error Log had no way back to the site, said No errors found. Great job! with no log present, requested <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/errors.json\" target=\"_blank\" rel=\"noopener\">data/errors.json</a> (404) on every visit, and Clear Log POSTed to an API a static host does not have. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1886\" target=\"_blank\" rel=\"noopener\">#1886</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1887\" target=\"_blank\" rel=\"noopener\">#1887</a>",
