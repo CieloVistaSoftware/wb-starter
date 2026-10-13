@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.521",
+      "date": "2026-10-12",
+      "summary": "#1869 put main red on two compliance gates, and this PR inherits (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1871\" target=\"_blank\" rel=\"noopener\">PR 1871</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1870\" target=\"_blank\" rel=\"noopener\">#1870</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Turn main&#39;s two red compliance gates green</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1870\" target=\"_blank\" rel=\"noopener\">#1870</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cf3ef44255ca47e9c7fd43ad3cfa18ed9d286f90\" target=\"_blank\" rel=\"noopener\"><code>cf3ef44</code></a>",
+          "issues": [
+            1870
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Media file cards download remote files, never committed ones</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1870\" target=\"_blank\" rel=\"noopener\">#1870</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b298c23a30b6fcb07b4d821c3d2800dafab2cc5b\" target=\"_blank\" rel=\"noopener\"><code>b298c23</code></a>",
+          "issues": [
+            1870
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every file card downloads the file it names</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1870\" target=\"_blank\" rel=\"noopener\">#1870</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/24e64795a3acdfea923eb800266c6b0e170714dc\" target=\"_blank\" rel=\"noopener\"><code>24e6479</code></a>",
+          "issues": [
+            1870
+          ]
+        }
+      ],
+      "seeIt": "Run the compliance suite on this branch. Before: two gates fail on main&#39;s fix history and repo name. Now: both pass and PACKAGE is 852.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3e983b73ade4d78d72f5479ad8c9b8ce000eb1d5\" target=\"_blank\" rel=\"noopener\"><code>3e983b7</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.520",
       "date": "2026-10-12",
       "summary": "Two compliance tests failed on main, and that also blocked npm run ship at Gate 1. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1875\" target=\"_blank\" rel=\"noopener\">PR 1875</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1874\" target=\"_blank\" rel=\"noopener\">#1874</a>",
