@@ -1,10 +1,14 @@
 name: Release
 
-# Every "release: X.Y.Z" commit on main gets its tag, its GitHub release and its
-# npm packages, without a person doing it by hand (#1182). `npm run ship` makes
-# the release commit; this finishes the release. Nothing here depends on who
-# pushed: it runs on every push to main and fills in whatever is missing, so a
-# release the tagging missed (1.0.0, 4.0.6) is completed by the next push.
+# Every "release: X.Y.Z" commit on main gets its tag and its GitHub release,
+# without a person doing it by hand (#1182). `npm run ship` makes the release
+# commit; this finishes the release. npm is not published here any more: every
+# push to main is published under the badge's number by publish-npm.yml (#1860).
+# The npm step this replaced never published anything (#1517).
+#
+# Nothing here depends on who pushed: it runs on every push to main and fills
+# in whatever is missing, so a release the tagging missed (1.0.0, 4.0.6) is
+# completed by the next push.
 #
 # Every step says what it did or why it did nothing -- never a silent skip.
 
@@ -38,8 +42,8 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      # One tag that cannot be made must not stop the others, the GitHub releases
-      # or npm (first run, 2026-09-30: v1.0.0 was tagged, then v4.0.6 was refused
+      # One tag that cannot be made must not stop the others or the GitHub
+      # releases (first run, 2026-09-30: v1.0.0 was tagged, then v4.0.6 was refused
       # and the job ended there). A git push of a tag whose commit carries older
       # workflow files is refused to the Actions token ("without `workflows`
       # permission"), so the tag API is tried next; a tag both refuse is named
@@ -79,33 +83,5 @@ jobs:
               latest=$([ "${version}" = "$(node -p "require('./package.json').version")" ] && echo --latest || echo --latest=false)
               gh release create "${tag}" --title "${version}" --notes-file notes.md --verify-tag ${latest}
               echo "➕ GitHub release ${tag}"
-            fi
-          done
-
-      - name: Publish to npm (wb-starter, create-wb-starter)
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          version=$(node -p "require('./package.json').version")
-          if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
-            echo "… ${version} has no release commit yet: nothing to publish"; exit 0
-          fi
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "::warning::NPM_TOKEN is not set in the repository secrets, so npm was not published."; exit 0
-          fi
-          # Publish the code the tag names, not whatever main holds now: main
-          # moves on after a release and still says the same version until the
-          # next one is cut.
-          pub="${RUNNER_TEMP}/publish-v${version}"
-          git worktree add --detach "${pub}" "v${version}"
-          echo "Publishing from v${version} ($(git rev-parse --short "v${version}^{commit}"))"
-          for dir in . packages/create-wb-starter; do
-            name=$(node -p "require('${pub}/${dir}/package.json').name")
-            ver=$(node -p "require('${pub}/${dir}/package.json').version")
-            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
-              echo "✓ ${name}@${ver} already on npm"
-            else
-              (cd "${pub}/${dir}" && npm publish --ignore-scripts --access public)
-              echo "➕ published ${name}@${ver}"
             fi
           done

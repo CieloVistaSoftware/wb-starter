@@ -1,0 +1,55 @@
+name: Publish to npm
+
+# John, 2026-10-13: npm should have what the live site serves (#1860). The site
+# serves main, and its badge counts every push, so after every push -- once
+# "Stamp version on main" has stamped it -- the same commit is published to npm
+# under the badge's number: the root package and every package in packages/.
+#
+# Authentication is npm trusted publishing (GitHub OIDC): there is no npm token
+# to expire, be mis-scoped or leak, and npm's 2027 cutoff for 2FA-bypass tokens
+# does not apply. One-time setup on npmjs.com, for each package: Settings ->
+# Trusted publishing -> GitHub Actions, this repository, workflow
+# publish-npm.yml.
+#
+# The job ends red unless npm then serves that number (scripts/publish-npm.mjs).
+
+on:
+  workflow_run:
+    workflows: [ "Stamp version on main" ]
+    types: [ completed ]
+    branches: [ main ]
+  workflow_dispatch:
+
+# One publish at a time; a later run publishes main as it is then, so runs that
+# finish out of order never move npm's "latest" backwards.
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write   # npm trusted publishing
+
+jobs:
+  publish:
+    name: Publish main to npm under the badge's number
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # main as it is now: the stamped commit the live site serves.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      # Trusted publishing needs npm 11.5.1 or later.
+      - name: Use a current npm
+        run: npm install -g npm@latest && npm --version
+
+      - name: Publish
+        run: node scripts/publish-npm.mjs
