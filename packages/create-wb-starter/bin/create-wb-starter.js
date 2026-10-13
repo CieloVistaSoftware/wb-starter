@@ -26,9 +26,10 @@ import { checkForUpdate } from '../lib/update-notice.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_DIR = join(HERE, '..', 'template');
-const OWN_VERSION = JSON.parse(readFileSync(join(HERE, '..', 'package.json'), 'utf8')).version;
+const OWN_PACKAGE = JSON.parse(readFileSync(join(HERE, '..', 'package.json'), 'utf8'));
+const OWN_VERSION = OWN_PACKAGE.version;
 // Started now so the registry request runs while the files are written.
-const updateNotice = checkForUpdate(OWN_VERSION);
+const updateNotice = checkForUpdate(OWN_PACKAGE);
 
 function fail(message) {
   console.error(`\n✖ ${message}\n`);

@@ -102,9 +102,8 @@ jobs:
              [ "$(git rev-parse "v${version}^{commit}")" != "$(git rev-parse HEAD)" ]; then
             echo "… v${version} is not this push's commit: not publishing old code (run Release by hand to publish it anyway)"; exit 0
           fi
-          # No token: npm trusts this workflow (release.yml in
-          # CieloVistaSoftware/wb-starter) through each package's Trusted
-          # Publisher setting on npmjs.com.
+          # No token: npm trusts this workflow (release.yml in this repo)
+          # through each package's Trusted Publisher setting on npmjs.com.
           # Publish the code the tag names, not whatever main holds now: main
           # moves on after a release and still says the same version until the
           # next one is cut.
