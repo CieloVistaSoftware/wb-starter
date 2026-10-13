@@ -132,9 +132,14 @@ jobs:
           # Publish only on the push that IS the release commit (or a manual run).
           # Every later push to main still names the last release, and that code
           # is behind main: 1.0.400 was 111 merges behind the site (2026-10-13).
-          if [ "${{ github.event_name }}" != "workflow_dispatch" ] && \
-             [ "$(git rev-parse "v${version}^{commit}")" != "$(git rev-parse HEAD)" ]; then
-            echo "… v${version} is not this push's commit: not publishing old code (run Release by hand to publish it anyway)"; exit 0
+          # A hand-started run publishes only the number typed into npm_version
+          # (the step above). With the box empty it publishes nothing: run #460
+          # (2026-10-13) had it empty and put the old v1.0.400 on npm.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "::warning::npm_version was empty, so nothing was published. Run Release again and type the version (e.g. 1.0.1) in npm_version."; exit 0
+          fi
+          if [ "$(git rev-parse "v${version}^{commit}")" != "$(git rev-parse HEAD)" ]; then
+            echo "… v${version} is not this push's commit: not publishing old code"; exit 0
           fi
           # No token: npm trusts this workflow (release.yml in this repo)
           # through each package's Trusted Publisher setting on npmjs.com.
