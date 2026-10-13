@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.519",
+      "date": "2026-10-12",
+      "summary": "The Fix Viewer on the live site showed 13 hand-written fixes from 2026-02-16, because the site has no /api/fixes and nothing ever updated <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/fixes.json\" target=\"_blank\" rel=\"noopener\">data/fixes.json</a>. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The live Fix Viewer shows every traced fix, regenerated on every push</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1861\" target=\"_blank\" rel=\"noopener\">#1861</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1869\" target=\"_blank\" rel=\"noopener\">#1869</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4a9a688b1bf896e22130e6cdfef87d8e57ca31c8\" target=\"_blank\" rel=\"noopener\"><code>4a9a688</code></a>",
+          "issues": [
+            1861,
+            1869
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/fix-viewer.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/public/fix-viewer.html</a>. Before: &quot;13 fixes&quot; from February, with no issue states or releases. Now: about 460 issues traced, each with its open/closed state, the commit that fixed it, the files it changed and the version that took it live, and the count line says which commit the table was built from.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4a9a688b1bf896e22130e6cdfef87d8e57ca31c8\" target=\"_blank\" rel=\"noopener\"><code>4a9a688</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.518",
       "date": "2026-10-12",
       "summary": "Npm never received a release: the token publish failed with E404 (#1517), and publish-npm.yml failed too because npm trusts release.yml. npm now gets deliberate releases (1.0.1 first, John&#39;s choice), and create-wb-starter says when a newer version exists. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1864\" target=\"_blank\" rel=\"noopener\">#1864</a>",
