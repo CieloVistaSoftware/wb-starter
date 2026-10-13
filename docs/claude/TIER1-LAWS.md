@@ -321,6 +321,28 @@ collision and requires the refusal).
 
 ---
 
+## 19. rem, Never px — On Every Device Type
+
+John, 2026-10-13: "rem is preferred measurement for all device types not px."
+px ignores the reader's browser font size; rem follows it. So every size is in
+rem: font sizes, spacing, radii, widths and heights, and also borders, shadows,
+blurs, transform offsets and media-query breakpoints. There is no
+"genuinely device-pixel" exception.
+
+- **Convert as n/16 rem** (`8px` → `0.5rem`, pill `999px` → `62.4375rem`), so
+  nothing moves at the default 16px root.
+- **Not every value needs a unit.** Fluid layout can use `%`, `fr` or `vw`;
+  `line-height` stays unitless; `em` is right for spacing that should follow
+  its own component's text. None of those is px.
+- **A layout that overflows in rem is a layout bug.** Fix the layout; never
+  put the value back in px.
+
+Guard tests: `tests/compliance/px-total-only-shrinks.spec.ts` (every px in
+`src/`; the count only goes down) and `px-no-new-creep.spec.ts`. Lower their
+baselines as files convert; never raise them.
+
+---
+
 ## Known Broken Areas (Don't Touch Without John's Direction)
 
 - **Schema viewer** — Schema dropdown doesn't populate. Known issue, not a priority.
