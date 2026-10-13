@@ -224,6 +224,8 @@
 
   <header id="errors-header">
     <div id="header-title">
+      <!-- #1886: the menu opens this page on its own, so it needs a way back. -->
+      <a href="../" id="errors-back" class="error-url">← Back to site</a>
       <h1>🚨 Error Log Viewer</h1>
       <p class="c-text-secondary-mt-05rem">Monitor and debug application errors</p>
     </div>
@@ -258,7 +260,21 @@
   </div>
 
   <script>
+    // #1886: a static host (GitHub Pages) has no server log and no clear API.
+    // Asking for them anyway cost a 404 on every visit; this browser's own log
+    // (wb:error-log, written by error-logger.js) is the only log there.
+    const STATIC_HOST = location.hostname.endsWith('.github.io');
+    let noServerLog = STATIC_HOST;
+
+    function showLocalOnly() {
+      noServerLog = true;
+      const local = readLocalLog();
+      renderErrors(local);
+      if (local.errors.length) noteLocalSource(local.errors.length);
+    }
+
     async function loadErrors() {
+      if (STATIC_HOST) { showLocalOnly(); return; }
       // #1000: this was fetch('/data/errors.json'), a ROOT-absolute path. This
       // page is served under /wb-starter/ on GitHub Pages, so that resolved to
       // the ORG root and 404'd — measured live:
@@ -292,14 +308,8 @@
           // errors were being recorded faithfully into a store the viewer did
           // not open, and the page reported "No errors found. Great job!".
           // The two halves were built to meet and never did.
-          const local = readLocalLog();
-          if (local.errors.length) {
-            renderErrors(local);
-            noteLocalSource(local.errors.length);
-            return;
-          }
-          renderErrors({ errors: [] });
-          noteWhereItLooked(logUrl);
+          showLocalOnly();
+          if (!readLocalLog().errors.length) noteWhereItLooked(logUrl);
           return;
         }
         if (!response.ok) throw new Error(`Failed to load errors (HTTP ${response.status})`);
@@ -396,7 +406,10 @@
 
       if (errors.length === 0) {
         shownErrors = [];
-        container.innerHTML = '<div class="empty-state">No errors found. Great job! 🎉</div>';
+        // #1886: with no server log, "no errors" is only this browser's view.
+        container.innerHTML = noServerLog
+          ? '<div class="empty-state" id="error-log-none-here">This browser has logged no errors on this site. There is no server log here (static site).</div>'
+          : '<div class="empty-state">No errors found. Great job! 🎉</div>';
         return;
       }
 
@@ -621,6 +634,7 @@
       // page is served. On GitHub Pages it is the ONLY log, and Clear used to
       // leave it untouched and say "Failed to clear errors" (#1568).
       try { localStorage.removeItem('wb:error-log'); } catch { /* storage unavailable */ }
+      if (STATIC_HOST) { loadErrors(); return; }   // #1886: no server log to clear
 
       // Then the server's file, through the same route error-logger.js uses.
       // Relative to this page, like loadErrors(): a root-absolute /api/...
@@ -649,7 +663,13 @@
     }
 
     // Initial load, once central-time.js (a module) has set WBTime.
-    document.addEventListener('DOMContentLoaded', loadErrors);
+    document.addEventListener('DOMContentLoaded', () => {
+      if (STATIC_HOST) {
+        document.querySelector('[onclick="clearErrors()"]').title = "Clear this browser's error log (a static site has no server log)";
+        document.querySelector('[onclick="loadErrors()"]').title = "Reload this browser's error log";
+      }
+      loadErrors();
+    });
   </script>
 </body>
 </html>
