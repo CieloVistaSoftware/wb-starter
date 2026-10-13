@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.525",
+      "date": "2026-10-13",
+      "summary": "The batch&#39;s converter wrote 0px as a bare 0, so (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1878\" target=\"_blank\" rel=\"noopener\">PR 1878</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>0px converts to 0rem, pills to exact rem; text-reading tests accept rem</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f7c37bf0eaf80278c8e626f59fd37b7632fa2927\" target=\"_blank\" rel=\"noopener\"><code>f7c37bf</code></a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every px in src/styles and in the CSS JS writes is rem; total px 940 -&gt; 102</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d0a0c0d0596432e1af98435e41154b22751c7c08\" target=\"_blank\" rel=\"noopener\"><code>d0a0c0d</code></a>",
+          "issues": [
+            294
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/behaviors/toast-every-permutation.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/behaviors/toast-every-permutation.spec.ts</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/cards/cardchip.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/cards/cardchip.spec.ts</a>. Before: toast top gap 113px (limit 96), chip radius 15984px. Now: both pass; the chip computes 999px.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/173e6ef0db355b49a9494e63335f3a0c22218942\" target=\"_blank\" rel=\"noopener\"><code>173e6ef</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.524",
       "date": "2026-10-12",
       "summary": "The CSS that behaviors write into &lt;style&gt; tags (audio, tooltip, (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1865\" target=\"_blank\" rel=\"noopener\">PR 1865</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
