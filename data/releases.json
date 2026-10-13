@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.522",
+      "date": "2026-10-12",
+      "summary": "Two sessions changed npm publishing at the same time, and John was walked through npm setup for a workflow that had already been deleted. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1873\" target=\"_blank\" rel=\"noopener\">PR 1873</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1872\" target=\"_blank\" rel=\"noopener\">#1872</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Check for other sessions before touching release, CI or publishing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1872\" target=\"_blank\" rel=\"noopener\">#1872</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/df4192f68498e96bba2ef2426d82aee381a91315\" target=\"_blank\" rel=\"noopener\"><code>df4192f</code></a>",
+          "issues": [
+            1872
+          ]
+        }
+      ],
+      "seeIt": "Open .claude/CLAUDE.md and find &quot;Before touching release, CI or publishing&quot;. Before: no rule told a session to look for other work on release or CI first. Now: a session checks open PRs and in-progress issues, stops if another session has the area, and re-reads main before giving John a manual step.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ba29d1c8902cf5c96bafce21fa1bb9e35ade4426\" target=\"_blank\" rel=\"noopener\"><code>ba29d1c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.521",
       "date": "2026-10-12",
       "summary": "#1869 put main red on two compliance gates, and this PR inherits (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1871\" target=\"_blank\" rel=\"noopener\">PR 1871</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1870\" target=\"_blank\" rel=\"noopener\">#1870</a>",
