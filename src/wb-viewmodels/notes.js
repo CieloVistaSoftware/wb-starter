@@ -85,7 +85,7 @@ export function notes(element, options = {}) {
     '--notes-max-width': config.maxWidth,
     '--notes-min-width': config.minWidth,
     width: config.defaultWidth,
-  }, { '--notes-max-width': '50vw', '--notes-min-width': '200px', width: '320px' }));
+  }, { '--notes-max-width': '50vw', '--notes-min-width': '12.5rem', width: '20rem' }));
 
   // Header holds ONLY the title + a corner close button (close pinned to the
   // header's own top-right corner) -- the position/pick/lookup controls live

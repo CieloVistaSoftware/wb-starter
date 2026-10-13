@@ -9,7 +9,7 @@
   justify-content: center;
   position: relative;
   width: 100%;
-  min-height: 400px;
+  min-height: 25rem;
   overflow: hidden;
 }
 
@@ -227,7 +227,7 @@
   justify-content: center;
   /* >=1rem on every side (was 0.85rem vertical, under the minimum). */
   padding: 1rem 1.75rem;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
@@ -476,7 +476,7 @@
   font-size: clamp(1rem, 2vw, 1.25rem);
   margin: 0 0 2rem 0;
   line-height: 1.6;
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 
 /* CTA Buttons */
@@ -496,7 +496,7 @@
   font-size: 1rem;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -529,7 +529,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   [x-hero]{
-    min-height: 300px;
+    min-height: 18.75rem;
   }
 
   [x-hero][data-height="100vh"]{
@@ -561,7 +561,7 @@
 
 @media (max-width: 480px) {
   [x-hero]{
-    min-height: 250px;
+    min-height: 15.625rem;
   }
 
   [x-hero] > div{

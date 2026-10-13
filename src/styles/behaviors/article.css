@@ -29,7 +29,7 @@
 
 .x-articles--grid > article {
   border: 1px solid var(--border-color, #374151);
-  border-radius: var(--radius-lg, 8px);
+  border-radius: var(--radius-lg, 0.5rem);
   padding: 1rem;
   background: var(--bg-secondary, #1f2937);
 }

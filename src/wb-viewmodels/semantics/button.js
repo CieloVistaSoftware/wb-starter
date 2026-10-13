@@ -46,7 +46,7 @@ const BUTTON_CSS = `
 x-button,
 .x-button {
 display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
+  gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 0.375rem);
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
   line-height: 1.5; text-decoration: none; user-select: none;
   font-family: inherit; font-size: inherit; color: inherit;

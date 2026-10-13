@@ -12,7 +12,7 @@
   align-items: flex-start;
   gap: var(--x-notification-gap, 0.75rem);
   padding: var(--x-notification-padding, 1rem);
-  border-radius: var(--x-notification-radius, 8px);
+  border-radius: var(--x-notification-radius, 0.5rem);
   border-left: 4px solid var(--border-color);
   background: var(--bg-secondary);
   color: var(--text-primary);
@@ -22,8 +22,8 @@
 /* Icon */
 .x-cardnotification__icon {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 1.75rem;
+  height: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,14 +57,14 @@
 /* Dismiss button */
 .x-cardnotification__dismiss {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 1.75rem;
+  height: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   color: inherit;
   opacity: 0.5;
   cursor: pointer;

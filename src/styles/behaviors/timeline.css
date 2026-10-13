@@ -44,8 +44,8 @@
   position: absolute;
   left: -1.1rem;
   top: 0.2rem;
-  width: 10px;
-  height: 10px;
+  width: 0.625rem;
+  height: 0.625rem;
   border-radius: 50%;
   background: var(--primary);
 }

@@ -49,5 +49,5 @@
    wins while the class is on. A `lines=` card opens through --unclamped and
    was never height-capped when open, so it is left out. */
 [x-cardexpandable].x-card--expanded > .x-card__expandable-content:not(.x-card__expandable-content--unclamped) {
-  max-height: 1000px;
+  max-height: 62.5rem;
 }

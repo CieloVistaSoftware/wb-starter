@@ -44,7 +44,7 @@ function injectStyles() {
          the cap mean the RENDERED width, which is what "maximum tooltip width"
          says to the person reading the docs. */
       box-sizing: border-box;
-      max-width: var(--x-tooltip-max-width, 200px);
+      max-width: var(--x-tooltip-max-width, 12.5rem);
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       opacity: 0;
       transform: scale(0.95);
