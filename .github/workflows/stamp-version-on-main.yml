@@ -64,6 +64,9 @@ jobs:
           # #1001: 404.html is index.html plus a <base>, and stamp-version.js
           # just rewrote index.html's ?v= keys, so regenerate it here too.
           node scripts/generate-404.mjs
+          # sitemap.xml names every page and doc for search engines; it reads
+          # the manifest and the page shells written just above.
+          node scripts/generate-sitemap.mjs
           # John: "A release has no meaning if i can't read about the content."
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.
@@ -74,8 +77,8 @@ jobs:
           node scripts/generate-fixes.mjs
           # stamp-version.js rewrites version.js AND the ?v= cache key in every
           # entry page (index.html, pages/, demos/); release-versions.mjs
-          # rewrites data/releases.json, generate-fixes.mjs data/fixes.json --
-          # all of it is the stamp.
+          # rewrites data/releases.json, generate-fixes.mjs data/fixes.json and
+          # generate-sitemap.mjs sitemap.xml -- all of it is the stamp.
           if git diff --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "version.js already describes main: nothing to commit."

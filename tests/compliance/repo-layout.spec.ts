@@ -58,11 +58,12 @@ test('no .txt or .log file at the root', () => {
 
 test('the root holds only the site entry points and project configuration', () => {
   // sw.js must stay at the root: a service worker's scope is its own folder
-  // (CieloVistaStandards build-deploy.md, rule 2).
+  // (CieloVistaStandards build-deploy.md, rule 2). sitemap.xml stays at the
+  // root too: a sitemap lists only addresses under its own folder (sitemaps.org).
   const ALLOWED = new Set([
     '.gitignore', '.mcp.json', '.nojekyll', '404.html', 'LICENSE', 'README.md',
     'eslint.config.js', 'global.d.ts', 'index.html', 'jsconfig.json', 'manifest.json',
-    'package-lock.json', 'package.json', 'playwright.config.ts', 'server.js', 'sw.js', 'tsconfig.json',
+    'package-lock.json', 'package.json', 'playwright.config.ts', 'server.js', 'sitemap.xml', 'sw.js', 'tsconfig.json',
   ]);
   expect(rootFiles.filter((f) => !ALLOWED.has(f)), 'move it to its folder, or archive/ if unused').toEqual([]);
 });
