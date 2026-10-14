@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.531",
+      "date": "2026-10-14",
+      "summary": "Search engines could not find the site&#39;s pages and docs, because the site is a single-page shell with no sitemap.xml, and the page description still said 170+ behaviors and 23 themes. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1888\" target=\"_blank\" rel=\"noopener\">#1888</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1889\" target=\"_blank\" rel=\"noopener\">#1889</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Sitemap.xml lists every page and doc; description says 167 behaviors, 50 themes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1888\" target=\"_blank\" rel=\"noopener\">#1888</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1889\" target=\"_blank\" rel=\"noopener\">#1889</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/88bab874c23b7bc0019490c6cfc5628d47f5b121\" target=\"_blank\" rel=\"noopener\"><code>88bab87</code></a>",
+          "issues": [
+            1888,
+            1889
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/sitemap.xml\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/sitemap.xml</a>. Before: 404. Now: 196 addresses (home, 17 pages, docs, demos, 176 docs), and the page&#39;s meta description says 167 behaviors, 50 themes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/88bab874c23b7bc0019490c6cfc5628d47f5b121\" target=\"_blank\" rel=\"noopener\"><code>88bab87</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.530",
       "date": "2026-10-13",
       "summary": "The home page&#39;s stats said 100+ Behaviors while its hero said 167, the Features cards said Over 40 behaviors and 23 themes, and John asked for two more facts on the page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1884\" target=\"_blank\" rel=\"noopener\">#1884</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1885\" target=\"_blank\" rel=\"noopener\">#1885</a>",

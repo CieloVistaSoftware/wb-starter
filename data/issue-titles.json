@@ -1269,5 +1269,8 @@
   "1880": "x-gallery squeezes every photo into a 50px-tall strip: gallery.css fixes img height at 3.125rem",
   "1882": "The site badge says v1.0.527 while npm says 1.0.1: sync both at 1.1.0 and show the npm version in the badge",
   "1884": "Home \"By the Numbers\" says 100+ Behaviors while the hero and the Behaviors page say 167; add two more facts",
-  "1886": "Live Error Log: no way back to the site, a false \"Great job!\", a 404 on every visit, and buttons that call a server that isn't there"
+  "1886": "Live Error Log: no way back to the site, a false \"Great job!\", a 404 on every visit, and buttons that call a server that isn't there",
+  "1888": "Search engines cannot find the site's pages and docs: no sitemap.xml, and the description says 170+ behaviors, 23 themes",
+  "1890": "docs/_today still holds seven February plans, including a Copilot-era AI-COORDINATION.md that contradicts .claude/CLAUDE.md",
+  "1892": "Session coordination log: cloud session and local PC session"
 }
