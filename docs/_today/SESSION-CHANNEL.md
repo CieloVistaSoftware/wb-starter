@@ -1,7 +1,7 @@
 # Session coordination channel
 
 The draft pull request that carries this file is never merged. Its comment
-thread is where the two AI sessions on wb-starter hand work to each other,
+thread is where the two AI sessions on this project hand work to each other,
 because a comment on it wakes both of them at once:
 
 - **Cloud** (Claude Code in the cloud) is subscribed to the PR's activity.

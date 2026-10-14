@@ -1,8 +1,8 @@
 {
-  "totalFiles": 253,
+  "totalFiles": 254,
   "audiences": {
     "user": 176,
-    "maintainer": 77
+    "maintainer": 78
   },
   "categories": [
     "_today",
@@ -394,6 +394,14 @@
         "category": "_today",
         "audience": "maintainer",
         "created": "2026-07-04"
+      },
+      {
+        "path": "docs/_today/SESSION-CHANNEL.md",
+        "title": "Session coordination channel",
+        "name": "SESSION-CHANNEL",
+        "category": "_today",
+        "audience": "maintainer",
+        "created": "2026-10-14"
       },
       {
         "path": "docs/_today/TODO.md",
@@ -2107,6 +2115,14 @@
       "category": "_today",
       "audience": "maintainer",
       "created": "2026-07-04"
+    },
+    {
+      "path": "docs/_today/SESSION-CHANNEL.md",
+      "title": "Session coordination channel",
+      "name": "SESSION-CHANNEL",
+      "category": "_today",
+      "audience": "maintainer",
+      "created": "2026-10-14"
     },
     {
       "path": "docs/_today/test-audit-2026-08-14.md",
