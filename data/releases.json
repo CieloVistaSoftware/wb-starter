@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.532",
+      "date": "2026-10-14",
+      "summary": "Docs/_today, the folder sessions read at start, still held seven finished February plans, and the Copilot-era AI-COORDINATION.md told sessions that only John merges, which .claude/CLAUDE.md replaced. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1890\" target=\"_blank\" rel=\"noopener\">#1890</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1891\" target=\"_blank\" rel=\"noopener\">#1891</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Archive the February 2026 plans out of docs/_today</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1890\" target=\"_blank\" rel=\"noopener\">#1890</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1891\" target=\"_blank\" rel=\"noopener\">#1891</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e5259d66ebfd0420cea56b95df3bb8341a39359e\" target=\"_blank\" rel=\"noopener\"><code>e5259d6</code></a>",
+          "issues": [
+            1890,
+            1891
+          ]
+        }
+      ],
+      "seeIt": "Open docs/_today on GitHub. Before: 15 files, including AI-COORDINATION.md, QUESTIONS.md and three repair plans. Now: 8 live files, and the seven February plans are in docs/archive/_today.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e5259d66ebfd0420cea56b95df3bb8341a39359e\" target=\"_blank\" rel=\"noopener\"><code>e5259d6</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.531",
       "date": "2026-10-14",
       "summary": "Search engines could not find the site&#39;s pages and docs, because the site is a single-page shell with no sitemap.xml, and the page description still said 170+ behaviors and 23 themes. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1888\" target=\"_blank\" rel=\"noopener\">#1888</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1889\" target=\"_blank\" rel=\"noopener\">#1889</a>",
