@@ -23,7 +23,11 @@
 </div>
 
 <h2>By the Numbers</h2>
-<div x-container maxWidth="900px" padding="2rem">
+<!-- #1884: wrap="false". A column x-container wraps by default, and a wrapping
+     column flexbox measured this grid's rows from a far narrower width: each
+     stat card stretched to 255px with four cards and 391px with six, for 120px
+     of content. One column never needs to wrap. -->
+<div x-container maxWidth="900px" padding="2rem" wrap="false">
   <!-- size="full" is load-bearing, not decoration (§22 overlap gate).
        Every card carries card.css's default floor
        `min-width: min(17.5rem, calc(100vw - 2rem))` = 280px on a desktop
@@ -41,10 +45,12 @@
        tracks: 4 tracks of 280px need 1168px of content box, which this page
        does not have at any supported width. -->
   <div x-grid columns="4">
-    <article x-cardstats size="full" id="autogen-home-stat-0" value="100+" label="Behaviors" icon="🧩"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-0" value="167" label="Behaviors" icon="🧩"></article>
     <article x-cardstats size="full" id="autogen-home-stat-1" value="Light" label="DOM Only" icon="☀️"></article>
     <article x-cardstats size="full" id="autogen-home-stat-2" value="&lt;1s" label="Build Time" icon="⚡"></article>
     <article x-cardstats size="full" id="autogen-home-stat-3" value="100%" label="Standards" icon="✅"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-4" value="50" label="Themes" icon="🎨"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-5" value="0" label="Dependencies" icon="📦"></article>
   </div>
   <div class="x-divider"></div>
   <div x-flex id="home-preview-row-1" justify="center" gap="1rem">
@@ -61,7 +67,7 @@
   <a href="?page=behaviors" class="feature-card-link" aria-label="Explore the Behaviors">
     <article variant="float">
       <h3>🧩 Behavior Library</h3>
-      <p>Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation.</p>
+      <p>167 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation.</p>
     </article>
   </a>
   <a href="?page=behaviors" class="feature-card-link" aria-label="Explore the Behaviors System">
@@ -77,7 +83,7 @@
   <a href="?page=themes" class="feature-card-link" aria-label="Explore the Theme Engine">
     <article variant="float">
       <h3>🎨 Theme Engine</h3>
-      <p>23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box.</p>
+      <p>50 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box.</p>
     </article>
   </a>
   <a href="?page=demos" class="feature-card-link" aria-label="See Data Viz demos">
@@ -96,6 +102,18 @@
     <article variant="float">
       <h3>🚀 Performance</h3>
       <p>Zero-runtime compilation. Browsers are fast now. We let them do their job.</p>
+    </article>
+  </a>
+  <a href="?page=docs" class="feature-card-link" aria-label="Read about starting a site">
+    <article variant="float">
+      <h3>📦 One-Command Start</h3>
+      <p>One npm create command makes a working site, ready to publish on any static host.</p>
+    </article>
+  </a>
+  <a href="?page=behaviors" class="feature-card-link" aria-label="Explore the behavior schemas">
+    <article variant="float">
+      <h3>🧠 Schema-Driven</h3>
+      <p>Every behavior has a JSON schema that powers its docs, validation and editor autocomplete.</p>
     </article>
   </a>
 </div>

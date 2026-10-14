@@ -16,6 +16,8 @@ const EXPECTED = [
   { title: 'Data Viz', href: '?page=demos' },
   { title: 'Accessible', href: '?page=docs' },
   { title: 'Performance', href: '?page=docs' },
+  { title: 'One-Command Start', href: '?page=docs' },
+  { title: 'Schema-Driven', href: '?page=behaviors' },
 ];
 
 test.describe('#184 — home feature cards are clickable', () => {
@@ -40,7 +42,7 @@ test.describe('#184 — home feature cards are clickable', () => {
         underline: getComputedStyle(a as HTMLElement).textDecorationLine,
       }))
     );
-    expect(links.length, 'expected 6 feature cards').toBe(6);
+    expect(links.length, 'expected 8 feature cards').toBe(EXPECTED.length);
     for (const exp of EXPECTED) {
       const found = links.find((l) => l.title.startsWith(exp.title));
       expect(found, `feature card "${exp.title}" not found`).toBeTruthy();

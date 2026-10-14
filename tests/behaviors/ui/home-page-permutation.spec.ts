@@ -113,16 +113,16 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   });
 
   // ═══════════════════════════════════════════════════════════════
-  // STATS — x-container > x-grid[columns=4] > x-cardstats ×4
+  // STATS — x-container > x-grid[columns=4] > x-cardstats ×6
   // ═══════════════════════════════════════════════════════════════
 
-  test('Stats: [x-cardstats] renders 4 instances', async ({ page }) => {
-    await expect(page.locator('[x-cardstats]')).toHaveCount(4);
+  test('Stats: [x-cardstats] renders 6 instances', async ({ page }) => {
+    await expect(page.locator('[x-cardstats]')).toHaveCount(6);
   });
 
   test('Stats: all have required attributes (value, label, icon)', async ({ page }) => {
     const stats = page.locator('[x-cardstats]');
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       await expect(stats.nth(i)).toHaveAttribute('value');
       await expect(stats.nth(i)).toHaveAttribute('label');
       await expect(stats.nth(i)).toHaveAttribute('icon');
@@ -131,7 +131,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Stats: renders expected text values', async ({ page }) => {
     const container = page.locator('[x-container]');
-    for (const text of ['100+', 'Behaviors', 'Light', 'DOM Only', 'Build Time', 'Standards']) {
+    for (const text of ['167', 'Behaviors', 'Themes', 'Dependencies', 'Light', 'DOM Only', 'Build Time', 'Standards']) {
       await expect(container).toContainText(text);
     }
   });
@@ -140,7 +140,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   // injected; x-hydrated is what cardstats sets once it has built.
   test('Stats: marked hydrated after hydration', async ({ page }) => {
     const stats = page.locator('[x-cardstats]');
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       await expect(stats.nth(i)).toHaveAttribute('x-hydrated', '1');
     }
   });
@@ -188,8 +188,8 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   // `body > [x-grid]` combinator never matched (#854).
   const FEATURES_GRID = `[x-grid]:has(${FEATURE_CARD})`;
 
-  test('Features: article[variant=float] renders 6 instances', async ({ page }) => {
-    await expect(page.locator(FEATURE_CARD)).toHaveCount(6);
+  test('Features: article[variant=float] renders 8 instances', async ({ page }) => {
+    await expect(page.locator(FEATURE_CARD)).toHaveCount(8);
   });
 
   // Cards stopped stamping x-card--{variant} (a8a7362e): card.css reads
@@ -198,7 +198,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   // actually painting -- the thing the class was only ever a proxy for.
   test('Features: float cards hydrate and paint the float shadow', async ({ page }) => {
     const cards = page.locator(FEATURE_CARD);
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
       const card = cards.nth(i);
       await buildInView(card);
       await expect(card).not.toHaveClass(/x-card--float/);
@@ -210,7 +210,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     const featuresGrid = page.locator(FEATURES_GRID);
     // 'Behavior Library', not 'Component Library': the card was renamed when
     // components were removed from the product.
-    for (const text of ['Behavior Library', 'Behaviors System', 'Theme Engine', 'Data Viz', 'Accessible', 'Performance']) {
+    for (const text of ['Behavior Library', 'Behaviors System', 'Theme Engine', 'Data Viz', 'Accessible', 'Performance', 'One-Command Start', 'Schema-Driven']) {
       await expect(featuresGrid).toContainText(text);
     }
   });
