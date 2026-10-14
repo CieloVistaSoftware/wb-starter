@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 297,
-    "totalWords": 5789
+    "totalWords": 5790
   },
   "documents": [
     {
@@ -302,6 +302,14 @@
           "text": "🚀 Performance"
         },
         {
+          "level": 3,
+          "text": "📦 One-Command Start"
+        },
+        {
+          "level": 3,
+          "text": "🧠 Schema-Driven"
+        },
+        {
           "level": 2,
           "text": "Notification Card Examples"
         },
@@ -319,7 +327,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.529\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.529\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library 167 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 50 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. 📦 One-Command Start One npm create command makes a working site, ready to publish on any static host. 🧠 Schema-Driven Every behavior has a JSON schema that powers its docs, validation and editor autocomplete. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.530\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.530\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-13"
@@ -5818,7 +5826,6 @@
     ],
     "23": [
       "pages/hero-gallery",
-      "pages/home",
       "docs/behaviors/cardvideo",
       "demos/landing-page-showcase"
     ],
@@ -5921,7 +5928,6 @@
     ],
     "40": [
       "pages/hero-gallery",
-      "pages/home",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/cardhorizontal",
@@ -5981,6 +5987,7 @@
     "50": [
       "pages/features",
       "pages/hero-gallery",
+      "pages/home",
       "pages/themes",
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -6384,6 +6391,9 @@
     "164": [
       "docs/audits/X-USAGE-AUDIT"
     ],
+    "167": [
+      "pages/home"
+    ],
     "170": [
       "pages/themes"
     ],
@@ -6562,7 +6572,7 @@
     "503": [
       "docs/behaviors/address"
     ],
-    "529": [
+    "530": [
       "pages/home"
     ],
     "540": [
@@ -7594,6 +7604,7 @@
     "schema": [
       "pages/about",
       "pages/ai-permutation-test",
+      "pages/home",
       "pages/introduction",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -8584,7 +8595,6 @@
     "over": [
       "pages/about",
       "pages/behaviors",
-      "pages/home",
       "pages/privacy",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -10596,6 +10606,7 @@
       "pages/ai-permutation-test",
       "pages/behaviors",
       "pages/features",
+      "pages/home",
       "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION-PLAN",
@@ -10872,6 +10883,7 @@
     ],
     "driven": [
       "pages/ai-permutation-test",
+      "pages/home",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -18858,6 +18870,7 @@
     ],
     "npm": [
       "pages/features",
+      "pages/home",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/behaviors/copybutton",
       "docs/behaviors/pre",
@@ -20539,6 +20552,7 @@
     ],
     "autocomplete": [
       "pages/features",
+      "pages/home",
       "docs/IMPROVEMENTS",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behavior-cross-reference",
@@ -23830,6 +23844,202 @@
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook"
     ],
+    "command": [
+      "pages/home",
+      "docs/IMPROVEMENTS",
+      "docs/behaviors/copy",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/PAGE-GENERATION",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/testing-runbook"
+    ],
+    "create": [
+      "pages/home",
+      "pages/newpage",
+      "pages/privacy",
+      "pages/terms",
+      "docs/IMPROVEMENTS",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/architecture/solidjscomparison",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/ol",
+      "docs/card",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/TIER1-LAWS",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/inline-editing",
+      "docs/linkedin-framework-agnostic",
+      "docs/pce-candidates",
+      "docs/schema-first-architecture",
+      "docs/schema-first-audit-report",
+      "docs/schema-test-value",
+      "docs/styles",
+      "docs/testing-runbook",
+      "demos/schema-first-architecture"
+    ],
+    "makes": [
+      "pages/home",
+      "pages/introduction",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/bounce",
+      "docs/behaviors/button",
+      "docs/behaviors/card",
+      "docs/behaviors/cardimage",
+      "docs/behaviors/copybutton",
+      "docs/behaviors/details",
+      "docs/behaviors/drawerLayout",
+      "docs/behaviors/fill",
+      "docs/behaviors/flex",
+      "docs/behaviors/frame",
+      "docs/behaviors/fullscreen",
+      "docs/behaviors/glass",
+      "docs/behaviors/lightbox",
+      "docs/behaviors/modal",
+      "docs/behaviors/notify",
+      "docs/behaviors/print",
+      "docs/behaviors/prompt",
+      "docs/behaviors/range",
+      "docs/behaviors/ratio",
+      "docs/behaviors/scrollalong",
+      "docs/behaviors/share",
+      "docs/behaviors/snow",
+      "docs/behaviors/x-copybutton",
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/create-a-website",
+      "docs/linkedin-standards-article",
+      "docs/properties",
+      "docs/schema.migration",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/styles"
+    ],
+    "working": [
+      "pages/home",
+      "pages/issues",
+      "docs/architecture/solidjscomparison",
+      "docs/audio",
+      "docs/behaviors/dialog",
+      "docs/behaviors/range",
+      "docs/behaviors/table",
+      "docs/behaviors/truncate",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/README",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/create-a-website",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS"
+    ],
+    "publish": [
+      "pages/home",
+      "docs/guides/create-a-website",
+      "docs/standards/RELEASE-PROCESS"
+    ],
+    "static": [
+      "pages/home",
+      "pages/issues",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/articles",
+      "docs/behaviors/container",
+      "docs/behaviors/scrollable",
+      "docs/behaviors/skeleton",
+      "docs/behaviors/table",
+      "docs/behaviors/time",
+      "docs/code-examples-standard",
+      "docs/guides/create-a-website",
+      "docs/linkedin-standards-article",
+      "docs/performance",
+      "docs/semantic-standard",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/testing-strategy",
+      "demos/autoinject",
+      "demos/landing-page-showcase",
+      "demos/pre-debug"
+    ],
+    "host": [
+      "pages/home",
+      "docs/MVVM-MIGRATION",
+      "docs/V3-GUIDE",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/audio",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/auto-injection",
+      "docs/behaviors/accordion",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/chip",
+      "docs/behaviors/codetheme",
+      "docs/behaviors/container",
+      "docs/behaviors/copybutton",
+      "docs/behaviors/dropdown",
+      "docs/behaviors/file",
+      "docs/behaviors/floatinglabel",
+      "docs/behaviors/formrow",
+      "docs/behaviors/icon",
+      "docs/behaviors/inputgroup",
+      "docs/behaviors/navbar",
+      "docs/behaviors/ripple",
+      "docs/behaviors/searchfield",
+      "docs/behaviors/skeleton",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/toast",
+      "docs/behaviors/x-copybutton",
+      "docs/guides/create-a-website",
+      "docs/pce-candidates",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/V3-STANDARDS"
+    ],
+    "powers": [
+      "pages/home",
+      "docs/guides/search-index"
+    ],
+    "validation": [
+      "pages/home",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/architecture/standards/ERROR-MESSAGE",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/auto-injection",
+      "docs/behaviors-reference",
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/form",
+      "docs/behaviors/input",
+      "docs/behaviors/select",
+      "docs/behaviors/x-enhancements",
+      "docs/claude/PAGE-GENERATION",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/compliance/iso-42001-alignment",
+      "docs/pricecard",
+      "docs/properties",
+      "docs/schema-first-architecture",
+      "docs/schema-first-audit-report",
+      "docs/schema",
+      "docs/schema.migration",
+      "docs/semantic-audit",
+      "docs/styles",
+      "docs/testing-runbook",
+      "docs/wbservices",
+      "demos/frameworks",
+      "demos/schema-first-architecture",
+      "demos/site/content"
+    ],
+    "editor": [
+      "pages/home",
+      "docs/behaviors/cardexpandable",
+      "docs/inline-editing",
+      "docs/properties",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "demos/playground"
+    ],
     "notification": [
       "pages/home",
       "docs/behaviors/aside",
@@ -24332,41 +24542,6 @@
     ],
     "popular": [
       "pages/introduction"
-    ],
-    "makes": [
-      "pages/introduction",
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/bounce",
-      "docs/behaviors/button",
-      "docs/behaviors/card",
-      "docs/behaviors/cardimage",
-      "docs/behaviors/copybutton",
-      "docs/behaviors/details",
-      "docs/behaviors/drawerLayout",
-      "docs/behaviors/fill",
-      "docs/behaviors/flex",
-      "docs/behaviors/frame",
-      "docs/behaviors/fullscreen",
-      "docs/behaviors/glass",
-      "docs/behaviors/lightbox",
-      "docs/behaviors/modal",
-      "docs/behaviors/notify",
-      "docs/behaviors/print",
-      "docs/behaviors/prompt",
-      "docs/behaviors/range",
-      "docs/behaviors/ratio",
-      "docs/behaviors/scrollalong",
-      "docs/behaviors/share",
-      "docs/behaviors/snow",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/TIER1-LAWS",
-      "docs/guides/create-a-website",
-      "docs/linkedin-standards-article",
-      "docs/properties",
-      "docs/schema.migration",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/styles"
     ],
     "trade": [
       "pages/introduction",
@@ -25338,22 +25513,6 @@
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
-    "working": [
-      "pages/issues",
-      "docs/architecture/solidjscomparison",
-      "docs/audio",
-      "docs/behaviors/dialog",
-      "docs/behaviors/range",
-      "docs/behaviors/table",
-      "docs/behaviors/truncate",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/README",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/guides/create-a-website",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS"
-    ],
     "completed": [
       "pages/issues",
       "docs/performance",
@@ -25448,29 +25607,6 @@
       "docs/properties",
       "docs/themes",
       "docs/wbservices"
-    ],
-    "static": [
-      "pages/issues",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/articles",
-      "docs/behaviors/container",
-      "docs/behaviors/scrollable",
-      "docs/behaviors/skeleton",
-      "docs/behaviors/table",
-      "docs/behaviors/time",
-      "docs/code-examples-standard",
-      "docs/guides/create-a-website",
-      "docs/linkedin-standards-article",
-      "docs/performance",
-      "docs/semantic-standard",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/testing-strategy",
-      "demos/autoinject",
-      "demos/landing-page-showcase",
-      "demos/pre-debug"
     ],
     "history": [
       "pages/issues",
@@ -25831,32 +25967,6 @@
       "docs/semantic-audit",
       "docs/testing-runbook",
       "docs/testing-strategy"
-    ],
-    "create": [
-      "pages/newpage",
-      "pages/privacy",
-      "pages/terms",
-      "docs/IMPROVEMENTS",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/MVVM-MIGRATION",
-      "docs/architecture/solidjscomparison",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/ol",
-      "docs/card",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/TIER1-LAWS",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/inline-editing",
-      "docs/linkedin-framework-agnostic",
-      "docs/pce-candidates",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
-      "docs/schema-test-value",
-      "docs/styles",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
     ],
     "visually": [
       "pages/newpage",
@@ -29218,15 +29328,6 @@
     "dx": [
       "docs/IMPROVEMENTS"
     ],
-    "command": [
-      "docs/IMPROVEMENTS",
-      "docs/behaviors/copy",
-      "docs/behaviors/x-copybutton",
-      "docs/claude/PAGE-GENERATION",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/testing-runbook"
-    ],
     "line": [
       "docs/IMPROVEMENTS",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -31174,37 +31275,6 @@
       "docs/claude/SCHEMAS-GUIDE",
       "demos/autoinject"
     ],
-    "validation": [
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/architecture/standards/ERROR-MESSAGE",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/auto-injection",
-      "docs/behaviors-reference",
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/form",
-      "docs/behaviors/input",
-      "docs/behaviors/select",
-      "docs/behaviors/x-enhancements",
-      "docs/claude/PAGE-GENERATION",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/compliance/iso-42001-alignment",
-      "docs/pricecard",
-      "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
-      "docs/schema",
-      "docs/schema.migration",
-      "docs/semantic-audit",
-      "docs/styles",
-      "docs/testing-runbook",
-      "docs/wbservices",
-      "demos/frameworks",
-      "demos/schema-first-architecture",
-      "demos/site/content"
-    ],
     "accepts": [
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/autocomplete",
@@ -32187,38 +32257,6 @@
     "neutral": [
       "docs/MVVM-MIGRATION",
       "docs/behaviors/cardstats",
-      "docs/standards/V3-STANDARDS"
-    ],
-    "host": [
-      "docs/MVVM-MIGRATION",
-      "docs/V3-GUIDE",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/audio",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/auto-injection",
-      "docs/behaviors/accordion",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/chip",
-      "docs/behaviors/codetheme",
-      "docs/behaviors/container",
-      "docs/behaviors/copybutton",
-      "docs/behaviors/dropdown",
-      "docs/behaviors/file",
-      "docs/behaviors/floatinglabel",
-      "docs/behaviors/formrow",
-      "docs/behaviors/icon",
-      "docs/behaviors/inputgroup",
-      "docs/behaviors/navbar",
-      "docs/behaviors/ripple",
-      "docs/behaviors/searchfield",
-      "docs/behaviors/skeleton",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/toast",
-      "docs/behaviors/x-copybutton",
-      "docs/guides/create-a-website",
-      "docs/pce-candidates",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS"
     ],
     "enhances": [
@@ -41029,13 +41067,6 @@
       "docs/test-schema-standard",
       "docs/testing-strategy"
     ],
-    "editor": [
-      "docs/behaviors/cardexpandable",
-      "docs/inline-editing",
-      "docs/properties",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/playground"
-    ],
     "recolors": [
       "docs/behaviors/cardexpandable"
     ],
@@ -46766,10 +46797,6 @@
       "docs/wbservices",
       "demos/index"
     ],
-    "publish": [
-      "docs/guides/create-a-website",
-      "docs/standards/RELEASE-PROCESS"
-    ],
     "ripples": [
       "docs/guides/create-a-website",
       "demos/frameworks"
@@ -46943,9 +46970,6 @@
     ],
     "bigger": [
       "docs/guides/migrate-an-existing-page"
-    ],
-    "powers": [
-      "docs/guides/search-index"
     ],
     "scanning": [
       "docs/guides/search-index"

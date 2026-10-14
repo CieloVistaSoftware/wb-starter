@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.530",
+      "date": "2026-10-13",
+      "summary": "The home page&#39;s stats said 100+ Behaviors while its hero said 167, the Features cards said Over 40 behaviors and 23 themes, and John asked for two more facts on the page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1884\" target=\"_blank\" rel=\"noopener\">#1884</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1885\" target=\"_blank\" rel=\"noopener\">#1885</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Home By the Numbers: 167 Behaviors, plus 50 Themes and 0 Dependencies</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1884\" target=\"_blank\" rel=\"noopener\">#1884</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1885\" target=\"_blank\" rel=\"noopener\">#1885</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e5c3e6a1b8f6c884bc3a6331465f5ccad6ededec\" target=\"_blank\" rel=\"noopener\"><code>e5c3e6a</code></a>",
+          "issues": [
+            1884,
+            1885
+          ]
+        }
+      ],
+      "seeIt": "Open the home page and scroll to By the Numbers. Before: four cards, 100+ Behaviors, each card stretched to 255px tall. Now: six compact cards, 167 Behaviors, Light, &lt;1s, 100%, 50 Themes and 0 Dependencies, and Features says 167 behaviors and 50 themes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e5c3e6a1b8f6c884bc3a6331465f5ccad6ededec\" target=\"_blank\" rel=\"noopener\"><code>e5c3e6a</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.529",
       "date": "2026-10-13",
       "summary": "The site badge said v1.0.527 while npm said 1.0.1, and nothing kept wb-starter and create-wb-starter on the same number. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1882\" target=\"_blank\" rel=\"noopener\">#1882</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1883\" target=\"_blank\" rel=\"noopener\">#1883</a>",
