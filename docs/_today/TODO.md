@@ -14,6 +14,11 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
   stopped treating it as "on". `scripts/generate-behavior-docs.mjs` was
   kebab-casing every schema property name into the generated table, which is
   where the dashed name came from for every behavior; fixed there too.
+- `archive/_today/021426FIXPLAN.md`, `archive/_today/AI-COORDINATION.md`,
+  `archive/_today/ANSWERS.md`, `archive/_today/MERGE-PLAN.md`,
+  `archive/_today/PAGE-REPAIR-PLAN.md`, `archive/_today/QUESTIONS.md`,
+  `archive/_today/REPAIR-PLAN-021526.md` (#1890) — the February 2026 plans
+  moved out of docs/_today; `claude/TIER2-DOMAIN-GUIDES.md` lists only live files.
 
 ---
 

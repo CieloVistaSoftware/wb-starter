@@ -136,15 +136,9 @@ Read when: starting a session (CURRENT-STATUS.md is Tier 1), or when John points
 |------|---------------|
 | `docs/_today/CURRENT-STATUS.md` | **Tier 1** — always read at session start |
 | `docs/_today/TODO.md` | Active task backlog |
-| `docs/_today/QUESTIONS.md` | Open questions for AI agents |
-| `docs/_today/ANSWERS.md` | Answered questions |
-| `docs/_today/MERGE-PLAN.md` | Branch merge status |
-| `docs/_today/AI-COORDINATION.md` | Multi-AI coordination rules |
-| `docs/_today/BEHAVIORS-TODO.md` | Behavior-specific backlog |
-| `docs/_today/PAGE-REPAIR-PLAN.md` | Page repair plan |
-| `docs/_today/REPAIR-PLAN-021526.md` | Repair plan 021526 |
-| `docs/_today/021426FIXPLAN.md` | 021426 Fix Plan |
 | `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | CSS migration plan |
+
+The February 2026 plans, questions and answers, and the Copilot-era AI-COORDINATION.md are in `docs/archive/_today/`. Sessions coordinate through open PRs and `status:in-progress` issues (`.claude/CLAUDE.md`).
 
 ---
 

@@ -1,8 +1,8 @@
 {
-  "totalFiles": 260,
+  "totalFiles": 253,
   "audiences": {
     "user": 176,
-    "maintainer": 84
+    "maintainer": 77
   },
   "categories": [
     "_today",
@@ -372,30 +372,6 @@
     ],
     "_today": [
       {
-        "path": "docs/_today/021426FIXPLAN.md",
-        "title": "021426FIXPLAN",
-        "name": "021426FIXPLAN",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-17"
-      },
-      {
-        "path": "docs/_today/AI-COORDINATION.md",
-        "title": "AI Coordination Protocol",
-        "name": "AI-COORDINATION",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-06"
-      },
-      {
-        "path": "docs/_today/ANSWERS.md",
-        "title": "AI Answers",
-        "name": "ANSWERS",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-06"
-      },
-      {
         "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
         "title": "CSS Ownership Migration Plan",
         "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
@@ -410,38 +386,6 @@
         "category": "_today",
         "audience": "maintainer",
         "created": "2025-12-28"
-      },
-      {
-        "path": "docs/_today/MERGE-PLAN.md",
-        "title": "Merge Plan - Completed",
-        "name": "MERGE-PLAN",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-10"
-      },
-      {
-        "path": "docs/_today/PAGE-REPAIR-PLAN.md",
-        "title": "PAGE REPAIR PLAN — Master Execution Guide",
-        "name": "PAGE-REPAIR-PLAN",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-17"
-      },
-      {
-        "path": "docs/_today/QUESTIONS.md",
-        "title": "AI Questions",
-        "name": "QUESTIONS",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-06"
-      },
-      {
-        "path": "docs/_today/REPAIR-PLAN-021526.md",
-        "title": "REPAIR PLAN — Page & Demo Compliance",
-        "name": "REPAIR-PLAN-021526",
-        "category": "_today",
-        "audience": "maintainer",
-        "created": "2026-02-17"
       },
       {
         "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
@@ -2117,30 +2061,6 @@
   },
   "files": [
     {
-      "path": "docs/_today/021426FIXPLAN.md",
-      "title": "021426FIXPLAN",
-      "name": "021426FIXPLAN",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-17"
-    },
-    {
-      "path": "docs/_today/AI-COORDINATION.md",
-      "title": "AI Coordination Protocol",
-      "name": "AI-COORDINATION",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-06"
-    },
-    {
-      "path": "docs/_today/ANSWERS.md",
-      "title": "AI Answers",
-      "name": "ANSWERS",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-06"
-    },
-    {
       "path": "docs/_today/audit-code-panels-v3-standards.md",
       "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
       "name": "audit-code-panels-v3-standards",
@@ -2179,38 +2099,6 @@
       "category": "_today",
       "audience": "maintainer",
       "created": "2026-07-10"
-    },
-    {
-      "path": "docs/_today/MERGE-PLAN.md",
-      "title": "Merge Plan - Completed",
-      "name": "MERGE-PLAN",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-10"
-    },
-    {
-      "path": "docs/_today/PAGE-REPAIR-PLAN.md",
-      "title": "PAGE REPAIR PLAN — Master Execution Guide",
-      "name": "PAGE-REPAIR-PLAN",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-17"
-    },
-    {
-      "path": "docs/_today/QUESTIONS.md",
-      "title": "AI Questions",
-      "name": "QUESTIONS",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-06"
-    },
-    {
-      "path": "docs/_today/REPAIR-PLAN-021526.md",
-      "title": "REPAIR PLAN — Page & Demo Compliance",
-      "name": "REPAIR-PLAN-021526",
-      "category": "_today",
-      "audience": "maintainer",
-      "created": "2026-02-17"
     },
     {
       "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
