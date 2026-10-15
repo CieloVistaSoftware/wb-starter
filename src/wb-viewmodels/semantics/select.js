@@ -44,6 +44,14 @@ export function select(element, options = {}) {
   }
   if (appliedClasses.length) element.classList.add(...appliedClasses);
 
+  // #1898: label= builds the shared label behavior's <label for> beside the
+  // field in an .x-label__group (1rem gap), here so the documented
+  // <select label="..."> and the <div x-select> builder (which passes its
+  // label in) both get it. Skipped when the field already has a label, so a
+  // re-scan does not add a second one.
+  const labelText = options.label ?? element.getAttribute('label');
+  const cleanupLabel = labelText && !element.labels?.length ? labelControl(element, { text: labelText }) : null;
+
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
   // #773: `searchable` was read only by buildWbSelect(), so on the showcase's
@@ -103,7 +111,10 @@ export function select(element, options = {}) {
     reset: () => { element.selectedIndex = -1; }
   };
 
-  return () => element.removeEventListener('change', onChange);
+  return () => {
+    element.removeEventListener('change', onChange);
+    if (cleanupLabel) cleanupLabel();
+  };
 }
 
 /**
@@ -257,17 +268,13 @@ function buildWbSelect(element, options) {
 
   element.appendChild(sel);
 
-  // The label is the shared label behavior's: <label for> beside the field in
-  // an .x-label__group, so it has the same 1rem gap as every labelled control.
+  // The label is built by the native branch (shared label behavior, 1rem gap).
   // A bare <label class="x-select__label"> had no rule at all and sat flush
   // against the field.
-  const cleanupLabel = label ? labelControl(sel, { text: label }) : null;
-
-  const cleanupField = select(sel, { clearable });
+  const cleanupField = select(sel, { clearable, label });
   element.wbSelect = sel.wbSelect;
 
   return () => {
-    if (cleanupLabel) cleanupLabel();
     if (cleanupField) cleanupField();
     element.innerHTML = '';
     element.classList.remove(`x-select--${size}`, `x-select--${variant}`, 'x-select--searchable');

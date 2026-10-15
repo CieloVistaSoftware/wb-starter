@@ -12,7 +12,8 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * now use the shared label behavior (.x-label__group, gap 1rem).
  */
 const CASES = [
-  ['select', `<div x-select label="Country" options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'></div>`, 'Country', 'select'],
+  ['native select', `<select label="Country"><option value="us">United States</option><option value="uk">United Kingdom</option></select>`, 'Country', 'select'],
+  ['select host', `<div x-select label="Country" options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'></div>`, 'Country', 'select'],
   ['textarea host', `<div x-textarea label="Message" placeholder="Enter your message..."></div>`, 'Message', 'textarea'],
   ['bare textarea', `<textarea label="Message" placeholder="Enter your message..."></textarea>`, 'Message', 'textarea'],
 ] as const;
