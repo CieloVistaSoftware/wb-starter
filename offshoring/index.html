@@ -76,6 +76,14 @@
     3. To change the Configuration (Menu items, Site Name, Theme):
        - Edit `config/site.json`
   -->
+  <!-- This site is an app and requires JavaScript (John, 2026-10-15, #1877).
+       A page built with WB-Starter still reads as semantic HTML without it;
+       tests/regression/site-works-without-javascript.spec.ts checks both. -->
+  <noscript>
+    <h1>WB-Starter</h1>
+    <p>This site needs JavaScript. Turn it on in your browser and reload the page.</p>
+  </noscript>
+
   <!-- Site container - built dynamically from config -->
   <div id="app" class="site">
     <div class="site__loading">
