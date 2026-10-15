@@ -4861,40 +4861,6 @@
         "priority": 3
       }
     ],
-    "public\\papers\\schema-architecture.html": [
-      {
-        "file": "public\\papers\\schema-architecture.html",
-        "line": 305,
-        "column": 157,
-        "behavior": "toast",
-        "originalSnippet": "<button class=\"btn-fake-hallucination\" style=\"padding: 2px 6px; font-size: 0.7rem; border: 1px solid",
-        "migrateTo": "x-toast",
-        "type": "component",
-        "priority": 2
-      }
-    ],
-    "public\\papers\\schema-first-architecture.html": [
-      {
-        "file": "public\\papers\\schema-first-architecture.html",
-        "line": 568,
-        "column": 17,
-        "behavior": "ripple toast",
-        "originalSnippet": "data-wb=\"ripple toast\"",
-        "migrateTo": "x-ripple toast",
-        "type": "component",
-        "priority": 3
-      },
-      {
-        "file": "public\\papers\\schema-first-architecture.html",
-        "line": 576,
-        "column": 17,
-        "behavior": "ripple toast",
-        "originalSnippet": "data-wb=\"ripple toast\"",
-        "migrateTo": "x-ripple toast",
-        "type": "component",
-        "priority": 3
-      }
-    ],
     "public\\schema-viewer.html": [
       {
         "file": "public\\schema-viewer.html",
@@ -5099,10 +5065,6 @@
       {
         "file": "demos\\behaviors.html",
         "line": 753
-      },
-      {
-        "file": "public\\papers\\schema-architecture.html",
-        "line": 305
       }
     ],
     "badge": [
@@ -6135,14 +6097,6 @@
       {
         "file": "pages\\components.html",
         "line": 600
-      },
-      {
-        "file": "public\\papers\\schema-first-architecture.html",
-        "line": 568
-      },
-      {
-        "file": "public\\papers\\schema-first-architecture.html",
-        "line": 576
       }
     ],
     "copy toast": [
@@ -8047,16 +8001,6 @@
       "column": 63,
       "behavior": "toast",
       "originalSnippet": "<button id=\"home-button-143\" class=\"x-btn-glass\" data-wb=\"toast\" data-message=\"Hello from toast! 🎉",
-      "migrateTo": "x-toast",
-      "type": "component",
-      "priority": 2
-    },
-    {
-      "file": "public\\papers\\schema-architecture.html",
-      "line": 305,
-      "column": 157,
-      "behavior": "toast",
-      "originalSnippet": "<button class=\"btn-fake-hallucination\" style=\"padding: 2px 6px; font-size: 0.7rem; border: 1px solid",
       "migrateTo": "x-toast",
       "type": "component",
       "priority": 2
@@ -12068,26 +12012,6 @@
       "behavior": "rating",
       "originalSnippet": "<div id=\"home-div-116\" data-wb=\"rating\" data-value=\"4\" data-max=\"5\"></div>",
       "migrateTo": "x-rating",
-      "type": "component",
-      "priority": 3
-    },
-    {
-      "file": "public\\papers\\schema-first-architecture.html",
-      "line": 568,
-      "column": 17,
-      "behavior": "ripple toast",
-      "originalSnippet": "data-wb=\"ripple toast\"",
-      "migrateTo": "x-ripple toast",
-      "type": "component",
-      "priority": 3
-    },
-    {
-      "file": "public\\papers\\schema-first-architecture.html",
-      "line": 576,
-      "column": 17,
-      "behavior": "ripple toast",
-      "originalSnippet": "data-wb=\"ripple toast\"",
-      "migrateTo": "x-ripple toast",
       "type": "component",
       "priority": 3
     },

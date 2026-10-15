@@ -587,10 +587,6 @@ export default class WBSite {
       window.open('schema-viewer.html', '_blank');
       return;
     }
-    if (pageId === 'schema-first-architecture') {
-      window.open('pages/schema-first-architecture.html', '_blank');
-      return;
-    }
     this.currentPage = pageId;
     this.updateActiveNav();
     // #1519: only the newest navigation may write #main or the scroll. Each

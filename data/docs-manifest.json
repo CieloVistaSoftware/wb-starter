@@ -1,8 +1,8 @@
 {
-  "totalFiles": 253,
+  "totalFiles": 251,
   "audiences": {
-    "user": 176,
-    "maintainer": 77
+    "user": 175,
+    "maintainer": 76
   },
   "categories": [
     "_today",
@@ -256,22 +256,6 @@
         "category": "root",
         "audience": "maintainer",
         "created": "2026-01-13"
-      },
-      {
-        "path": "docs/schema-first-architecture.md",
-        "title": "Schema-First MVVM Architecture",
-        "name": "schema-first-architecture",
-        "category": "root",
-        "audience": "user",
-        "created": "2026-01-10"
-      },
-      {
-        "path": "docs/schema-first-audit-report.md",
-        "title": "Schema-First Architecture Audit Report",
-        "name": "schema-first-audit-report",
-        "category": "root",
-        "audience": "maintainer",
-        "created": "2026-01-10"
       },
       {
         "path": "docs/schema-test-value.md",
@@ -3891,22 +3875,6 @@
       "category": "root",
       "audience": "maintainer",
       "created": "2026-01-13"
-    },
-    {
-      "path": "docs/schema-first-architecture.md",
-      "title": "Schema-First MVVM Architecture",
-      "name": "schema-first-architecture",
-      "category": "root",
-      "audience": "user",
-      "created": "2026-01-10"
-    },
-    {
-      "path": "docs/schema-first-audit-report.md",
-      "title": "Schema-First Architecture Audit Report",
-      "name": "schema-first-audit-report",
-      "category": "root",
-      "audience": "maintainer",
-      "created": "2026-01-10"
     },
     {
       "path": "docs/schema-test-value.md",

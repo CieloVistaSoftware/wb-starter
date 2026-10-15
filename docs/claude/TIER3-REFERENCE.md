@@ -24,7 +24,6 @@ Historical snapshots — useful for understanding past decisions, not for curren
 
 | File | What It Is |
 |------|-----------|
-| `docs/schema-first-audit-report.md` | Audit of schema-first compliance |
 | `docs/semantic-audit.md` | Semantic HTML audit results |
 | `docs/audits/X-USAGE-AUDIT.md` | x-attribute usage audit |
 | `docs/pce-candidates.md` | Proposed custom element candidates |

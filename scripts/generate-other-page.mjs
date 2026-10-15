@@ -56,7 +56,6 @@ export const SKIP = {
   'public/JP07012025Resume.html': 'a personal resume, not part of the site',
   'public/performance-dashboard.html': 'needs the local dev server (/api/performance-results); blank on a static host',
   'public/test-dashboard.html': 'needs the local dev server (fetches /data/test-*.json from the domain root); blank on a static host',
-  'public/papers/schema-first-architecture.html': 'a near-copy of demos/schema-first-architecture.html, which is listed under Demos',
 };
 
 /** Whole folders that hold no pages for visitors. */

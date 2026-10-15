@@ -258,11 +258,6 @@
         "issues": []
       },
       {
-        "file": "schema-first-architecture.html",
-        "status": "PASS",
-        "issues": []
-      },
-      {
         "file": "semantics-forms.html",
         "status": "PASS",
         "issues": []

@@ -92,7 +92,7 @@ missing the bare-attribute fallback every demo actually uses.
 
 Narrative/non-generated pages the issue's own proposal explicitly carves out
 ("Hand-written demos only for narrative pages"):
-- `frameworks.html`, `playground.html`, `schema-first-architecture.html`,
+- `frameworks.html`, `playground.html`,
   `wb-views-demo.html`, `wizard.html` — narrative or interactive-tool pages, not
   component catalogs.
 - `charity-food.html` — a real-world composed-page example (uses several components
