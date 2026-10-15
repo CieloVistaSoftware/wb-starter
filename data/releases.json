@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.533",
+      "date": "2026-10-15",
+      "summary": "With JavaScript turned off the site showed only &quot;Loading...&quot; and no links, so a visitor could not reach any page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1877\" target=\"_blank\" rel=\"noopener\">#1877</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1894\" target=\"_blank\" rel=\"noopener\">#1894</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>With JavaScript off, the site says it needs JavaScript</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1877\" target=\"_blank\" rel=\"noopener\">#1877</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1894\" target=\"_blank\" rel=\"noopener\">#1894</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/506830d53ac6074d8d6d680f7596e12e3f840189\" target=\"_blank\" rel=\"noopener\"><code>506830d</code></a>",
+          "issues": [
+            1877,
+            1894
+          ]
+        }
+      ],
+      "seeIt": "Turn JavaScript off in the browser and open the site&#39;s home page. Before: the page says &quot;Loading...&quot; and nothing else. Now: a WB-Starter heading and a Pages menu (Home, Behaviors, Themes, Docs, About, Releases, Issues, Other) appear, and each link opens that page as plain HTML.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/506830d53ac6074d8d6d680f7596e12e3f840189\" target=\"_blank\" rel=\"noopener\"><code>506830d</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.532",
       "date": "2026-10-14",
       "summary": "Docs/_today, the folder sessions read at start, still held seven finished February plans, and the Copilot-era AI-COORDINATION.md told sessions that only John merges, which .claude/CLAUDE.md replaced. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1890\" target=\"_blank\" rel=\"noopener\">#1890</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1891\" target=\"_blank\" rel=\"noopener\">#1891</a>",
