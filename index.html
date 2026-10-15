@@ -74,6 +74,28 @@
     3. To change the Configuration (Menu items, Site Name, Theme):
        - Edit `config/site.json`
   -->
+  <!-- Without JavaScript the shell below never builds, so the pages are linked
+       here as plain HTML (#1877). Keep in step with navigationMenu in config/site.json;
+       tests/regression/site-works-without-javascript.spec.ts checks it. -->
+  <noscript>
+    <header>
+      <h1>WB-Starter</h1>
+      <p>JavaScript is off, so the pages open as plain semantic HTML.</p>
+    </header>
+    <nav aria-label="Pages">
+      <ul>
+        <li><a href="pages/home.html">Home</a></li>
+        <li><a href="pages/behaviors.html">Behaviors</a></li>
+        <li><a href="pages/themes.html">Themes</a></li>
+        <li><a href="pages/docs.html">Docs</a></li>
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/releases.html">Releases</a></li>
+        <li><a href="pages/issues.html">Issues</a></li>
+        <li><a href="pages/other.html">Other</a></li>
+      </ul>
+    </nav>
+  </noscript>
+
   <!-- Site container - built dynamically from config -->
   <div id="app" class="site">
     <div class="site__loading">
