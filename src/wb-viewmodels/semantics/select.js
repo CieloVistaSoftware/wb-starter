@@ -1,6 +1,7 @@
 import { logError } from '../../core/error-logger.js';
 import { readFlag } from '../../core/read-attr.js';
 import { moveKeepingFocus } from '../../core/keep-focus.js';
+import { label as labelControl } from '../label.js';
 /**
  * Select - Enhanced <select> element
  * CSS targets `select` tag directly — no classes, no inline styles.
@@ -227,14 +228,6 @@ function buildWbSelect(element, options) {
   if (size !== 'md') fieldClasses.push(`x-select--${size}`);
   if (variant !== 'default') fieldClasses.push(`x-select--${variant}`);
 
-  let labelEl = null;
-  if (label) {
-    labelEl = document.createElement('label');
-    labelEl.className = 'x-select__label';
-    labelEl.textContent = label;
-    element.appendChild(labelEl);
-  }
-
   const sel = document.createElement('select');
   sel.className = 'x-select__field';
   if (fieldClasses.length) sel.classList.add(...fieldClasses);
@@ -260,20 +253,21 @@ function buildWbSelect(element, options) {
     sel.appendChild(optEl);
   });
 
-  if (labelEl) {
-    const labelId = 'x-select-label-' + Math.random().toString(36).slice(2, 9);
-    labelEl.id = labelId;
-    sel.setAttribute('aria-labelledby', labelId);
-  }
-
   if (searchable) element.appendChild(searchBoxFor(sel, label));
 
   element.appendChild(sel);
+
+  // The label is the shared label behavior's: <label for> beside the field in
+  // an .x-label__group, so it has the same 1rem gap as every labelled control.
+  // A bare <label class="x-select__label"> had no rule at all and sat flush
+  // against the field.
+  const cleanupLabel = label ? labelControl(sel, { text: label }) : null;
 
   const cleanupField = select(sel, { clearable });
   element.wbSelect = sel.wbSelect;
 
   return () => {
+    if (cleanupLabel) cleanupLabel();
     if (cleanupField) cleanupField();
     element.innerHTML = '';
     element.classList.remove(`x-select--${size}`, `x-select--${variant}`, 'x-select--searchable');
