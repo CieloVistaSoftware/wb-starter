@@ -88,7 +88,7 @@
   input[type="number"],
   textarea,
   select {
-    font-size: max(16px, 1em);
+    font-size: max(16px, 1em); /* px-ok: iOS zooms into inputs under 16 device px */
   }
 }
 
@@ -169,5 +169,5 @@
 .safari-fixes input,
 .safari-fixes textarea,
 .safari-fixes select {
-  font-size: max(16px, 1em);
+  font-size: max(16px, 1em); /* px-ok: iOS zooms into inputs under 16 device px */
 }
