@@ -126,13 +126,16 @@ for (const abs of files) {
   const rawLines = raw.split(/\r?\n/);
   const lines = blankComments(raw, abs.endsWith('.css')).split(/\r?\n/);
   lines.forEach((line, i) => {
-    if (/px-ok:/.test(rawLines[i])) {
+    // Only the comment text: what blankComments() blanked out. A px-ok inside
+    // a string is not a marker.
+    const comment = [...rawLines[i]].map((ch, j) => (line[j] === ' ' && ch !== ' ' ? ch : ' ')).join('');
+    if (/px-ok:/.test(comment)) {
       PX_RE.lastIndex = 0;
       let n = 0;
       while (PX_RE.exec(line)) n++;
       if (n) {
         totals.ALLOWED += n;
-        allowed.push(`${rel}:${i + 1}  ${rawLines[i].split('px-ok:')[1].replace(/\*\/.*$/, '').trim()}`);
+        allowed.push(`${rel}:${i + 1}  ${comment.split('px-ok:')[1].replace(/\*\/.*$/, '').trim()}`);
       }
       return;
     }
