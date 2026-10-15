@@ -13,12 +13,21 @@
  *     transform/translate, media query breakpoints (@media), letter-spacing
  *   - UNCLASSIFIED: anything else (needs a human look)
  *
- * This is an audit only — no gate, no conversion. Output: data/px-audit.json
- * + a grouped console report, so the real scope is visible before anyone
- * commits to converting it.
+ * Output: data/px-audit.json + a grouped console report. The gate is
+ * tests/compliance/px-total-only-shrinks.spec.ts.
+ *
+ * What counts (#294, 2026-10-15):
+ *   - Only files git tracks. An ignored local folder (src/wb-overlay-ext/) is
+ *     not the project's code and made the local count differ from CI's.
+ *   - Only code. A px inside a comment ("measured 600px wide") is prose, not a
+ *     size, so comments are blanked before matching.
+ *   - A px that must stay px carries `px-ok: <reason>` in a comment on the
+ *     same line. It is counted as ALLOWED, listed by line, and not in the
+ *     gate's total.
  */
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -50,8 +59,57 @@ function walk(dir, out) {
   }
 }
 
-const files = [];
-for (const d of DIRS) walk(path.join(ROOT, d), files);
+const walked = [];
+for (const d of DIRS) walk(path.join(ROOT, d), walked);
+// Tracked files only; outside a git checkout every walked file counts.
+let tracked = null;
+try {
+  tracked = new Set(
+    execFileSync('git', ['ls-files', ...DIRS], { cwd: ROOT, encoding: 'utf8' })
+      .split('\n').filter(Boolean).map((f) => path.join(ROOT, f)),
+  );
+} catch { /* not a git checkout */ }
+const files = tracked ? walked.filter((f) => tracked.has(f)) : walked;
+
+/**
+ * The text with every comment replaced by spaces, so line numbers hold. CSS
+ * has block comments; JS also has line comments. A string's contents are
+ * kept (CSS that JS writes is code), and `//` inside a string is not a comment.
+ */
+function blankComments(text, isCss) {
+  let out = '';
+  let i = 0;
+  let quote = null;
+  while (i < text.length) {
+    const c = text[i];
+    const next = text[i + 1];
+    if (quote) {
+      out += c;
+      if (c === '\\') { out += text[i + 1] ?? ''; i += 2; continue; }
+      if (c === quote) quote = null;
+      i++;
+      continue;
+    }
+    if (c === '/' && next === '*') {
+      const end = text.indexOf('*/', i + 2);
+      const stop = end === -1 ? text.length : end + 2;
+      out += text.slice(i, stop).replace(/[^\n]/g, ' ');
+      i = stop;
+      continue;
+    }
+    if (!isCss && c === '/' && next === '/') {
+      const end = text.indexOf('\n', i);
+      const stop = end === -1 ? text.length : end;
+      out += ' '.repeat(stop - i);
+      i = stop;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === String.fromCharCode(96)) quote = c;
+    out += c;
+    i++;
+  }
+  return out;
+}
 
 // property-name : <spaces/colon> ... <number>px  (CSS-style, also matches
 // inline cssText strings like `font-size:1.5rem` written in JS)
@@ -59,13 +117,28 @@ const PX_RE = /([a-zA-Z-]+)\s*:\s*[^;{}\n]*?(-?[\d.]+)px/g;
 const MEDIA_RE = /@media[^{]*\d+px/;
 
 const byBucket = { LIKELY_CONVERT: {}, LIKELY_OK: {}, UNCLASSIFIED: {} };
-const totals = { LIKELY_CONVERT: 0, LIKELY_OK: 0, UNCLASSIFIED: 0, mediaBreakpoints: 0 };
+const totals = { LIKELY_CONVERT: 0, LIKELY_OK: 0, UNCLASSIFIED: 0, mediaBreakpoints: 0, ALLOWED: 0 };
+const allowed = [];
 
 for (const abs of files) {
   const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
-  const text = fs.readFileSync(abs, 'utf8');
-  const lines = text.split(/\r?\n/);
-  lines.forEach((line) => {
+  const raw = fs.readFileSync(abs, 'utf8');
+  const rawLines = raw.split(/\r?\n/);
+  const lines = blankComments(raw, abs.endsWith('.css')).split(/\r?\n/);
+  lines.forEach((line, i) => {
+    // Only the comment text: what blankComments() blanked out. A px-ok inside
+    // a string is not a marker.
+    const comment = [...rawLines[i]].map((ch, j) => (line[j] === ' ' && ch !== ' ' ? ch : ' ')).join('');
+    if (/px-ok:/.test(comment)) {
+      PX_RE.lastIndex = 0;
+      let n = 0;
+      while (PX_RE.exec(line)) n++;
+      if (n) {
+        totals.ALLOWED += n;
+        allowed.push(`${rel}:${i + 1}  ${comment.split('px-ok:')[1].replace(/\*\/.*$/, '').trim()}`);
+      }
+      return;
+    }
     if (MEDIA_RE.test(line)) { totals.mediaBreakpoints++; return; } // breakpoints stay px, don't double-count
     PX_RE.lastIndex = 0;
     let m;
@@ -86,7 +159,7 @@ for (const abs of files) {
 }
 
 fs.mkdirSync(path.join(ROOT, 'data'), { recursive: true });
-fs.writeFileSync(path.join(ROOT, 'data/px-audit.json'), JSON.stringify({ totals, byBucket }, null, 2));
+fs.writeFileSync(path.join(ROOT, 'data/px-audit.json'), JSON.stringify({ totals, byBucket, allowed }, null, 2));
 
 console.log(`px-unit audit (#294) — ${totals.LIKELY_CONVERT} likely-convert, ${totals.LIKELY_OK} likely-ok, ${totals.UNCLASSIFIED} unclassified, ${totals.mediaBreakpoints} media-breakpoint line(s) (excluded).\n`);
 
@@ -98,5 +171,8 @@ for (const [f, c] of top('LIKELY_CONVERT')) console.log(`  ${String(c).padStart(
 
 console.log('\nTop files — UNCLASSIFIED (needs a human look):');
 for (const [f, c] of top('UNCLASSIFIED')) console.log(`  ${String(c).padStart(4)}  ${f}`);
+
+console.log(`\nALLOWED (px-ok, not in the gate's total): ${totals.ALLOWED}`);
+for (const a of allowed) console.log(`  ${a}`);
 
 console.log('\nWrote data/px-audit.json');

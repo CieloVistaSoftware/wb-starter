@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.534",
+      "date": "2026-10-15",
+      "summary": "The px audit counted 102 px left in src/, so #294 looked unfinished, but 88 of them were words in comments and the other 14 had to stay px; locally it also counted a git-ignored folder. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1895\" target=\"_blank\" rel=\"noopener\">#1895</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Px audit counts code, not comments; the 14 kept px say why</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1895\" target=\"_blank\" rel=\"noopener\">#1895</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9d6ca9fadb703f3e3ff4705cbc6153d966b59a03\" target=\"_blank\" rel=\"noopener\"><code>9d6ca9f</code></a>",
+          "issues": [
+            294,
+            1895
+          ]
+        }
+      ],
+      "seeIt": "Run node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-px-units.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-px-units.mjs</a>. Before: &quot;64 likely-convert, 15 likely-ok, 43 unclassified&quot; locally (102 on CI). Now: &quot;0 likely-convert, 0 likely-ok, 0 unclassified&quot; and an ALLOWED list of 14 lines, each with its reason.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9d6ca9fadb703f3e3ff4705cbc6153d966b59a03\" target=\"_blank\" rel=\"noopener\"><code>9d6ca9f</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.533",
       "date": "2026-10-15",
       "summary": "With JavaScript turned off the site showed only &quot;Loading...&quot; and no links, so a visitor could not reach any page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1877\" target=\"_blank\" rel=\"noopener\">#1877</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1894\" target=\"_blank\" rel=\"noopener\">#1894</a>",

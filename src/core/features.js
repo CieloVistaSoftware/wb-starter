@@ -161,7 +161,7 @@ export const supports = {
 export const cssFeatures = {
   grid: supports.css('display', 'grid'),
   subgrid: supports.css('grid-template-columns', 'subgrid'),
-  flexGap: supports.css('gap', '1px'),
+  flexGap: supports.css('gap', '1px'), // px-ok: feature test value, never applied
   containerQueries: supports.css('container-type', 'inline-size'),
   hasSelector: supports.cssRule('selector(:has(*))'),
   layerRule: supports.cssRule('@layer test'),

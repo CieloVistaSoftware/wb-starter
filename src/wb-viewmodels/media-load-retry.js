@@ -230,7 +230,7 @@ function attachLoadRetry(el, config) {
         lazyGate = null;
         scheduleCheck();
       }
-    }, { rootMargin: '200px' });
+    }, { rootMargin: '200px' }); // px-ok: IntersectionObserver rootMargin takes px only
     lazyGate.observe(el);
   } else {
     scheduleCheck();
