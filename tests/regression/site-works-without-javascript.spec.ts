@@ -1,43 +1,28 @@
 import { test, expect } from '../fixtures/offline';
-import fs from 'fs';
-import path from 'path';
 
 /**
- * With JavaScript off the site still offers its pages (#1877).
+ * JavaScript off (#1877).
  *
- * John: "one of the selling points is that the page will render anyway using
- * just semantic html". The shell is built by JavaScript, so with it off `/`
- * showed only "Loading..." and no links. index.html now carries a <noscript>
- * menu linking every page in config/site.json's navigationMenu.
+ * The site is an app and requires JavaScript (John, 2026-10-15: "agreed
+ * javascript must be on"), so with it off the home page says so instead of
+ * sitting on "Loading..." forever. The selling point is about the library: a
+ * page built with WB-Starter is semantic HTML and still reads without it.
  */
-const ROOT = process.cwd();
-const menu: { menuItemId: string; href?: string }[] = JSON.parse(
-  fs.readFileSync(path.join(ROOT, 'config/site.json'), 'utf8'),
-).navigationMenu;
-// An item names its own href (error-log), or else opens its page fragment.
-const links = menu.map((m) => m.href ?? `pages/${m.menuItemId}.html`);
-
 test.use({ javaScriptEnabled: false, serviceWorkers: 'block' });
 
-test('the noscript menu links every page in the navigation menu', () => {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  const noscript = html.match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1] ?? '';
-  for (const href of links) {
-    expect(noscript, `index.html <noscript> links ${href}`).toContain(`href="${href}"`);
-  }
+test('with JavaScript off, the site says it needs JavaScript', async ({ page }) => {
+  // The served HTML is checked, not the rendered text: in this harness Chromium
+  // sometimes parses <noscript> as raw text even with JavaScript off.
+  const res = await page.goto('/');
+  const html = (await res!.text()).match(/<noscript>([\s\S]*?)<\/noscript>/i)?.[1] ?? '';
+  expect(html, 'the home page has a <noscript> message').toContain('This site needs JavaScript');
+  await expect(page.locator('#app'), 'the app never starts without JavaScript').toContainText('Loading');
 });
 
-test('with JavaScript off, home shows links to every page, and each one opens', async ({ page }) => {
-  await page.goto('/');
-  const hrefs = await page.locator('nav[aria-label="Pages"] a').evaluateAll((as) =>
-    as.map((a) => a.getAttribute('href')),
-  );
-  expect(hrefs, 'links in the no-JavaScript menu').toEqual(links);
-
-  for (const href of hrefs) {
-    const res = await page.goto(`/${href}`);
-    expect(res?.status(), `${href} answers`).toBe(200);
-    const text = (await page.locator('body').innerText()).trim();
-    expect(text.length, `${href} has readable text`).toBeGreaterThan(20);
-  }
+test('with JavaScript off, a page built with WB-Starter still reads as semantic HTML', async ({ page }) => {
+  await page.goto('/demos/autoinject.html');
+  await expect(page.locator('h1').first()).toHaveText('Auto-Injection Demo');
+  const text = (await page.locator('body').innerText()).trim();
+  expect(text.length, 'readable text on the demo page').toBeGreaterThan(1000);
+  expect(await page.locator('h2').count(), 'section headings').toBeGreaterThan(3);
 });
