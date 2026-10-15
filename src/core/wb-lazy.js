@@ -620,7 +620,7 @@ function getLazyObserver() {
       // scrolling lazy elements into view (#491). 1200px matches the value
       // x-demo.js's lazy observer already settled on for the same class of
       // pop-in (#390: 400px still lost to fast scrolls/nav jumps).
-      rootMargin: '1200px'
+      rootMargin: '1200px' // px-ok: IntersectionObserver rootMargin takes px only
     });
   }
   return lazyObserver;

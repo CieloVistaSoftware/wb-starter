@@ -33,7 +33,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // sizes with pointer px read them through src/core/length-to-px.js. What is
 // left is prose in comments, the card/iOS/12px floors, and APIs that only take
 // px (IntersectionObserver rootMargin, a measured clientWidth).
-const TOTAL_BASELINE = 102;
+// 0: the audit stopped counting comments and git-ignored files (88 of the 102
+// were prose such as "measured 600px wide"). The 14 px that must stay px
+// carry `px-ok: <reason>` on their line and are listed as ALLOWED (#294).
+const TOTAL_BASELINE = 0;
+// The px-ok exceptions, so a new one is a deliberate change to this number.
+const ALLOWED_BASELINE = 14;
 
 test('audit: total px in src/ only shrinks -- rem on every device (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });
@@ -47,4 +52,14 @@ test('audit: total px in src/ only shrinks -- rem on every device (#294)', () =>
       `not px (#294) -- borders, shadows and breakpoints included. Run \`node scripts/audit-px-units.mjs\` ` +
       `to find the new px and write it in rem (n/16). Never raise TOTAL_BASELINE.`
   ).toBeLessThanOrEqual(TOTAL_BASELINE);
+
+  expect(
+    report.totals.ALLOWED,
+    `px-ok exceptions grew from ${ALLOWED_BASELINE} to ${report.totals.ALLOWED}:\n${report.allowed.join('\n')}\n` +
+      `A px-ok is only for a value that cannot be rem (an API that takes px, a device-pixel floor). ` +
+      `Write the value in rem instead, or raise ALLOWED_BASELINE in the same PR that explains why.`
+  ).toBeLessThanOrEqual(ALLOWED_BASELINE);
+  for (const line of report.allowed) {
+    expect(line.split(/\s{2,}/)[1] ?? '', `px-ok without a reason: ${line}`).not.toBe('');
+  }
 });

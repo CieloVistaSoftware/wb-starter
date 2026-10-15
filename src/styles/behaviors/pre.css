@@ -87,7 +87,7 @@
 .x-pre__wrapper .x-pre__copy {
   padding: 0.1rem 0.25rem;
   /* Never under 12px: the mobile readability floor (tests/mobile/mobile-validation.spec.ts) */
-  font-size: max(0.5rem, 12px);
+  font-size: max(0.5rem, 12px); /* px-ok: 12px readability floor on any root */
   z-index: 10;
   opacity: 0.6;
 }
@@ -110,7 +110,7 @@
   color: var(--text-tertiary, #9ca3af);
   padding: 0.15rem 0.35rem;
   border-radius: var(--radius-sm, 0.25rem);
-  font-size: max(0.55rem, 12px); /* the 12px readability floor, as .x-pre__copy */
+  font-size: max(0.55rem, 12px); /* px-ok: the 12px readability floor, as .x-pre__copy */
   font-weight: 600;
   text-transform: uppercase;
   font-family: system-ui, -apple-system, sans-serif;
