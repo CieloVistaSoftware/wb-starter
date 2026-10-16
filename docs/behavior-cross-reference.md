@@ -15,7 +15,7 @@ Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `do
 | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — |
 | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — |
 | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — |
-| `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — |
+| `autosize` | `x-autosize` (deprecated: use `<textarea autosize>`) | [behaviors/autosize.md](behaviors/autosize.md) | — |
 | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — |
 | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — |
 | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — |
