@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T21:15:54.371Z",
+  "generatedAt": "2026-10-16T22:05:07.954Z",
   "count": 211,
   "schemas": [
     {
@@ -4342,7 +4342,7 @@
         },
         "headingLevel": {
           "type": "string",
-          "description": "Heading level for the hero title (1-6). A page hero is usually the page's h1; a hero inside a section is not. Default 3.",
+          "description": "Heading tag for the hero title, <h1> to <h6>: document structure only, the title looks the same at every level. A page hero is usually the page's h1; a hero inside a section is not. Default 3.",
           "default": "3",
           "enum": [
             "1",
@@ -4351,7 +4351,8 @@
             "4",
             "5",
             "6"
-          ]
+          ],
+          "rendersTag": "h{{value}}"
         },
         "ctaTooltip": {
           "type": "string",

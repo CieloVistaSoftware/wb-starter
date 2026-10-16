@@ -8,7 +8,11 @@ import { sliceOverBudget, nextSlice } from '../core/main-thread-budget.js';
 import { siteRoot } from '../core/site-root.js';
 
 /** Behaviors that fill their row by nature: a demo holding only one of them is full width (#1387). */
-const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero'];
+// #1903: x-grid joins them. Its columns are repeat(auto-fit, minmax(min(Nrem,
+// 100%), 1fr)) -- sized from its container -- so shrink-to-fit asked it for a
+// width and got its items' min-content back: grid.md's columns="4" demo
+// measured 9px wide with 1..4 stacked.
+const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero', 'grid'];
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------

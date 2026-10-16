@@ -117,7 +117,10 @@
     },
     "kind": {
       "type": "string",
-      "enum": ["element", "decorator"],
+      "enum": [
+        "element",
+        "decorator"
+      ],
       "description": "#835: element = the behavior is (or replaces) a native element, the one named in 'element'; decorator = it adds behavior to whatever host it lands on"
     },
     "element": {
@@ -319,6 +322,10 @@
         "appliesClass": {
           "type": "string",
           "description": "CSS class applied when truthy. Supports {{value}} template."
+        },
+        "rendersTag": {
+          "type": "string",
+          "description": "The element tag this option renders, for an option that changes the tag and not the look (headingLevel). Supports {{value}}: \"h{{value}}\". The Behaviors list shows it on each option row."
         }
       },
       "allOf": [

@@ -20,7 +20,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.544">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.548">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -872,6 +872,19 @@
           const v = document.createElement('span');
           v.className = 'behaviors-search-results__variant';
           v.textContent = shownOption;
+          // A semantic-only option (headingLevel) changes the tag, not the look,
+          // so its rows would look identical. The schema says which tag each
+          // value renders ("rendersTag": "h{{value}}"), and the row shows it.
+          const optSchema = variant && schemaByName.get(extensionMap[entry.attr]);
+          const rendersTag = optSchema && optSchema.properties && optSchema.properties[opt.prop]
+            && optSchema.properties[opt.prop].rendersTag;
+          if (rendersTag) {
+            const tag = document.createElement('code');
+            tag.className = 'behaviors-search-results__tag';
+            tag.textContent = '<' + String(rendersTag).replace('{{value}}', variant) + '>';
+            tag.title = 'Renders this tag; the look is the same';
+            v.append(' ', tag);
+          }
           btn.append(t, v);
           built.push(btn);
         });

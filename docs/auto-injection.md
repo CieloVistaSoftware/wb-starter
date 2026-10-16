@@ -109,12 +109,12 @@ The following HTML elements are automatically mapped to WB behaviors:
 
 ### 3. Modal Dialog
 **Explicit (Shorthand):**
-```html
+```html-static
 <dialog>...</dialog>
 ```
 
 **Implicit (Auto Injection):**
-```html
+```html-static
 <dialog>
   <header>
     <h2>Settings</h2>
