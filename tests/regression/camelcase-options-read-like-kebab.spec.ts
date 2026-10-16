@@ -164,10 +164,17 @@ test('every multi-word option builds the same in camelCase as dashed, on every h
         if (n.nodeType === Node.TEXT_NODE) { out.push(n.textContent || ''); return; }
         if (n.nodeType !== Node.ELEMENT_NODE) return;
         const el = n as Element;
+        // Media load state is timing, not the option's spelling: the test's
+        // images and videos fail offline, and media-load-retry.js retries on a
+        // timer before it adds x-{img,video}--load-failed and inserts an
+        // x-{img,video}__load-failed message. Copies reach that at different
+        // moments, which failed img.goldenRatio in CI on one run and not the next.
+        if (/\bx-(img|video)__load-failed\b/.test(el.getAttribute('class') || '')) return;
         const attrs = new Set<string>();
         for (const a of Array.from(el.attributes)) {
           if (/^(id|for|aria-[a-z]+|data-[a-z-]*id)$/.test(a.name)) continue;
-          attrs.add(`${a.name.toLowerCase().replace(/-/g, '')}=${a.value}`);
+          const value = a.name === 'class' ? a.value.replace(/\bx-(img|video)--load-failed\b/g, '').replace(/\s+/g, ' ').trim() : a.value;
+          attrs.add(`${a.name.toLowerCase().replace(/-/g, '')}=${value}`);
         }
         out.push(`<${el.tagName} ${[...attrs].sort().join(' ')}>`);
         el.childNodes.forEach(walk);
