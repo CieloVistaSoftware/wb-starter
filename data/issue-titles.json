@@ -1287,5 +1287,6 @@
   "1915": "Events log names the element but not what was picked, typed or toggled",
   "1917": "x-autosize duplicates <textarea autosize> (without maxRows): mark it deprecated and move our pages off it",
   "1919": "Remove x-control: a leftover from the paused page-builder work that does nothing",
-  "1921": "x-cardhero headingLevel rows look identical: show the h1..h6 tag each renders, and document it"
+  "1921": "x-cardhero headingLevel rows look identical: show the h1..h6 tag each renders, and document it",
+  "1926": "npm run ask: a local, offline assistant that answers from wb-starter's own files, with sources"
 }

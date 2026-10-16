@@ -54,7 +54,9 @@ export function articles(element, options = {}) {
   list.className = `x-articles__list x-articles--${layout}`;
   // The column count is the author's: a generated rule (#779), and only when
   // it is not the 3 article.css already defaults --x-articles-columns to.
-  if (layout === 'grid' && String(columns) !== '3') {
+  // #1905: masonry reads the same variable (columns: var(--x-articles-columns)),
+  // but only grid was given it, so masonry was always 3 whatever columns said.
+  if ((layout === 'grid' || layout === 'masonry') && String(columns) !== '3') {
     setRule(list, 'columns', { '--x-articles-columns': columns });
   }
   list.appendChild(body);

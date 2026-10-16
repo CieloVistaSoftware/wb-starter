@@ -7,7 +7,7 @@
       "demos": 28
     },
     "totalDocuments": 295,
-    "totalWords": 5728
+    "totalWords": 5729
   },
   "documents": [
     {
@@ -327,7 +327,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library 167 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 50 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. 📦 One-Command Start One npm create command makes a working site, ready to publish on any static host. 🧠 Schema-Driven Every behavior has a JSON schema that powers its docs, validation and editor autocomplete. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.544\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.544\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library 167 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 50 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. 📦 One-Command Start One npm create command makes a working site, ready to publish on any static host. 🧠 Schema-Driven Every behavior has a JSON schema that powers its docs, validation and editor autocomplete. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.548\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.548\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-16"
@@ -1068,7 +1068,7 @@
           "text": "Settings"
         }
       ],
-      "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-*` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple`). If you want to **prevent** Auto Injection for a specific element, use the `x-ignore` attribute. This ` ` gets the `button` behavior from its tag and `ripple` from its attribute; the ` ` does not become a WB navbar: Click Me Just a link --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `img` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (any other host):** Content **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `x-ignore` attribute. This ` ` does not become a WB navbar: Just a link ## Overriding If you want to use a semantic element but apply a *different* behavior, name it with its attribute. This ` ` is built by `cardhero` instead of the plain `card`, and renders one card, not two (#923):",
+      "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-*` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple`). If you want to **prevent** Auto Injection for a specific element, use the `x-ignore` attribute. This ` ` gets the `button` behavior from its tag and `ripple` from its attribute; the ` ` does not become a WB navbar: Click Me Just a link --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `img` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (any other host):** Content **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html-static ... ``` **Implicit (Auto Injection):** ```html-static Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `x-ignore` attribute. This ` ` does not become a WB navbar: Just a link ## Overriding If you want to use a semantic element but apply a *different* behavior, name it with its attribute. This ` ` is built by `cardhero` instead of the plain `card`, and renders one card, not two (#923):",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -1445,7 +1445,7 @@
       "title": "cardhero",
       "description": null,
       "headings": [],
-      "content": "# Hero Card `x-cardhero` renders a large banner card with an optional small `pretitle`, a headline, a subtitle and up to two call-to-action buttons, over an optional `background` image. Put it at the top of a page or section; `variant` switches between the stock looks. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `background` | URL | — | Background image URL | | `title` | text | — | Hero headline | | `pretitle` | text | — | Small label or count shown above the title (e.g. '100 Behaviors') | | `subtitle` | text | — | Hero tagline/subheadline | | `content` | text or HTML | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) | | `cta` | text | — | Call-to-action button text | | `ctaHref` | URL | `#` | Call-to-action link URL | | `ctaSecondary` | text | — | Secondary CTA text | | `ctaSecondaryHref` | URL | `#` | Secondary CTA URL | | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant | | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) | | `overlay` | `boolean` | `true` | Show gradient overlay for text readability | | `fullHeight` | `boolean` | `false` | Make hero full viewport height | ## Methods - `show()` — Shows the hero - `hide()` — Hides the hero - `toggle()` — Toggles hero visibility - `animate()` — Triggers hero entrance animation - `setBackground()` — Changes the background image Schema: [`cardhero.schema.json`](../../src/wb-models/cardhero.schema.json)",
+      "content": "# Hero Card `x-cardhero` renders a large banner card with an optional small `pretitle`, a headline, a subtitle and up to two call-to-action buttons, over an optional `background` image. Put it at the top of a page or section; `variant` switches between the stock looks. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `background` | URL | — | Background image URL | | `title` | text | — | Hero headline | | `pretitle` | text | — | Small label or count shown above the title (e.g. '100 Behaviors') | | `subtitle` | text | — | Hero tagline/subheadline | | `content` | text or HTML | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) | | `cta` | text | — | Call-to-action button text | | `ctaHref` | URL | `#` | Call-to-action link URL | | `ctaSecondary` | text | — | Secondary CTA text | | `ctaSecondaryHref` | URL | `#` | Secondary CTA URL | | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant | | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) | | `overlay` | `boolean` | `true` | Show gradient overlay for text readability | | `fullHeight` | `boolean` | `false` | Make hero full viewport height | | `headingLevel` | `1` · `2` · `3` · `4` · `5` · `6` | `3` | Which heading tag the title is, ` ` to ` ` | `headingLevel` is document structure only: it changes the title's tag, not its size or style, so all six levels look the same. Use `1` when the hero is the page's main heading, and a lower level when the hero sits inside a section. Screen readers and search engines read the tag; the reader sees one design. On the Behaviors page, each `headingLevel` row shows the tag it renders. ## Methods - `show()` — Shows the hero - `hide()` — Hides the hero - `toggle()` — Toggles hero visibility - `animate()` — Triggers hero entrance animation - `setBackground()` — Changes the background image Schema: [`cardhero.schema.json`](../../src/wb-models/cardhero.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -1855,7 +1855,7 @@
           "text": "Confirm the merge"
         }
       ],
-      "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: Delete branch… ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Dialog title | | `content` | text or HTML | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). | | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. | | `showClose` | `boolean` | `true` | Show the × button in the header | | `variant` | `default` · `centered` · `fullscreen` | `default` | | These three are on by default, so you only ever write them to turn something **off**: ```html Confirm the merge Escape still gets you out. ``` ### What `\"false\"` means `\"false\"` and `\"0\"` turn a boolean option off. The attribute being present is not what switches it on — its value is read: ```html ``` This is worth spelling out because it used to be untrue: `showClose=\"false\"` showed the close button anyway (#747). The old dashed spellings (`showClose`, `closeOnBackdrop`, `closeOnEscape`) are still read, so pages already written keep working — but no attribute name carries a dash, so the camelCase names above are the ones to write (#1125). ### A dialog always has an exit Hiding the close button is allowed; leaving no way out is not. With `showClose=\"false\"`, Escape is the dialog's exit, so it cannot be turned off too (#794): ```html ``` That combination is refused: Escape stays on, and the console says why. `closeOnBackdrop=\"false\"` is fine with either, because Escape is the platform's own way out of a modal and the one a keyboard user reaches for. A backdrop click is something a user finds by accident. `dialog.schema.json` states the same rule as an `if`/`then`. ### Layout Every dialog has the same three parts as a card, by tag: | Part | Element | Class | | --- | --- | --- | | Header (title, ×) | ` ` | `x-dialog__header` | | Content | ` ` | `x-dialog__main` | | Cancel / OK (a dialog built from a trigger) | ` ` | `x-dialog__footer` | The ` ` frame has no padding; the parts carry it, so content sits at least 1rem from the frame (DEMOS-AND-DOCS-STANDARDS.md §13). An authored ` ` gets the header and main built around its own markup: its first heading moves into the header, and the rest moves into ` `. ## Events - `wb:dialog:open` — Dialog opened - `wb:dialog:close` — Dialog closed - `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop) - `wb:dialog:ok` — The dialog's confirm button is clicked ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
+      "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: Delete branch… ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Dialog title | | `content` | text or HTML | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). | | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. | | `showClose` | `boolean` | `true` | Show the × button in the header | | `variant` | `default` · `centered` · `fullscreen` | `default` | | These three are on by default, so you only ever write them to turn something **off**: ```html-static Confirm the merge Escape still gets you out. ``` ### What `\"false\"` means `\"false\"` and `\"0\"` turn a boolean option off. The attribute being present is not what switches it on — its value is read: ```html-static ``` This is worth spelling out because it used to be untrue: `showClose=\"false\"` showed the close button anyway (#747). The old dashed spellings (`showClose`, `closeOnBackdrop`, `closeOnEscape`) are still read, so pages already written keep working — but no attribute name carries a dash, so the camelCase names above are the ones to write (#1125). ### A dialog always has an exit Hiding the close button is allowed; leaving no way out is not. With `showClose=\"false\"`, Escape is the dialog's exit, so it cannot be turned off too (#794): ```html-static ``` That combination is refused: Escape stays on, and the console says why. `closeOnBackdrop=\"false\"` is fine with either, because Escape is the platform's own way out of a modal and the one a keyboard user reaches for. A backdrop click is something a user finds by accident. `dialog.schema.json` states the same rule as an `if`/`then`. ### Layout Every dialog has the same three parts as a card, by tag: | Part | Element | Class | | --- | --- | --- | | Header (title, ×) | ` ` | `x-dialog__header` | | Content | ` ` | `x-dialog__main` | | Cancel / OK (a dialog built from a trigger) | ` ` | `x-dialog__footer` | The ` ` frame has no padding; the parts carry it, so content sits at least 1rem from the frame (DEMOS-AND-DOCS-STANDARDS.md §13). An authored ` ` gets the header and main built around its own markup: its first heading moves into the header, and the rest moves into ` `. ## Events - `wb:dialog:open` — Dialog opened - `wb:dialog:close` — Dialog closed - `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop) - `wb:dialog:ok` — The dialog's confirm button is clicked ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -3321,7 +3321,7 @@
       "content": "# Ask the Project (npm run ask) `npm run ask` answers questions about WB-Starter from the project's own files, on your machine, with no internet. Every answer lists the files it came from, and when the project doesn't say, it tells you so instead of guessing. ```bash npm run ask -- \"how do I add a label to a select?\" ``` It is a search over the project, not a model that memorized it: your question finds the closest passages in the docs, schemas, code and tests, and a small local model writes the answer from those passages only. ## What you need (once) 1. **Ollama**, installed and running (the Ollama app, or `ollama serve`). 2. **Two models**, about 2.3 GB together: ```bash ollama pull nomic-embed-text ``` ```bash ollama pull qwen2.5-coder:3b ``` `nomic-embed-text` turns text into searchable vectors; `qwen2.5-coder:3b` writes the answers. If `ollama` is \"not recognized\" right after installing, restart VS Code: its terminals keep the PATH they started with. 3. **The index**, built from the project's files: ```bash npm run ask:index ``` ## The two commands | Command | What it does | When to run it | |---|---|---| | `npm run ask:index` | Splits every file git tracks into passages and stores a searchable index in `data/ask-index/` | Once, then after pulling or merging changes. Only changed files are redone. | | `npm run ask -- \"question\"` | Answers from the closest passages and lists them as sources | Whenever you want to know something about the project | | `npm run ask -- --sources \"words\"` | Lists the closest passages without asking the model | To see which files cover a topic, instantly | ### Reading the ask:index output ```text [ask:index] 2181 files, 11976 passages: 11947 reused, 29 to embed with nomic-embed-text [ask:index] embedded 29/29 (about 0s left) [ask:index] wrote data/ask-index/ (11976 passages, 768 dimensions) ``` - **files / passages**: what is indexed. A passage is about 1,500 characters of one file, labelled with its path and nearest heading. - **reused**: passages from files that did not change since the last run; they are not redone. - **to embed**: passages from new or changed files. The first run embeds all of them (about 40 minutes on a laptop CPU); later runs take seconds. - **768 dimensions**: the size of each passage's vector. Nothing to act on. ## What is indexed Every file git tracks that is project knowledge: `docs/`, `src/` (code, schemas, styles), `pages/`, `demos/`, `scripts/`, `tests/`, the CLAUDE.md rules and `data/behavior-examples.json`. Left out: `archive/`, generated `data/` files (search and schema indexes, reports), images and anything over 400 KB. The index stays on your machine (`data/ask-index/` is git-ignored), and no question or file leaves it. ## Good to know - **Speed**: an answer takes about 10 to 50 seconds on a laptop CPU. `--sources` is instant. - **Accuracy**: it is as current as the last `npm run ask:index`. After a merge that changes docs, rebuild so answers reflect it. - **Scope**: it answers what the project's files say. It does not change code, run tests or open pull requests. - **Memory**: the answer model uses about 2 GB of RAM while loaded, and Ollama frees it after a few idle minutes. Test runs refuse to start below 800 MB free. ## Choosing other models | Variable | Default | Used for | |---|---|---| | `WB_ASK_MODEL` | `qwen2.5-coder:3b` | Writing answers. A larger model (for example `qwen2.5-coder:7b`) answers better and slower. | | `WB_ASK_EMBED_MODEL` | `nomic-embed-text` | Searching. Changing it needs `npm run ask:index -- --full`. | | `WB_ASK_PASSAGES` | `8` | How many passages each answer is given | | `OLLAMA_HOST` | `http://localhost:11434` | Where Ollama runs | In PowerShell: ```bash $env:WB_ASK_MODEL = \"qwen2.5-coder:7b\"; npm run ask -- \"what are the Tier 1 laws?\" ``` ## When something goes wrong | Message | Fix | |---|---| | `Ollama is not running` | Start the Ollama app, or run `ollama serve` | | `Ollama has no model \"...\"` | Run the `ollama pull` it names | | `No index yet. Run: npm run ask:index` | Build the index | | An answer misses something you know is in the docs | Run `npm run ask:index` (the index may predate the change), or try `--sources` to see what it found | ## How it works - `scripts/ask-index.mjs`: builds the index. - `scripts/ask.mjs`: answers a question. - `scripts/lib/ask-core.mjs`: chunking, ranking and the prompt, tested by `tests/regression/ask-chunks-and-ranks.spec.ts`. Introduced in issue #1926.",
       "keywords": [],
       "type": "doc",
-      "modified": null
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/guides/create-a-website",
@@ -3417,7 +3417,7 @@
       "content": "# WB-Starter Documentation > A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture. **New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | | [Ask the Project](./guides/ask-the-project.md) | `npm run ask`: answers from the project's own files, offline, with sources | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-15"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/inline-editing",
@@ -6450,7 +6450,7 @@
     "540": [
       "docs/behaviors/img"
     ],
-    "544": [
+    "548": [
       "pages/home"
     ],
     "555": [
@@ -9322,6 +9322,7 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/code",
       "docs/behaviors/confirm",
       "docs/behaviors/copybutton",
@@ -9761,6 +9762,7 @@
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardlink",
       "docs/behaviors/cardminimizable",
@@ -12147,6 +12149,7 @@
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardstats",
       "docs/behaviors/cart",
@@ -15239,6 +15242,7 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/fieldset",
@@ -15259,6 +15263,7 @@
     ],
     "reader": [
       "pages/behaviors",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/glow",
       "docs/behaviors/move",
@@ -15483,6 +15488,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/address",
+      "docs/behaviors/cardhero",
       "docs/behaviors/chip",
       "docs/behaviors/codetheme",
       "docs/behaviors/dropdown",
@@ -15530,6 +15536,7 @@
       "pages/features",
       "pages/issues",
       "docs/behaviors/button",
+      "docs/behaviors/cardhero",
       "docs/behaviors/input",
       "docs/behaviors/mark",
       "docs/behaviors/search",
@@ -16021,6 +16028,7 @@
       "docs/behaviors/card",
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/colorpicker",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/gallery",
@@ -17511,6 +17519,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/aside",
       "docs/behaviors/card",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardstats",
       "docs/behaviors/dialog",
       "docs/behaviors/flex",
@@ -18846,6 +18855,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
+      "docs/behaviors/cardhero",
       "docs/behaviors/container",
       "docs/behaviors/ol",
       "docs/behaviors/x-copybutton",
@@ -19055,6 +19065,7 @@
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardtestimonial",
@@ -21433,6 +21444,7 @@
     "look": [
       "pages/hero-variants",
       "pages/themes",
+      "docs/behaviors/cardhero",
       "docs/behaviors/clock",
       "docs/behaviors/glass",
       "docs/behaviors/grid",
@@ -22850,6 +22862,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/alert",
       "docs/behaviors/articles",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardvideo",
       "docs/behaviors/collapse",
       "docs/behaviors/confirm",
@@ -23007,6 +23020,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audio",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/codetheme",
       "docs/behaviors/container",
@@ -23699,8 +23713,10 @@
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/auto-injection",
       "docs/behaviors/articles",
       "docs/behaviors/container",
+      "docs/behaviors/dialog",
       "docs/behaviors/scrollable",
       "docs/behaviors/skeleton",
       "docs/behaviors/table",
@@ -25398,6 +25414,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/chip",
       "docs/behaviors/container",
       "docs/behaviors/dialog",
@@ -26537,6 +26554,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/address",
       "docs/behaviors/blockquote",
+      "docs/behaviors/cardhero",
       "docs/behaviors/dl",
       "docs/behaviors/fill",
       "docs/behaviors/ol",
@@ -29651,6 +29669,7 @@
     ],
     "levels": [
       "docs/INTELLISENSE-TOOLTIPS",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cover"
     ],
     "info": [
@@ -31823,6 +31842,7 @@
     ],
     "readers": [
       "docs/MVVM-MIGRATION",
+      "docs/behaviors/cardhero",
       "docs/behaviors/codetheme",
       "docs/behaviors/fieldset",
       "docs/behaviors/release",
@@ -32433,6 +32453,7 @@
       "docs/audio",
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardstats",
       "docs/behaviors/cluster",
@@ -36728,6 +36749,7 @@
     ],
     "six": [
       "docs/architecture/solidjscomparison",
+      "docs/behaviors/cardhero",
       "docs/home-page"
     ],
     "substantive": [
@@ -40498,6 +40520,7 @@
     ],
     "sits": [
       "docs/behaviors/card",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/dialog",
       "docs/behaviors/figure",
@@ -40880,6 +40903,29 @@
       "docs/behaviors/cardoverlay",
       "docs/behaviors/dl",
       "docs/linkedin-standards-article"
+    ],
+    "headinglevel": [
+      "docs/behaviors/cardhero",
+      "docs/schema"
+    ],
+    "lower": [
+      "docs/behaviors/cardhero",
+      "docs/behaviors/details",
+      "docs/behaviors/ol",
+      "docs/behaviors/searchfield",
+      "docs/behaviors/switcher",
+      "docs/behaviors/typewriter",
+      "docs/property-viewer"
+    ],
+    "engines": [
+      "docs/behaviors/cardhero"
+    ],
+    "sees": [
+      "docs/behaviors/cardhero",
+      "docs/guides/create-a-website",
+      "docs/linkedin-framework-agnostic",
+      "docs/pce-candidates",
+      "demos/playground"
     ],
     "entrance": [
       "docs/behaviors/cardhero",
@@ -42376,14 +42422,6 @@
     ],
     "rain": [
       "docs/behaviors/details"
-    ],
-    "lower": [
-      "docs/behaviors/details",
-      "docs/behaviors/ol",
-      "docs/behaviors/searchfield",
-      "docs/behaviors/switcher",
-      "docs/behaviors/typewriter",
-      "docs/property-viewer"
     ],
     "dry": [
       "docs/behaviors/details",
@@ -46517,12 +46555,6 @@
     "pnpm": [
       "docs/guides/create-a-website"
     ],
-    "sees": [
-      "docs/guides/create-a-website",
-      "docs/linkedin-framework-agnostic",
-      "docs/pce-candidates",
-      "demos/playground"
-    ],
     "dependency": [
       "docs/guides/create-a-website",
       "docs/pce-candidates",
@@ -47862,9 +47894,6 @@
     ],
     "assignments": [
       "docs/schema-test-value"
-    ],
-    "headinglevel": [
-      "docs/schema"
     ],
     "subheading": [
       "docs/schema"
