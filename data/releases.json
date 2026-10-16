@@ -6,6 +6,72 @@
   ],
   "releases": [
     {
+      "version": "1.0.547",
+      "date": "2026-10-16",
+      "summary": "X-articles masonry ignored its columns attribute and always used 3, cutting off the third card in articles.md&#39;s two-column example; and a four-card example in the attribute naming standard ran past the doc column. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1905\" target=\"_blank\" rel=\"noopener\">#1905</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1925\" target=\"_blank\" rel=\"noopener\">#1925</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Masonry honors columns; the naming standard&#39;s Cards example fits its column</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1905\" target=\"_blank\" rel=\"noopener\">#1905</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1925\" target=\"_blank\" rel=\"noopener\">#1925</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc8456b601ac5298a000b8d723125c6d9083b872\" target=\"_blank\" rel=\"noopener\"><code>dc8456b</code></a>",
+          "issues": [
+            1905,
+            1925
+          ]
+        }
+      ],
+      "seeIt": "Open the articles doc (<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Farticles.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/articles.md</a>) at Masonry layout. Before: three cards in a row, the third cut off. Now: two columns, as columns=&quot;2&quot; says, all inside the example.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/dc8456b601ac5298a000b8d723125c6d9083b872\" target=\"_blank\" rel=\"noopener\"><code>dc8456b</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.546",
+      "date": "2026-10-16",
+      "summary": "Five doc examples showed only a closed dialog, which renders nothing, so each appeared as an empty box above its code. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1904\" target=\"_blank\" rel=\"noopener\">#1904</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1924\" target=\"_blank\" rel=\"noopener\">#1924</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Closed-dialog illustrations are code, not empty live examples</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1904\" target=\"_blank\" rel=\"noopener\">#1904</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1924\" target=\"_blank\" rel=\"noopener\">#1924</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/28c33003481c069d279309008205f75ec1a4b012\" target=\"_blank\" rel=\"noopener\"><code>28c3300</code></a>",
+          "issues": [
+            1904,
+            1924
+          ]
+        }
+      ],
+      "seeIt": "Open the dialog doc (<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fdialog.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/dialog.md</a>) at &#39;These three are on by default&#39;. Before: an empty box above the code. Now: just the highlighted code, as an illustration of what to write.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/28c33003481c069d279309008205f75ec1a4b012\" target=\"_blank\" rel=\"noopener\"><code>28c3300</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.545",
+      "date": "2026-10-16",
+      "summary": "X-grid sizes its columns from its container and a single-item example shrinks to its content&#39;s width, so each asked the other for a width and grid.md&#39;s columns=4 example collapsed to one 9px column of stacked items. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1903\" target=\"_blank\" rel=\"noopener\">#1903</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1923\" target=\"_blank\" rel=\"noopener\">#1923</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>An x-grid example takes the full width instead of collapsing to a 9px column</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1903\" target=\"_blank\" rel=\"noopener\">#1903</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1923\" target=\"_blank\" rel=\"noopener\">#1923</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8f185c65afd2ad9769330009c00c6aa5b5c9280f\" target=\"_blank\" rel=\"noopener\"><code>8f185c6</code></a>",
+          "issues": [
+            1903,
+            1923
+          ]
+        }
+      ],
+      "seeIt": "Open the x-grid doc (<a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fbehaviors%2Fgrid.md\" target=\"_blank\" rel=\"noopener\">docs/behaviors/grid.md</a>) and look at Column Count. Before: 1, 2, 3, 4 stacked in a thin column. Now: the grid spans the doc column with its items side by side.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8f185c65afd2ad9769330009c00c6aa5b5c9280f\" target=\"_blank\" rel=\"noopener\"><code>8f185c6</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.544",
       "date": "2026-10-16",
       "summary": "X-autosize duplicated &lt;textarea autosize&gt; without its maxRows limit, and nothing said which to use; it is now marked deprecated everywhere and our own pages use &lt;textarea autosize&gt;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1917\" target=\"_blank\" rel=\"noopener\">#1917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1918\" target=\"_blank\" rel=\"noopener\">#1918</a>",
