@@ -59,7 +59,7 @@
 }
 
 .x-footer__link:hover {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .x-footer__social {

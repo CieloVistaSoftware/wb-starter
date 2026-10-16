@@ -77,7 +77,7 @@ x-button[variant="info"] { background: var(--info-color); color: var(--text-on-a
 x-button[variant="info"]:hover { filter: brightness(0.85); }
 x-button[variant="ghost"] { background: transparent; color: var(--text-primary); border-color: var(--border-color); }
 x-button[variant="ghost"]:hover { background: var(--bg-tertiary); border-color: var(--text-secondary); }
-x-button[variant="link"] { background: transparent; color: var(--primary); padding: 0; border: none; }
+x-button[variant="link"] { background: transparent; color: var(--primary-text); padding: 0; border: none; }
 x-button[variant="link"]:hover { text-decoration: underline; }
 
 /* Loading state */
@@ -125,7 +125,7 @@ x-button[loading] { cursor: not-allowed; opacity: 0.7; }
 .x-button--info:hover { filter: brightness(0.85); }
 .x-button--ghost { background: transparent; color: var(--text-primary); border-color: var(--border-color); }
 .x-button--ghost:hover { background: var(--bg-tertiary); border-color: var(--text-secondary); }
-.x-button--link { background: transparent; color: var(--primary); padding: 0; border: none; }
+.x-button--link { background: transparent; color: var(--primary-text); padding: 0; border: none; }
 .x-button--link:hover { text-decoration: underline; }
 `;
 

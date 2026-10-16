@@ -103,7 +103,7 @@
 .x-offcanvas__header > .x-offcanvas__title,
 .x-sheet__header > .x-sheet__title {
   margin: 0;
-  color: var(--primary, #6366f1);
+  color: var(--primary-text, #6366f1);
 }
 
 .x-offcanvas__header .x-offcanvas__close.x-offcanvas__close,
@@ -213,7 +213,7 @@
 .x-prompt__box > .x-prompt__title {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;
-  color: var(--primary, #6366f1);
+  color: var(--primary-text, #6366f1);
 }
 
 .x-confirm__message,

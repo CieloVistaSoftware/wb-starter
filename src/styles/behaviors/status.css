@@ -15,7 +15,7 @@
  * this file (#1464).
  */
 
-.x-status--primary   { color: var(--primary); }
+.x-status--primary   { color: var(--primary-text); }
 .x-status--secondary { color: var(--secondary); }
 .x-status--success   { color: var(--success-color); }
 .x-status--error     { color: var(--danger-color); }

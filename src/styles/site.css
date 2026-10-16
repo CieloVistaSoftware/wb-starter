@@ -316,7 +316,7 @@ body > button[x-copy] {
 .header__notes-btn:hover,
 .header__playground-btn:hover {
   background: var(--bg-tertiary);
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .header__logo {
@@ -354,7 +354,7 @@ body > button[x-copy] {
 }
 
 .header__logo:hover {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .header__version {
@@ -375,7 +375,7 @@ body > button[x-copy] {
 }
 
 .header__version:hover {
-  color: var(--primary);
+  color: var(--primary-text);
   text-decoration: underline;
 }
 
@@ -450,7 +450,7 @@ body > button[x-copy] {
 
 .nav__toggle:hover {
   background: var(--bg-tertiary);
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 :where(.site__nav) .x-sidebar__items {
@@ -610,7 +610,7 @@ body > button[x-copy] {
 }
 
 .footer__links a:hover {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 /* #1245: the live site's visit total, set by src/core/visitor-count.js. */
@@ -663,7 +663,7 @@ h2 {
 h3 {
   font-size: 1.25rem;
   margin: 1.5rem 0 0.75rem;
-  color: var(--primary);
+  color: var(--primary-text);
   font-weight: 600;
 }
 
@@ -688,7 +688,7 @@ h5, h6 {
 }
 
 .page h3 {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .page h4 {
@@ -1050,7 +1050,7 @@ h5, h6 {
 }
 .btn--ghost:hover {
   background: rgba(255, 255, 255, 0.05);
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .btn--outline {
@@ -1060,7 +1060,7 @@ h5, h6 {
 }
 .btn--outline:hover {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 /* Sizes */

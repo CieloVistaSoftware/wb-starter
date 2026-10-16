@@ -15,7 +15,7 @@
 }
 
 .x-release--clickable:hover {
-  color: var(--primary);
+  color: var(--primary-text);
   text-decoration: underline;
 }
 

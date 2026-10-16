@@ -235,7 +235,7 @@
 }
 [x-cardhero] .x-hero-cta--primary{
   background: var(--text-on-accent, #fff);
-  color: var(--primary);
+  color: var(--primary-text);
   box-shadow: 0 0.75rem 1.875rem hsl(var(--overlay-dark-hsl) / 0.35);
 }
 [x-cardhero] .x-hero-cta--primary:hover { transform: translateY(-0.125rem); box-shadow: 0 1.125rem 2.625rem hsl(var(--overlay-dark-hsl) / 0.45); }

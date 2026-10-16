@@ -32,7 +32,9 @@ async function scanned(page: import('@playwright/test').Page, html: string) {
     const nav = host.querySelector('nav') as HTMLElement;
     const after = link ? link.getBoundingClientRect().left - host.getBoundingClientRect().left : null;
     const probe = document.createElement('span');
-    probe.style.color = 'var(--primary)';
+    // The theme's colour for TEXT (#1902): --primary is a fill colour and was
+    // under 3:1 as link text on the dark theme.
+    probe.style.color = 'var(--primary-text)';
     host.appendChild(probe);
     return {
       cls: nav.className,

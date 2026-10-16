@@ -57,7 +57,7 @@
 }
 
 .services-card h3 {
-  color: var(--primary);
+  color: var(--primary-text);
   margin-top: 0;
   font-size: 1.3rem;
   margin-bottom: 1rem;

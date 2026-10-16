@@ -52,5 +52,5 @@
 .x-popover--floating > .x-popover__title {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--primary, #6366f1);
+  color: var(--primary-text, #6366f1);
 }

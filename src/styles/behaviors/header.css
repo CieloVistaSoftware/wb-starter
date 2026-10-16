@@ -95,7 +95,7 @@
 }
 
 .x-header__logo:hover {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .x-header__icon {

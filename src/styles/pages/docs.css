@@ -144,7 +144,7 @@
 .behavior-chip__name {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.9375rem;
-  color: var(--primary);
+  color: var(--primary-text);
   overflow-wrap: anywhere;
 }
 
@@ -207,7 +207,7 @@
 
 .docs-card .docs-card__title {
   margin: 0 0 0.5rem;
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 1rem;
 }
 

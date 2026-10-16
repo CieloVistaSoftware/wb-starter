@@ -76,7 +76,7 @@
 
 .links-item .links-item__url {
   font-size: 0.8rem;
-  color: var(--primary);
+  color: var(--primary-text);
   text-decoration: none;
   display: block;
   margin-top: 0.5rem;
