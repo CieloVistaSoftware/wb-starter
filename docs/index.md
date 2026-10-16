@@ -14,6 +14,7 @@
 | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards |
 | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work |
 | [TODO](./_today/TODO.md) | Upcoming tasks |
+| [Ask the Project](./guides/ask-the-project.md) | `npm run ask`: answers from the project's own files, offline, with sources |
 
 ---
 

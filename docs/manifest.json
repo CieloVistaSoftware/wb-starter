@@ -19,6 +19,12 @@
           "modified": "2026-10-10"
         },
         {
+          "file": "guides/ask-the-project.md",
+          "title": "Ask the Project",
+          "description": "npm run ask: answers from the project's own files, offline, with sources",
+          "modified": "2026-10-16"
+        },
+        {
           "file": "guides/search-index.md",
           "title": "Search Index",
           "description": "Documentation for Search Index",

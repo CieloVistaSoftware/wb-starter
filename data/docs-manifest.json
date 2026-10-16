@@ -1,7 +1,7 @@
 {
-  "totalFiles": 251,
+  "totalFiles": 252,
   "audiences": {
-    "user": 175,
+    "user": 176,
     "maintainer": 76
   },
   "categories": [
@@ -1952,6 +1952,13 @@
     ],
     "guides": [
       {
+        "path": "docs/guides/ask-the-project.md",
+        "title": "Ask the Project (npm run ask)",
+        "name": "ask-the-project",
+        "category": "guides",
+        "audience": "user"
+      },
+      {
         "path": "docs/guides/create-a-website.md",
         "title": "How to Create a Website with wb-starter",
         "name": "create-a-website",
@@ -3715,6 +3722,13 @@
       "category": "root",
       "audience": "user",
       "created": "2026-01-14"
+    },
+    {
+      "path": "docs/guides/ask-the-project.md",
+      "title": "Ask the Project (npm run ask)",
+      "name": "ask-the-project",
+      "category": "guides",
+      "audience": "user"
     },
     {
       "path": "docs/guides/create-a-website.md",
