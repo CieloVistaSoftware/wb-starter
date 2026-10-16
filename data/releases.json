@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.548",
+      "date": "2026-10-16",
+      "summary": "X-cardhero&#39;s six headingLevel examples looked identical, because the option changes the title&#39;s tag (h1 to h6) and not its style, and nothing said so. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1921\" target=\"_blank\" rel=\"noopener\">#1921</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1922\" target=\"_blank\" rel=\"noopener\">#1922</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>HeadingLevel rows show the tag they render; the docs say it changes structure, not look</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1921\" target=\"_blank\" rel=\"noopener\">#1921</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1922\" target=\"_blank\" rel=\"noopener\">#1922</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c862a9831e46d541331b13e23ed52a8d40e5c165\" target=\"_blank\" rel=\"noopener\"><code>c862a98</code></a>",
+          "issues": [
+            1921,
+            1922
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors and expand x-cardhero. Before: rows read headingLevel=1 to headingLevel=6 with no visible difference. Now: each row shows the tag it renders, &lt;h1&gt; to &lt;h6&gt;, and cardhero.md explains headingLevel.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c862a9831e46d541331b13e23ed52a8d40e5c165\" target=\"_blank\" rel=\"noopener\"><code>c862a98</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.547",
       "date": "2026-10-16",
       "summary": "X-articles masonry ignored its columns attribute and always used 3, cutting off the third card in articles.md&#39;s two-column example; and a four-card example in the attribute naming standard ran past the doc column. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1905\" target=\"_blank\" rel=\"noopener\">#1905</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1925\" target=\"_blank\" rel=\"noopener\">#1925</a>",

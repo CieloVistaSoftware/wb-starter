@@ -244,7 +244,7 @@
           "file": "behaviors/cardhero.md",
           "title": "Hero Card",
           "description": "x-cardhero renders a large banner card with an optional small pretitle, a headline, a subtitle and up to two call-to-action buttons, over an optional…",
-          "modified": "2026-10-10"
+          "modified": "2026-10-16"
         },
         {
           "file": "behaviors/cardhorizontal.md",
