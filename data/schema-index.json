@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T19:50:34.825Z",
+  "generatedAt": "2026-10-16T21:03:20.941Z",
   "count": 212,
   "schemas": [
     {
@@ -347,7 +347,7 @@
       "file": "autosize.schema.json",
       "name": "autosize",
       "title": "Autosize",
-      "description": "Grows a textarea to fit its content as the user types.",
+      "description": "Deprecated. Grows a textarea to fit its content as the user types; use <textarea autosize> instead.",
       "tag": "x-autosize",
       "baseClass": "x-autosize",
       "kind": "decorator",
@@ -356,7 +356,8 @@
       "_metadata": {
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source.",
+        "status": "deprecated"
       }
     },
     {

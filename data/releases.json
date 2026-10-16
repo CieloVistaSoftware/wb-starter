@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.542",
+      "date": "2026-10-16",
+      "summary": "The Behaviors page Events log named only the element an event came from, so a breadcrumb click never said which item was clicked and a behavior&#39;s own event never showed its detail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1915\" target=\"_blank\" rel=\"noopener\">#1915</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1916\" target=\"_blank\" rel=\"noopener\">#1916</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Events log says what was picked, typed or toggled, not only where</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1915\" target=\"_blank\" rel=\"noopener\">#1915</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1916\" target=\"_blank\" rel=\"noopener\">#1916</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1ee94061c6ba7b3b97040da9335bbf5c318336be\" target=\"_blank\" rel=\"noopener\"><code>1ee9406</code></a>",
+          "issues": [
+            1915,
+            1916
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors, pick x-breadcrumb, click Electronics. Before: click breadcrumb-separator-span-3. Now: click breadcrumb-separator-span-3 Electronics. A select change also shows wb:select:change {&quot;value&quot;:&quot;...&quot;}.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1ee94061c6ba7b3b97040da9335bbf5c318336be\" target=\"_blank\" rel=\"noopener\"><code>1ee9406</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.541",
+      "date": "2026-10-16",
+      "summary": "The x-autocomplete API panel showed &lt;div x-autocomplete items=&quot;&quot;&gt;...&lt;/div&gt; as its usage, and its array default as an empty code block crushed into the DEFAULT column, because defaults were turned into text with String(). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1913\" target=\"_blank\" rel=\"noopener\">#1913</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1914\" target=\"_blank\" rel=\"noopener\">#1914</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>API panel puts a decorator on its real element and shows array defaults as arrays</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1913\" target=\"_blank\" rel=\"noopener\">#1913</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1914\" target=\"_blank\" rel=\"noopener\">#1914</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c3b263dfe59a61c15b62e4fe753f5eb6806103fe\" target=\"_blank\" rel=\"noopener\"><code>c3b263d</code></a>",
+          "issues": [
+            1913,
+            1914
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors, pick x-autocomplete, click API. Before: &lt;div x-autocomplete items=&quot;&quot;&gt;...&lt;/div&gt;, and a vertical JAVA label in DEFAULT. Now: &lt;input x-autocomplete items=&#39;[]&#39; /&gt;, and DEFAULT reads [].",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c3b263dfe59a61c15b62e4fe753f5eb6806103fe\" target=\"_blank\" rel=\"noopener\"><code>c3b263d</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.540",
       "date": "2026-10-16",
       "summary": "Toasts were 67px tall because the theme&#39;s full button padding, background and border reached the close button, beating toast.css&#39;s single-class reset. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1909\" target=\"_blank\" rel=\"noopener\">#1909</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1910\" target=\"_blank\" rel=\"noopener\">#1910</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1907\" target=\"_blank\" rel=\"noopener\">#1907</a>",

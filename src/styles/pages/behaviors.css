@@ -948,6 +948,13 @@
 
 /* #677: the "from" trail on an event that originated on a descendant. Muted —
    the source element is the headline, its container is context. */
+/* What the event was about: the clicked item's text, a field's value, a
+   toggle's state or a behavior event's detail. */
+.behaviors-live__events-value {
+  color: var(--text-primary);
+  font-family: var(--font-mono, monospace);
+}
+
 .behaviors-live__events-from {
   color: var(--text-muted);
   font-size: 0.68rem;
