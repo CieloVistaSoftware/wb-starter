@@ -879,7 +879,7 @@ name         attribute with DIFFERENT meaning?
 
 ### Cards
 
-<figure x-demo>
+<figure x-demo columns="2">
 <article
   title="Welcome"
   subtitle="Get started"
