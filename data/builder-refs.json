@@ -682,20 +682,6 @@
     ]
   },
   {
-    "file": "docs\\schema-first-architecture.md",
-    "hits": [
-      "L26: *   **Role**: The \"Enhancer\". It observes the View, binds event listeners, manages state, and handles user interaction. ",
-      "L40: *   **Builder Mode (Fallback)**: \"I see an empty container. I will use the Model (Schema) defaults to generate a standar"
-    ]
-  },
-  {
-    "file": "docs\\schema-first-audit-report.md",
-    "hits": [
-      "L5: The goal is to ensure that JavaScript behaviors act as **Enhancers** (hydrating existing DOM) rather than **Builders** (",
-      "L9: | **Card** | `src/behaviors/js/card.js` | **TRUE** | 1. **Decouple Validation**: Update `validateSemanticContainer` to a"
-    ]
-  },
-  {
     "file": "docs\\semantic-audit.md",
     "hits": [
       "L111: 5. **Update builder.js** - Ensure components are created with correct element tags"

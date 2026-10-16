@@ -3,11 +3,11 @@
   "$stats": {
     "sources": {
       "pages": 22,
-      "docs": 246,
-      "demos": 29
+      "docs": 244,
+      "demos": 28
     },
-    "totalDocuments": 297,
-    "totalWords": 5790
+    "totalDocuments": 294,
+    "totalWords": 5688
   },
   "documents": [
     {
@@ -384,10 +384,6 @@
         },
         {
           "level": 3,
-          "text": "🗂️ Schema first"
-        },
-        {
-          "level": 3,
           "text": "🔌 With your framework"
         },
         {
@@ -407,7 +403,7 @@
           "text": "🐙 The source"
         }
       ],
-      "content": "Introduction to wb-starter A zero-build website framework. You write HTML5. That is the whole API. What it is wb-starter adds behavior to the HTML you already write. A behavior attaches either to a semantic element itself (an article becomes a card, a dialog a modal, a details an accordion) or to any element through an x-* attribute ( x-ripple , x-tooltip , x-draggable ). There is no build step, no bundler, no JSX and no custom-element vocabulary, and everything renders in the light DOM, where your CSS and your devtools reach it. article x-draggable x-ripple h3 Hello /h3 p A card you can drag, with a ripple on press. /p /article The article is still an article . Inspect it and you see the element you wrote, with classes on it: HTML5 in, HTML5 out. Why it ends the traditional framework Every popular framework makes the same trade: to get components, you give up HTML. React turns markup into JSX and a build pipeline, Vue and Angular add template languages and compilers, and Web Components hide your markup behind shadow roots your CSS cannot reach. wb-starter makes the opposite trade. The browser already has the components; wb-starter adds what they are missing. Here is what a team pays for with each, and where to see it for yourself. What you pay for Typical framework wb-starter See it Build toolchain A compiler, a bundler and their configuration, before anything runs None. The files you write are the files the browser runs This page's own source , and a site in five minutes Vocabulary to learn Components, props, hooks or directives, and a template syntax HTML5 elements and x-* attributes Auto injection and every behavior, live Lock-in and upgrade churn Breaking releases and migrations; components only run inside that framework Your markup is HTML and does not go out of date; the same attributes work inside React, Vue or Svelte Escape hatches and the framework demos Styling walls Scoped styles, CSS-in-JS, or shadow roots your stylesheet cannot reach Light DOM only: one stylesheet and CSS variables reach every element The themes and how theming works Bundle size and first paint The framework runtime ships, and runs, before your page appears No framework library; each behavior is a small ES module, loaded when its element nears the viewport How it works internally (§7) and the performance work When the framework is abandoned The site depends on code nobody maintains, and a rewrite The page is still an HTML document; without the script it loses behavior, not content Portability and the behavior system Where to go next Everything an evaluator needs, one link each. 🧩 Try it Every behavior with a live example and its attributes, on the Behaviors page. 🛝 Playground Write HTML with behaviors on it and see the result as you type. 🚀 Build a site From nothing to a published website in about five minutes. 📚 Behaviors reference What exists, by category, with a page per behavior. 📖 The complete guide How to use it and how it works internally, in one document. ⚙️ How it works Behaviors as plain functions on native elements: composition, not inheritance. 🏷️ Auto injection Which semantic elements upgrade on their own, and how to opt one out. 🗂️ Schema first Each behavior is described by a JSON schema: the data contract its markup and code follow. 🔌 With your framework The same behavior attributes, live inside React, Vue and Svelte. 🪝 Escape hatches Override or customize any behavior when its defaults don't fit. 🎨 Theming Variable-based themes, dark and light, nested and forced per section. ⚡ Performance Lazy loading, shared observers and the rest of the performance work. 🐙 The source Every behavior, schema, stylesheet and test, on GitHub.",
+      "content": "Introduction to wb-starter A zero-build website framework. You write HTML5. That is the whole API. What it is wb-starter adds behavior to the HTML you already write. A behavior attaches either to a semantic element itself (an article becomes a card, a dialog a modal, a details an accordion) or to any element through an x-* attribute ( x-ripple , x-tooltip , x-draggable ). There is no build step, no bundler, no JSX and no custom-element vocabulary, and everything renders in the light DOM, where your CSS and your devtools reach it. article x-draggable x-ripple h3 Hello /h3 p A card you can drag, with a ripple on press. /p /article The article is still an article . Inspect it and you see the element you wrote, with classes on it: HTML5 in, HTML5 out. Why it ends the traditional framework Every popular framework makes the same trade: to get components, you give up HTML. React turns markup into JSX and a build pipeline, Vue and Angular add template languages and compilers, and Web Components hide your markup behind shadow roots your CSS cannot reach. wb-starter makes the opposite trade. The browser already has the components; wb-starter adds what they are missing. Here is what a team pays for with each, and where to see it for yourself. What you pay for Typical framework wb-starter See it Build toolchain A compiler, a bundler and their configuration, before anything runs None. The files you write are the files the browser runs This page's own source , and a site in five minutes Vocabulary to learn Components, props, hooks or directives, and a template syntax HTML5 elements and x-* attributes Auto injection and every behavior, live Lock-in and upgrade churn Breaking releases and migrations; components only run inside that framework Your markup is HTML and does not go out of date; the same attributes work inside React, Vue or Svelte Escape hatches and the framework demos Styling walls Scoped styles, CSS-in-JS, or shadow roots your stylesheet cannot reach Light DOM only: one stylesheet and CSS variables reach every element The themes and how theming works Bundle size and first paint The framework runtime ships, and runs, before your page appears No framework library; each behavior is a small ES module, loaded when its element nears the viewport How it works internally (§7) and the performance work When the framework is abandoned The site depends on code nobody maintains, and a rewrite The page is still an HTML document; without the script it loses behavior, not content Portability and the behavior system Where to go next Everything an evaluator needs, one link each. 🧩 Try it Every behavior with a live example and its attributes, on the Behaviors page. 🛝 Playground Write HTML with behaviors on it and see the result as you type. 🚀 Build a site From nothing to a published website in about five minutes. 📚 Behaviors reference What exists, by category, with a page per behavior. 📖 The complete guide How to use it and how it works internally, in one document. ⚙️ How it works Behaviors as plain functions on native elements: composition, not inheritance. 🏷️ Auto injection Which semantic elements upgrade on their own, and how to opt one out. 🔌 With your framework The same behavior attributes, live inside React, Vue and Svelte. 🪝 Escape hatches Override or customize any behavior when its defaults don't fit. 🎨 Theming Variable-based themes, dark and light, nested and forced per section. ⚡ Performance Lazy loading, shared observers and the rest of the performance work. 🐙 The source Every behavior, schema, stylesheet and test, on GitHub.",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-15"
@@ -528,7 +524,7 @@
       "content": "🧭 Other Everything on the site the main menu does not reach, grouped by folder. 🎮 Demos Standalone demos from the demos/ folder, plus the component library and the plain demos index. 📄 Pages Pages from the pages/ folder that are not in the main menu. 🛠️ Tools Viewers from the public/ folder. 📰 Articles Articles and papers from the articles/ and public/papers/ folders.",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-08"
+      "modified": "2026-10-15"
     },
     {
       "id": "pages/privacy",
@@ -3225,10 +3221,10 @@
       "title": "TIER2-DOMAIN-GUIDES",
       "description": null,
       "headings": [],
-      "content": "# TIER 2 — DOMAIN GUIDES (Read When Working In That Area) **Only load these when the task touches this domain.** **Don't read all of these every session — that defeats the purpose.** --- ## 🔧 CORE ARCHITECTURE Read when: modifying `src/core/`, behavior registration, behavior system, or WB.js | File | What It Covers | |------|---------------| | `docs/standards/V3-STANDARDS.md` | **THE** v3 spec — naming, file structure, syntax, BEM classes | | `docs/architecture.md` | Overall architecture overview | | `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec | | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements | | `docs/auto-injection.md` | How CSS/JS auto-loading works | | `docs/container-pattern.md` | Container behavior pattern | | `docs/escape-hatches.md` | How to override framework defaults | | `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals | | `docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md` | X-prefix migration history | --- ## 🧩 BEHAVIORS Read when: working on a specific behavior — an `x-*` attribute or an auto-injected semantic element | File | What It Covers | |------|---------------| | `docs/behaviors/README.md` | Behavior catalog overview | | `docs/behaviors/cards/` | 20+ card variant specs (card, cardhero, cardimage, etc.) | | `docs/behaviors/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) | | `docs/behaviors/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) | | `docs/behaviors/effects/` | Visual effects (confetti, fireworks, snow) | | `docs/behaviors/feedback/` | Feedback behaviors | | `docs/behaviors/forms/` | Form behaviors | | `docs/behaviors/layout/` | Layout behaviors | | `docs/behaviors/navigation/` | Navigation behaviors | | `docs/behaviors/demo/` | Demo and showcase behaviors | | `docs/behaviors/drawer.md` | Drawer behavior | | `docs/behaviors/tabs.md` | Tabs behavior | | `docs/behaviors-reference.md` | All behaviors cross-reference | | `docs/behavior-cross-reference.md` | Behavior ↔ behavior mapping | | `docs/properties.md` | Behavior property patterns | --- ## 🧪 TESTING Read when: writing tests, fixing test failures, or modifying test infrastructure | File | What It Covers | |------|---------------| | `docs/testing-strategy.md` | Overall test approach and philosophy | | `docs/testing-runbook.md` | Step-by-step test procedures | | `docs/builder-testing.md` | Builder-specific test rules | | `docs/test-schema-standard.md` | How to test schemas | | `docs/schema-test-value.md` | Test value conventions for schemas | | `docs/ANNOUNCE_TEST_POLICY.md` | Test policy announcement | | `data/FUNCTIONAL-TEST-ANALYSIS.md` | Analysis of test gaps | | `docs/compliance/iso-42001-alignment.md` | Compliance alignment | | `docs/audits/X-USAGE-AUDIT.md` | X-usage audit | --- ## 📐 SCHEMAS & MVVM Read when: modifying schemas, schema-builder, or MVVM migration work | File | What It Covers | |------|---------------| | **`docs/claude/SCHEMAS-GUIDE.md`** | **⭐ START HERE — Claude's guide to schemas: rules, mistakes to avoid, test workflow** | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with complete examples | | `docs/schema.md` | Schema system overview | | `docs/schema-first-architecture.md` | Schema-first design philosophy | | `docs/schema.migration.md` | Schema migration patterns | | `docs/MVVM-MIGRATION.md` | MVVM migration overview | | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan | | `docs/architecture/WBVIEWS.md` | WB Views system ($view in schemas) | | `docs/wb-parts-spec.md` | ` ` template system | | `docs/property-viewer.md` | Property viewer panel | --- ## 🎨 CSS & STYLES Read when: modifying CSS files, style extraction, or theme work | File | What It Covers | |------|---------------| | `docs/css-standards.md` | CSS naming and organization rules | | `docs/styles.md` | Style system overview | | `docs/themes.md` | Theme system and CSS variables | | `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | Current CSS migration status | | `docs/_today/CSS-OWNERSHIP-MIGRATION.md` | (legacy) CSS migration status | --- ## 📄 PAGE GENERATION Read when: generating demo pages, creating showcases, working with `.page.json` schemas, or running `auto-showcase.mjs` | File | What It Covers | |------|---------------| | `docs/claude/PAGE-GENERATION.md` | Full pipeline guide — validate, generate, auto-showcase | Scripts: `scripts/validate-page-schema.mjs`, `scripts/generate-page.mjs`, `scripts/auto-showcase.mjs` --- ## 🔌 MCP & TOOLING Read when: MCP server issues, npm scripts, or dev tooling | File | What It Covers | |------|---------------| | `docs/mcp.md` | MCP server documentation | | `mcp-server/README.md` | MCP server setup and API | | `docs/DATA-FILES.md` | What lives in `data/` and why | | `docs/INTELLI",
+      "content": "# TIER 2 — DOMAIN GUIDES (Read When Working In That Area) **Only load these when the task touches this domain.** **Don't read all of these every session — that defeats the purpose.** --- ## 🔧 CORE ARCHITECTURE Read when: modifying `src/core/`, behavior registration, behavior system, or WB.js | File | What It Covers | |------|---------------| | `docs/standards/V3-STANDARDS.md` | **THE** v3 spec — naming, file structure, syntax, BEM classes | | `docs/architecture.md` | Overall architecture overview | | `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec | | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements | | `docs/auto-injection.md` | How CSS/JS auto-loading works | | `docs/container-pattern.md` | Container behavior pattern | | `docs/escape-hatches.md` | How to override framework defaults | | `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals | | `docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md` | X-prefix migration history | --- ## 🧩 BEHAVIORS Read when: working on a specific behavior — an `x-*` attribute or an auto-injected semantic element | File | What It Covers | |------|---------------| | `docs/behaviors/README.md` | Behavior catalog overview | | `docs/behaviors/cards/` | 20+ card variant specs (card, cardhero, cardimage, etc.) | | `docs/behaviors/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) | | `docs/behaviors/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) | | `docs/behaviors/effects/` | Visual effects (confetti, fireworks, snow) | | `docs/behaviors/feedback/` | Feedback behaviors | | `docs/behaviors/forms/` | Form behaviors | | `docs/behaviors/layout/` | Layout behaviors | | `docs/behaviors/navigation/` | Navigation behaviors | | `docs/behaviors/demo/` | Demo and showcase behaviors | | `docs/behaviors/drawer.md` | Drawer behavior | | `docs/behaviors/tabs.md` | Tabs behavior | | `docs/behaviors-reference.md` | All behaviors cross-reference | | `docs/behavior-cross-reference.md` | Behavior ↔ behavior mapping | | `docs/properties.md` | Behavior property patterns | --- ## 🧪 TESTING Read when: writing tests, fixing test failures, or modifying test infrastructure | File | What It Covers | |------|---------------| | `docs/testing-strategy.md` | Overall test approach and philosophy | | `docs/testing-runbook.md` | Step-by-step test procedures | | `docs/builder-testing.md` | Builder-specific test rules | | `docs/test-schema-standard.md` | How to test schemas | | `docs/schema-test-value.md` | Test value conventions for schemas | | `docs/ANNOUNCE_TEST_POLICY.md` | Test policy announcement | | `data/FUNCTIONAL-TEST-ANALYSIS.md` | Analysis of test gaps | | `docs/compliance/iso-42001-alignment.md` | Compliance alignment | | `docs/audits/X-USAGE-AUDIT.md` | X-usage audit | --- ## 📐 SCHEMAS & MVVM Read when: modifying schemas, schema-builder, or MVVM migration work | File | What It Covers | |------|---------------| | **`docs/claude/SCHEMAS-GUIDE.md`** | **⭐ START HERE — Claude's guide to schemas: rules, mistakes to avoid, test workflow** | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with complete examples | | `docs/schema.md` | Schema system overview | | `docs/schema.migration.md` | Schema migration patterns | | `docs/MVVM-MIGRATION.md` | MVVM migration overview | | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan | | `docs/architecture/WBVIEWS.md` | WB Views system ($view in schemas) | | `docs/wb-parts-spec.md` | ` ` template system | | `docs/property-viewer.md` | Property viewer panel | --- ## 🎨 CSS & STYLES Read when: modifying CSS files, style extraction, or theme work | File | What It Covers | |------|---------------| | `docs/css-standards.md` | CSS naming and organization rules | | `docs/styles.md` | Style system overview | | `docs/themes.md` | Theme system and CSS variables | | `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | Current CSS migration status | | `docs/_today/CSS-OWNERSHIP-MIGRATION.md` | (legacy) CSS migration status | --- ## 📄 PAGE GENERATION Read when: generating demo pages, creating showcases, working with `.page.json` schemas, or running `auto-showcase.mjs` | File | What It Covers | |------|---------------| | `docs/claude/PAGE-GENERATION.md` | Full pipeline guide — validate, generate, auto-showcase | Scripts: `scripts/validate-page-schema.mjs`, `scripts/generate-page.mjs`, `scripts/auto-showcase.mjs` --- ## 🔌 MCP & TOOLING Read when: MCP server issues, npm scripts, or dev tooling | File | What It Covers | |------|---------------| | `docs/mcp.md` | MCP server documentation | | `mcp-server/README.md` | MCP server setup and API | | `docs/DATA-FILES.md` | What lives in `data/` and why | | `docs/INTELLISENSE-TOOLTIPS.md` | IDE intellisense generation | | `vscode/README.md` |",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-14"
+      "modified": "2026-10-15"
     },
     {
       "id": "docs/claude/TIER3-REFERENCE",
@@ -3236,10 +3232,10 @@
       "title": "TIER3-REFERENCE",
       "description": null,
       "headings": [],
-      "content": "# TIER 3 — REFERENCE (Don't Read Unless Specifically Needed) **These docs exist for historical context, audits, or external publishing.** **Never read these at session start. Only pull them in if John points you here or the task explicitly requires it.** --- ## 📰 ARTICLES & EXTERNAL CONTENT Published or draft content — not operational docs. | File | What It Is | |------|-----------| | `articles/resilience-through-separation-code.md` | Article draft | | `articles/resilience-through-separation-decoupled.md` | Article draft | | `docs/linkedin-framework-agnostic.md` | LinkedIn article draft | | `docs/linkedin-standards-article.md` | LinkedIn article draft | --- ## 📊 AUDITS & REPORTS Historical snapshots — useful for understanding past decisions, not for current work. | File | What It Is | |------|-----------| | `docs/schema-first-audit-report.md` | Audit of schema-first compliance | | `docs/semantic-audit.md` | Semantic HTML audit results | | `docs/audits/X-USAGE-AUDIT.md` | x-attribute usage audit | | `docs/pce-candidates.md` | Proposed custom element candidates | | `archive/SITE_VALIDATION_REPORT.md` | Site validation snapshot (archived 2026-09-29) | | `CUSTOMER_READY.md` | Customer readiness checklist | --- ## 📜 MIGRATION HISTORY Documents decisions already made. Don't re-read unless revisiting a migration. | File | What It Is | |------|-----------| | `docs/NOTES-V3-GUIDE.md` | V3 migration notes | | `docs/semantic-standard.md` | Semantic HTML standard (established) | | `docs/code-examples-standard.md` | Code example conventions | | `docs/committing-fixes.md` | Git commit conventions | | `docs/BRANCH_PROTECTION.md` | Branch protection rules | --- ## 🚀 DEPLOYMENT & OPS Only relevant when deploying or configuring infrastructure. | File | What It Is | |------|-----------| | `docs/deploying-wb-starter-to-render.md` | Render deployment guide | | `docs/performance.md` | Performance profiling notes | --- ## 📖 BEHAVIOR DEEP-DIVES (Specific) Individual behavior docs that are only relevant if working on that exact behavior. Most of these duplicate info in the behavior folder READMEs. | File | What It Is | |------|-----------| | `docs/card.md` | Card behavior deep-dive | | `docs/pricecard.md` | Price card specifics | | `docs/audio.md` | Audio behavior | | `docs/search.md` | Search behavior | | `docs/inline-editing.md` | Inline editing feature | | `demos/code.md` | Code demo notes | | `demos/wb-views-demo.md` | Views demo notes | --- ## 📋 COMPLIANCE & GOVERNANCE Enterprise compliance docs — not relevant to daily development. | File | What It Is | |------|-----------| | `docs/compliance/iso-42001-alignment.md` | ISO 42001 AI compliance alignment | | `CONTRIBUTING.md` | Contribution guidelines | --- ## 📁 IMPROVEMENT TRACKING Wishlists and improvement ideas — not active work items. | File | What It Is | |------|-----------| | `docs/IMPROVEMENTS.md` | Improvement ideas backlog | | `WB-ISSUES-TODO.md` | Issues tracking (root level) | --- ## 🗄️ ROOT-LEVEL MISC | File | What It Is | |------|-----------| | `README.md` | Project README | | `docs/index.md` | Docs index page | | `docs/guides/search-index.md` | Search index for docs site | --- ## 📂 SAFELY IGNORABLE These folders/files can always be ignored: | Path | Why | |------|-----| | `tmp/` | Temporary files, integration runs, playwright artifacts | | `archive/` | Archived old files | | `data/test-results/*/error-context.md` | Auto-generated test failure context (dozens of files) | --- ## The Rule **If you're reading a Tier 3 doc during a normal session, you're probably going too deep.** These docs exist so John doesn't lose institutional knowledge, not so AI reads them every time. Stick to Tier 1 (always) and Tier 2 (when relevant to the task).",
+      "content": "# TIER 3 — REFERENCE (Don't Read Unless Specifically Needed) **These docs exist for historical context, audits, or external publishing.** **Never read these at session start. Only pull them in if John points you here or the task explicitly requires it.** --- ## 📰 ARTICLES & EXTERNAL CONTENT Published or draft content — not operational docs. | File | What It Is | |------|-----------| | `articles/resilience-through-separation-code.md` | Article draft | | `articles/resilience-through-separation-decoupled.md` | Article draft | | `docs/linkedin-framework-agnostic.md` | LinkedIn article draft | | `docs/linkedin-standards-article.md` | LinkedIn article draft | --- ## 📊 AUDITS & REPORTS Historical snapshots — useful for understanding past decisions, not for current work. | File | What It Is | |------|-----------| | `docs/semantic-audit.md` | Semantic HTML audit results | | `docs/audits/X-USAGE-AUDIT.md` | x-attribute usage audit | | `docs/pce-candidates.md` | Proposed custom element candidates | | `archive/SITE_VALIDATION_REPORT.md` | Site validation snapshot (archived 2026-09-29) | | `CUSTOMER_READY.md` | Customer readiness checklist | --- ## 📜 MIGRATION HISTORY Documents decisions already made. Don't re-read unless revisiting a migration. | File | What It Is | |------|-----------| | `docs/NOTES-V3-GUIDE.md` | V3 migration notes | | `docs/semantic-standard.md` | Semantic HTML standard (established) | | `docs/code-examples-standard.md` | Code example conventions | | `docs/committing-fixes.md` | Git commit conventions | | `docs/BRANCH_PROTECTION.md` | Branch protection rules | --- ## 🚀 DEPLOYMENT & OPS Only relevant when deploying or configuring infrastructure. | File | What It Is | |------|-----------| | `docs/deploying-wb-starter-to-render.md` | Render deployment guide | | `docs/performance.md` | Performance profiling notes | --- ## 📖 BEHAVIOR DEEP-DIVES (Specific) Individual behavior docs that are only relevant if working on that exact behavior. Most of these duplicate info in the behavior folder READMEs. | File | What It Is | |------|-----------| | `docs/card.md` | Card behavior deep-dive | | `docs/pricecard.md` | Price card specifics | | `docs/audio.md` | Audio behavior | | `docs/search.md` | Search behavior | | `docs/inline-editing.md` | Inline editing feature | | `demos/code.md` | Code demo notes | | `demos/wb-views-demo.md` | Views demo notes | --- ## 📋 COMPLIANCE & GOVERNANCE Enterprise compliance docs — not relevant to daily development. | File | What It Is | |------|-----------| | `docs/compliance/iso-42001-alignment.md` | ISO 42001 AI compliance alignment | | `CONTRIBUTING.md` | Contribution guidelines | --- ## 📁 IMPROVEMENT TRACKING Wishlists and improvement ideas — not active work items. | File | What It Is | |------|-----------| | `docs/IMPROVEMENTS.md` | Improvement ideas backlog | | `WB-ISSUES-TODO.md` | Issues tracking (root level) | --- ## 🗄️ ROOT-LEVEL MISC | File | What It Is | |------|-----------| | `README.md` | Project README | | `docs/index.md` | Docs index page | | `docs/guides/search-index.md` | Search index for docs site | --- ## 📂 SAFELY IGNORABLE These folders/files can always be ignored: | Path | Why | |------|-----| | `tmp/` | Temporary files, integration runs, playwright artifacts | | `archive/` | Archived old files | | `data/test-results/*/error-context.md` | Auto-generated test failure context (dozens of files) | --- ## The Rule **If you're reading a Tier 3 doc during a normal session, you're probably going too deep.** These docs exist so John doesn't lose institutional knowledge, not so AI reads them every time. Stick to Tier 1 (always) and Tier 2 (when relevant to the task).",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-04"
+      "modified": "2026-10-15"
     },
     {
       "id": "docs/claude/TOOLING-INVENTORY",
@@ -3407,10 +3403,10 @@
       "title": "index",
       "description": null,
       "headings": [],
-      "content": "# WB-Starter Documentation > A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture. **New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - [Schema-First Architecture](./schema-first-architecture.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Schema-First Audit Report](./schema-first-audit-report.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
+      "content": "# WB-Starter Documentation > A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture. **New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-08"
+      "modified": "2026-10-15"
     },
     {
       "id": "docs/inline-editing",
@@ -3518,28 +3514,6 @@
       "description": null,
       "headings": [],
       "content": "# Property Viewer (Right Panel) ## Overview The **Property Viewer** refers to the dynamic right-hand panel in the WB-Starter Builder interface. Historically separated into distinct tabs, the listener interfaces have been unified into a **Split View** to improve workflow efficiency. ## Split View UX Instead of toggling between the Behavior Tree and Properties Panel, the default \"Tree\" view (🌳) now displays **both simultaneously**: 1. **Top Section (Behavior Tree)**: * Occupies the upper 50% of the panel (flex-grow). * Scrolls independently. * Shows the hierarchy of all behaviors on the page. * Allows for drag-and-drop reordering. 2. **Bottom Section (Properties Panel)**: * Occupies the lower 50% of the panel. * Scrolls independently. * **Dynamic State**: * **Empty State**: Shows \"Select a behavior\" when nothing is selected. * **Active State**: Instantly populates with controls when a behavior is clicked in the Tree or Canvas. ## Key Features * **Unified Context**: Users can see where an element lives in the hierarchy while editing its properties. * **Persistent Visibility**: The properties panel does not hide when navigating the tree. * **Independent Scrolling**: Large trees and complex property lists do not conflict; each has its own scroll container. * **Visual Separation**: A border divider helps distinguish the navigation area from the editing area. ## Technical Implementation ### Controller Logic (`src/wb-viewmodels/builder-app/index.js`) The core logic resides in `window.switchPanelTab`. When the `'tree'` tab is activated, the system enforces a flex-column layout: ```javascript // src/wb-viewmodels/builder-app/index.js window.switchPanelTab = (tab) => { // ... if (tab === 'tree') { // 1. Activate Tree treeTab?.classList.add('active'); componentList.style.display = 'flex'; // Top half // 2. Force Properties Panel Visibility if (propsPanel) { propsPanel.style.display = 'flex'; propsPanel.classList.add('open'); propsPanel.style.flex = '1'; // Share vertical space evenly propsPanel.style.overflowY = 'auto'; // scrollable propsPanel.style.minHeight = '0'; // prevent flex overflow } // 3. Render contents if selection exists if (window.sel) { renderProps(window.sel); } } // ... }; ``` ### Rendering Logic (`renderProps`) The rendering function manages the \"subtitle\" state to keep the UI clean: ```javascript function renderProps(w, scrollToProperty = null) { // ... // Hide the \"Select a behavior\" subtitle when content is loaded const propsHeader = document.getElementById('propsHeader'); if (propsHeader) { const subtitle = propsHeader.querySelector('span'); if (subtitle) subtitle.style.display = 'none'; } // ... } ``` Conversely, deselecting (via `resetCanvas` or `Escape` key) restores the empty state and subtitle. ## CSS Architecture The split view relies on the parent container `#panelRight` having: * `display: flex` * `flex-direction: column` * `height: 100%` The children (`.panel-right-list` for tree, `.props-panel` for properties) use: * `flex: 1` (or specific basis) * `overflow-y: auto` * `min-height: 0` (Crucial for nested flex scrolling) ## Future Improvements * **Resizable Split**: Add a drag handle between the Tree and Properties sections to allow users to adjust the 50/50 split. * **Collapse State**: Allow double-clicking the divider to collapse the tree temporarily.",
-      "keywords": [],
-      "type": "doc",
-      "modified": "2026-08-26"
-    },
-    {
-      "id": "docs/schema-first-architecture",
-      "url": "/docs/schema-first-architecture",
-      "title": "schema-first-architecture",
-      "description": null,
-      "headings": [],
-      "content": "# Schema-First MVVM Architecture [Edit this file](./schema-first-architecture.md) ## Overview **Schema-First MVVM** is our architectural pattern where the **View (HTML)** and **ViewModel (JS)** together serve as the source of truth for the behavior. We adopt a strict **Model-View-ViewModel (MVVM)** separation to ensure scalability, maintainability, and a clear separation of concerns. ## The MVVM Triad ### 1. Model (`src/wb-models/`) * **What**: The Data Contract (Model Definition). * **Format**: JSON Schema (`*.schema.json`). * **Role**: Defines the *shape* of the data (properties, types, validation). * **Analogy**: Like a C# Class definition (`public class Card { ... }`). It defines the structure, but is not the object instance itself. * **Superpower**: Since all field definitions are here, we can use this to **auto-generate verification steps** for the real product. Mock data is reserved strictly for **injecting errors** and testing failure states. * **Note**: The **Model Instance** (the actual data) lives in the **View** (as HTML attributes) and the **ViewModel** (as runtime state). ### 2. View (`src/wb-views/`) * **What**: The Visual Structure. * **Format**: HTML Templates (` `). * **Role**: Defines the DOM hierarchy, semantic tags, and initial layout. * **Example**: `card.html` defines ` ... ... `. ### 3. ViewModel (`src/wb-viewmodels/`) * **What**: The Interaction Logic. * **Format**: JavaScript Modules (`*.js`). * **Role**: The \"Enhancer\". It observes the View, binds event listeners, manages state, and handles user interaction. It **does not** build the DOM unless absolutely necessary (Builder Mode fallback). * **Example**: `card.js` attaches click handlers to the existing ` ` defined in the View. --- ## Core Philosophy 1. **View is King**: The HTML Template defines *what* a behavior looks like. The ViewModel must respect this structure. 2. **ViewModel is the Servant**: The JavaScript logic defines *how* a behavior acts. It \"hydrates\" the existing View. 3. **No DOM Destruction**: The ViewModel must never blindly overwrite the inner HTML of a View. It must attach to the existing structure (Enhancer Pattern). ## The \"Enhancer\" Pattern In this architecture, a ViewModel (Behavior) has two modes: * **Enhancer Mode (Primary)**: \"I see an existing View structure (e.g., ` `). I will attach my logic to it.\" * **Builder Mode (Fallback)**: \"I see an empty container. I will use the Model (Schema) defaults to generate a standard View structure.\" ## Directory Structure ``` src/ ├── wb-models/ # JSON Schemas (The Contract) │ ├── card.schema.json │ └── ... ├── wb-views/ # HTML Templates (The Structure) │ ├── card.html │ └── ... ├── wb-viewmodels/ # JavaScript Logic (The Behavior) │ ├── card.js │ └── ... └── core/ # Engine Logic (The Binder) ``` ## Implementation Plan ### Phase 1: Restructuring (Current) * Rename `src/parts/` to `src/wb-views/`. * Rename `src/behaviors/js/` to `src/wb-viewmodels/`. * Create `src/wb-models/` for schemas. * Update `wb-parts` concept to `wb-views`. ### Phase 2: Semantic Alignment Ensure that Views and ViewModels speak the same language (Semantic HTML). * **Standard**: Define the \"Contract\" for each behavior. * *Example*: A Card View MUST use ` `, ` `, ` `, ` `. * **Action**: Update all `wb-views` templates to use these semantic tags. * **Action**: Update ViewModels to query these tags (e.g., `querySelector('header')`). ### Phase 3: Feature Parity Ensure that the \"View Path\" and the \"ViewModel Path\" support the same features defined in the Model. * **Goal**: `new Card({ badge: 'New' })` (ViewModel) should render the same output as ` ` (View). ### Phase 4: The Future * **Goal**: Developers primarily write **Views** (HTML) and **Models** (JSON). * **Result**: The system automatically binds the correct **ViewModel** logic.",
-      "keywords": [],
-      "type": "doc",
-      "modified": "2026-08-26"
-    },
-    {
-      "id": "docs/schema-first-audit-report",
-      "url": "/docs/schema-first-audit-report",
-      "title": "schema-first-audit-report",
-      "description": null,
-      "headings": [],
-      "content": "# Schema-First Architecture Audit Report [Edit this file](./schema-first-audit-report.md) This report identifies behaviors that need to be refactored to comply with the **Schema-First Architecture**. The goal is to ensure that JavaScript behaviors act as **Enhancers** (hydrating existing DOM) rather than **Builders** (overwriting DOM). | Attribute Name | File Location | Schema Update Needed | Steps to Convert | | :--- | :--- | :---: | :--- | | **Card** | `src/behaviors/js/card.js` | **TRUE** | 1. **Decouple Validation**: Update `validateSemanticContainer` to allow standard tags (`ARTICLE`, `SECTION`, `DIV`) OR any Custom Element (tag with hyphen), removing the hardcoded allowlist. 2. **MVVM/Enhancer Pattern**: Refactor `composeCard` to check for existing structure (`header`, `main`, `footer`) and *bind* to it (Enhancer) instead of injecting new elements (Builder), unless the structure is completely missing. 3. Update all variants to check for existing semantic structure before building. | | **Collapse** | `src/behaviors/js/collapse.js` | **TRUE** | 1. Check if `.x-collapse__trigger` and `.x-collapse__content` already exist. 2. If they exist, attach event listeners to them. 3. Only build structure from scratch if they are missing. | | **Tabs** | `src/behaviors/js/tabs.js` | **TRUE** | 1. Check if `.x-tabs__nav` and `.x-tabs__panels` already exist. 2. If they exist, attach event listeners. 3. Only build from `element.children` if the structure is missing. | | **Dropdown** | `src/behaviors/js/dropdown.js` | **TRUE** | 1. Check if `.x-dropdown__trigger` and `.x-dropdown__menu` already exist. 2. If they exist, attach event listeners. 3. Only build structure if missing. | | **Tooltip** | `src/behaviors/js/tooltip.js` | FALSE | None (Already compliant). | | **Hero** | `src/behaviors/js/hero.js` | **TRUE** | 1. Check if `.x-hero__content` exists. 2. If it exists, enhance it. 3. Only build from scratch if content is missing. | | **Footer** | `src/behaviors/js/footer.js` | **TRUE** | 1. Check if `.x-footer__left`, `.x-footer__center`, or `.x-footer__right` exist. 2. If they exist, preserve them. 3. Only build structure if missing. | | **Header** | `src/behaviors/js/header.js` | **TRUE** | 1. Check if `.x-header__left`, `.x-header__center`, or `.x-header__right` exist. 2. If they exist, preserve them. 3. Only build structure if missing. | | **Navigation** | `src/behaviors/js/navigation.js` | **TRUE** | 1. For Sidebar, Menu, Pagination, Steps, Treeview, and Statusbar: Check for existing structure before building. 2. If structure exists, attach listeners/enhance. 3. Navbar, BackToTop, and Link are already compliant. | | **Overlay** | `src/behaviors/js/overlay.js` | FALSE | None (Already compliant). | | **WBCard** | `src/behaviors/js/x-card.js` | **TRUE** | 1. Check if element has children in `connectedCallback`. 2. If children exist, skip `buildStructure()`. 3. Ensure `composeCard` logic supports enhancing existing content. | ## Next Steps 1. **Implement MVVM Directory Structure** (Layered Architecture selected to support Behavior Modules): * **`src/wb-models/`**: Create this folder to hold JSON Schemas (e.g., `parts.schema.json`, `audio.schema.json`). * **`src/wb-views/`**: Rename `src/parts/` to `src/wb-views/`. This will hold the HTML templates. * **`src/wb-viewmodels/`**: Move behavior logic from `src/behaviors/js/` to `src/wb-viewmodels/`. * *Note: Update `src/behaviors/index.js` to import from `../wb-viewmodels/` instead of `./js/`.* 2. **Rename Concepts**: * `WB Parts` → `WB Views`. * Attribute ` ` → ` `. 3. **Centralize Templates**: Move all ` ` definitions to `src/templates/` (or keep in `wb-views` if they are file-based). 4. **Refactor Behaviors**: Systematically go through the \"TRUE\" items above and implement the \"Steps to Convert\". 5. **Verify**: Run tests to ensure that manually written HTML (matching the schema) is correctly enhanced without being destroyed.",
       "keywords": [],
       "type": "doc",
       "modified": "2026-08-26"
@@ -4094,7 +4068,7 @@
           "text": "🎮 Demos"
         }
       ],
-      "content": "Demos Index — wb-starter 🎮 Demos Every demo, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file. 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials — 19 behaviors · 265 demos Open Card Behaviors → 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 behaviors · 210 demos Open Feedback & Status → 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas — 9 behaviors · 156 demos Open Form Controls → 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content — 3 behaviors · 28 demos Open Overlays & Popups → 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 behaviors · 51 demos Open Layout & Navigation → 📄 Content & Media Articles, markdown rendering, audio, tables — 6 behaviors · 28 demos Open Content & Media → ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff — 5 behaviors · 19 demos Open Visual Effects → 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views — 8 behaviors · 15 demos Open Interactive & Utility → 🃏 Cards & Layout Hero 🏗️ Narrative & Tools Autoinject Uganda Community Food Bank Framework Integration Demo wb-starter — Zero-build behaviors for developers Playground Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development Standalone Preview 🎮 More Demos 🧩 Multi-Behavior Demo",
+      "content": "Demos Index — wb-starter 🎮 Demos Every demo, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file. 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials — 19 behaviors · 265 demos Open Card Behaviors → 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 behaviors · 210 demos Open Feedback & Status → 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas — 9 behaviors · 156 demos Open Form Controls → 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content — 3 behaviors · 28 demos Open Overlays & Popups → 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 behaviors · 51 demos Open Layout & Navigation → 📄 Content & Media Articles, markdown rendering, audio, tables — 6 behaviors · 28 demos Open Content & Media → ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff — 5 behaviors · 19 demos Open Visual Effects → 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views — 8 behaviors · 15 demos Open Interactive & Utility → 🃏 Cards & Layout Hero 🏗️ Narrative & Tools Autoinject Uganda Community Food Bank Framework Integration Demo wb-starter — Zero-build behaviors for developers Playground Standalone Preview 🎮 More Demos 🧩 Multi-Behavior Demo",
       "keywords": [],
       "type": "demo",
       "modified": "2026-10-15"
@@ -4314,122 +4288,6 @@
         }
       ],
       "content": "Pre Debug Pre Behavior Debug 1. Static Pre console.log('Hello World'); const x = 10; const y = 20; console.log(x + y); 2. Static Pre with Line Numbers function test() { return \"Line 1\"; } // Line 3 // Line 4 3. Double Injection Test div Test /div",
-      "keywords": [],
-      "type": "demo",
-      "modified": "2026-10-15"
-    },
-    {
-      "id": "demos/schema-first-architecture",
-      "url": "/demos/schema-first-architecture",
-      "title": "Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development",
-      "description": "A research paper on how Schema First Architecture solves AI hallucination in web development.",
-      "headings": [
-        {
-          "level": 1,
-          "text": "Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development"
-        },
-        {
-          "level": 2,
-          "text": "1. Introduction"
-        },
-        {
-          "level": 3,
-          "text": "1.1. The Determinism Gap"
-        },
-        {
-          "level": 2,
-          "text": "2. The Three Pillars"
-        },
-        {
-          "level": 3,
-          "text": "2.1. The Site Schema"
-        },
-        {
-          "level": 3,
-          "text": "2.2. The Behavior Schema"
-        },
-        {
-          "level": 3,
-          "text": "2.3. The Semantic Schema"
-        },
-        {
-          "level": 2,
-          "text": "3. Experimental Results"
-        },
-        {
-          "level": 3,
-          "text": "3.1. Eliminating the Confident Lie"
-        },
-        {
-          "level": 3,
-          "text": "3.2. Error Reduction by Development Phase"
-        },
-        {
-          "level": 3,
-          "text": "3.3. Self-Validation"
-        },
-        {
-          "level": 3,
-          "text": "3.4. Auto-Fix Generation"
-        },
-        {
-          "level": 2,
-          "text": "4. Discussion"
-        },
-        {
-          "level": 3,
-          "text": "4.1. The Fix Database: A Knowledge Graph of Failure"
-        },
-        {
-          "level": 3,
-          "text": "4.2. Implications for Self-Correcting Agents"
-        },
-        {
-          "level": 3,
-          "text": "4.3. Schema-Driven Self-Healing"
-        },
-        {
-          "level": 3,
-          "text": "4.4. Zero-Shot Test Generation"
-        },
-        {
-          "level": 3,
-          "text": "4.5. The Governance of Generation Rules"
-        },
-        {
-          "level": 2,
-          "text": "5. Limitations Future Work"
-        },
-        {
-          "level": 3,
-          "text": "5.1. Structural vs. Semantic Validity"
-        },
-        {
-          "level": 3,
-          "text": "5.2. The Determinism Question"
-        },
-        {
-          "level": 3,
-          "text": "5.3. Schema Completeness as Maintenance Tax"
-        },
-        {
-          "level": 3,
-          "text": "5.4. Fix Database Boundaries"
-        },
-        {
-          "level": 3,
-          "text": "5.5. Future Research Directions"
-        },
-        {
-          "level": 2,
-          "text": "6. Conclusion"
-        },
-        {
-          "level": 2,
-          "text": "References"
-        }
-      ],
-      "content": "Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development ← Return to Project Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development Prepared for: Michael Vendetti, New York City Dr. Elena Vance Cielo Vista Research Department of Automated Engineering Abstract Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as \"hallucination.\" When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a \"lie\"—a confident assertion of correctness for structurally invalid code. This paper introduces \"Schema-First Architecture,\" a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI behaviors with high reliability. We present the three pillars of this architecture—Site, Behavior, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project. 1. Introduction The advent of generative AI has transformed software development, yet the integration of AI into frontend workflows remains fraught with inconsistency. When prompted to \"create a card,\" an LLM may generate a div with Tailwind classes in one instance, and a BEM-style structure in another [1]. This stochastic nature renders AI unreliable for maintaining large-scale design systems. Recent studies have quantified this unreliability. Kabir et al. (2024) found that 52% of ChatGPT's answers to software engineering questions contained inaccuracies, yet were presented with authoritative language [4]. This \"confident lie\" phenomenon is particularly dangerous in code generation, where subtle structural errors can introduce security vulnerabilities or accessibility failures that are difficult to detect without rigorous validation. Key Insight The root cause of AI unreliability is not the model's lack of intelligence, but the lack of contextual constraints . Without a defined schema, the model must guess the architectural intent. We propose that this problem has a structural solution: Schema-First Architecture —a methodology where JSON schemas serve as the ground truth for both human developers and AI agents. 1.1. The Determinism Gap The prevailing industry narrative focuses on \"Prompt Engineering\" and Retrieval-Augmented Generation (RAG) as primary methods for controlling AI output. These techniques are fundamentally probabilistic—they attempt to increase the likelihood of a correct response. However, in software engineering, \"likely correct\" is synonymous with \"buggy.\" We identify this as the \"Determinism Gap\" : the chasm between the stochastic nature of LLMs and the rigid requirements of a runtime environment. The Problem Prompt Engineering cannot guarantee correctness. It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate. Schema-First Architecture bridges this gap by enforcing a hard separation of concerns. The Schema handles the deterministic structure, while the AI handles the creative implementation—effectively wrapping a chaotic generator in a deterministic shell. 2. The Three Pillars Our methodology rests on three foundational schemas that serve as the \"ground truth\" for both the runtime engine and the AI agent. 2.1. The Site Schema The macroscopic structure of the application is defined not in code, but in data. The site.json file serves as the immutable source of truth for navigation, routing, and global configuration. This allows an AI to modify the entire site structure by manipulating a single JSON object, avoiding the complexities of file-system routing or behavior imports. 2.2. The Behavior Schema Every UI element is governed by a strict JSON schema defining its properties, allowed values, and accessibility requirements. This is the contract between the AI and the UI. { \"behavior\": \"card\", \"properties\": { \"variant\": { \"type\": \"string\", \"enum\": [\"default\", \"outlined\", \"elevated\"] }, \"interactive\": { \"type\": \"boolean\" } }, \"compliance\": { \"baseClass\": \"x-card\", \"requiredChildren\": { \".x-card__header\": { \"description\": \"Card header element\" } } }, \"test\": { \"functional\": { \"hover\": [...], \"keyboard\": [...], \"visual\": [...] } } } Fig 1. A Behavior Schema defining structure, properties, and test specifications. 2.3. The Semantic Schema We enforce HTML5 semantic standards as a structural constraint. Behaviors are attached to meaningful tags ( article , nav , dialog ) rather than generic containers. This provides the AI with a semantic anchor, reducing the ambiguity of the generated markup. 3. Experimental Results To validate this architecture, we implemented the WB Starter kit and subjected it to AI-driven modification tasks across multiple development phases. 3.1. Eliminating the Confident Li",
       "keywords": [],
       "type": "demo",
       "modified": "2026-10-15"
@@ -6015,8 +5873,7 @@
     ],
     "52": [
       "pages/hero-gallery",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "demos/schema-first-architecture"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
     "53": [
       "pages/hero-gallery"
@@ -6206,8 +6063,7 @@
     ],
     "95": [
       "pages/hero-gallery",
-      "docs/WB_BEHAVIOR_SYSTEM",
-      "demos/schema-first-architecture"
+      "docs/WB_BEHAVIOR_SYSTEM"
     ],
     "96": [
       "pages/hero-gallery",
@@ -6882,8 +6738,7 @@
       "docs/linkedin-framework-agnostic",
       "docs/properties",
       "docs/semantic-audit",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "2025": [
       "docs/IMPROVEMENTS",
@@ -7015,19 +6870,16 @@
     ],
     "cielo": [
       "pages/about",
-      "docs/guides/create-a-website",
-      "demos/schema-first-architecture"
+      "docs/guides/create-a-website"
     ],
     "vista": [
       "pages/about",
-      "docs/guides/create-a-website",
-      "demos/schema-first-architecture"
+      "docs/guides/create-a-website"
     ],
     "software": [
       "pages/about",
       "docs/behaviors/articles",
-      "docs/guides/create-a-website",
-      "demos/schema-first-architecture"
+      "docs/guides/create-a-website"
     ],
     "team": [
       "pages/about",
@@ -7269,8 +7121,6 @@
       "docs/pricecard",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
@@ -7295,7 +7145,6 @@
       "demos/landing-page-showcase",
       "demos/layout-test",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/site/index",
       "demos/site/interactive",
       "demos/standalone",
@@ -7376,7 +7225,6 @@
       "docs/wbservices",
       "demos/index",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/index"
     ],
     "mission": [
@@ -7458,8 +7306,6 @@
       "docs/linkedin-standards-article",
       "docs/pricecard",
       "docs/standards/REPO-LAYOUT",
-      "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content"
     ],
@@ -7500,7 +7346,6 @@
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -7530,7 +7375,6 @@
       "docs/behaviors/cart",
       "docs/card",
       "docs/pricecard",
-      "docs/schema-first-architecture",
       "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/cards",
       "demos/site/learn-more"
@@ -7589,8 +7433,6 @@
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -7771,7 +7613,6 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/escape-hatches",
@@ -7780,8 +7621,6 @@
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -7794,8 +7633,6 @@
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/wbservices",
-      "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/interactive"
     ],
     "first": [
@@ -7828,18 +7665,13 @@
       "docs/behaviors/toggle",
       "docs/behaviors/video",
       "docs/claude/PAGE-GENERATION",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/guides/search-index",
       "docs/home-page",
-      "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/npx-commands",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -7848,9 +7680,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook",
-      "demos/frameworks",
-      "demos/index",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "behavior": [
       "pages/about",
@@ -7973,8 +7803,6 @@
       "docs/pricecard",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -7997,7 +7825,6 @@
       "demos/landing-page-showcase",
       "demos/multi-behavior-demo-generated",
       "demos/pre-debug",
-      "demos/schema-first-architecture",
       "demos/scrollalong-test",
       "demos/site/cards",
       "demos/site/content",
@@ -8026,8 +7853,7 @@
       "docs/themes",
       "demos/frameworks",
       "demos/index",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "compose": [
       "pages/about",
@@ -8090,15 +7916,12 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-audit",
       "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/layout-test",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "behaviors": [
@@ -8185,8 +8008,6 @@
       "docs/pricecard",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -8206,7 +8027,6 @@
       "demos/index",
       "demos/landing-page-showcase",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content",
       "demos/site/index",
@@ -8352,8 +8172,6 @@
       "docs/pce-candidates",
       "docs/performance",
       "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/search",
@@ -8512,8 +8330,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
@@ -8530,7 +8346,6 @@
       "demos/index",
       "demos/intellisense-check",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/cards"
     ],
     "works": [
@@ -8757,7 +8572,6 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -8920,7 +8734,6 @@
       "docs/pricecard",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/search",
       "docs/semantic-audit",
@@ -8933,7 +8746,6 @@
       "docs/themes",
       "docs/wbservices",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/content",
       "demos/site/feedback",
       "demos/site/interactive",
@@ -9010,8 +8822,6 @@
       "docs/pce-candidates",
       "docs/performance",
       "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -9108,7 +8918,6 @@
     ],
     "described": [
       "pages/about",
-      "pages/introduction",
       "docs/audio",
       "docs/behaviors/accordion",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
@@ -9118,7 +8927,6 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
-      "pages/introduction",
       "pages/issues",
       "pages/privacy",
       "docs/MVVM-MIGRATION-PLAN",
@@ -9166,7 +8974,6 @@
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
       "docs/semantic-audit",
@@ -9180,7 +8987,6 @@
       "docs/testing-strategy",
       "docs/themes",
       "demos/autoinject",
-      "demos/schema-first-architecture",
       "demos/site/content",
       "demos/site/interactive"
     ],
@@ -9300,8 +9106,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/behaviors/release",
-      "docs/linkedin-standards-article",
-      "docs/schema-first-audit-report"
+      "docs/linkedin-standards-article"
     ],
     "colors": [
       "pages/about",
@@ -9408,9 +9213,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-framework-agnostic",
-      "docs/linkedin-standards-article",
-      "demos/index",
-      "demos/schema-first-architecture"
+      "docs/linkedin-standards-article"
     ],
     "practice": [
       "pages/ai-docs",
@@ -9530,7 +9333,6 @@
       "docs/home-page",
       "docs/index",
       "docs/mcp",
-      "docs/schema-first-architecture",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -9597,7 +9399,6 @@
       "docs/testing-strategy",
       "demos/intellisense-check",
       "demos/pre-debug",
-      "demos/schema-first-architecture",
       "demos/scrollalong-test",
       "demos/test-harness"
     ],
@@ -9616,7 +9417,6 @@
       "docs/claude/README",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/migrate-an-existing-page",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/test-schema-standard",
       "docs/testing-runbook"
@@ -9801,7 +9601,6 @@
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -9832,9 +9631,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/home-page",
       "docs/performance",
-      "docs/schema-first-architecture",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "select": [
       "pages/ai-permutation-test",
@@ -9959,7 +9756,6 @@
       "docs/performance",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/schema",
       "docs/search",
@@ -10005,8 +9801,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "pages": [
       "pages/ai-permutation-test",
@@ -10051,8 +9846,7 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/REPO-LAYOUT",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "activity": [
       "pages/ai-permutation-test"
@@ -10122,7 +9916,6 @@
       "docs/code-examples-standard",
       "docs/guides/migrate-an-existing-page",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -10264,14 +10057,12 @@
       "docs/linkedin-framework-agnostic",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
       "docs/test-schema-standard",
       "docs/testing-strategy",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "enum": [
       "pages/ai-permutation-test",
@@ -10283,8 +10074,7 @@
       "docs/schema",
       "docs/test-schema-standard",
       "docs/testing-strategy",
-      "demos/multi-behavior-demo-generated",
-      "demos/schema-first-architecture"
+      "demos/multi-behavior-demo-generated"
     ],
     "boolean": [
       "pages/ai-permutation-test",
@@ -10369,8 +10159,7 @@
       "docs/properties",
       "docs/search",
       "docs/test-schema-standard",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "becomes": [
       "pages/ai-permutation-test",
@@ -10433,8 +10222,6 @@
       "docs/container-pattern",
       "docs/guides/migrate-an-existing-page",
       "docs/mcp",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/styles",
@@ -10490,7 +10277,6 @@
       "demos/frameworks",
       "demos/index",
       "demos/mdhtml-pre-debug",
-      "demos/schema-first-architecture",
       "demos/test-harness"
     ],
     "gaps": [
@@ -10502,8 +10288,7 @@
     "outlined": [
       "pages/ai-permutation-test",
       "docs/behaviors/chip",
-      "docs/escape-hatches",
-      "demos/schema-first-architecture"
+      "docs/escape-hatches"
     ],
     "green": [
       "pages/ai-permutation-test",
@@ -10535,8 +10320,7 @@
       "docs/schema-test-value",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "pairwise": [
       "pages/ai-permutation-test"
@@ -10559,12 +10343,10 @@
       "docs/escape-hatches",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/standards/RELEASE-PROCESS",
       "docs/themes",
       "demos/index",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/index",
       "demos/site/interactive"
     ],
@@ -10607,7 +10389,6 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
-      "pages/introduction",
       "docs/IMPROVEMENTS",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
@@ -10786,8 +10567,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -10800,8 +10579,7 @@
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "setup": [
       "pages/ai-permutation-test",
@@ -10895,8 +10673,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/testing-strategy",
       "docs/wbservices",
-      "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "combinatorial": [
@@ -10936,15 +10712,12 @@
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/styles",
       "docs/testing-strategy",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "finds": [
       "pages/ai-permutation-test",
@@ -11025,7 +10798,6 @@
       "docs/behaviors/select",
       "docs/pce-candidates",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -11234,8 +11006,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
@@ -11409,13 +11179,10 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/mcp",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
       "docs/wbservices",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "parses": [
@@ -11443,7 +11210,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/semantic-standard",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -11609,7 +11375,6 @@
       "docs/themes",
       "demos/autoinject",
       "demos/frameworks",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "set": [
@@ -11674,11 +11439,9 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/compliance/iso-42001-alignment",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/styles",
       "docs/themes",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "values": [
       "pages/ai-permutation-test",
@@ -11794,8 +11557,7 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
       "docs/testing-strategy",
-      "docs/themes",
-      "demos/schema-first-architecture"
+      "docs/themes"
     ],
     "example": [
       "pages/ai-permutation-test",
@@ -11833,7 +11595,6 @@
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/npx-commands",
-      "docs/schema-first-architecture",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles",
       "docs/test-schema-standard",
@@ -11929,7 +11690,6 @@
       "demos/autoinject",
       "demos/frameworks",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/overlays"
     ],
@@ -12101,7 +11861,6 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
@@ -12186,7 +11945,6 @@
       "docs/behaviors/youtube",
       "docs/claude/PAGE-GENERATION",
       "docs/home-page",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/V3-STANDARDS",
@@ -12276,7 +12034,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -12384,7 +12141,6 @@
       "docs/testing-runbook",
       "demos/charity-food",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content",
       "demos/site/forms"
@@ -12604,7 +12360,6 @@
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "demos/autoinject",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content",
       "demos/site/overlays"
@@ -12653,8 +12408,7 @@
       "docs/behaviors/flex",
       "docs/styles",
       "docs/wbservices",
-      "demos/charity-food",
-      "demos/schema-first-architecture"
+      "demos/charity-food"
     ],
     "appears": [
       "pages/ai-permutation-test",
@@ -12722,8 +12476,7 @@
       "pages/ai-permutation-test",
       "docs/behaviors/release",
       "docs/home-page",
-      "docs/performance",
-      "docs/schema-first-architecture"
+      "docs/performance"
     ],
     "bugs": [
       "pages/ai-permutation-test",
@@ -12839,7 +12592,6 @@
       "docs/performance",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/schema.migration",
       "docs/semantic-standard",
@@ -12885,13 +12637,11 @@
       "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/testing-runbook",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "reducing": [
       "pages/ai-permutation-test",
-      "docs/performance",
-      "demos/schema-first-architecture"
+      "docs/performance"
     ],
     "count": [
       "pages/ai-permutation-test",
@@ -13070,7 +12820,6 @@
       "docs/inline-editing",
       "docs/pce-candidates",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -13093,7 +12842,6 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/home-page",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/search",
       "docs/semantic-audit",
@@ -13175,8 +12923,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/escape-hatches",
       "docs/home-page",
-      "docs/schema",
-      "demos/schema-first-architecture"
+      "docs/schema"
     ],
     "explained": [
       "pages/ai-permutation-test",
@@ -13300,7 +13047,6 @@
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/standalone"
     ],
     "paste": [
@@ -13370,7 +13116,6 @@
       "docs/testing-strategy",
       "docs/wbservices",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/content",
       "demos/standalone"
     ],
@@ -13572,7 +13317,6 @@
       "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
       "docs/test-schema-standard",
       "demos/frameworks",
       "demos/landing-page-showcase",
@@ -13718,7 +13462,6 @@
       "docs/home-page",
       "docs/performance",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "demos/autoinject",
@@ -13765,8 +13508,6 @@
       "docs/committing-fixes",
       "docs/inline-editing",
       "docs/performance",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/search",
       "docs/semantic-audit",
@@ -13801,7 +13542,6 @@
       "docs/home-page",
       "docs/mcp",
       "docs/npx-commands",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -13839,7 +13579,6 @@
       "docs/index",
       "docs/mcp",
       "docs/npx-commands",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -13903,7 +13642,6 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/V3-STANDARDS",
       "demos/playground",
@@ -14157,7 +13895,6 @@
       "docs/mcp",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
       "docs/semantic-standard",
@@ -14239,7 +13976,6 @@
       "docs/linkedin-standards-article",
       "docs/npx-commands",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -14287,8 +14023,7 @@
       "docs/styles",
       "docs/testing-strategy",
       "docs/themes",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "css": [
       "pages/ai-permutation-test",
@@ -14479,7 +14214,6 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/performance",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -14511,8 +14245,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/test-schema-standard",
       "demos/autoinject",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "appliesclass": [
       "pages/ai-permutation-test"
@@ -14606,7 +14339,6 @@
       "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -14614,7 +14346,6 @@
       "docs/test-schema-standard",
       "docs/themes",
       "demos/autoinject",
-      "demos/schema-first-architecture",
       "demos/site/interactive"
     ],
     "visible": [
@@ -14662,8 +14393,7 @@
       "docs/home-page",
       "docs/npx-commands",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "show": [
       "pages/ai-permutation-test",
@@ -14757,7 +14487,6 @@
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
       "docs/inline-editing",
-      "docs/schema-first-architecture",
       "docs/standards/RELEASE-PROCESS"
     ],
     "pointing": [
@@ -14799,7 +14528,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/schema-first-architecture",
       "docs/schema"
     ],
     "quick": [
@@ -14874,7 +14602,6 @@
       "docs/container-pattern",
       "docs/index",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -15060,7 +14787,6 @@
       "docs/code-examples-standard",
       "docs/home-page",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -15068,8 +14794,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "demos/frameworks",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "description": [
       "pages/ai-permutation-test",
@@ -15232,7 +14957,6 @@
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
-      "demos/schema-first-architecture",
       "demos/site/cards"
     ],
     "checks": [
@@ -15398,7 +15122,6 @@
       "docs/mcp",
       "docs/npx-commands",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -15487,7 +15210,6 @@
       "docs/guides/search-index",
       "docs/pce-candidates",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/REPO-LAYOUT",
@@ -15531,8 +15253,7 @@
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "docs/testing-runbook",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "gate": [
       "pages/behaviors",
@@ -15778,8 +15499,6 @@
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -15791,7 +15510,6 @@
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/layout-test",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "deliberately": [
@@ -15851,7 +15569,6 @@
       "docs/home-page",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/semantic-audit",
@@ -16006,7 +15723,6 @@
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -16153,7 +15869,6 @@
       "docs/inline-editing",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "matter": [
@@ -16254,7 +15969,6 @@
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
@@ -16288,15 +16002,12 @@
       "docs/guides/create-a-website",
       "docs/pce-candidates",
       "docs/performance",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
-      "demos/schema-first-architecture",
       "demos/site/content",
       "demos/site/layout"
     ],
@@ -16541,7 +16252,6 @@
       "docs/claude/PAGE-GENERATION",
       "docs/inline-editing",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "demos/playground",
       "demos/site/feedback",
       "demos/site/overlays"
@@ -16636,7 +16346,6 @@
       "docs/claude/TIER1-LAWS",
       "docs/guides/migrate-an-existing-page",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "closed": [
@@ -16692,7 +16401,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -16705,7 +16413,6 @@
       "docs/behaviors/cardminimizable",
       "docs/behaviors/tabs",
       "docs/linkedin-standards-article",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
@@ -17027,7 +16734,6 @@
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
-      "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/autoinject",
       "demos/frameworks"
@@ -17042,8 +16748,7 @@
       "docs/behaviors/fix-card",
       "docs/compliance/iso-42001-alignment",
       "docs/guides/migrate-an-existing-page",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/schema-first-architecture"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "appear": [
       "pages/behaviors",
@@ -17074,8 +16779,6 @@
       "docs/behaviors/x-copybutton",
       "docs/code-examples-standard",
       "docs/performance",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/test-schema-standard",
       "docs/wbservices",
@@ -17149,8 +16852,7 @@
       "docs/styles",
       "docs/themes",
       "docs/wbservices",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "before": [
       "pages/behaviors",
@@ -17201,7 +16903,6 @@
       "docs/mcp",
       "docs/npx-commands",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -17243,7 +16944,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/npx-commands",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT"
     ],
@@ -17474,9 +17174,7 @@
       "pages/features",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/performance",
-      "docs/schema-first-audit-report",
-      "docs/semantic-standard",
-      "demos/schema-first-architecture"
+      "docs/semantic-standard"
     ],
     "went": [
       "pages/behaviors",
@@ -17720,7 +17418,6 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/search",
       "docs/semantic-audit",
@@ -17738,8 +17435,7 @@
     ],
     "city": [
       "pages/contact",
-      "docs/behaviors/cardportfolio",
-      "demos/schema-first-architecture"
+      "docs/behaviors/cardportfolio"
     ],
     "hello": [
       "pages/contact",
@@ -17939,7 +17635,6 @@
       "docs/performance",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/semantic-audit",
@@ -18050,8 +17745,6 @@
       "docs/pce-candidates",
       "docs/performance",
       "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -18068,7 +17761,6 @@
       "demos/landing-page-showcase",
       "demos/legacy-syntax-check",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content",
       "demos/site/index",
@@ -18230,13 +17922,11 @@
       "docs/linkedin-standards-article",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/V3-STANDARDS",
       "demos/autoinject",
       "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/content",
       "demos/site/index",
       "demos/site/layout"
@@ -18300,13 +17990,11 @@
       "docs/inline-editing",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/test-schema-standard",
       "docs/themes",
       "demos/autoinject",
       "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/effects",
       "demos/site/index"
     ],
@@ -18352,7 +18040,6 @@
       "docs/testing-runbook",
       "demos/code",
       "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/index",
       "demos/site/interactive"
     ],
@@ -18477,7 +18164,6 @@
       "docs/card",
       "docs/home-page",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/styles",
       "demos/site/cards",
@@ -18498,8 +18184,7 @@
     ],
     "narrative": [
       "pages/demos",
-      "demos/index",
-      "demos/schema-first-architecture"
+      "demos/index"
     ],
     "forced": [
       "pages/demos",
@@ -18586,7 +18271,6 @@
       "docs/styles",
       "docs/themes",
       "docs/wbservices",
-      "demos/schema-first-architecture",
       "demos/site/interactive"
     ],
     "browse": [
@@ -18601,8 +18285,7 @@
     ],
     "research": [
       "pages/docs",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "demos/schema-first-architecture"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
     "papers": [
       "pages/docs",
@@ -18741,8 +18424,6 @@
       "docs/pce-candidates",
       "docs/performance",
       "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -18753,14 +18434,12 @@
       "docs/testing-runbook",
       "docs/themes",
       "docs/wbservices",
-      "demos/layout-test",
-      "demos/schema-first-architecture"
+      "demos/layout-test"
     ],
     "introduction": [
       "pages/docs",
       "pages/introduction",
       "docs/index",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "ends": [
@@ -18788,7 +18467,6 @@
       "docs/behaviors/alert",
       "docs/index",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -18819,7 +18497,6 @@
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/styles",
@@ -18910,8 +18587,7 @@
       "docs/mcp",
       "docs/performance",
       "docs/standards/RELEASE-PROCESS",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "index": [
       "pages/features",
@@ -18934,7 +18610,6 @@
       "docs/inline-editing",
       "docs/performance",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
@@ -19038,8 +18713,7 @@
       "docs/standards/REPO-LAYOUT",
       "docs/styles",
       "demos/autoinject",
-      "demos/charity-food",
-      "demos/schema-first-architecture"
+      "demos/charity-food"
     ],
     "structure": [
       "pages/features",
@@ -19066,8 +18740,6 @@
       "docs/guides/search-index",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -19077,7 +18749,6 @@
       "docs/testing-strategy",
       "docs/themes",
       "docs/wbservices",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content"
     ],
@@ -19095,7 +18766,6 @@
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -19159,8 +18829,6 @@
       "docs/behaviors/ol",
       "docs/behaviors/stagelight",
       "docs/behaviors/ul",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/styles",
       "demos/autoinject"
@@ -19224,7 +18892,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/npx-commands",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -19233,7 +18900,6 @@
       "docs/wbservices",
       "demos/autoinject",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/cards"
     ],
     "reload": [
@@ -19382,8 +19048,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/search",
       "docs/semantic-audit",
@@ -19437,7 +19101,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -19501,7 +19164,6 @@
       "docs/mcp",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -19540,8 +19202,6 @@
       "docs/card",
       "docs/guides/create-a-website",
       "docs/inline-editing",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/search",
       "demos/index"
     ],
@@ -19619,7 +19279,6 @@
       "docs/guides/search-index",
       "docs/inline-editing",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
       "docs/test-schema-standard",
@@ -19834,8 +19493,7 @@
       "docs/testing-runbook",
       "docs/testing-strategy",
       "demos/frameworks",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "modal": [
       "pages/features",
@@ -19874,7 +19532,6 @@
       "docs/escape-hatches",
       "docs/home-page",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
@@ -19907,7 +19564,6 @@
       "docs/inline-editing",
       "docs/pce-candidates",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "demos/index",
@@ -19931,7 +19587,6 @@
       "docs/home-page",
       "docs/pce-candidates",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
       "demos/site/interactive"
@@ -20047,7 +19702,6 @@
       "docs/behaviors-reference",
       "docs/behaviors/navbar",
       "docs/code-examples-standard",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "demos/site/layout"
     ],
@@ -20062,7 +19716,6 @@
       "docs/behaviors/sidebarlayout",
       "docs/code-examples-standard",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "docs/semantic-standard",
       "demos/layout-test"
     ],
@@ -20078,7 +19731,6 @@
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
       "demos/charity-food"
@@ -20089,7 +19741,6 @@
       "docs/behaviors/articles",
       "docs/behaviors/pagination",
       "docs/behaviors/table",
-      "docs/schema-first-audit-report",
       "docs/semantic-standard",
       "demos/site/content"
     ],
@@ -20100,24 +19751,19 @@
       "docs/behaviors/steps",
       "docs/guides/create-a-website",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/semantic-audit"
     ],
     "treeview": [
-      "pages/features",
-      "docs/schema-first-audit-report"
+      "pages/features"
     ],
     "backtotop": [
-      "pages/features",
-      "docs/schema-first-audit-report"
+      "pages/features"
     ],
     "anchor": [
       "pages/features",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/schema-first-architecture"
+      "docs/standards/RELEASE-PROCESS"
     ],
     "table": [
       "pages/features",
@@ -20180,7 +19826,6 @@
       "docs/performance",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -20244,7 +19889,6 @@
       "demos/landing-page-showcase",
       "demos/mdhtml-pre-debug",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "kbd": [
@@ -20337,7 +19981,6 @@
       "docs/code-examples-standard",
       "docs/home-page",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -20864,7 +20507,6 @@
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-audit",
       "docs/styles",
@@ -21111,8 +20753,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/search",
       "docs/semantic-audit",
@@ -21317,7 +20957,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -21574,7 +21213,6 @@
       "docs/mcp",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -21744,8 +21382,7 @@
     ],
     "subtle": [
       "pages/hero-variants",
-      "docs/search",
-      "demos/schema-first-architecture"
+      "docs/search"
     ],
     "professional": [
       "pages/hero-variants",
@@ -22175,7 +21812,6 @@
       "docs/behaviors/ripple",
       "docs/claude/PAGE-GENERATION",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "demos/code"
     ],
     "stage": [
@@ -22328,7 +21964,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
       "demos/charity-food",
@@ -22450,12 +22085,10 @@
     ],
     "nature": [
       "pages/hero-variants",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "creative": [
-      "pages/hero-variants",
-      "demos/schema-first-architecture"
+      "pages/hero-variants"
     ],
     "artistic": [
       "pages/hero-variants"
@@ -22835,8 +22468,7 @@
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "demos/schema-first-architecture"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "item": [
       "pages/home",
@@ -23073,7 +22705,6 @@
       "docs/code-examples-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
-      "demos/schema-first-architecture",
       "demos/standalone"
     ],
     "heading": [
@@ -23126,7 +22757,6 @@
       "docs/npx-commands",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -23168,8 +22798,7 @@
       "docs/architecture/solidjscomparison",
       "docs/claude/TOOLING-INVENTORY",
       "docs/pricecard",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "again": [
       "pages/home",
@@ -23225,7 +22854,6 @@
       "docs/guides/create-a-website",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/semantic-standard",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -23288,7 +22916,6 @@
     "removing": [
       "pages/home",
       "docs/linkedin-standards-article",
-      "docs/schema-first-audit-report",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
     "duplicate": [
@@ -23373,14 +23000,11 @@
     ],
     "contract": [
       "pages/home",
-      "pages/introduction",
       "pages/themes",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
       "docs/schema",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "cell": [
       "pages/home",
@@ -23421,10 +23045,8 @@
       "docs/behaviors/video",
       "docs/behaviors/x-copybutton",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/wbservices",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content"
     ],
@@ -23540,12 +23162,10 @@
       "docs/pricecard",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/styles",
       "docs/themes",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/interactive"
     ],
@@ -23591,7 +23211,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/performance",
       "docs/pricecard",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -23693,8 +23312,7 @@
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "aria": [
       "pages/home",
@@ -23745,7 +23363,6 @@
       "docs/testing-runbook",
       "docs/testing-strategy",
       "demos/autoinject",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content"
     ],
@@ -23783,13 +23400,11 @@
       "docs/compliance/iso-42001-alignment",
       "docs/guides/create-a-website",
       "docs/performance",
-      "docs/schema-first-architecture",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/wbservices",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "compilation": [
       "pages/home"
@@ -23874,12 +23489,9 @@
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/styles",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "makes": [
       "pages/home",
@@ -24020,8 +23632,6 @@
       "docs/compliance/iso-42001-alignment",
       "docs/pricecard",
       "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/schema.migration",
       "docs/semantic-audit",
@@ -24029,7 +23639,6 @@
       "docs/testing-runbook",
       "docs/wbservices",
       "demos/frameworks",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "editor": [
@@ -24136,7 +23745,6 @@
       "docs/inline-editing",
       "docs/pce-candidates",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/REPO-LAYOUT",
       "demos/site/cards",
@@ -24185,7 +23793,6 @@
       "docs/committing-fixes",
       "docs/escape-hatches",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "docs/styles",
       "docs/wbservices",
       "demos/frameworks"
@@ -24235,12 +23842,10 @@
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/test-schema-standard",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "done": [
@@ -24356,8 +23961,7 @@
       "docs/linkedin-standards-article",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "adds": [
       "pages/introduction",
@@ -24412,7 +24016,6 @@
       "docs/behaviors/range",
       "docs/behaviors/ripple",
       "docs/behaviors/stagelight",
-      "docs/schema-first-architecture",
       "demos/site/feedback"
     ],
     "either": [
@@ -24454,7 +24057,6 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS",
       "demos/playground",
-      "demos/schema-first-architecture",
       "demos/site/overlays"
     ],
     "through": [
@@ -24482,10 +24084,8 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/migrate-an-existing-page",
-      "docs/schema-first-audit-report",
       "docs/standards/V3-STANDARDS",
       "docs/wbservices",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/interactive"
     ],
@@ -24634,7 +24234,6 @@
       "docs/behaviors/release",
       "docs/behaviors/repeater",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/schema-first-architecture",
       "demos/frameworks"
     ],
     "languages": [
@@ -24700,8 +24299,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/RELEASE-PROCESS",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "opposite": [
       "pages/introduction",
@@ -24757,8 +24355,7 @@
       "docs/performance",
       "docs/properties",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/REPO-LAYOUT",
-      "demos/schema-first-architecture"
+      "docs/standards/REPO-LAYOUT"
     ],
     "anything": [
       "pages/introduction",
@@ -25173,7 +24770,6 @@
       "docs/behaviors-reference",
       "docs/claude/PAGE-GENERATION",
       "docs/home-page",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -25312,17 +24908,6 @@
       "demos/playground",
       "demos/site/cards"
     ],
-    "follow": [
-      "pages/introduction",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/committing-fixes",
-      "docs/npx-commands",
-      "docs/schema.migration",
-      "docs/semantic-audit",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/REPO-LAYOUT"
-    ],
     "override": [
       "pages/introduction",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -25372,7 +24957,6 @@
       "docs/escape-hatches",
       "docs/home-page",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/multi-behavior-demo-generated"
     ],
@@ -25397,14 +24981,12 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/themes",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/cards"
     ],
     "nested": [
@@ -25686,7 +25268,6 @@
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -25962,8 +25543,6 @@
       "docs/npx-commands",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/testing-runbook",
       "docs/testing-strategy"
@@ -26041,8 +25620,7 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/REPO-LAYOUT",
-      "demos/schema-first-architecture"
+      "docs/standards/REPO-LAYOUT"
     ],
     "country": [
       "pages/offshoring",
@@ -26111,7 +25689,6 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/claude/TIER3-REFERENCE",
       "docs/guides/create-a-website",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
@@ -26139,7 +25716,6 @@
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/guides/create-a-website",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/REPO-LAYOUT"
@@ -26222,8 +25798,7 @@
       "docs/card",
       "docs/compliance/iso-42001-alignment",
       "docs/properties",
-      "demos/charity-food",
-      "demos/schema-first-architecture"
+      "demos/charity-food"
     ],
     "account": [
       "pages/privacy",
@@ -26356,12 +25931,10 @@
       "pages/privacy"
     ],
     "security": [
-      "pages/privacy",
-      "demos/schema-first-architecture"
+      "pages/privacy"
     ],
     "implement": [
-      "pages/privacy",
-      "docs/schema-first-audit-report"
+      "pages/privacy"
     ],
     "appropriate": [
       "pages/privacy",
@@ -26390,8 +25963,7 @@
       "docs/semantic-standard"
     ],
     "however": [
-      "pages/privacy",
-      "demos/schema-first-architecture"
+      "pages/privacy"
     ],
     "method": [
       "pages/privacy",
@@ -26423,7 +25995,6 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/solidjscomparison",
       "docs/card",
-      "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS"
     ],
@@ -26480,13 +26051,11 @@
       "pages/privacy",
       "docs/behaviors/checkbox",
       "docs/code-examples-standard",
-      "docs/schema-first-architecture",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "delete": [
       "pages/privacy",
@@ -26510,11 +26079,9 @@
       "docs/container-pattern",
       "docs/guides/search-index",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/styles",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "restrict": [
       "pages/privacy"
@@ -26597,7 +26164,6 @@
       "docs/performance",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema.migration",
       "docs/search",
@@ -26622,8 +26188,7 @@
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/schema.migration",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "acmeco": [
       "pages/privacy",
@@ -26817,10 +26382,8 @@
       "docs/behaviors/range",
       "docs/behaviors/ul",
       "docs/claude/TIER1-LAWS",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/wbservices",
       "demos/autoinject",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "interfaces": [
@@ -26839,7 +26402,6 @@
     "convert": [
       "pages/services",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit"
     ],
     "users": [
@@ -26883,9 +26445,7 @@
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/performance",
-      "docs/testing-runbook",
-      "demos/index",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "robust": [
       "pages/services",
@@ -26952,8 +26512,7 @@
       "docs/behaviors/dl"
     ],
     "reliability": [
-      "pages/services",
-      "demos/schema-first-architecture"
+      "pages/services"
     ],
     "comprehensive": [
       "pages/services",
@@ -26990,7 +26549,6 @@
       "docs/behaviors/figure",
       "docs/behaviors/img",
       "docs/behaviors/video",
-      "docs/schema-first-architecture",
       "docs/standards/RELEASE-PROCESS",
       "demos/charity-food"
     ],
@@ -27173,7 +26731,6 @@
       "docs/claude/TIER1-LAWS",
       "docs/guides/migrate-an-existing-page",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -27307,8 +26864,7 @@
     ],
     "modify": [
       "pages/terms",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "effective": [
       "pages/terms"
@@ -27343,8 +26899,7 @@
       "docs/wbservices"
     ],
     "governed": [
-      "pages/terms",
-      "demos/schema-first-architecture"
+      "pages/terms"
     ],
     "construed": [
       "pages/terms"
@@ -27486,8 +27041,7 @@
     ],
     "acts": [
       "pages/themes",
-      "docs/card",
-      "docs/schema-first-architecture"
+      "docs/card"
     ],
     "fundamental": [
       "pages/themes",
@@ -27576,8 +27130,7 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "equally": [
       "pages/themes"
@@ -27659,10 +27212,8 @@
       "docs/inline-editing",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/search",
-      "docs/semantic-standard",
-      "demos/schema-first-architecture"
+      "docs/semantic-standard"
     ],
     "javascript": [
       "pages/themes",
@@ -27693,8 +27244,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -27716,7 +27265,6 @@
       "docs/compliance/iso-42001-alignment",
       "docs/home-page",
       "docs/semantic-standard",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "function": [
@@ -27844,7 +27392,6 @@
       "demos/frameworks",
       "demos/mdhtml-pre-debug",
       "demos/pre-debug",
-      "demos/schema-first-architecture",
       "demos/site/learn-more"
     ],
     "generate": [
@@ -27855,12 +27402,10 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/index",
-      "demos/multi-behavior-demo-generated",
-      "demos/schema-first-architecture"
+      "demos/multi-behavior-demo-generated"
     ],
     "blues": [
       "pages/themes"
@@ -28044,8 +27589,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/performance",
       "docs/testing-strategy",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "contrast": [
       "pages/themes",
@@ -28277,8 +27821,7 @@
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
       "docs/claude/TIER1-LAWS",
-      "docs/linkedin-standards-article",
-      "demos/schema-first-architecture"
+      "docs/linkedin-standards-article"
     ],
     "tier": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28506,8 +28049,6 @@
       "docs/index",
       "docs/linkedin-standards-article",
       "docs/mcp",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema",
       "docs/schema.migration",
@@ -28627,8 +28168,6 @@
       "docs/behaviors/blockquote",
       "docs/compliance/iso-42001-alignment",
       "docs/npx-commands",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/themes"
@@ -28655,6 +28194,16 @@
     ],
     "channel": [
       "docs/ANNOUNCE_TEST_POLICY"
+    ],
+    "follow": [
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/committing-fixes",
+      "docs/npx-commands",
+      "docs/schema.migration",
+      "docs/semantic-audit",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/REPO-LAYOUT"
     ],
     "track": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28719,7 +28268,6 @@
       "docs/mcp",
       "docs/npx-commands",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-runbook",
@@ -28730,8 +28278,6 @@
       "docs/BRANCH_PROTECTION",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/pricecard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
       "demos/charity-food"
@@ -28895,11 +28441,9 @@
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
       "docs/pricecard",
-      "docs/schema-first-architecture",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "contexts": [
       "docs/BRANCH_PROTECTION",
@@ -28990,8 +28534,7 @@
       "docs/committing-fixes",
       "docs/guides/create-a-website",
       "docs/mcp",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "rule": [
       "docs/BRANCH_PROTECTION",
@@ -29046,7 +28589,6 @@
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
       "docs/home-page",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/semantic-standard",
       "docs/test-schema-standard"
@@ -29155,7 +28697,6 @@
       "docs/behaviors/switcher",
       "docs/linkedin-framework-agnostic",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/schema.migration",
       "demos/autoinject"
     ],
@@ -29204,14 +28745,10 @@
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/styles",
       "docs/themes",
       "docs/wbservices",
-      "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/cards"
     ],
     "lite": [
@@ -29236,8 +28773,7 @@
       "docs/behaviors/ul",
       "docs/inline-editing",
       "docs/linkedin-framework-agnostic",
-      "docs/property-viewer",
-      "demos/schema-first-architecture"
+      "docs/property-viewer"
     ],
     "reduces": [
       "docs/IMPROVEMENTS",
@@ -29255,8 +28791,7 @@
       "docs/behaviors/drawerLayout",
       "docs/behaviors/searchfield",
       "docs/behaviors/tags",
-      "docs/behaviors/toast",
-      "docs/schema-first-architecture"
+      "docs/behaviors/toast"
     ],
     "download": [
       "docs/IMPROVEMENTS",
@@ -29412,8 +28947,7 @@
       "docs/IMPROVEMENTS",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/committing-fixes",
-      "docs/schema",
-      "demos/schema-first-architecture"
+      "docs/schema"
     ],
     "extension": [
       "docs/IMPROVEMENTS",
@@ -29442,8 +28976,7 @@
       "docs/behaviors/address",
       "docs/home-page",
       "docs/properties",
-      "docs/search",
-      "demos/schema-first-architecture"
+      "docs/search"
     ],
     "hover": [
       "docs/IMPROVEMENTS",
@@ -29467,7 +29000,6 @@
       "docs/inline-editing",
       "docs/test-schema-standard",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/overlays"
     ],
     "snippets": [
@@ -29578,8 +29110,7 @@
       "docs/behaviors/select",
       "docs/container-pattern",
       "docs/linkedin-framework-agnostic",
-      "docs/property-viewer",
-      "docs/schema-first-audit-report"
+      "docs/property-viewer"
     ],
     "community": [
       "docs/IMPROVEMENTS",
@@ -29605,9 +29136,7 @@
     ],
     "templates": [
       "docs/IMPROVEMENTS",
-      "docs/code-examples-standard",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report"
+      "docs/code-examples-standard"
     ],
     "stability": [
       "docs/IMPROVEMENTS"
@@ -29632,7 +29161,6 @@
       "docs/behaviors/youtube",
       "docs/claude/TOOLING-INVENTORY",
       "docs/performance",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
@@ -29705,7 +29233,6 @@
       "docs/linkedin-standards-article",
       "docs/mcp",
       "docs/npx-commands",
-      "docs/schema-first-audit-report",
       "docs/testing-strategy"
     ],
     "viewer": [
@@ -29729,6 +29256,7 @@
     "tooltips": [
       "docs/IMPROVEMENTS",
       "docs/INTELLISENSE-TOOLTIPS",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
       "demos/frameworks",
       "demos/index",
       "demos/site/feedback",
@@ -29875,6 +29403,7 @@
       "docs/architecture/solidjscomparison",
       "docs/behaviors/cardexpandable",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/pricecard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/intellisense-check"
@@ -29890,7 +29419,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/index",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/schema.migration",
       "docs/semantic-audit",
@@ -29902,8 +29430,6 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment",
-      "docs/index",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
@@ -29931,13 +29457,11 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "displaying": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30110,8 +29634,7 @@
       "docs/search",
       "docs/styles",
       "docs/test-schema-standard",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "icon": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30385,7 +29908,6 @@
       "docs/card",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TOOLING-INVENTORY",
-      "docs/schema-first-architecture",
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "indicator": [
@@ -30428,7 +29950,6 @@
       "docs/behaviors/img",
       "docs/behaviors/pre",
       "docs/behaviors/video",
-      "docs/schema-first-architecture",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/site/content",
@@ -30537,8 +30058,7 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/linkedin-framework-agnostic",
-      "docs/themes",
-      "demos/schema-first-architecture"
+      "docs/themes"
     ],
     "metadata": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30599,8 +30119,7 @@
       "docs/semantic-audit",
       "docs/test-schema-standard",
       "docs/wbservices",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "requirements": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30608,8 +30127,7 @@
       "docs/guides/search-index",
       "docs/semantic-audit",
       "docs/test-schema-standard",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "validates": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30626,7 +30144,6 @@
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/address",
       "docs/behaviors/ul",
-      "docs/schema-first-audit-report",
       "docs/test-schema-standard",
       "docs/themes"
     ],
@@ -30716,8 +30233,7 @@
       "docs/pricecard",
       "docs/semantic-standard",
       "docs/standards/V3-STANDARDS",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "containers": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30728,7 +30244,6 @@
       "docs/semantic-standard",
       "docs/styles",
       "docs/themes",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "banner": [
@@ -30816,8 +30331,7 @@
       "docs/behaviors/timeline",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/schema",
-      "docs/search",
-      "demos/schema-first-architecture"
+      "docs/search"
     ],
     "subtitle": [
       "docs/INTELLISENSE-TOOLTIPS",
@@ -30858,8 +30372,7 @@
       "docs/behaviors/cardvideo",
       "docs/card",
       "docs/claude/PAGE-GENERATION",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "depth": [
       "docs/INTELLISENSE-TOOLTIPS"
@@ -30993,8 +30506,7 @@
       "docs/search",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/test-schema-standard",
-      "demos/schema-first-architecture"
+      "docs/test-schema-standard"
     ],
     "mime": [
       "docs/INTELLISENSE-TOOLTIPS"
@@ -31009,7 +30521,6 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/x-copybutton",
       "docs/pce-candidates",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/cards",
@@ -31074,9 +30585,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report"
+      "docs/claude/TIER2-DOMAIN-GUIDES"
     ],
     "migration": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31097,7 +30606,6 @@
       "docs/guides/create-a-website",
       "docs/performance",
       "docs/pricecard",
-      "docs/schema-first-architecture",
       "docs/schema.migration"
     ],
     "06": [
@@ -31205,7 +30713,6 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/container-pattern",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/wbservices"
@@ -31241,7 +30748,6 @@
       "docs/container-pattern",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
-      "docs/schema-first-audit-report",
       "demos/site/content"
     ],
     "exempt": [
@@ -31351,8 +30857,6 @@
       "docs/index",
       "docs/npx-commands",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/test-schema-standard",
       "docs/wbservices",
       "demos/frameworks"
@@ -31363,11 +30867,9 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/schema-first-architecture"
+      "docs/standards/RELEASE-PROCESS"
     ],
     "remaining": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31422,8 +30924,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/schema-first-architecture"
+      "docs/standards/RELEASE-PROCESS"
     ],
     "resource": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31493,7 +30994,6 @@
       "docs/pce-candidates",
       "docs/properties",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/test-schema-standard",
       "docs/wbservices",
@@ -31520,7 +31020,6 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/code-examples-standard",
       "docs/home-page",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
       "docs/test-schema-standard",
@@ -31611,8 +31110,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/claude/SCHEMAS-GUIDE",
-      "docs/test-schema-standard",
-      "demos/schema-first-architecture"
+      "docs/test-schema-standard"
     ],
     "flat": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31738,7 +31236,6 @@
       "docs/behaviors/toast",
       "docs/behaviors/tooltip",
       "docs/behaviors/x-copybutton",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
@@ -31775,11 +31272,9 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
-      "docs/schema-first-architecture",
       "docs/schema",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "format": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31791,7 +31286,6 @@
       "docs/behaviors/x-behavior",
       "docs/claude/PAGE-GENERATION",
       "docs/code-examples-standard",
-      "docs/schema-first-architecture",
       "demos/playground"
     ],
     "danger": [
@@ -31819,14 +31313,12 @@
       "docs/inline-editing",
       "docs/linkedin-standards-article",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/schema-test-value",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/testing-strategy",
       "demos/frameworks",
-      "demos/pre-debug",
-      "demos/schema-first-architecture"
+      "demos/pre-debug"
     ],
     "part": [
       "docs/MVVM-MIGRATION-PLAN",
@@ -31883,8 +31375,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/testing-strategy",
       "docs/wbservices",
@@ -32015,8 +31505,6 @@
       "docs/mcp",
       "docs/pce-candidates",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -32036,11 +31524,8 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/compliance/iso-42001-alignment",
       "docs/home-page",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/themes",
-      "demos/schema-first-architecture"
+      "docs/themes"
     ],
     "enums": [
       "docs/MVVM-MIGRATION"
@@ -32064,13 +31549,11 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/dropdown",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "handlers": [
       "docs/MVVM-MIGRATION",
-      "docs/code-examples-standard",
-      "docs/schema-first-architecture"
+      "docs/code-examples-standard"
     ],
     "management": [
       "docs/MVVM-MIGRATION",
@@ -32115,8 +31598,7 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/wbservices",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "uses": [
       "docs/MVVM-MIGRATION",
@@ -32174,7 +31656,6 @@
       "docs/behaviors/searchfield",
       "docs/behaviors/switcher",
       "docs/guides/search-index",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/RELEASE-PROCESS",
       "demos/site/content"
@@ -32191,8 +31672,7 @@
       "docs/committing-fixes",
       "docs/guides/create-a-website",
       "docs/styles",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "truth": [
       "docs/MVVM-MIGRATION",
@@ -32203,11 +31683,9 @@
       "docs/code-examples-standard",
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "tagname": [
       "docs/MVVM-MIGRATION",
@@ -32393,7 +31871,6 @@
       "docs/behaviors/time",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/semantic-standard",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "demos/site/content"
@@ -32454,7 +31931,6 @@
       "docs/escape-hatches",
       "docs/pce-candidates",
       "docs/properties",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/V3-STANDARDS",
@@ -32529,7 +32005,6 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -32609,7 +32084,6 @@
       "docs/behaviors/select",
       "docs/behaviors/textarea",
       "docs/claude/TIER1-LAWS",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/ERROR-LOG-RETENTION",
       "demos/autoinject",
@@ -32669,8 +32143,6 @@
       "docs/code-examples-standard",
       "docs/mcp",
       "docs/properties",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/themes",
       "docs/wbservices"
     ],
@@ -32749,7 +32221,6 @@
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -32857,7 +32328,6 @@
       "docs/behaviors/release",
       "docs/behaviors/skeleton",
       "docs/properties",
-      "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/test-schema-standard",
@@ -33027,8 +32497,6 @@
       "docs/behaviors/youtube",
       "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/styles"
     ],
     "dragged": [
@@ -33079,8 +32547,7 @@
       "docs/linkedin-standards-article",
       "docs/themes",
       "docs/wbservices",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "stored": [
       "docs/NOTES-V3-GUIDE",
@@ -33471,8 +32938,7 @@
       "docs/schema-test-value",
       "docs/test-schema-standard",
       "docs/testing-strategy",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "starting": [
       "docs/V3-GUIDE",
@@ -33588,7 +33054,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -33679,7 +33144,6 @@
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "succeeded": [
@@ -33729,7 +33193,6 @@
       "docs/escape-hatches",
       "docs/home-page",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -33750,8 +33213,6 @@
       "docs/V3-GUIDE",
       "docs/behaviors-reference",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/testing-runbook"
     ],
@@ -33847,8 +33308,7 @@
       "docs/pricecard",
       "docs/test-schema-standard",
       "docs/testing-strategy",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "progressive": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -33892,7 +33352,6 @@
     "concept": [
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/schema-first-architecture",
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "chain": [
@@ -33926,7 +33385,6 @@
       "docs/claude/TIER1-LAWS",
       "docs/linkedin-standards-article",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/semantic-standard",
       "docs/themes",
       "docs/wbservices"
@@ -34061,8 +33519,7 @@
       "docs/container-pattern",
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "parser": [
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -34080,7 +33537,6 @@
       "docs/escape-hatches",
       "docs/inline-editing",
       "docs/property-viewer",
-      "docs/schema-first-architecture",
       "docs/search"
     ],
     "got": [
@@ -34328,7 +33784,6 @@
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/performance",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "handled": [
@@ -34373,8 +33828,7 @@
     ],
     "phase": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/claude/PAGE-GENERATION",
-      "docs/schema-first-architecture"
+      "docs/claude/PAGE-GENERATION"
     ],
     "infrastructure": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -34421,8 +33875,6 @@
       "docs/guides/search-index",
       "docs/linkedin-framework-agnostic",
       "docs/performance",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/wbservices",
       "demos/landing-page-showcase"
@@ -34445,8 +33897,7 @@
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
     "phases": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "demos/schema-first-architecture"
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
     "naming": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -34576,7 +34027,6 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER3-REFERENCE",
       "docs/home-page",
-      "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/styles",
       "docs/testing-strategy",
@@ -34596,16 +34046,14 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/schema.migration",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/schema-first-architecture"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "impact": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/compliance/iso-42001-alignment"
     ],
     "builders": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/schema-first-audit-report"
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
     ],
     "ides": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
@@ -34614,8 +34062,7 @@
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/mcp",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "consistency": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -34625,8 +34072,7 @@
     ],
     "solution": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/pricecard",
-      "demos/schema-first-architecture"
+      "docs/pricecard"
     ],
     "extensionregistry": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
@@ -34636,8 +34082,7 @@
     ],
     "refactored": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/performance",
-      "docs/schema-first-audit-report"
+      "docs/performance"
     ],
     "simplified": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1"
@@ -34670,8 +34115,7 @@
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/claude/PAGE-GENERATION",
       "docs/guides/search-index",
-      "docs/home-page",
-      "demos/schema-first-architecture"
+      "docs/home-page"
     ],
     "detailed": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -34727,7 +34171,6 @@
     "preserve": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/auto-injection",
-      "docs/schema-first-audit-report",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "camelcase": [
@@ -34748,8 +34191,7 @@
     "imports": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/standards/V3-STANDARDS",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "span": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -34796,7 +34238,6 @@
       "docs/behaviors/time",
       "docs/behaviors/video",
       "docs/claude/TIER3-REFERENCE",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -34956,7 +34397,6 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/test-schema-standard",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "arrangement": [
@@ -34994,7 +34434,6 @@
       "docs/behaviors/range",
       "docs/card",
       "docs/code-examples-standard",
-      "docs/schema-first-audit-report",
       "docs/search",
       "docs/themes",
       "demos/autoinject"
@@ -35471,8 +34910,7 @@
       "docs/behaviors/skeleton",
       "docs/behaviors/stagelight",
       "docs/behaviors/toast",
-      "docs/pricecard",
-      "demos/schema-first-architecture"
+      "docs/pricecard"
     ],
     "record": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -35534,8 +34972,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
     "dr": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "demos/schema-first-architecture"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
     "reached": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -35575,7 +35012,6 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/performance",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -35596,8 +35032,7 @@
       "docs/card"
     ],
     "inconsistency": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "demos/schema-first-architecture"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
     "estimated": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -35620,7 +35055,6 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/compliance/iso-42001-alignment",
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes"
@@ -35896,7 +35330,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/claude/TIER1-LAWS",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "lookup": [
@@ -36099,7 +35532,6 @@
     ],
     "wbcard": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/schema-first-audit-report",
       "docs/wbservices"
     ],
     "wbfixcard": [
@@ -36328,7 +35760,6 @@
       "docs/behaviors/pre",
       "docs/themes",
       "demos/landing-page-showcase",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "picked": [
@@ -36474,8 +35905,7 @@
     ],
     "known": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/blockquote",
-      "demos/schema-first-architecture"
+      "docs/behaviors/blockquote"
     ],
     "mathematically": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -36736,8 +36166,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
     ],
     "presented": [
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "demos/schema-first-architecture"
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec"
     ],
     "established": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -36944,7 +36373,6 @@
       "docs/standards/RELEASE-PROCESS",
       "docs/themes",
       "docs/wbservices",
-      "demos/schema-first-architecture",
       "demos/site/cards",
       "demos/site/content"
     ],
@@ -37028,9 +36456,7 @@
       "docs/behaviors/code",
       "docs/behaviors/pre",
       "docs/behaviors/x-copybutton",
-      "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
-      "demos/schema-first-architecture"
+      "docs/linkedin-framework-agnostic"
     ],
     "almost": [
       "docs/architecture/solidjscomparison",
@@ -37156,7 +36582,6 @@
     ],
     "observes": [
       "docs/architecture/solidjscomparison",
-      "docs/schema-first-architecture",
       "docs/standards/V3-STANDARDS"
     ],
     "collapsed": [
@@ -37340,12 +36765,10 @@
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/claude/PAGE-GENERATION",
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-architecture",
       "docs/schema-test-value",
       "docs/schema.migration",
       "docs/semantic-audit",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "demos/schema-first-architecture"
+      "docs/standards/ERROR-LOG-RETENTION"
     ],
     "typo": [
       "docs/architecture/solidjscomparison",
@@ -37375,7 +36798,6 @@
       "docs/guides/search-index",
       "docs/mcp",
       "docs/npx-commands",
-      "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/site/content"
     ],
@@ -37541,7 +36963,8 @@
     ],
     "ide": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/claude/SCHEMAS-GUIDE"
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER2-DOMAIN-GUIDES"
     ],
     "applying": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -37635,7 +37058,6 @@
       "docs/behaviors/release",
       "docs/guides/create-a-website",
       "docs/mcp",
-      "docs/schema-first-audit-report",
       "docs/testing-strategy"
     ],
     "invalid": [
@@ -37646,8 +37068,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/code-examples-standard",
       "docs/semantic-audit",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "gracefully": [
       "docs/architecture/standards/ERROR-MESSAGE"
@@ -37770,8 +37191,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/V3-STANDARDS"
     ],
@@ -37787,8 +37206,7 @@
     ],
     "abstract": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/claude/SCHEMAS-GUIDE",
-      "demos/schema-first-architecture"
+      "docs/claude/SCHEMAS-GUIDE"
     ],
     "inherited": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -37827,8 +37245,7 @@
       "docs/linkedin-standards-article",
       "docs/npx-commands",
       "docs/styles",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "govern": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -37847,7 +37264,6 @@
     "production": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/performance",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "doctype": [
@@ -37867,8 +37283,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "wraps": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -37895,8 +37310,7 @@
       "docs/home-page",
       "docs/pricecard",
       "docs/semantic-audit",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "stacked": [
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
@@ -37955,7 +37369,6 @@
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/styles",
-      "demos/schema-first-architecture",
       "demos/standalone"
     ],
     "stacks": [
@@ -38044,7 +37457,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-architecture",
       "demos/autoinject"
     ],
     "inherit": [
@@ -38268,8 +37680,7 @@
     "produces": [
       "docs/audio",
       "docs/behaviors/ratio",
-      "docs/guides/search-index",
-      "demos/schema-first-architecture"
+      "docs/guides/search-index"
     ],
     "byte": [
       "docs/audio",
@@ -38294,8 +37705,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/pre",
       "docs/behaviors/searchfield",
-      "docs/claude/PAGE-GENERATION",
-      "docs/schema-first-architecture"
+      "docs/claude/PAGE-GENERATION"
     ],
     "throws": [
       "docs/audio"
@@ -38322,9 +37732,7 @@
       "docs/audio",
       "docs/behaviors/codetheme",
       "docs/performance",
-      "docs/schema-first-architecture",
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "wider": [
       "docs/audio",
@@ -38352,8 +37760,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/performance",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/testing-strategy",
-      "demos/schema-first-architecture"
+      "docs/testing-strategy"
     ],
     "thin": [
       "docs/audio"
@@ -38500,8 +37907,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
     ],
     "structurally": [
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "demos/schema-first-architecture"
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
     ],
     "reflects": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -38598,7 +38004,6 @@
     ],
     "verification": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/schema-first-architecture",
       "docs/testing-strategy"
     ],
     "filed": [
@@ -38640,8 +38045,7 @@
     ],
     "paper": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/compliance/iso-42001-alignment",
-      "demos/schema-first-architecture"
+      "docs/compliance/iso-42001-alignment"
     ],
     "idempotency": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -38929,15 +38333,13 @@
       "docs/home-page",
       "docs/mcp",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/semantic-standard",
       "docs/standards/RELEASE-PROCESS",
       "docs/styles"
     ],
     "manually": [
       "docs/auto-injection",
-      "docs/escape-hatches",
-      "docs/schema-first-audit-report"
+      "docs/escape-hatches"
     ],
     "adding": [
       "docs/auto-injection",
@@ -38978,8 +38380,7 @@
       "docs/auto-injection"
     ],
     "correctness": [
-      "docs/auto-injection",
-      "demos/schema-first-architecture"
+      "docs/auto-injection"
     ],
     "encourages": [
       "docs/auto-injection"
@@ -38992,8 +38393,7 @@
       "docs/container-pattern",
       "docs/performance",
       "demos/autoinject",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "even": [
       "docs/auto-injection",
@@ -39188,21 +38588,17 @@
     "kit": [
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
-      "docs/performance",
-      "demos/schema-first-architecture"
+      "docs/performance"
     ],
     "categorized": [
       "docs/behaviors-reference"
     ],
     "listeners": [
       "docs/behaviors-reference",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/standards/V3-STANDARDS"
     ],
     "fundamentally": [
-      "docs/behaviors-reference",
-      "demos/schema-first-architecture"
+      "docs/behaviors-reference"
     ],
     "configurable": [
       "docs/behaviors-reference",
@@ -39278,8 +38674,7 @@
       "docs/behaviors-reference",
       "docs/mcp",
       "docs/standards/V3-STANDARDS",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "decorated": [
       "docs/behaviors-reference",
@@ -39412,7 +38807,6 @@
       "docs/behaviors/card",
       "docs/behaviors/cardhero",
       "docs/linkedin-standards-article",
-      "docs/schema-first-architecture",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -39568,7 +38962,6 @@
       "docs/behaviors/tabs",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
-      "docs/schema-first-architecture",
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/standards/V3-STANDARDS",
@@ -39886,7 +39279,6 @@
       "docs/testing-strategy",
       "demos/frameworks",
       "demos/index",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "end": [
@@ -40212,7 +39604,6 @@
       "docs/behaviors/tags",
       "docs/claude/TIER1-LAWS",
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-audit-report",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "appended": [
@@ -40460,8 +39851,7 @@
     "identifies": [
       "docs/behaviors/blockquote",
       "docs/behaviors/vimeo",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/schema-first-audit-report"
+      "docs/claude/SCHEMAS-GUIDE"
     ],
     "steve": [
       "docs/behaviors/blockquote"
@@ -40734,15 +40124,13 @@
       "docs/behaviors/radio",
       "docs/behaviors/search",
       "docs/behaviors/select",
-      "docs/behaviors/textarea",
-      "demos/schema-first-architecture"
+      "docs/behaviors/textarea"
     ],
     "ariadisabled": [
       "docs/behaviors/button"
     ],
     "composecard": [
-      "docs/behaviors/card",
-      "docs/schema-first-audit-report"
+      "docs/behaviors/card"
     ],
     "emitted": [
       "docs/behaviors/card",
@@ -40757,8 +40145,7 @@
     "controlling": [
       "docs/behaviors/card",
       "docs/behaviors/figure",
-      "docs/behaviors/img",
-      "demos/schema-first-architecture"
+      "docs/behaviors/img"
     ],
     "hovertext": [
       "docs/behaviors/card",
@@ -40814,7 +40201,6 @@
       "docs/behaviors/scrollalong",
       "docs/behaviors/x-copybutton",
       "docs/inline-editing",
-      "docs/schema-first-audit-report",
       "docs/standards/RELEASE-PROCESS"
     ],
     "featured": [
@@ -40958,8 +40344,7 @@
     "prompt": [
       "docs/behaviors/cardbutton",
       "docs/behaviors/prompt",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "demos/schema-first-architecture"
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "fire": [
       "docs/behaviors/cardbutton",
@@ -40994,7 +40379,6 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/ul",
       "docs/guides/migrate-an-existing-page",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/REPO-LAYOUT"
@@ -41236,7 +40620,6 @@
       "docs/property-viewer",
       "docs/search",
       "demos/autoinject",
-      "demos/schema-first-architecture",
       "demos/site/overlays"
     ],
     "pretitle": [
@@ -42072,8 +41455,7 @@
       "docs/behaviors/clock"
     ],
     "york": [
-      "docs/behaviors/clock",
-      "demos/schema-first-architecture"
+      "docs/behaviors/clock"
     ],
     "lays": [
       "docs/behaviors/cluster",
@@ -42090,8 +41472,7 @@
       "docs/behaviors/flex",
       "docs/behaviors/pre",
       "docs/behaviors/sidebarlayout",
-      "docs/pce-candidates",
-      "demos/schema-first-architecture"
+      "docs/pce-candidates"
     ],
     "centred": [
       "docs/behaviors/cluster",
@@ -42255,7 +41636,6 @@
       "docs/behaviors/range",
       "docs/behaviors/select",
       "docs/property-viewer",
-      "docs/schema-first-audit-report",
       "docs/search"
     ],
     "persisting": [
@@ -42315,8 +41695,7 @@
       "docs/behaviors/time",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
-      "docs/schema",
-      "demos/schema-first-architecture"
+      "docs/schema"
     ],
     "clicking": [
       "docs/behaviors/collapse",
@@ -42483,8 +41862,7 @@
     "hard": [
       "docs/behaviors/confirm",
       "docs/behaviors/grid",
-      "docs/pricecard",
-      "demos/schema-first-architecture"
+      "docs/pricecard"
     ],
     "undo": [
       "docs/behaviors/confirm",
@@ -42876,8 +42254,7 @@
       "docs/behaviors/range",
       "docs/behaviors/ul",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/linkedin-standards-article",
-      "docs/schema-first-architecture"
+      "docs/linkedin-standards-article"
     ],
     "underused": [
       "docs/behaviors/dl"
@@ -43038,8 +42415,7 @@
       "docs/behaviors/dropdown"
     ],
     "hyphen": [
-      "docs/behaviors/dropdown",
-      "docs/schema-first-audit-report"
+      "docs/behaviors/dropdown"
     ],
     "stale": [
       "docs/behaviors/dropdown",
@@ -43107,8 +42483,7 @@
     ],
     "overwriting": [
       "docs/behaviors/fieldset",
-      "docs/card",
-      "docs/schema-first-audit-report"
+      "docs/card"
     ],
     "legend": [
       "docs/behaviors/fieldset",
@@ -43166,8 +42541,7 @@
       "docs/behaviors/stagelight"
     ],
     "absolutely": [
-      "docs/behaviors/figure",
-      "docs/schema-first-architecture"
+      "docs/behaviors/figure"
     ],
     "translucent": [
       "docs/behaviors/figure"
@@ -43381,8 +42755,7 @@
     "reserved": [
       "docs/behaviors/frame",
       "docs/behaviors/img",
-      "docs/behaviors/switcher",
-      "docs/schema-first-architecture"
+      "docs/behaviors/switcher"
     ],
     "thumbnail": [
       "docs/behaviors/gallery",
@@ -44079,16 +43452,14 @@
       "docs/linkedin-framework-agnostic",
       "docs/performance",
       "docs/pricecard",
-      "docs/property-viewer",
-      "demos/schema-first-architecture"
+      "docs/property-viewer"
     ],
     "timelines": [
       "docs/behaviors/ol"
     ],
     "maintaining": [
       "docs/behaviors/ol",
-      "docs/behaviors/radio",
-      "demos/schema-first-architecture"
+      "docs/behaviors/radio"
     ],
     "stepped": [
       "docs/behaviors/ol"
@@ -44282,8 +43653,6 @@
     ],
     "rename": [
       "docs/behaviors/prompt",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration"
     ],
     "modernizes": [
@@ -44300,7 +43669,6 @@
     ],
     "techniques": [
       "docs/behaviors/radio",
-      "demos/schema-first-architecture",
       "demos/site/content"
     ],
     "rainbow": [
@@ -44335,8 +43703,7 @@
     ],
     "contextual": [
       "docs/behaviors/range",
-      "docs/behaviors/tooltip",
-      "demos/schema-first-architecture"
+      "docs/behaviors/tooltip"
     ],
     "bounds": [
       "docs/behaviors/range",
@@ -44418,8 +43785,7 @@
       "docs/behaviors/ratio"
     ],
     "authoritative": [
-      "docs/behaviors/ratio",
-      "demos/schema-first-architecture"
+      "docs/behaviors/ratio"
     ],
     "snaps": [
       "docs/behaviors/reel"
@@ -44558,10 +43924,8 @@
     "handles": [
       "docs/behaviors/resizable",
       "docs/claude/PAGE-GENERATION",
-      "docs/schema-first-architecture",
       "docs/themes",
-      "demos/frameworks",
-      "demos/schema-first-architecture"
+      "demos/frameworks"
     ],
     "corners": [
       "docs/behaviors/resizable",
@@ -44624,8 +43988,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "meaningful": [
-      "docs/behaviors/scrollable",
-      "demos/schema-first-architecture"
+      "docs/behaviors/scrollable"
     ],
     "potentially": [
       "docs/behaviors/scrollable"
@@ -44712,8 +44075,7 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "demos/multi-behavior-demo-generated",
-      "demos/schema-first-architecture"
+      "demos/multi-behavior-demo-generated"
     ],
     "setoptions": [
       "docs/behaviors/select"
@@ -44866,8 +44228,7 @@
       "docs/behaviors/stagelight"
     ],
     "experimental": [
-      "docs/behaviors/stagelight",
-      "demos/schema-first-architecture"
+      "docs/behaviors/stagelight"
     ],
     "ffffff": [
       "docs/behaviors/stagelight"
@@ -45283,10 +44644,8 @@
     "developers": [
       "docs/behaviors/ul",
       "docs/properties",
-      "docs/schema-first-architecture",
       "demos/index",
-      "demos/landing-page-showcase",
-      "demos/schema-first-architecture"
+      "demos/landing-page-showcase"
     ],
     "bullet": [
       "docs/behaviors/ul"
@@ -45531,7 +44890,6 @@
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
-      "docs/schema-first-architecture",
       "docs/styles",
       "docs/themes"
     ],
@@ -45567,8 +44925,7 @@
       "docs/index",
       "docs/mcp",
       "docs/schema.migration",
-      "docs/testing-runbook",
-      "demos/schema-first-architecture"
+      "docs/testing-runbook"
     ],
     "readme": [
       "docs/claude/README",
@@ -45616,8 +44973,7 @@
     ],
     "recent": [
       "docs/claude/README",
-      "docs/properties",
-      "demos/schema-first-architecture"
+      "docs/properties"
     ],
     "chats": [
       "docs/claude/README"
@@ -45628,8 +44984,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/mcp",
       "docs/performance",
-      "docs/schema.migration",
-      "demos/schema-first-architecture"
+      "docs/schema.migration"
     ],
     "negotiable": [
       "docs/claude/README",
@@ -45772,8 +45127,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/linkedin-framework-agnostic",
       "docs/linkedin-standards-article",
-      "docs/mcp",
-      "demos/schema-first-architecture"
+      "docs/mcp"
     ],
     "async": [
       "docs/claude/TIER1-LAWS",
@@ -45820,8 +45174,7 @@
     "agent": [
       "docs/claude/TIER1-LAWS",
       "docs/linkedin-framework-agnostic",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "demos/schema-first-architecture"
+      "docs/standards/ERROR-LOG-RETENTION"
     ],
     "yours": [
       "docs/claude/TIER1-LAWS",
@@ -45920,8 +45273,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
-      "docs/linkedin-standards-article",
-      "demos/schema-first-architecture"
+      "docs/linkedin-standards-article"
     ],
     "symptoms": [
       "docs/claude/TIER1-LAWS"
@@ -45971,8 +45323,6 @@
     "views": [
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
       "docs/schema.migration",
       "demos/index",
       "demos/site/index",
@@ -45988,8 +45338,10 @@
       "docs/linkedin-framework-agnostic",
       "docs/schema.migration"
     ],
-    "intelli": [
-      "docs/claude/TIER2-DOMAIN-GUIDES"
+    "vscode": [
+      "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/pricecard",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "publishing": [
       "docs/claude/TIER3-REFERENCE",
@@ -46001,9 +45353,7 @@
     ],
     "separation": [
       "docs/claude/TIER3-REFERENCE",
-      "docs/property-viewer",
-      "docs/schema-first-architecture",
-      "demos/schema-first-architecture"
+      "docs/property-viewer"
     ],
     "decoupled": [
       "docs/claude/TIER3-REFERENCE"
@@ -46292,10 +45642,8 @@
     "serve": [
       "docs/claude/TOOLING-INVENTORY",
       "docs/guides/create-a-website",
-      "docs/schema-first-architecture",
       "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/schema-first-architecture"
+      "docs/standards/RELEASE-PROCESS"
     ],
     "spend": [
       "docs/claude/TOOLING-INVENTORY"
@@ -46446,9 +45794,7 @@
     ],
     "architectural": [
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-architecture",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "formal": [
       "docs/compliance/iso-42001-alignment"
@@ -46479,8 +45825,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "mitigate": [
       "docs/compliance/iso-42001-alignment"
@@ -46497,8 +45842,7 @@
     ],
     "constraints": [
       "docs/compliance/iso-42001-alignment",
-      "docs/linkedin-standards-article",
-      "demos/schema-first-architecture"
+      "docs/linkedin-standards-article"
     ],
     "treats": [
       "docs/compliance/iso-42001-alignment",
@@ -46506,17 +45850,14 @@
       "docs/testing-runbook"
     ],
     "hallucination": [
-      "docs/compliance/iso-42001-alignment",
-      "demos/schema-first-architecture"
+      "docs/compliance/iso-42001-alignment"
     ],
     "confident": [
       "docs/compliance/iso-42001-alignment",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/schema-first-architecture"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "lie": [
-      "docs/compliance/iso-42001-alignment",
-      "demos/schema-first-architecture"
+      "docs/compliance/iso-42001-alignment"
     ],
     "mitigates": [
       "docs/compliance/iso-42001-alignment"
@@ -46542,17 +45883,13 @@
     ],
     "pillars": [
       "docs/compliance/iso-42001-alignment",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "deterministic": [
-      "docs/compliance/iso-42001-alignment",
-      "demos/index",
-      "demos/schema-first-architecture"
+      "docs/compliance/iso-42001-alignment"
     ],
     "ground": [
-      "docs/compliance/iso-42001-alignment",
-      "demos/schema-first-architecture"
+      "docs/compliance/iso-42001-alignment"
     ],
     "vague": [
       "docs/compliance/iso-42001-alignment"
@@ -46569,8 +45906,7 @@
     ],
     "requiredchildren": [
       "docs/compliance/iso-42001-alignment",
-      "docs/test-schema-standard",
-      "demos/schema-first-architecture"
+      "docs/test-schema-standard"
     ],
     "negative": [
       "docs/compliance/iso-42001-alignment"
@@ -46590,12 +45926,10 @@
     ],
     "effectively": [
       "docs/compliance/iso-42001-alignment",
-      "docs/linkedin-framework-agnostic",
-      "demos/schema-first-architecture"
+      "docs/linkedin-framework-agnostic"
     ],
     "modes": [
       "docs/compliance/iso-42001-alignment",
-      "docs/schema-first-architecture",
       "docs/themes"
     ],
     "manage": [
@@ -46603,8 +45937,7 @@
       "docs/linkedin-framework-agnostic"
     ],
     "immutable": [
-      "docs/compliance/iso-42001-alignment",
-      "demos/schema-first-architecture"
+      "docs/compliance/iso-42001-alignment"
     ],
     "modifies": [
       "docs/compliance/iso-42001-alignment"
@@ -46629,13 +45962,11 @@
     ],
     "compliant": [
       "docs/compliance/iso-42001-alignment",
-      "docs/home-page",
-      "docs/schema-first-audit-report"
+      "docs/home-page"
     ],
     "lack": [
       "docs/compliance/iso-42001-alignment",
-      "docs/pricecard",
-      "demos/schema-first-architecture"
+      "docs/pricecard"
     ],
     "aims": [
       "docs/compliance/iso-42001-alignment"
@@ -47358,8 +46689,7 @@
       "docs/linkedin-framework-agnostic"
     ],
     "determinism": [
-      "docs/linkedin-framework-agnostic",
-      "demos/schema-first-architecture"
+      "docs/linkedin-framework-agnostic"
     ],
     "shouldn": [
       "docs/linkedin-framework-agnostic"
@@ -47371,8 +46701,7 @@
       "docs/linkedin-framework-agnostic"
     ],
     "speak": [
-      "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture"
+      "docs/linkedin-framework-agnostic"
     ],
     "managing": [
       "docs/linkedin-framework-agnostic",
@@ -47385,8 +46714,7 @@
       "docs/wbservices"
     ],
     "rigid": [
-      "docs/linkedin-framework-agnostic",
-      "demos/schema-first-architecture"
+      "docs/linkedin-framework-agnostic"
     ],
     "propertyconfig": [
       "docs/linkedin-framework-agnostic",
@@ -47395,7 +46723,6 @@
     "refactor": [
       "docs/linkedin-framework-agnostic",
       "docs/pricecard",
-      "docs/schema-first-audit-report",
       "docs/schema.migration"
     ],
     "tightly": [
@@ -47403,12 +46730,10 @@
     ],
     "coupled": [
       "docs/linkedin-framework-agnostic",
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "strictly": [
       "docs/linkedin-framework-agnostic",
-      "docs/schema-first-architecture",
       "docs/styles"
     ],
     "risking": [
@@ -47418,8 +46743,7 @@
       "docs/linkedin-framework-agnostic"
     ],
     "intelligence": [
-      "docs/linkedin-framework-agnostic",
-      "demos/schema-first-architecture"
+      "docs/linkedin-framework-agnostic"
     ],
     "jquery": [
       "docs/linkedin-framework-agnostic"
@@ -47488,8 +46812,7 @@
     ],
     "engineering": [
       "docs/linkedin-standards-article",
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "forbidden": [
       "docs/linkedin-standards-article",
@@ -47514,15 +46837,13 @@
       "docs/linkedin-standards-article"
     ],
     "inherent": [
-      "docs/linkedin-standards-article",
-      "demos/schema-first-architecture"
+      "docs/linkedin-standards-article"
     ],
     "oop": [
       "docs/linkedin-standards-article"
     ],
     "layered": [
       "docs/linkedin-standards-article",
-      "docs/schema-first-audit-report",
       "docs/styles"
     ],
     "oriented": [
@@ -47643,8 +46964,7 @@
     ],
     "environment": [
       "docs/mcp",
-      "docs/performance",
-      "demos/schema-first-architecture"
+      "docs/performance"
     ],
     "highest": [
       "docs/mcp"
@@ -47659,8 +46979,7 @@
       "docs/mcp"
     ],
     "completely": [
-      "docs/mcp",
-      "docs/schema-first-audit-report"
+      "docs/mcp"
     ],
     "healthy": [
       "docs/mcp",
@@ -47673,8 +46992,7 @@
       "docs/npx-commands"
     ],
     "centralize": [
-      "docs/npx-commands",
-      "docs/schema-first-audit-report"
+      "docs/npx-commands"
     ],
     "repeating": [
       "docs/npx-commands"
@@ -47683,8 +47001,7 @@
       "docs/npx-commands"
     ],
     "increase": [
-      "docs/npx-commands",
-      "demos/schema-first-architecture"
+      "docs/npx-commands"
     ],
     "captures": [
       "docs/npx-commands",
@@ -47932,12 +47249,10 @@
       "docs/performance"
     ],
     "decoupling": [
-      "docs/performance",
-      "demos/schema-first-architecture"
+      "docs/performance"
     ],
     "rate": [
-      "docs/performance",
-      "demos/schema-first-architecture"
+      "docs/performance"
     ],
     "modulepreload": [
       "docs/performance"
@@ -47962,8 +47277,7 @@
       "docs/pricecard"
     ],
     "difficult": [
-      "docs/pricecard",
-      "demos/schema-first-architecture"
+      "docs/pricecard"
     ],
     "clutter": [
       "docs/pricecard",
@@ -47987,10 +47301,6 @@
     ],
     "pruned": [
       "docs/pricecard"
-    ],
-    "vscode": [
-      "docs/pricecard",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "compare": [
       "docs/pricecard"
@@ -48094,8 +47404,7 @@
       "docs/property-viewer"
     ],
     "manages": [
-      "docs/property-viewer",
-      "docs/schema-first-architecture"
+      "docs/property-viewer"
     ],
     "scrolltoproperty": [
       "docs/property-viewer"
@@ -48131,142 +47440,6 @@
     "temporarily": [
       "docs/property-viewer"
     ],
-    "adopt": [
-      "docs/schema-first-architecture"
-    ],
-    "scalability": [
-      "docs/schema-first-architecture",
-      "docs/schema.migration"
-    ],
-    "maintainability": [
-      "docs/schema-first-architecture",
-      "docs/schema.migration",
-      "docs/styles"
-    ],
-    "concerns": [
-      "docs/schema-first-architecture",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
-    ],
-    "triad": [
-      "docs/schema-first-architecture"
-    ],
-    "analogy": [
-      "docs/schema-first-architecture"
-    ],
-    "superpower": [
-      "docs/schema-first-architecture"
-    ],
-    "mock": [
-      "docs/schema-first-architecture"
-    ],
-    "injecting": [
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report"
-    ],
-    "enhancer": [
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report"
-    ],
-    "binds": [
-      "docs/schema-first-architecture"
-    ],
-    "necessary": [
-      "docs/schema-first-architecture",
-      "docs/styles"
-    ],
-    "king": [
-      "docs/schema-first-architecture"
-    ],
-    "respect": [
-      "docs/schema-first-architecture"
-    ],
-    "servant": [
-      "docs/schema-first-architecture"
-    ],
-    "hydrates": [
-      "docs/schema-first-architecture"
-    ],
-    "destruction": [
-      "docs/schema-first-architecture"
-    ],
-    "blindly": [
-      "docs/schema-first-architecture"
-    ],
-    "overwrite": [
-      "docs/schema-first-architecture"
-    ],
-    "directory": [
-      "docs/schema-first-architecture",
-      "docs/schema-first-audit-report",
-      "demos/landing-page-showcase"
-    ],
-    "binder": [
-      "docs/schema-first-architecture"
-    ],
-    "restructuring": [
-      "docs/schema-first-architecture"
-    ],
-    "parity": [
-      "docs/schema-first-architecture"
-    ],
-    "primarily": [
-      "docs/schema-first-architecture"
-    ],
-    "comply": [
-      "docs/schema-first-audit-report"
-    ],
-    "act": [
-      "docs/schema-first-audit-report",
-      "docs/standards/ERROR-LOG-RETENTION"
-    ],
-    "enhancers": [
-      "docs/schema-first-audit-report"
-    ],
-    "hydrating": [
-      "docs/schema-first-audit-report"
-    ],
-    "decouple": [
-      "docs/schema-first-audit-report"
-    ],
-    "validatesemanticcontainer": [
-      "docs/schema-first-audit-report",
-      "docs/semantic-audit"
-    ],
-    "allowlist": [
-      "docs/schema-first-audit-report"
-    ],
-    "bind": [
-      "docs/schema-first-audit-report",
-      "docs/standards/V3-STANDARDS"
-    ],
-    "scratch": [
-      "docs/schema-first-audit-report"
-    ],
-    "statusbar": [
-      "docs/schema-first-audit-report"
-    ],
-    "connectedcallback": [
-      "docs/schema-first-audit-report",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
-    ],
-    "buildstructure": [
-      "docs/schema-first-audit-report"
-    ],
-    "enhancing": [
-      "docs/schema-first-audit-report"
-    ],
-    "concepts": [
-      "docs/schema-first-audit-report",
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "systematically": [
-      "docs/schema-first-audit-report"
-    ],
-    "destroyed": [
-      "docs/schema-first-audit-report",
-      "docs/standards/ERROR-LOG-RETENTION"
-    ],
     "wild": [
       "docs/schema-test-value"
     ],
@@ -48284,8 +47457,7 @@
       "docs/schema-test-value"
     ],
     "specifications": [
-      "docs/schema-test-value",
-      "demos/schema-first-architecture"
+      "docs/schema-test-value"
     ],
     "bases": [
       "docs/schema-test-value",
@@ -48354,6 +47526,13 @@
     "approve": [
       "docs/schema.migration"
     ],
+    "maintainability": [
+      "docs/schema.migration",
+      "docs/styles"
+    ],
+    "scalability": [
+      "docs/schema.migration"
+    ],
     "unambiguous": [
       "docs/schema.migration"
     ],
@@ -48413,6 +47592,9 @@
     "updating": [
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "validatesemanticcontainer": [
+      "docs/semantic-audit"
     ],
     "comments": [
       "docs/semantic-standard",
@@ -48495,8 +47677,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "enforcing": [
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/schema-first-architecture"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "defect": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -48589,6 +47770,9 @@
     "execute": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
+    "connectedcallback": [
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
+    ],
     "registers": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
@@ -48619,8 +47803,7 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "demonstrated": [
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "demos/schema-first-architecture"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "assumed": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
@@ -48659,8 +47842,7 @@
     ],
     "assertion": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/test-schema-standard",
-      "demos/schema-first-architecture"
+      "docs/test-schema-standard"
     ],
     "worse": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
@@ -48780,6 +47962,9 @@
     "behaviormodules": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
+    "concepts": [
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
     "batches": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
@@ -48876,6 +48061,9 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/styles"
     ],
+    "destroyed": [
+      "docs/standards/ERROR-LOG-RETENTION"
+    ],
     "seventeen": [
       "docs/standards/ERROR-LOG-RETENTION"
     ],
@@ -48886,6 +48074,9 @@
       "docs/standards/ERROR-LOG-RETENTION"
     ],
     "archives": [
+      "docs/standards/ERROR-LOG-RETENTION"
+    ],
+    "act": [
       "docs/standards/ERROR-LOG-RETENTION"
     ],
     "prune": [
@@ -48964,6 +48155,9 @@
     "inert": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
+    "concerns": [
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
     "verbatim": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
@@ -48995,8 +48189,7 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "answers": [
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "demos/schema-first-architecture"
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "drafted": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
@@ -49217,6 +48410,9 @@
     "authority": [
       "docs/standards/V3-STANDARDS"
     ],
+    "bind": [
+      "docs/standards/V3-STANDARDS"
+    ],
     "outlives": [
       "docs/standards/V3-STANDARDS"
     ],
@@ -49319,8 +48515,7 @@
       "docs/styles"
     ],
     "likely": [
-      "docs/styles",
-      "demos/schema-first-architecture"
+      "docs/styles"
     ],
     "incompatible": [
       "docs/styles"
@@ -49362,6 +48557,9 @@
     "repairing": [
       "docs/styles"
     ],
+    "necessary": [
+      "docs/styles"
+    ],
     "debt": [
       "docs/styles"
     ],
@@ -49369,8 +48567,7 @@
       "docs/styles"
     ],
     "guarantee": [
-      "docs/test-schema-standard",
-      "demos/schema-first-architecture"
+      "docs/test-schema-standard"
     ],
     "propname": [
       "docs/test-schema-standard"
@@ -49601,8 +48798,7 @@
       "docs/wbservices"
     ],
     "introduce": [
-      "docs/wbservices",
-      "demos/schema-first-architecture"
+      "docs/wbservices"
     ],
     "association": [
       "docs/wbservices"
@@ -49632,8 +48828,7 @@
       "demos/autoinject"
     ],
     "department": [
-      "demos/autoinject",
-      "demos/schema-first-architecture"
+      "demos/autoinject"
     ],
     "marketing": [
       "demos/autoinject"
@@ -49957,6 +49152,9 @@
       "demos/landing-page-showcase",
       "demos/site/content"
     ],
+    "directory": [
+      "demos/landing-page-showcase"
+    ],
     "composed": [
       "demos/multi-behavior-demo-generated"
     ],
@@ -49976,222 +49174,6 @@
     "seeing": [
       "demos/playground",
       "demos/standalone"
-    ],
-    "eliminating": [
-      "demos/schema-first-architecture"
-    ],
-    "generative": [
-      "demos/schema-first-architecture"
-    ],
-    "prepared": [
-      "demos/schema-first-architecture"
-    ],
-    "michael": [
-      "demos/schema-first-architecture"
-    ],
-    "vendetti": [
-      "demos/schema-first-architecture"
-    ],
-    "elena": [
-      "demos/schema-first-architecture"
-    ],
-    "vance": [
-      "demos/schema-first-architecture"
-    ],
-    "llms": [
-      "demos/schema-first-architecture"
-    ],
-    "remarkable": [
-      "demos/schema-first-architecture"
-    ],
-    "suffer": [
-      "demos/schema-first-architecture"
-    ],
-    "overconfidence": [
-      "demos/schema-first-architecture"
-    ],
-    "phenomenon": [
-      "demos/schema-first-architecture"
-    ],
-    "introduces": [
-      "demos/schema-first-architecture"
-    ],
-    "novel": [
-      "demos/schema-first-architecture"
-    ],
-    "methodology": [
-      "demos/schema-first-architecture"
-    ],
-    "constrains": [
-      "demos/schema-first-architecture"
-    ],
-    "rigorous": [
-      "demos/schema-first-architecture"
-    ],
-    "demonstrate": [
-      "demos/schema-first-architecture"
-    ],
-    "empirical": [
-      "demos/schema-first-architecture"
-    ],
-    "efficacy": [
-      "demos/schema-first-architecture"
-    ],
-    "advent": [
-      "demos/schema-first-architecture"
-    ],
-    "transformed": [
-      "demos/schema-first-architecture"
-    ],
-    "frontend": [
-      "demos/schema-first-architecture"
-    ],
-    "fraught": [
-      "demos/schema-first-architecture"
-    ],
-    "prompted": [
-      "demos/schema-first-architecture"
-    ],
-    "llm": [
-      "demos/schema-first-architecture"
-    ],
-    "tailwind": [
-      "demos/schema-first-architecture"
-    ],
-    "stochastic": [
-      "demos/schema-first-architecture"
-    ],
-    "unreliable": [
-      "demos/schema-first-architecture"
-    ],
-    "studies": [
-      "demos/schema-first-architecture"
-    ],
-    "quantified": [
-      "demos/schema-first-architecture"
-    ],
-    "unreliability": [
-      "demos/schema-first-architecture"
-    ],
-    "kabir": [
-      "demos/schema-first-architecture"
-    ],
-    "et": [
-      "demos/schema-first-architecture"
-    ],
-    "al": [
-      "demos/schema-first-architecture"
-    ],
-    "chatgpt": [
-      "demos/schema-first-architecture"
-    ],
-    "inaccuracies": [
-      "demos/schema-first-architecture"
-    ],
-    "particularly": [
-      "demos/schema-first-architecture"
-    ],
-    "dangerous": [
-      "demos/schema-first-architecture"
-    ],
-    "vulnerabilities": [
-      "demos/schema-first-architecture"
-    ],
-    "insight": [
-      "demos/schema-first-architecture"
-    ],
-    "intent": [
-      "demos/schema-first-architecture"
-    ],
-    "propose": [
-      "demos/schema-first-architecture"
-    ],
-    "prevailing": [
-      "demos/schema-first-architecture"
-    ],
-    "industry": [
-      "demos/schema-first-architecture"
-    ],
-    "retrieval": [
-      "demos/schema-first-architecture"
-    ],
-    "augmented": [
-      "demos/schema-first-architecture"
-    ],
-    "rag": [
-      "demos/schema-first-architecture"
-    ],
-    "probabilistic": [
-      "demos/schema-first-architecture"
-    ],
-    "attempt": [
-      "demos/schema-first-architecture"
-    ],
-    "likelihood": [
-      "demos/schema-first-architecture"
-    ],
-    "response": [
-      "demos/schema-first-architecture"
-    ],
-    "synonymous": [
-      "demos/schema-first-architecture"
-    ],
-    "buggy": [
-      "demos/schema-first-architecture"
-    ],
-    "chasm": [
-      "demos/schema-first-architecture"
-    ],
-    "probability": [
-      "demos/schema-first-architecture"
-    ],
-    "unacceptable": [
-      "demos/schema-first-architecture"
-    ],
-    "bridges": [
-      "demos/schema-first-architecture"
-    ],
-    "chaotic": [
-      "demos/schema-first-architecture"
-    ],
-    "rests": [
-      "demos/schema-first-architecture"
-    ],
-    "foundational": [
-      "demos/schema-first-architecture"
-    ],
-    "macroscopic": [
-      "demos/schema-first-architecture"
-    ],
-    "routing": [
-      "demos/schema-first-architecture"
-    ],
-    "manipulating": [
-      "demos/schema-first-architecture"
-    ],
-    "avoiding": [
-      "demos/schema-first-architecture"
-    ],
-    "complexities": [
-      "demos/schema-first-architecture"
-    ],
-    "fig": [
-      "demos/schema-first-architecture"
-    ],
-    "constraint": [
-      "demos/schema-first-architecture"
-    ],
-    "ambiguity": [
-      "demos/schema-first-architecture"
-    ],
-    "subjected": [
-      "demos/schema-first-architecture"
-    ],
-    "modification": [
-      "demos/schema-first-architecture"
-    ],
-    "li": [
-      "demos/schema-first-architecture"
     ],
     "evolving": [
       "demos/site/cards"

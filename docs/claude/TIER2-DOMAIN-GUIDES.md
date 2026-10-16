@@ -77,7 +77,6 @@ Read when: modifying schemas, schema-builder, or MVVM migration work
 | **`docs/claude/SCHEMAS-GUIDE.md`** | **⭐ START HERE — Claude's guide to schemas: rules, mistakes to avoid, test workflow** |
 | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with complete examples |
 | `docs/schema.md` | Schema system overview |
-| `docs/schema-first-architecture.md` | Schema-first design philosophy |
 | `docs/schema.migration.md` | Schema migration patterns |
 | `docs/MVVM-MIGRATION.md` | MVVM migration overview |
 | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan |

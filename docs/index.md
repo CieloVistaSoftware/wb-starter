@@ -23,7 +23,6 @@
 - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md)
 - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md)
 - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md)
-- [Schema-First Architecture](./schema-first-architecture.md)
 - CSS Standards
 - [Semantic Standard](./semantic-standard.md)
 - [Container Pattern](./container-pattern.md)
@@ -37,6 +36,5 @@
 - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI
 - [Test Schema Standard](./test-schema-standard.md)
 - [Schema Test Value](./schema-test-value.md)
-- [Schema-First Audit Report](./schema-first-audit-report.md)
 - [Semantic Audit](./semantic-audit.md)
 - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)

@@ -49,12 +49,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "schema-first-architecture.md",
-          "title": "Schema-first-architecture",
-          "description": "Documentation for Schema-first-architecture",
-          "modified": "2026-08-26"
-        },
-        {
           "file": "escape-hatches.md",
           "title": "Escape Hatches",
           "description": "Override and customize WB behavior behavior",

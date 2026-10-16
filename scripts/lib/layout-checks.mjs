@@ -167,7 +167,7 @@ export function overlapViolations(minOverlapDim) {
   }
 
   // #556: a CSS multi-column ancestor (`column-count`/`columns`, e.g.
-  // demos/schema-first-architecture.html's academic-paper-style
+  // an academic-paper-style page with
   // `.paper-body { column-count: 2 }`) fragments a paragraph's paint
   // across two disjoint boxes -- one per column -- but
   // getBoundingClientRect() (and the Range-based text rect above) only
