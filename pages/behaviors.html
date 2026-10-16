@@ -20,7 +20,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.540">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.542">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -1416,6 +1416,17 @@
      * type-named placeholder. Nothing here implies a value the schema does
      * not actually permit.
      */
+    /**
+     * An attribute or table value as text. An array or object default is JSON:
+     * String([]) is "", so autocomplete's `items` default of [] came out as
+     * items="" in the usage and as an empty <code> in the DEFAULT column, which
+     * the code behavior then built into a block with a language label crushed
+     * into the cell.
+     */
+    function attrText(v) {
+      return v !== null && typeof v === 'object' ? JSON.stringify(v) : String(v);
+    }
+
     function buildUsageSnippet(behavior, props) {
       const names = Object.keys(props);
 
@@ -1426,8 +1437,17 @@
       for (const [selector, beh] of Object.entries(nativeMap || {})) {
         if (beh === behavior && !selector.includes('[')) { host = selector; break; }
       }
-      const tag = host || 'div';
+      // No tag carries it on its own: a decorator. Put it on the element its
+      // curated example uses (x-autocomplete belongs on an <input>), not on a
+      // <div> it does nothing to.
+      let tag = host;
+      if (!tag) {
+        const curated = exampleCatalogue['x-' + behavior] && exampleCatalogue['x-' + behavior].source;
+        const m = curated && curated.match(/^\s*<([a-z][a-z0-9-]*)/i);
+        tag = m ? m[1].toLowerCase() : 'div';
+      }
       const marker = host ? '' : ' x-' + behavior;
+      const isVoid = VOID_TAGS.has(tag);
 
       const attrs = names.map((n) => {
         const d = props[n] || {};
@@ -1446,13 +1466,18 @@
         else value = d.type || 'value';
         // A boolean attribute is written bare; `muted="true"` is not how HTML
         // booleans work and would teach the wrong thing.
-        return value === null ? '  ' + n : '  ' + n + '="' + value + '"';
+        if (value === null) return '  ' + n;
+        // JSON carries double quotes, so an array or object goes in single ones.
+        return value !== null && typeof value === 'object'
+          ? '  ' + n + "='" + attrText(value) + "'"
+          : '  ' + n + '="' + value + '"';
       });
 
+      const close = isVoid ? ' />' : '>';
       const open = attrs.length
-        ? '<' + tag + marker + '\n' + attrs.join('\n') + '>'
-        : '<' + tag + marker + '>';
-      return open + '\n  ...' + '\n</' + tag + '>';
+        ? '<' + tag + marker + '\n' + attrs.join('\n') + close
+        : '<' + tag + marker + close;
+      return isVoid ? open : open + '\n  ...' + '\n</' + tag + '>';
     }
 
     function showApi(behavior) {
@@ -1510,7 +1535,7 @@
         // would otherwise render as an empty cell and mean different things.
         const dflt = d.default === undefined
           ? '<span class="behaviors-live__api-none">—</span>'
-          : '<code>' + esc(d.default === '' ? '""' : d.default) + '</code>';
+          : '<code>' + esc(d.default === '' ? '""' : attrText(d.default)) + '</code>';
         const req = d.required ? ' <span class="behaviors-live__api-req">required</span>' : '';
         return '<tr id="behaviors-api-row-' + esc(name) + '">' +
           '<td class="behaviors-live__api-name"><code>' + esc(name) + '</code>' + req + '</td>' +
@@ -2692,6 +2717,34 @@
       return el.tagName.toLowerCase() + cls;
     }
 
+    /**
+     * What the event was ABOUT, not just where it happened (John, 2026-10-16,
+     * on x-breadcrumb: "what does user need to know the value of what was
+     * selected? not just the element name?"). A behavior's own event says it in
+     * its detail; a native change/input in the field's value; a toggle in its
+     * open state; a click in the text of what was clicked ("Electronics").
+     */
+    function eventValue(e) {
+      const short = (v) => { const t = String(v).replace(/\s+/g, ' ').trim(); return t.length > 60 ? t.slice(0, 57) + '...' : t; };
+      if (e.detail && typeof e.detail === 'object' && Object.keys(e.detail).length) {
+        try { return short(JSON.stringify(e.detail)); } catch { /* fall through */ }
+      }
+      const t = e.target instanceof Element ? e.target : null;
+      if (!t) return '';
+      if (e.type === 'change' || e.type === 'input') {
+        if (t.type === 'checkbox' || t.type === 'radio') return t.checked ? 'checked' : 'unchecked';
+        if (t.multiple && t.selectedOptions) return short(Array.from(t.selectedOptions, (o) => o.value).join(', '));
+        return 'value' in t ? short(t.value) : '';
+      }
+      if (e.type === 'toggle') return t.open ? 'open' : 'closed';
+      if (e.type === 'click') {
+        const hit = t.closest('a, button, [role], li, label, summary, option') || t;
+        if ('value' in hit && hit.value && !(hit instanceof HTMLButtonElement)) return short(hit.value);
+        return short(hit.getAttribute('aria-label') || hit.textContent || '');
+      }
+      return '';
+    }
+
     function logEvent(e) {
       const target = e.target instanceof Element ? e.target : null;
       // #755: the listener is on the STAGE, so a click on the stage's own
@@ -2712,6 +2765,13 @@
       li.innerHTML =
         `<code class="behaviors-live__events-type">${e.type}</code>` +
         `<span class="behaviors-live__events-target">${from}</span>${origin}`;
+      const value = e.note ? '' : eventValue(e);
+      if (value) {
+        const v = document.createElement('span');
+        v.className = 'behaviors-live__events-value';
+        v.textContent = value;
+        li.querySelector('.behaviors-live__events-target').after(v);
+      }
       if (e.note) {
         const note = document.createElement('span');
         note.className = 'behaviors-live__events-note';
@@ -2807,7 +2867,8 @@
         // anything (form · ajax showed six, from its labels and button).
         if (event && CUSTOM_EVENT_RE.test(event.type) && !LIFECYCLE_EVENTS.has(event.type)
             && this instanceof Node && liveStage.contains(this)) {
-          logEvent({ type: event.type, target: this });
+          // The detail is what the event says happened ({ value: 'uk' }).
+          logEvent({ type: event.type, target: this, detail: event.detail });
         }
       } catch { /* logging must never break the event it is watching */ }
       return result;
