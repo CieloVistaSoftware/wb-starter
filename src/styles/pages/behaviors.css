@@ -667,6 +667,12 @@
   text-align: left;
 }
 
+/* The tag a semantic-only option renders (headingLevel=3 -> <h3>). */
+.behaviors-search-results__tag {
+  color: var(--primary-text);
+  font-family: var(--font-mono, monospace);
+}
+
 .behaviors-search-results__variant {
   font-family: var(--font-mono, monospace);
   font-size: 0.8rem;

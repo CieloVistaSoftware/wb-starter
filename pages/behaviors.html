@@ -872,6 +872,19 @@
           const v = document.createElement('span');
           v.className = 'behaviors-search-results__variant';
           v.textContent = shownOption;
+          // A semantic-only option (headingLevel) changes the tag, not the look,
+          // so its rows would look identical. The schema says which tag each
+          // value renders ("rendersTag": "h{{value}}"), and the row shows it.
+          const optSchema = variant && schemaByName.get(extensionMap[entry.attr]);
+          const rendersTag = optSchema && optSchema.properties && optSchema.properties[opt.prop]
+            && optSchema.properties[opt.prop].rendersTag;
+          if (rendersTag) {
+            const tag = document.createElement('code');
+            tag.className = 'behaviors-search-results__tag';
+            tag.textContent = '<' + String(rendersTag).replace('{{value}}', variant) + '>';
+            tag.title = 'Renders this tag; the look is the same';
+            v.append(' ', tag);
+          }
           btn.append(t, v);
           built.push(btn);
         });

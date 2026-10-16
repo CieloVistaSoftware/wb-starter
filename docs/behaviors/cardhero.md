@@ -31,6 +31,13 @@
 | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) |
 | `overlay` | `boolean` | `true` | Show gradient overlay for text readability |
 | `fullHeight` | `boolean` | `false` | Make hero full viewport height |
+| `headingLevel` | `1` · `2` · `3` · `4` · `5` · `6` | `3` | Which heading tag the title is, `<h1>` to `<h6>` |
+
+`headingLevel` is document structure only: it changes the title's tag, not its
+size or style, so all six levels look the same. Use `1` when the hero is the
+page's main heading, and a lower level when the hero sits inside a section.
+Screen readers and search engines read the tag; the reader sees one design. On
+the Behaviors page, each `headingLevel` row shows the tag it renders.
 
 ## Methods
 
