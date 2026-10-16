@@ -39,7 +39,7 @@ On another element, write `x-dialog`:
 These three are on by default, so you only ever write them to turn something
 **off**:
 
-```html
+```html-static
 <dialog showClose="false" closeOnBackdrop="false">
   <h2>Confirm the merge</h2>
   <p>Escape still gets you out.</p>
@@ -51,7 +51,7 @@ These three are on by default, so you only ever write them to turn something
 `"false"` and `"0"` turn a boolean option off. The attribute being present is
 not what switches it on — its value is read:
 
-```html
+```html-static
 <dialog showClose>              <!-- on  -->
 <dialog showClose="true">       <!-- on  -->
 <dialog showClose="false">      <!-- OFF -->
@@ -70,7 +70,7 @@ Hiding the close button is allowed; leaving no way out is not. With
 `showClose="false"`, Escape is the dialog's exit, so it cannot be turned off
 too (#794):
 
-```html
+```html-static
 <dialog showClose="false" closeOnEscape="false">  <!-- Escape still closes it -->
 ```
 
