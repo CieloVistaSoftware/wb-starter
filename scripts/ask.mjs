@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * ask.mjs -- `npm run ask -- "question"` (#1926): answer a question from
- * wb-starter's own files, on this machine, with the files it used.
+ * WB-Starter's own files, on this machine, with the files it used.
  *
  * The question is embedded, the closest passages in data/ask-index/ (built by
  * `npm run ask:index`) are found, and a small local model answers from those
@@ -29,7 +29,7 @@ async function main() {
   const sourcesOnly = args.includes('--sources');
   const question = args.filter((a) => a !== '--sources').join(' ').trim();
   if (!question) {
-    console.log('Usage: npm run ask -- "your question about wb-starter"');
+    console.log('Usage: npm run ask -- "your question about WB-Starter"');
     process.exit(1);
   }
   if (!fs.existsSync(path.join(OUT, 'meta.json'))) {

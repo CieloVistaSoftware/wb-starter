@@ -6,7 +6,7 @@ import { isKnowledge, chunkFile, embedText, cosine, topK, buildPrompt } from '..
  * `npm run ask` (#1926): the parts that decide what the local model sees.
  *
  * John, 2026-10-16: "what i want is an llm that serves known data such as
- * anything from our wb-starter project". The model is small and runs on this
+ * anything from our WB-Starter project". The model is small and runs on this
  * laptop; the knowledge is the project's files, found by search. So these
  * must hold, and none of them needs Ollama:
  *   - every line of a file reaches some passage, in order, labelled with its

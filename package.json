@@ -170,7 +170,7 @@
     "test:free-port": "Self-test: every local test run gets its own port.",
     "test:summary-parse": "Self-test: the test-run tally counts each test once.",
     "test:pages-deploy-state": "Self-test: the deployed-smoke gate reads GitHub Pages deploy state correctly.",
-    "ask": "Ask a question about wb-starter and get an answer from the project's own files, with the files it used. Runs offline on this machine (Ollama). Example: npm run ask -- \"what does headingLevel change?\"",
+    "ask": "Ask a question about WB-Starter and get an answer from the project's own files, with the files it used. Runs offline on this machine (Ollama). Example: npm run ask -- \"what does headingLevel change?\"",
     "ask:index": "Build or update the local index npm run ask answers from. Run once, then after big changes; only changed files are re-embedded. Needs Ollama with nomic-embed-text."
   },
   "scripts-groups": {

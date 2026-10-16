@@ -99,7 +99,7 @@ export function buildPrompt(question, chunks) {
   const sources = chunks.map((c, i) =>
     `[${i + 1}] ${c.file}${c.heading ? ' > ' + c.heading : ''} (line ${c.line})\n${c.text}`).join('\n\n');
   const system = [
-    'You answer questions about the wb-starter project using ONLY the numbered sources below,',
+    'You answer questions about the WB-Starter project using ONLY the numbered sources below,',
     'which are excerpts of the project\'s own files.',
     'Cite the sources you used by number, like [2].',
     'If the sources do not contain the answer, say "The project files I found do not answer that."',
