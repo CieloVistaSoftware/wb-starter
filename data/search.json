@@ -7,7 +7,7 @@
       "demos": 28
     },
     "totalDocuments": 294,
-    "totalWords": 5688
+    "totalWords": 5690
   },
   "documents": [
     {
@@ -1199,7 +1199,7 @@
       "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `cart` | `x-cart` | [behaviors/cart.md](behaviors/cart.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behav",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/behaviors-reference",
@@ -1313,10 +1313,10 @@
       "title": "autosize",
       "description": null,
       "headings": [],
-      "content": "# x-autosize Behavior Automatically resizes a textarea to fit its content as the user types. - [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)",
+      "content": "# x-autosize Behavior (deprecated) > **Deprecated.** Use ` ` instead. Every ` ` already > grows with that attribute, and it also honors `maxRows`, which `x-autosize` > does not. `x-autosize` still works and logs a one-time console warning. Automatically resizes a textarea to fit its content as the user types. - [Demo](../../demos/site/forms.html#textarea-autosize-textarea-that-grows-with-content)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/behaviors/avatar",
@@ -3913,7 +3913,7 @@
           "id": "autoinject-modal-title"
         }
       ],
-      "content": "WB Auto-Inject Demo Autoinject — WB Demo Auto-Injection Demo Write standard HTML. Get enhanced, accessible, theme-aware behaviors automatically. No classes. No data attributes. Just pure HTML. Status: Initializing... Enabled via WB.init({ autoInject: true }) 🚀 The \"Zero-Config\" Form These forms are built with standard HTML tags only. No custom classes, no JavaScript initialization code. Default Theme Full Name Email Address Department Engineering Design Marketing Sales Bio Experience Level Preferences Remote Relocation Contract Type Full-time Contractor Submit Application Success Theme Username Status Active Verified Approved Verified Items Email Verified Phone Verified Save Settings Warning Theme Alert Level Priority Critical High Medium Notifications Email Alert SMS Alert Set Alerts Why this matters: Clean Code: Your HTML remains semantic and readable. Instant Theming: Try the theme switcher above. Every input adapts instantly. Future Proof: If you switch frameworks, your HTML is still valid standard HTML. Accessibility: ARIA attributes and keyboard navigation are added automatically. The Code (Default Form): ```html-static form label Full Name input type=\"text\" placeholder=\"John Doe\" required /label label Email Address input type=\"email\" placeholder=\"john@example.com\" required /label label Department select option Engineering /option option Design /option option Marketing /option option Sales /option /select /label label Bio textarea rows=\"3\" placeholder=\"Tell us about yourself...\" /textarea /label label Experience Level input type=\"range\" min=\"0\" max=\"10\" value=\"5\" /label fieldset legend Preferences /legend label input type=\"checkbox\" checked Remote /label label input type=\"checkbox\" Relocation /label /fieldset fieldset legend Contract Type /legend label input type=\"radio\" name=\"contract\" checked Full-time /label label input type=\"radio\" name=\"contract\" Contractor /label /fieldset button type=\"submit\" Submit Application /button /form ``` 1. Checkboxes Enhanced Value Added: Custom Styling: Replaces browser default with a consistent, theme-aware SVG checkmark. Wrapper: Automatically wraps input and label for better alignment. Indeterminate State: Visual support for indeterminate state. Accessibility: Maintains keyboard navigation and screen reader support. Standard HTML Standard Checkbox Checked Checkbox Disabled Checkbox Disabled Checked Variants Primary Variant Success Variant Warning Variant Danger Variant Info Variant Sizes Extra Small (xs) Small (sm) Medium (md) Large (lg) Extra Large (xl) Code: ```html-static !-- Standard -- label input type=\"checkbox\" Standard Checkbox /label label input type=\"checkbox\" checked Checked /label label input type=\"checkbox\" disabled Disabled /label !-- Variants -- label input type=\"checkbox\" variant=\"primary\" checked Primary /label label input type=\"checkbox\" variant=\"success\" checked Success /label label input type=\"checkbox\" variant=\"warning\" checked Warning /label label input type=\"checkbox\" variant=\"danger\" checked Danger /label label input type=\"checkbox\" variant=\"info\" checked Info /label !-- Sizes -- label input type=\"checkbox\" size=\"xs\" Extra Small /label label input type=\"checkbox\" size=\"sm\" Small /label label input type=\"checkbox\" size=\"md\" Medium /label label input type=\"checkbox\" size=\"lg\" Large /label label input type=\"checkbox\" size=\"xl\" Extra Large /label ``` 2. Radio Buttons Enhanced Value Added: Custom Styling: Consistent, theme-aware radio buttons. Animation: Smooth transition effects on selection. Layout: Automatic flexbox alignment with labels. Option 1 Option 2 Option 3 Code: ```html-static label input type=\"radio\" name=\"grp\" value=\"1\" Option 1 /label label input type=\"radio\" name=\"grp\" value=\"2\" checked Option 2 /label label input type=\"radio\" name=\"grp\" value=\"3\" Option 3 /label ``` 3. Select Dropdowns Enhanced Value Added: Theming: Applies site theme colors to the dropdown trigger. Clearable: Adds a clear button (x) if clearable is present. Searchable: Adds search capabilities if searchable is present. Variants: Supports variant (success, error) and size (sm, lg). Standard Select Choose a fruit: Apple Banana Cherry Date Elderberry Static Theme Variants Success (Static Green Border) ✓ Valid Option ✓ Approved ✓ Complete Error (Static Red Border) ✗ Invalid Option ✗ Rejected ✗ Failed Clearable Select Choose a topping (Clearable): Select... Chocolate Sprinkles Nuts Sizes Small Small Select Large Large Select Code: ```html-static !-- Standard -- select option Apple /option option Banana /option /select !-- Clearable -- select clearable option value=\"\" Select... /option option Chocolate /option /select !-- Static Theme Variants (visible without selection) -- select variant=\"success\" option ✓ Valid Option /option /select select variant=\"error\" option ✗ Invalid Option /option /select !-- Sizes -- select size=\"sm\" ... /select select size=\"lg\" ... /select ``` 4. Textarea Enhanced Value Added: Auto-resize: Automatically expands height as you type (if x-aut",
+      "content": "WB Auto-Inject Demo Autoinject — WB Demo Auto-Injection Demo Write standard HTML. Get enhanced, accessible, theme-aware behaviors automatically. No classes. No data attributes. Just pure HTML. Status: Initializing... Enabled via WB.init({ autoInject: true }) 🚀 The \"Zero-Config\" Form These forms are built with standard HTML tags only. No custom classes, no JavaScript initialization code. Default Theme Full Name Email Address Department Engineering Design Marketing Sales Bio Experience Level Preferences Remote Relocation Contract Type Full-time Contractor Submit Application Success Theme Username Status Active Verified Approved Verified Items Email Verified Phone Verified Save Settings Warning Theme Alert Level Priority Critical High Medium Notifications Email Alert SMS Alert Set Alerts Why this matters: Clean Code: Your HTML remains semantic and readable. Instant Theming: Try the theme switcher above. Every input adapts instantly. Future Proof: If you switch frameworks, your HTML is still valid standard HTML. Accessibility: ARIA attributes and keyboard navigation are added automatically. The Code (Default Form): ```html-static form label Full Name input type=\"text\" placeholder=\"John Doe\" required /label label Email Address input type=\"email\" placeholder=\"john@example.com\" required /label label Department select option Engineering /option option Design /option option Marketing /option option Sales /option /select /label label Bio textarea rows=\"3\" placeholder=\"Tell us about yourself...\" /textarea /label label Experience Level input type=\"range\" min=\"0\" max=\"10\" value=\"5\" /label fieldset legend Preferences /legend label input type=\"checkbox\" checked Remote /label label input type=\"checkbox\" Relocation /label /fieldset fieldset legend Contract Type /legend label input type=\"radio\" name=\"contract\" checked Full-time /label label input type=\"radio\" name=\"contract\" Contractor /label /fieldset button type=\"submit\" Submit Application /button /form ``` 1. Checkboxes Enhanced Value Added: Custom Styling: Replaces browser default with a consistent, theme-aware SVG checkmark. Wrapper: Automatically wraps input and label for better alignment. Indeterminate State: Visual support for indeterminate state. Accessibility: Maintains keyboard navigation and screen reader support. Standard HTML Standard Checkbox Checked Checkbox Disabled Checkbox Disabled Checked Variants Primary Variant Success Variant Warning Variant Danger Variant Info Variant Sizes Extra Small (xs) Small (sm) Medium (md) Large (lg) Extra Large (xl) Code: ```html-static !-- Standard -- label input type=\"checkbox\" Standard Checkbox /label label input type=\"checkbox\" checked Checked /label label input type=\"checkbox\" disabled Disabled /label !-- Variants -- label input type=\"checkbox\" variant=\"primary\" checked Primary /label label input type=\"checkbox\" variant=\"success\" checked Success /label label input type=\"checkbox\" variant=\"warning\" checked Warning /label label input type=\"checkbox\" variant=\"danger\" checked Danger /label label input type=\"checkbox\" variant=\"info\" checked Info /label !-- Sizes -- label input type=\"checkbox\" size=\"xs\" Extra Small /label label input type=\"checkbox\" size=\"sm\" Small /label label input type=\"checkbox\" size=\"md\" Medium /label label input type=\"checkbox\" size=\"lg\" Large /label label input type=\"checkbox\" size=\"xl\" Extra Large /label ``` 2. Radio Buttons Enhanced Value Added: Custom Styling: Consistent, theme-aware radio buttons. Animation: Smooth transition effects on selection. Layout: Automatic flexbox alignment with labels. Option 1 Option 2 Option 3 Code: ```html-static label input type=\"radio\" name=\"grp\" value=\"1\" Option 1 /label label input type=\"radio\" name=\"grp\" value=\"2\" checked Option 2 /label label input type=\"radio\" name=\"grp\" value=\"3\" Option 3 /label ``` 3. Select Dropdowns Enhanced Value Added: Theming: Applies site theme colors to the dropdown trigger. Clearable: Adds a clear button (x) if clearable is present. Searchable: Adds search capabilities if searchable is present. Variants: Supports variant (success, error) and size (sm, lg). Standard Select Choose a fruit: Apple Banana Cherry Date Elderberry Static Theme Variants Success (Static Green Border) ✓ Valid Option ✓ Approved ✓ Complete Error (Static Red Border) ✗ Invalid Option ✗ Rejected ✗ Failed Clearable Select Choose a topping (Clearable): Select... Chocolate Sprinkles Nuts Sizes Small Small Select Large Large Select Code: ```html-static !-- Standard -- select option Apple /option option Banana /option /select !-- Clearable -- select clearable option value=\"\" Select... /option option Chocolate /option /select !-- Static Theme Variants (visible without selection) -- select variant=\"success\" option ✓ Valid Option /option /select select variant=\"error\" option ✗ Invalid Option /option /select !-- Sizes -- select size=\"sm\" ... /select select size=\"lg\" ... /select ``` 4. Textarea Enhanced Value Added: Auto-resize: Automatically expands height as you type (if autos",
       "keywords": [],
       "type": "demo",
       "modified": "2026-10-16"
@@ -5143,7 +5143,7 @@
         },
         {
           "level": 2,
-          "text": "🧩 x-autosize — textarea that grows with content"
+          "text": "🧩 textarea autosize — textarea that grows with content"
         },
         {
           "level": 2,
@@ -5168,7 +5168,7 @@
       "content": "Form Controls ← Back to Index 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 🔘 Button icon variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. iconPosition variants This is example button content. This is example button content. Variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. size variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. target variants This is example button content. This is example button content. Toggles This is example button content. This is example button content. This is example button content. This is example button content. ☑️ Checkbox size variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Toggles This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. 📝 Input This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. inputType variants This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. Variants This is example input content. This is example input content. This is example input content. size variants This is example input content. This is example input content. This is example input content. iconPosition variants This is example input content. This is example input content. Toggles This is example input content. This is example input content. This is example input content. This is example input content. 🔍 Search This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. size variants This is example search content. This is example search content. This is example search content. Variants This is example search content. This is example search content. This is example search content. Toggles This is example search content. This is example search content. This is example search content. 📋 Select is the control for choosing a VALUE. Each sample shows one thing it does; x-dropdown (overlays.html) is for menus of actions. --> main develop release Canada Germany Japan Mexico United States Apple Banana Cherry Cheese Mushroom Olive Pepper Pro (locked) Team size variants This is example select content. This is example select content. This is example select content. Variants This is example select content. This is example select content. This is example select content. Toggles This is example select content. 🔘 Switch labelPosition variants This is example switch content. This is example switch content. size variants This is example switch content. This is example switch content. This is example switch content. Variants This is example switch content. This is example switch content. This is example switch content. Toggles This is example switch content. This is example switch content. This is example switch content. This is example switch content. 📝 Textarea This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. resize variants This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. Variants This is example textarea content. This is example textarea content. This is example textarea content. Toggles This is example textarea content. This is example textarea content. This is example textarea content. 📦 Slider This is example slider content. 📦 Toggle This is example toggle con",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "demos/site/index",
@@ -8362,6 +8362,7 @@
       "docs/auto-injection",
       "docs/behavior-cross-reference",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
       "docs/behaviors/codetheme",
@@ -9450,6 +9451,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/audio",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/autosize",
       "docs/behaviors/avatar",
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
@@ -9697,6 +9699,7 @@
       "docs/behaviors/address",
       "docs/behaviors/alert",
       "docs/behaviors/articles",
+      "docs/behaviors/autosize",
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
       "docs/behaviors/cardbutton",
@@ -9934,6 +9937,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardvideo",
       "docs/behaviors/clock",
@@ -12015,6 +12019,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
@@ -12067,6 +12072,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/alert",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardexpandable",
@@ -17077,6 +17083,7 @@
       "docs/audio",
       "docs/behaviors/accordion",
       "docs/behaviors/address",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cart",
@@ -29544,6 +29551,7 @@
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/alert",
+      "docs/behaviors/autosize",
       "docs/behaviors/badge",
       "docs/behaviors/button",
       "docs/behaviors/cardnotification",
@@ -33021,6 +33029,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
@@ -33635,6 +33644,7 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/chip",
       "docs/behaviors/code",
       "docs/behaviors/codetheme",
@@ -33689,6 +33699,7 @@
     "deprecated": [
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/list",
       "docs/behaviors/select",
       "docs/behaviors/x-behavior",
@@ -38789,6 +38800,7 @@
     ],
     "logs": [
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/clock",
       "docs/mcp",
@@ -39698,6 +39710,12 @@
       "docs/behaviors/textarea",
       "docs/behaviors/x-copybutton",
       "docs/search"
+    ],
+    "honors": [
+      "docs/behaviors/autosize"
+    ],
+    "maxrows": [
+      "docs/behaviors/autosize"
     ],
     "resizes": [
       "docs/behaviors/autosize"
@@ -48888,7 +48906,7 @@
     "nuts": [
       "demos/autoinject"
     ],
-    "aut": [
+    "autos": [
       "demos/autoinject"
     ],
     "uganda": [

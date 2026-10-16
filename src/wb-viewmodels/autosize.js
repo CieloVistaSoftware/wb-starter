@@ -1,6 +1,15 @@
 import { setRule } from '../core/dynamic-style.js';
 // Minimal autosize modifier (adjusts textarea height)
+// Deprecated: <textarea autosize> does this already (semantics/textarea.js) and
+// also honors maxRows. x-autosize keeps working so no page breaks, and says so
+// once per page.
+let deprecationWarned = false;
+
 export default function autosize(el) {
+  if (!deprecationWarned) {
+    deprecationWarned = true;
+    console.warn('[x-autosize] is deprecated -- use <textarea autosize> instead. Every textarea already grows with that attribute, and it also honors maxRows.');
+  }
   try {
     const t = el.tagName === 'TEXTAREA' ? el : el.querySelector('textarea');
     if (!t) return () => {};
