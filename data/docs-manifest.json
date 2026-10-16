@@ -563,7 +563,7 @@
       },
       {
         "path": "docs/behaviors/autosize.md",
-        "title": "x-autosize Behavior",
+        "title": "x-autosize Behavior (deprecated)",
         "name": "autosize",
         "category": "behaviors",
         "audience": "user",
@@ -2278,7 +2278,7 @@
     },
     {
       "path": "docs/behaviors/autosize.md",
-      "title": "x-autosize Behavior",
+      "title": "x-autosize Behavior (deprecated)",
       "name": "autosize",
       "category": "behaviors",
       "audience": "user",

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Content search index for the Demos page (#253) — scripts/generate-demos-search-index.mjs. Maps each demos/**/*.html file to searchable terms (visible text words, wb-* tags used, x-* behaviors used) extracted from its content, not just its title. Regenerate after adding/editing a demo; do not hand-edit.",
-    "generated": "2026-10-15",
+    "generated": "2026-10-16",
     "demoCount": 18
   },
   "demos": [
@@ -10,7 +10,6 @@
       "title": "Autoinject",
       "tags": [],
       "behaviors": [
-        "x-autosize",
         "x-button",
         "x-button--primary",
         "x-dialog",
@@ -57,7 +56,6 @@
         "max",
         "radio",
         "styling",
-        "x-autosize",
         "controls",
         "video",
         "mark",
@@ -138,7 +136,8 @@
         "labels",
         "grp",
         "applies",
-        "supports"
+        "supports",
+        "error"
       ]
     },
     {
@@ -586,7 +585,6 @@
       "tags": [],
       "behaviors": [
         "x-autocomplete",
-        "x-autosize",
         "x-badge",
         "x-behaviors",
         "x-bounce",
@@ -763,7 +761,6 @@
         "x-relativetime",
         "x-breadcrumb",
         "x-search",
-        "x-autosize",
         "x-colorpicker",
         "x-tags",
         "x-autocomplete",
@@ -801,7 +798,8 @@
         "form",
         "cards",
         "card",
-        "heroes"
+        "heroes",
+        "permutations"
       ]
     },
     {
@@ -1225,8 +1223,6 @@
       "tags": [],
       "behaviors": [
         "x-autocomplete",
-        "x-autosize",
-        "x-autosize-textarea-that-grows-with-content",
         "x-behavior-desc",
         "x-behavior-tag",
         "x-behaviors",
@@ -1282,7 +1278,6 @@
         "x-wobble",
         "x-tada",
         "x-label",
-        "x-autosize",
         "x-switch",
         "x-autocomplete",
         "ripple",
@@ -1306,7 +1301,6 @@
         "x-form-ajax-validate-behavior",
         "x-help-permanent-hint-text",
         "x-label-including-rtl-layouts",
-        "x-autosize-textarea-that-grows-with-content",
         "x-rating",
         "controls",
         "icon",
@@ -1378,7 +1372,9 @@
         "banana",
         "cherry",
         "cheese",
-        "mushroom"
+        "mushroom",
+        "olive",
+        "pepper"
       ]
     },
     {

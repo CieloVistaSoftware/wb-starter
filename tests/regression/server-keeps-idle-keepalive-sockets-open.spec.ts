@@ -66,7 +66,11 @@ test.describe('#1549 an idle keep-alive socket is not closed under a reusing cli
 
     const request = `GET /docs/README.md HTTP/1.1\r\nHost: localhost:${port}\r\nConnection: keep-alive\r\n\r\n`;
     sock.write(request);
-    await expect.poll(() => /^HTTP\/1\.1 \d{3}/.test(received), { timeout: 10_000 }).toBe(true);
+    // The FIRST answer is warm-up, not the scenario: a just-started server on a
+    // loaded Windows runner (4 workers) took over 10s to serve it once in CI,
+    // and the test failed before it reached the idle reuse it exists to check.
+    // The idle time and the second request's 5s budget below are unchanged.
+    await expect.poll(() => /^HTTP\/1\.1 \d{3}/.test(received), { timeout: 30_000 }).toBe(true);
 
     // sleep-is-the-scenario: the socket must survive IDLE_MS of idleness; the idle time is the scenario
     await new Promise((r) => setTimeout(r, IDLE_MS));

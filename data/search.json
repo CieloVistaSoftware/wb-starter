@@ -7,7 +7,7 @@
       "demos": 28
     },
     "totalDocuments": 293,
-    "totalWords": 5687
+    "totalWords": 5689
   },
   "documents": [
     {
@@ -327,7 +327,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library 167 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 50 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. 📦 One-Command Start One npm create command makes a working site, ready to publish on any static host. 🧠 Schema-Driven Every behavior has a JSON schema that powers its docs, validation and editor autocomplete. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.542\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.542\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library 167 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 50 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. 📦 One-Command Start One npm create command makes a working site, ready to publish on any static host. 🧠 Schema-Driven Every behavior has a JSON schema that powers its docs, validation and editor autocomplete. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.544\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.544\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-16"
@@ -1313,7 +1313,7 @@
       "title": "autosize",
       "description": null,
       "headings": [],
-      "content": "# x-autosize Behavior Automatically resizes a textarea to fit its content as the user types. - [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)",
+      "content": "# x-autosize Behavior (deprecated) > **Deprecated.** Use ` ` instead. Every ` ` already > grows with that attribute, and it also honors `maxRows`, which `x-autosize` > does not. `x-autosize` still works and logs a one-time console warning. Automatically resizes a textarea to fit its content as the user types. - [Demo](../../demos/site/forms.html#textarea-autosize-textarea-that-grows-with-content)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -3902,7 +3902,7 @@
           "id": "autoinject-modal-title"
         }
       ],
-      "content": "WB Auto-Inject Demo Autoinject — WB Demo Auto-Injection Demo Write standard HTML. Get enhanced, accessible, theme-aware behaviors automatically. No classes. No data attributes. Just pure HTML. Status: Initializing... Enabled via WB.init({ autoInject: true }) 🚀 The \"Zero-Config\" Form These forms are built with standard HTML tags only. No custom classes, no JavaScript initialization code. Default Theme Full Name Email Address Department Engineering Design Marketing Sales Bio Experience Level Preferences Remote Relocation Contract Type Full-time Contractor Submit Application Success Theme Username Status Active Verified Approved Verified Items Email Verified Phone Verified Save Settings Warning Theme Alert Level Priority Critical High Medium Notifications Email Alert SMS Alert Set Alerts Why this matters: Clean Code: Your HTML remains semantic and readable. Instant Theming: Try the theme switcher above. Every input adapts instantly. Future Proof: If you switch frameworks, your HTML is still valid standard HTML. Accessibility: ARIA attributes and keyboard navigation are added automatically. The Code (Default Form): ```html-static form label Full Name input type=\"text\" placeholder=\"John Doe\" required /label label Email Address input type=\"email\" placeholder=\"john@example.com\" required /label label Department select option Engineering /option option Design /option option Marketing /option option Sales /option /select /label label Bio textarea rows=\"3\" placeholder=\"Tell us about yourself...\" /textarea /label label Experience Level input type=\"range\" min=\"0\" max=\"10\" value=\"5\" /label fieldset legend Preferences /legend label input type=\"checkbox\" checked Remote /label label input type=\"checkbox\" Relocation /label /fieldset fieldset legend Contract Type /legend label input type=\"radio\" name=\"contract\" checked Full-time /label label input type=\"radio\" name=\"contract\" Contractor /label /fieldset button type=\"submit\" Submit Application /button /form ``` 1. Checkboxes Enhanced Value Added: Custom Styling: Replaces browser default with a consistent, theme-aware SVG checkmark. Wrapper: Automatically wraps input and label for better alignment. Indeterminate State: Visual support for indeterminate state. Accessibility: Maintains keyboard navigation and screen reader support. Standard HTML Standard Checkbox Checked Checkbox Disabled Checkbox Disabled Checked Variants Primary Variant Success Variant Warning Variant Danger Variant Info Variant Sizes Extra Small (xs) Small (sm) Medium (md) Large (lg) Extra Large (xl) Code: ```html-static !-- Standard -- label input type=\"checkbox\" Standard Checkbox /label label input type=\"checkbox\" checked Checked /label label input type=\"checkbox\" disabled Disabled /label !-- Variants -- label input type=\"checkbox\" variant=\"primary\" checked Primary /label label input type=\"checkbox\" variant=\"success\" checked Success /label label input type=\"checkbox\" variant=\"warning\" checked Warning /label label input type=\"checkbox\" variant=\"danger\" checked Danger /label label input type=\"checkbox\" variant=\"info\" checked Info /label !-- Sizes -- label input type=\"checkbox\" size=\"xs\" Extra Small /label label input type=\"checkbox\" size=\"sm\" Small /label label input type=\"checkbox\" size=\"md\" Medium /label label input type=\"checkbox\" size=\"lg\" Large /label label input type=\"checkbox\" size=\"xl\" Extra Large /label ``` 2. Radio Buttons Enhanced Value Added: Custom Styling: Consistent, theme-aware radio buttons. Animation: Smooth transition effects on selection. Layout: Automatic flexbox alignment with labels. Option 1 Option 2 Option 3 Code: ```html-static label input type=\"radio\" name=\"grp\" value=\"1\" Option 1 /label label input type=\"radio\" name=\"grp\" value=\"2\" checked Option 2 /label label input type=\"radio\" name=\"grp\" value=\"3\" Option 3 /label ``` 3. Select Dropdowns Enhanced Value Added: Theming: Applies site theme colors to the dropdown trigger. Clearable: Adds a clear button (x) if clearable is present. Searchable: Adds search capabilities if searchable is present. Variants: Supports variant (success, error) and size (sm, lg). Standard Select Choose a fruit: Apple Banana Cherry Date Elderberry Static Theme Variants Success (Static Green Border) ✓ Valid Option ✓ Approved ✓ Complete Error (Static Red Border) ✗ Invalid Option ✗ Rejected ✗ Failed Clearable Select Choose a topping (Clearable): Select... Chocolate Sprinkles Nuts Sizes Small Small Select Large Large Select Code: ```html-static !-- Standard -- select option Apple /option option Banana /option /select !-- Clearable -- select clearable option value=\"\" Select... /option option Chocolate /option /select !-- Static Theme Variants (visible without selection) -- select variant=\"success\" option ✓ Valid Option /option /select select variant=\"error\" option ✗ Invalid Option /option /select !-- Sizes -- select size=\"sm\" ... /select select size=\"lg\" ... /select ``` 4. Textarea Enhanced Value Added: Auto-resize: Automatically expands height as you type (if x-aut",
+      "content": "WB Auto-Inject Demo Autoinject — WB Demo Auto-Injection Demo Write standard HTML. Get enhanced, accessible, theme-aware behaviors automatically. No classes. No data attributes. Just pure HTML. Status: Initializing... Enabled via WB.init({ autoInject: true }) 🚀 The \"Zero-Config\" Form These forms are built with standard HTML tags only. No custom classes, no JavaScript initialization code. Default Theme Full Name Email Address Department Engineering Design Marketing Sales Bio Experience Level Preferences Remote Relocation Contract Type Full-time Contractor Submit Application Success Theme Username Status Active Verified Approved Verified Items Email Verified Phone Verified Save Settings Warning Theme Alert Level Priority Critical High Medium Notifications Email Alert SMS Alert Set Alerts Why this matters: Clean Code: Your HTML remains semantic and readable. Instant Theming: Try the theme switcher above. Every input adapts instantly. Future Proof: If you switch frameworks, your HTML is still valid standard HTML. Accessibility: ARIA attributes and keyboard navigation are added automatically. The Code (Default Form): ```html-static form label Full Name input type=\"text\" placeholder=\"John Doe\" required /label label Email Address input type=\"email\" placeholder=\"john@example.com\" required /label label Department select option Engineering /option option Design /option option Marketing /option option Sales /option /select /label label Bio textarea rows=\"3\" placeholder=\"Tell us about yourself...\" /textarea /label label Experience Level input type=\"range\" min=\"0\" max=\"10\" value=\"5\" /label fieldset legend Preferences /legend label input type=\"checkbox\" checked Remote /label label input type=\"checkbox\" Relocation /label /fieldset fieldset legend Contract Type /legend label input type=\"radio\" name=\"contract\" checked Full-time /label label input type=\"radio\" name=\"contract\" Contractor /label /fieldset button type=\"submit\" Submit Application /button /form ``` 1. Checkboxes Enhanced Value Added: Custom Styling: Replaces browser default with a consistent, theme-aware SVG checkmark. Wrapper: Automatically wraps input and label for better alignment. Indeterminate State: Visual support for indeterminate state. Accessibility: Maintains keyboard navigation and screen reader support. Standard HTML Standard Checkbox Checked Checkbox Disabled Checkbox Disabled Checked Variants Primary Variant Success Variant Warning Variant Danger Variant Info Variant Sizes Extra Small (xs) Small (sm) Medium (md) Large (lg) Extra Large (xl) Code: ```html-static !-- Standard -- label input type=\"checkbox\" Standard Checkbox /label label input type=\"checkbox\" checked Checked /label label input type=\"checkbox\" disabled Disabled /label !-- Variants -- label input type=\"checkbox\" variant=\"primary\" checked Primary /label label input type=\"checkbox\" variant=\"success\" checked Success /label label input type=\"checkbox\" variant=\"warning\" checked Warning /label label input type=\"checkbox\" variant=\"danger\" checked Danger /label label input type=\"checkbox\" variant=\"info\" checked Info /label !-- Sizes -- label input type=\"checkbox\" size=\"xs\" Extra Small /label label input type=\"checkbox\" size=\"sm\" Small /label label input type=\"checkbox\" size=\"md\" Medium /label label input type=\"checkbox\" size=\"lg\" Large /label label input type=\"checkbox\" size=\"xl\" Extra Large /label ``` 2. Radio Buttons Enhanced Value Added: Custom Styling: Consistent, theme-aware radio buttons. Animation: Smooth transition effects on selection. Layout: Automatic flexbox alignment with labels. Option 1 Option 2 Option 3 Code: ```html-static label input type=\"radio\" name=\"grp\" value=\"1\" Option 1 /label label input type=\"radio\" name=\"grp\" value=\"2\" checked Option 2 /label label input type=\"radio\" name=\"grp\" value=\"3\" Option 3 /label ``` 3. Select Dropdowns Enhanced Value Added: Theming: Applies site theme colors to the dropdown trigger. Clearable: Adds a clear button (x) if clearable is present. Searchable: Adds search capabilities if searchable is present. Variants: Supports variant (success, error) and size (sm, lg). Standard Select Choose a fruit: Apple Banana Cherry Date Elderberry Static Theme Variants Success (Static Green Border) ✓ Valid Option ✓ Approved ✓ Complete Error (Static Red Border) ✗ Invalid Option ✗ Rejected ✗ Failed Clearable Select Choose a topping (Clearable): Select... Chocolate Sprinkles Nuts Sizes Small Small Select Large Large Select Code: ```html-static !-- Standard -- select option Apple /option option Banana /option /select !-- Clearable -- select clearable option value=\"\" Select... /option option Chocolate /option /select !-- Static Theme Variants (visible without selection) -- select variant=\"success\" option ✓ Valid Option /option /select select variant=\"error\" option ✗ Invalid Option /option /select !-- Sizes -- select size=\"sm\" ... /select select size=\"lg\" ... /select ``` 4. Textarea Enhanced Value Added: Auto-resize: Automatically expands height as you type (if autos",
       "keywords": [],
       "type": "demo",
       "modified": "2026-10-16"
@@ -5132,7 +5132,7 @@
         },
         {
           "level": 2,
-          "text": "🧩 x-autosize — textarea that grows with content"
+          "text": "🧩 textarea autosize — textarea that grows with content"
         },
         {
           "level": 2,
@@ -6418,7 +6418,7 @@
     "540": [
       "docs/behaviors/img"
     ],
-    "542": [
+    "544": [
       "pages/home"
     ],
     "555": [
@@ -8346,6 +8346,7 @@
       "docs/auto-injection",
       "docs/behavior-cross-reference",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
       "docs/behaviors/codetheme",
@@ -9433,6 +9434,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/audio",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/autosize",
       "docs/behaviors/avatar",
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
@@ -9680,6 +9682,7 @@
       "docs/behaviors/address",
       "docs/behaviors/alert",
       "docs/behaviors/articles",
+      "docs/behaviors/autosize",
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
       "docs/behaviors/cardbutton",
@@ -9916,6 +9919,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardvideo",
       "docs/behaviors/clock",
@@ -11994,6 +11998,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
@@ -12046,6 +12051,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/alert",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardexpandable",
@@ -17051,6 +17057,7 @@
       "docs/audio",
       "docs/behaviors/accordion",
       "docs/behaviors/address",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cart",
@@ -29513,6 +29520,7 @@
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/alert",
+      "docs/behaviors/autosize",
       "docs/behaviors/badge",
       "docs/behaviors/button",
       "docs/behaviors/cardnotification",
@@ -32987,6 +32995,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/autosize",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
@@ -33601,6 +33610,7 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/standards/ERROR-MESSAGE",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/chip",
       "docs/behaviors/code",
       "docs/behaviors/codetheme",
@@ -33655,6 +33665,7 @@
     "deprecated": [
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/list",
       "docs/behaviors/select",
       "docs/behaviors/x-behavior",
@@ -38753,6 +38764,7 @@
     ],
     "logs": [
       "docs/behaviors/accordion",
+      "docs/behaviors/autosize",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/clock",
       "docs/mcp",
@@ -39662,6 +39674,12 @@
       "docs/behaviors/textarea",
       "docs/behaviors/x-copybutton",
       "docs/search"
+    ],
+    "honors": [
+      "docs/behaviors/autosize"
+    ],
+    "maxrows": [
+      "docs/behaviors/autosize"
     ],
     "resizes": [
       "docs/behaviors/autosize"
@@ -48848,7 +48866,7 @@
     "nuts": [
       "demos/autoinject"
     ],
-    "aut": [
+    "autos": [
       "demos/autoinject"
     ],
     "uganda": [

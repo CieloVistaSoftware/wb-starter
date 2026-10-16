@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.544",
+      "date": "2026-10-16",
+      "summary": "X-autosize duplicated &lt;textarea autosize&gt; without its maxRows limit, and nothing said which to use; it is now marked deprecated everywhere and our own pages use &lt;textarea autosize&gt;. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1917\" target=\"_blank\" rel=\"noopener\">#1917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1918\" target=\"_blank\" rel=\"noopener\">#1918</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-autosize is deprecated in favor of &lt;textarea autosize&gt;; it still works and warns once</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1917\" target=\"_blank\" rel=\"noopener\">#1917</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1918\" target=\"_blank\" rel=\"noopener\">#1918</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/83794c9ee20f526b8edc76554bb4ea7f7851528d\" target=\"_blank\" rel=\"noopener\"><code>83794c9</code></a>",
+          "issues": [
+            1917,
+            1918
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors and find x-autosize. Before: &quot;Grows a textarea to fit its content...&quot;. Now: &quot;Deprecated. ... use &lt;textarea autosize&gt; instead.&quot; Using x-autosize logs one console warning; the contact page&#39;s message box uses &lt;textarea autosize&gt;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/83794c9ee20f526b8edc76554bb4ea7f7851528d\" target=\"_blank\" rel=\"noopener\"><code>83794c9</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.543",
+      "date": "2026-10-16",
+      "summary": "Package.json had 74 npm scripts, 22 with no description and none grouped, so nobody could tell which to run day to day and which are internals for hooks and CI. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1911\" target=\"_blank\" rel=\"noopener\">#1911</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1912\" target=\"_blank\" rel=\"noopener\">#1912</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every npm script says what it does and when to use it, in six groups</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1911\" target=\"_blank\" rel=\"noopener\">#1911</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1912\" target=\"_blank\" rel=\"noopener\">#1912</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c67536d04ef38fe30335c7bcfd6833c15cd3387b\" target=\"_blank\" rel=\"noopener\"><code>c67536d</code></a>",
+          "issues": [
+            1911,
+            1912
+          ]
+        }
+      ],
+      "seeIt": "Run npm run scripts:help. Before: a flat list of 52 one-line descriptions in no order. Now: all 74 in six groups (Daily, Test one area, Full and cross-browser runs, Release and live site, Generate and audit, Internal), each saying what it does and when to use it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/c67536d04ef38fe30335c7bcfd6833c15cd3387b\" target=\"_blank\" rel=\"noopener\"><code>c67536d</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.542",
       "date": "2026-10-16",
       "summary": "The Behaviors page Events log named only the element an event came from, so a breadcrumb click never said which item was clicked and a behavior&#39;s own event never showed its detail. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1915\" target=\"_blank\" rel=\"noopener\">#1915</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1916\" target=\"_blank\" rel=\"noopener\">#1916</a>",
