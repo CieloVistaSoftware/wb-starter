@@ -544,7 +544,7 @@
 .x-demo__card-doc-link:hover,
 .x-demo__card-doc-link:focus-visible {
   opacity: 1;
-  color: var(--primary);
+  color: var(--primary-text);
   border-color: var(--primary);
 }
 

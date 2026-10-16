@@ -265,7 +265,7 @@
 .hv-ref-table thead tr { border-bottom: 0.0625rem solid var(--x-glass-border); }
 .hv-ref-table th { text-align: left; padding: 1rem; }
 .hv-ref-table td { padding: 1rem; }
-.hv-ref-table td:nth-child(2) { font-family: monospace; color: var(--primary); }
+.hv-ref-table td:nth-child(2) { font-family: monospace; color: var(--primary-text); }
 .hv-reference__note { margin-top: 2rem; text-align: center; }
 /* Three classes: code.css's `.x-code--inline.hljs` (0-2-0) sets its own
    background on every inline snippet. */

@@ -44,7 +44,7 @@
   border: 0.0625rem solid var(--border-color, #4b5563);
   color: var(--text-primary, #f9fafb);
 }
-.x-chip--outlined.x-chip--primary { border-color: var(--primary, #6366f1); color: var(--primary, #6366f1); }
+.x-chip--outlined.x-chip--primary { border-color: var(--primary, #6366f1); color: var(--primary-text, #6366f1); }
 .x-chip--outlined.x-chip--success { border-color: var(--success-color, #22c55e); color: var(--success-color, #22c55e); }
 .x-chip--outlined.x-chip--warning { border-color: var(--warning-color, #f59e0b); color: var(--warning-color, #f59e0b); }
 .x-chip--outlined.x-chip--error   { border-color: var(--danger-color, #ef4444); color: var(--danger-color, #ef4444); }

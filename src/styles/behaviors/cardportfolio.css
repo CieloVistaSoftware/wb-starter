@@ -476,7 +476,7 @@
 [x-cardportfolio] .x-cardportfolio__stat-value {
   font-size:1.25rem;
   font-weight:700;
-  color:var(--primary);
+  color:var(--primary-text);
 }
 
 [x-cardportfolio] .x-cardportfolio__stat-label {
@@ -555,7 +555,7 @@
 }
 
 [x-cardportfolio] .x-cardportfolio__exp-company {
-  color:var(--primary);
+  color:var(--primary-text);
   font-size:0.9rem;
   margin-top:0.25rem;
 }

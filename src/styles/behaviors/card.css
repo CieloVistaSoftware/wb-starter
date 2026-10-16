@@ -100,7 +100,7 @@ article,
 }
 
 /* A card's heading is the card's, not the page's (#887).
-   site.css styles bare `h3 { color: var(--primary); margin: 1.5rem 0 0.75rem }`
+   site.css styles bare `h3 { color: var(--primary-text); margin: 1.5rem 0 0.75rem }`
    for page headings, and card.css never claimed the heading it builds -- so
    every card title rendered accent-blue on the card's dark surface (measured
    rgb(38,38,217) against --text-primary's near-white) with 1.5rem of dead
@@ -292,7 +292,7 @@ article[variant="primary"],
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="info"][variant="info"] > header > :is(h1, h2, h3, h4),
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="info"] .x-card__title.x-card__title { color: var(--info-color); }
 :is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"][variant="primary"] > header > :is(h1, h2, h3, h4),
-:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"] .x-card__title.x-card__title { color: var(--primary); }
+:is(article, [x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[variant="primary"] .x-card__title.x-card__title { color: var(--primary-text); }
 
 /* Cards WITHOUT header/main/footer need padding on the card itself */
 /* #945 left `.x-card__main` here on purpose. No card has carried that class

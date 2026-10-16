@@ -225,7 +225,7 @@ body.x-sidebar--resizing {
 /* ── link ─────────────────────────────────────────────────────────────── */
 .x-link {
   cursor: pointer;
-  color: var(--primary);
+  color: var(--primary-text);
   text-decoration: underline;
   transition: color 0.2s ease;
 }

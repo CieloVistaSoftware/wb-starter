@@ -118,7 +118,7 @@ h2 {
    highlight.js theme WB loads at runtime. */
 .x-pre.hljs { color: var(--text-primary); background: transparent; }
 .x-pre .hljs-comment, .x-pre .hljs-quote { color: var(--text-muted); font-style: italic; }
-.x-pre .hljs-keyword, .x-pre .hljs-selector-tag, .x-pre .hljs-literal { color: var(--primary); }
+.x-pre .hljs-keyword, .x-pre .hljs-selector-tag, .x-pre .hljs-literal { color: var(--primary-text); }
 .x-pre .hljs-string, .x-pre .hljs-attr { color: var(--success-color); }
 .x-pre .hljs-number, .x-pre .hljs-built_in { color: var(--warning-color); }
 .x-pre .hljs-title, .x-pre .hljs-name, .x-pre .hljs-type, .x-pre .hljs-tag { color: var(--info-color); }

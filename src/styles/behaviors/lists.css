@@ -37,7 +37,7 @@
   color: var(--success, #22c55e);
 }
 .x-ul__icon {
-  color: var(--primary);
+  color: var(--primary-text);
   min-width: 1rem;
 }
 

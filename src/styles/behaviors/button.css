@@ -155,7 +155,7 @@ button-tooltip[disabled] {
    specificity tie-break against a single class. */
 .x-button.x-button--outline {
   background-color: transparent;
-  color: var(--primary);
+  color: var(--primary-text);
   border-color: var(--primary);
 }
 .x-button.x-button--outline:hover {
@@ -166,7 +166,7 @@ button-tooltip[disabled] {
 
 .x-button.x-button--link {
   background-color: transparent;
-  color: var(--primary);
+  color: var(--primary-text);
   padding: 0;
   border: none;
   box-shadow: none;
@@ -243,7 +243,7 @@ button-tooltip[disabled] {
 .x-btn.x-btn--warning   { background-color: var(--warning-color); color: var(--text-on-accent); border-color: transparent; }
 .x-btn.x-btn--ghost     { background-color: transparent; color: var(--text-primary); border: 0.0625rem solid var(--border-color); }
 .x-btn.x-btn--ghost:hover{ background-color: var(--bg-tertiary); border-color: var(--text-secondary); }
-.x-btn.x-btn--link      { background-color: transparent; color: var(--primary); border: none; box-shadow: none; }
+.x-btn.x-btn--link      { background-color: transparent; color: var(--primary-text); border: none; box-shadow: none; }
 .x-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* The showcase sizes buttons with the .x-btn--* prefix (Small/Medium/Large), but

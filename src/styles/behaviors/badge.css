@@ -139,7 +139,7 @@
   background: transparent;
   border: 0.0625rem solid currentColor;
 }
-.x-badge--outline.x-badge--primary { color: var(--primary); }
+.x-badge--outline.x-badge--primary { color: var(--primary-text); }
 .x-badge--outline.x-badge--success { color: var(--success-color); }
 .x-badge--outline.x-badge--warning { color: var(--warning-color); }
 .x-badge--outline.x-badge--error { color: var(--danger-color); }

@@ -74,7 +74,7 @@
   border-radius: 50%;
   border: 0.125rem solid rgba(255,255,255,0.15);
   background: linear-gradient(145deg, #2a2a3a 0%, #1a1a28 100%);
-  color: var(--primary, #6366f1);
+  color: var(--primary-text, #6366f1);
   font-size: 1.25rem;
   cursor: pointer;
   display: flex;
@@ -208,7 +208,7 @@
 /* Light theme adjustments for transport */
 [data-theme="light"] .x-audio__play-btn {
   background: linear-gradient(145deg, #e0e0e8 0%, #c8c8d8 100%);
-  color: var(--primary);
+  color: var(--primary-text);
   border-color: rgba(0,0,0,0.15);
 }
 

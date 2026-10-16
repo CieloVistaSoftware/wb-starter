@@ -245,7 +245,7 @@
 }
 
 .x-fixcard .fix-enhancement-link {
-  color: var(--primary);
+  color: var(--primary-text);
   text-decoration: none;
   border-bottom: 0.0625rem dashed var(--primary);
 }

@@ -230,7 +230,7 @@
 
 .variables-group h3 {
   margin: 0 0 0.75rem;
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -364,7 +364,7 @@
 
 .harmony-card h4 {
   margin: 0 0 0.5rem;
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 1.125rem;
 }
 
@@ -500,7 +500,7 @@ code.harmony-formula {
 }
 
 .harmony-themes strong {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 /* Math Section */
@@ -533,7 +533,7 @@ code.harmony-formula {
 
 .math-card h4 {
   margin: 0 0 0.75rem;
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 0.875rem;
 }
 
