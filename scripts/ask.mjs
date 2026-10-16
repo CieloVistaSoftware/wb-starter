@@ -35,7 +35,11 @@ async function main() {
   if (!fs.existsSync(path.join(OUT, 'meta.json'))) {
     throw new Error('No index yet. Run: npm run ask:index');
   }
+  // Say what is happening at every step: a cold first answer loads a 2 GB
+  // model, and a blank cursor for a minute read as "didn't work at all".
+  const step = (msg) => process.stderr.write(`${msg}\n`);
   const meta = JSON.parse(fs.readFileSync(path.join(OUT, 'meta.json'), 'utf8'));
+  step(`Searching ${meta.chunks.length.toLocaleString()} passages of the project...`);
   const vectors = new Float32Array(fs.readFileSync(path.join(OUT, 'vectors.bin')).buffer.slice(0));
 
   const er = await fetch(`${HOST}/api/embed`, {
@@ -52,6 +56,17 @@ async function main() {
     console.log(`Closest passages:\n${list}`);
     return;
   }
+
+  step(`Found: ${[...new Set(hits.map((h) => h.file))].slice(0, 4).join(', ')}${hits.length > 4 ? ', ...' : ''}`);
+  // Is the answer model already in memory? If not, loading it is the slow part.
+  let loaded = false;
+  try {
+    const ps = await (await fetch(`${HOST}/api/ps`)).json();
+    loaded = (ps.models || []).some((m) => m.name === MODEL || m.model === MODEL);
+  } catch { /* the chat call below reports a real problem */ }
+  step(loaded
+    ? `Asking ${MODEL}...`
+    : `Loading ${MODEL} into memory (the first question after a while can take a minute or more)...`);
 
   const { system, user } = buildPrompt(question, hits);
   const res = await fetch(`${HOST}/api/chat`, {
