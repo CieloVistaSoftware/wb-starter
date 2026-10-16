@@ -397,12 +397,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/control.md",
-          "title": "Control",
-          "description": "x-control adds the x-control class to the element and does nothing else; no stylesheet targets that class yet.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/copy.md",
           "title": "Copy",
           "description": "x-copy copies text to the clipboard when the element is clicked: the value of copy-text, or the text of the element matched by copy-target.",

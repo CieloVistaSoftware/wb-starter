@@ -215,12 +215,11 @@ const behaviorModules = {
   // Utility → helpers.js + standalone
   stagelight: 'stagelight',
   status: 'status',
-  // These two are the only behaviors whose module file is x-prefixed. The
+  // x-repeater is the only behavior whose module file is x-prefixed. The
   // values carried literal square brackets, so loadModule()'s
-  // `./${moduleName}.js` asked for "./[x-control].js" -- a path that cannot
-  // exist. Both behaviors failed every load, and the module-failure cooldown
+  // `./${moduleName}.js` asked for "./[x-repeater].js" -- a path that cannot
+  // exist. It (and the since-removed x-control) failed every load, and the module-failure cooldown
   // re-armed forever, so each retry was a fresh 404 (#882).
-  control: 'x-control',
   repeater: 'x-repeater',
   copy: 'copy',
   // x-copybutton (#291) — overlays a positioned copy button on ANY element;

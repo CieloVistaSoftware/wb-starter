@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-13T02:57:07.248Z",
-  "count": 212,
+  "generatedAt": "2026-10-16T19:35:51.378Z",
+  "count": 211,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -2143,22 +2143,6 @@
           "default": "this is the wrap"
         }
       },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
-        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-      }
-    },
-    {
-      "file": "control.schema.json",
-      "name": "control",
-      "title": "Control",
-      "description": "x-control adds the x-control class to the element and does nothing else; no stylesheet targets that class yet.",
-      "tag": "x-control",
-      "baseClass": "x-control",
-      "kind": "decorator",
-      "properties": {},
       "matrix": [],
       "_metadata": {
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

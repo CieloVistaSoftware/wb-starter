@@ -53,7 +53,6 @@ Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `do
 | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — |
 | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — |
 | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes |
-| `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — |
 | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — |
 | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — |
 | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — |

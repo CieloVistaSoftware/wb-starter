@@ -177,7 +177,6 @@ test('no spec file appears in more than one npm-test project', async () => {
         'components/validator.spec.ts',
         'components/x-cluster.spec.ts',
         'components/x-column.spec.ts',
-        'components/x-control.spec.ts',
         'components/x-grid.spec.ts',
         'components/x-repeater.spec.ts',
         'components/x-row.spec.ts',

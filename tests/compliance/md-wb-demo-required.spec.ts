@@ -46,7 +46,6 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'architecture/WBVIEWS.md',
   'auto-injection.md',
   'behaviors/x-card.md',
-  'behaviors/x-control.md',
   'behaviors/x-repeater.md',
   'behaviors/x-search.md',
   'components/cards/cards.readme.md',

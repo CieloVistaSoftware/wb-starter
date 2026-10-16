@@ -3,10 +3,10 @@
   "$stats": {
     "sources": {
       "pages": 22,
-      "docs": 244,
+      "docs": 243,
       "demos": 28
     },
-    "totalDocuments": 294,
+    "totalDocuments": 293,
     "totalWords": 5687
   },
   "documents": [
@@ -1196,7 +1196,7 @@
           "text": "Card Title"
         }
       ],
-      "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `cart` | `x-cart` | [behaviors/cart.md](behaviors/cart.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behav",
+      "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `cart` | `x-cart` | [behaviors/cart.md](behaviors/cart.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behaviors/details.md](behaviors/details.md) | yes | | `dialog` | `x-dialog` | [behav",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -1732,17 +1732,6 @@
       "description": null,
       "headings": [],
       "content": "# Container - wb-starter v3.0 Full-featured layout container that switches between a flex stack/row (1 column) and a responsive auto-fit grid (2+ columns), with configurable gap, alignment, padding, and max-width. ## Overview | Property | Value | |----------|-------| | Attribute form | ` ` | | Behavior | `container` | | Semantic | ` ` (structural/CSS-only -- no `$methods`; a `semantic/container.schema.json` exists for the plain ` ` semantic element, not for this behavior) | | Root CSS Class | `x-container` (`x-container--grid` in grid mode) | | Category | Layout | `container()` (`src/wb-viewmodels/layouts.js`) is a plain structural behavior driven entirely by attributes. ## Properties | Property | Type | Default | Description | |----------|------|---------|-------------| | `direction` | `column` · `row` | `\"column\"` | `column` (stack) or `row` -- only used when `columns` is `1` | | `columns` | number | `1` | `1` = flex mode (stack/row); `2`+ = responsive auto-fit grid mode | | `gap` | CSS length | `\"1rem\"` | Gap between children | | `align` | `start` · `center` · `end` · `stretch` | `\"stretch\"` | `start`, `center`, `end`, `stretch` | | `justify` | `start` · `center` · `end` · `space-between` · `space-around` · `space-evenly` | `\"start\"` | `start`, `center`, `end`, `space-between`, `space-around`, `space-evenly` | | `wrap` | boolean | `true` | Whether flex-mode children wrap (`false` forces `nowrap`) | | `padding` | CSS padding | `\"1rem\"` | Padding on the container itself | | `maxWidth` | CSS length | `\"\"` | Optional max-width; when set, also centers via `margin: 0 auto` | ## Usage ### Custom Element (Flex Stack, Default) Content Content ### Row Direction Save Cancel ### Grid Mode (2+ Columns) Card A Card B Card C ### Centered, Max-Width Centered reading-width content block. ### Alignment Left Right ## Generated Structure `container()` does not add or remove elements, and it writes no inline style. It adds the `x-container` class, plus `x-container--grid` when `columns` is 2 or more; those rules in `src/styles/behaviors/layout.css` carry the defaults. Any value you change from a default (`gap`, `padding`, `align`, `justify`, `direction`, `maxWidth`, or the grid's minimum column width) travels as a generated rule, named by a `data-x-style` token on the host. Children are left untouched. With `columns=\"2\"` the host becomes: ```html-static ``` ## CSS Classes | Selector | Applied When | Description | |----------|--------------|--------------| | `.x-container` | Always | Flex column: `align-items: stretch`, `gap: 1rem`, `padding: 1rem`, wrapping (`layout.css`) | | `.x-container--grid` | `columns` is 2 or more | `display: grid`, auto-fit columns (`layout.css`) | | `[x-container].drop-target` | External drag-and-drop code adds `.drop-target` | Success-colored border/background (`effects.css`) | ## Methods None. `container()` returns a cleanup function that clears its generated rules and removes `x-container--grid`, and attaches no API to the element. ## Events None. ` ` dispatches no custom events. ## CSS API `container()` has no dedicated CSS custom properties -- `gap`/`align`/`justify`/`padding`/`maxWidth` reach the host as a generated rule, not as variables. | Variable | Used For | Description | |----------|----------|--------------| | `--primary` | Hover border color (tag-level CSS) | From `src/styles/behaviors/effects.css` | | `--success-color` / `--success-bg` | `.drop-target` state (tag-level CSS) | Drag-and-drop target highlight | ## Accessibility ` ` is a purely presentational layout container -- it sets no ARIA role or attributes. Give individual children their own accessible names/roles/landmarks as appropriate.",
-      "keywords": [],
-      "type": "doc",
-      "modified": "2026-10-10"
-    },
-    {
-      "id": "docs/behaviors/control",
-      "url": "/docs/behaviors/control",
-      "title": "control",
-      "description": null,
-      "headings": [],
-      "content": "# Control `x-control` adds the `x-control` class to the element and does nothing else; no stylesheet targets that class yet. The former button treatment (`action=\"move-up\"` and so on) never ran and is not supported — use the `x-move*` behaviors for that. ## Usage Schema: [`control.schema.json`](../../src/wb-models/control.schema.json)",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -3469,7 +3458,7 @@
       "title": "pce-candidates",
       "description": null,
       "headings": [],
-      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) let an author name a behavior by tag. 4.0.0 removed them: there are no behavior tags of our own any more, and the noun-first aliases went with them. ## Naming Conventions One form is left. A behavior is either the semantic element itself (` ` is a card) or an `x-*` attribute on a host element: The old generic form, `x-behavior=\"cardprofile\"`, is deprecated (#1642): write the named attribute. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-{name} Attributes** | One attribute per behavior (`x-cardprofile`); `x-behavior=\"…\"` is deprecated (#1642) | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | | ` ` | `control` | Form control wrapper | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-vie",
+      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) let an author name a behavior by tag. 4.0.0 removed them: there are no behavior tags of our own any more, and the noun-first aliases went with them. ## Naming Conventions One form is left. A behavior is either the semantic element itself (` ` is a card) or an `x-*` attribute on a host element: The old generic form, `x-behavior=\"cardprofile\"`, is deprecated (#1642): write the named attribute. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-{name} Attributes** | One attribute per behavior (`x-cardprofile`); `x-behavior=\"…\"` is deprecated (#1642) | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-viewmodels/mycomponent.js`: ```javascript expo",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
@@ -6976,7 +6965,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -7499,7 +7487,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -7965,7 +7952,6 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/dropdown",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/help",
@@ -8634,7 +8620,6 @@
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/counter",
@@ -9711,7 +9696,6 @@
       "docs/behaviors/cluster",
       "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
-      "docs/behaviors/control",
       "docs/behaviors/dropdown",
       "docs/behaviors/error",
       "docs/behaviors/fill",
@@ -10438,7 +10422,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -10870,7 +10853,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -11064,7 +11046,6 @@
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -14168,7 +14149,6 @@
       "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/counter",
       "docs/behaviors/cover",
       "docs/behaviors/dialog",
@@ -15344,7 +15324,6 @@
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/fill",
       "docs/behaviors/icon",
       "docs/behaviors/img",
@@ -15634,7 +15613,6 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardstats",
       "docs/behaviors/cluster",
-      "docs/behaviors/control",
       "docs/behaviors/grid",
       "docs/behaviors/heartbeat",
       "docs/behaviors/icon",
@@ -15700,7 +15678,6 @@
       "docs/behaviors/articles",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
-      "docs/behaviors/control",
       "docs/behaviors/fieldset",
       "docs/behaviors/figure",
       "docs/behaviors/fix-card",
@@ -16742,7 +16719,6 @@
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/fix-card",
       "docs/compliance/iso-42001-alignment",
       "docs/guides/migrate-an-existing-page",
@@ -20593,7 +20569,6 @@
       "docs/behaviors/collapse",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
-      "docs/behaviors/control",
       "docs/behaviors/copybutton",
       "docs/behaviors/dialog",
       "docs/behaviors/drawer",
@@ -22937,7 +22912,6 @@
       "pages/home",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audio",
-      "docs/behaviors/control",
       "docs/claude/TOOLING-INVENTORY",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -23066,7 +23040,6 @@
     "supported": [
       "pages/home",
       "docs/audio",
-      "docs/behaviors/control",
       "docs/card"
     ],
     "ripple": [
@@ -23756,7 +23729,6 @@
       "pages/home",
       "pages/introduction",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/globe",
       "docs/behaviors/move",
       "docs/behaviors/scrollalong",
@@ -23975,7 +23947,6 @@
       "docs/behaviors/button",
       "docs/behaviors/chip",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/error",
       "docs/behaviors/file",
       "docs/behaviors/fix-card",
@@ -24041,6 +24012,7 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/auto-injection",
+      "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/behaviors/confirm",
       "docs/behaviors/dialog",
@@ -28577,7 +28549,6 @@
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardproduct",
       "docs/behaviors/confirm",
-      "docs/behaviors/control",
       "docs/behaviors/dropdown",
       "docs/behaviors/form",
       "docs/behaviors/pagination",
@@ -32636,7 +32607,6 @@
     "control": [
       "docs/V3-GUIDE",
       "docs/audio",
-      "docs/behavior-cross-reference",
       "docs/behaviors/articles",
       "docs/behaviors/bounce",
       "docs/behaviors/button",
@@ -32644,7 +32614,6 @@
       "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/dl",
       "docs/behaviors/formrow",
       "docs/behaviors/glow",
@@ -32662,7 +32631,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
-      "docs/pce-candidates",
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -36143,7 +36111,6 @@
     "else": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audio",
-      "docs/behaviors/control",
       "docs/behaviors/masked",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/time",
@@ -38124,7 +38091,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -40370,7 +40336,6 @@
     ],
     "move": [
       "docs/behaviors/carddraggable",
-      "docs/behaviors/control",
       "docs/behaviors/draggable",
       "docs/behaviors/move",
       "docs/behaviors/reel",
@@ -41564,8 +41529,7 @@
       "docs/behaviors/pre"
     ],
     "treatment": [
-      "docs/behaviors/code",
-      "docs/behaviors/control"
+      "docs/behaviors/code"
     ],
     "spelling": [
       "docs/behaviors/code",
@@ -41920,18 +41884,6 @@
     ],
     "landmarks": [
       "docs/behaviors/container"
-    ],
-    "targets": [
-      "docs/behaviors/control",
-      "docs/behaviors/globe",
-      "docs/behaviors/radio",
-      "docs/behaviors/slider"
-    ],
-    "former": [
-      "docs/behaviors/control",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/status",
-      "docs/styles"
     ],
     "copies": [
       "docs/behaviors/copy",
@@ -42479,6 +42431,11 @@
     "coupon": [
       "docs/behaviors/fieldset"
     ],
+    "former": [
+      "docs/behaviors/fieldset",
+      "docs/behaviors/status",
+      "docs/styles"
+    ],
     "overwriting": [
       "docs/behaviors/fieldset",
       "docs/card"
@@ -42821,6 +42778,11 @@
     "globe": [
       "docs/behaviors/globe",
       "docs/pce-candidates"
+    ],
+    "targets": [
+      "docs/behaviors/globe",
+      "docs/behaviors/radio",
+      "docs/behaviors/slider"
     ],
     "treat": [
       "docs/behaviors/globe"
@@ -47094,7 +47056,7 @@
     "mycomponent": [
       "docs/pce-candidates"
     ],
-    "vie": [
+    "expo": [
       "docs/pce-candidates"
     ],
     "execution": [
