@@ -176,7 +176,10 @@ table.x-table {
   margin-right: auto;
 }
 
-.x-table__pager-btn {
+/* Doubled class (0,2,0): themes.css styles every button with [data-theme] button
+   (0,1,1) -- padding 1rem, a background, a border -- which beat a single class and
+   drew this small control as a full padded button. */
+.x-table__pager-btn.x-table__pager-btn {
   padding: 0.375rem 0.875rem;
   border: 0.0625rem solid var(--border-color);
   border-radius: 0.25rem;

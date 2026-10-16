@@ -24,7 +24,10 @@
 
 .x-cardnotification__message { margin: 0.25rem 0 0; color: var(--text-primary); opacity: 0.9; }
 
-/* Dismiss button */ .x-cardnotification__dismiss { background: none; border: none; font-size: 1.25rem; cursor: pointer; opacity: 0.5; padding: 0; color: var(--text-primary); line-height: 1; }
+/* Doubled class (0,2,0): themes.css styles every button with [data-theme] button
+   (0,1,1) -- padding 1rem, a background, a border -- which beat a single class and
+   drew this small control as a full padded button. */
+/* Dismiss button */ .x-cardnotification__dismiss.x-cardnotification__dismiss { background: none; border: none; font-size: 1.25rem; cursor: pointer; opacity: 0.5; padding: 0; color: var(--text-primary); line-height: 1; }
 
 .x-cardnotification__dismiss:hover { opacity: 1; background: rgba(0,0,0,0.1); border-radius: 0.25rem; }
 
