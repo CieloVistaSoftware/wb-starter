@@ -1284,5 +1284,8 @@
   "1909": "Badge remove ✕ and 6 other built-in small buttons get the theme's full button padding and background",
   "1911": "npm scripts: 74 with no grouping and 22 undescribed, so nobody can tell what to run or when",
   "1913": "API panel: x-autocomplete usage is a <div> with items=\"\", and an array default shows as a crushed code block",
-  "1915": "Events log names the element but not what was picked, typed or toggled"
+  "1915": "Events log names the element but not what was picked, typed or toggled",
+  "1917": "x-autosize duplicates <textarea autosize> (without maxRows): mark it deprecated and move our pages off it",
+  "1919": "Remove x-control: a leftover from the paused page-builder work that does nothing",
+  "1921": "x-cardhero headingLevel rows look identical: show the h1..h6 tag each renders, and document it"
 }
