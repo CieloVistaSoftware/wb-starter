@@ -1274,5 +1274,6 @@
   "1890": "docs/_today still holds seven February plans, including a Copilot-era AI-COORDINATION.md that contradicts .claude/CLAUDE.md",
   "1892": "Session coordination log: cloud session and local PC session",
   "1896": "Remove the Schema-First Architecture paper: both HTML copies, both .md docs, every link and index entry",
-  "1898": "label= on select and textarea: textarea shows no label, select's label has no 1rem gap"
+  "1898": "label= on select and textarea: textarea shows no label, select's label has no 1rem gap",
+  "1900": "Behaviors Docs panel: text centered right of its headings, and code labels from underneath show through"
 }
