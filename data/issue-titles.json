@@ -1281,5 +1281,8 @@
   "1904": "Doc examples of a closed <dialog> render an empty box (8 demos in 4 docs)",
   "1905": "x-articles masonry ignores columns and overflows its example box; reel and article items spill past docs",
   "1907": "Toast is 67px tall: its close button gets the theme's full button padding and background",
-  "1909": "Badge remove ✕ and 6 other built-in small buttons get the theme's full button padding and background"
+  "1909": "Badge remove ✕ and 6 other built-in small buttons get the theme's full button padding and background",
+  "1911": "npm scripts: 74 with no grouping and 22 undescribed, so nobody can tell what to run or when",
+  "1913": "API panel: x-autocomplete usage is a <div> with items=\"\", and an array default shows as a crushed code block",
+  "1915": "Events log names the element but not what was picked, typed or toggled"
 }

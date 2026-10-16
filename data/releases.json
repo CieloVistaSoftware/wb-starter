@@ -6,6 +6,51 @@
   ],
   "releases": [
     {
+      "version": "1.0.540",
+      "date": "2026-10-16",
+      "summary": "Toasts were 67px tall because the theme&#39;s full button padding, background and border reached the close button, beating toast.css&#39;s single-class reset. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1909\" target=\"_blank\" rel=\"noopener\">#1909</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1910\" target=\"_blank\" rel=\"noopener\">#1910</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1907\" target=\"_blank\" rel=\"noopener\">#1907</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A badge&#39;s ✕ and 6 other built-in small buttons keep their compact look</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1909\" target=\"_blank\" rel=\"noopener\">#1909</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1910\" target=\"_blank\" rel=\"noopener\">#1910</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1907\" target=\"_blank\" rel=\"noopener\">#1907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/05a8e13f75218dd736af1e87cc205b21e5565bc4\" target=\"_blank\" rel=\"noopener\"><code>05a8e13</code></a>",
+          "issues": [
+            1909,
+            1910,
+            1907
+          ]
+        }
+      ],
+      "seeIt": "Open the toast doc and click Show toast. Before: a tall toast with a dark padded square around the ✕. Now: a slim one-line toast with a plain ✕.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/05a8e13f75218dd736af1e87cc205b21e5565bc4\" target=\"_blank\" rel=\"noopener\"><code>05a8e13</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.539",
+      "date": "2026-10-16",
+      "summary": "Toasts were 67px tall because the theme&#39;s full button padding, background and border reached the close button, beating toast.css&#39;s single-class reset. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1907\" target=\"_blank\" rel=\"noopener\">#1907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1908\" target=\"_blank\" rel=\"noopener\">#1908</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A toast is one line tall; its close button is a bare ✕</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1907\" target=\"_blank\" rel=\"noopener\">#1907</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1908\" target=\"_blank\" rel=\"noopener\">#1908</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/43ba73cc98d33dc8ba47dc6f2a0c213868ae63b2\" target=\"_blank\" rel=\"noopener\"><code>43ba73c</code></a>",
+          "issues": [
+            1907,
+            1908
+          ]
+        }
+      ],
+      "seeIt": "Open the toast doc and click Show toast. Before: a tall toast with a dark padded square around the ✕. Now: a slim one-line toast with a plain ✕.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/43ba73cc98d33dc8ba47dc6f2a0c213868ae63b2\" target=\"_blank\" rel=\"noopener\"><code>43ba73c</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.538",
       "date": "2026-10-16",
       "summary": "Every ### heading in the docs, and other text coloured with the theme&#39;s primary button colour, was dark blue on the dark theme and under 3:1 contrast (613 headings in 91 docs). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1902\" target=\"_blank\" rel=\"noopener\">#1902</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1906\" target=\"_blank\" rel=\"noopener\">#1906</a>",
