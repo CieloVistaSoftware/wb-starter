@@ -1,6 +1,7 @@
 import { logError } from '../../core/error-logger.js';
 import { readFlag } from '../../core/read-attr.js';
 import { moveKeepingFocus } from '../../core/keep-focus.js';
+import { label as labelControl } from '../label.js';
 /**
  * Select - Enhanced <select> element
  * CSS targets `select` tag directly — no classes, no inline styles.
@@ -42,6 +43,14 @@ export function select(element, options = {}) {
     appliedClasses.push(`x-select--${nativeSize}`);
   }
   if (appliedClasses.length) element.classList.add(...appliedClasses);
+
+  // #1898: label= builds the shared label behavior's <label for> beside the
+  // field in an .x-label__group (1rem gap), here so the documented
+  // <select label="..."> and the <div x-select> builder (which passes its
+  // label in) both get it. Skipped when the field already has a label, so a
+  // re-scan does not add a second one.
+  const labelText = options.label ?? element.getAttribute('label');
+  const cleanupLabel = labelText && !element.labels?.length ? labelControl(element, { text: labelText }) : null;
 
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
@@ -102,7 +111,10 @@ export function select(element, options = {}) {
     reset: () => { element.selectedIndex = -1; }
   };
 
-  return () => element.removeEventListener('change', onChange);
+  return () => {
+    element.removeEventListener('change', onChange);
+    if (cleanupLabel) cleanupLabel();
+  };
 }
 
 /**
@@ -227,14 +239,6 @@ function buildWbSelect(element, options) {
   if (size !== 'md') fieldClasses.push(`x-select--${size}`);
   if (variant !== 'default') fieldClasses.push(`x-select--${variant}`);
 
-  let labelEl = null;
-  if (label) {
-    labelEl = document.createElement('label');
-    labelEl.className = 'x-select__label';
-    labelEl.textContent = label;
-    element.appendChild(labelEl);
-  }
-
   const sel = document.createElement('select');
   sel.className = 'x-select__field';
   if (fieldClasses.length) sel.classList.add(...fieldClasses);
@@ -260,17 +264,14 @@ function buildWbSelect(element, options) {
     sel.appendChild(optEl);
   });
 
-  if (labelEl) {
-    const labelId = 'x-select-label-' + Math.random().toString(36).slice(2, 9);
-    labelEl.id = labelId;
-    sel.setAttribute('aria-labelledby', labelId);
-  }
-
   if (searchable) element.appendChild(searchBoxFor(sel, label));
 
   element.appendChild(sel);
 
-  const cleanupField = select(sel, { clearable });
+  // The label is built by the native branch (shared label behavior, 1rem gap).
+  // A bare <label class="x-select__label"> had no rule at all and sat flush
+  // against the field.
+  const cleanupField = select(sel, { clearable, label });
   element.wbSelect = sel.wbSelect;
 
   return () => {

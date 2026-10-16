@@ -110,8 +110,10 @@ export const BEHAVIOR_CSS_MAP = {
   // Native form controls + x-input/x-select/x-textarea all share
   // input.css, including its unscoped native-fallback rules.
   input: ['input.css'],
-  textarea: ['input.css'],
-  select: ['input.css'],
+  // label.css: a label= builds its <label> through the label behavior, whose
+  // .x-label__group gives the 1rem gap after the label.
+  textarea: ['input.css', 'label.css'],
+  select: ['input.css', 'label.css'],
   checkbox: ['input.css', 'checkbox.css'],
   radio: ['input.css'],
   range: ['input.css'],

@@ -12,6 +12,7 @@ import { setRule, clearRules } from '../../core/dynamic-style.js';
 import { authorText } from '../../core/author-content.js';
 import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
 import { moveKeepingFocus } from '../../core/keep-focus.js';
+import { label as labelControl } from '../label.js';
 
 let _textareaHostDeprecationWarned = false;
 
@@ -115,7 +116,7 @@ export function textarea(element, options = {}) {
     });
     host.textContent = '';
     host.appendChild(built);
-    return textarea(built, options);
+    return textarea(built, { label: host.getAttribute('label'), ...options });
   }
 
   // A schema-built host (<div x-textarea>): wb-lazy's buildSchemaIfNeeded
@@ -134,7 +135,7 @@ export function textarea(element, options = {}) {
   if (element.tagName !== 'TEXTAREA') {
     const inner = element.querySelector(':scope > textarea');
     reflectHostAttributes(element, inner);
-    return textarea(inner, options);
+    return textarea(inner, { label: element.getAttribute('label'), ...options });
   }
 
   const variant = options.variant || element.getAttribute('variant') || 'default';
@@ -206,6 +207,13 @@ export function textarea(element, options = {}) {
     resize();
   }
 
+  // textarea.schema.json declares `label`, but nothing read it: the field
+  // rendered with no label. The shared label behavior builds it, with the
+  // same 1rem gap as every labelled control (.x-label__group). It runs before
+  // the counter wrapper, so the label sits beside field and counter together.
+  const labelText = options.label ?? element.getAttribute('label');
+  const cleanupLabel = labelText ? labelControl(element, { text: labelText }) : null;
+
   let counter = null;
   if (config.showCount) {
     element.classList.add('x-textarea--has-counter');
@@ -237,6 +245,7 @@ export function textarea(element, options = {}) {
   }
 
   return () => {
+    if (cleanupLabel) cleanupLabel();
     enhanced.delete(element);
     clearRules(element);
     element.classList.remove('x-textarea');
