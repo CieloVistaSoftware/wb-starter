@@ -637,7 +637,12 @@
   margin: 0 0 0.5rem;
 }
 
-.behaviors-live__stage p {
+/* The Docs panel sits in the same hero, and #690 reset only the stage: every
+   doc paragraph (and every <p> an example renders) stayed 37.5rem wide and
+   auto-centred, so the prose sat to the right of its own headings and examples.
+   Same values as the stage, so a doc reads like any other page. */
+.behaviors-live__stage p,
+.behaviors-live__doc-body p {
   font-size: 1rem;
   color: var(--text-secondary);
   max-width: none;
@@ -2320,7 +2325,11 @@ body:has(#behaviors-live-doc[open]) #behaviors-live-doc-body {
   display: block;
   position: absolute;
   inset: 0;
-  z-index: 5;
+  /* Above the chrome of the code panels it covers: pre.css puts the language
+     label, copy button and toggle at z-index 9-11 in this same stacking
+     context, so at 5 the example's "HTML" / "JavaScript" labels painted
+     through the opaque panel at its right edge. */
+  z-index: 12;
   overflow-y: auto;
   /* Opaque on purpose: a translucent panel over a rendered example makes both
      unreadable. */
