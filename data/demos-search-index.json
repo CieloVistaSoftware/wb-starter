@@ -1223,7 +1223,6 @@
       "tags": [],
       "behaviors": [
         "x-autocomplete",
-        "x-autosize-textarea-that-grows-with-content",
         "x-behavior-desc",
         "x-behavior-tag",
         "x-behaviors",
@@ -1302,7 +1301,6 @@
         "x-form-ajax-validate-behavior",
         "x-help-permanent-hint-text",
         "x-label-including-rtl-layouts",
-        "x-autosize-textarea-that-grows-with-content",
         "x-rating",
         "controls",
         "icon",
@@ -1375,7 +1373,8 @@
         "cherry",
         "cheese",
         "mushroom",
-        "olive"
+        "olive",
+        "pepper"
       ]
     },
     {

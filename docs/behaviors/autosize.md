@@ -10,4 +10,4 @@ Automatically resizes a textarea to fit its content as the user types.
 <textarea autosize placeholder="Type several lines — the box grows with them"></textarea>
 </figure>
 
-- [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)
+- [Demo](../../demos/site/forms.html#textarea-autosize-textarea-that-grows-with-content)
