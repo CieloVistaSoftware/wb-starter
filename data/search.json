@@ -7,7 +7,7 @@
       "demos": 28
     },
     "totalDocuments": 294,
-    "totalWords": 5690
+    "totalWords": 5691
   },
   "documents": [
     {
@@ -1316,7 +1316,7 @@
       "content": "# x-autosize Behavior (deprecated) > **Deprecated.** Use ` ` instead. Every ` ` already > grows with that attribute, and it also honors `maxRows`, which `x-autosize` > does not. `x-autosize` still works and logs a one-time console warning. Automatically resizes a textarea to fit its content as the user types. - [Demo](../../demos/site/forms.html#textarea-autosize-textarea-that-grows-with-content)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-16"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/avatar",
@@ -1445,10 +1445,10 @@
       "title": "cardhero",
       "description": null,
       "headings": [],
-      "content": "# Hero Card `x-cardhero` renders a large banner card with an optional small `pretitle`, a headline, a subtitle and up to two call-to-action buttons, over an optional `background` image. Put it at the top of a page or section; `variant` switches between the stock looks. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `background` | URL | — | Background image URL | | `title` | text | — | Hero headline | | `pretitle` | text | — | Small label or count shown above the title (e.g. '100 Behaviors') | | `subtitle` | text | — | Hero tagline/subheadline | | `content` | text or HTML | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) | | `cta` | text | — | Call-to-action button text | | `ctaHref` | URL | `#` | Call-to-action link URL | | `ctaSecondary` | text | — | Secondary CTA text | | `ctaSecondaryHref` | URL | `#` | Secondary CTA URL | | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant | | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) | | `overlay` | `boolean` | `true` | Show gradient overlay for text readability | | `fullHeight` | `boolean` | `false` | Make hero full viewport height | ## Methods - `show()` — Shows the hero - `hide()` — Hides the hero - `toggle()` — Toggles hero visibility - `animate()` — Triggers hero entrance animation - `setBackground()` — Changes the background image Schema: [`cardhero.schema.json`](../../src/wb-models/cardhero.schema.json)",
+      "content": "# Hero Card `x-cardhero` renders a large banner card with an optional small `pretitle`, a headline, a subtitle and up to two call-to-action buttons, over an optional `background` image. Put it at the top of a page or section; `variant` switches between the stock looks. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `background` | URL | — | Background image URL | | `title` | text | — | Hero headline | | `pretitle` | text | — | Small label or count shown above the title (e.g. '100 Behaviors') | | `subtitle` | text | — | Hero tagline/subheadline | | `content` | text or HTML | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) | | `cta` | text | — | Call-to-action button text | | `ctaHref` | URL | `#` | Call-to-action link URL | | `ctaSecondary` | text | — | Secondary CTA text | | `ctaSecondaryHref` | URL | `#` | Secondary CTA URL | | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant | | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) | | `overlay` | `boolean` | `true` | Show gradient overlay for text readability | | `fullHeight` | `boolean` | `false` | Make hero full viewport height | | `headingLevel` | `1` · `2` · `3` · `4` · `5` · `6` | `3` | Which heading tag the title is, ` ` to ` ` | `headingLevel` is document structure only: it changes the title's tag, not its size or style, so all six levels look the same. Use `1` when the hero is the page's main heading, and a lower level when the hero sits inside a section. Screen readers and search engines read the tag; the reader sees one design. On the Behaviors page, each `headingLevel` row shows the tag it renders. ## Methods - `show()` — Shows the hero - `hide()` — Hides the hero - `toggle()` — Toggles hero visibility - `animate()` — Triggers hero entrance animation - `setBackground()` — Changes the background image Schema: [`cardhero.schema.json`](../../src/wb-models/cardhero.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/behaviors/cardhorizontal",
@@ -5168,7 +5168,7 @@
       "content": "Form Controls ← Back to Index 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas 🔘 Button icon variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. iconPosition variants This is example button content. This is example button content. Variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. size variants This is example button content. This is example button content. This is example button content. This is example button content. This is example button content. target variants This is example button content. This is example button content. Toggles This is example button content. This is example button content. This is example button content. This is example button content. ☑️ Checkbox size variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Variants This is example checkbox content. This is example checkbox content. This is example checkbox content. Toggles This is example checkbox content. This is example checkbox content. This is example checkbox content. This is example checkbox content. 📝 Input This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. inputType variants This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. This is example input content. Variants This is example input content. This is example input content. This is example input content. size variants This is example input content. This is example input content. This is example input content. iconPosition variants This is example input content. This is example input content. Toggles This is example input content. This is example input content. This is example input content. This is example input content. 🔍 Search This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. This is example search content. size variants This is example search content. This is example search content. This is example search content. Variants This is example search content. This is example search content. This is example search content. Toggles This is example search content. This is example search content. This is example search content. 📋 Select is the control for choosing a VALUE. Each sample shows one thing it does; x-dropdown (overlays.html) is for menus of actions. --> main develop release Canada Germany Japan Mexico United States Apple Banana Cherry Cheese Mushroom Olive Pepper Pro (locked) Team size variants This is example select content. This is example select content. This is example select content. Variants This is example select content. This is example select content. This is example select content. Toggles This is example select content. 🔘 Switch labelPosition variants This is example switch content. This is example switch content. size variants This is example switch content. This is example switch content. This is example switch content. Variants This is example switch content. This is example switch content. This is example switch content. Toggles This is example switch content. This is example switch content. This is example switch content. This is example switch content. 📝 Textarea This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. resize variants This is example textarea content. This is example textarea content. This is example textarea content. This is example textarea content. Variants This is example textarea content. This is example textarea content. This is example textarea content. Toggles This is example textarea content. This is example textarea content. This is example textarea content. 📦 Slider This is example slider content. 📦 Toggle This is example toggle con",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-16"
+      "modified": "2026-10-10"
     },
     {
       "id": "demos/site/index",
@@ -9268,6 +9268,7 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/code",
       "docs/behaviors/confirm",
       "docs/behaviors/copybutton",
@@ -9705,6 +9706,7 @@
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardlink",
       "docs/behaviors/cardminimizable",
@@ -12077,6 +12079,7 @@
       "docs/behaviors/cardbutton",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardstats",
       "docs/behaviors/cart",
@@ -15152,6 +15155,7 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/fieldset",
@@ -15172,6 +15176,7 @@
     ],
     "reader": [
       "pages/behaviors",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/glow",
       "docs/behaviors/move",
@@ -15395,6 +15400,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/address",
+      "docs/behaviors/cardhero",
       "docs/behaviors/chip",
       "docs/behaviors/codetheme",
       "docs/behaviors/dropdown",
@@ -15442,6 +15448,7 @@
       "pages/features",
       "pages/issues",
       "docs/behaviors/button",
+      "docs/behaviors/cardhero",
       "docs/behaviors/input",
       "docs/behaviors/mark",
       "docs/behaviors/search",
@@ -15932,6 +15939,7 @@
       "docs/behaviors/card",
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/colorpicker",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/gallery",
@@ -17411,6 +17419,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/aside",
       "docs/behaviors/card",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardstats",
       "docs/behaviors/dialog",
       "docs/behaviors/flex",
@@ -18738,6 +18747,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
+      "docs/behaviors/cardhero",
       "docs/behaviors/container",
       "docs/behaviors/ol",
       "docs/behaviors/x-copybutton",
@@ -18945,6 +18955,7 @@
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardtestimonial",
@@ -21309,6 +21320,7 @@
     "look": [
       "pages/hero-variants",
       "pages/themes",
+      "docs/behaviors/cardhero",
       "docs/behaviors/clock",
       "docs/behaviors/glass",
       "docs/behaviors/grid",
@@ -22720,6 +22732,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/alert",
       "docs/behaviors/articles",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardvideo",
       "docs/behaviors/collapse",
       "docs/behaviors/confirm",
@@ -22875,6 +22888,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audio",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/codetheme",
       "docs/behaviors/container",
@@ -25252,6 +25266,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
+      "docs/behaviors/cardhero",
       "docs/behaviors/chip",
       "docs/behaviors/container",
       "docs/behaviors/dialog",
@@ -26384,6 +26399,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/address",
       "docs/behaviors/blockquote",
+      "docs/behaviors/cardhero",
       "docs/behaviors/dl",
       "docs/behaviors/fill",
       "docs/behaviors/ol",
@@ -29485,6 +29501,7 @@
     ],
     "levels": [
       "docs/INTELLISENSE-TOOLTIPS",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cover"
     ],
     "info": [
@@ -31650,6 +31667,7 @@
     ],
     "readers": [
       "docs/MVVM-MIGRATION",
+      "docs/behaviors/cardhero",
       "docs/behaviors/codetheme",
       "docs/behaviors/fieldset",
       "docs/behaviors/release",
@@ -32259,6 +32277,7 @@
       "docs/audio",
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardstats",
       "docs/behaviors/cluster",
@@ -36536,6 +36555,7 @@
     ],
     "six": [
       "docs/architecture/solidjscomparison",
+      "docs/behaviors/cardhero",
       "docs/home-page"
     ],
     "substantive": [
@@ -40291,6 +40311,7 @@
     ],
     "sits": [
       "docs/behaviors/card",
+      "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/dialog",
       "docs/behaviors/figure",
@@ -40669,6 +40690,29 @@
       "docs/behaviors/cardoverlay",
       "docs/behaviors/dl",
       "docs/linkedin-standards-article"
+    ],
+    "headinglevel": [
+      "docs/behaviors/cardhero",
+      "docs/schema"
+    ],
+    "lower": [
+      "docs/behaviors/cardhero",
+      "docs/behaviors/details",
+      "docs/behaviors/ol",
+      "docs/behaviors/searchfield",
+      "docs/behaviors/switcher",
+      "docs/behaviors/typewriter",
+      "docs/property-viewer"
+    ],
+    "engines": [
+      "docs/behaviors/cardhero"
+    ],
+    "sees": [
+      "docs/behaviors/cardhero",
+      "docs/guides/create-a-website",
+      "docs/linkedin-framework-agnostic",
+      "docs/pce-candidates",
+      "demos/playground"
     ],
     "entrance": [
       "docs/behaviors/cardhero",
@@ -42161,14 +42205,6 @@
     ],
     "rain": [
       "docs/behaviors/details"
-    ],
-    "lower": [
-      "docs/behaviors/details",
-      "docs/behaviors/ol",
-      "docs/behaviors/searchfield",
-      "docs/behaviors/switcher",
-      "docs/behaviors/typewriter",
-      "docs/property-viewer"
     ],
     "dry": [
       "docs/behaviors/details",
@@ -46136,12 +46172,6 @@
     "pnpm": [
       "docs/guides/create-a-website"
     ],
-    "sees": [
-      "docs/guides/create-a-website",
-      "docs/linkedin-framework-agnostic",
-      "docs/pce-candidates",
-      "demos/playground"
-    ],
     "dependency": [
       "docs/guides/create-a-website",
       "docs/pce-candidates",
@@ -47503,9 +47533,6 @@
     ],
     "assignments": [
       "docs/schema-test-value"
-    ],
-    "headinglevel": [
-      "docs/schema"
     ],
     "subheading": [
       "docs/schema"
