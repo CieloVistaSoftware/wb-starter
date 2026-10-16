@@ -1275,5 +1275,9 @@
   "1892": "Session coordination log: cloud session and local PC session",
   "1896": "Remove the Schema-First Architecture paper: both HTML copies, both .md docs, every link and index entry",
   "1898": "label= on select and textarea: textarea shows no label, select's label has no 1rem gap",
-  "1900": "Behaviors Docs panel: text centered right of its headings, and code labels from underneath show through"
+  "1900": "Behaviors Docs panel: text centered right of its headings, and code labels from underneath show through",
+  "1902": "Docs: every ### heading is dark blue on the dark theme (613 headings in 91 docs below 3:1 contrast)",
+  "1903": "x-grid docs: a 4-column grid renders as one 9px column of stacked items",
+  "1904": "Doc examples of a closed <dialog> render an empty box (8 demos in 4 docs)",
+  "1905": "x-articles masonry ignores columns and overflows its example box; reel and article items spill past docs"
 }

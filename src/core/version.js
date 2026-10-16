@@ -8,14 +8,14 @@
  */
 export const VERSION = {
   "version": "1.0.400",
-  "commit": "0fb33f2a",
-  "builtAt": "2026-10-16T00:06:25.438Z",
+  "commit": "e19ecc9a",
+  "builtAt": "2026-10-16T15:22:47.545Z",
   "branch": "main",
   "dirty": false,
   "ahead": 0,
   "behind": 0,
   "upstream": "origin/main",
   "release": "1.0.400",
-  "sinceRelease": 136,
+  "sinceRelease": 137,
   "npm": "1.0.1"
 };

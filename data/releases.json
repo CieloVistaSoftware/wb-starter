@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.537",
+      "date": "2026-10-16",
+      "summary": "In the Behaviors Docs panel every paragraph was a 600px centered column to the right of its headings (hero copy styling #690 reset only for the stage), and the pane&#39;s own HTML/JavaScript labels painted through the panel. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1900\" target=\"_blank\" rel=\"noopener\">#1900</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1901\" target=\"_blank\" rel=\"noopener\">#1901</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Docs panel text starts with its headings, and the panel hides the pane under it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1900\" target=\"_blank\" rel=\"noopener\">#1900</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1901\" target=\"_blank\" rel=\"noopener\">#1901</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e19ecc9aeb1d5a2a3567d74ba263eded6a705efb\" target=\"_blank\" rel=\"noopener\"><code>e19ecc9</code></a>",
+          "issues": [
+            1900,
+            1901
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors, pick article card default, click Docs. Before: the text sat in a narrow column to the right, with HTML and JAVASCRIPT floating at the right edge. Now: the text starts under the headings and uses the panel&#39;s width, and no stray labels.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e19ecc9aeb1d5a2a3567d74ba263eded6a705efb\" target=\"_blank\" rel=\"noopener\"><code>e19ecc9</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.536",
       "date": "2026-10-15",
       "summary": "A textarea ignored label= entirely, and a select&#39;s label sat flush against its field because nothing styled it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1898\" target=\"_blank\" rel=\"noopener\">#1898</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1899\" target=\"_blank\" rel=\"noopener\">#1899</a>",
