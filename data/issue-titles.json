@@ -1279,5 +1279,7 @@
   "1902": "Docs: every ### heading is dark blue on the dark theme (613 headings in 91 docs below 3:1 contrast)",
   "1903": "x-grid docs: a 4-column grid renders as one 9px column of stacked items",
   "1904": "Doc examples of a closed <dialog> render an empty box (8 demos in 4 docs)",
-  "1905": "x-articles masonry ignores columns and overflows its example box; reel and article items spill past docs"
+  "1905": "x-articles masonry ignores columns and overflows its example box; reel and article items spill past docs",
+  "1907": "Toast is 67px tall: its close button gets the theme's full button padding and background",
+  "1909": "Badge remove ✕ and 6 other built-in small buttons get the theme's full button padding and background"
 }

@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.538",
+      "date": "2026-10-16",
+      "summary": "Every ### heading in the docs, and other text coloured with the theme&#39;s primary button colour, was dark blue on the dark theme and under 3:1 contrast (613 headings in 91 docs). <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1902\" target=\"_blank\" rel=\"noopener\">#1902</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1906\" target=\"_blank\" rel=\"noopener\">#1906</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Headings and primary-coloured text read at 4.5:1 in every theme</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1902\" target=\"_blank\" rel=\"noopener\">#1902</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1906\" target=\"_blank\" rel=\"noopener\">#1906</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d9cd3cbded31cdfd84837e097aa331edda87b127\" target=\"_blank\" rel=\"noopener\"><code>d9cd3cb</code></a>",
+          "issues": [
+            1902,
+            1906
+          ]
+        }
+      ],
+      "seeIt": "Open Docs, then any behavior doc such as dialog, in the dark theme. Before: section headings like &quot;What false means&quot; were dark blue and hard to read. Now: they are a lighter blue that reads clearly, and light themes look the same as before.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d9cd3cbded31cdfd84837e097aa331edda87b127\" target=\"_blank\" rel=\"noopener\"><code>d9cd3cb</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.537",
       "date": "2026-10-16",
       "summary": "In the Behaviors Docs panel every paragraph was a 600px centered column to the right of its headings (hero copy styling #690 reset only for the stage), and the pane&#39;s own HTML/JavaScript labels painted through the panel. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1900\" target=\"_blank\" rel=\"noopener\">#1900</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1901\" target=\"_blank\" rel=\"noopener\">#1901</a>",
