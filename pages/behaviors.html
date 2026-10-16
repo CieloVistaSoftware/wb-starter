@@ -1416,6 +1416,17 @@
      * type-named placeholder. Nothing here implies a value the schema does
      * not actually permit.
      */
+    /**
+     * An attribute or table value as text. An array or object default is JSON:
+     * String([]) is "", so autocomplete's `items` default of [] came out as
+     * items="" in the usage and as an empty <code> in the DEFAULT column, which
+     * the code behavior then built into a block with a language label crushed
+     * into the cell.
+     */
+    function attrText(v) {
+      return v !== null && typeof v === 'object' ? JSON.stringify(v) : String(v);
+    }
+
     function buildUsageSnippet(behavior, props) {
       const names = Object.keys(props);
 
@@ -1426,8 +1437,17 @@
       for (const [selector, beh] of Object.entries(nativeMap || {})) {
         if (beh === behavior && !selector.includes('[')) { host = selector; break; }
       }
-      const tag = host || 'div';
+      // No tag carries it on its own: a decorator. Put it on the element its
+      // curated example uses (x-autocomplete belongs on an <input>), not on a
+      // <div> it does nothing to.
+      let tag = host;
+      if (!tag) {
+        const curated = exampleCatalogue['x-' + behavior] && exampleCatalogue['x-' + behavior].source;
+        const m = curated && curated.match(/^\s*<([a-z][a-z0-9-]*)/i);
+        tag = m ? m[1].toLowerCase() : 'div';
+      }
       const marker = host ? '' : ' x-' + behavior;
+      const isVoid = VOID_TAGS.has(tag);
 
       const attrs = names.map((n) => {
         const d = props[n] || {};
@@ -1446,13 +1466,18 @@
         else value = d.type || 'value';
         // A boolean attribute is written bare; `muted="true"` is not how HTML
         // booleans work and would teach the wrong thing.
-        return value === null ? '  ' + n : '  ' + n + '="' + value + '"';
+        if (value === null) return '  ' + n;
+        // JSON carries double quotes, so an array or object goes in single ones.
+        return value !== null && typeof value === 'object'
+          ? '  ' + n + "='" + attrText(value) + "'"
+          : '  ' + n + '="' + value + '"';
       });
 
+      const close = isVoid ? ' />' : '>';
       const open = attrs.length
-        ? '<' + tag + marker + '\n' + attrs.join('\n') + '>'
-        : '<' + tag + marker + '>';
-      return open + '\n  ...' + '\n</' + tag + '>';
+        ? '<' + tag + marker + '\n' + attrs.join('\n') + close
+        : '<' + tag + marker + close;
+      return isVoid ? open : open + '\n  ...' + '\n</' + tag + '>';
     }
 
     function showApi(behavior) {
@@ -1510,7 +1535,7 @@
         // would otherwise render as an empty cell and mean different things.
         const dflt = d.default === undefined
           ? '<span class="behaviors-live__api-none">—</span>'
-          : '<code>' + esc(d.default === '' ? '""' : d.default) + '</code>';
+          : '<code>' + esc(d.default === '' ? '""' : attrText(d.default)) + '</code>';
         const req = d.required ? ' <span class="behaviors-live__api-req">required</span>' : '';
         return '<tr id="behaviors-api-row-' + esc(name) + '">' +
           '<td class="behaviors-live__api-name"><code>' + esc(name) + '</code>' + req + '</td>' +
