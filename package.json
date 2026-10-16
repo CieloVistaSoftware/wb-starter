@@ -156,7 +156,7 @@
     "test:duplicates": "Part of npm test: find duplicate content and assets in the repo.",
     "test:x-demo-integrity": "Part of npm test: find unbalanced or empty <div x-demo> tags in pages and demos.",
     "pw:maybe": "Run Playwright only if tests match the arguments (used by hooks).",
-    "start:mcp": "Start the wb-starter MCP server with the web server. Claude Desktop starts it from .mcp.json.",
+    "start:mcp": "Start this project's MCP server with the web server. Claude Desktop starts it from .mcp.json.",
     "mcp:healthcheck": "Probe that the MCP server is up (CI and orchestration).",
     "test:lock-guards": "Self-test: the machine-wide test locks (one suite at a time across worktrees).",
     "test:gate-guards": "Self-test: the commit gate finishes in bounded time and holds the machine lock.",
