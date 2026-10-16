@@ -51,7 +51,10 @@
   pointer-events: none;
 }
 
-.x-search__clear {
+/* Doubled class (0,2,0): themes.css styles every button with [data-theme] button
+   (0,1,1) -- padding 1rem, a background, a border -- which beat a single class and
+   drew this small control as a full padded button. */
+.x-search__clear.x-search__clear {
   display: none;
   background: none;
   border: none;

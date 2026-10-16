@@ -17,7 +17,10 @@
   line-height: 1;
 }
 
-.x-stepper__btn {
+/* Doubled class (0,2,0): themes.css styles every button with [data-theme] button
+   (0,1,1) -- padding 1rem, a background, a border -- which beat a single class and
+   drew this small control as a full padded button. */
+.x-stepper__btn.x-stepper__btn {
   border: 0;
   background: var(--bg-tertiary);
   color: var(--text-primary);
