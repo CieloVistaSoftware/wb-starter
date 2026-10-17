@@ -12,7 +12,7 @@ function checkPort(host, port, timeout) {
     const socket = new net.Socket();
     let done = false;
     const onSuccess = () => { if (done) return; done = true; socket.destroy(); resolve(true); };
-    const onFail = () => { if (done) return; done = true; try { socket.destroy(); } catch(e){} resolve(false); };
+    const onFail = () => { if (done) return; done = true; try { socket.destroy(); } catch{} resolve(false); };
 
     socket.setTimeout(timeout);
     socket.on('connect', onSuccess);

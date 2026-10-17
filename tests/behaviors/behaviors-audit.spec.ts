@@ -13,13 +13,6 @@ import { settlePage } from '../base';
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
-function lum(rgb: string): number {
-  const m = rgb.match(/(\d+(?:\.\d+)?)/g);
-  if (!m) return -1;
-  const [r, g, b] = m.map(Number);
-  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-}
-
 async function loadDark(page: Page) {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#mainPage-behaviors', { timeout: 25000 });

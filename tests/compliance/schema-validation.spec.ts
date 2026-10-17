@@ -13,7 +13,7 @@ import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import {
-  PATHS, getSchemaFiles, loadSchema, getComponentSchemas, Schema, usesNativeHost
+  PATHS, getSchemaFiles, loadSchema, getComponentSchemas, usesNativeHost
 } from '../base';
 
 // ═══════════════════════════════════════════════════════════════════════════

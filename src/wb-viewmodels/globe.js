@@ -4,7 +4,7 @@
  * Custom Tag: <div x-globe>
  * -----------------------------------------------------------------------------
  */
-export function globe(element, options = {}) {
+export function globe(element, _options = {}) {
   element.classList.add('x-globe');
   return () => element.classList.remove('x-globe');
 }

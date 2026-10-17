@@ -21,7 +21,7 @@ if (fs.existsSync(modelsDir)) {
             validBehaviors.add(name);
             validBehaviors.add(`x-${name}`); // x-card
             validBehaviors.add(`x-as-${name}`); // x-as-card
-        } catch (e) {}
+        } catch {}
     });
 }
 
@@ -68,7 +68,6 @@ function checkFile(filePath) {
             // 2. x-as-{behavior} (e.g. x-as-card)
             
             let status = '❓ Unknown';
-            let behaviorName = '';
             
             if (validBehaviors.has(usage)) {
                 status = '✅ Valid';

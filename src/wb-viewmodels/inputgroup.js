@@ -1,5 +1,5 @@
 // Standalone inputgroup behavior extracted from enhancements.js
-export function inputgroup(element, options = {}) {
+export function inputgroup(element, _options = {}) {
   element.classList.add('x-inputgroup');
   const prepend = element.querySelector('[data-prepend]');
   const append = element.querySelector('[data-append]');

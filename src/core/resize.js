@@ -57,11 +57,9 @@ export function onResize(element, callback, options = {}) {
   } = options;
 
   let timeout;
-  let lastEntry = null;
 
   const debouncedCallback = (entries) => {
     const entry = entries[0];
-    lastEntry = entry;
     
     if (debounce === 0) {
       callback(entry);

@@ -19,6 +19,6 @@ for (const l of lines) {
   let commits = '?';
   try {
     commits = execSync(`git rev-list --count origin/main..${name}`, { encoding: 'utf8' }).trim();
-  } catch (e) { /* skip */ }
+  } catch { /* skip */ }
   console.log(`${short} | ${date} | ${commits} | ${(subj || '').substring(0, 70)}`);
 }

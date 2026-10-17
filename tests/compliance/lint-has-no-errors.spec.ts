@@ -14,16 +14,18 @@ import path from 'node:path';
  * duplicate key, two test assertions that were never awaited, and two regexes
  * built from strings where '\.' was '.' and '\b' was a backspace.
  *
- * The whole repository lints with zero errors, and stays that way.
+ * #1932: warnings too. 225 warnings (mostly unused variables) sat behind the
+ * same ratchet. John, 2026-10-16: "no warning allowed". The repository lints
+ * with zero problems, errors and warnings alike, and stays that way.
  */
-test('the repository lints with zero errors (#1237)', async () => {
+test('the repository lints with zero errors and zero warnings (#1237, #1932)', async () => {
   test.setTimeout(300_000); // a full lint, with type-aware rules on tests/, is ~25s locally
   const eslint = new ESLint({ cwd: process.cwd() });
   const results = await eslint.lintFiles(['.']);
   expect(results.length, 'ESLint looked at the repository').toBeGreaterThan(300);
 
-  const errors = results.flatMap((r) => r.messages
-    .filter((m) => m.severity === 2)
+  const problems = results.flatMap((r) => r.messages
+    .filter((m) => !(m.ruleId === null && /File ignored/.test(m.message)))
     .map((m) => `${path.relative(process.cwd(), r.filePath).split(path.sep).join('/')}:${m.line} ${m.ruleId ?? 'parse'} ${m.message}`));
-  expect(errors, 'lint errors (npx eslint . lists them)').toEqual([]);
+  expect(problems, 'lint errors and warnings (npx eslint . lists them)').toEqual([]);
 });

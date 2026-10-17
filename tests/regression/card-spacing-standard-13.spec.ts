@@ -1,4 +1,4 @@
-import { test, expect, Page } from '../fixtures/offline';
+import { test, expect } from '../fixtures/offline';
 import { elementReady, settlePage, buildInView } from '../base';
 
 /**

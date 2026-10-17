@@ -64,7 +64,7 @@ let bare = 0, fallback = 0;
 for (const abs of files) {
   const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
   const lines = fs.readFileSync(abs, 'utf8').split(/\r?\n/);
-  lines.forEach((line, li) => {
+  lines.forEach((line, _li) => {
     // skip comment-only lines cheaply
     for (const re of [HEX, RGB, HSL, NAMEDRE]) {
       re.lastIndex = 0;

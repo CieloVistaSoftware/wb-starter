@@ -334,7 +334,7 @@ export async function mdhtml(element, options = {}) {
         const pageSource = await getPageSource();
         const block = extractAttrBlock(pageSource, 'x-mdhtml', idx, allMdHtml.length);
         if (block && block.trim()) raw = block;
-      } catch (e) {
+      } catch {
         // ignore — fall through to the live-DOM read below
       }
       if (raw == null) raw = element.innerHTML;
@@ -413,12 +413,12 @@ export async function mdhtml(element, options = {}) {
     element.classList.remove('x-mdhtml--loading');
     element.classList.add('x-mdhtml--loaded');
     // Runtime/test hook: mark hydrated so tests can wait deterministically
-    try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+    try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:mdhtml:hydrated', { bubbles: true })); } catch { /* best-effort */ }
 
     // #295: contain wide tables in their own scroll box and keep
     // hyphenated tokens whole -- see the two functions' own comments above.
-    try { wrapTables(element); } catch (e) { /* best-effort, never break rendering */ }
-    try { protectHyphenatedTokens(element); } catch (e) { /* best-effort, never break rendering */ }
+    try { wrapTables(element); } catch { /* best-effort, never break rendering */ }
+    try { protectHyphenatedTokens(element); } catch { /* best-effort, never break rendering */ }
 
     // Add captions to code blocks (System-wide)
     if (config.captions !== false) {
@@ -512,7 +512,7 @@ export async function mdhtml(element, options = {}) {
         try {
             tpl = document.createElement('template');
             tpl.innerHTML = raw;
-        } catch (e) {
+        } catch {
             return; // never break the doc over a malformed example
         }
         // A content-free example still renders: the behavior fills itself in from

@@ -53,7 +53,7 @@ export function isProcessRunning(pid) {
   try {
     process.kill(pid, 0);
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -223,13 +223,13 @@ export function createGuards(opts) {
   }
 
   async function removeLock() {
-    try { await unlink(lockFile); } catch (e) { /* ignore */ }
+    try { await unlink(lockFile); } catch { /* ignore */ }
   }
 
   async function readJson(path) {
     try {
       return JSON.parse(await readFile(path, "utf-8"));
-    } catch (e) {
+    } catch {
       return null;
     }
   }
@@ -421,7 +421,7 @@ export function createGuards(opts) {
       // Occupied — reap it if the holder is gone, then retry this slot once.
       const held = await readJson(slot);
       if (!held || !held.pid || !holderAlive(held)) {
-        try { await unlink(slot); } catch (e) { /* lost the race, fine */ }
+        try { await unlink(slot); } catch { /* lost the race, fine */ }
         try {
           await writeFile(slot, payload(), { flag: "wx" });
           return slot;
@@ -440,7 +440,7 @@ export function createGuards(opts) {
     let entries = [];
     try {
       entries = await readdir(slotDir);
-    } catch (e) {
+    } catch {
       return lines;
     }
     for (const name of entries.sort()) {
@@ -465,7 +465,7 @@ export function createGuards(opts) {
     let entries = [];
     try {
       entries = await readdir(slotDir);
-    } catch (e) {
+    } catch {
       return null;
     }
     for (const name of entries) {
@@ -478,7 +478,7 @@ export function createGuards(opts) {
 
   async function releaseSlot(slotPath) {
     if (!slotPath) return;
-    try { await unlink(slotPath); } catch (e) { /* ignore */ }
+    try { await unlink(slotPath); } catch { /* ignore */ }
   }
 
   /**

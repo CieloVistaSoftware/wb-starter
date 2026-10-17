@@ -31,7 +31,7 @@ import { centralDateTime } from '../core/central-time.js';
 function formatBuiltAtCentral(isoString) {
   try {
     return centralDateTime(isoString);
-  } catch (e) {
+  } catch {
     return isoString; // never break the element over a formatting failure
   }
 }

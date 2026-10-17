@@ -22,9 +22,6 @@ const PIPELINE_PROJECTS = [
   'functional', 'regression', 'schema-viewer', 'performance'
 ];
 
-// Cross-browser projects intentionally duplicate specs — skip them
-const EXCLUDED_PROJECTS = ['firefox', 'webkit', 'mobile-chrome', 'mobile-safari'];
-
 interface ResolvedProject {
   name: string;
   files: string[];
@@ -78,20 +75,11 @@ function isIgnored(filePath: string, testDir: string, ignorePatterns: string[]):
 
 test('no spec file appears in more than one npm-test project', async () => {
   const rootDir = path.resolve(__dirname, '../..');
-  const configPath = path.join(rootDir, 'playwright.config.ts');
-  const configText = fs.readFileSync(configPath, 'utf-8');
 
   // Parse projects from config
   // Strategy: find each { name: '...' ... } block in the projects array
   const projects: ResolvedProject[] = [];
 
-  // Split config into project blocks
-  const projectsStart = configText.indexOf('projects: [');
-  const projectsSection = configText.substring(projectsStart);
-  
-  // Match each project object
-  const blockRegex = /\{\s*\n\s*name:\s*'([^']+)'[\s\S]*?(?=\n\s*\{?\s*\n\s*name:|$)/g;
-  
   // Simpler approach: extract project names, testDirs, testMatch, testIgnore manually
   const projectDefs: { name: string; testDir: string; testMatch: string[]; testIgnore: string[] }[] = [
     {
@@ -265,16 +253,6 @@ test('every spec file under tests/ is claimed by at least one project', async ()
   // Find ALL spec files
   const allSpecs = findSpecs(path.join(rootDir, 'tests'))
     .map(f => path.relative(rootDir, f).replace(/\\/g, '/'));
-
-  // Collect all files claimed by any project (including cross-browser)
-  // We just want to know if something exists that nobody runs
-  const allProjectDirs = [
-    'tests/compliance',
-    'tests/views',
-    'tests/behaviors',
-    'tests/behaviors/ui',
-    'tests/regression',
-  ];
 
   // For now, just report the count — informational, not a hard fail
   console.log(`\nTotal spec files found: ${allSpecs.length}`);

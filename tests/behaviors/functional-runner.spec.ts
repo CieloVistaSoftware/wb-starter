@@ -215,7 +215,7 @@ function loadSchema(filename: string): Schema | null {
       schema.behavior = schema.schemaFor.replace(/^x-/, '');
     }
     return schema;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -387,7 +387,7 @@ async function runSteps(page: Page, steps: Step[]): Promise<void> {
           // parts[2] is method name
           if (parts[0] === 'element' && parts.length >= 3) {
              await page.locator(selector).first().evaluate((el, args) => {
-                const [_, prop, method] = args;
+                const [, prop, method] = args;
                 if ((el as any)[prop] && typeof (el as any)[prop][method] === 'function') {
                   (el as any)[prop][method]();
                 }
@@ -568,7 +568,7 @@ const schemasWithTests = getSchemasWithFunctionalTests();
 test.describe('Functional Test Runner', () => {
   test('schema discovery', () => {
     console.log(`\n📋 Found ${schemasWithTests.length} schemas with functional tests:`);
-    for (const { file, schema } of schemasWithTests) {
+    for (const { schema } of schemasWithTests) {
       const f = schema.test!.functional!;
       const counts = [
         f.buttons?.length ? `${f.buttons.length} buttons` : null,
@@ -587,7 +587,7 @@ test.describe('Functional Test Runner', () => {
 });
 
 // Generate tests for each schema
-for (const { file, schema } of schemasWithTests) {
+for (const { schema } of schemasWithTests) {
   const behavior = schema.behavior;
   const functional = schema.test!.functional!;
   

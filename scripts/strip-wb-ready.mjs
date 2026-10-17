@@ -33,7 +33,7 @@ function processFile(filePath) {
   // e.g. element.classList.add('x-ready');
   //      btnEl.classList.add("x-ready");
   //      if (isCustom) element.classList.add("x-ready");
-  content = content.replace(/^[ \t]*(?:if\s*\([^)]*\)\s*)?[\w.]+\.classList\.add\(\s*['"]x-ready['"]\s*\);?\s*\n/gm, (match) => {
+  content = content.replace(/^[ \t]*(?:if\s*\([^)]*\)\s*)?[\w.]+\.classList\.add\(\s*['"]x-ready['"]\s*\);?\s*\n/gm, (_match) => {
     removed++;
     return '';
   });

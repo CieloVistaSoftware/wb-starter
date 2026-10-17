@@ -56,7 +56,7 @@ for (const [compName, pageSlug] of Object.entries(pageMap)) {
 
   // Extract expected classes from enum values with appliesClass
   const checkClasses = [];
-  for (const [propName, propDef] of Object.entries(props)) {
+  for (const [, propDef] of Object.entries(props)) {
     if (propDef.appliesClass && propDef.enum) {
       // Just check the first non-default enum value
       const nonDefault = propDef.enum.find(v => v !== propDef.default);

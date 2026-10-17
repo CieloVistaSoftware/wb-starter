@@ -35,7 +35,6 @@ const FILES = [
 ].sort();
 
 const MIN_GAP_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding
-const MIN_PADDING_PX = 15;
 // MIN_TEXT_EDGE_PX (16, 1rem) is DEMOS-AND-DOCS-STANDARDS.md §13's documented minimum; it lives
 // beside the check in scripts/lib/layout-checks.mjs.
 

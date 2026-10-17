@@ -393,7 +393,7 @@ export function notes(element, options = {}) {
       showStatus('Copied!', 'success');
       // #344: notes.schema.json declares copy and clear; nothing fired them.
       element.dispatchEvent(new CustomEvent('wb:notes:copy', { bubbles: true }));
-    } catch (e) {
+    } catch {
       showStatus('Copy failed', 'error');
     }
   };
@@ -411,7 +411,7 @@ export function notes(element, options = {}) {
       let res = await fetch('/api/notes', { cache: 'no-store' });
       if (!res.ok) res = await fetch(config.savePath, { cache: 'no-store' });
       if (res.ok) savedData = await res.json();
-    } catch (e) {
+    } catch {
       const raw = localStorage.getItem(NOTES_STORAGE_KEY + '-file');
       savedData = raw ? JSON.parse(raw) : { notes: [] };
     }

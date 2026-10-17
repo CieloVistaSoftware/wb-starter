@@ -1,5 +1,5 @@
 // Standalone file behavior extracted from enhancements.js
-export function file(element, options = {}) {
+export function file(element, _options = {}) {
   element.classList.add('x-file');
   const input = document.createElement('input');
   input.type = 'file';

@@ -689,7 +689,7 @@ export default class WBSite {
         main.innerHTML = this.render404(pageId);
         this._placeScroll(pageId);
       }
-    } catch (e) {
+    } catch {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }

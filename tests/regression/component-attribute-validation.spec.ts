@@ -34,7 +34,7 @@ test.describe('Component Attribute Validation', () => {
             files.push(fullPath);
           }
         });
-      } catch (e) {
+      } catch {
         // Silently skip inaccessible dirs
       }
     };

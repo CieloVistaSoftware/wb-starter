@@ -43,7 +43,7 @@ if (typeof document !== 'undefined') {
         
         lastInteraction = { from, to, timestamp: Date.now() };
       }
-    } catch (err) {
+    } catch {
       // Ignore interaction tracking errors
     }
   }, true);

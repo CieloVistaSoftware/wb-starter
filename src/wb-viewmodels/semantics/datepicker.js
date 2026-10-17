@@ -6,8 +6,8 @@ export function datepicker(element) {
     element.addEventListener('focus', () => {
       element.setAttribute('data-open', 'true');
     });
-  } catch (err) {
-    try { if (element) element.setAttribute('x-error', 'datepicker-failed'); } catch (e) {}
+  } catch {
+    try { if (element) element.setAttribute('x-error', 'datepicker-failed'); } catch {}
   }
-  return () => { try { element.removeAttribute('data-open'); element.removeAttribute('x-datepicker-init'); } catch(e){} };
+  return () => { try { element.removeAttribute('data-open'); element.removeAttribute('x-datepicker-init'); } catch{} };
 }

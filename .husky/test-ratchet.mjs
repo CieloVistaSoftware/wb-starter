@@ -16,8 +16,9 @@
  *
  * Blocked AND blind is strictly worse than unblocked with real detection.
  *
- * This is the same argument .husky/lint-ratchet.mjs (#840) already makes for
- * lint, in its own words: "a gate too strict to pass gets bypassed, and the
+ * This is the same argument .husky/lint-ratchet.mjs made for lint (#840; lint
+ * has since been brought to zero, #1932), in its own words: "a gate too
+ * strict to pass gets bypassed, and the
  * --no-verify habit takes every other check down with it." The lint check became
  * a ratchet. The test gate never did. This is that change.
  *
@@ -33,7 +34,7 @@
  *     a broken test, which then blocks the next unrelated commit.
  *
  * The register only changes on an explicit `--update` — a deliberate act with a
- * diff someone can review, the same way .husky/lint-baseline.json is maintained.
+ * diff someone can review, the same way the lint baseline was (#840, removed in #1932).
  *
  * FLAKY IS NOT A CATEGORY
  *

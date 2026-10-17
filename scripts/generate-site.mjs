@@ -44,8 +44,8 @@
  *   data/site-generator-result.json     — build report
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
-import { resolve, join, basename, relative } from 'path';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { resolve, join, relative } from 'path';
 import { execSync } from 'child_process';
 import { PRIMARY_VALUE_ATTRIBUTE } from '../src/core/author-content.js';
 
@@ -517,7 +517,7 @@ function deduplicateSections(sections) {
 
 // ─── Build a multi-component page schema ───
 
-function buildMultiComponentPage(pageDef, defaults) {
+function buildMultiComponentPage(pageDef, _defaults) {
   const allSections = [];
   const componentResults = [];
 

@@ -42,6 +42,6 @@ try {
     const count = (bhtml.match(re) || []).length;
     console.log(`  ${m}: ${count}`);
   });
-} catch (e) {
+} catch {
   console.log('behaviors.html does NOT exist');
 }

@@ -341,7 +341,7 @@ export function button(element, options = {}) {
   // handler would double-fire.
   if (href && element.tagName !== 'A') {
     element.setAttribute('role', 'link');
-    const navigate = (e) => {
+    const navigate = () => {
       if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
       const target = element.getAttribute('target');
       if (target === '_blank') window.open(href, '_blank', 'noopener');

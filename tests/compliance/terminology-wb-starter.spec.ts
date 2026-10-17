@@ -10,7 +10,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const allowedTerm = 'WB-Starter';
 const forbiddenTerms = [
   'Web Behaviors (WB)',
   'WB Framework'
