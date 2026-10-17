@@ -21,11 +21,13 @@ test('grid.md: every x-grid demo is wide and lays its items out side by side', a
 
   const grids = await page.evaluate(() => [...document.querySelectorAll('#content .x-demo [x-grid]')].map((g) => {
     const xs = [...g.children].map((c) => Math.round(c.getBoundingClientRect().x));
-    return { width: g.getBoundingClientRect().width, items: xs.length, columns: new Set(xs).size, demo: g.closest('.x-demo')!.className };
+    return { width: g.getBoundingClientRect().width, items: xs.length, columns: new Set(xs).size, declared: Number(g.getAttribute('columns') || 3), demo: g.closest('.x-demo')!.className };
   }));
   expect(grids.length, 'grid.md has x-grid demos').toBeGreaterThan(3);
   for (const g of grids) {
     expect(g.width, 'an x-grid demo is not shrunk to its items').toBeGreaterThan(300);
-    if (g.items > 1) expect(g.columns, 'items sit side by side, not stacked').toBeGreaterThan(1);
+    // #1930: columns is a maximum -- columns="1" (the altRows example) stacks.
+    expect(g.columns, 'never more columns than declared').toBeLessThanOrEqual(g.declared);
+    if (g.items > 1 && g.declared > 1) expect(g.columns, 'items sit side by side, not stacked').toBeGreaterThan(1);
   }
 });

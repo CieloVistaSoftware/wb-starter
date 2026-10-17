@@ -62,17 +62,16 @@ export function grid(element, options = {}) {
   // it. Guarded so a literal <x-grid> tag does not get a redundant class.
   element.classList.add('x-grid');
 
-  let gridTemplateColumns;
-  if (config.minWidth) {
-    // Explicit min-width: use auto-fit with minmax
-    gridTemplateColumns = `repeat(auto-fit, minmax(${config.minWidth}, 1fr))`;
-  } else {
-    // Smart default: auto-fit with sensible min-width based on column count
-    // This is mobile-first — columns collapse naturally on small screens
-    const defaultMins = { '2': '17.5rem', '3': '15.625rem', '4': '12.5rem', '5': '11.25rem', '6': '9.375rem' };
-    const autoMin = defaultMins[config.columns] || '15.625rem';
-    gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
-  }
+  // #1930: `columns` is a maximum. auto-fit alone fits as many columns of the
+  // floor width as there is room for, so columns="1" showed 4 and columns="2"
+  // showed 3 on a wide screen. Each column's minimum is now the larger of the
+  // floor and 1/N of the width less the gaps, so at most N fit; a narrow
+  // screen still drops to fewer (the floor wins there). Mobile-first as before.
+  const n = Math.max(1, parseInt(config.columns, 10) || 3);
+  const defaultMins = { '2': '17.5rem', '3': '15.625rem', '4': '12.5rem', '5': '11.25rem', '6': '9.375rem' };
+  const floor = config.minWidth || `min(${defaultMins[String(n)] || '15.625rem'}, 100%)`;
+  const share = n === 1 ? '100%' : `calc((100% - ${n - 1} * ${config.gap}) / ${n})`;
+  const gridTemplateColumns = `repeat(auto-fit, minmax(max(${floor}, ${share}), 1fr))`;
 
   // `center` is a shorthand for aligning + centering item content in one step.
   const alignItems = config.center ? 'center' : config.align;
