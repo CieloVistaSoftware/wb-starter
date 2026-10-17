@@ -7,7 +7,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { resolve, basename } from 'path';
+import { resolve } from 'path';
 
 import { execSync } from 'child_process';
 
@@ -84,11 +84,6 @@ function attrString(attrs) {
 
 function escapeAttr(str) {
   return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function indent(text, level) {
-  const spaces = '  '.repeat(level);
-  return text.split('\n').map(line => spaces + line).join('\n');
 }
 
 // --- Build the HTML ---

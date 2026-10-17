@@ -56,7 +56,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
               return true;
             }
           }
-        } catch (e) {
+        } catch {
           // Cross-origin stylesheets will throw
         }
       }
@@ -193,7 +193,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
               return true;
             }
           }
-        } catch (e) {
+        } catch {
           // Cross-origin stylesheets will throw
         }
       }
@@ -211,7 +211,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
               return true;
             }
           }
-        } catch (e) {}
+        } catch {}
       }
       return false;
     });

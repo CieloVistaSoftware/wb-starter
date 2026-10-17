@@ -12,7 +12,7 @@
  *   - Checks no critical JS errors
  *   - For each component: renders, has base class, text visible, classes applied
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { resolve, join } from 'path';
 
 const MODELS = resolve('src/wb-models');

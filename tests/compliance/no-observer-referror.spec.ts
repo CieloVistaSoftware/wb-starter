@@ -1,6 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import * as path from 'path';
-import { readJson, PATHS, settlePage } from '../base';
+import { settlePage } from '../base';
 
 /**
  * Regression: ensure no ReferenceError for undeclared "observer"-style globals
@@ -9,7 +8,6 @@ import { readJson, PATHS, settlePage } from '../base';
  * runtime errors that match the pattern.
  */
 
-const ERROR_LOG_PATH = path.join(PATHS.data, 'errors.json');
 const OBSERVER_ERROR_RE = /observer is not defined|ResizeObserver is not defined|MutationObserver is not defined/i;
 
 test.describe('Runtime: no undefined-observer ReferenceError', () => {

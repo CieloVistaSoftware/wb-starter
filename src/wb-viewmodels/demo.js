@@ -45,7 +45,7 @@ export function formatHtml(raw) {
     try {
         tpl = document.createElement('template');
         tpl.innerHTML = src;
-    } catch (e) {
+    } catch {
         return src; // never break the demo over a formatting failure
     }
     // #1125/#1526: the parser lower-cases attribute names, so re-serializing
@@ -552,7 +552,7 @@ export async function demo(element, options = {}) {
                 .filter((d) => d === element || !d._rawSource);
             const idx = allDemos.indexOf(element);
             rawBlock = extractAttrBlock(pageSource, 'x-demo', idx, allDemos.length);
-        } catch (e) {
+        } catch {
             // ignore fetch errors
         }
         if (!rawBlock || !rawBlock.trim()) {
@@ -1279,7 +1279,7 @@ export async function demo(element, options = {}) {
                 if (e.detail !== undefined) {
                     try {
                         detailStr = JSON.stringify(serializeEventDetailForLog(e.detail));
-                    } catch (err) {
+                    } catch {
                         detailStr = String(e.detail);
                     }
                 }

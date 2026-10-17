@@ -1,11 +1,8 @@
 #!/usr/bin/env node
 import { spawn } from 'child_process';
 import http from 'http';
-import { fileURLToPath } from 'url';
 import path from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const argv = process.argv.slice(2);
 const forward = [];
@@ -91,20 +88,20 @@ waitForHealth(healthPort, waitSeconds).then(() => {
   web.on('exit', (code, sig) => {
     console.log(`[start-mcp] web server exited (code=${code}, sig=${sig})`);
     // ensure mcp is killed when web server exits
-    try { mcp.kill(); } catch (e) {}
+    try { mcp.kill(); } catch {}
     process.exit(code || 0);
   });
 
   // Forward signals
   ['SIGINT','SIGTERM','SIGHUP'].forEach(s => {
     process.on(s, () => {
-      try { web.kill(s); } catch (e) {}
-      try { mcp.kill(s); } catch (e) {}
+      try { web.kill(s); } catch {}
+      try { mcp.kill(s); } catch {}
       process.exit(0);
     });
   });
 }).catch((err) => {
   console.error('[start-mcp] mcp-server failed to become healthy:', err && err.message);
-  try { mcp.kill(); } catch (e) {}
+  try { mcp.kill(); } catch {}
   process.exit(1);
 });

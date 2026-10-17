@@ -53,7 +53,7 @@ import { styleSheetDefinesClass } from '../style-registry.js';
 // =============================================================================
 
 // Debug logging — silent unless localStorage['x-debug'] === '1'.
-const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch (e) { return false; } })();
+const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 
@@ -242,9 +242,6 @@ function getPartClass(schema, partName) {
 /**
  * Auto-generate modifier class: baseClass--modifier
  */
-function getModifierClass(schema, modifier) {
-  return `${getBaseClass(schema)}--${modifier}`;
-}
 
 // =============================================================================
 // DATA EXTRACTION
@@ -327,7 +324,7 @@ function parseValue(value) {
   if (/^-?\d+$/.test(value)) return parseInt(value, 10);
   if (/^-?\d+\.\d+$/.test(value)) return parseFloat(value);
   if (value.startsWith('{') || value.startsWith('[')) {
-    try { return JSON.parse(value); } catch (e) { /* keep as string */ }
+    try { return JSON.parse(value); } catch { /* keep as string */ }
   }
   return value;
 }
@@ -467,7 +464,7 @@ function buildStructure(element, schema, data) {
  */
 function buildFromView(element, schema, data) {
   const parts = schema.$view || [];
-  const baseClass = getBaseClass(schema);
+  getBaseClass(schema);
   
   // Map to track created elements by name
   const createdElements = new Map();
@@ -717,7 +714,7 @@ function interpolate(template, data) {
 export function bindMethods(element, schema, viewModel) {
   const methods = schema.$methods || {};
   
-  for (const [name, config] of Object.entries(methods)) {
+  for (const [name] of Object.entries(methods)) {
     if (typeof viewModel[name] === 'function') {
       // Bind method to element so users can call element.show(), element.hide(), etc.
       element[name] = viewModel[name].bind(viewModel);
@@ -816,7 +813,7 @@ export function processElement(element, schemaName = null) {
  */
 function bindSchemaMethodsToElement(element, schema, data) {
   const methods = schema.$methods || {};
-  const baseClass = getBaseClass(schema);
+  getBaseClass(schema);
   
   // Create a simple ViewModel with common methods
   const viewModel = {
@@ -866,7 +863,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
   };
   
   // Bind each method defined in schema to the element
-  for (const [methodName, config] of Object.entries(methods)) {
+  for (const [methodName] of Object.entries(methods)) {
     if (typeof viewModel[methodName] === 'function') {
       element[methodName] = viewModel[methodName].bind(viewModel);
     } else if (typeof element[methodName] === 'function') {

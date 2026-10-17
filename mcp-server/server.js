@@ -248,7 +248,7 @@ if (healthPort) {
 
     // Best-effort cleanup on exit/signals
     const _closeHealth = () => {
-      try { healthServer.close(); } catch (e) {}
+      try { healthServer.close(); } catch {}
     };
     ['exit','SIGINT','SIGTERM','SIGHUP'].forEach(ev => process.on(ev, _closeHealth));
   } catch (err) {

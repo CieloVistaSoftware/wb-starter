@@ -5,7 +5,7 @@ import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
 import { createServer as createHttpServer } from 'http';
-import { exec, execSync, execFile, execFileSync } from 'child_process';
+import { exec, execFile, execFileSync } from 'child_process';
 import { promisify } from 'util';
 
 // `gh` is called ASYNCHRONOUSLY. execFileSync froze the whole server for as
@@ -148,14 +148,14 @@ const setupPerDirWatch = (root) => {
     const cur = stack.pop();
     try {
       fs.watch(cur, triggerReload).on('error', () => {});
-    } catch (e) {
+    } catch {
       // ignore individual watch errors
     }
 
     let entries = [];
     try {
       entries = fs.readdirSync(cur, { withFileTypes: true });
-    } catch (e) {
+    } catch {
       continue;
     }
 
@@ -259,12 +259,12 @@ app.use(compression());
 const isProduction = process.env.NODE_ENV === 'production';
 const cacheConfig = isProduction ? {
   maxAge: '1d',
-  setHeaders: (res, filePath) => {
+  setHeaders: (res, _filePath) => {
     res.setHeader('Cache-Control', 'public, max-age=86400');
   }
 } : {
   maxAge: '0', // Disable cache for development
-  setHeaders: (res, filePath) => {
+  setHeaders: (res, _filePath) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
@@ -552,7 +552,7 @@ app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
   try {
     const html = marked.parse(req.body || '');
     res.type('text/html').send(html);
-  } catch (err) {
+  } catch {
     res.status(500).send('Markdown conversion error');
   }
 });
@@ -1492,7 +1492,7 @@ app.post("/api/rename-page", (req, res) => {
 });
 
 // Fallback - serve index.html for SPA routes
-app.use((req, res, next) => {
+app.use((req, res, _next) => {
   const ext = path.extname(req.path).toLowerCase();
 
   // Allow .json files from /src/wb-models/ to be served.

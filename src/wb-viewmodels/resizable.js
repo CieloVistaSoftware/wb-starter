@@ -105,8 +105,6 @@ export function resizable(element, options = {}) {
     
     let newWidth = startWidth;
     let newHeight = startHeight;
-    let newLeft = startLeft;
-    let newTop = startTop;
     
     // Calculate new dimensions based on direction
     if (currentDir.includes('e')) {
@@ -114,14 +112,12 @@ export function resizable(element, options = {}) {
     }
     if (currentDir.includes('w')) {
       newWidth = startWidth - deltaX;
-      newLeft = startLeft + deltaX;
     }
     if (currentDir.includes('s')) {
       newHeight = startHeight + deltaY;
     }
     if (currentDir.includes('n')) {
       newHeight = startHeight - deltaY;
-      newTop = startTop + deltaY;
     }
     
     // Apply aspect ratio

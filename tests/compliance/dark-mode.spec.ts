@@ -131,7 +131,7 @@ test.describe('Dark Mode Compliance', () => {
         await page.evaluate(() => {
           document.documentElement.setAttribute('data-theme', 'dark');
         });
-      } catch (e) {
+      } catch {
         // Page navigated — re-wait and retry
         await page.waitForLoadState('domcontentloaded').catch(() => {});
         await settlePage(page, { timeout: 15000, ifPresent: true }).catch(() => {});

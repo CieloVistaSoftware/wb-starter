@@ -712,7 +712,7 @@ export function sheet(element, options = {}) {
     
     // Resize handle
     const resizeHandle = sheetEl.querySelector('.x-sheet__resize');
-    resizeHandle.onmousedown = (e) => {
+    resizeHandle.onmousedown = (_e) => {
       isResizing = true;
       // The sheet's own modifier (#1096), on <body> so the drag cursor and
       // no-select hold wherever the pointer goes during the drag.

@@ -4,5 +4,5 @@ const toDelete = [
   'scripts/show-failures.mjs'
 ];
 for (const f of toDelete) {
-  try { unlinkSync(f); console.log('Deleted:', f); } catch(e) { console.log('Not found:', f); }
+  try { unlinkSync(f); console.log('Deleted:', f); } catch { console.log('Not found:', f); }
 }

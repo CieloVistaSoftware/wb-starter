@@ -4,7 +4,7 @@ import path from 'path';
 
 test.describe('Compliance: No Scrollbars in Docs', () => {
   
-  test('docs-div-1 children should have scrollbars hidden', async ({ page }) => {
+  test('docs-div-1 children should have scrollbars hidden', async () => {
     // Navigate to docs page
     // We assume the server is running on localhost:3000
     // If not, we can try to load the file content and check CSS, but runtime check is better.

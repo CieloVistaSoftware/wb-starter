@@ -103,7 +103,6 @@ function readObjectLiteral(file: string, name: string): Record<string, string> {
     if (c === '{') depth++;
     else if (c === '}') {
       depth--;
-      // eslint-disable-next-line no-new-func
       if (depth === 0) return new Function(`return (${src.slice(start, i + 1)});`)();
     }
   }

@@ -25,7 +25,7 @@ const schemas = fs.readdirSync(schemaDir)
     try {
       const content = JSON.parse(fs.readFileSync(path.join(schemaDir, f), 'utf8'));
       return content.behavior || f.replace('.schema.json', '');
-    } catch (e) {
+    } catch {
       return null;
     }
   })

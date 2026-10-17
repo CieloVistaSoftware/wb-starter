@@ -18,8 +18,8 @@
 
 echo "🔍 Running pre-commit checks..."
 
-# Lint ratchet on STAGED files (#840): fails only when a file you touched has
-# more problems than its recorded baseline. CI does not lint.
+# Lint on STAGED files (#1932): any error or warning in a file you touched
+# fails. CI lints the whole repo (tests/compliance/lint-has-no-errors.spec.ts).
 node .husky/lint-ratchet.mjs --staged || exit 1
 
 # A spec that collects zero tests exits 0 and reports success (#1091). Listing

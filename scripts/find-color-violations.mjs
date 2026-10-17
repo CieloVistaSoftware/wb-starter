@@ -15,7 +15,7 @@ function getCssFiles(dir) {
         results.push(full);
       }
     }
-  } catch(e) {}
+  } catch {}
   return results;
 }
 

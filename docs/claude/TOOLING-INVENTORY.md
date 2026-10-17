@@ -46,7 +46,7 @@ existence of old ones. A gate too strict to pass gets bypassed, and the
 
 | gate | script | baseline | fails when |
 |---|---|---|---|
-| Lint | `.husky/lint-ratchet.mjs` | `.husky/lint-baseline.json` | a file you touched has *more* problems than recorded |
+| Lint | `.husky/lint-ratchet.mjs` | none: the rule is zero (#1932) | a file you touched has any error or warning |
 | Tests | `.husky/test-ratchet.mjs` | `data/test-baseline-failures.json` | a failure appears that is **not** in the register |
 | `wb-` prefix | `scripts/audit-wb-prefix.mjs` | ceilings in `tests/compliance/wb-prefix-cannot-return.spec.ts` | a category grows past its ceiling |
 

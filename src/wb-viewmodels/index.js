@@ -10,7 +10,7 @@
 import { BEHAVIOR_ALIASES } from '../core/tag-map.js';
 
 // Debug logging — silent unless localStorage['x-debug'] === '1'.
-const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch (e) { return false; } })();
+const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch { return false; } })();
 const _wbClog = console.log.bind(console);
 const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 
@@ -453,7 +453,7 @@ export const behaviors = new Proxy({}, {
         });
         if (!fn || typeof fn !== 'function') {
           // Behavior missing or invalid — mark element and return noop cleanup
-          try { if (element) element.setAttribute('x-error', 'missing-behavior'); } catch (e) { /* best-effort */ }
+          try { if (element) element.setAttribute('x-error', 'missing-behavior'); } catch { /* best-effort */ }
           return () => {};
         }
 
@@ -475,19 +475,19 @@ export const behaviors = new Proxy({}, {
           if (result && typeof result.then === 'function') {
             return await result.catch(err => {
               console.error(`[WB] Behavior '${prop}' threw (async):`, err && err.message ? err.message : err);
-              try { if (element) element.setAttribute('x-error', (err && err.message) || 'behavior-async-failed'); } catch (e) { /* best-effort */ }
+              try { if (element) element.setAttribute('x-error', (err && err.message) || 'behavior-async-failed'); } catch { /* best-effort */ }
               return () => {};
             });
           }
           return result;
         } catch (err) {
           console.error(`[WB] Behavior '${prop}' threw (sync):`, err && err.message ? err.message : err);
-          try { if (element) element.setAttribute('x-error', (err && err.message) || 'behavior-sync-failed'); } catch (e) { /* best-effort */ }
+          try { if (element) element.setAttribute('x-error', (err && err.message) || 'behavior-sync-failed'); } catch { /* best-effort */ }
           return () => {};
         }
       } catch (err) {
         console.error(`[WB] Unexpected error invoking behavior '${String(prop)}':`, err && err.message ? err.message : err);
-        try { if (element) element.setAttribute('x-error', 'behavior-invocation-failed'); } catch (e) { /* best-effort */ }
+        try { if (element) element.setAttribute('x-error', 'behavior-invocation-failed'); } catch { /* best-effort */ }
         return () => {};
       }
     };

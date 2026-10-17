@@ -158,7 +158,6 @@ function updateSchema(filepath) {
   const newTests = generatePermutationTests(schema);
   
   // Merge: keep existing wb- tests, replace non-wb tests
-  const nonWbTests = schema.test.setup.filter(t => !t.includes('<wb-'));
   
   // Build final test array: new wb- tests + keep unique existing wb- tests
   const finalTests = [...newTests];

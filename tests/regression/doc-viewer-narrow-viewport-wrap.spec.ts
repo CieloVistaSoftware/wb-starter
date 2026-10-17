@@ -118,7 +118,6 @@ test.describe('doc-viewer: narrow-viewport wrap (#295)', () => {
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       const hits: { text: string; rects: number; parentTag: string }[] = [];
       let node: Text | null;
-      // eslint-disable-next-line no-cond-assign
       while ((node = walker.nextNode() as Text | null)) {
         const value = node.nodeValue || '';
         let idx = value.indexOf('x-toast');

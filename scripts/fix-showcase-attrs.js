@@ -71,7 +71,6 @@ const replacements = [
 ];
 
 replacements.forEach(([pattern, replacement]) => {
-  const before = html.length;
   html = html.replace(pattern, replacement);
 });
 

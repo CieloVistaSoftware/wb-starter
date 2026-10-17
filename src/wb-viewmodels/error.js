@@ -1,5 +1,5 @@
 // Standalone error behavior extracted from enhancements.js
-export function error(element, options = {}) {
+export function error(element, _options = {}) {
   element.classList.add('x-error');
   element.setAttribute('role', 'alert');
   return () => element.classList.remove('x-error');

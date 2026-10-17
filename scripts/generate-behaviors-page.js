@@ -127,7 +127,7 @@ function generateFromView(viewArray) {
 
     // Find children
     const children = [];
-    for (const [childName, childHtml] of elements) {
+    for (const [childName] of elements) {
       const childPart = viewArray.find(p => p.name === childName);
       if (childPart && childPart.parent === name) {
         children.push(buildNestedHtml(childName));

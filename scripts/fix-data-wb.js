@@ -5,20 +5,6 @@
 import fs from 'fs';
 import path from 'path';
 
-// Components that become <wb-*> tags
-const COMPONENTS = [
-  'card', 'badge', 'button', 'modal', 'alert', 'avatar', 'chip', 'progress',
-  'spinner', 'skeleton', 'rating', 'switch', 'tabs', 'accordion', 'drawer',
-  'dropdown', 'tooltip', 'toast', 'navbar', 'footer', 'header', 'hero',
-  'cardhero', 'cardimage', 'cardprofile', 'cardstats', 'cardpricing',
-  'cardproduct', 'cardtestimonial', 'cardnotification', 'cardfile',
-  'cardlink', 'cardhorizontal', 'cardoverlay', 'cardportfolio',
-  'cardbutton', 'carddraggable', 'cardexpandable', 'cardminimizable',
-  'cardvideo', 'code', 'container', 'grid', 'row', 'column', 'span',
-  'repeater', 'control', 'themecontrol', 'input', 'select', 'textarea',
-  'checkbox', 'dialog', 'details', 'audio', 'video', 'table'
-];
-
 // Behaviors that become x-* attributes
 const BEHAVIORS = [
   'ripple', 'tooltip', 'sticky', 'draggable', 'resizable', 'copy', 'share',
@@ -114,7 +100,7 @@ function scan(dir, extensions = ['.html', '.js']) {
         }
       }
     });
-  } catch (e) {}
+  } catch {}
 }
 
 console.log('='.repeat(60));

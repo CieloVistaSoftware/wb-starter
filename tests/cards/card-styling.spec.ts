@@ -153,7 +153,7 @@ test.describe('Card Styling Standards', () => {
     const issues = await page.evaluate(() => {
       const problems: string[] = [];
       
-      document.querySelectorAll('article').forEach((card, idx) => {
+      document.querySelectorAll('article').forEach((card, _idx) => {
         const cardRect = card.getBoundingClientRect();
         
         // Check first text element
