@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.554",
+      "date": "2026-10-17",
+      "summary": "ESLint reported 225 warnings and nothing failed on them, because the lint gate only refused new ones. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1932\" target=\"_blank\" rel=\"noopener\">#1932</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1935\" target=\"_blank\" rel=\"noopener\">#1935</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Zero lint warnings, and any warning now fails</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1932\" target=\"_blank\" rel=\"noopener\">#1932</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1935\" target=\"_blank\" rel=\"noopener\">#1935</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4f7736dfc2488bd70ce83fa0afc6b6bd916264ca\" target=\"_blank\" rel=\"noopener\"><code>4f7736d</code></a>",
+          "issues": [
+            1932,
+            1935
+          ]
+        }
+      ],
+      "seeIt": "Run npx eslint . in the repo. Before: 0 errors, 233 warnings. Now: no output; and a commit or CI run with any warning fails.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4f7736dfc2488bd70ce83fa0afc6b6bd916264ca\" target=\"_blank\" rel=\"noopener\"><code>4f7736d</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.553",
       "date": "2026-10-17",
       "summary": "Every x-drawer-layout example showed one line of run-together links with a second toggle hidden under the first: the runtime applied drawerLayout twice (under drawerLayout and drawer-layout) and the drawer had no panel or list layout. Present since at least 2026-09-15. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1928\" target=\"_blank\" rel=\"noopener\">#1928</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1929\" target=\"_blank\" rel=\"noopener\">#1929</a>",
