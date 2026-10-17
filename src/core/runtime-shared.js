@@ -13,6 +13,7 @@
  * duplicated blocks.
  */
 import { Events } from './events.js';
+import { canonicalBehaviorName } from '../wb-viewmodels/index.js';
 import { isReady, whenReady } from './ready-signal.js';
 import { latestWins } from './latest-wins.js';
 
@@ -86,6 +87,17 @@ export function failInjection(element, behaviorName, error, { report = true } = 
  * @param {string|null} behaviorName
  * @param {(name: string) => void} [onRemoved] - told each behavior removed
  */
+/**
+ * #1928: the name to apply a behavior under, or null when it is already on the
+ * element. One behavior can arrive under two names ('drawer-layout' from the
+ * attribute, 'drawerLayout' from the tag-map); comparing raw names applied it
+ * twice, so both runtimes compare canonical names here.
+ */
+export function canonicalIfNotApplied(applied, element, behaviorName) {
+  const name = canonicalBehaviorName(behaviorName);
+  return (applied.get(element) || []).some((b) => b.name === name) ? null : name;
+}
+
 export function removeApplied(applied, element, behaviorName, onRemoved = () => {}) {
   const elementBehaviors = applied.get(element);
   if (!elementBehaviors) return;
