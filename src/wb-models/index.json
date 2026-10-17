@@ -48,7 +48,6 @@
     "colorpicker.schema.json",
     "confetti.schema.json",
     "confirm.schema.json",
-    "control.schema.json",
     "copy.schema.json",
     "copybutton.schema.json",
     "countdown.schema.json",
@@ -310,7 +309,6 @@
       "card.base.schema.json",
       "demo.schema.json",
       "views.schema.json",
-      "control.schema.json",
       "repeater.schema.json"
     ]
   },

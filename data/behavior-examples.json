@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 156,
+  "count": 160,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -1741,32 +1741,6 @@
         {
           "label": "code snippet",
           "source": "<textarea x-autosize rows=\"1\">function add(a, b) {\n  return a + b;\n}</textarea>"
-        }
-      ]
-    },
-    "x-control": {
-      "source": "<div x-control label=\"Threshold\">\n  <input type=\"range\" min=\"0\" max=\"100\" value=\"60\">\n</div>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "number field",
-          "source": "<div x-control label=\"Retries\">\n  <input type=\"number\" value=\"3\" min=\"0\" max=\"10\">\n</div>"
-        },
-        {
-          "label": "select",
-          "source": "<div x-control label=\"Region\">\n  <select><option>us-east</option><option>eu-west</option></select>\n</div>"
-        },
-        {
-          "label": "checkbox",
-          "source": "<div x-control label=\"Notifications\">\n  <input type=\"checkbox\" checked>\n</div>"
-        },
-        {
-          "label": "text field",
-          "source": "<div x-control label=\"Project name\">\n  <input type=\"text\" value=\"wb-starter\">\n</div>"
-        },
-        {
-          "label": "colour",
-          "source": "<div x-control label=\"Accent\">\n  <input type=\"color\" value=\"#22c55e\">\n</div>"
         }
       ]
     },

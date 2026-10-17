@@ -213,7 +213,6 @@ export const extensionMap = {
   'x-checkbox': 'checkbox',
   'x-chip': 'chip',
   'x-codetheme': 'codetheme',
-  'x-control': 'control',
   'x-demo': 'demo',
   'x-details': 'details',
   'x-dialog': 'dialog',

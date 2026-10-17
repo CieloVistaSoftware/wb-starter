@@ -3,11 +3,11 @@
   "$stats": {
     "sources": {
       "pages": 22,
-      "docs": 244,
+      "docs": 243,
       "demos": 28
     },
-    "totalDocuments": 294,
-    "totalWords": 5691
+    "totalDocuments": 293,
+    "totalWords": 5690
   },
   "documents": [
     {
@@ -987,7 +987,7 @@
       "content": "# WB-Starter Attribute Naming Standard **Version:** 1.1 **Created:** 2026-01-03 **Updated:** 2026-01-05 **Status:** Active --- ## Golden Rule: Attributes Over Nested Markup > **Attribute name = what it is for** > **Schema = where it goes** Users provide simple attribute values. The schema defines how those values become DOM structure. Users should **never need to know behavior internals**. A behavior's one primary value (a badge's label, an alert's message, a card's body) may also be written as the content between the tags, and then the content wins — see [Primary Value: Content Wins](#primary-value-content-wins). ### The Principle ```html-static Explore the Universe Your journey begins Launch Mission ``` ### When to Use What | Content Type | Use | Example | |--------------|-----|-------| | Simple text values | **Attributes** | `title=\"Hello\"` | | Enum choices | **Attributes** | `variant=\"cosmic\"` | | Boolean flags | **Attributes** | `elevated`, `dismissible` | | Arbitrary/rich content | **Body (children)** | ` Any HTML here ` | ### The Contract | Layer | Responsibility | |-------|---------------| | **User** | Provides attribute values | | **Schema** | Defines what tags/structure those values become | | **Framework** | Builds the DOM from schema | ``` User Input Schema Transform DOM Output ─────────── ──────────────── ────────── title=\"Hello\" → \"tag\": \"h1\" → Hello subtitle=\"World\" → \"tag\": \"p\" → World cta=\"Click\" → \"tag\": \"button\" → Click ``` **User doesn't care about internals. Attributes in, DOM out.** --- ## Core Rule > **If a native HTML attribute exists with the same meaning, use the native name.** > > If no native equivalent exists, create a clear, semantic name that doesn't collide with native attributes. --- ## Table of Contents 1. [Element Naming Convention](#element-naming-convention) 2. [Native Attributes to Reuse](#native-attributes-to-reuse) 3. [Native Attributes to Avoid](#native-attributes-to-avoid) 4. [Standard Custom Attributes](#standard-custom-attributes) 5. [Data Injection](#data-injection) 6. [Extension Attributes](#extension-attributes) 7. [Naming Conventions](#naming-conventions) 8. [Accessibility Attributes](#accessibility-attributes) 9. [Units and Values](#units-and-values) 10. [Primary Value: Content Wins](#primary-value-content-wins) 11. [CSS Custom Properties](#css-custom-properties) 12. [Migration from Legacy Syntax](#migration-from-legacy-syntax) 13. [Error Handling](#error-handling) 14. [IDE Support](#ide-support) 15. [Quick Reference](#quick-reference) 16. [Examples by Behavior](#examples-by-behavior) --- ## Element Naming Convention WB-Starter uses two patterns for applying behaviors: | Pattern | Meaning | Use Case | Example | |---------|---------|----------|---------| | semantic HTML tag | **Native** | The element IS the behavior (`nativeMap` in `src/core/tag-map.js`) | ` `, ` `, ` ` | | `x-{name}` | **Extension** | An attribute names the behavior on a host (`extensionMap`) | ` `, ` ` | There are no behavior tags of our own: 4.0.0 removed them, and `elementMap` is empty on purpose (Tier-1 Law 5). A behavior with no semantic tag is always an `x-*` attribute on a host. > **Both are composition.** The split is only about how the behavior is named — > by the semantic tag itself, or by an attribute on a host. Nothing subclasses > anything: ` ` does not extend a `card` class, the > `cardpricing` behavior function decorates the element in place, exactly as > `x-ripple` does. > > This used to be labelled IS-A / HAS-A and needed a paragraph explaining that the > label did not mean what it says. Renamed under **#465**: the architecture is > composition, so the vocabulary is too. Content Save --- ## Native Attributes to Reuse These native HTML attributes should be used **with the same meaning** on custom elements: ### Resource Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `src` | ` `, ` `, ` ` | Resource URL | ` `, ` `, ` ` | | `href` | ` `, ` ` | Link destination | ` `, ` ` | | `alt` | ` ` | Alternative text | ` `, ` ` | | `poster` | ` ` | Preview image | ` ` | ### Form Attributes | Attribute | Native Element | Meaning | Use On | |-----------|---------------|---------|--------| | `placeholder` | ` `, ` ` | Hint text | ` `, ` ` | | `disabled` | Form elements | Disabled state | Any interactive behavior | | `readonly` | ` `, ` ` | Read-only state | ` ` | | `required` | Form elements | Required field | Form behaviors | | `name` | Form elements | Form field name | Form behaviors | | `value` | Form elements | Current value | ` `, ` ` | | `checked` | ` ` | Checked state | ` `, ` ` | | `min` | ` ` | Minimum value | ` `, ` ` | | `max` | ` ` | Maximum value | ` `, ` ` | | `step` | ` ` | Step increment | ` `, ` ` | | `pattern` | ` ` | Validation pattern | ` ` | | `maxlength` | ` `, ` ` | Max characters | ` `, ` ` | | `autocomplete` | ` ` | Autocomplete hint | ` ` | ### Boolean Attributes | Attribute | Native Element | Meaning | U",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-16"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/architecture/standards/ERROR-MESSAGE",
@@ -1071,7 +1071,7 @@
       "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-*` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple`). If you want to **prevent** Auto Injection for a specific element, use the `x-ignore` attribute. This ` ` gets the `button` behavior from its tag and `ripple` from its attribute; the ` ` does not become a WB navbar: Click Me Just a link --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `img` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (any other host):** Content **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html-static ... ``` **Implicit (Auto Injection):** ```html-static Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `x-ignore` attribute. This ` ` does not become a WB navbar: Just a link ## Overriding If you want to use a semantic element but apply a *different* behavior, name it with its attribute. This ` ` is built by `cardhero` instead of the plain `card`, and renders one card, not two (#923):",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-16"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behavior-cross-reference",
@@ -1196,10 +1196,10 @@
           "text": "Card Title"
         }
       ],
-      "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `cart` | `x-cart` | [behaviors/cart.md](behaviors/cart.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behav",
+      "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `cart` | `x-cart` | [behaviors/cart.md](behaviors/cart.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behaviors/details.md](behaviors/details.md) | yes | | `dialog` | `x-dialog` | [behav",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/behaviors-reference",
@@ -1219,7 +1219,7 @@
       "content": "# WB-Starter Reference > **This is the cross-behavior INDEX, not the per-behavior documentation.** > Every behavior now has its own page, generated from its schema, at > `docs/behaviors/ .md` — e.g. [button](behaviors/button.md), > [ripple](behaviors/ripple.md), [tooltip](behaviors/tooltip.md). Each of those > pages opens by stating which of the two behavior types it is (decorates a > semantic element vs. adds a new capability) and how to write it. Go there for > attributes, events and examples; this page is for *browsing what exists* and > for the shared syntax/auto-injection/event rules below. > > Reach this page from an `x-demo` 📖 badge? That means the behavior has no > page of its own yet — find its row in the tables below (#842). This document lists all available behaviors in the WB Starter kit, categorized by function. --- ## What is a Behavior? A **behavior** is a JavaScript function that **enhances** an HTML element by adding: - CSS classes (styling hooks) - Inline styles (visual enhancement) - Event listeners (interactivity) - ARIA attributes (accessibility) - Data attributes (state tracking) A behavior does **NOT** change what the element fundamentally is - it enhances it. --- ## Syntax & Usage Behaviors are applied using attributes with a configurable prefix (default: `x-`). ### 1. Decoration (`x-{behavior}`) Enhances an element without changing its fundamental structure. Click Me Hover Me | Element | Behavior | Result | |---------|----------|--------| | ` ` | `button` | Button with variants, sizes, loading state | | ` ` | `table` | Table with sorting, striping, hover | | ` ` | `details` | Details with smooth animation | | ` ` | `dialog` | Dialog with backdrop, animations | | ` ` | `img` | Lazy loading, fade-in, lightbox | ### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783) There is no `-as-` infix any more. A behavior that builds out a behavior's internals is applied exactly like any other: the attribute name **is** the behavior name, and on a semantic element it is injected for you. Title Content | Element | Behavior | Written as | |---------|----------|------------| | ` ` | `card` | ` ` (auto-injected) or ` ` | | ` ` | `navbar` | ` ` (auto-injected) or ` ` | | ` ` | `sidebar` | ` ` (auto-injected) or ` ` | ### 3. Configuration (Optional) If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally. ```javascript // In your main entry point WB.init({ prefix: 'b' // Changes syntax to b-ripple, b-card, etc. }); ``` --- ## Auto Injection Behaviors can be configured to automatically attach to standard HTML5 semantic elements. It is **on by default** (`autoInject: true` in src/core/config.js). To opt a page out, pass `{ autoInject: false }` to `WB.init()`; to opt one element out, give it `x-ignore`. When enabled, plain semantic elements like ` ` and ` ` below get the `dialog`/`img` behaviors attached automatically, with no `x-` attribute needed: Auto-decorated dialog (zero x- attributes): Auto-decorated dialog content. --- ## Categories ### 1. Semantic HTML & Forms Enhances standard HTML elements with better styling and functionality. | Behavior | Element | Type | Description | |----------|---------|------|-------------| | [`audio`](behaviors/audio.md) | ` ` | Decorate | Enhanced audio player styling | | [`video`](behaviors/video.md) | ` ` | Decorate | Enhanced video player styling | | [`img`](behaviors/img.md) | ` ` | Decorate | Lazy loading, fade-in, lightbox | | [`figure`](behaviors/figure.md) | ` ` | Decorate | Figure with caption styling | | [`table`](behaviors/table.md) | ` ` | Decorate | Sortable headers, striped rows | | [`code`](behaviors/code.md) | ` ` | Decorate | Inline code styling | | [`pre`](behaviors/pre.md) | ` ` | Decorate | Code block with copy button | | [`input`](behaviors/input.md) | ` ` | Decorate | Styled input with variants | | [`textarea`](behaviors/textarea.md) | ` ` | Decorate | Auto-resize, counter | | [`select`](behaviors/select.md) | ` ` | Decorate | Custom dropdown styling | | [`checkbox`](behaviors/checkbox.md) | ` ` | Decorate | Custom checkbox styling | | [`radio`](behaviors/radio.md) | ` ` | Decorate | Custom radio styling | | [`button`](behaviors/button.md) | ` ` | Decorate | Variants, sizes, loading state | | [`switch`](behaviors/switch.md) | ` ` | Decorate | Toggle switch UI | | [`range`](behaviors/range.md) | ` ` | Decorate | Custom track/thumb styling | | [`rating`](behaviors/rating.md) | ` ` | - | Star rating input | | [`form`](behaviors/form.md) | ` ` | Decorate | Validation UI, loading states | | [`details`](behaviors/details.md) | ` ` | Decorate | Smooth expand/collapse animation | | [`dialog`](behaviors/dialog.md) | ` ` | Decorate | Backdrop, close button, animations | | [`fieldset`](behaviors/fieldset.md) | ` ` | Decorate | Groups related form controls | | [`formrow`](behaviors/formrow.md) | ` ` | - | Form field wrapper laid out as a row | | [`inputgroup`](behaviors/inputgroup.md) | ` ` | - | Input joined with prepend",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/behaviors/accordion",
@@ -1448,7 +1448,7 @@
       "content": "# Hero Card `x-cardhero` renders a large banner card with an optional small `pretitle`, a headline, a subtitle and up to two call-to-action buttons, over an optional `background` image. Put it at the top of a page or section; `variant` switches between the stock looks. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `background` | URL | — | Background image URL | | `title` | text | — | Hero headline | | `pretitle` | text | — | Small label or count shown above the title (e.g. '100 Behaviors') | | `subtitle` | text | — | Hero tagline/subheadline | | `content` | text or HTML | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) | | `cta` | text | — | Call-to-action button text | | `ctaHref` | URL | `#` | Call-to-action link URL | | `ctaSecondary` | text | — | Secondary CTA text | | `ctaSecondaryHref` | URL | `#` | Secondary CTA URL | | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant | | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) | | `overlay` | `boolean` | `true` | Show gradient overlay for text readability | | `fullHeight` | `boolean` | `false` | Make hero full viewport height | | `headingLevel` | `1` · `2` · `3` · `4` · `5` · `6` | `3` | Which heading tag the title is, ` ` to ` ` | `headingLevel` is document structure only: it changes the title's tag, not its size or style, so all six levels look the same. Use `1` when the hero is the page's main heading, and a lower level when the hero sits inside a section. Screen readers and search engines read the tag; the reader sees one design. On the Behaviors page, each `headingLevel` row shows the tag it renders. ## Methods - `show()` — Shows the hero - `hide()` — Hides the hero - `toggle()` — Toggles hero visibility - `animate()` — Triggers hero entrance animation - `setBackground()` — Changes the background image Schema: [`cardhero.schema.json`](../../src/wb-models/cardhero.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-16"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/cardhorizontal",
@@ -1737,17 +1737,6 @@
       "modified": "2026-10-10"
     },
     {
-      "id": "docs/behaviors/control",
-      "url": "/docs/behaviors/control",
-      "title": "control",
-      "description": null,
-      "headings": [],
-      "content": "# Control `x-control` adds the `x-control` class to the element and does nothing else; no stylesheet targets that class yet. The former button treatment (`action=\"move-up\"` and so on) never ran and is not supported — use the `x-move*` behaviors for that. ## Usage Schema: [`control.schema.json`](../../src/wb-models/control.schema.json)",
-      "keywords": [],
-      "type": "doc",
-      "modified": "2026-10-10"
-    },
-    {
       "id": "docs/behaviors/copy",
       "url": "/docs/behaviors/copy",
       "title": "copy",
@@ -1858,7 +1847,7 @@
       "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: Delete branch… ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | text | — | Dialog title | | `content` | text or HTML | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). | | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape. Stays on while `showClose` is `false`: then Escape is the way out. | | `showClose` | `boolean` | `true` | Show the × button in the header | | `variant` | `default` · `centered` · `fullscreen` | `default` | | These three are on by default, so you only ever write them to turn something **off**: ```html-static Confirm the merge Escape still gets you out. ``` ### What `\"false\"` means `\"false\"` and `\"0\"` turn a boolean option off. The attribute being present is not what switches it on — its value is read: ```html-static ``` This is worth spelling out because it used to be untrue: `showClose=\"false\"` showed the close button anyway (#747). The old dashed spellings (`showClose`, `closeOnBackdrop`, `closeOnEscape`) are still read, so pages already written keep working — but no attribute name carries a dash, so the camelCase names above are the ones to write (#1125). ### A dialog always has an exit Hiding the close button is allowed; leaving no way out is not. With `showClose=\"false\"`, Escape is the dialog's exit, so it cannot be turned off too (#794): ```html-static ``` That combination is refused: Escape stays on, and the console says why. `closeOnBackdrop=\"false\"` is fine with either, because Escape is the platform's own way out of a modal and the one a keyboard user reaches for. A backdrop click is something a user finds by accident. `dialog.schema.json` states the same rule as an `if`/`then`. ### Layout Every dialog has the same three parts as a card, by tag: | Part | Element | Class | | --- | --- | --- | | Header (title, ×) | ` ` | `x-dialog__header` | | Content | ` ` | `x-dialog__main` | | Cancel / OK (a dialog built from a trigger) | ` ` | `x-dialog__footer` | The ` ` frame has no padding; the parts carry it, so content sits at least 1rem from the frame (DEMOS-AND-DOCS-STANDARDS.md §13). An authored ` ` gets the header and main built around its own markup: its first heading moves into the header, and the rest moves into ` `. ## Events - `wb:dialog:open` — Dialog opened - `wb:dialog:close` — Dialog closed - `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop) - `wb:dialog:ok` — The dialog's confirm button is clicked ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-16"
+      "modified": "2026-10-10"
     },
     {
       "id": "docs/behaviors/dl",
@@ -3469,10 +3458,10 @@
       "title": "pce-candidates",
       "description": null,
       "headings": [],
-      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) let an author name a behavior by tag. 4.0.0 removed them: there are no behavior tags of our own any more, and the noun-first aliases went with them. ## Naming Conventions One form is left. A behavior is either the semantic element itself (` ` is a card) or an `x-*` attribute on a host element: The old generic form, `x-behavior=\"cardprofile\"`, is deprecated (#1642): write the named attribute. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-{name} Attributes** | One attribute per behavior (`x-cardprofile`); `x-behavior=\"…\"` is deprecated (#1642) | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | | ` ` | `control` | Form control wrapper | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-vie",
+      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) let an author name a behavior by tag. 4.0.0 removed them: there are no behavior tags of our own any more, and the noun-first aliases went with them. ## Naming Conventions One form is left. A behavior is either the semantic element itself (` ` is a card) or an `x-*` attribute on a host element: The old generic form, `x-behavior=\"cardprofile\"`, is deprecated (#1642): write the named attribute. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-{name} Attributes** | One attribute per behavior (`x-cardprofile`); `x-behavior=\"…\"` is deprecated (#1642) | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-viewmodels/mycomponent.js`: ```javascript expo",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-10"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/performance",
@@ -6239,9 +6228,7 @@
       "docs/claude/README"
     ],
     "161": [
-      "docs/audits/X-USAGE-AUDIT"
-    ],
-    "162": [
+      "docs/audits/X-USAGE-AUDIT",
       "docs/behavior-cross-reference"
     ],
     "164": [
@@ -6978,7 +6965,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -7501,7 +7487,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -7967,7 +7952,6 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/dropdown",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/help",
@@ -8637,7 +8621,6 @@
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/counter",
@@ -9718,7 +9701,6 @@
       "docs/behaviors/cluster",
       "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
-      "docs/behaviors/control",
       "docs/behaviors/dropdown",
       "docs/behaviors/error",
       "docs/behaviors/fill",
@@ -10446,7 +10428,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -10878,7 +10859,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -11072,7 +11052,6 @@
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -14179,7 +14158,6 @@
       "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/counter",
       "docs/behaviors/cover",
       "docs/behaviors/dialog",
@@ -15357,7 +15335,6 @@
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/fill",
       "docs/behaviors/icon",
       "docs/behaviors/img",
@@ -15649,7 +15626,6 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardstats",
       "docs/behaviors/cluster",
-      "docs/behaviors/control",
       "docs/behaviors/grid",
       "docs/behaviors/heartbeat",
       "docs/behaviors/icon",
@@ -15715,7 +15691,6 @@
       "docs/behaviors/articles",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
-      "docs/behaviors/control",
       "docs/behaviors/fieldset",
       "docs/behaviors/figure",
       "docs/behaviors/fix-card",
@@ -16758,7 +16733,6 @@
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/fix-card",
       "docs/compliance/iso-42001-alignment",
       "docs/guides/migrate-an-existing-page",
@@ -20613,7 +20587,6 @@
       "docs/behaviors/collapse",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
-      "docs/behaviors/control",
       "docs/behaviors/copybutton",
       "docs/behaviors/dialog",
       "docs/behaviors/drawer",
@@ -22960,7 +22933,6 @@
       "pages/home",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audio",
-      "docs/behaviors/control",
       "docs/claude/TOOLING-INVENTORY",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -23089,7 +23061,6 @@
     "supported": [
       "pages/home",
       "docs/audio",
-      "docs/behaviors/control",
       "docs/card"
     ],
     "ripple": [
@@ -23781,7 +23752,6 @@
       "pages/home",
       "pages/introduction",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/globe",
       "docs/behaviors/move",
       "docs/behaviors/scrollalong",
@@ -24000,7 +23970,6 @@
       "docs/behaviors/button",
       "docs/behaviors/chip",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/error",
       "docs/behaviors/file",
       "docs/behaviors/fix-card",
@@ -24066,6 +24035,7 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/auto-injection",
+      "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/behaviors/confirm",
       "docs/behaviors/dialog",
@@ -28604,7 +28574,6 @@
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardproduct",
       "docs/behaviors/confirm",
-      "docs/behaviors/control",
       "docs/behaviors/dropdown",
       "docs/behaviors/form",
       "docs/behaviors/pagination",
@@ -32667,7 +32636,6 @@
     "control": [
       "docs/V3-GUIDE",
       "docs/audio",
-      "docs/behavior-cross-reference",
       "docs/behaviors/articles",
       "docs/behaviors/bounce",
       "docs/behaviors/button",
@@ -32675,7 +32643,6 @@
       "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/codetheme",
-      "docs/behaviors/control",
       "docs/behaviors/dl",
       "docs/behaviors/formrow",
       "docs/behaviors/glow",
@@ -32693,7 +32660,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
-      "docs/pce-candidates",
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -36177,7 +36143,6 @@
     "else": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audio",
-      "docs/behaviors/control",
       "docs/behaviors/masked",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/time",
@@ -38159,7 +38124,6 @@
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
-      "docs/behaviors/control",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
@@ -40413,7 +40377,6 @@
     ],
     "move": [
       "docs/behaviors/carddraggable",
-      "docs/behaviors/control",
       "docs/behaviors/draggable",
       "docs/behaviors/move",
       "docs/behaviors/reel",
@@ -41630,8 +41593,7 @@
       "docs/behaviors/pre"
     ],
     "treatment": [
-      "docs/behaviors/code",
-      "docs/behaviors/control"
+      "docs/behaviors/code"
     ],
     "spelling": [
       "docs/behaviors/code",
@@ -41986,18 +41948,6 @@
     ],
     "landmarks": [
       "docs/behaviors/container"
-    ],
-    "targets": [
-      "docs/behaviors/control",
-      "docs/behaviors/globe",
-      "docs/behaviors/radio",
-      "docs/behaviors/slider"
-    ],
-    "former": [
-      "docs/behaviors/control",
-      "docs/behaviors/fieldset",
-      "docs/behaviors/status",
-      "docs/styles"
     ],
     "copies": [
       "docs/behaviors/copy",
@@ -42537,6 +42487,11 @@
     "coupon": [
       "docs/behaviors/fieldset"
     ],
+    "former": [
+      "docs/behaviors/fieldset",
+      "docs/behaviors/status",
+      "docs/styles"
+    ],
     "overwriting": [
       "docs/behaviors/fieldset",
       "docs/card"
@@ -42879,6 +42834,11 @@
     "globe": [
       "docs/behaviors/globe",
       "docs/pce-candidates"
+    ],
+    "targets": [
+      "docs/behaviors/globe",
+      "docs/behaviors/radio",
+      "docs/behaviors/slider"
     ],
     "treat": [
       "docs/behaviors/globe"
@@ -47146,7 +47106,7 @@
     "mycomponent": [
       "docs/pce-candidates"
     ],
-    "vie": [
+    "expo": [
       "docs/pce-candidates"
     ],
     "execution": [

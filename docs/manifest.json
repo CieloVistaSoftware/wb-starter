@@ -82,7 +82,7 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-10"
+          "modified": "2026-10-16"
         },
         {
           "file": "behaviors/autosize.md",
@@ -394,12 +394,6 @@
           "file": "behaviors/container.md",
           "title": "Container - wb-starter v3.0",
           "description": "Full-featured layout container that switches between a flex stack/row (1 column) and a responsive auto-fit grid (2+ columns), with configurable gap,…",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/control.md",
-          "title": "Control",
-          "description": "x-control adds the x-control class to the element and does nothing else; no stylesheet targets that class yet.",
           "modified": "2026-10-10"
         },
         {

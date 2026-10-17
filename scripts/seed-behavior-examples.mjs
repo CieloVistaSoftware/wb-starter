@@ -236,9 +236,6 @@ export const EXAMPLES = {
 
   'x-autosize': `<textarea x-autosize rows="1" placeholder="This grows as you type — try three or four lines."></textarea>`,
 
-  'x-control': `<div x-control label="Threshold">
-  <input type="range" min="0" max="100" value="60">
-</div>`,
 
   // ── Layout ─────────────────────────────────────────────────────────────────
   'x-flex': `<div x-flex gap="1rem">
