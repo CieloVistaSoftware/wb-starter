@@ -12,7 +12,7 @@ import { createToast } from '../feedback.js';
 import { readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 import { authorText, authoredNodes } from '../../core/author-content.js';
 
-export function switchInput(element, options = {}) {
+export function switchInput(element, _options = {}) {
   const host = element;
   const isBareCheckbox = host.tagName === 'INPUT' && host.type === 'checkbox';
   let input = isBareCheckbox ? host : host.querySelector('input');

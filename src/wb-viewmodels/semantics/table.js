@@ -266,19 +266,9 @@ export function table(element, options = {}) {
     }
   }
 
-  let currentData = [];
-  let filteredData = [];
   let sortCol = -1;
   let sortDir = 'asc';
-
-  // Initialize data from DOM
   const tbody = tableEl.querySelector('tbody');
-  if (tbody) {
-    currentData = Array.from(tbody.querySelectorAll('tr')).map(tr =>
-      Array.from(tr.querySelectorAll('td')).map(td => td.textContent) // Use textContent instead of innerHTML
-    );
-    filteredData = [...currentData];
-  }
 
   // #448: skip the class specifically when tableEl IS the <table> HOST
   // itself (a <table> used with no nested <table> child) -- data.css
@@ -299,7 +289,7 @@ export function table(element, options = {}) {
       const term = searchInput.value.toLowerCase();
       const rows = tbody.querySelectorAll('tr');
       
-      rows.forEach((row, i) => {
+      rows.forEach((row, _i) => {
         const text = row.textContent.toLowerCase();
         const match = !term || text.includes(term);
         // A class, not style.display (#779) -- and not `hidden`, which the

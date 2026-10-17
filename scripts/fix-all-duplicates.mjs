@@ -19,8 +19,7 @@ const changes = [];
 /**
  * Generate a contextual rename for a variable
  */
-function getContextualName(variable, funcName, lineNum, occurrenceIndex, filePath) {
-  const fileName = filePath.split(/[/\\]/).pop().replace('.js', '');
+function getContextualName(variable, funcName, lineNum, occurrenceIndex) {
   
   // Context-based naming strategies
   const contextMap = {

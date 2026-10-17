@@ -1118,7 +1118,7 @@ export async function safeScrollIntoView(
       await el.scrollIntoViewIfNeeded();
       await el.waitFor({ state: 'visible', timeout });
       return;
-    } catch (err) {
+    } catch {
       // JS fallback + short wait then retry
       try {
         await el.evaluate((node: Element) => {

@@ -1,8 +1,7 @@
 import { test, expect } from '../fixtures/offline';
-import * as fs from 'fs';
 import * as path from 'path';
 import { 
-  getFiles, getHtmlFiles, readFile, fileExists, 
+  getFiles, readFile, fileExists, 
   stripDynamicContent, stripCodeExamples,
   ROOT, PATHS, relativePath, IssueCollector 
 } from '../base';
@@ -176,7 +175,7 @@ test.describe('Project Integrity', () => {
         );
         const matches = content.match(regex);
         if (matches) {
-          for (const match of matches) {
+          for (let n = 0; n < matches.length; n++) {
             issues.add(`${relFile}: <${element} data-wb="${behavior}"> is redundant (auto-injected)`);
           }
         }
@@ -188,7 +187,7 @@ test.describe('Project Integrity', () => {
         );
         const matches = content.match(regex);
         if (matches) {
-          for (const match of matches) {
+          for (let n = 0; n < matches.length; n++) {
             issues.add(`${relFile}: <input type="${inputType}" data-wb="${behavior}"> is redundant`);
           }
         }

@@ -35,7 +35,7 @@ for (const branch of local) {
   try {
     execSync(`git branch -D ${branch}`, { encoding: 'utf8', stdio: 'pipe' });
     localDeleted++;
-  } catch (e) { /* skip */ }
+  } catch { /* skip */ }
 }
 
 console.log(`\nDone: ${deleted} remote deleted, ${failed} failed, ${localDeleted} local cleaned up`);

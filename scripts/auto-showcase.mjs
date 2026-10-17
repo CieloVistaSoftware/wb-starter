@@ -23,7 +23,7 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'fs';
-import { resolve, join, basename } from 'path';
+import { resolve, join } from 'path';
 import { execSync } from 'child_process';
 
 const MODELS_DIR = resolve('src/wb-models');
@@ -168,7 +168,7 @@ function generateSections(schema) {
   );
 
   if (boolProps.length > 0) {
-    const demos = boolProps.map(([propName, propDef]) => {
+    const demos = boolProps.map(([propName]) => {
       const attrs = { [camelToKebab(propName)]: true };
       // Add required props
       for (const [rk, rv] of Object.entries(props)) {

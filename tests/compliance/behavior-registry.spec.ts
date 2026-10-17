@@ -5,7 +5,6 @@
  */
 
 import { test, expect } from '../fixtures/offline';
-import * as fs from 'fs';
 import * as path from 'path';
 import { PATHS, readFile, fileExists } from '../base';
 

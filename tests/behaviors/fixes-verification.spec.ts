@@ -252,7 +252,7 @@ test.describe('Fix Verification Tests', () => {
         await import('/src/wb-viewmodels/globe.js');
         await import('/src/wb-viewmodels/slider.js');
         return true;
-      } catch (e) {
+      } catch {
         return false;
       }
     });

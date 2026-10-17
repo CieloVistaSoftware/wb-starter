@@ -7,7 +7,7 @@
  * each entry is simply a div with its text. The schema only stamps a single
  * empty item that the stylesheet does not target, so we render here. (#220)
  */
-export function timeline(element, options = {}) {
+export function timeline(element, _options = {}) {
   // #448: skip the class on a literal <div x-timeline> host -- timeline.css
   // selects the `[x-timeline]` TAG directly for that case now. Still added
   // for every OTHER host (x-timeline on a <div>, e.g. demos/playground.html),

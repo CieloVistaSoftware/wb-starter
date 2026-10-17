@@ -15,12 +15,12 @@ export default function diff(element) {
       wrapper.appendChild(after.cloneNode(true));
       element.appendChild(wrapper);
     }
-  } catch (err) {
-    try { if (element) element.setAttribute('x-error', 'diff-behavior-failed'); } catch (e) { /* best-effort */ }
+  } catch {
+    try { if (element) element.setAttribute('x-error', 'diff-behavior-failed'); } catch { /* best-effort */ }
   }
 
   // Return teardown function for runtime compatibility
   return () => {
-    try { if (element) element.removeAttribute('x-diff-init'); } catch (e) { /* noop */ }
+    try { if (element) element.removeAttribute('x-diff-init'); } catch { /* noop */ }
   };
 }

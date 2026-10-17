@@ -153,7 +153,7 @@ function mergeWithExisting(newData) {
   if (existsSync(customDataPath)) {
     try {
       existing = JSON.parse(readFileSync(customDataPath, 'utf-8'));
-    } catch (e) {
+    } catch {
       console.warn('Could not parse existing html-custom-data.json, starting fresh');
     }
   }

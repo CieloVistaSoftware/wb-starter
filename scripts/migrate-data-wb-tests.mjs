@@ -15,7 +15,6 @@ import { join, relative } from 'path';
 
 const BASE = 'tests';
 const DRY_RUN = process.argv.includes('--dry-run');
-const VERBOSE = process.argv.includes('--verbose');
 
 // Files that INTENTIONALLY test legacy data-wb behavior — DO NOT MIGRATE
 const SKIP_FILES = [
@@ -30,9 +29,6 @@ const SKIP_FILES = [
 ];
 
 // Files where data-wb appears only in comments — safe to update comments
-const COMMENT_ONLY_PATTERNS = [
-  'base.ts',                           // Comment about mdhtml cleanup
-];
 
 function walk(dir, cb) {
   for (const f of readdirSync(dir)) {
@@ -104,7 +100,7 @@ walk(BASE, (filepath) => {
   // Replace with a scan for [class*="x-ready"] or similar v3.0 indicator
   content = content.replace(
     /querySelectorAll\(\s*'\[data-wb\]'\s*\)/g,
-    (match) => {
+    (_match) => {
       fileChanges++;
       return `querySelectorAll('.x-ready')`;
     }
@@ -113,7 +109,7 @@ walk(BASE, (filepath) => {
   // ─── Pattern 5: getAttribute('data-wb') ───
   content = content.replace(
     /getAttribute\(\s*['"]data-wb['"]\s*\)/g,
-    (match, offset) => {
+    (match, _offset) => {
       // This is trickier — the test is reading the value of data-wb
       // In v3.0 there's no single attribute to read. Flag for manual review.
       report.push(`  MANUAL REVIEW: ${relPath} — getAttribute('data-wb') needs case-by-case fix`);

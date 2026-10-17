@@ -20,7 +20,7 @@ export function autocomplete(element, options = {}) {
     const raw = element.getAttribute('items') || '';
     try {
       items = raw.trim().startsWith('[') ? JSON.parse(raw) : raw.split(',').map((s) => s.trim()).filter(Boolean);
-    } catch (e) {
+    } catch {
       items = raw.split(',').map((s) => s.trim()).filter(Boolean);
     }
   } else {

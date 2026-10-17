@@ -1,5 +1,5 @@
 // Standalone colorpicker behavior extracted from enhancements.js
-export function colorpicker(element, options = {}) {
+export function colorpicker(element, _options = {}) {
   element.classList.add('x-colorpicker');
 
   // <input> is a void element — it can never hold a child, so

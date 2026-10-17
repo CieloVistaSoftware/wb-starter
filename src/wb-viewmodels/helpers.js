@@ -67,7 +67,7 @@ export function lazy(element, options = {}) {
               }));
             };
 
-            try { observer.disconnect(); } catch (e) { /* best-effort */ }
+            try { observer.disconnect(); } catch { /* best-effort */ }
           }
         });
       } catch (cbErr) {
@@ -90,7 +90,7 @@ export function lazy(element, options = {}) {
   try { observer.observe(element); } catch (obsErr) { console.debug('[wb-lazy] observer.observe failed', obsErr); }
 
   return () => {
-    try { observer.disconnect(); } catch (e) { /* best-effort */ }
+    try { observer.disconnect(); } catch { /* best-effort */ }
     element.classList.remove('x-lazy', 'x-lazy--loading', 'x-lazy--loaded', 'x-lazy--pending', 'x-lazy--placeholder');
   };
 }
@@ -167,7 +167,7 @@ export function share(element, options = {}) {
     if (navigator.share) {
       try {
         await navigator.share({ title: config.title, text: config.text, url: config.url });
-      } catch (e) {}
+      } catch {}
     } else {
       // writeToClipboard (copy.js), not a bare navigator.clipboard.writeText:
       // the bare call REJECTS whenever clipboard permission is denied or the
@@ -807,7 +807,7 @@ export function relativetime(element, options = {}) {
  * Offline - Offline detection (VISIBLE)
  * Helper Attribute: [x-offline]
  */
-export function offline(element, options = {}) {
+export function offline(element, _options = {}) {
   // #779: the pill (with #486's 1rem padding floor) and its online/offline
   // colours are .x-offline / --online / --offline in helpers.css.
   element.classList.add('x-offline');
@@ -833,7 +833,7 @@ export function offline(element, options = {}) {
  * Visible - Visibility toggle
  * Helper Attribute: [x-visible]
  */
-export function visible(element, options = {}) {
+export function visible(element, _options = {}) {
   element.classList.add('x-visible');
 
   // Hidden is .x-visible--hidden (helpers.css), not display:none on the

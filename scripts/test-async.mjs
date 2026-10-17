@@ -94,7 +94,7 @@ function killProcess(pid) {
   try {
     process.kill(pid, "SIGTERM");
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -153,7 +153,7 @@ async function runStop() {
     status.completedAt = new Date().toISOString();
     status.exitCode = -1;
     await writeFile(STATUS_FILE, JSON.stringify(status, null, 2));
-  } catch (e) { /* ignore */ }
+  } catch { /* ignore */ }
 
   await guards.removeLock();
 
@@ -295,7 +295,7 @@ async function runMonitor(args) {
   let status;
   try {
     status = JSON.parse(await readFile(statusFile, "utf-8"));
-  } catch (e) {
+  } catch {
     status = makeStatus(startTime, cmdArgs, specFile);
   }
 
@@ -466,7 +466,7 @@ function extractErrors(text) {
 
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
 
     // Also update test-results.json with live results array
     if (mode === "suite") {
@@ -482,7 +482,7 @@ function extractErrors(text) {
           results: testResults,
           failures: testResults.filter(t => t.status === "failed"),
         }, null, 2));
-      } catch (e) { /* ignore */ }
+      } catch { /* ignore */ }
     }
   };
 
@@ -550,7 +550,7 @@ function extractErrors(text) {
 
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
 
     // Write full results (suite mode only)
     if (mode === "suite") {
@@ -568,7 +568,7 @@ function extractErrors(text) {
           stdout,
           stderr,
         }, null, 2));
-      } catch (e) { /* ignore */ }
+      } catch { /* ignore */ }
 
       await guards.removeLock();
     } else {
@@ -583,7 +583,7 @@ function extractErrors(text) {
     status.errors = err.message;
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     if (mode === "suite") await guards.removeLock();
     else await guards.releaseSlot(ownSlot);
   });

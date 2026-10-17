@@ -202,7 +202,7 @@ function validatePageFragment(html, filename) {
 }
 
 
-function validateDemo(html, filename) {
+function validateDemo(html, _filename) {
   const issues = [];
   const lower = html.toLowerCase();
 
@@ -253,7 +253,7 @@ function validateDemo(html, filename) {
 }
 
 
-function validatePageSchema(schema, filename) {
+function validatePageSchema(schema, _filename) {
   const issues = [];
 
   if (!schema.title) {

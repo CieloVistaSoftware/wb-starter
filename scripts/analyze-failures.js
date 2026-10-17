@@ -17,7 +17,7 @@ try {
   const homeNavs = [...home.matchAll(/<nav[^>]*>/gi)];
   homeNavs.forEach(n => console.log(n[0]));
   if (home.includes('scrollalong')) console.log('Has scrollalong');
-} catch (e) { console.log('No home.html'); }
+} catch { console.log('No home.html'); }
 
 // Check all pages for scrollalong usage
 console.log('\n=== scrollalong usage in pages ===');
@@ -26,7 +26,7 @@ pages.forEach(p => {
   try {
     const c = fs.readFileSync('pages/' + p, 'utf8');
     if (c.includes('scrollalong')) console.log(p + ': uses scrollalong');
-  } catch (e) {}
+  } catch {}
 });
 
 // Check demos
@@ -37,9 +37,9 @@ try {
     try {
       const c = fs.readFileSync('demos/' + d, 'utf8');
       if (c.includes('scrollalong')) console.log(d + ': uses scrollalong');
-    } catch (e) {}
+    } catch {}
   });
-} catch (e) {}
+} catch {}
 
 // Check what the sticky test page is
 console.log('\n=== sticky.spec.ts test page ===');

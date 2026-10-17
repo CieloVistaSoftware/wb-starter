@@ -10,7 +10,7 @@
  * Small/Medium/Large demo is on demos/site/forms.html (the Form Controls
  * category page), inside the grid scoped as SIZES below.
  */
-import { test, expect, Page } from '../fixtures/offline';
+import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/demos/site/forms.html`;

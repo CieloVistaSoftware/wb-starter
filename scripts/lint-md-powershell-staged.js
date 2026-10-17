@@ -1,20 +1,18 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 // Staged-only variant of lint-md-powershell.js — scans only staged markdown files.
 import { execSync } from 'child_process';
 import fs from 'fs';
-import path from 'path';
 
 function gitStagedFiles() {
   try {
     const out = execSync('git diff --name-only --cached', { encoding: 'utf8' });
     return out.split(/\r?\n/).filter(Boolean);
-  } catch (err) {
+  } catch {
     return [];
   }
 }
 
-function scanFileText(text, file) {
+function scanFileText(text, _file) {
   const lines = text.split(/\r?\n/);
   const forbidden = [/\b&&\b/, /\|\|/, /;\s*true\b/];
   const shellLikeLang = /^(?:bash|sh|shell|console|text|zsh|cmd|powershell|pwsh)$/i;

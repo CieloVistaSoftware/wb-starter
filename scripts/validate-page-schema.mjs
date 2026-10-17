@@ -142,11 +142,9 @@ function validateDemoAttrs(demo, schema, location, componentSchemas) {
 
     // Try exact match first, then camelCase conversion
     let propDef = allProps[attrName];
-    let resolvedName = attrName;
     if (!propDef && attrName.includes('-')) {
       const camelName = hyphenToCamel(attrName);
       propDef = allProps[camelName];
-      if (propDef) resolvedName = camelName;
     }
     if (!propDef) {
       errors.push({

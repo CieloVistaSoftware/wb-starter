@@ -38,7 +38,7 @@ test.describe('Demo Page Safety', () => {
             files.push(fullPath);
           }
         });
-      } catch (e) {
+      } catch {
         // Silently skip inaccessible dirs
       }
     };

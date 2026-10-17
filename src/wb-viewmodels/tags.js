@@ -5,7 +5,7 @@ import { wrapInput } from '../core/wrap-input.js';
 // children, so (unlike the old version of this file) we never append a new
 // <input> into it. Instead, wrap the real input in a container (same
 // approach as search.js) and add the tag list as a sibling.
-export function tags(element, options = {}) {
+export function tags(element, _options = {}) {
   const { wrapper, input } = wrapInput(element, 'x-tags');
   const isInput = input === element;
 

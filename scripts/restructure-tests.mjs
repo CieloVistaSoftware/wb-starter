@@ -11,8 +11,6 @@ import path from 'path';
 
 const ROOT = process.cwd();
 const TESTS = path.join(ROOT, 'tests');
-const SCHEMAS = path.join(ROOT, 'src/wb-models');
-const VIEWMODELS = path.join(ROOT, 'src/wb-viewmodels');
 
 const apply = process.argv.includes('--apply');
 

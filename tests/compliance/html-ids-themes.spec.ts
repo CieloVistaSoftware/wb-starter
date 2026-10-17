@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { ROOT, relativePath, readFile } from '../base';
+import { ROOT, readFile } from '../base';
 
 test.describe('HTML Compliance: ID attributes (themes.html)', () => {
   test('themes critical containers have IDs', async ({ page }) => {

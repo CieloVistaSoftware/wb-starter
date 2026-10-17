@@ -9,9 +9,6 @@ const modelsDir = path.join(__dirname, '../src/wb-models');
 const vscodeDataPath = path.join(__dirname, '../.vscode/html-custom-data.json');
 
 // Helper to convert CamelCase/kebab-case to separate words
-function toTitleCase(str) {
-  return str.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-}
 
 async function audit() {
     console.log('🔍 Auditing Intellisense Coverage...\n');

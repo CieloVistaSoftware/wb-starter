@@ -169,7 +169,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       const toggle = page.locator(`${EX} [x-toggle]`).first();
       // #1092: the example must render a [x-toggle] element to click
       expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
-      const bgBefore = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
+      await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
       await toggle.click();
       // The toggle has repainted, transitions done (#1516: not 300ms).
       await page.evaluate(async () => {

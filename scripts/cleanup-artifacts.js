@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 // Remove local heavy test artifacts that slow down repo operations.
 import fs from 'fs';
 import path from 'path';
@@ -20,7 +19,7 @@ for (const t of targets) {
   for (const e of entries) {
     if (e.name.startsWith('playwright-') || e.name.endsWith('-artifacts') || e.name === 'test-results' || e.name === '.playwright-artifacts') {
       const full = path.join(dir, e.name);
-      try { fs.rmSync(full, { recursive: true, force: true }); removed++; } catch (err) { /* ignore */ }
+      try { fs.rmSync(full, { recursive: true, force: true }); removed++; } catch { /* ignore */ }
     }
   }
 }

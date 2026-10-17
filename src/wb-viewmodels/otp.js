@@ -13,7 +13,7 @@ export function otp(element, options = {}) {
     input.inputMode = 'numeric';
     input.maxLength = 1;
     input.className = 'x-otp__input';
-    input.addEventListener('input', (e) => {
+    input.addEventListener('input', (_e) => {
       if (input.value.length === 1 && i < config.length - 1) {
         inputs[i + 1].focus();
       }

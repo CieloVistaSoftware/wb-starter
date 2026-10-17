@@ -9,7 +9,7 @@ import path from 'path';
 
 function run(cmd){
   try { return execSync(cmd, { encoding: 'utf8' }).trim(); }
-  catch (err) { return ''; }
+  catch { return ''; }
 }
 
 // Ensure we have an up-to-date main to diff against
