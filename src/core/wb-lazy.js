@@ -9,7 +9,7 @@
  */
 
 import { hasAuthoredAttr } from './read-attr.js';
-import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../wb-viewmodels/index.js';
+import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules, canonicalBehaviorName } from '../wb-viewmodels/index.js';
 import { markReady } from './ready-signal.js';
 import { Events } from './events.js';
 import './click-confirm.js';
@@ -29,7 +29,7 @@ import { makeDlog, traceStatusLabel, isTraceCategoryEnabled } from './debug-trac
 import { sliceOverBudget, nextSlice } from './main-thread-budget.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import {
-  beginInFlight, failInjection, removeApplied, installReadiness,
+  beginInFlight, failInjection, removeApplied, installReadiness, canonicalIfNotApplied,
   startObserving, stopObserving, commonInitOptions, bootDocument,
 } from './runtime-shared.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
@@ -696,11 +696,10 @@ const WB = {
       return null;
     }
 
-    // Check if already applied
-    const elementBehaviors = applied.get(element) || [];
-    if (elementBehaviors.some(b => b.name === behaviorName)) {
-      return null; // Already applied
-    }
+    // Already applied under any of its names? (#1928)
+    const canonical = canonicalIfNotApplied(applied, element, behaviorName);
+    if (!canonical) return null;
+    behaviorName = canonical;
 
     // Check if pending (prevent race conditions)
     let pending = pendingInjections.get(element);
@@ -902,7 +901,7 @@ const WB = {
    * @param {string} behaviorName - Behavior to remove (or all if not specified)
    */
   remove(element, behaviorName = null) {
-    removeApplied(applied, element, behaviorName);
+    removeApplied(applied, element, behaviorName && canonicalBehaviorName(behaviorName));
   },
 
   /**

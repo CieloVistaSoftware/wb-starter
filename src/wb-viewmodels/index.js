@@ -326,6 +326,26 @@ async function loadModule(moduleName) {
  * @param {string} name - Behavior name
  * @returns {Promise<Function>} The behavior function
  */
+/**
+ * The one name a behavior goes by, whichever spelling reached it (#1928).
+ *
+ * `x-drawer-layout` reaches drawerLayout() as 'drawerLayout' (tag-map) AND as
+ * 'drawer-layout' (the attribute, an export alias). The runtimes skip a
+ * behavior already applied by comparing names, so two names meant two runs:
+ * every drawer got two toggle buttons. An alias folds into its target only when
+ * the target is itself a registered behavior in the same module -- otherwise
+ * the name is kept, so getBehavior() can always load what this returns.
+ * @param {string} name
+ * @returns {string}
+ */
+export function canonicalBehaviorName(name) {
+  const target = exportAliases[name];
+  if (target && target !== name && behaviorModules[target] && behaviorModules[target] === behaviorModules[name]) {
+    return target;
+  }
+  return name;
+}
+
 export async function getBehavior(name) {
   const moduleName = behaviorModules[name];
   

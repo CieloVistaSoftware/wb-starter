@@ -693,6 +693,19 @@
   text-overflow: ellipsis;
 }
 
+/* #1933: the group's box is the <li>, not its <details>, so the description
+   line (a sibling of <details>, see behaviors.html) sits inside the same
+   border as the name instead of under it, against the next group's box. */
+.behaviors-search-results__group {
+  border: 0.0625rem solid var(--border-color, #374151);
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+.behaviors-search-results__group > details.x-details {
+  border: 0;
+  border-radius: 0;
+}
+
 /* A group's line sits under its collapsed name, indented like the name. */
 .behaviors-search-results__desc--group {
   padding: 0 1rem 0.6rem;

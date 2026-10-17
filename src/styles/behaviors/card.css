@@ -309,7 +309,8 @@ article:not(:has(.x-card__header)):not(:has(.x-card__main)),
    TYPOGRAPHY
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.x-card__title {
+/* Not the hero title: it is sized by its h1..h6 tag (#1936). */
+.x-card__title:not(.x-card__hero-title) {
   /* margin-bottom:0.5rem (not 0), font-size:1.1rem (not 1.125rem) -- these
     used to come from composeCard's inline STYLE_TITLE (card.js), which always
      won over this rule's old values, so 1.1rem/0.5rem-bottom was the actual

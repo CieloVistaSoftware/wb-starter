@@ -135,7 +135,7 @@ function traceMediaLoads() {
  *   </script>
  */
 
-import { behaviors } from '../wb-viewmodels/index.js';
+import { behaviors, canonicalBehaviorName } from '../wb-viewmodels/index.js';
 import { markReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
@@ -162,7 +162,7 @@ import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import {
-  beginInFlight, failInjection, removeApplied, installReadiness,
+  beginInFlight, failInjection, removeApplied, installReadiness, canonicalIfNotApplied,
   startObserving, stopObserving, commonInitOptions, bootDocument,
   appliedBehaviors, pendingInjections, inFlightInjections,
 } from './runtime-shared.js';
@@ -389,11 +389,11 @@ const WB = {
       return null;
     }
 
-    // Check if already applied
+    // Already applied under any of its names? (#1928)
+    const canonical = canonicalIfNotApplied(applied, element, behaviorName);
+    if (!canonical) return null;
+    behaviorName = canonical;
     const elementBehaviors = applied.get(element) || [];
-    if (elementBehaviors.some(b => b.name === behaviorName)) {
-      return null; // Already applied
-    }
 
     // Check if pending
     let elementPending = pending.get(element);
@@ -510,7 +510,7 @@ const WB = {
    * @param {string} behaviorName - Behavior to remove (or all if not specified)
    */
   remove(element, behaviorName = null) {
-    removeApplied(applied, element, behaviorName,
+    removeApplied(applied, element, behaviorName && canonicalBehaviorName(behaviorName),
       (name) => pubsub.publish('wb:remove', { element, behavior: name }));
   },
 

@@ -37,7 +37,7 @@ const CASES: Case[] = [
   { label: '"big" (junk)', attr: 'big', expected: 'h3' },
 ];
 
-type Row = { label: string; expected: string; tag: string | null };
+type Row = { label: string; expected: string; tag: string | null; size: string | null; plain: string | null };
 
 test.describe('x-cardhero headingLevel renders the declared heading (#1124)', () => {
   let rows: Row[];
@@ -62,7 +62,12 @@ test.describe('x-cardhero headingLevel renders the declared heading (#1124)', ()
 
       const out = cases.map((c, i) => {
         const title = document.querySelector(`#hl-${i} .x-card__hero-title`);
-        return { label: c.label, expected: c.expected, tag: title ? title.tagName.toLowerCase() : null };
+        const tag = title ? title.tagName.toLowerCase() : null;
+        // A plain heading of the same tag on the same page: what that tag looks like (#1936).
+        const plain = tag ? document.body.appendChild(document.createElement(tag)) : null;
+        const res = { label: c.label, expected: c.expected, tag, size: title ? getComputedStyle(title).fontSize : null, plain: plain ? getComputedStyle(plain).fontSize : null };
+        plain?.remove();
+        return res;
       });
       host.remove();
       return out;
@@ -89,5 +94,12 @@ test.describe('x-cardhero headingLevel renders the declared heading (#1124)', ()
     // regression reads as the defect it is, not as five unrelated mismatches.
     const tags = new Set(rows.filter((r) => /^"\d"$/.test(r.label) && Number(r.label[1]) >= 1 && Number(r.label[1]) <= 6).map((r) => r.tag));
     expect(tags.size, `levels 1..6 rendered only ${[...tags].join(', ')}`).toBe(6);
+  });
+
+  test('each title is the size of a plain heading with its tag (#1936)', () => {
+    // John: "header 1 is a <h1> header2 is a <h2>". The hero used to force one
+    // size on every level, so an h6 looked like an h1.
+    const wrong = rows.filter((r) => r.size !== r.plain).map((r) => `<${r.tag}>: ${r.size}, a plain <${r.tag}> is ${r.plain}`);
+    expect(wrong, 'the hero redefined its heading size').toEqual([]);
   });
 });

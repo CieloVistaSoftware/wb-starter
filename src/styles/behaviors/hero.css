@@ -177,13 +177,10 @@
    regardless of load order. */
 [x-cardhero] .x-card__title.x-card__hero-title{
   margin: 0;
-  font-weight: 800;
-  line-height: 1.05;
-  /* 11cqi of the column: a 13-letter word ("Accessibility") at weight 800
-     is ~8em, so 11% of the column keeps it on one line down to a phone. The
-     floor was 2rem, which alone was wider than a 320px hero's column. */
-  font-size: clamp(1.25rem, 11cqi, 3.5rem);
-  letter-spacing: -0.01em;
+  /* #1936, John: "header 1 is a <h1> header2 is a <h2>". No size, weight or
+     line-height here: the title is styled by its tag (site.css h1..h6), like
+     every other heading, so headingLevel changes what it looks like too.
+     Only what the photo behind it needs stays: colour and shadow. */
   /* Break between words only. The card's own `overflow-wrap: break-word`
      (card.css) is inherited, and it broke a heading that did not fit at a
      character. The size above is what makes it fit. */

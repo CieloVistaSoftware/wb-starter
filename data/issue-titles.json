@@ -1289,5 +1289,9 @@
   "1919": "Remove x-control: a leftover from the paused page-builder work that does nothing",
   "1921": "x-cardhero headingLevel rows look identical: show the h1..h6 tag each renders, and document it",
   "1926": "npm run ask: a local, offline assistant that answers from wb-starter's own files, with sources",
-  "1928": "x-drawer-layout examples: two toggles per drawer, links run together, no visible panel (since at least Sep 15)"
+  "1928": "x-drawer-layout examples: two toggles per drawer, links run together, no visible panel (since at least Sep 15)",
+  "1930": "x-grid columns is not a column count: columns=1 shows 4 columns, columns=2 shows 3",
+  "1932": "Lint: 225 warnings allowed through; make zero warnings the rule",
+  "1933": "Behaviors list: a group's description sits outside its box, under the next group",
+  "1936": "x-cardhero: every headingLevel renders at the same size; h1 should look like h1"
 }
