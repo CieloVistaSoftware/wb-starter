@@ -13,7 +13,7 @@
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { readdirSync } from 'fs';
-import { join, basename } from 'path';
+import { join } from 'path';
 
 const root = process.cwd();
 const pagesDir = join(root, 'pages');

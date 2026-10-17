@@ -16,7 +16,7 @@ let cache = {};
 if (fs.existsSync(CACHE_FILE)) {
   try {
     cache = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
-  } catch (e) {
+  } catch {
     console.log('Corrupt cache, starting fresh.');
   }
 }
@@ -161,13 +161,13 @@ function processResults(stdout, reportFile) {
     
     try {
       json = JSON.parse(jsonStr);
-    } catch (e) {
+    } catch {
       const start = jsonStr.indexOf('{');
       const end = jsonStr.lastIndexOf('}');
       if (start !== -1 && end !== -1) {
         try {
           json = JSON.parse(jsonStr.substring(start, end + 1));
-        } catch (e2) {
+        } catch {
            console.log('Could not extract JSON from stdout/file');
         }
       }

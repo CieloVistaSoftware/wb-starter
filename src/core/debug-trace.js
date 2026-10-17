@@ -30,7 +30,7 @@ const STORAGE_KEY = 'x-debug';
 function readRaw() {
   try {
     return localStorage.getItem(STORAGE_KEY);
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -96,7 +96,7 @@ export function setDebugTrace(value) {
     } else {
       localStorage.setItem(STORAGE_KEY, String(value));
     }
-  } catch (e) {
+  } catch {
     // localStorage unavailable (private mode, SSR, etc.) — best-effort only.
   }
 }

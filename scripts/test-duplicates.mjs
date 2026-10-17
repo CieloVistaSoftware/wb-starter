@@ -239,7 +239,7 @@ class ScopeAwareDuplicateDetector {
         c(node.body, state);
       },
       
-      ImportDeclaration(node, state, c) {
+      ImportDeclaration(node, _state, _c) {
         for (const spec of node.specifiers) {
           declareVariable(spec.local.name, 'import', spec.loc?.start.line || node.loc.start.line);
         }
@@ -309,7 +309,7 @@ class ScopeAwareDuplicateDetector {
             files.push(fullPath);
           }
         }
-      } catch (e) {
+      } catch {
         // Silently skip
       }
     };

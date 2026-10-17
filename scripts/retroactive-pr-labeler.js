@@ -6,7 +6,7 @@ const APPLY = process.argv.includes('--apply');
 const OWNER = 'CieloVistaSoftware';
 const REPO = 'wb-starter';
 function run(cmd){
-  try{ return execSync(cmd, {encoding: 'utf8'}).trim(); }catch(e){ return null; }
+  try{ return execSync(cmd, {encoding: 'utf8'}).trim(); }catch{ return null; }
 }
 console.log(`Retroactive Tier-1 labeler — max=${MAX} apply=${APPLY}`);
 const prsJson = run(`gh pr list --state open --json number,headRefName,headRefOid,labels -L ${MAX}`);
@@ -20,7 +20,7 @@ for(const pr of prs){
   const checksRaw = run(`gh api repos/${OWNER}/${REPO}/commits/${sha}/check-runs --paginate --jq '.check_runs'`);
   let tier1 = null;
   if(checksRaw){
-    try{ const checks = JSON.parse(checksRaw); tier1 = checks.find(c=>/compliance|tier-?1/i.test(c.name)); }catch(e){ tier1 = null; }
+    try{ const checks = JSON.parse(checksRaw); tier1 = checks.find(c=>/compliance|tier-?1/i.test(c.name)); }catch{ tier1 = null; }
   }
   const needs = (!tier1) || (tier1 && tier1.conclusion !== 'success');
   if(!needs){

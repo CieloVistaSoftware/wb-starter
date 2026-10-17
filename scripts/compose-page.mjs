@@ -18,8 +18,8 @@
  * Composed schemas are written to src/wb-models/pages/ (resolved, no directives).
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
-import { resolve, dirname, basename, join } from 'path';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { resolve, basename, join } from 'path';
 import { execSync } from 'child_process';
 
 const PAGES_DIR = resolve('src/wb-models/pages');

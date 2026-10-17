@@ -113,7 +113,7 @@
   // History
   var HIST_KEY = 'wbdc_history';
   var cmdHist = [];
-  try { cmdHist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); } catch(e) {}
+  try { cmdHist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); } catch {}
   var histIdx = -1;
   var savedDraft = '';
 
@@ -149,7 +149,7 @@
     sp.textContent = args.map(function(a) {
       if (a === null) return 'null';
       if (a === undefined) return 'undefined';
-      if (typeof a === 'object') { try { return JSON.stringify(a, null, 2); } catch(e2) { return String(a); } }
+      if (typeof a === 'object') { try { return JSON.stringify(a, null, 2); } catch { return String(a); } }
       return String(a);
     }).join(' ');
     row.appendChild(ic);
@@ -176,7 +176,7 @@
     ta.className = 'wbdc-copybuf';
     document.body.appendChild(ta);
     ta.focus(); ta.select();
-    try { document.execCommand('copy'); flashCopy(); } catch(e) {}
+    try { document.execCommand('copy'); flashCopy(); } catch {}
     document.body.removeChild(ta);
   }
 
@@ -196,7 +196,7 @@
     // History
     if (!cmdHist.length || cmdHist[cmdHist.length - 1] !== code) {
       cmdHist.push(code);
-      try { localStorage.setItem(HIST_KEY, JSON.stringify(cmdHist.slice(-20))); } catch(e) {}
+      try { localStorage.setItem(HIST_KEY, JSON.stringify(cmdHist.slice(-20))); } catch {}
     }
     histIdx = -1;
     savedDraft = '';
@@ -229,7 +229,7 @@
   btnRun.onclick     = runCode;
   btnClear.onclick   = resetOutput;
   btnRefresh.onclick = function() {
-    try { sessionStorage.setItem('wbdc_open', '1'); } catch(e) {}
+    try { sessionStorage.setItem('wbdc_open', '1'); } catch {}
     window.location.reload();
   };
   // Reopen panel after refresh
@@ -240,7 +240,7 @@
       fab.classList.add('wbdc-fab--hidden');
       addLine('info', 'i', ['[Console] Page refreshed — watching for errors...']);
     }
-  } catch(e) {}
+  } catch {}
 
   // ── Runtime error capture ─────────────────────────────
   window.addEventListener('error', function(e) {

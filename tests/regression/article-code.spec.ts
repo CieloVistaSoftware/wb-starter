@@ -1,7 +1,5 @@
 
 import { test, expect } from '../fixtures/offline';
-import { setupBehaviorTest, waitForWB } from './base';
-import * as path from 'path';
 
 test.describe('External Markdown Code Block Injection', () => {
 

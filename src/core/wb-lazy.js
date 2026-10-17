@@ -493,7 +493,6 @@ function keepAuthoredText(element, schema) {
 // apply one behavior twice because each runtime kept its own record.
 const applied = appliedBehaviors;
 const inFlight = inFlightInjections;
-let injectionTimeout = null;
 // #961/#962: the countable, awaitable view of the same in-flight work.
 // Same module wb.js uses — one contract, implemented once (#923/#951 are what
 // happens when the two runtimes each grow their own copy).

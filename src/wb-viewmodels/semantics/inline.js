@@ -9,7 +9,7 @@ import { setRule, clearRules } from '../../core/dynamic-style.js';
  * Kbd - Keyboard Input
  * Helper Attribute: [x-kbd]
  */
-export function kbd(element, options = {}) {
+export function kbd(element, _options = {}) {
   element.classList.add('x-kbd');
   
   // #779: the styling is .x-kbd in ui-utils.css (always loaded). This used

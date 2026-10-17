@@ -63,7 +63,7 @@ test.describe('image load failures raise runtime errors', () => {
   test.setTimeout(RETRY_BUDGET_MS + 30000);
 
   test('a missing image throws once its retries are exhausted', async ({ page }) => {
-    const { caught, className } = await renderAndCollect(
+    const { caught } = await renderAndCollect(
       page,
       '<img id="broken" src="/definitely-missing-image.png" alt="broken">',
       RETRY_BUDGET_MS,

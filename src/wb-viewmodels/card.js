@@ -1743,14 +1743,14 @@ export function cardstats(element, options = {}) {
   element.appendChild(content);
 
   // Runtime/test hook: mark cardstats as hydrated so tests can wait on it
-  try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch (e) { /* best-effort */ }
+  try { element.setAttribute('x-hydrated', '1'); element.dispatchEvent(new CustomEvent('wb:cardstats:hydrated', { bubbles: true })); } catch { /* best-effort */ }
 
   // #678: show the author's own content -- see renderAuthoredContent().
   base.renderAuthoredContent();
   return base.cleanup;
   } catch (err) {
     // Prevent unhandled errors from closing the test page; surface diagnostics instead.
-    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.setAttribute('x-error', (err && err.message) || 'init-failed'); element.classList.add('x-cardstats--error'); } catch (e) { /* best-effort */ }
+    try { console.error('[cardstats] init error:', err && err.message ? err.message : err); element.setAttribute('x-error', (err && err.message) || 'init-failed'); element.classList.add('x-cardstats--error'); } catch { /* best-effort */ }
     return () => {};
   }
 }

@@ -83,7 +83,7 @@ function scan(dir) {
         });
       }
     });
-  } catch (e) {}
+  } catch {}
 }
 
 scan('.');

@@ -73,7 +73,7 @@ function extractIssueIdsFromCommit(){
 }
 
 function markFromLastCommit(){
-  const {sha, msg, candidates} = extractIssueIdsFromCommit();
+  const {sha, candidates} = extractIssueIdsFromCommit();
   if (candidates.length === 0){
     console.log("No issue IDs found in the last commit message — nothing to mark.");
     return 0;

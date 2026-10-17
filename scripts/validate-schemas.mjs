@@ -9,11 +9,9 @@ import { readFileSync, readdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 const modelsDir = join(process.cwd(), 'src', 'wb-models');
-const metaSchemaPath = join(modelsDir, 'schema.schema.json');
 const outputPath = join(process.cwd(), 'data', 'schema-validation.json');
 
 // Load meta-schema
-const metaSchema = JSON.parse(readFileSync(metaSchemaPath, 'utf8'));
 
 // Get target schemas
 const filter = process.argv[2];
@@ -77,7 +75,7 @@ console.log(`\nFull results: ${outputPath}`);
  *  2. Better error messages
  *  3. We can add custom rules beyond JSON Schema
  */
-function validateSchema(schema, filename) {
+function validateSchema(schema, _filename) {
   const issues = [];
 
   // --- Top-level required fields ---

@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { readJson, getFiles, ROOT, PATHS } from '../base';
+import { readJson, getFiles, ROOT } from '../base';
 import * as path from 'path';
 
 test.describe('Docs Manifest Integrity', () => {

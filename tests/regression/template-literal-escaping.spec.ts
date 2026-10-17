@@ -35,7 +35,7 @@ test.describe('Template Literal Escaping', () => {
             files.push(fullPath);
           }
         });
-      } catch (e) {
+      } catch {
         // Silently skip inaccessible dirs
       }
     };

@@ -547,7 +547,7 @@ export function menu(element, options = {}) {
     // The old onmouseleave left an item at opacity 0.9 once it had been
     // hovered (it started at 1). Kept as a class so the look is unchanged.
     item.addEventListener('mouseleave', () => item.classList.add('x-menu__item--visited'), { once: true });
-    item.addEventListener('click', (e) => {
+    item.addEventListener('click', (_e) => {
       element.dispatchEvent(new CustomEvent('wb:menu:select', {
         bubbles: true,
         detail: { 

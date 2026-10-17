@@ -37,7 +37,7 @@ function readCatalogue() {
   try {
     const parsed = JSON.parse(raw);
     return { count: parsed && parsed.examples ? Object.keys(parsed.examples).length : 0, raw };
-  } catch (err) {
+  } catch {
     return { count: 0, raw, corrupt: true };
   }
 }

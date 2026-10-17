@@ -60,7 +60,7 @@ test('the error handler retries without crossOrigin exactly once when show-eq ca
   expect(result.srcStillSet, 'the retry must reassign the same src, not lose it').toBe(true);
 });
 
-test('a genuinely broken src (not a CORS failure) still throws after the one CORS-fallback attempt', async ({ page, baseURL }) => {
+test('a genuinely broken src (not a CORS failure) still throws after the one CORS-fallback attempt', async ({ page }) => {
   const pageErrors: string[] = [];
   page.on('pageerror', (err) => pageErrors.push(err.message));
 

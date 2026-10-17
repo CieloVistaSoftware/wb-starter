@@ -24,8 +24,8 @@ export default function autosize(el) {
     t.addEventListener('input', resize);
     if (t) t.setAttribute('x-autosize-init', '1');
     return () => t.removeEventListener('input', resize);
-  } catch (err) {
-    try { if (el) el.setAttribute('x-error', 'autosize-failed'); } catch (e) {}
+  } catch {
+    try { if (el) el.setAttribute('x-error', 'autosize-failed'); } catch {}
     return () => {};
   }
 }

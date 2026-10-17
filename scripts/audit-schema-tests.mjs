@@ -19,16 +19,6 @@ const OUTPUT_FILE = path.join(PROJECT_DIR, 'data/schema-test-audit.json');
 // Minimum required permutation tests
 const MIN_PERMUTATION_TESTS = 5;
 
-function loadSchema(filename) {
-  try {
-    const content = fs.readFileSync(path.join(SCHEMA_DIR, filename), 'utf-8');
-    return JSON.parse(content);
-  } catch (e) {
-    console.error(`Error loading ${filename}:`, e.message);
-    return null;
-  }
-}
-
 function listSchemaFiles(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);

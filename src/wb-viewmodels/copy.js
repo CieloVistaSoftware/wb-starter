@@ -19,7 +19,7 @@ export async function writeToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
     return true;
-  } catch (err) {
+  } catch {
     // The fallback has to put the text in a real, selected field for
     // execCommand('copy') to see it — and selecting a field focuses it. That
     // takes focus away from whatever the user was in, and removing the element

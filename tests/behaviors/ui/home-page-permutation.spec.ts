@@ -24,7 +24,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     await expect(page.locator('[x-demo]')).toHaveCount(0);
   });
 
-  test('Layout: no inline styles in source HTML', async ({ page }) => {
+  test('Layout: no inline styles in source HTML', async () => {
     // Validated by generator at build time — noInlineStyles pageRule
     // Runtime hydration adds inline styles, which is expected
     expect(true).toBe(true);

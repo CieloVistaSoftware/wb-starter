@@ -90,7 +90,6 @@ function runOnce(runIndex) {
 
 const results = [];
 for (let i = 0; i < runs; i++) {
-  // eslint-disable-next-line no-await-in-loop
   const r = await runOnce(i);
   results.push(r);
   const status = r.healthy ? '✅ healthy' : '❌ ' + r.reason;
@@ -100,7 +99,6 @@ for (let i = 0; i < runs; i++) {
     console.log(`    GET #${g.n} @ +${g.atMs}ms — ${label}`);
   }
   // Let the port fully release before the next run.
-  // eslint-disable-next-line no-await-in-loop
   await new Promise((r2) => setTimeout(r2, 500));
 }
 

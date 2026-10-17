@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 // Lightweight integrity check for staged HTML/JS files (fast pre-commit alternative).
 import { execSync } from 'child_process';
 import fs from 'fs';
@@ -9,7 +8,7 @@ function gitStagedFiles() {
   try {
     const out = execSync('git diff --name-only --cached', { encoding: 'utf8' });
     return out.split(/\r?\n/).filter(Boolean);
-  } catch (err) { return []; }
+  } catch { return []; }
 }
 
 function checkHtml(file, ROOT) {

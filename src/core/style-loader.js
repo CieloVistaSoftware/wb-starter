@@ -250,7 +250,7 @@ function behaviorsUsedIn(html) {
     for (const [selector, behaviorName] of Object.entries(nativeMap)) {
       try {
         if (el.matches(selector)) names.add(behaviorName);
-      } catch (e) {
+      } catch {
         // Detached-tree edge case on an exotic selector — skip it rather
         // than let one bad selector abort the whole scan.
       }

@@ -482,7 +482,7 @@ test.describe('Mobile Responsive', () => {
   test('horizontal card stacks image above text on mobile', async ({ page }) => {
     const card = page.locator('#card-gallery [x-cardhorizontal]').first();
     await scrollTo(page, card);
-    const flexDir = await card.evaluate(el => getComputedStyle(el).flexDirection);
+    await card.evaluate(el => getComputedStyle(el).flexDirection);
     // On mobile should be column or wrap
     // If still row, image width should be reasonable
     const img = card.locator('img');

@@ -22,7 +22,7 @@ for (const file of files) {
   let schema;
   try {
     schema = JSON.parse(readFileSync(filePath, 'utf8'));
-  } catch (e) { continue; }
+  } catch { continue; }
 
   let modified = false;
 

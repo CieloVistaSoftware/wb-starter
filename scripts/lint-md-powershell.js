@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
 // Scan markdown files for POSIX-only one-liners that break in PowerShell
 import fs from 'fs';
 import path from 'path';
 
 const ROOT = process.cwd();
 const DOCS = path.join(ROOT, 'docs');
-const GLOB = ['**/*.md', 'README.md'];
 const forbidden = [/\b&&\b/, /\|\|/, /;\s*true\b/];
 
 function findMarkdownFiles(dir) {

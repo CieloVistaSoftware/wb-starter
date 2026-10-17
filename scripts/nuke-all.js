@@ -109,7 +109,7 @@ function scan(dir) {
         processFile(fp);
       }
     });
-  } catch (e) {}
+  } catch {}
 }
 
 console.log('='.repeat(60));

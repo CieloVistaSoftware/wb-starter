@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { execSync } from 'child_process';
-function run(cmd){ try{ return execSync(cmd,{encoding:'utf8'}); }catch(e){ return ''; } }
+function run(cmd){ try{ return execSync(cmd,{encoding:'utf8'}); }catch{ return ''; } }
 const shas = run('git rev-list --reverse --all').trim().split('\n');
 let prevHas = false;
 for (const s of shas) {
