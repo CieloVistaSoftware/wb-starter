@@ -162,7 +162,7 @@ import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import {
-  beginInFlight, failInjection, removeApplied, installReadiness,
+  beginInFlight, failInjection, removeApplied, installReadiness, canonicalIfNotApplied,
   startObserving, stopObserving, commonInitOptions, bootDocument,
   appliedBehaviors, pendingInjections, inFlightInjections,
 } from './runtime-shared.js';
@@ -389,14 +389,11 @@ const WB = {
       return null;
     }
 
-    // #1928: one behavior, one name (drawer-layout and drawerLayout are one function).
-    behaviorName = canonicalBehaviorName(behaviorName);
-
-    // Check if already applied
+    // Already applied under any of its names? (#1928)
+    const canonical = canonicalIfNotApplied(applied, element, behaviorName);
+    if (!canonical) return null;
+    behaviorName = canonical;
     const elementBehaviors = applied.get(element) || [];
-    if (elementBehaviors.some(b => b.name === behaviorName)) {
-      return null; // Already applied
-    }
 
     // Check if pending
     let elementPending = pending.get(element);

@@ -29,7 +29,7 @@ import { makeDlog, traceStatusLabel, isTraceCategoryEnabled } from './debug-trac
 import { sliceOverBudget, nextSlice } from './main-thread-budget.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import {
-  beginInFlight, failInjection, removeApplied, installReadiness,
+  beginInFlight, failInjection, removeApplied, installReadiness, canonicalIfNotApplied,
   startObserving, stopObserving, commonInitOptions, bootDocument,
 } from './runtime-shared.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
@@ -697,15 +697,10 @@ const WB = {
       return null;
     }
 
-    // #1928: one behavior, one name -- 'drawer-layout' and 'drawerLayout' are
-    // the same function, and comparing raw names below applied it twice.
-    behaviorName = canonicalBehaviorName(behaviorName);
-
-    // Check if already applied
-    const elementBehaviors = applied.get(element) || [];
-    if (elementBehaviors.some(b => b.name === behaviorName)) {
-      return null; // Already applied
-    }
+    // Already applied under any of its names? (#1928)
+    const canonical = canonicalIfNotApplied(applied, element, behaviorName);
+    if (!canonical) return null;
+    behaviorName = canonical;
 
     // Check if pending (prevent race conditions)
     let pending = pendingInjections.get(element);
