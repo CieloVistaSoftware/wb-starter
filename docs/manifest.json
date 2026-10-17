@@ -52,7 +52,7 @@
           "file": "auto-injection.md",
           "title": "Auto-Injection",
           "description": "Automatic behavior injection",
-          "modified": "2026-10-10"
+          "modified": "2026-10-16"
         },
         {
           "file": "escape-hatches.md",
@@ -250,7 +250,7 @@
           "file": "behaviors/cardhero.md",
           "title": "Hero Card",
           "description": "x-cardhero renders a large banner card with an optional small pretitle, a headline, a subtitle and up to two call-to-action buttons, over an optional…",
-          "modified": "2026-10-10"
+          "modified": "2026-10-16"
         },
         {
           "file": "behaviors/cardhorizontal.md",
@@ -403,12 +403,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/control.md",
-          "title": "Control",
-          "description": "x-control adds the x-control class to the element and does nothing else; no stylesheet targets that class yet.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/copy.md",
           "title": "Copy",
           "description": "x-copy copies text to the clipboard when the element is clicked: the value of copy-text, or the text of the element matched by copy-target.",
@@ -460,7 +454,7 @@
           "file": "behaviors/dialog.md",
           "title": "Dialog",
           "description": "A plain <dialog> gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click.",
-          "modified": "2026-10-10"
+          "modified": "2026-10-16"
         },
         {
           "file": "behaviors/dl.md",

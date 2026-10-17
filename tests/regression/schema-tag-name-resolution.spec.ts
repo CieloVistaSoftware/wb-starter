@@ -19,11 +19,6 @@ test.describe('Schema-driven tags resolve to a real, class-bearing element', () 
     await setupBehaviorTest(page);
   });
 
-  test('[x-control] gets a real class, not empty', async ({ page }) => {
-    const el = await setupTestContainer(page, '<div x-control></div>');
-    await expect(el).not.toHaveClass('');
-  });
-
   test('[x-repeater] behavior runs (display:contents wrapper, by design no class)', async ({ page }) => {
     // repeater() (x-repeater.js) intentionally sets no class -- it uses
     // display:contents so its repeated children lay out as if direct

@@ -53,7 +53,6 @@ const NEEDS_NO_RULE: Record<string, string> = {
   // (x-behavior and x-behaviors-showcase were listed here until #1096 deleted
   // behavior.js and behaviors-showcase.js: no registry, import or page reached
   // either function, so nothing ever added the classes.)
-  'x-control': 'control() adds its baseClass and does nothing else (control.schema.json says so); a rule would style a no-op',
   'x-globe': 'globe() adds its baseClass and builds nothing; a rule would style an empty host',
   'x-slider': 'slider() adds its baseClass and builds nothing; a rule would style an empty host',
   // The look is on a sibling class the same behavior adds to the same element.

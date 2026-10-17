@@ -141,7 +141,6 @@ Enhances standard HTML elements with better styling and functionality.
 | [`mark`](behaviors/mark.md) | `<mark>` | Decorate | Highlighted text with status colour variants |
 | [`error`](behaviors/error.md) | any | - | Marks an error message (`role="alert"`) |
 | [`help`](behaviors/help.md) | any | - | Help text for a field |
-| [`control`](behaviors/control.md) | any | - | Marks a form control wrapper |
 
 #### Live Examples
 

@@ -115,7 +115,6 @@ the named attribute.
 | `<div x-globe>` | `globe` | 3D globe visualization |
 | `<div x-stagelight>` | `stagelight` | Spotlight effect |
 | `<div x-repeater>` | `repeater` | Data repeater |
-| `<div x-control>` | `control` | Form control wrapper |
 
 ---
 

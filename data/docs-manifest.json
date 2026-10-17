@@ -1,7 +1,7 @@
 {
-  "totalFiles": 252,
+  "totalFiles": 251,
   "audiences": {
-    "user": 176,
+    "user": 175,
     "maintainer": 76
   },
   "categories": [
@@ -872,14 +872,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2026-02-14"
-      },
-      {
-        "path": "docs/behaviors/control.md",
-        "title": "Control",
-        "name": "control",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/copy.md",
@@ -2603,14 +2595,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2026-02-14"
-    },
-    {
-      "path": "docs/behaviors/control.md",
-      "title": "Control",
-      "name": "control",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/copy.md",

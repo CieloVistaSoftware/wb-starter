@@ -6,7 +6,7 @@ What each WB behavior adds to the element it decorates. The **inventory** below 
 
 ## Inventory: every behavior
 
-Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
+Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
 
 | Behavior | Written as | Reference | Detailed below |
 |---|---|---|---|
@@ -53,7 +53,6 @@ Rows: **162**, read from `src/core/tag-map.js`. 162 have a reference page in `do
 | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — |
 | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — |
 | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes |
-| `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — |
 | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — |
 | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — |
 | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — |
