@@ -6,6 +6,72 @@
   ],
   "releases": [
     {
+      "version": "1.0.553",
+      "date": "2026-10-17",
+      "summary": "Every x-drawer-layout example showed one line of run-together links with a second toggle hidden under the first: the runtime applied drawerLayout twice (under drawerLayout and drawer-layout) and the drawer had no panel or list layout. Present since at least 2026-09-15. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1928\" target=\"_blank\" rel=\"noopener\">#1928</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1929\" target=\"_blank\" rel=\"noopener\">#1929</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-drawer-layout applies once and looks like a drawer: one toggle, a panel, stacked links</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1928\" target=\"_blank\" rel=\"noopener\">#1928</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1929\" target=\"_blank\" rel=\"noopener\">#1929</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6c3f3e32d623d132d6137ca543a456740532c8e7\" target=\"_blank\" rel=\"noopener\"><code>6c3f3e3</code></a>",
+          "issues": [
+            1928,
+            1929
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors and pick x-drawer-layout, wide drawer. Before: InboxStarredSentArchive on one line beside a toggle tab. Now: a bordered panel with Inbox, Starred, Sent, Archive stacked, one toggle that collapses and reopens it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6c3f3e32d623d132d6137ca543a456740532c8e7\" target=\"_blank\" rel=\"noopener\"><code>6c3f3e3</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.552",
+      "date": "2026-10-17",
+      "summary": "X-grid ignored its columns count on wide screens: columns=&quot;1&quot; showed 4 columns and columns=&quot;2&quot; showed 3. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1930\" target=\"_blank\" rel=\"noopener\">#1930</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1931\" target=\"_blank\" rel=\"noopener\">#1931</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-grid columns is a maximum, so columns=2 shows two columns</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1930\" target=\"_blank\" rel=\"noopener\">#1930</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1931\" target=\"_blank\" rel=\"noopener\">#1931</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a699d3835a8400cc5e4cee289e7279a5bb5be48b\" target=\"_blank\" rel=\"noopener\"><code>a699d38</code></a>",
+          "issues": [
+            1930,
+            1931
+          ]
+        }
+      ],
+      "seeIt": "Open the Playground and type &lt;div x-grid columns=2 altRows&gt; with four child rows. Before: three columns before the next row. Now: two columns.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a699d3835a8400cc5e4cee289e7279a5bb5be48b\" target=\"_blank\" rel=\"noopener\"><code>a699d38</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.551",
+      "date": "2026-10-17",
+      "summary": "On the Behaviors page each group&#39;s one-line description hung below its box, so it looked like part of the next group. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1933\" target=\"_blank\" rel=\"noopener\">#1933</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1934\" target=\"_blank\" rel=\"noopener\">#1934</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A Behaviors group&#39;s description sits inside its box</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1933\" target=\"_blank\" rel=\"noopener\">#1933</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1934\" target=\"_blank\" rel=\"noopener\">#1934</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7337aac34294ed21505e7db283a6b3bc94135052\" target=\"_blank\" rel=\"noopener\"><code>7337aac</code></a>",
+          "issues": [
+            1933,
+            1934
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors and look at the collapsed groups (audio, button, code). Before: the name in a box with its description below the border. Now: name and description in one box.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7337aac34294ed21505e7db283a6b3bc94135052\" target=\"_blank\" rel=\"noopener\"><code>7337aac</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.550",
       "date": "2026-10-17",
       "summary": "Every x-cardhero headingLevel rendered at the same size, so an h6 title looked like an h1. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1936\" target=\"_blank\" rel=\"noopener\">#1936</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1937\" target=\"_blank\" rel=\"noopener\">#1937</a>",
