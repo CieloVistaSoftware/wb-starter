@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.550",
+      "date": "2026-10-17",
+      "summary": "Every x-cardhero headingLevel rendered at the same size, so an h6 title looked like an h1. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1936\" target=\"_blank\" rel=\"noopener\">#1936</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1937\" target=\"_blank\" rel=\"noopener\">#1937</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardhero&#39;s title looks like its tag -- an h1 is an h1</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1936\" target=\"_blank\" rel=\"noopener\">#1936</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1937\" target=\"_blank\" rel=\"noopener\">#1937</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a2536779e862d29771b6a98306399ba59b9d1e7e\" target=\"_blank\" rel=\"noopener\"><code>a253677</code></a>",
+          "issues": [
+            1936,
+            1937
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors, x-cardhero, and click the headingLevel=1 to headingLevel=6 rows. Before: six titles of one size. Now: h1 largest, each level smaller, like any heading.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a2536779e862d29771b6a98306399ba59b9d1e7e\" target=\"_blank\" rel=\"noopener\"><code>a253677</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.549",
       "date": "2026-10-16",
       "summary": "X-control was left over from the paused page-builder work (moving page controls up, down and sideways); it only added a class nothing styles, yet showed five examples on the Behaviors page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1919\" target=\"_blank\" rel=\"noopener\">#1919</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1920\" target=\"_blank\" rel=\"noopener\">#1920</a>",
