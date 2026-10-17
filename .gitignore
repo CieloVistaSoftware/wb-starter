@@ -154,3 +154,6 @@ data/video/out/
 
 # Written by tests/mobile/mobile-validation.spec.ts on every run (#961)
 data/mobile-screenshots/
+
+# Local index for npm run ask (#1926): built on each machine, never committed.
+data/ask-index/

@@ -248,6 +248,10 @@ const SKIP = [
   // #1869: the traced fix history, regenerated on every push from issue and
   // commit text that quotes the names as they were when the fix landed.
   'data/fixes.json',
+  // #1926: npm run ask's local index (git-ignored, built per machine) holds
+  // every doc's text verbatim, history included -- the same reason as
+  // data/search.json above.
+  'data/ask-index',
 ];
 const SCANNED = /\.(js|mjs|ts|css|html|md|json)$/;
 

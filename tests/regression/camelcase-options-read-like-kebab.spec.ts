@@ -173,7 +173,11 @@ test('every multi-word option builds the same in camelCase as dashed, on every h
         const attrs = new Set<string>();
         for (const a of Array.from(el.attributes)) {
           if (/^(id|for|aria-[a-z]+|data-[a-z-]*id)$/.test(a.name)) continue;
-          const value = a.name === 'class' ? a.value.replace(/\bx-(img|video)--load-failed\b/g, '').replace(/\s+/g, ' ').trim() : a.value;
+          // A retry also rewrites src as src?_retry=<Date.now()> (media-load-retry.js),
+          // so two copies of one image differ by milliseconds in src. Drop it.
+          const value = a.name === 'class'
+            ? a.value.replace(/\bx-(img|video)--load-failed\b/g, '').replace(/\s+/g, ' ').trim()
+            : a.value.replace(/[?&]_retry=\d+/g, '');
           attrs.add(`${a.name.toLowerCase().replace(/-/g, '')}=${value}`);
         }
         out.push(`<${el.tagName} ${[...attrs].sort().join(' ')}>`);
