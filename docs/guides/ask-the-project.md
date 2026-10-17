@@ -5,8 +5,12 @@ on your machine, with no internet. Every answer lists the files it came from,
 and when the project doesn't say, it tells you so instead of guessing.
 
 ```bash
-npm run ask -- "how do I add a label to a select?"
+q how do I add a label to a select?
 ```
+
+`q` works from any terminal and folder once it is in your PowerShell profile
+(below). Inside the project, `npm run q "question"` and
+`npm run ask -- "question"` do the same.
 
 It is a search over the project, not a model that memorized it: your question
 finds the closest passages in the docs, schemas, code and tests, and a small
@@ -35,13 +39,25 @@ restart VS Code: its terminals keep the PATH they started with.
 npm run ask:index
 ```
 
-## The two commands
+4. **The `q` command** (optional, recommended): add this line to your
+   PowerShell profile (open it with `notepad $PROFILE`), with the path to
+   your own checkout, then open a new terminal:
+
+```bash
+function q { node "C:\path\to\your\checkout\scripts\ask.mjs" @args }
+```
+
+Quote the question if it contains `|`, `;` or `&`, which PowerShell treats
+as commands.
+
+## The commands
 
 | Command | What it does | When to run it |
 |---|---|---|
 | `npm run ask:index` | Splits every file git tracks into passages and stores a searchable index in `data/ask-index/` | Once, then after pulling or merging changes. Only changed files are redone. |
-| `npm run ask -- "question"` | Answers from the closest passages and lists them as sources | Whenever you want to know something about the project |
-| `npm run ask -- --sources "words"` | Lists the closest passages without asking the model | To see which files cover a topic, instantly |
+| `q question` | Answers from the closest passages and lists them as sources | Whenever you want to know something about the project |
+| `q --sources words` | Lists the closest passages without asking the model | To see which files cover a topic, instantly |
+| `npm run q "question"` or `npm run ask -- "question"` | The same as `q`, from inside the project, without the profile line | When `q` is not set up |
 
 ### Reading the ask:index output
 
