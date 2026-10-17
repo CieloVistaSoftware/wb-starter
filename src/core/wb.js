@@ -146,7 +146,7 @@ import { matchingElements } from './dom-query.js';
 import './click-confirm.js';
 import { Theme } from './theme.js';
 import { getNativeBehavior, nativeMap, propertyMappings } from './tag-map.js';
-import { makeDlog, traceStatusLabel } from './debug-trace.js';
+import { makeDlog } from './debug-trace.js';
 
 // x-grid/x-demo/x-column/x-cluster/x-stack/x-row/x-search/x-accordion are all
 // BEHAVIORS (grid/demo/cluster/stack/flex/searchfield/accordion), not classes
@@ -172,13 +172,13 @@ import { teachByExample } from './teach-by-example.js';
 try {
   if (typeof window !== 'undefined') {
     window.addEventListener('error', ev => {
-      try { console.error('[WB:UNCAUGHT]', ev.message || ev && ev.error && ev.error.message, ev.error && ev.error.stack); } catch (e) { /* best-effort */ }
+      try { console.error('[WB:UNCAUGHT]', ev.message || ev && ev.error && ev.error.message, ev.error && ev.error.stack); } catch { /* best-effort */ }
     });
     window.addEventListener('unhandledrejection', ev => {
-      try { console.error('[WB:UNHANDLEDREJ]', ev.reason && (ev.reason.stack || ev.reason)); } catch (e) { /* best-effort */ }
+      try { console.error('[WB:UNHANDLEDREJ]', ev.reason && (ev.reason.stack || ev.reason)); } catch { /* best-effort */ }
     });
   }
-} catch (e) { /* best-effort */ }
+} catch { /* best-effort */ }
 
 // Auto-injection mappings (from tag-map.js)
 // Convert nativeMap {selector: behavior} to [{selector, behavior}]
@@ -520,7 +520,7 @@ const WB = {
    * @param {HTMLElement} element - Element to process
    * @param {string} schemaName - Schema name (optional, auto-detected)
    */
-  async processSchema(element, schemaName = null, blocking = false) {
+  async processSchema(element, schemaName = null) {
     if (schemaProcessed.has(element)) return;
 
     // A tag either HAS a def or it doesn't -- schema and behavior must never
