@@ -11,7 +11,8 @@ import { test, expect } from '../fixtures/offline';
 test('every collapsed group description lies inside a bordered box with its name', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/pages/behaviors.html');
-  await page.waitForSelector('.behaviors-search-results__desc--group', { timeout: 20000 });
+  await page.waitForSelector('.behaviors-search-results__desc--group', { state: 'attached', timeout: 20000 });
+  // An open group hides its line (behaviors.css), and the first group may be open.
 
   const bad = await page.evaluate(() => [...document.querySelectorAll('.behaviors-search-results__group')]
     .filter((li) => li.querySelector('.behaviors-search-results__desc--group') && !li.querySelector('details')!.open)
