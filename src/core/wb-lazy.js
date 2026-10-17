@@ -9,7 +9,7 @@
  */
 
 import { hasAuthoredAttr } from './read-attr.js';
-import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../wb-viewmodels/index.js';
+import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules, canonicalBehaviorName } from '../wb-viewmodels/index.js';
 import { markReady } from './ready-signal.js';
 import { Events } from './events.js';
 import './click-confirm.js';
@@ -697,6 +697,10 @@ const WB = {
       return null;
     }
 
+    // #1928: one behavior, one name -- 'drawer-layout' and 'drawerLayout' are
+    // the same function, and comparing raw names below applied it twice.
+    behaviorName = canonicalBehaviorName(behaviorName);
+
     // Check if already applied
     const elementBehaviors = applied.get(element) || [];
     if (elementBehaviors.some(b => b.name === behaviorName)) {
@@ -903,7 +907,7 @@ const WB = {
    * @param {string} behaviorName - Behavior to remove (or all if not specified)
    */
   remove(element, behaviorName = null) {
-    removeApplied(applied, element, behaviorName);
+    removeApplied(applied, element, behaviorName && canonicalBehaviorName(behaviorName));
   },
 
   /**

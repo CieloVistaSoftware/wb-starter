@@ -135,7 +135,7 @@ function traceMediaLoads() {
  *   </script>
  */
 
-import { behaviors } from '../wb-viewmodels/index.js';
+import { behaviors, canonicalBehaviorName } from '../wb-viewmodels/index.js';
 import { markReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
@@ -389,6 +389,9 @@ const WB = {
       return null;
     }
 
+    // #1928: one behavior, one name (drawer-layout and drawerLayout are one function).
+    behaviorName = canonicalBehaviorName(behaviorName);
+
     // Check if already applied
     const elementBehaviors = applied.get(element) || [];
     if (elementBehaviors.some(b => b.name === behaviorName)) {
@@ -510,7 +513,7 @@ const WB = {
    * @param {string} behaviorName - Behavior to remove (or all if not specified)
    */
   remove(element, behaviorName = null) {
-    removeApplied(applied, element, behaviorName,
+    removeApplied(applied, element, behaviorName && canonicalBehaviorName(behaviorName),
       (name) => pubsub.publish('wb:remove', { element, behavior: name }));
   },
 
