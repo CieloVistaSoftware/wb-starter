@@ -16,7 +16,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { topK, buildPrompt } from './lib/ask-core.mjs';
+import { topK, buildPrompt, bm25, tokenize, queryTerms, fuse, embedText } from './lib/ask-core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'data', 'ask-index');
@@ -49,7 +49,12 @@ async function main() {
   if (!er.ok) throw new Error(`Ollama /api/embed answered ${er.status}: ${(await er.text()).slice(0, 200)}`);
   const q = (await er.json()).embeddings[0];
 
-  const hits = topK(q, vectors, meta.dim, K).map(([i, score]) => ({ ...meta.chunks[i], score }));
+  // Meaning and keywords together (#1938): meaning alone ranked package.json
+  // above the code that reads and saves JSON files.
+  const n = meta.chunks.length;
+  const meaning = topK(q, vectors, meta.dim, n).reduce((a, [i, s]) => { a[i] = s; return a; }, new Array(n).fill(0));
+  const keyword = bm25(queryTerms(question), meta.chunks.map((c) => tokenize(embedText(c))));
+  const hits = fuse(meaning, keyword, K).map(([i, score]) => ({ ...meta.chunks[i], score }));
   const list = hits.map((h, i) => `  [${i + 1}] ${h.file}:${h.line}${h.heading ? '  (' + h.heading + ')' : ''}`).join('\n');
 
   if (sourcesOnly) {

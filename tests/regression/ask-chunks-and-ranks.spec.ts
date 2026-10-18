@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 // @ts-ignore -- an .mjs module with no type declarations
-import { isKnowledge, chunkFile, embedText, cosine, topK, buildPrompt } from '../../scripts/lib/ask-core.mjs';
+import { isKnowledge, chunkFile, embedText, cosine, topK, buildPrompt, tokenize, queryTerms, bm25, fuse } from '../../scripts/lib/ask-core.mjs';
 
 /**
  * `npm run ask` (#1926): the parts that decide what the local model sees.
@@ -55,4 +55,37 @@ test('the prompt holds the model to its sources and to "not found"', () => {
   expect(system).toMatch(/do not guess/);
   expect(user).toContain('[1] docs/behaviors/cardhero.md > Attributes (line 34)');
   expect(user).toContain('Question: What does headingLevel change?');
+});
+
+/**
+ * #1938. John: "I find it odd that we read and parse files a lot in this
+ * project but q can't figure it out." Search by meaning alone ranked
+ * package.json first for this question; the code that answers it says
+ * readFileSync and writeFileSync. Keyword search, with everyday words mapped
+ * to the project's, has to put that code first.
+ */
+test('a plain-English file question finds the code that reads, parses and saves', () => {
+  expect(tokenize('JSON.parse(readFileSync(p))')).toEqual(expect.arrayContaining(['readfilesync', 'read', 'file', 'sync', 'parse']));
+  expect(queryTerms('how do I save a file')).toEqual(expect.arrayContaining(['save', 'file', 'write', 'writefilesync']));
+  expect(queryTerms('how do I save a file')).not.toContain('how');
+
+  const passages = [
+    { file: 'package.json', heading: '', line: 1, text: '{ "name": "wb-starter", "type": "module", "main": "index.json", "files": ["data/*.json"] }' },
+    { file: 'scripts/bump.mjs', heading: '', line: 12, text: [
+      "const pkg = JSON.parse(readFileSync(p, 'utf8'));",
+      'pkg.version = next;',
+      'writeFileSync(p, JSON.stringify(pkg, null, 2));',
+    ].join('\n') },
+    { file: 'docs/behaviors/toast.md', heading: 'Usage', line: 40, text: 'Add x-toast to a button to show a message.' },
+    { file: 'scripts/report.mjs', heading: '', line: 8, text: "const rows = readFileSync(input, 'utf8').split('\\n');" },
+    { file: 'scripts/stamp.mjs', heading: '', line: 30, text: 'writeFileSync(out, html);' },
+  ];
+  const keyword = bm25(queryTerms('how do I read, parse, change and save a JSON file'), passages.map((c) => tokenize(embedText(c))));
+  expect(keyword[1]).toBe(Math.max(...keyword));
+  expect(keyword[1]).toBeGreaterThan(keyword[0]);
+  expect(keyword[2]).toBe(0);
+
+  // Meaning alone prefers package.json (as it did on the real index); fused, the code wins.
+  const meaning = [0.62, 0.55, 0.20, 0.30, 0.30];
+  expect(fuse(meaning, keyword, 3)[0][0]).toBe(1);
 });
