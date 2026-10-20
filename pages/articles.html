@@ -74,14 +74,13 @@
 
   const cell = (row, label, text) => {
     const td = row.insertCell();
-    td.dataset.label = label;
     if (text !== undefined) td.textContent = text;
     return td;
   };
 
   for (const art of articles) {
     const row = body.insertRow();
-    row.dataset.search = (art.title + ' ' + (art.tag_list || []).join(' ')).toLowerCase();
+    row.searchText = (art.title + ' ' + (art.tag_list || []).join(' ')).toLowerCase();
     const a = document.createElement('a');
     a.href = art.url;
     a.target = '_blank';
@@ -99,7 +98,7 @@
     const q = filter.value.trim().toLowerCase();
     let n = 0;
     for (const row of body.rows) {
-      const hit = !q || row.dataset.search.includes(q);
+      const hit = !q || row.searchText.includes(q);
       row.hidden = !hit;
       if (hit) n++;
     }
