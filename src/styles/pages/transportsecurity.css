@@ -1,0 +1,106 @@
+/* transportsecurity.css — page layout for pages/transportsecurity.html (#1940). */
+
+.ts-page {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.ts-page h3 {
+  margin-top: 1.5rem;
+}
+
+.ts-page code {
+  overflow-wrap: anywhere;
+}
+
+.ts-page pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.ts-page ol,
+.ts-page ul {
+  padding-left: 1.5rem;
+}
+
+.ts-note {
+  border-left: 4px solid var(--primary, #6366f1);
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-primary, #111827);
+  padding: 0.75rem 1rem;
+  border-radius: 0 6px 6px 0;
+  margin: 1rem 0;
+}
+
+/* The layer table: wide on desktop, one card per row on a phone. */
+.ts-table-wrap {
+  overflow-x: auto;
+}
+
+.ts-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-primary, #111827);
+}
+
+.ts-table th,
+.ts-table td {
+  border: 1px solid var(--border-color, #d1d5db);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.ts-table th {
+  background: var(--bg-tertiary, #e5e7eb);
+}
+
+.ts-table td pre {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 760px) {
+  .ts-table thead {
+    display: none;
+  }
+
+  /* Two classes deep: data.css's `table.x-table { display: table }` is 0-1-1,
+     and every <table> on the site is enhanced with x-table. */
+  .ts-table-wrap table.ts-table,
+  .ts-table tbody,
+  .ts-table tr,
+  .ts-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .ts-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color, #d1d5db);
+    border-radius: 6px;
+  }
+
+  .ts-table td {
+    border: 0;
+    border-top: 1px solid var(--border-color, #d1d5db);
+  }
+
+  .ts-table td:first-child {
+    border-top: 0;
+    background: var(--bg-tertiary, #e5e7eb);
+    font-weight: 700;
+  }
+
+  .ts-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary, #4b5563);
+  }
+
+  .ts-table td:first-child::before {
+    content: none;
+  }
+}
