@@ -193,6 +193,8 @@ first word of the info string, so `html static` would arrive as `html` and run.
 
 ## 10. Mobile-first / responsive
 
+- The general rule (check 375px and desktop, no sideways scroll) is in the [Layout and Theming Standard §3](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md); the wb-starter cases below are why it exists.
+
 - Menus and navs **stack** on mobile; no horizontal overflow at any width. Design for the
   narrowest screen first, then enhance up.
 - **A viewport-filling layout is a wide-screen layout — scope it to a breakpoint.** Fixed
@@ -210,8 +212,7 @@ first word of the info string, so `html static` would arrive as `html` and run.
 
 ## 11. Zero hardcoded colors
 
-- Theme CSS variables only. Only `themes.css` (and documented exceptions) may hold color
-  literals.
+- **Moved to CieloVistaStandards:** [Layout and Theming Standard §2](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md). In short: every colour comes from a theme variable; only `themes.css` (and documented exceptions) may hold colour literals.
 
 ## 12. Anatomy docs label every part
 
@@ -220,10 +221,7 @@ first word of the info string, so `html static` would arrive as `html` and run.
 
 ## 13. Every example has proper margins & padding
 
-- No cramped, zero-spacing layouts. Examples and their containers have visible
-  breathing room: **≥ 1rem** vertical spacing between examples, and **≥ 1rem** padding
-  inside example/demo containers. Spacing comes from theme/spacing variables, not ad-hoc
-  values. (Tracked project-wide; see #239.)
+- **Moved to CieloVistaStandards:** [Layout and Theming Standard §1](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md). In short: at least 1rem of side padding, 1rem between examples and 1rem inside demo containers, from spacing variables.
 
 ## 14. Doc sections that reference a doc must link to it
 
@@ -233,21 +231,11 @@ first word of the info string, so `html static` would arrive as `html` and run.
 
 ## 15a. Normal-flow media fits its container
 
-- An `<img>`, `<video>`, `<iframe>` or `<svg>` in a rendered example must never be wider
-  than the container it renders in, and must never be **upscaled past its natural size**.
-  A 480px image stretched across a 900px panel is blurry and misrepresents the behavior.
-- `max-width: 100%` alone is not enough — it caps the width but still allows an upscale
-  when a rule sets `width: 100%`. Both constraints are required.
-- §15 covers floating layers (popovers, tooltips, menus). This rule covers ordinary
-  content, which had no rule at all until an example rendered an image far larger than
-  itself. (#775)
+- **Moved to CieloVistaStandards:** [Layout and Theming Standard §4](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md). In short: an `<img>`, `<video>`, `<iframe>` or `<svg>` never overflows its container or is upscaled past its natural size (#775).
 
 ## 15. Overlays and popups stay within bounds
 
-- A popover, tooltip, dropdown, menu, or any floating layer must **not overflow** its
-  parent element or the viewport. It must reposition/flip or clamp to stay fully visible.
-  A popup that spills outside its parent's bounds is a defect. (Tracked project-wide; see
-  #252 — parent-overflow detection test.)
+- **Moved to CieloVistaStandards:** [Layout and Theming Standard §5](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md). In short: popovers, tooltips, dropdowns and menus never overflow their parent or the viewport (#252).
 
 ## 16. Every demo shows a working demo AND its code
 
