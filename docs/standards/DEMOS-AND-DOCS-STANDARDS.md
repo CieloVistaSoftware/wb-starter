@@ -193,7 +193,7 @@ first word of the info string, so `html static` would arrive as `html` and run.
 
 ## 10. Mobile-first / responsive
 
-- The general rule (check 375px and desktop, no sideways scroll) is in the [Layout and Theming Standard §3](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md); the wb-starter cases below are why it exists.
+- The general rule (check 375px and desktop, no sideways scroll) is in the [Layout and Theming Standard §3](https://github.com/CieloVistaSoftware/CieloVistaStandards/blob/main/layout-and-theming.md); the cases below are why it exists.
 
 - Menus and navs **stack** on mobile; no horizontal overflow at any width. Design for the
   narrowest screen first, then enhance up.
