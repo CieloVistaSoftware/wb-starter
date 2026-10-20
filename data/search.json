@@ -3,11 +3,11 @@
   "$stats": {
     "sources": {
       "pages": 22,
-      "docs": 243,
+      "docs": 244,
       "demos": 28
     },
-    "totalDocuments": 293,
-    "totalWords": 5690
+    "totalDocuments": 294,
+    "totalWords": 5726
   },
   "documents": [
     {
@@ -3235,7 +3235,7 @@
       "content": "# Tooling Inventory — What This Repo Already Has **Read this before writing any new tooling.** Every entry here was already built, and at least three of them have been reinvented by someone who didn't know they existed. The reinvention is not a style problem. A second mechanism measuring the same thing drifts from the first, and then the two disagree with nobody noticing — which is exactly how `#923` ended up with five copies of one rule and `#951` with a duplicated label rule that lost a branch. --- ## Machine-readable test output Produced by `scripts/tools/test-reporter.ts`, installed as a reporter in `playwright.config.ts`. It runs on **every** Playwright invocation — you never need to add `--reporter=json`. | file | what it holds | |---|---| | `data/test-results/failures.json` | every failure: `{project, title, file, line, error}` — **this is the one you want** | | `data/test-results/ .json` | per-project detail | | `data/test-status.json` | live status while a run is in flight: `state`, `passed`, `failed`, `currentFile`, `failures[]` | | `data/test-results/failures-live.log` | human-readable running log | > Do **not** add Playwright's own `json` reporter to get at failures. It was > tried; `PLAYWRIGHT_JSON_OUTPUT_NAME` produced nothing and the gate reported > \"the suite never ran\" for a run that had never been launched. The reporter > above already writes what you need, and using it keeps the ratchet and the > rest of the tooling agreeing on what a failure *is*. ## Running tests - `npm_test_async` MCP tool → launches asynchronously; poll `data/test-status.json`. **Law 4: never run Playwright synchronously.** One suite run at a time, machine-wide. - Single spec: pass a filter, e.g. `npm_test_async { filter: \"sticky\" }`. The filter is a path regex — `|` will be eaten by the shell, so run one at a time. ## Gates, and the baselines they ratchet against All three are **ratchets**: they fail on *new* problems, never on the mere existence of old ones. A gate too strict to pass gets bypassed, and the `--no-verify` habit takes every other check down with it (`#840`). | gate | script | baseline | fails when | |---|---|---|---| | Lint | `.husky/lint-ratchet.mjs` | none: the rule is zero (#1932) | a file you touched has any error or warning | | Tests | `.husky/test-ratchet.mjs` | `data/test-baseline-failures.json` | a failure appears that is **not** in the register | | `wb-` prefix | `scripts/audit-wb-prefix.mjs` | ceilings in `tests/compliance/wb-prefix-cannot-return.spec.ts` | a category grows past its ceiling | Baselines **only ever shrink**. A repaired test is removed automatically so it can never rot again. Never raise a ceiling to make a build pass — that is the moment the gate stops meaning anything. Where each gate runs (since 2026-10-02): - **Commit hook** — fast checks only (~30s), none of which CI runs: version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright, no counter, no every-10th run. - **PR CI** (`.github/workflows/ci-tests.yml`) — one Playwright check per category on windows-latest, plus the \"Gate scripts self-test\" job. Information, not a merge gate. - **Nightly** (`.github/workflows/nightly.yml`) — the full suite on `main` through the test ratchet. A new failure files one `priority:2` issue linking the run. It does not release; the badge number (`v1.0.41`) is counted from the last tag. ## Reading attributes in a behavior `src/core/read-attr.js` — use these, do not hand-roll a `??` chain: - `readAttr(el, name, fallback = '')` — string. **Returns `''`, not `null`, when absent**, so `readAttr(...) ?? 'default'` is dead code. This caused #946. - `readNumber(el, name, fallback = 0)` — number, never `NaN`. - `readFlag(el, name)` — boolean. ## Audits and one-off analysis Check `scripts/` before writing a new analysis script — there are ~100 of them. Notable: `audit-wb-prefix.mjs`, `audit-inline-styles`, `run-regression-tests.js`. --- ## The rule this file exists to serve Before building tooling, spend thirty seconds: ```bash ls scripts/ | grep -i grep -rn \" \" --include=*.ts --include=*.mjs . ``` The repo usually already has it.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-17"
+      "modified": "2026-10-01"
     },
     {
       "id": "docs/code-examples-standard",
@@ -3300,6 +3300,17 @@
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-10"
+    },
+    {
+      "id": "docs/guides/ask-the-project",
+      "url": "/docs/guides/ask-the-project",
+      "title": "ask-the-project",
+      "description": null,
+      "headings": [],
+      "content": "# Ask the Project (npm run ask) `npm run ask` answers questions about WB-Starter from the project's own files, on your machine, with no internet. Every answer lists the files it came from, and when the project doesn't say, it tells you so instead of guessing. ```bash q how do I add a label to a select? ``` `q` works from any terminal and folder once it is in your PowerShell profile (below). Inside the project, `npm run q \"question\"` and `npm run ask -- \"question\"` do the same. It is a search over the project, not a model that memorized it: your question finds the closest passages in the docs, schemas, code and tests, and a small local model writes the answer from those passages only. ## What you need (once) 1. **Ollama**, installed and running (the Ollama app, or `ollama serve`). 2. **Two models**, about 2.3 GB together: ```bash ollama pull nomic-embed-text ``` ```bash ollama pull qwen2.5-coder:3b ``` `nomic-embed-text` turns text into searchable vectors; `qwen2.5-coder:3b` writes the answers. If `ollama` is \"not recognized\" right after installing, restart VS Code: its terminals keep the PATH they started with. 3. **The index**, built from the project's files: ```bash npm run ask:index ``` 4. **The `q` command** (optional, recommended): add this line to your PowerShell profile (open it with `notepad $PROFILE`), with the path to your own checkout, then open a new terminal: ```bash function q { node \"C:\\path\\to\\your\\checkout\\scripts\\ask.mjs\" @args } ``` Quote the question if it contains `|`, `;` or `&`, which PowerShell treats as commands. ## The commands | Command | What it does | When to run it | |---|---|---| | `npm run ask:index` | Splits every file git tracks into passages and stores a searchable index in `data/ask-index/` | Once, then after pulling or merging changes. Only changed files are redone. | | `q question` | Answers from the closest passages and lists them as sources | Whenever you want to know something about the project | | `q --sources words` | Lists the closest passages without asking the model | To see which files cover a topic, instantly | | `npm run q \"question\"` or `npm run ask -- \"question\"` | The same as `q`, from inside the project, without the profile line | When `q` is not set up | ### Reading the ask:index output ```text [ask:index] 2181 files, 11976 passages: 11947 reused, 29 to embed with nomic-embed-text [ask:index] embedded 29/29 (about 0s left) [ask:index] wrote data/ask-index/ (11976 passages, 768 dimensions) ``` - **files / passages**: what is indexed. A passage is about 1,500 characters of one file, labelled with its path and nearest heading. - **reused**: passages from files that did not change since the last run; they are not redone. - **to embed**: passages from new or changed files. The first run embeds all of them (about 40 minutes on a laptop CPU); later runs take seconds. - **768 dimensions**: the size of each passage's vector. Nothing to act on. ## What is indexed Every file git tracks that is project knowledge: `docs/`, `src/` (code, schemas, styles), `pages/`, `demos/`, `scripts/`, `tests/`, the CLAUDE.md rules and `data/behavior-examples.json`. Left out: `archive/`, generated `data/` files (search and schema indexes, reports), images and anything over 400 KB. The index stays on your machine (`data/ask-index/` is git-ignored), and no question or file leaves it. ## Good to know - **Speed**: an answer takes about 10 to 50 seconds on a laptop CPU. `--sources` is instant. - **Accuracy**: it is as current as the last `npm run ask:index`. After a merge that changes docs, rebuild so answers reflect it. - **Scope**: it answers what the project's files say. It does not change code, run tests or open pull requests. - **Memory**: the answer model uses about 2 GB of RAM while loaded, and Ollama frees it after a few idle minutes. Test runs refuse to start below 800 MB free. ## Choosing other models | Variable | Default | Used for | |---|---|---| | `WB_ASK_MODEL` | `qwen2.5-coder:3b` | Writing answers. A larger model (for example `qwen2.5-coder:7b`) answers better and slower. | | `WB_ASK_EMBED_MODEL` | `nomic-embed-text` | Searching. Changing it needs `npm run ask:index -- --full`. | | `WB_ASK_PASSAGES` | `8` | How many passages each answer is given | | `OLLAMA_HOST` | `http://localhost:11434` | Where Ollama runs | In PowerShell: ```bash $env:WB_ASK_MODEL = \"qwen2.5-coder:7b\"; npm run ask -- \"what are the Tier 1 laws?\" ``` ## When something goes wrong | Message | Fix | |---|---| | `Ollama is not running` | Start the Ollama app, or run `ollama serve` | | `Ollama has no model \"...\"` | Run the `ollama pull` it names | | `No index yet. Run: npm run ask:index` | Build the index | | An answer misses something you know is in the docs | Run `npm run ask:index` (the index may predate the change), or try `--sources` to see what it found | ## How it works - `scripts/ask-index.mjs`: builds the index. - `scripts/ask.mjs`: answers a question. - `scripts/lib/ask-core.mjs`: chunking, ranking ",
+      "keywords": [],
+      "type": "doc",
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/guides/create-a-website",
@@ -3392,10 +3403,10 @@
       "title": "index",
       "description": null,
       "headings": [],
-      "content": "# WB-Starter Documentation > A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture. **New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
+      "content": "# WB-Starter Documentation > A zero-build website framework: behaviors on plain HTML5 elements, themes, and Light DOM architecture. **New here? Start with the [Introduction](../?page=introduction)**: what wb-starter is, why it ends the traditional framework, and where to go next. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | | [Ask the Project](./guides/ask-the-project.md) | `npm run ask`: answers from the project's own files, offline, with sources | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-15"
+      "modified": "2026-10-16"
     },
     {
       "id": "docs/inline-editing",
@@ -5530,6 +5541,7 @@
       "docs/claude/README",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/schema-test-value",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -5715,6 +5727,7 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/cardpricing",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS"
     ],
@@ -5779,6 +5792,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/cardhorizontal",
       "docs/claude/README",
+      "docs/guides/ask-the-project",
       "docs/home-page",
       "docs/schema",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -5844,6 +5858,7 @@
       "docs/behaviors/figure",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/typewriter",
+      "docs/guides/ask-the-project",
       "docs/property-viewer",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/test-schema-standard",
@@ -6368,7 +6383,8 @@
       "docs/audits/X-USAGE-AUDIT"
     ],
     "400": [
-      "docs/behaviors/address"
+      "docs/behaviors/address",
+      "docs/guides/ask-the-project"
     ],
     "404": [
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -6411,6 +6427,9 @@
     ],
     "472": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
+    ],
+    "500": [
+      "docs/guides/ask-the-project"
     ],
     "503": [
       "docs/behaviors/address"
@@ -6518,6 +6537,9 @@
     "764": [
       "docs/behaviors/fill"
     ],
+    "768": [
+      "docs/guides/ask-the-project"
+    ],
     "772": [
       "demos/charity-food",
       "demos/site/index"
@@ -6529,7 +6551,8 @@
       "docs/behaviors/dialog"
     ],
     "800": [
-      "docs/claude/TIER1-LAWS"
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project"
     ],
     "831": [
       "docs/architecture/solidjscomparison",
@@ -6771,6 +6794,9 @@
       "demos/site/learn-more",
       "demos/site/shop-now"
     ],
+    "2181": [
+      "docs/guides/ask-the-project"
+    ],
     "3000": [
       "docs/behaviors/notify",
       "docs/behaviors/toast",
@@ -6800,6 +6826,15 @@
     ],
     "9999": [
       "docs/behaviors/masked"
+    ],
+    "11434": [
+      "docs/guides/ask-the-project"
+    ],
+    "11947": [
+      "docs/guides/ask-the-project"
+    ],
+    "11976": [
+      "docs/guides/ask-the-project"
     ],
     "12345": [
       "pages/contact"
@@ -6845,6 +6880,7 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/auto-injection",
       "docs/behaviors/toast",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/linkedin-standards-article",
@@ -7099,6 +7135,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -7193,6 +7230,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -7241,6 +7279,7 @@
       "docs/behaviors/stepper",
       "docs/behaviors/switch",
       "docs/behaviors/time",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -7417,6 +7456,7 @@
       "docs/behaviors/x-enhancements",
       "docs/card",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
@@ -7605,6 +7645,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/index",
@@ -7656,6 +7697,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
@@ -7780,6 +7822,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -8263,6 +8306,7 @@
       "docs/behaviors/share",
       "docs/committing-fixes",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/mcp",
@@ -8307,6 +8351,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -8371,6 +8416,7 @@
       "docs/claude/README",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
@@ -8448,6 +8494,7 @@
       "docs/behaviors/zoomin",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/mcp",
       "docs/npx-commands",
       "docs/pce-candidates",
@@ -8556,6 +8603,7 @@
       "docs/committing-fixes",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
@@ -8954,6 +9002,7 @@
       "docs/code-examples-standard",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
@@ -9054,6 +9103,7 @@
       "docs/behaviors/toast",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -9148,6 +9198,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/mcp",
       "docs/schema",
@@ -9220,6 +9271,7 @@
       "docs/behaviors/switcher",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -9368,6 +9420,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/home-page",
       "docs/index",
       "docs/npx-commands",
@@ -9641,6 +9694,7 @@
       "docs/behaviors/table",
       "docs/behaviors/textarea",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/inline-editing",
       "docs/properties",
       "docs/property-viewer",
@@ -9783,7 +9837,9 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/home-page",
+      "docs/index",
       "docs/mcp",
       "docs/npx-commands",
       "docs/schema",
@@ -9810,6 +9866,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -9980,7 +10037,8 @@
     ],
     "dimensions": [
       "pages/ai-permutation-test",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec"
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/guides/ask-the-project"
     ],
     "testable": [
       "pages/ai-permutation-test",
@@ -10260,6 +10318,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -10305,6 +10364,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/icon",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/npx-commands",
@@ -10546,6 +10606,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -10700,6 +10761,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
       "docs/schema",
@@ -10716,12 +10778,14 @@
       "docs/behaviors/dialog",
       "docs/behaviors/inputgroup",
       "docs/behaviors/searchfield",
+      "docs/guides/ask-the-project",
       "docs/pce-candidates",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "tells": [
       "pages/ai-permutation-test",
+      "docs/guides/ask-the-project",
       "docs/standards/RELEASE-PROCESS"
     ],
     "exactly": [
@@ -10760,6 +10824,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/schema-test-value",
       "docs/schema.migration",
       "docs/semantic-audit",
@@ -10986,6 +11051,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
@@ -11164,6 +11230,7 @@
       "docs/card",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/mcp",
@@ -11402,6 +11469,7 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -11580,6 +11648,7 @@
       "docs/card",
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/npx-commands",
@@ -12109,6 +12178,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
@@ -12334,6 +12404,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
@@ -12447,6 +12518,7 @@
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/inline-editing",
       "docs/schema-test-value",
@@ -12619,6 +12691,7 @@
       "docs/behaviors/table",
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/pricecard",
       "docs/properties",
@@ -12674,6 +12747,7 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/x-copybutton",
       "docs/card",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/linkedin-framework-agnostic",
       "docs/pricecard",
@@ -12731,6 +12805,7 @@
       "docs/committing-fixes",
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/home-page",
       "docs/pce-candidates",
@@ -12777,6 +12852,7 @@
       "docs/behaviors/tada",
       "docs/behaviors/x-copybutton",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/mcp",
       "docs/search",
@@ -12882,6 +12958,7 @@
       "docs/behaviors/skeleton",
       "docs/behaviors/snow",
       "docs/behaviors/sparkle",
+      "docs/guides/ask-the-project",
       "docs/performance",
       "demos/site/cards",
       "demos/site/content"
@@ -13090,6 +13167,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
@@ -13117,6 +13195,7 @@
       "docs/behaviors/container",
       "docs/behaviors/x-behavior",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
@@ -13526,10 +13605,12 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
+      "docs/index",
       "docs/mcp",
       "docs/npx-commands",
       "docs/schema.migration",
@@ -13565,6 +13646,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/home-page",
       "docs/index",
       "docs/mcp",
@@ -13631,6 +13713,7 @@
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/ask-the-project",
       "docs/property-viewer",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/V3-STANDARDS",
@@ -13928,6 +14011,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
@@ -14590,6 +14674,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/index",
       "docs/properties",
       "docs/search",
@@ -14670,6 +14755,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -15349,6 +15435,7 @@
       "docs/behaviors/x-behavior",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/property-viewer",
@@ -15432,6 +15519,7 @@
       "docs/behaviors/select",
       "docs/claude/TIER3-REFERENCE",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/mcp",
       "docs/search",
@@ -15596,6 +15684,7 @@
       "docs/behaviors/cover",
       "docs/behaviors/scrollable",
       "docs/behaviors/time",
+      "docs/guides/ask-the-project",
       "docs/inline-editing",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -15638,6 +15727,7 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/mcp",
       "docs/npx-commands",
       "docs/schema-test-value",
@@ -15931,6 +16021,7 @@
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -16085,6 +16176,7 @@
       "docs/behaviors/img",
       "docs/behaviors/ratio",
       "docs/behaviors/video",
+      "docs/guides/ask-the-project",
       "docs/pce-candidates"
     ],
     "earlier": [
@@ -16119,7 +16211,9 @@
     "ask": [
       "pages/behaviors",
       "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER1-LAWS"
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
+      "docs/index"
     ],
     "max": [
       "pages/behaviors",
@@ -16238,6 +16332,7 @@
       "docs/behaviors/typewriter",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/inline-editing",
       "docs/pce-candidates",
       "demos/playground",
@@ -16332,6 +16427,7 @@
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/switcher",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/property-viewer",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
@@ -16482,6 +16578,7 @@
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/schema-test-value",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -16734,6 +16831,7 @@
       "docs/behaviors/codetheme",
       "docs/behaviors/fix-card",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
@@ -16956,6 +17054,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/home-page",
       "docs/index",
       "docs/linkedin-standards-article",
@@ -16978,6 +17077,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
@@ -16998,6 +17098,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/home-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -17343,6 +17444,7 @@
       "docs/behaviors/prompt",
       "docs/behaviors/time",
       "docs/behaviors/toast",
+      "docs/guides/ask-the-project",
       "docs/home-page",
       "docs/inline-editing",
       "docs/pce-candidates",
@@ -17503,6 +17605,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/linkedin-standards-article",
       "docs/schema",
@@ -18235,6 +18338,7 @@
       "docs/behaviors/toast",
       "docs/behaviors/video",
       "docs/behaviors/x-copybutton",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/REPO-LAYOUT",
@@ -18270,7 +18374,8 @@
       "docs/behaviors/ol",
       "docs/claude/README",
       "docs/claude/TIER2-DOMAIN-GUIDES",
-      "docs/claude/TIER3-REFERENCE"
+      "docs/claude/TIER3-REFERENCE",
+      "docs/index"
     ],
     "research": [
       "pages/docs",
@@ -18406,6 +18511,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/index",
@@ -18545,9 +18651,11 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
+      "docs/index",
       "docs/mcp",
       "docs/npx-commands",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -18592,6 +18700,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/README",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -18650,6 +18759,7 @@
       "docs/behaviors/tabs",
       "docs/behaviors/textarea",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/linkedin-framework-agnostic",
@@ -18802,6 +18912,7 @@
       "pages/introduction",
       "docs/behaviors/container",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/linkedin-standards-article",
       "docs/performance",
       "docs/styles",
@@ -18875,6 +18986,7 @@
       "docs/behaviors/vimeo",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/youtube",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/inline-editing",
@@ -18960,6 +19072,7 @@
       "docs/behaviors/time",
       "docs/behaviors/zoomin",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/performance",
       "docs/search",
@@ -19224,6 +19337,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
@@ -19853,6 +19967,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/index",
       "docs/linkedin-framework-agnostic",
@@ -19992,6 +20107,7 @@
     "embed": [
       "pages/features",
       "docs/behaviors/vimeo",
+      "docs/guides/ask-the-project",
       "docs/properties",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
@@ -20253,6 +20369,7 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/inline-editing",
       "docs/semantic-standard",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -20647,6 +20764,7 @@
       "docs/behaviors/table",
       "docs/behaviors/video",
       "docs/card",
+      "docs/guides/ask-the-project",
       "docs/semantic-standard",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
@@ -20654,6 +20772,7 @@
     ],
     "lib": [
       "pages/hero-gallery",
+      "docs/guides/ask-the-project",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
@@ -20776,6 +20895,7 @@
       "docs/behaviors/truncate",
       "docs/behaviors/video",
       "docs/behaviors/x-copybutton",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/performance",
       "docs/pricecard",
@@ -20816,6 +20936,7 @@
       "docs/behaviors/switcher",
       "docs/behaviors/toggle",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/properties",
@@ -20830,6 +20951,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/collapse",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -20847,6 +20969,7 @@
       "docs/behaviors/gallery",
       "docs/behaviors/img",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
       "docs/properties",
@@ -20938,6 +21061,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/index",
@@ -21017,8 +21141,10 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
+      "docs/index",
       "docs/linkedin-standards-article",
       "docs/pce-candidates",
       "docs/property-viewer",
@@ -21195,6 +21321,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/home-page",
@@ -21316,6 +21443,7 @@
       "docs/behaviors/ol",
       "docs/behaviors/snow",
       "docs/behaviors/time",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/mcp",
@@ -21437,6 +21565,7 @@
       "docs/IMPROVEMENTS",
       "docs/behaviors/glass",
       "docs/behaviors/shake",
+      "docs/guides/ask-the-project",
       "docs/npx-commands",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "demos/autoinject",
@@ -21448,6 +21577,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audio",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/mcp",
@@ -22154,6 +22284,7 @@
       "docs/committing-fixes",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/inline-editing",
@@ -22383,6 +22514,7 @@
       "docs/behaviors/video",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/npx-commands",
       "docs/performance",
       "docs/pricecard",
@@ -22565,6 +22697,7 @@
       "docs/behaviors/video",
       "docs/claude/TIER1-LAWS",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -22714,6 +22847,7 @@
       "docs/behaviors/prompt",
       "docs/behaviors/rainbow",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/schema-test-value",
@@ -22743,6 +22877,7 @@
       "docs/behaviors/scrollable",
       "docs/behaviors/sidebarlayout",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/npx-commands",
       "docs/pricecard",
       "docs/properties",
@@ -23046,6 +23181,7 @@
     "tracks": [
       "pages/home",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/performance"
     ],
     "280px": [
@@ -23455,6 +23591,7 @@
       "docs/behaviors/copy",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/testing-runbook"
@@ -23594,6 +23731,7 @@
       "docs/behaviors/stagelight",
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/pce-candidates",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -23864,6 +24002,7 @@
       "docs/behaviors/table",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -24128,6 +24267,7 @@
     "wrote": [
       "pages/introduction",
       "docs/behaviors/card",
+      "docs/guides/ask-the-project",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
@@ -24191,6 +24331,7 @@
       "docs/behaviors/typewriter",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/V3-STANDARDS"
@@ -24365,6 +24506,7 @@
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -24392,6 +24534,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/search-index",
       "docs/mcp",
@@ -24416,10 +24559,12 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
       "docs/home-page",
+      "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/properties",
       "docs/schema.migration",
@@ -24444,6 +24589,7 @@
     "minutes": [
       "pages/introduction",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/schema-test-value"
     ],
@@ -24643,6 +24789,7 @@
       "pages/introduction",
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/pce-candidates",
       "docs/performance",
@@ -24746,6 +24893,7 @@
       "docs/card",
       "docs/code-examples-standard",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/semantic-audit",
       "docs/semantic-standard",
@@ -25140,6 +25288,7 @@
       "docs/BRANCH_PROTECTION",
       "docs/behaviors/clock",
       "docs/behaviors/input",
+      "docs/guides/ask-the-project",
       "docs/mcp",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
@@ -25151,6 +25300,7 @@
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/claude/TIER3-REFERENCE",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/linkedin-standards-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -25370,6 +25520,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/standards/V3-STANDARDS"
     ],
     "private": [
@@ -25679,6 +25830,7 @@
       "pages/other",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/schema.migration",
       "docs/standards/RELEASE-PROCESS",
@@ -25754,6 +25906,7 @@
       "docs/card",
       "docs/claude/README",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/semantic-audit",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/RELEASE-PROCESS",
@@ -25968,7 +26121,8 @@
       "pages/privacy"
     ],
     "internet": [
-      "pages/privacy"
+      "pages/privacy",
+      "docs/guides/ask-the-project"
     ],
     "secure": [
       "pages/privacy",
@@ -26144,6 +26298,7 @@
       "docs/compliance/iso-42001-alignment",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/inline-editing",
@@ -26178,6 +26333,7 @@
       "pages/terms",
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/guides/ask-the-project",
       "docs/schema.migration",
       "demos/landing-page-showcase"
     ],
@@ -26313,6 +26469,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/index",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
@@ -26353,6 +26510,7 @@
       "docs/behaviors/table",
       "docs/behaviors/tabs",
       "docs/behaviors/toast",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
@@ -26540,6 +26698,7 @@
       "docs/behaviors/figure",
       "docs/behaviors/img",
       "docs/behaviors/video",
+      "docs/guides/ask-the-project",
       "docs/standards/RELEASE-PROCESS",
       "demos/charity-food"
     ],
@@ -26685,6 +26844,7 @@
       "docs/behaviors/card",
       "docs/claude/README",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/wbservices"
     ],
     "reproduce": [
@@ -27283,6 +27443,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/container-pattern",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/inline-editing",
       "docs/pricecard",
@@ -27827,6 +27988,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/testing-strategy"
     ],
     "prs": [
@@ -28034,6 +28196,7 @@
       "docs/code-examples-standard",
       "docs/committing-fixes",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -28109,7 +28272,8 @@
       "docs/schema.migration"
     ],
     "pulling": [
-      "docs/ANNOUNCE_TEST_POLICY"
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/guides/ask-the-project"
     ],
     "bash": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28117,6 +28281,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/mcp",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -28305,6 +28470,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/cardpricing",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/mcp",
       "docs/npx-commands",
       "docs/schema.migration",
@@ -28345,7 +28511,8 @@
     ],
     "merging": [
       "docs/BRANCH_PROTECTION",
-      "docs/committing-fixes"
+      "docs/committing-fixes",
+      "docs/guides/ask-the-project"
     ],
     "exact": [
       "docs/BRANCH_PROTECTION",
@@ -28389,6 +28556,7 @@
       "docs/behaviors/stat",
       "docs/behaviors/x-enhancements",
       "docs/claude/SCHEMAS-GUIDE",
+      "docs/guides/ask-the-project",
       "docs/pce-candidates",
       "docs/styles",
       "docs/test-schema-standard"
@@ -28517,6 +28685,7 @@
       "docs/behaviors/dialog",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page"
     ],
     "workflows": [
@@ -28877,6 +29046,7 @@
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TOOLING-INVENTORY",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/inline-editing",
       "docs/linkedin-standards-article",
       "docs/npx-commands",
@@ -28912,6 +29082,7 @@
       "docs/IMPROVEMENTS",
       "docs/behaviors/articles",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/property-viewer",
       "docs/standards/REPO-LAYOUT",
       "docs/styles",
@@ -29150,6 +29321,7 @@
       "docs/behaviors/colorpicker",
       "docs/behaviors/youtube",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/performance",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/RELEASE-PROCESS",
@@ -29366,6 +29538,7 @@
       "docs/card",
       "docs/code-examples-standard",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -29444,6 +29617,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/compliance/iso-42001-alignment",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
@@ -29570,6 +29744,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-standards-article",
@@ -30259,6 +30434,7 @@
       "docs/behaviors/cardprofile",
       "docs/behaviors/dropdown",
       "docs/behaviors/ol",
+      "docs/guides/ask-the-project",
       "docs/pce-candidates",
       "docs/schema-test-value",
       "demos/site/cards"
@@ -30762,7 +30938,8 @@
       "docs/testing-strategy"
     ],
     "recognized": [
-      "docs/MVVM-MIGRATION-PLAN"
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/guides/ask-the-project"
     ],
     "getcomponentschemas": [
       "docs/MVVM-MIGRATION-PLAN"
@@ -30876,6 +31053,7 @@
       "docs/behaviors/address",
       "docs/behaviors/table",
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/standards/REPO-LAYOUT",
       "docs/styles"
     ],
@@ -31033,6 +31211,7 @@
       "docs/behaviors/move",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -31262,6 +31441,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/guides/ask-the-project",
       "docs/linkedin-framework-agnostic",
       "docs/mcp",
       "docs/schema",
@@ -31607,6 +31787,7 @@
       "docs/behaviors/ul",
       "docs/code-examples-standard",
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
@@ -32088,6 +32269,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
+      "docs/guides/ask-the-project",
       "docs/schema",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/REPO-LAYOUT",
@@ -32303,6 +32485,7 @@
       "docs/behaviors/tags",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/RELEASE-PROCESS"
@@ -32515,6 +32698,7 @@
       "docs/behaviors/toast",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/schema-test-value",
       "demos/site/interactive"
     ],
@@ -32902,6 +33086,7 @@
       "docs/V3-GUIDE",
       "docs/behaviors/move",
       "docs/behaviors/notify",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/V3-STANDARDS"
@@ -33041,6 +33226,7 @@
       "docs/behaviors/x-copybutton",
       "docs/card",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/performance",
       "docs/pricecard",
@@ -33058,6 +33244,7 @@
     "guessing": [
       "docs/V3-GUIDE",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/linkedin-standards-article",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
@@ -33256,6 +33443,7 @@
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/home-page",
       "docs/pricecard",
@@ -33790,7 +33978,8 @@
       "docs/behaviors/cardexpandable",
       "docs/behaviors/dropdown",
       "docs/behaviors/mark",
-      "docs/claude/TIER3-REFERENCE"
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project"
     ],
     "hasattribute": [
       "docs/WB_BEHAVIOR_SYSTEM"
@@ -35000,6 +35189,7 @@
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/guides/search-index",
@@ -35098,6 +35288,7 @@
       "docs/behaviors/stat",
       "docs/behaviors/x-copybutton",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/npx-commands",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -35271,6 +35462,7 @@
       "docs/behaviors/resizable",
       "docs/behaviors/skeleton",
       "docs/behaviors/ul",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/performance",
       "docs/property-viewer",
@@ -35675,6 +35867,7 @@
     "memory": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/performance",
       "docs/wbservices",
       "demos/site/cards"
@@ -35694,7 +35887,8 @@
     "larger": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/icon",
-      "docs/behaviors/radio"
+      "docs/behaviors/radio",
+      "docs/guides/ask-the-project"
     ],
     "multiplier": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec"
@@ -35866,6 +36060,7 @@
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/npx-commands",
       "docs/semantic-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -36104,6 +36299,7 @@
       "docs/behaviors/card",
       "docs/behaviors/copybutton",
       "docs/behaviors/typewriter",
+      "docs/guides/ask-the-project",
       "docs/standards/RELEASE-PROCESS"
     ],
     "proposals": [
@@ -36424,6 +36620,7 @@
       "docs/behaviors/cardexpandable",
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/properties"
     ],
     "along": [
@@ -36494,6 +36691,7 @@
     ],
     "kb": [
       "docs/architecture/solidjscomparison",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website"
     ],
     "package": [
@@ -36704,6 +36902,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/checkbox",
       "docs/behaviors/radio",
+      "docs/guides/ask-the-project",
       "docs/semantic-audit",
       "demos/autoinject"
     ],
@@ -36745,6 +36944,7 @@
     "answer": [
       "docs/architecture/solidjscomparison",
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
       "demos/site/cards"
@@ -36796,6 +36996,7 @@
     "reports": [
       "docs/architecture/solidjscomparison",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/npx-commands",
       "demos/site/cards"
     ],
@@ -36972,7 +37173,8 @@
     ],
     "labelled": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/collapse"
+      "docs/behaviors/collapse",
+      "docs/guides/ask-the-project"
     ],
     "renamed": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -37040,6 +37242,7 @@
       "docs/behaviors/avatar",
       "docs/behaviors/typewriter",
       "docs/code-examples-standard",
+      "docs/guides/ask-the-project",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
@@ -37162,12 +37365,14 @@
     ],
     "http": [
       "docs/architecture/standards/ERROR-MESSAGE",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/mcp",
       "docs/test-schema-standard"
     ],
     "localhost": [
       "docs/architecture/standards/ERROR-MESSAGE",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website"
     ],
     "mozilla": [
@@ -37540,6 +37745,7 @@
       "docs/behaviors/video",
       "docs/behaviors/vimeo",
       "docs/behaviors/youtube",
+      "docs/guides/ask-the-project",
       "docs/mcp"
     ],
     "showdisplay": [
@@ -39034,7 +39240,8 @@
       "docs/behaviors/address"
     ],
     "nearest": [
-      "docs/behaviors/address"
+      "docs/behaviors/address",
+      "docs/guides/ask-the-project"
     ],
     "postal": [
       "docs/behaviors/address"
@@ -39328,6 +39535,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/dropdown",
       "docs/behaviors/select",
+      "docs/guides/ask-the-project",
       "docs/standards/V3-STANDARDS",
       "demos/site/forms"
     ],
@@ -39466,6 +39674,7 @@
     "archive": [
       "docs/behaviors/audio",
       "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
@@ -39736,7 +39945,8 @@
     ],
     "offline": [
       "docs/behaviors/avatar",
-      "docs/behaviors/ul"
+      "docs/behaviors/ul",
+      "docs/index"
     ],
     "setimage": [
       "docs/behaviors/avatar",
@@ -39843,6 +40053,7 @@
     "quote": [
       "docs/behaviors/blockquote",
       "docs/behaviors/cardtestimonial",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/semantic-standard"
     ],
@@ -39902,7 +40113,9 @@
     "sources": [
       "docs/behaviors/blockquote",
       "docs/claude/PAGE-GENERATION",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
+      "docs/index",
       "docs/properties",
       "demos/multi-behavior-demo-generated"
     ],
@@ -39949,6 +40162,7 @@
     "good": [
       "docs/behaviors/bounce",
       "docs/behaviors/dl",
+      "docs/guides/ask-the-project",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "noticed": [
@@ -40305,6 +40519,7 @@
     "say": [
       "docs/behaviors/card",
       "docs/behaviors/cardfile",
+      "docs/guides/ask-the-project",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "waterproof": [
@@ -40472,6 +40687,7 @@
     "whenever": [
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cart",
+      "docs/guides/ask-the-project",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "brings": [
@@ -40594,7 +40810,8 @@
     "mb": [
       "docs/behaviors/cardfile",
       "docs/behaviors/table",
-      "docs/claude/TIER1-LAWS"
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project"
     ],
     "downloadable": [
       "docs/behaviors/cardfile"
@@ -40758,6 +40975,7 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/fill",
+      "docs/guides/ask-the-project",
       "demos/layout-test"
     ],
     "widest": [
@@ -41333,7 +41551,8 @@
       "docs/behaviors/img",
       "docs/behaviors/reel",
       "docs/behaviors/slider",
-      "docs/behaviors/stagelight"
+      "docs/behaviors/stagelight",
+      "docs/guides/ask-the-project"
     ],
     "posts": [
       "docs/behaviors/checkbox",
@@ -41415,6 +41634,7 @@
       "docs/behaviors/countdown",
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
+      "docs/guides/ask-the-project",
       "docs/schema-test-value"
     ],
     "segment": [
@@ -41545,7 +41765,8 @@
       "docs/search"
     ],
     "args": [
-      "docs/behaviors/code"
+      "docs/behaviors/code",
+      "docs/guides/ask-the-project"
     ],
     "cleartimeout": [
       "docs/behaviors/code"
@@ -41810,7 +42031,8 @@
     "0s": [
       "docs/behaviors/confetti",
       "docs/behaviors/fireworks",
-      "docs/behaviors/snow"
+      "docs/behaviors/snow",
+      "docs/guides/ask-the-project"
     ],
     "3s": [
       "docs/behaviors/confetti",
@@ -42466,6 +42688,7 @@
     ],
     "asking": [
       "docs/behaviors/fieldset",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website"
     ],
     "coupon": [
@@ -42845,6 +43068,7 @@
       "docs/behaviors/glow",
       "docs/claude/TIER3-REFERENCE",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/semantic-standard"
     ],
     "trial": [
@@ -43688,7 +43912,8 @@
       "demos/site/learn-more"
     ],
     "slower": [
-      "docs/behaviors/rainbow"
+      "docs/behaviors/rainbow",
+      "docs/guides/ask-the-project"
     ],
     "improves": [
       "docs/behaviors/range",
@@ -44016,6 +44241,7 @@
     "instant": [
       "docs/behaviors/search",
       "docs/behaviors/searchfield",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "docs/performance",
       "docs/search",
@@ -44064,6 +44290,7 @@
     "searchable": [
       "docs/behaviors/select",
       "docs/behaviors/table",
+      "docs/guides/ask-the-project",
       "docs/guides/search-index",
       "demos/autoinject",
       "demos/site/content"
@@ -44198,6 +44425,7 @@
       "docs/behaviors/spinner",
       "docs/behaviors/stagelight",
       "docs/behaviors/typewriter",
+      "docs/guides/ask-the-project",
       "demos/site/feedback"
     ],
     "pad": [
@@ -44351,7 +44579,8 @@
       "docs/behaviors/table"
     ],
     "splits": [
-      "docs/behaviors/table"
+      "docs/behaviors/table",
+      "docs/guides/ask-the-project"
     ],
     "pagesize": [
       "docs/behaviors/table"
@@ -44456,6 +44685,7 @@
       "docs/behaviors/time",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
@@ -44507,6 +44737,7 @@
     ],
     "rebuild": [
       "docs/behaviors/time",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website"
     ],
     "january": [
@@ -44603,7 +44834,8 @@
       "docs/behaviors/toast"
     ],
     "reused": [
-      "docs/behaviors/toast"
+      "docs/behaviors/toast",
+      "docs/guides/ask-the-project"
     ],
     "exiting": [
       "docs/behaviors/toast"
@@ -44709,7 +44941,8 @@
     ],
     "embeds": [
       "docs/behaviors/vimeo",
-      "docs/behaviors/youtube"
+      "docs/behaviors/youtube",
+      "docs/guides/ask-the-project"
     ],
     "videoid": [
       "docs/behaviors/vimeo",
@@ -44744,7 +44977,8 @@
       "docs/claude/TIER1-LAWS"
     ],
     "idle": [
-      "docs/behaviors/x-copybutton"
+      "docs/behaviors/x-copybutton",
+      "docs/guides/ask-the-project"
     ],
     "execcommand": [
       "docs/behaviors/x-copybutton"
@@ -45186,6 +45420,7 @@
     ],
     "env": [
       "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project",
       "docs/performance"
     ],
     "holder": [
@@ -45223,7 +45458,8 @@
       "docs/claude/TIER1-LAWS"
     ],
     "gb": [
-      "docs/claude/TIER1-LAWS"
+      "docs/claude/TIER1-LAWS",
+      "docs/guides/ask-the-project"
     ],
     "launched": [
       "docs/claude/TIER1-LAWS",
@@ -45467,7 +45703,8 @@
       "docs/claude/TIER3-REFERENCE"
     ],
     "knowledge": [
-      "docs/claude/TIER3-REFERENCE"
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/ask-the-project"
     ],
     "reinvented": [
       "docs/claude/TOOLING-INVENTORY"
@@ -45509,6 +45746,7 @@
     "installed": [
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website"
     ],
     "invocation": [
@@ -45641,6 +45879,7 @@
     ],
     "serve": [
       "docs/claude/TOOLING-INVENTORY",
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/RELEASE-PROCESS"
@@ -45746,6 +45985,7 @@
     ],
     "checkout": [
       "docs/committing-fixes",
+      "docs/guides/ask-the-project",
       "docs/guides/migrate-an-existing-page",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-runbook"
@@ -45846,6 +46086,7 @@
     ],
     "treats": [
       "docs/compliance/iso-42001-alignment",
+      "docs/guides/ask-the-project",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-runbook"
     ],
@@ -46039,6 +46280,7 @@
     ],
     "closest": [
       "docs/container-pattern",
+      "docs/guides/ask-the-project",
       "docs/inline-editing",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
@@ -46101,14 +46343,154 @@
     "myelement": [
       "docs/escape-hatches"
     ],
+    "answers": [
+      "docs/guides/ask-the-project",
+      "docs/index",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
+    "came": [
+      "docs/guides/ask-the-project"
+    ],
     "terminal": [
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/mcp"
     ],
     "powershell": [
+      "docs/guides/ask-the-project",
       "docs/guides/create-a-website",
       "docs/guides/migrate-an-existing-page",
       "docs/npx-commands"
+    ],
+    "question": [
+      "docs/guides/ask-the-project",
+      "docs/guides/create-a-website"
+    ],
+    "memorized": [
+      "docs/guides/ask-the-project"
+    ],
+    "passages": [
+      "docs/guides/ask-the-project"
+    ],
+    "ollama": [
+      "docs/guides/ask-the-project"
+    ],
+    "nomic": [
+      "docs/guides/ask-the-project"
+    ],
+    "qwen2": [
+      "docs/guides/ask-the-project"
+    ],
+    "coder": [
+      "docs/guides/ask-the-project"
+    ],
+    "3b": [
+      "docs/guides/ask-the-project"
+    ],
+    "vectors": [
+      "docs/guides/ask-the-project"
+    ],
+    "installing": [
+      "docs/guides/ask-the-project"
+    ],
+    "terminals": [
+      "docs/guides/ask-the-project"
+    ],
+    "notepad": [
+      "docs/guides/ask-the-project"
+    ],
+    "commands": [
+      "docs/guides/ask-the-project",
+      "docs/mcp",
+      "docs/npx-commands",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/REPO-LAYOUT",
+      "docs/testing-runbook"
+    ],
+    "stores": [
+      "docs/guides/ask-the-project"
+    ],
+    "redone": [
+      "docs/guides/ask-the-project"
+    ],
+    "words": [
+      "docs/guides/ask-the-project",
+      "docs/guides/search-index"
+    ],
+    "topic": [
+      "docs/guides/ask-the-project"
+    ],
+    "instantly": [
+      "docs/guides/ask-the-project",
+      "docs/linkedin-standards-article",
+      "docs/property-viewer",
+      "demos/autoinject"
+    ],
+    "embedded": [
+      "docs/guides/ask-the-project",
+      "docs/properties",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
+    ],
+    "indexed": [
+      "docs/guides/ask-the-project"
+    ],
+    "passage": [
+      "docs/guides/ask-the-project"
+    ],
+    "laptop": [
+      "docs/guides/ask-the-project"
+    ],
+    "cpu": [
+      "docs/guides/ask-the-project",
+      "demos/site/cards"
+    ],
+    "vector": [
+      "docs/guides/ask-the-project",
+      "docs/semantic-standard"
+    ],
+    "act": [
+      "docs/guides/ask-the-project",
+      "docs/standards/ERROR-LOG-RETENTION"
+    ],
+    "indexes": [
+      "docs/guides/ask-the-project"
+    ],
+    "accuracy": [
+      "docs/guides/ask-the-project"
+    ],
+    "reflect": [
+      "docs/guides/ask-the-project",
+      "docs/schema.migration"
+    ],
+    "requests": [
+      "docs/guides/ask-the-project"
+    ],
+    "ram": [
+      "docs/guides/ask-the-project"
+    ],
+    "frees": [
+      "docs/guides/ask-the-project"
+    ],
+    "refuse": [
+      "docs/guides/ask-the-project"
+    ],
+    "7b": [
+      "docs/guides/ask-the-project"
+    ],
+    "searching": [
+      "docs/guides/ask-the-project"
+    ],
+    "misses": [
+      "docs/guides/ask-the-project"
+    ],
+    "predate": [
+      "docs/guides/ask-the-project"
+    ],
+    "chunking": [
+      "docs/guides/ask-the-project"
+    ],
+    "ranking": [
+      "docs/guides/ask-the-project"
     ],
     "differs": [
       "docs/guides/create-a-website"
@@ -46187,9 +46569,6 @@
       "docs/guides/create-a-website"
     ],
     "dist": [
-      "docs/guides/create-a-website"
-    ],
-    "question": [
       "docs/guides/create-a-website"
     ],
     "signed": [
@@ -46345,9 +46724,6 @@
       "docs/guides/search-index"
     ],
     "stopwords": [
-      "docs/guides/search-index"
-    ],
-    "words": [
       "docs/guides/search-index"
     ],
     "welcome": [
@@ -46853,11 +47229,6 @@
     "repeats": [
       "docs/linkedin-standards-article"
     ],
-    "instantly": [
-      "docs/linkedin-standards-article",
-      "docs/property-viewer",
-      "demos/autoinject"
-    ],
     "hack": [
       "docs/linkedin-standards-article"
     ],
@@ -46915,13 +47286,6 @@
     ],
     "tcp": [
       "docs/mcp"
-    ],
-    "commands": [
-      "docs/mcp",
-      "docs/npx-commands",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/REPO-LAYOUT",
-      "docs/testing-runbook"
     ],
     "curl": [
       "docs/mcp"
@@ -47322,10 +47686,6 @@
       "docs/properties",
       "docs/standards/REPO-LAYOUT"
     ],
-    "embedded": [
-      "docs/properties",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
-    ],
     "checkboxes": [
       "docs/properties",
       "demos/autoinject",
@@ -47508,9 +47868,6 @@
       "demos/frameworks",
       "demos/multi-behavior-demo-generated"
     ],
-    "reflect": [
-      "docs/schema.migration"
-    ],
     "assign": [
       "docs/schema.migration"
     ],
@@ -47653,9 +48010,6 @@
       "docs/semantic-standard"
     ],
     "graphics": [
-      "docs/semantic-standard"
-    ],
-    "vector": [
       "docs/semantic-standard"
     ],
     "illustrations": [
@@ -48073,9 +48427,6 @@
     "archives": [
       "docs/standards/ERROR-LOG-RETENTION"
     ],
-    "act": [
-      "docs/standards/ERROR-LOG-RETENTION"
-    ],
     "prune": [
       "docs/standards/ERROR-LOG-RETENTION"
     ],
@@ -48183,9 +48534,6 @@
       "docs/standards/RELEASE-PROCESS"
     ],
     "backfiller": [
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
-    ],
-    "answers": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "drafted": [
@@ -49185,9 +49533,6 @@
       "demos/site/cards"
     ],
     "connections": [
-      "demos/site/cards"
-    ],
-    "cpu": [
       "demos/site/cards"
     ],
     "featuredtone": [

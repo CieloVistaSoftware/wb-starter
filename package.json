@@ -90,7 +90,10 @@
     "lint:ratchet": "node .husky/lint-ratchet.mjs --all",
     "lint:staged": "node .husky/lint-ratchet.mjs --staged",
     "test:collection": "node scripts/check-test-collection.mjs",
-    "test:pages-deploy-state": "node scripts/test-pages-deploy-state.mjs"
+    "test:pages-deploy-state": "node scripts/test-pages-deploy-state.mjs",
+    "ask": "node scripts/ask.mjs",
+    "ask:index": "node scripts/ask-index.mjs",
+    "q": "node scripts/ask.mjs"
   },
   "scripts-info": {
     "start": "Run the site at localhost:3000: pulls main, stamps the version, rebuilds the docs list, then serves. Use this to work on or look at the site.",
@@ -165,13 +168,19 @@
     "test:suite-env": "Self-test: a test suite's scratch git commands cannot reach the real repo.",
     "test:free-port": "Self-test: every local test run gets its own port.",
     "test:summary-parse": "Self-test: the test-run tally counts each test once.",
-    "test:pages-deploy-state": "Self-test: the deployed-smoke gate reads GitHub Pages deploy state correctly."
+    "test:pages-deploy-state": "Self-test: the deployed-smoke gate reads GitHub Pages deploy state correctly.",
+    "ask": "Ask a question about WB-Starter and get an answer from the project's own files, with the files it used. Runs offline on this machine (Ollama). Example: npm run ask -- \"what does headingLevel change?\"",
+    "ask:index": "Build or update the local index npm run ask answers from. Run once, then after big changes; only changed files are re-embedded. Needs Ollama with nomic-embed-text.",
+    "q": "Short for npm run ask: npm run q \"question\". From any terminal, the q command in your PowerShell profile does the same without npm run (see docs/guides/ask-the-project.md)."
   },
   "scripts-groups": {
     "Daily: start here": [
       "start",
       "dev",
       "scripts:help",
+      "ask",
+      "ask:index",
+      "q",
       "test:async",
       "test:stop",
       "test:ui",
