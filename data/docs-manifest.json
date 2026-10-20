@@ -1949,7 +1949,7 @@
         "name": "ask-the-project",
         "category": "guides",
         "audience": "user",
-        "created": "2026-10-16"
+        "created": "2026-10-20"
       },
       {
         "path": "docs/guides/create-a-website.md",
@@ -3714,7 +3714,7 @@
       "name": "ask-the-project",
       "category": "guides",
       "audience": "user",
-      "created": "2026-10-16"
+      "created": "2026-10-20"
     },
     {
       "path": "docs/guides/create-a-website.md",

@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.555",
+      "date": "2026-10-20",
+      "summary": "There was no way to ask the project a question offline; a small local model now answers from wb-starter&#39;s files, cites them, and says when the project has no answer. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1926\" target=\"_blank\" rel=\"noopener\">#1926</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1927\" target=\"_blank\" rel=\"noopener\">#1927</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Npm run ask answers questions from wb-starter&#39;s own files, offline, with sources</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1926\" target=\"_blank\" rel=\"noopener\">#1926</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1927\" target=\"_blank\" rel=\"noopener\">#1927</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e9e8a846ce8bb2f8f998d535c1cbabbdbd14bdee\" target=\"_blank\" rel=\"noopener\"><code>e9e8a84</code></a>",
+          "issues": [
+            1926,
+            1927
+          ]
+        }
+      ],
+      "seeIt": "With Ollama running and nomic-embed-text and qwen2.5-coder:3b pulled, run npm run ask:index, then npm run ask -- &quot;what does headingLevel change?&quot;. Before: no such command. Now: an answer drawn from cardhero.md, followed by the source files and lines.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e9e8a846ce8bb2f8f998d535c1cbabbdbd14bdee\" target=\"_blank\" rel=\"noopener\"><code>e9e8a84</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.554",
       "date": "2026-10-17",
       "summary": "ESLint reported 225 warnings and nothing failed on them, because the lint gate only refused new ones. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1932\" target=\"_blank\" rel=\"noopener\">#1932</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1935\" target=\"_blank\" rel=\"noopener\">#1935</a>",

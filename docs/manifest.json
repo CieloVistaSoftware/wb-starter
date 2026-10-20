@@ -22,7 +22,7 @@
           "file": "guides/ask-the-project.md",
           "title": "Ask the Project",
           "description": "npm run ask: answers from the project's own files, offline, with sources",
-          "modified": "2026-10-16"
+          "modified": "2026-10-20"
         },
         {
           "file": "guides/search-index.md",
@@ -88,7 +88,7 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-10"
+          "modified": "2026-10-16"
         },
         {
           "file": "behaviors/autosize.md",
