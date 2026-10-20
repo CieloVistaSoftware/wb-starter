@@ -81,22 +81,22 @@
     </thead>
     <tbody>
       <tr>
-        <td data-label="Layer">TLS</td>
-        <td data-label="Purpose">Encrypt transport</td>
-        <td data-label="Example">TLS 1.3</td>
-        <td data-label="Full Name">Transport Layer Security</td>
-        <td data-label="C# Implementation"><pre><code class="language-csharp">var handler = new HttpClientHandler
+        <td>TLS</td>
+        <td>Encrypt transport</td>
+        <td>TLS 1.3</td>
+        <td>Transport Layer Security</td>
+        <td><pre><code class="language-csharp">var handler = new HttpClientHandler
 {
     SslProtocols = SslProtocols.Tls13
 };
 var client = new HttpClient(handler);</code></pre></td>
       </tr>
       <tr>
-        <td data-label="Layer">Authentication</td>
-        <td data-label="Purpose">Identify sender</td>
-        <td data-label="Example">OAuth2, JWT, mTLS</td>
-        <td data-label="Full Name">Open Authorization 2.0, JSON Web Token, Mutual Transport Layer Security</td>
-        <td data-label="C# Implementation"><pre><code class="language-csharp">// JWT bearer tokens (OAuth 2.0)
+        <td>Authentication</td>
+        <td>Identify sender</td>
+        <td>OAuth2, JWT, mTLS</td>
+        <td>Open Authorization 2.0, JSON Web Token, Mutual Transport Layer Security</td>
+        <td><pre><code class="language-csharp">// JWT bearer tokens (OAuth 2.0)
 builder.Services
     .AddAuthentication("Bearer")
     .AddJwtBearer(o =&gt;
@@ -112,11 +112,11 @@ builder.WebHost.ConfigureKestrel(k =&gt;
             ClientCertificateMode.RequireCertificate));</code></pre></td>
       </tr>
       <tr>
-        <td data-label="Layer">Message Integrity</td>
-        <td data-label="Purpose">Protect message</td>
-        <td data-label="Example">HMAC, signed JWT</td>
-        <td data-label="Full Name">Hash-Based Message Authentication Code, Signed JSON Web Token</td>
-        <td data-label="C# Implementation"><pre><code class="language-csharp">// HMAC over the message body
+        <td>Message Integrity</td>
+        <td>Protect message</td>
+        <td>HMAC, signed JWT</td>
+        <td>Hash-Based Message Authentication Code, Signed JSON Web Token</td>
+        <td><pre><code class="language-csharp">// HMAC over the message body
 using var hmac = new HMACSHA256(key);
 byte[] signature = hmac.ComputeHash(
     Encoding.UTF8.GetBytes(body));
@@ -132,11 +132,11 @@ var token = new JwtSecurityToken(
     signingCredentials: credentials);</code></pre></td>
       </tr>
       <tr>
-        <td data-label="Layer">Replay Protection</td>
-        <td data-label="Purpose">Stop hijacks</td>
-        <td data-label="Example">Nonces, timestamps</td>
-        <td data-label="Full Name">Number used once (one-time random value), Time-based validation</td>
-        <td data-label="C# Implementation"><pre><code class="language-csharp">// Claim the nonce in one atomic step: two identical
+        <td>Replay Protection</td>
+        <td>Stop hijacks</td>
+        <td>Nonces, timestamps</td>
+        <td>Number used once (one-time random value), Time-based validation</td>
+        <td><pre><code class="language-csharp">// Claim the nonce in one atomic step: two identical
 // requests at once cannot both pass a Contains-then-Add.
 // nonceStore: ConcurrentDictionary&lt;string, DateTimeOffset&gt;
 if (!nonceStore.TryAdd(nonce, DateTimeOffset.UtcNow))

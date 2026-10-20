@@ -1,4 +1,5 @@
-/* transportsecurity.css — page layout for pages/transportsecurity.html (#1940). */
+/* transportsecurity.css — page layout for pages/transportsecurity.html (#1940).
+   Sizes in rem (#294); panels keep >= 1rem text padding (layout standard). */
 
 .ts-page {
   max-width: 60rem;
@@ -24,11 +25,11 @@
 }
 
 .ts-note {
-  border-left: 4px solid var(--primary, #6366f1);
+  border-left: 0.25rem solid var(--primary, #6366f1);
   background: var(--bg-secondary, #f3f4f6);
   color: var(--text-primary, #111827);
-  padding: 0.75rem 1rem;
-  border-radius: 0 6px 6px 0;
+  padding: 1rem;
+  border-radius: 0 0.375rem 0.375rem 0;
   margin: 1rem 0;
 }
 
@@ -45,8 +46,8 @@
 
 .ts-table th,
 .ts-table td {
-  border: 1px solid var(--border-color, #d1d5db);
-  padding: 0.6rem 0.75rem;
+  border: 0.0625rem solid var(--border-color, #d1d5db);
+  padding: 1rem;
   text-align: left;
   vertical-align: top;
 }
@@ -60,7 +61,7 @@
   font-size: 0.8rem;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 47.5rem) {
   .ts-table thead {
     display: none;
   }
@@ -77,13 +78,13 @@
 
   .ts-table tr {
     margin-bottom: 1rem;
-    border: 1px solid var(--border-color, #d1d5db);
-    border-radius: 6px;
+    border: 0.0625rem solid var(--border-color, #d1d5db);
+    border-radius: 0.375rem;
   }
 
   .ts-table td {
     border: 0;
-    border-top: 1px solid var(--border-color, #d1d5db);
+    border-top: 0.0625rem solid var(--border-color, #d1d5db);
   }
 
   .ts-table td:first-child {
@@ -92,15 +93,16 @@
     font-weight: 700;
   }
 
+  /* Column names for the stacked cells (no data-* attributes, #224). */
   .ts-table td::before {
-    content: attr(data-label);
     display: block;
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--text-secondary, #4b5563);
   }
 
-  .ts-table td:first-child::before {
-    content: none;
-  }
+  .ts-table td:nth-child(2)::before { content: "Purpose"; }
+  .ts-table td:nth-child(3)::before { content: "Example"; }
+  .ts-table td:nth-child(4)::before { content: "Full Name"; }
+  .ts-table td:nth-child(5)::before { content: "C# Implementation"; }
 }
