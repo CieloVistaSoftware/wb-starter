@@ -1,0 +1,111 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root. Redirect to the route that works (#1734). */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    window.stop();
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<!-- Page styles: src/styles/pages/articles.css -->
+<link rel="stylesheet" href="src/styles/pages/articles.css?v=1.0.554">
+
+<div class="page__hero">
+  <h1>Articles</h1>
+  <p>Everything John has written on <a href="https://dev.to/jwp" target="_blank" rel="noopener">dev.to</a>, newest first.</p>
+</div>
+
+<section class="page__section articles" id="articles">
+  <h2>All articles</h2>
+  <div class="articles__bar">
+    <input type="search" id="articles-filter" class="articles__filter" placeholder="Filter by title or tag" aria-label="Filter articles">
+    <span id="articles-count" class="articles__count" aria-live="polite">Loading…</span>
+  </div>
+  <div class="articles__wrap">
+    <table class="articles__table" id="articles-table">
+      <thead>
+        <tr><th>Title</th><th>Published</th><th>Tags</th><th>Reactions</th><th>Comments</th><th>Read</th></tr>
+      </thead>
+      <tbody id="articles-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+(async function () {
+  /* #1942: every dev.to article by jwp, fetched live. The API allows
+     cross-origin reads and returns all of them in one call. */
+  const API = 'https://dev.to/api/articles?username=jwp&per_page=2000';
+  const body = document.getElementById('articles-body');
+  const count = document.getElementById('articles-count');
+  const filter = document.getElementById('articles-filter');
+  if (!body) return;
+
+  // Dates in US Central (#1553).
+  let centralDate = window.WBTime && window.WBTime.centralDate;
+  if (!centralDate) {
+    try { ({ centralDate } = await import(new URL('src/core/central-time.js', document.baseURI).href)); }
+    catch { centralDate = (v) => String(v).slice(0, 10); }
+  }
+
+  let articles;
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    articles = await res.json();
+  } catch (err) {
+    count.textContent = '';
+    const row = body.insertRow();
+    const cell = row.insertCell();
+    cell.colSpan = 6;
+    cell.className = 'articles__error';
+    cell.append('Could not load the articles from dev.to (' + err.message + '). See them at ');
+    const a = document.createElement('a');
+    a.href = 'https://dev.to/jwp';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = 'dev.to/jwp';
+    cell.append(a, '.');
+    return;
+  }
+
+  articles.sort((a, b) => String(b.published_at).localeCompare(String(a.published_at)));
+
+  const cell = (row, label, text) => {
+    const td = row.insertCell();
+    if (text !== undefined) td.textContent = text;
+    return td;
+  };
+
+  for (const art of articles) {
+    const row = body.insertRow();
+    row.searchText = (art.title + ' ' + (art.tag_list || []).join(' ')).toLowerCase();
+    const a = document.createElement('a');
+    a.href = art.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = art.title;
+    cell(row, 'Title').append(a);
+    cell(row, 'Published', centralDate(art.published_at));
+    cell(row, 'Tags', (art.tag_list || []).map((t) => '#' + t).join(' '));
+    cell(row, 'Reactions', String(art.public_reactions_count ?? 0));
+    cell(row, 'Comments', String(art.comments_count ?? 0));
+    cell(row, 'Read', (art.reading_time_minutes ?? 0) + ' min');
+  }
+
+  const show = () => {
+    const q = filter.value.trim().toLowerCase();
+    let n = 0;
+    for (const row of body.rows) {
+      const hit = !q || row.searchText.includes(q);
+      row.hidden = !hit;
+      if (hit) n++;
+    }
+    count.textContent = q ? n + ' of ' + articles.length + ' articles' : articles.length + ' articles';
+  };
+  filter.addEventListener('input', show);
+  show();
+})();
+</script>

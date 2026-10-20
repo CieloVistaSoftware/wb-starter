@@ -27,7 +27,7 @@ const PAGE_ID = /^[a-z0-9][a-z0-9-]*$/i;
  * tests/regression/pages-have-real-paths.spec.ts fails if another page gains
  * a folder of the same name.
  */
-export const FOLDER_PAGES = new Set(['demos', 'docs']);
+export const FOLDER_PAGES = new Set(['articles', 'demos', 'docs']);
 
 /**
  * The page a URL names, or null for a path that is not a page.
