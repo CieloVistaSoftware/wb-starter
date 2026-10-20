@@ -30,18 +30,15 @@ export function loadSchemaIndex() {
   if (index) return Promise.resolve(index);
   if (pending) return pending;
   if (typeof fetch !== 'function') { index = {}; return Promise.resolve(index); }
-  // schemaPath points at src/wb-models; the index sits at the SITE ROOT in
-  // data/. Resolving against document.baseURI is only correct for a document
-  // that IS at the site root: from public/doc-viewer.html it produced
-  // /wb-starter/public/data/schema-index.json -- a 404 -- and the same for every
-  // page under pages/, demos/ and articles/ (#1053). So walk up out of the
-  // known content directories first, the same rule pages/behaviors.html's
-  // siteRoot() uses. Still relative to the document, so it stays correct at
-  // "/" and under "/wb-starter/" alike.
+  // The index ships beside this module: data/ is two levels up from
+  // src/core/, in the repo and in the npm package alike. Resolving against the
+  // page instead broke twice: from public/doc-viewer.html and every page under
+  // pages/, demos/ and articles/ (#1053), and on any other site that loads
+  // wb.js from the package, which asked that site for a file only the package
+  // has (#1944). The module's own URL is right in every one of those cases.
   let url;
   try {
-    const root = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
-    url = new URL('data/schema-index.json', new URL(root, location.href)).href;
+    url = new URL('../../data/schema-index.json', import.meta.url).href;
   } catch {
     index = {};
     return Promise.resolve(index);
