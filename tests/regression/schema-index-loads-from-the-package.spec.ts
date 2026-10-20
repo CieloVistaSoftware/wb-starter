@@ -4,14 +4,16 @@ import { test, expect } from '../fixtures/offline';
  * THE SCHEMA INDEX LOADS FROM WHERE wb.js IS, NOT FROM WHERE THE PAGE IS (#1944)
  * ==============================================================================
  * A site that loads wb.js from the npm package
- * (https://cdn.jsdelivr.net/npm/wb-starter@1.0.1/src/core/wb.js) asked its OWN
+ * (jsDelivr, .../npm/<package>@1.0.1/src/core/wb.js) asked its OWN
  * site for data/schema-index.json, because schema-index.js built the URL from
  * the page's location. That was a 404, and x-cardhero rendered as an empty bar.
  *
  * Stand-in for "another site": a page at /other-site/index.html, a folder
- * wb-starter knows nothing about, importing wb.js by its absolute path. The
+ * this repo knows nothing about, importing wb.js by its absolute path. The
  * old code asked for /other-site/data/schema-index.json.
  */
+test.use({ serviceWorkers: 'block' });
+
 const PAGE = '/other-site/index.html';
 const HTML = `<!DOCTYPE html>
 <html lang="en" data-theme="dark"><head><meta charset="utf-8">
@@ -23,7 +25,7 @@ const HTML = `<!DOCTYPE html>
 </script></head>
 <body><section x-cardhero title="Hello from another site" subtitle="sub" cta="Go" ctaHref="#"></section></body></html>`;
 
-test('a page outside wb-starter fetches the schema index from beside wb.js', async ({ page }) => {
+test('a page outside this site fetches the schema index from beside wb.js', async ({ page }) => {
   await page.route(`**${PAGE}`, (route) => route.fulfill({ status: 200, contentType: 'text/html', body: HTML }));
   const asked: string[] = [];
   page.on('request', (r) => { if (r.url().includes('schema-index.json')) asked.push(new URL(r.url()).pathname); });
