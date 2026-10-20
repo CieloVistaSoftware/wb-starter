@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.559",
+      "date": "2026-10-20",
+      "summary": "The navbar stayed dark slate with white links on every theme, because navbar.css used fixed colours instead of the theme&#39;s variables. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1946\" target=\"_blank\" rel=\"noopener\">#1946</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1947\" target=\"_blank\" rel=\"noopener\">#1947</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-navbar takes its colours from the theme</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1946\" target=\"_blank\" rel=\"noopener\">#1946</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1947\" target=\"_blank\" rel=\"noopener\">#1947</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/85360d104d98aeb257644bd5d5cdc2235945aecf\" target=\"_blank\" rel=\"noopener\"><code>85360d1</code></a>",
+          "issues": [
+            1946,
+            1947
+          ]
+        }
+      ],
+      "seeIt": "Open any page with an x-navbar and pick the Light theme. Before: the page turns light and the navbar stays dark slate. Now: the navbar turns light too, with dark links and the theme&#39;s primary underline.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/85360d104d98aeb257644bd5d5cdc2235945aecf\" target=\"_blank\" rel=\"noopener\"><code>85360d1</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.558",
+      "date": "2026-10-20",
+      "summary": "A site that loaded wb.js from the npm package asked its own server for <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/data/schema-index.json\" target=\"_blank\" rel=\"noopener\">data/schema-index.json</a>, got a 404, and x-cardhero rendered as an empty bar. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1944\" target=\"_blank\" rel=\"noopener\">#1944</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1945\" target=\"_blank\" rel=\"noopener\">#1945</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Schema index loads from beside wb.js, not from the page&#39;s site</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1944\" target=\"_blank\" rel=\"noopener\">#1944</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1945\" target=\"_blank\" rel=\"noopener\">#1945</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49ab661f6f9842eaa81880289179cb5156cd7b1e\" target=\"_blank\" rel=\"noopener\"><code>49ab661</code></a>",
+          "issues": [
+            1944,
+            1945
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/schema-index-loads-from-the-package.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/schema-index-loads-from-the-package.spec.ts</a>. Before: the page at /other-site/ asked for /other-site/data/schema-index.json and the hero had no title. Now: it asks for /data/schema-index.json beside wb.js and the hero shows &quot;Hello from another site&quot;; 1 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/49ab661f6f9842eaa81880289179cb5156cd7b1e\" target=\"_blank\" rel=\"noopener\"><code>49ab661</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.557",
       "date": "2026-10-20",
       "summary": "There was no page listing John&#39;s dev.to articles; they could only be found on dev.to itself. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1942\" target=\"_blank\" rel=\"noopener\">#1942</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1943\" target=\"_blank\" rel=\"noopener\">#1943</a>",
