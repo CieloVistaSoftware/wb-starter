@@ -1295,5 +1295,6 @@
   "1933": "Behaviors list: a group's description sits outside its box, under the next group",
   "1936": "x-cardhero: every headingLevel renders at the same size; h1 should look like h1",
   "1938": "q can't find the project's own file read/parse/save code: search by meaning only misses identifiers",
-  "1940": "Add a transportsecurity page: TLS, HSTS, TLS key exchange, API message security"
+  "1940": "Add a transportsecurity page: TLS, HSTS, TLS key exchange, API message security",
+  "1942": "Add an articles page: all of jwp's dev.to articles in a linked table"
 }

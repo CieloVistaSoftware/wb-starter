@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.556",
+      "date": "2026-10-20",
+      "summary": "John&#39;s notes on TLS, HSTS, how TLS agrees on keys and API message security existed only in a chat transcript; there was no page for them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1940\" target=\"_blank\" rel=\"noopener\">#1940</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1941\" target=\"_blank\" rel=\"noopener\">#1941</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Add the transportsecurity page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1940\" target=\"_blank\" rel=\"noopener\">#1940</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1941\" target=\"_blank\" rel=\"noopener\">#1941</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5eb1429e52a8c9680d112cfe788a8cd02c69966d\" target=\"_blank\" rel=\"noopener\"><code>5eb1429</code></a>",
+          "issues": [
+            1940,
+            1941
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=transportsecurity\" target=\"_blank\" rel=\"noopener\">?page=transportsecurity</a> (or Other &gt; Transport Security). Before: no such page, the route showed nothing. Now: four sections, and a layer table with full names and formatted C# code that turns into one card per layer on a phone.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5eb1429e52a8c9680d112cfe788a8cd02c69966d\" target=\"_blank\" rel=\"noopener\"><code>5eb1429</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.555",
       "date": "2026-10-20",
       "summary": "There was no way to ask the project a question offline; a small local model now answers from wb-starter&#39;s files, cites them, and says when the project has no answer. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1926\" target=\"_blank\" rel=\"noopener\">#1926</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1927\" target=\"_blank\" rel=\"noopener\">#1927</a>",
