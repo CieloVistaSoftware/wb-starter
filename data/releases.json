@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.560",
+      "date": "2026-10-20",
+      "summary": "The 1rem spacing, theme-only colour, media and popup rules (§11, §13, §15, §15a) applied to every CieloVista site but lived only in wb-starter&#39;s demo standards; they now live in CieloVistaStandards&#39; layout-and-theming.md and these sections link there. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1948\" target=\"_blank\" rel=\"noopener\">#1948</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Layout and colour rules now live in CieloVistaStandards</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1948\" target=\"_blank\" rel=\"noopener\">#1948</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a7d9d012b02b5d65c7f1ff4aad0ab3374788fd39\" target=\"_blank\" rel=\"noopener\"><code>a7d9d01</code></a>",
+          "issues": [
+            1948
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Fstandards%2FDEMOS-AND-DOCS-STANDARDS.md\" target=\"_blank\" rel=\"noopener\">docs/standards/DEMOS-AND-DOCS-STANDARDS.md</a> §13. Before: the full 1rem rule written only here. Now: a one-line summary with a link to the Layout and Theming Standard; section numbers are unchanged so every citation still works.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a7d9d012b02b5d65c7f1ff4aad0ab3374788fd39\" target=\"_blank\" rel=\"noopener\"><code>a7d9d01</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.559",
       "date": "2026-10-20",
       "summary": "The navbar stayed dark slate with white links on every theme, because navbar.css used fixed colours instead of the theme&#39;s variables. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1946\" target=\"_blank\" rel=\"noopener\">#1946</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1947\" target=\"_blank\" rel=\"noopener\">#1947</a>",
