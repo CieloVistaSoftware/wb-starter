@@ -136,10 +136,11 @@ var token = new JwtSecurityToken(
         <td data-label="Purpose">Stop hijacks</td>
         <td data-label="Example">Nonces, timestamps</td>
         <td data-label="Full Name">Number used once (one-time random value), Time-based validation</td>
-        <td data-label="C# Implementation"><pre><code class="language-csharp">// Reject a nonce that was already used
-if (nonceStore.Contains(nonce))
+        <td data-label="C# Implementation"><pre><code class="language-csharp">// Claim the nonce in one atomic step: two identical
+// requests at once cannot both pass a Contains-then-Add.
+// nonceStore: ConcurrentDictionary&lt;string, DateTimeOffset&gt;
+if (!nonceStore.TryAdd(nonce, DateTimeOffset.UtcNow))
     return Results.Unauthorized();
-nonceStore.Add(nonce);
 
 // Reject requests older than 5 minutes
 if (DateTimeOffset.UtcNow - timestamp
