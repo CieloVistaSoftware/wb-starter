@@ -50,6 +50,7 @@ export const SKIP = {
   'demos/scrollalong-test.html': 'behavior test page (spacer blocks and a scroll box), not a showcase',
   'demos/standalone.html': 'the Playground\'s preview stage (#659): shows "Nothing to preview" when opened on its own',
   'demos/test-harness.html': 'test harness',
+  'articles/index.html': 'route shell for ?page=articles written by generate-404.mjs (#1942), not an article',
   'pages/newpage.html': 'page-builder template scaffold, not a page (generate-404.mjs NOT_PAGES)',
   'pages/ai-permutation-test.html': 'test harness page (generate-404.mjs NOT_PAGES)',
   'public/doc-viewer.html': 'needs ?file=; every doc is already linked from the Docs page',
