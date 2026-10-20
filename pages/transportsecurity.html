@@ -1,0 +1,155 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root. Redirect to the route that works (#1734). */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    window.stop();
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<!-- Page styles: src/styles/pages/transportsecurity.css -->
+<link rel="stylesheet" href="src/styles/pages/transportsecurity.css?v=1.0.554">
+
+<div class="page__hero">
+  <h1>Transport Security</h1>
+  <p>TLS, HSTS, how TLS agrees on secrets, and what it takes to secure an API message.</p>
+</div>
+
+<div class="ts-page">
+
+<section class="page__section" id="ts-tls">
+  <h2>1. TLS — Transport Layer Security</h2>
+  <p>TLS secures a connection between two endpoints (browser and server, service and service). It provides three things:</p>
+  <ul>
+    <li><strong>Encryption</strong> — nobody on the path can read the data.</li>
+    <li><strong>Integrity</strong> — any change to the data in transit is detected.</li>
+    <li><strong>Authentication</strong> — the client knows it is talking to the real server (via its certificate); with mutual TLS, the server knows the client too.</li>
+  </ul>
+  <h3>Two protocols inside TLS</h3>
+  <ul>
+    <li><strong>Handshake protocol</strong> — negotiates the version and cipher suite, authenticates the server, and agrees on the keys.</li>
+    <li><strong>Record protocol</strong> — carries the application data, split into records, each encrypted and integrity-protected with those keys.</li>
+  </ul>
+  <h3>Versions</h3>
+  <ul>
+    <li><strong>TLS 1.3</strong> (2018) — current; faster one-round-trip handshake, only forward-secret key exchange, only AEAD ciphers.</li>
+    <li><strong>TLS 1.2</strong> (2008) — still common and acceptable when configured with modern cipher suites.</li>
+    <li><strong>TLS 1.0 / 1.1</strong> — deprecated (RFC 8996, 2021); disable them.</li>
+  </ul>
+</section>
+
+<section class="page__section" id="ts-hsts">
+  <h2>2. HSTS — HTTP Strict Transport Security</h2>
+  <p>HSTS is a response header that tells the browser: for this site, use HTTPS only, for the given time. After the browser has seen it, it rewrites any <code>http://</code> link to <code>https://</code> itself and refuses to let the user click through certificate errors. That closes the gap where an attacker downgrades the first plain-HTTP request.</p>
+  <pre><code class="language-http">Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code></pre>
+  <ul>
+    <li><code>max-age=31536000</code> — remember the rule for one year (in seconds).</li>
+    <li><code>includeSubDomains</code> — apply it to every subdomain too.</li>
+    <li><code>preload</code> — consent to be listed in the browsers' built-in HSTS preload list, so even the very first visit uses HTTPS.</li>
+  </ul>
+</section>
+
+<section class="page__section" id="ts-key-exchange">
+  <h2>3. How TLS exchanges secrets</h2>
+  <p>The key is never sent across the network. Both sides compute it.</p>
+  <ol>
+    <li><strong>Ephemeral key agreement (ECDHE — Elliptic Curve Diffie-Hellman Ephemeral).</strong> Client and server each make a fresh key pair for this connection and send only the <em>public</em> half (in ClientHello / ServerHello). Each combines its own private key with the other's public key, and both arrive at the same shared secret. An eavesdropper who sees both public values cannot compute it. Because the key pairs are thrown away afterwards, a later theft of the server's long-term key cannot decrypt recorded traffic (forward secrecy).</li>
+    <li><strong>Server authentication.</strong> The server sends its certificate and signs the handshake transcript with the certificate's private key (CertificateVerify). The client checks the certificate chain and the signature, so it knows the public value it used came from the real server, not a man in the middle.</li>
+    <li><strong>Key derivation (HKDF — HMAC-based Key Derivation Function).</strong> The shared secret is fed through HKDF-<em>Extract</em> and HKDF-<em>Expand</em>, mixed with a hash of the handshake so far, to derive separate secrets for separate jobs:
+      <ul>
+        <li><strong>handshake traffic secrets</strong> — encrypt the rest of the handshake;</li>
+        <li><strong>application traffic secrets</strong> — encrypt the application data, one per direction;</li>
+        <li><strong>resumption secret</strong> — lets a later connection resume without a full handshake;</li>
+        <li><strong>exporter secret</strong> — keys that higher-level protocols can derive from the session.</li>
+      </ul>
+    </li>
+    <li><strong>Symmetric encryption (AEAD — Authenticated Encryption with Associated Data).</strong> From here on every record is encrypted and authenticated with a fast symmetric cipher such as AES-GCM or ChaCha20-Poly1305.</li>
+  </ol>
+</section>
+
+<section class="page__section" id="ts-api">
+  <h2>4. API message security</h2>
+  <p class="ts-note"><strong>TLS protects the pipe, not the message.</strong> Once a request arrives and TLS is terminated (at a load balancer, a gateway, or the server), the message is plain again. Who sent it, whether it was altered after that point, and whether it is a replay are separate questions, answered by separate layers.</p>
+  <p>HMAC (Hash-based Message Authentication Code) in the table is a cryptographic <em>primitive</em>, a keyed hash, not a protocol; protocols and token formats such as signed JWTs are built on it.</p>
+
+  <div class="ts-table-wrap">
+  <table class="ts-table">
+    <thead>
+      <tr><th>Layer</th><th>Purpose</th><th>Example</th><th>Full Name (no abbreviations)</th><th>C# Implementation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TLS</td>
+        <td>Encrypt transport</td>
+        <td>TLS 1.3</td>
+        <td>Transport Layer Security</td>
+        <td><pre><code class="language-csharp">var handler = new HttpClientHandler
+{
+    SslProtocols = SslProtocols.Tls13
+};
+var client = new HttpClient(handler);</code></pre></td>
+      </tr>
+      <tr>
+        <td>Authentication</td>
+        <td>Identify sender</td>
+        <td>OAuth2, JWT, mTLS</td>
+        <td>Open Authorization 2.0, JSON Web Token, Mutual Transport Layer Security</td>
+        <td><pre><code class="language-csharp">// JWT bearer tokens (OAuth 2.0)
+builder.Services
+    .AddAuthentication("Bearer")
+    .AddJwtBearer(o =&gt;
+    {
+        o.Authority = "https://auth.server";
+        o.Audience = "api";
+    });
+
+// Mutual TLS: require a client certificate
+builder.WebHost.ConfigureKestrel(k =&gt;
+    k.ConfigureHttpsDefaults(h =&gt;
+        h.ClientCertificateMode =
+            ClientCertificateMode.RequireCertificate));</code></pre></td>
+      </tr>
+      <tr>
+        <td>Message Integrity</td>
+        <td>Protect message</td>
+        <td>HMAC, signed JWT</td>
+        <td>Hash-Based Message Authentication Code, Signed JSON Web Token</td>
+        <td><pre><code class="language-csharp">// HMAC over the message body
+using var hmac = new HMACSHA256(key);
+byte[] signature = hmac.ComputeHash(
+    Encoding.UTF8.GetBytes(body));
+
+// Signed JWT
+var credentials = new SigningCredentials(
+    new SymmetricSecurityKey(key),
+    SecurityAlgorithms.HmacSha256);
+var token = new JwtSecurityToken(
+    issuer: "api",
+    claims: claims,
+    expires: DateTime.UtcNow.AddMinutes(5),
+    signingCredentials: credentials);</code></pre></td>
+      </tr>
+      <tr>
+        <td>Replay Protection</td>
+        <td>Stop hijacks</td>
+        <td>Nonces, timestamps</td>
+        <td>Number used once (one-time random value), Time-based validation</td>
+        <td><pre><code class="language-csharp">// Claim the nonce in one atomic step: two identical
+// requests at once cannot both pass a Contains-then-Add.
+// nonceStore: ConcurrentDictionary&lt;string, DateTimeOffset&gt;
+if (!nonceStore.TryAdd(nonce, DateTimeOffset.UtcNow))
+    return Results.Unauthorized();
+
+// Reject requests older than 5 minutes
+if (DateTimeOffset.UtcNow - timestamp
+        &gt; TimeSpan.FromMinutes(5))
+    return Results.Unauthorized();</code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+</div>

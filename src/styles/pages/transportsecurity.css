@@ -1,0 +1,108 @@
+/* transportsecurity.css — page layout for pages/transportsecurity.html (#1940).
+   Sizes in rem (#294); panels keep >= 1rem text padding (layout standard). */
+
+.ts-page {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.ts-page h3 {
+  margin-top: 1.5rem;
+}
+
+.ts-page code {
+  overflow-wrap: anywhere;
+}
+
+.ts-page pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.ts-page ol,
+.ts-page ul {
+  padding-left: 1.5rem;
+}
+
+.ts-note {
+  border-left: 0.25rem solid var(--primary, #6366f1);
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-primary, #111827);
+  padding: 1rem;
+  border-radius: 0 0.375rem 0.375rem 0;
+  margin: 1rem 0;
+}
+
+/* The layer table: wide on desktop, one card per row on a phone. */
+.ts-table-wrap {
+  overflow-x: auto;
+}
+
+.ts-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-primary, #111827);
+}
+
+.ts-table th,
+.ts-table td {
+  border: 0.0625rem solid var(--border-color, #d1d5db);
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.ts-table th {
+  background: var(--bg-tertiary, #e5e7eb);
+}
+
+.ts-table td pre {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 47.5rem) {
+  .ts-table thead {
+    display: none;
+  }
+
+  /* Two classes deep: data.css's `table.x-table { display: table }` is 0-1-1,
+     and every <table> on the site is enhanced with x-table. */
+  .ts-table-wrap table.ts-table,
+  .ts-table tbody,
+  .ts-table tr,
+  .ts-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .ts-table tr {
+    margin-bottom: 1rem;
+    border: 0.0625rem solid var(--border-color, #d1d5db);
+    border-radius: 0.375rem;
+  }
+
+  .ts-table td {
+    border: 0;
+    border-top: 0.0625rem solid var(--border-color, #d1d5db);
+  }
+
+  .ts-table td:first-child {
+    border-top: 0;
+    background: var(--bg-tertiary, #e5e7eb);
+    font-weight: 700;
+  }
+
+  /* Column names for the stacked cells (no data-* attributes, #224). */
+  .ts-table td::before {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary, #4b5563);
+  }
+
+  .ts-table td:nth-child(2)::before { content: "Purpose"; }
+  .ts-table td:nth-child(3)::before { content: "Example"; }
+  .ts-table td:nth-child(4)::before { content: "Full Name"; }
+  .ts-table td:nth-child(5)::before { content: "C# Implementation"; }
+}
