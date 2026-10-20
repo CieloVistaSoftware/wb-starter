@@ -7,6 +7,8 @@ import { test, expect } from '../fixtures/offline';
  * every theme, so on Light the page turned light and the navbar stayed dark.
  * Its colours now come from the theme's variables.
  */
+test.use({ serviceWorkers: 'block' });
+
 const PAGE = '/tests/fixtures/navbar-theme.html';
 const HTML = `<!DOCTYPE html>
 <html lang="en" data-theme="dark"><head><meta charset="utf-8">
@@ -24,9 +26,13 @@ test('the navbar background and link colour change with the theme', async ({ pag
   const nav = page.locator('[x-navbar]');
   await expect(nav.locator('a').nth(1)).toBeVisible();
 
+  // The bar and its links fade between colours (transition: 0.3s), so read
+  // them with transitions switched off: the values the theme sets, not a
+  // frame from the middle of the fade.
+  await page.addStyleTag({ content: '[x-navbar], [x-navbar] * { transition: none !important; }' });
   const look = () => nav.evaluate((el) => ({
     bg: getComputedStyle(el).backgroundColor,
-    link: getComputedStyle(el.querySelectorAll('a')[1]).color,
+    link: getComputedStyle(el.querySelectorAll('a')[2]).color,
   }));
   // navbar.css arrives after the behavior applies; measure once it has.
   await expect.poll(async () => (await look()).bg, { message: 'navbar.css never painted the bar' }).not.toMatch(/\/ 0\)$|rgba\(0, 0, 0, 0\)/);
