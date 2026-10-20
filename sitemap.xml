@@ -10,9 +10,6 @@
     <loc>https://cielovistasoftware.github.io/wb-starter/ai-docs</loc>
   </url>
   <url>
-    <loc>https://cielovistasoftware.github.io/wb-starter/articles</loc>
-  </url>
-  <url>
     <loc>https://cielovistasoftware.github.io/wb-starter/behaviors</loc>
   </url>
   <url>
@@ -56,6 +53,9 @@
   </url>
   <url>
     <loc>https://cielovistasoftware.github.io/wb-starter/themes</loc>
+  </url>
+  <url>
+    <loc>https://cielovistasoftware.github.io/wb-starter/?page=articles</loc>
   </url>
   <url>
     <loc>https://cielovistasoftware.github.io/wb-starter/?page=demos</loc>
