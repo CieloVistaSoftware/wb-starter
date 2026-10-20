@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.557",
+      "date": "2026-10-20",
+      "summary": "There was no page listing John&#39;s dev.to articles; they could only be found on dev.to itself. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1942\" target=\"_blank\" rel=\"noopener\">#1942</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1943\" target=\"_blank\" rel=\"noopener\">#1943</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Add the articles page (dev.to articles in a linked table)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1942\" target=\"_blank\" rel=\"noopener\">#1942</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1943\" target=\"_blank\" rel=\"noopener\">#1943</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4b5328609850ac9fe89cbac38ec5a4828634fb89\" target=\"_blank\" rel=\"noopener\"><code>4b53286</code></a>",
+          "issues": [
+            1942,
+            1943
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=articles\" target=\"_blank\" rel=\"noopener\">?page=articles</a> (or Other &gt; Articles) and type &quot;webdev&quot; in the filter. Before: no such page. Now: a table of all 328 articles, newest first, each title linking to dev.to, and the filter shows &quot;8 of 328 articles&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4b5328609850ac9fe89cbac38ec5a4828634fb89\" target=\"_blank\" rel=\"noopener\"><code>4b53286</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.556",
       "date": "2026-10-20",
       "summary": "John&#39;s notes on TLS, HSTS, how TLS agrees on keys and API message security existed only in a chat transcript; there was no page for them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1940\" target=\"_blank\" rel=\"noopener\">#1940</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1941\" target=\"_blank\" rel=\"noopener\">#1941</a>",

@@ -1296,5 +1296,7 @@
   "1936": "x-cardhero: every headingLevel renders at the same size; h1 should look like h1",
   "1938": "q can't find the project's own file read/parse/save code: search by meaning only misses identifiers",
   "1940": "Add a transportsecurity page: TLS, HSTS, TLS key exchange, API message security",
-  "1942": "Add an articles page: all of jwp's dev.to articles in a linked table"
+  "1942": "Add an articles page: all of jwp's dev.to articles in a linked table",
+  "1944": "wb.js loaded from the npm package asks the page's own site for schema-index.json (404)",
+  "1946": "x-navbar ignores the theme: its colours are fixed in navbar.css"
 }
