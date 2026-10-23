@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Close stale needs-tests PRs
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           script: |
             const grace = parseInt(core.getInput('grace_days') || '7');

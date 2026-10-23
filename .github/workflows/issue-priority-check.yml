@@ -37,7 +37,7 @@ jobs:
     if: github.event.action != 'closed' && github.event.issue.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4        # for scripts/triage-issue-priority.mjs
+      - uses: actions/checkout@v7        # for scripts/triage-issue-priority.mjs
       - name: Count priority labels
         env:
           GH_TOKEN: ${{ github.token }}
@@ -80,7 +80,7 @@ jobs:
     if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4        # for scripts/signature-field.mjs
+      - uses: actions/checkout@v7        # for scripts/signature-field.mjs
       - name: Signature must name a runnable test
         env:
           GH_TOKEN: ${{ github.token }}
@@ -103,7 +103,7 @@ jobs:
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4        # for scripts/signature-field.mjs
+      - uses: actions/checkout@v7        # for scripts/signature-field.mjs
       - name: test and fix must be filled in
         env:
           GH_TOKEN: ${{ github.token }}
