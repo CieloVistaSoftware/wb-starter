@@ -33,6 +33,16 @@ import { test, expect } from '../fixtures/offline';
  * and safe against the real observer firing again later), await all of them,
  * THEN scroll to the now-accurate bottom.
  */
+
+// How long End may legitimately take to land, from public/doc-viewer.html's
+// own bounds: contentReady() waits up to 4s and the settle loop up to
+// END_SCROLL_MAX_WAIT_MS (8s), plus 3s for the final scroll. Nightly #21
+// (#1950) waited only 10s: its trace shows the page's main thread busy for
+// the whole window on a loaded Windows runner (the evaluate sent 120ms after
+// End never returned), so the poll's only reading was the pre-scroll 498px.
+// The 5px landing tolerance is unchanged.
+const LANDS_WITHIN_MS = 4000 + 8000 + 3000;
+
 test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () => {
   test('End on a doc with lazy <div x-demo> blocks lands within a few px of true bottom', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 855 });
@@ -95,7 +105,7 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
     await expect.poll(() => page.evaluate(() => {
       const el = document.documentElement;
       return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
-    }), { timeout: 10000 }).toBeLessThanOrEqual(5);
+    }), { timeout: LANDS_WITHIN_MS }).toBeLessThanOrEqual(5);
   });
 
   // CI on #1838 (Windows): End landed on scrollTop 168731, then the page grew
@@ -114,17 +124,17 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
       return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
     });
     await page.keyboard.press('End');
-    await expect.poll(gap, { timeout: 10000 }).toBeLessThanOrEqual(5);
+    await expect.poll(gap, { timeout: LANDS_WITHIN_MS }).toBeLessThanOrEqual(5);
     // The settle loop has finished and the page is following the bottom
     // (html[data-end-scroll="following"]). Grow it the way CI saw it grow:
     // content arriving under the reader, with no input.
-    await expect(page.locator('html')).toHaveAttribute('data-end-scroll', 'following', { timeout: 10000 });
+    await expect(page.locator('html')).toHaveAttribute('data-end-scroll', 'following', { timeout: LANDS_WITHIN_MS });
     await page.evaluate(() => {
       const late = document.createElement('div');
       late.style.height = '852px';
       document.getElementById('content')!.append(late);
     });
-    await expect.poll(gap, { timeout: 10000, message: 'End still lands on the true bottom after late growth' }).toBeLessThanOrEqual(5);
+    await expect.poll(gap, { timeout: LANDS_WITHIN_MS, message: 'End still lands on the true bottom after late growth' }).toBeLessThanOrEqual(5);
   });
 
   test('a reader who scrolls up after End is not pulled back down by later growth', async ({ page }) => {
@@ -139,10 +149,10 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
     await expect.poll(() => page.evaluate(() => {
       const el = document.documentElement;
       return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
-    }), { timeout: 10000 }).toBeLessThanOrEqual(5);
+    }), { timeout: LANDS_WITHIN_MS }).toBeLessThanOrEqual(5);
     // Once End has landed and is following, the reader scrolls up with a key
     // of their own. (A wheel would scroll whatever box is under the pointer.)
-    await expect(page.locator('html')).toHaveAttribute('data-end-scroll', 'following', { timeout: 10000 });
+    await expect(page.locator('html')).toHaveAttribute('data-end-scroll', 'following', { timeout: LANDS_WITHIN_MS });
     await page.keyboard.press('PageUp');
     await expect.poll(() => page.evaluate(() => {
       const el = document.documentElement;
