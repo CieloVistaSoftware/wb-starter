@@ -1299,5 +1299,7 @@
   "1942": "Add an articles page: all of jwp's dev.to articles in a linked table",
   "1944": "wb.js loaded from the npm package asks the page's own site for schema-index.json (404)",
   "1946": "x-navbar ignores the theme: its colours are fixed in navbar.css",
-  "1949": "Remove wb-starter's own Articles page: the list now lives on cielovistasoftware.com"
+  "1949": "Remove wb-starter's own Articles page: the list now lives on cielovistasoftware.com",
+  "1950": "Nightly 2026-10-22: new test failures on main",
+  "1951": "CI: actions target the deprecated Node.js 20 runtime"
 }

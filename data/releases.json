@@ -6,6 +6,29 @@
   ],
   "releases": [
     {
+      "version": "1.0.561",
+      "date": "2026-10-22",
+      "summary": "The nightly run went red because one End-key test gave the page 10s to scroll when the page is built to take up to 12s, and every CI run warned that its GitHub actions use the deprecated Node.js 20. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1950\" target=\"_blank\" rel=\"noopener\">#1950</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1951\" target=\"_blank\" rel=\"noopener\">#1951</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1952\" target=\"_blank\" rel=\"noopener\">#1952</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>End-key spec waits the page&#39;s own limit; actions on Node 24</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1950\" target=\"_blank\" rel=\"noopener\">#1950</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1951\" target=\"_blank\" rel=\"noopener\">#1951</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1952\" target=\"_blank\" rel=\"noopener\">#1952</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/48be499f2737df1bfa83073a817aa73055d10745\" target=\"_blank\" rel=\"noopener\"><code>48be499</code></a>",
+          "issues": [
+            1950,
+            1951,
+            1952
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/doc-viewer-end-key-true-bottom.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/doc-viewer-end-key-true-bottom.spec.ts</a> --project=regression --repeat-each=10 and open any Actions run&#39;s annotations. Before: Nightly #21 failed with gap 498 &gt; 5 and every run warned &quot;Node.js 20 is deprecated&quot;. Now: 50 passed, and the runs carry no Node.js 20 warning.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/48be499f2737df1bfa83073a817aa73055d10745\" target=\"_blank\" rel=\"noopener\"><code>48be499</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.560",
       "date": "2026-10-20",
       "summary": "The 1rem spacing, theme-only colour, media and popup rules (§11, §13, §15, §15a) applied to every CieloVista site but lived only in wb-starter&#39;s demo standards; they now live in CieloVistaStandards&#39; layout-and-theming.md and these sections link there. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1948\" target=\"_blank\" rel=\"noopener\">#1948</a>",
