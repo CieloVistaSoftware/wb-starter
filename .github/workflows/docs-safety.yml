@@ -15,7 +15,7 @@ on:
 jobs:
   md-powershell-lint:
     name: Markdown PowerShell lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # #1955: ubuntu-latest is 26.04, which Playwright 1.58 cannot install browsers on
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
@@ -32,7 +32,7 @@ jobs:
 
   critical-scripts-check:
     name: Critical npm-scripts check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # #1955: ubuntu-latest is 26.04, which Playwright 1.58 cannot install browsers on
     timeout-minutes: 10
     needs: md-powershell-lint
     steps:
@@ -50,7 +50,7 @@ jobs:
 
   builder-del-guard:
     name: Builder del() guard (quick)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # #1955: ubuntu-latest is 26.04, which Playwright 1.58 cannot install browsers on
     # #961: `playwright install --with-deps` runs apt-get, and on 85c5a367 it
     # waited on an Ubuntu mirror for six hours until GitHub cancelled the job.
     # The job takes about five minutes; a hung install now fails in twenty.
