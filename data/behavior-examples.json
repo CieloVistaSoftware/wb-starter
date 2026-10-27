@@ -738,119 +738,9 @@
         }
       ]
     },
-    "x-confetti": {
-      "source": "<button variant=\"primary\" x-confetti>\n  x-confetti · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "gold confetti",
-          "source": "<button variant=\"warning\" x-confetti colors=\"#facc15,#f59e0b,#fde68a\">\n  Gold confetti\n</button>"
-        },
-        {
-          "label": "a big burst",
-          "source": "<button variant=\"success\" size=\"lg\" x-confetti count=\"200\">\n  Ship it! (200 pieces)\n</button>"
-        },
-        {
-          "label": "slow fall",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-confetti duration=\"6s\" colors=\"#a855f7,#ec4899\">\n  Slow celebration\n</button>"
-        },
-        {
-          "label": "on a card",
-          "source": "<article x-confetti title=\"You finished the course\" subtitle=\"Click the card to celebrate\"></article>"
-        }
-      ]
-    },
-    "x-fireworks": {
-      "source": "<button variant=\"primary\" x-fireworks>\n  x-fireworks · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "red and gold",
-          "source": "<button variant=\"error\" x-fireworks colors=\"#ef4444,#facc15\">\n  Red and gold\n</button>"
-        },
-        {
-          "label": "a big show",
-          "source": "<button variant=\"success\" size=\"lg\" x-fireworks count=\"80\">\n  Grand finale\n</button>"
-        },
-        {
-          "label": "cool palette",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-fireworks colors=\"#06b6d4,#6366f1,#a855f7\">\n  Cool palette\n</button>"
-        }
-      ]
-    },
-    "x-snow": {
-      "source": "<button variant=\"primary\" x-snow>\n  x-snow · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "light flurry",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-snow count=\"10\">\n  Light flurry\n</button>"
-        },
-        {
-          "label": "blizzard",
-          "source": "<button variant=\"primary\" size=\"lg\" x-snow count=\"120\" duration=\"4s\">\n  Blizzard\n</button>"
-        },
-        {
-          "label": "on a card",
-          "source": "<article x-snow title=\"Winter sale\" subtitle=\"Click for a snowfall\"></article>"
-        }
-      ]
-    },
-    "x-sparkle": {
-      "source": "<button variant=\"primary\" x-sparkle>\n  x-sparkle · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "success button",
-          "source": "<button variant=\"success\" x-sparkle>\n  New feature\n</button>"
-        },
-        {
-          "label": "many sparkles",
-          "source": "<button variant=\"warning\" size=\"lg\" x-sparkle count=\"40\">\n  Premium\n</button>"
-        },
-        {
-          "label": "a few sparkles",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-sparkle count=\"4\">\n  Subtle\n</button>"
-        },
-        {
-          "label": "on a heading",
-          "source": "<h3 x-sparkle>Sparkling headline</h3>"
-        },
-        {
-          "label": "on a card",
-          "source": "<article x-sparkle title=\"Pro plan\" subtitle=\"Now with sparkles\"></article>"
-        }
-      ]
-    },
     "x-glow": {
       "source": "<button variant=\"primary\" x-glow>\n  x-glow · variant: primary\n</button>",
       "alternates": []
-    },
-    "x-rainbow": {
-      "source": "<button variant=\"primary\" x-rainbow>\n  x-rainbow · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "fast cycle",
-          "source": "<button variant=\"secondary\" size=\"lg\" x-rainbow duration=\"1s\">\n  Fast rainbow\n</button>"
-        },
-        {
-          "label": "slow cycle",
-          "source": "<button variant=\"primary\" size=\"sm\" x-rainbow duration=\"10s\">\n  Slow rainbow\n</button>"
-        },
-        {
-          "label": "on a heading",
-          "source": "<h2 x-rainbow>Rainbow headline</h2>"
-        },
-        {
-          "label": "on a paragraph",
-          "source": "<p x-rainbow>Every letter of this sentence cycles through the spectrum.</p>"
-        },
-        {
-          "label": "error button",
-          "source": "<button variant=\"error\" x-rainbow duration=\"2s\">\n  Rainbow alert\n</button>"
-        }
-      ]
     },
     "x-copy": {
       "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\n  x-copy · variant: primary · copy-text: Text copied to clipboard!\n</button>",
@@ -1916,32 +1806,6 @@
         "<div x-mark>light DOM</div>"
       ]
     },
-    "x-typewriter": {
-      "source": "<p x-typewriter speed=\"45\">Zero build. Real components. Light DOM only.</p>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "fast",
-          "source": "<p x-typewriter speed=\"15\">Typed quickly, fifteen milliseconds a letter.</p>"
-        },
-        {
-          "label": "slow",
-          "source": "<p x-typewriter speed=\"150\">Slow. Deliberate. Dramatic.</p>"
-        },
-        {
-          "label": "on a heading",
-          "source": "<h2 x-typewriter speed=\"60\">Hello, world.</h2>"
-        },
-        {
-          "label": "without a caret",
-          "source": "<p x-typewriter speed=\"45\" cursor=\"false\">Typed without a caret.</p>"
-        },
-        {
-          "label": "long sentence",
-          "source": "<p x-typewriter speed=\"30\">Behaviors decorate real elements in light DOM — no build step, no shadow roots, no base classes.</p>"
-        }
-      ]
-    },
     "x-mdhtml": {
       "source": "<div x-mdhtml src=\"docs/behaviors/dropdown.md\"></div>",
       "alternates": [],
@@ -2355,20 +2219,6 @@
         {
           "label": "on a card",
           "source": "<article x-scrollalong offset=\"8\" title=\"Order summary\" subtitle=\"3 items · $84\"></article>"
-        }
-      ]
-    },
-    "x-stagelight": {
-      "source": "<div x-stagelight variant=\"spotlight\" color=\"#f59e0b\" intensity=\"0.5\" size=\"360px\">\n  The spotlight follows the pointer across this panel.\n</div>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "red beam",
-          "source": "<div x-stagelight variant=\"beam\" color=\"#ef4444\" intensity=\"0.8\">\n  A red beam sweeps the stage.\n</div>"
-        },
-        {
-          "label": "wide blue spotlight",
-          "source": "<div x-stagelight variant=\"spotlight\" color=\"#3b82f6\" size=\"600px\" intensity=\"0.4\">\n  A wide, soft blue spotlight.\n</div>"
         }
       ]
     },

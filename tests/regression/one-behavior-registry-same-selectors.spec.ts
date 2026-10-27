@@ -487,7 +487,7 @@ test('wb.js binds the same table-driven selectors, all read from tag-map.js', as
  * <div x-search>Text</div> lost its text to an attribute.
  */
 const FROM_WB_LAZY_TABLE = [
-  'pre', 'code', 'breadcrumb', 'notify', 'typewriter', 'bounce', 'pulse', 'copybutton',
+  'pre', 'code', 'breadcrumb', 'notify', 'bounce', 'pulse', 'copybutton',
   'fadein', 'shake', 'slidein', 'zoomin', 'wobble', 'tada', 'jello', 'heartbeat', 'flip',
   'flash', 'relativetime', 'password', 'ul', 'ol', 'dl', 'stepper', 'otp', 'search',
   'clock', 'countdown', 'pagination', 'steps', 'kbd', 'img', 'popover', 'confirm', 'prompt',

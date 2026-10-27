@@ -189,16 +189,14 @@ const behaviorModules = {
   // Docs
   docsviewer: 'docs-viewer',
   
-  // Animation (31) → effects.js
+  // Animation (21) → effects.js. The 10 showpiece effects and stagelight are
+  // WB Pro (#1953) and register through registerBehaviorPack().
   animate: 'effects', fadein: 'effects', fadeout: 'effects', slidein: 'effects',
   slideout: 'effects', zoomin: 'effects', zoomout: 'effects', bounce: 'effects',
   shake: 'effects', pulse: 'effects', flip: 'effects', rotate: 'effects',
   swing: 'effects', tada: 'effects', wobble: 'effects', jello: 'effects',
-  heartbeat: 'effects', flash: 'effects', rubberband: 'effects', typewriter: 'effects',
-  countup: 'effects', parallax: 'effects', reveal: 'effects', marquee: 'effects',
-  confetti: 'effects', sparkle: 'effects', glow: 'effects', rainbow: 'effects',
-  fireworks: 'effects', snow: 'effects', particle: 'effects',
-  
+  heartbeat: 'effects', flash: 'effects', rubberband: 'effects', reveal: 'effects', glow: 'effects',
+
   // Layout (19) → layouts.js + standalone
   draggable: 'draggable',
   resizable: 'resizable',
@@ -213,7 +211,6 @@ const behaviorModules = {
   imposter: 'layouts', icon: 'layouts', drawerLayout: 'layouts', 'drawer-layout': 'layouts',
   
   // Utility → helpers.js + standalone
-  stagelight: 'stagelight',
   status: 'status',
   // x-repeater is the only behavior whose module file is x-prefixed. The
   // values carried literal square brackets, so loadModule()'s

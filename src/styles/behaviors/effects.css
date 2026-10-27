@@ -42,34 +42,6 @@
 }
 
 /* =============================================================================
-   CONFETTI
-============================================================================= */
-@keyframes x-confetti-fall {
-  0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) translateX(var(--end-x, 0)) rotate(var(--rotation, 720deg));
-    opacity: 0;
-  }
-}
-
-@keyframes x-confetti-gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.x-confetti--trigger {
-  position: relative;
-}
-
-.x-confetti__piece {
-  will-change: transform, opacity;
-}
-
-/* =============================================================================
    CLOCK VARIANTS
 ============================================================================= */
 .x-clock--led {
@@ -269,11 +241,6 @@
 /* =============================================================================
 MARQUEE & RIPPLE
 ============================================================================= */
-@keyframes x-marquee {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
-}
-
 @keyframes x-ripple {
   to { transform: scale(4); opacity: 0; }
 }
@@ -361,9 +328,7 @@ MARQUEE & RIPPLE
    labelled "Download report" that downloads nothing.
    #1096: each behavior's own modifier, x-{behavior}--pressed.
    ───────────────────────────────────────────────────────────────────────── */
-.x-glow--pressed,
-.x-rainbow--pressed,
-.x-particle--pressed {
+.x-glow--pressed {
   /* translate + scale, not a box-shadow change: these elements already own
      their box-shadow (that IS the glow), and overriding it would fight the
      effect rather than sit on top of it. */
@@ -373,24 +338,18 @@ MARQUEE & RIPPLE
 
 /* Fast down, slower back up — a real button gives way immediately and
    returns under spring. Equal timings both ways feel mechanical. */
-.x-glow,
-.x-rainbow,
-.x-particle {
+.x-glow {
   transition: transform 140ms ease-out, filter 140ms ease-out;
 }
 
-.x-glow--pressed,
-.x-rainbow--pressed,
-.x-particle--pressed {
+.x-glow--pressed {
   transition: transform 40ms ease-in, filter 40ms ease-in;
 }
 
 /* Respect a reader who has asked for less motion: keep the brightness cue,
    drop the movement. */
 @media (prefers-reduced-motion: reduce) {
-  .x-glow--pressed,
-  .x-rainbow--pressed,
-  .x-particle--pressed {
+  .x-glow--pressed {
     transform: none;
   }
 }
@@ -409,14 +368,6 @@ MARQUEE & RIPPLE
 /* x-animate with trigger="click": say it is clickable */
 .x-animate.x-animate--clickable { cursor: pointer; }
 
-/* x-typewriter: clickable to replay, with an optional caret */
-.x-typewriter { cursor: pointer; }
-.x-typewriter.x-typewriter--cursor { border-right: 0.125rem solid var(--primary); }
-
-/* x-countup: every digit the same width, so the number does not jitter
-   sideways as it counts (#1095). */
-.x-countup { font-variant-numeric: tabular-nums; }
-
 /* x-reveal: hidden until scrolled into view */
 .x-reveal {
   opacity: 0;
@@ -426,76 +377,6 @@ MARQUEE & RIPPLE
 .x-reveal.x-reveal--visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* x-marquee */
-.x-marquee {
-  overflow: hidden;
-  white-space: nowrap;
-  display: flex;
-}
-.x-marquee__track {
-  display: inline-block;
-  animation: x-marquee var(--x-marquee-speed, 30s) linear infinite;
-  padding-right: 2rem;
-}
-
-/* x-confetti */
-.x-confetti--trigger.x-confetti--trigger-button {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--confetti-trigger--button-bg-1, #ff6b6b), var(--confetti-trigger--button-bg-2, #feca57), var(--confetti-trigger--button-bg-3, #48dbfb), var(--confetti-trigger--button-bg-4, #ff9ff3));
-  background-size: 300% 300%;
-  animation: x-confetti-gradient 3s ease infinite;
-  color: var(--confetti-trigger--button-fg, #fff);
-  font-weight: bold;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  text-shadow: 0 0.0625rem 0.125rem rgba(0,0,0,0.3);
-  border: none;
-  box-shadow: 0 0.25rem 0.9375rem rgba(255, 107, 107, 0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.x-confetti--trigger.x-confetti--trigger-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0.375rem 1.25rem rgba(255, 107, 107, 0.6);
-}
-.x-confetti__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  overflow: hidden;
-}
-.x-confetti__piece {
-  position: absolute;
-  top: -1.25rem;
-  animation-name: x-confetti-fall;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-/* x-sparkle */
-.x-sparkle--trigger {
-  position: relative;
-  overflow: visible;
-}
-.x-sparkle__spark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  pointer-events: none;
-  animation-name: x-sparkle;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-  z-index: 1000;
-  filter: drop-shadow(0 0 0.25rem gold);
 }
 
 /* x-glow (#906): no colour default on the element, so a theme's --glow-color
@@ -555,95 +436,6 @@ MARQUEE & RIPPLE
   }
 }
 
-/* x-rainbow -- doubled class: on a <button> host, themes.css's
-   `[data-theme] button` (0,1,1) sets `color` and would beat a single class,
-   putting solid text back over the gradient. */
-.x-rainbow.x-rainbow {
-  background-image: linear-gradient(45deg, var(--rainbow-bg-1, #ff6b6b), var(--rainbow-bg-2, #feca57), var(--rainbow-bg-3, #48dbfb), var(--rainbow-bg-4, #ff9ff3), var(--rainbow-bg-5, #54a0ff), var(--rainbow-bg-6, #5f27cd), var(--rainbow-bg-7, #ff6b6b));
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: x-rainbow var(--x-rainbow-duration, 3s) linear infinite;
-}
-
-/* x-fireworks */
-.x-fireworks--trigger.x-fireworks--trigger-button {
-  cursor: pointer;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, var(--fireworks-trigger--button-bg-1, #1a1a2e), var(--fireworks-trigger--button-bg-2, #16213e));
-  color: var(--fireworks-trigger--button-fg, #fff);
-  border-radius: 0.5rem;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.x-fireworks__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
-.x-fireworks__particle {
-  position: absolute;
-  border-radius: 50%;
-  animation-name: x-firework-particle;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-/* x-snow */
-.x-snow--trigger.x-snow--trigger-button {
-  cursor: pointer;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--snow-trigger--button-bg-1, #a8edea), var(--snow-trigger--button-bg-2, #fed6e3));
-  color: var(--snow-trigger--button-fg, #333);
-  border-radius: 0.5rem;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.x-snow__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  overflow: hidden;
-}
-.x-snow__flake {
-  position: absolute;
-  top: -1.875rem;
-  animation-name: x-snow-fall;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  opacity: 0.8;
-}
-
-/* x-particle */
-.x-particle {
-  position: relative;
-  overflow: hidden;
-}
-.x-particle__dot {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--x-particle-color, var(--primary));
-  bottom: -0.625rem;
-  opacity: 0.6;
-  animation-name: x-particle-float;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  pointer-events: none;
-}
-
 /* #779: ripple.js's wave, formerly style.cssText. Colour, duration, size and
    position are per click and arrive through src/core/dynamic-style.js. */
 .x-ripple__wave {
@@ -655,229 +447,11 @@ MARQUEE & RIPPLE
 }
 
 /* =============================================================================
-   STAGELIGHT -- stagelight.js (#817)
-   behavior-css-manifest.js has always mapped stagelight to this file, but
-   its rules were a <style id="x-stagelight-styles"> that stagelight.js
-   injected on first use. Every other effect is styled from this file
-   (#779), so stagelight is too: one mechanism, and the manifest entry now
-   loads what it names.
-   ============================================================================= */
-.x-stagelight {
-  position: relative;
-  pointer-events: none; /* Let clicks pass through generally */
-  /* --x-stagelight-color, -size and -intensity default in themes.css. */
-}
-
-/* === VARIANT: BEAM === */
-/* The HOST is the stage, in normal flow, keeping its own text -- the same
-   change #647 made for spotlight, for the same reason. The host used to BE
-   the beam's pivot: position absolute, width 0, height 0. Its authored
-   text sat in a zero-size box, it contributed nothing to layout, and in a
-   demo grid the whole example measured 0x0 and rendered as an empty box
-   (live-examples-render.spec.ts, demos/site/effects.html). The swing now
-   lives on the beam itself, pivoting from the fixture at the top centre,
-   and overflow is clipped to the stage: a 100vh beam used to sweep across
-   whatever sat below it, its own code sample included. */
-.x-stagelight--beam {
-  position: relative;
-  overflow: hidden;
-  /* A beam needs room to be seen -- the same canvas spotlight gets. */
-  min-width: 18rem;
-  min-height: 14rem;
-}
-
-.x-stagelight__beam {
-  position: absolute;
-  top: 0;
-  left: calc(50% - var(--x-stagelight-size) / 2);
-  width: var(--x-stagelight-size);
-  height: 100%;
-  background: linear-gradient(
-    to bottom, 
-    rgba(255, 255, 255, var(--x-stagelight-intensity)) 0%, 
-    var(--x-stagelight-color) 20%, 
-    transparent 80%
-  );
-  /* Make it cone shaped via clip-path or mask */
-  clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
-  filter: blur(0.625rem);
-  mix-blend-mode: screen;
-  /* Swing animation, pivoting where the cone meets the fixture */
-  animation: x-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
-  transform-origin: top center;
-}
-
-.x-stagelight__source {
-  position: absolute;
-  top: -0.625rem;
-  left: calc(50% - 1.25rem);
-  width: 2.5rem;
-  height: 1.25rem;
-  background: var(--x-stagelight-fixture);
-  border-radius: 0 0 1.25rem 1.25rem;
-  box-shadow: 0 0 0.625rem var(--x-stagelight-color);
-  z-index: 1;
-}
-
-@keyframes x-beam-swing {
-  from { transform: rotate(-15deg); }
-  to { transform: rotate(15deg); }
-}
-
-/* === VARIANT: SPOTLIGHT === */
-/* #647: the HOST element stays in normal flow and keeps its own text.
-   It used to BE the overlay (position: fixed, 100vw x 100vh), which meant
-   the author's text was dragged into a full-screen layer -- that is the
-   "Spotlight effect behind this text" ghost seen at the top-left of the
-   Playground. It also left the element contributing zero in-flow size, so
-   once contained its demo box collapsed to 0 width and rendered nothing.
-   Beam and fixture already build a child for their visuals; spotlight now
-   does the same (its old comment claimed an ::after did this -- there was
-   no ::after anywhere). */
-.x-stagelight--spotlight {
-  position: relative;
-  /* A spotlight with zero area is meaningless. The host is often empty
-     (the component consumes its text), and inside a single-item demo grid
-     "width: fit-content" then resolves to 0 -- the effect had nothing to
-     paint on. It previously hid this by covering the whole viewport
-     instead, which is the bug. Give it a real canvas by default. */
-  min-width: 18rem;
-  min-height: 14rem;
-}
-
-/* The actual overlay. "inset: 0" sizes it to its CONTAINING BLOCK, where
-   "width: 100vw; height: 100vh" could not: viewport units are absolute and
-   ignore containment, so an ancestor with "contain: layout" could re-anchor
-   this layer's origin but never shrink it -- it kept blanketing the page
-   from wherever it landed. That is why the first attempt at this bug
-   (adding "contain: layout" to the Playground preview) could not have
-   worked, quite apart from targeting an element the spotlight was never
-   inside.
-   Standalone the containing block IS the viewport, so full-screen coverage
-   is unchanged; inside a demo box that establishes one, it stays in the box.
-   Pairs with ".x-demo__grid { contain: layout }" in
-   styles/behaviors/demo.css -- BOTH are required, neither suffices.
-   NOTE: this block sits inside a JS template literal -- never use a
-   backtick here, it terminates the string. */
-/* #658: off state. Only the OVERLAY is hidden -- the host and its content
-   stay visible, which is the whole point of being able to switch the
-   effect off and read what is underneath. */
-.x-stagelight--spotlight[data-x-stagelight-off] .x-stagelight__spot {
-  display: none;
-}
-
-.x-stagelight--spotlight {
-  cursor: pointer;
-}
-
-.x-stagelight__spot {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  mix-blend-mode: multiply; /* Darkens everything except the spot */
-  /* --x-stagelight-radius is the EFFECTIVE radius: the author's size
-     capped to what the box can actually show (set in JS below). A circle
-     gradient's radius must be a length -- CSS cannot express "40% of the
-     box" here -- so the cap is computed rather than declared. Without it a
-     size larger than the box clips the falloff through a single edge and
-     only part of the effect is visible. Falls back to the raw size. */
-  background: radial-gradient(
-    circle at var(--x, 50%) var(--y, 50%), 
-    transparent var(--x-stagelight-radius, var(--x-stagelight-size)), 
-    rgba(0,0,0,0.85) calc(var(--x-stagelight-radius, var(--x-stagelight-size)) + 3.125rem)
-  );
-  transition: background 0.1s ease-out; /* Smooth follow */
-}
-
-/* Variant: Spotlight - Screen Mode (Light beam in dark room) */
-.x-stagelight--spotlight.mode-add .x-stagelight__spot {
-  mix-blend-mode: screen;
-  background: radial-gradient(
-    circle at var(--x, 50%) var(--y, 50%), 
-    rgba(255,255,255,0.2) 0%, 
-    transparent var(--x-stagelight-size)
-  );
-}
-
-/* === VARIANT: FIXTURE === */
-.x-stagelight--fixture {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  width: 6.25rem;
-  pointer-events: auto;
-}
-
-.x-stagelight__housing {
-  width: 3.75rem;
-  height: 5rem;
-  background: var(--x-stagelight-housing);
-  border-radius: 0.625rem;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0.3125rem 0.9375rem rgba(0,0,0,0.5);
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
-}
-
-/* Light Emitter inside fixture */
-.x-stagelight__housing::after {
-  content: '';
-  width: 2.5rem; 
-  height: 2.5rem;
-  background: var(--x-stagelight-color);
-  border-radius: 50%;
-  box-shadow: 0 0 1.25rem var(--x-stagelight-color);
-  opacity: var(--x-stagelight-intensity);
-}
-
-.x-stagelight--fixture .x-stagelight__housing {
-  cursor: pointer;
-}
-
-.x-stagelight__housing:hover {
-   transform: rotateX(-20deg);
-}
-
-.x-stagelight--fixture span {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  font-family: monospace;
-}
-
-/* =============================================================================
    KEYFRAMES once injected at runtime (#817)
    sparkle, rainbow, fireworks, snow, particle and ripple each appended a
    <style> with these keyframes the first time they ran. They live here now
    with the rest of each effect's CSS, so every effect is styled one way.
 ============================================================================= */
-@keyframes x-sparkle {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1); opacity: 0; }
-}
-@keyframes x-rainbow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes x-firework-particle {
-  0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--end-x), var(--end-y)) scale(0); opacity: 0; }
-}
-@keyframes x-snow-fall {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(100vh) rotate(360deg); }
-}
-@keyframes x-particle-float {
-  0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.6; }
-  50% { transform: translateY(-6.25rem) translateX(1.25rem); }
-}
 @keyframes x-ripple-animation {
   to {
     transform: scale(1);

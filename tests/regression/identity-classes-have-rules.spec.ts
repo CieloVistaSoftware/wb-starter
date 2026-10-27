@@ -159,9 +159,10 @@ test.describe('#1095 batch 3: identity classes are styled by stylesheet rules', 
     expect(await css(page, '#fl', 'background-color')).toBe(await token(page, 'background-color', '--bg-secondary'));
   });
 
-  test('x-masked and x-countup: digits are all one width', async ({ page }) => {
-    await injectAndScan(page, '<input x-masked mask="(999) 999-9999" id="mk"><span x-countup to="100" id="cu">0</span>');
-    for (const [sel, cls] of [['#mk', 'x-masked'], ['#cu', 'x-countup']]) {
+  // x-countup's half of this check moved to WB Pro with the behavior (#1953).
+  test('x-masked: digits are all one width', async ({ page }) => {
+    await injectAndScan(page, '<input x-masked mask="(999) 999-9999" id="mk">');
+    for (const [sel, cls] of [['#mk', 'x-masked']]) {
       await expect(page.locator(sel)).toHaveClass(new RegExp(cls));
       expect(await ruleNames(page, cls), cls).toBe(true);
       expect(await hasStyleAttr(page, sel), cls).toEqual([]);

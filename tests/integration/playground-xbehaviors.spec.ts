@@ -90,10 +90,17 @@ test.describe('Playground: 50 x-* behaviors example set', () => {
     await expect(page.locator('.x-tooltip, [role="tooltip"], [class*="tooltip"]').first()).toBeVisible({ timeout: 5000 });
   });
 
-  test('combination: x-confetti + x-tooltip trigger fires confetti on click', async ({ page }) => {
-    const btn = page.locator('#pg-preview button[x-confetti][x-tooltip]').first();
+  // Was x-confetti + x-tooltip until confetti moved to WB Pro (#1953).
+  test('combination: x-tada + x-tooltip animates on click', async ({ page }) => {
+    const btn = page.locator('#pg-preview button[x-tada][x-tooltip]').first();
+    await btn.evaluate((el) => {
+      (window as any).__wbTada = 0;
+      el.addEventListener('animationstart', (e) => {
+        if ((e as AnimationEvent).animationName === 'x-tada') (window as any).__wbTada++;
+      });
+    });
     await btn.click();
-    await expect(page.locator('.x-confetti, [class*="confetti"]').first()).toBeVisible({ timeout: 5000 });
+    await expect.poll(() => page.evaluate(() => (window as any).__wbTada), { timeout: 5000 }).toBeGreaterThan(0);
   });
 
   test('all 50 examples parse as valid elements with zero x-error markers', async ({ page }) => {

@@ -1,7 +1,7 @@
 {
-  "totalFiles": 252,
+  "totalFiles": 245,
   "audiences": {
-    "user": 175,
+    "user": 168,
     "maintainer": 77
   },
   "categories": [
@@ -851,14 +851,6 @@
         "created": "2026-08-17"
       },
       {
-        "path": "docs/behaviors/confetti.md",
-        "title": "Confetti",
-        "name": "confetti",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/confirm.md",
         "title": "Confirm",
         "name": "confirm",
@@ -1033,14 +1025,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2026-08-22"
-      },
-      {
-        "path": "docs/behaviors/fireworks.md",
-        "title": "Fireworks",
-        "name": "fireworks",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/fix-card.md",
@@ -1427,14 +1411,6 @@
         "created": "2025-12-28"
       },
       {
-        "path": "docs/behaviors/rainbow.md",
-        "title": "Rainbow",
-        "name": "rainbow",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/range.md",
         "title": "Range Behavior Design & User Guide",
         "name": "range",
@@ -1595,22 +1571,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/snow.md",
-        "title": "Snow",
-        "name": "snow",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/sparkle.md",
-        "title": "Sparkle",
-        "name": "sparkle",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/spinner.md",
         "title": "Spinner",
         "name": "spinner",
@@ -1625,14 +1585,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/stagelight.md",
-        "title": "Stage Light - wb-starter v3.0",
-        "name": "stagelight",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/stat.md",
@@ -1782,14 +1734,6 @@
         "path": "docs/behaviors/truncate.md",
         "title": "Truncate",
         "name": "truncate",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/typewriter.md",
-        "title": "Typewriter",
-        "name": "typewriter",
         "category": "behaviors",
         "audience": "user",
         "created": "2026-08-20"
@@ -2583,14 +2527,6 @@
       "created": "2026-08-17"
     },
     {
-      "path": "docs/behaviors/confetti.md",
-      "title": "Confetti",
-      "name": "confetti",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/confirm.md",
       "title": "Confirm",
       "name": "confirm",
@@ -2765,14 +2701,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2026-08-22"
-    },
-    {
-      "path": "docs/behaviors/fireworks.md",
-      "title": "Fireworks",
-      "name": "fireworks",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/fix-card.md",
@@ -3159,14 +3087,6 @@
       "created": "2025-12-28"
     },
     {
-      "path": "docs/behaviors/rainbow.md",
-      "title": "Rainbow",
-      "name": "rainbow",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/range.md",
       "title": "Range Behavior Design & User Guide",
       "name": "range",
@@ -3327,22 +3247,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/snow.md",
-      "title": "Snow",
-      "name": "snow",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/sparkle.md",
-      "title": "Sparkle",
-      "name": "sparkle",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/spinner.md",
       "title": "Spinner",
       "name": "spinner",
@@ -3357,14 +3261,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/stagelight.md",
-      "title": "Stage Light - wb-starter v3.0",
-      "name": "stagelight",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/stat.md",
@@ -3514,14 +3410,6 @@
       "path": "docs/behaviors/truncate.md",
       "title": "Truncate",
       "name": "truncate",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/typewriter.md",
-      "title": "Typewriter",
-      "name": "typewriter",
       "category": "behaviors",
       "audience": "user",
       "created": "2026-08-20"

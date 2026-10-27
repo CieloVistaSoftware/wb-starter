@@ -721,7 +721,7 @@
     // *.js) and confirmed wired to a real [x-*] selector in wb-lazy.js — not
     // guessed from the attribute's "obvious" name. A few behaviors that exist
     // as functions but aren't wired to an auto-inject [x-*] selector
-    // (x-parallax, x-countup, x-reveal, x-marquee, x-rotate, x-swing,
+    // (x-reveal, x-rotate, x-swing,
     // x-rubberband) are intentionally left out rather than shown not-working.
     function fiftyXBehaviors() {
       return [
@@ -766,12 +766,8 @@
         '<div x-fadein>Fades in as it scrolls into view</div>',
         '<div x-slidein>Slides in as it scrolls into view</div>',
         '<div x-zoomin>Zooms in as it scrolls into view</div>',
-        '<h3 x-typewriter text="Typed out letter by letter" speed="40"></h3>',
-        '<div x-rainbow duration="3s">Cycling through rainbow colors (always on, no click)</div>',
-        '<button x-confetti count="80" label="🎉 Celebrate"></button>',
-        '<button x-sparkle count="20">Sparkle Button</button>',
-        '<button x-fireworks count="40">Fireworks</button>',
-        '<button x-snow count="40">Let it Snow</button>',
+        // typewriter, rainbow, confetti, sparkle, fireworks and snow are WB Pro (#1953).
+        '<a href="../?page=pro">⭐ Typewriter, rainbow, confetti, sparkle, fireworks and snow are in WB Pro</a>',
 
         // Overlays (all self-contained triggers — no separate target element needed)
         '<button x-confirm confirmTitle="Delete item?" confirmMessage="This cannot be undone.">Delete</button>',
@@ -808,7 +804,7 @@
         '<button x-ripple x-tooltip="Ripples on click, tooltip on hover">Ripple + Tooltip</button>',
         '<button x-ripple x-toast message="Ripple fired the toast too" toast-variant="info">Ripple + Toast</button>',
         '<div x-fadein x-glow color="primary">Fades in, then glows</div>',
-        '<button x-confetti x-tooltip="Click for confetti" count="60" label="🎊 Party"></button>',
+        '<button x-tada x-tooltip="Click for a tada">🎊 Tada + Tooltip</button>',
         '<button x-ripple x-confirm confirmTitle="Really?" confirmMessage="Ripple + confirm together.">Ripple + Confirm</button>',
       ].join('\n');
     }

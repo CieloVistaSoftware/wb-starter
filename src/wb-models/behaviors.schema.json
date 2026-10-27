@@ -504,34 +504,9 @@
           "description": "Flip animation"
         },
         {
-          "name": "x-confetti",
-          "type": "action",
-          "description": "Confetti effect"
-        },
-        {
-          "name": "x-fireworks",
-          "type": "action",
-          "description": "Fireworks effect"
-        },
-        {
-          "name": "x-snow",
-          "type": "action",
-          "description": "Snow effect"
-        },
-        {
-          "name": "x-sparkle",
-          "type": "action",
-          "description": "Sparkle effect"
-        },
-        {
           "name": "x-glow",
           "type": "action",
           "description": "Glow effect"
-        },
-        {
-          "name": "x-rainbow",
-          "type": "action",
-          "description": "Rainbow effect"
         },
         {
           "name": "x-ripple",

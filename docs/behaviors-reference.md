@@ -564,30 +564,14 @@ Apply animations to elements.
 | `shake` | any | - | Shake effect |
 | `pulse` | any | - | Pulse effect |
 | `flip` | any | - | Flip effect |
-| [`confetti`](behaviors/confetti.md) | any | - | Confetti explosion |
-| `sparkle` | any | - | Sparkle effect |
 | `glow` | any | - | Glow effect |
-| `rainbow` | any | - | Rainbow text/bg |
-| `typewriter` | any | - | Typewriter text effect |
-| `parallax` | any | - | Parallax scroll effect |
 | `reveal` | any | - | Scroll reveal effect |
-| [`fireworks`](behaviors/fireworks.md) | any | - | Firework burst on click |
-| [`snow`](behaviors/snow.md) | `<button>` | - | Starts/stops falling snow over the page |
-| [`stagelight`](behaviors/stagelight.md) | any | - | Beam, spotlight and fixture lighting effects |
 
-#### Live Examples
-
-**`confetti`**
-
-<figure x-demo>
-<div x-confetti
-  count="100"
-  label="Celebrate!">
-</div>
-</figure>
+Confetti, fireworks, snow, sparkle, particle, rainbow, typewriter, countup,
+parallax, marquee and stagelight are [WB Pro](../?page=pro) behaviors (#1953).
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
-`sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a
+`glow` and `reveal` don't yet have a
 dedicated behavior doc with a live example to pull from — tracked as remaining work,
 not guessed here.
 

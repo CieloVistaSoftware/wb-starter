@@ -55,11 +55,9 @@ const NEEDS_NO_RULE: Record<string, string> = {
   // either function, so nothing ever added the classes.)
   'x-globe': 'globe() adds its baseClass and builds nothing; a rule would style an empty host',
   'x-slider': 'slider() adds its baseClass and builds nothing; a rule would style an empty host',
+  // (x-confetti, x-fireworks, x-snow, x-sparkle and x-parallax were listed here
+  // until they moved to WB Pro, #1953.)
   // The look is on a sibling class the same behavior adds to the same element.
-  'x-confetti': 'confetti() also adds x-confetti--trigger (and --trigger-button), which effects.css styles',
-  'x-fireworks': 'fireworks() also adds x-fireworks--trigger (and --trigger-button), which effects.css styles',
-  'x-snow': 'snow() also adds x-snow--trigger (and --trigger-button), which effects.css styles',
-  'x-sparkle': 'sparkle() also adds x-sparkle--trigger, which effects.css styles (position: relative for the sparks)',
   'x-lightbox': 'lightbox() also adds x-lightbox--trigger, which overlays.css styles (cursor: pointer)',
   'x-modal': 'added beside x-dialog on a <dialog>; the tag and dialog.css\'s .x-dialog rules are its look',
   'x-modal--trigger': 'added beside x-dialog--trigger, which dialog.css styles (cursor: pointer)',
@@ -74,7 +72,6 @@ const NEEDS_NO_RULE: Record<string, string> = {
   'x-accordion': 'a plain container; its look is its parts: x-accordion__item/__head/__body in accordion.css for titled panels, and x-details for the <details> form, where accordion() adds only exclusivity. Measured (#1095 batch 4): a <span> host lays its panels out exactly as a <div> host does, so a host rule would have nothing to change',
   'x-tooltip--trigger': 'the trigger is whatever element the tooltip describes, often a button or link with its own cursor; the visible feedback is the .x-tooltip panel',
   // The visible change is made another way; the class is a signal for JS or tests.
-  'x-parallax': 'its look is the per-scroll transform dynamic-style.js generates; a static rule has nothing to add',
   'x-demo--measured': 'readiness signal tests wait on; the visible change at that moment is the removal of x-demo--measuring, which demo.css styles',
   'x-demo__source--unavailable': 'the panel text is an HTML comment saying the source is unavailable, which the highlighter already paints in the theme\'s comment colour',
 };
