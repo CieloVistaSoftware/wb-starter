@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T03:23:12.310Z",
+  "generatedAt": "2026-10-27T05:10:23.208Z",
   "count": 200,
   "schemas": [
     {
@@ -1802,7 +1802,7 @@
           "examples": [
             "America/Chicago",
             "America/New_York",
-            "Europe/London",
+            "Asia/Tokyo",
             "local"
           ]
         }
