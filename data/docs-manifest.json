@@ -1927,7 +1927,8 @@
         "title": "WB Pro — Commercial License (DRAFT)",
         "name": "WB-PRO-EULA",
         "category": "legal",
-        "audience": "maintainer"
+        "audience": "maintainer",
+        "created": "2026-10-27"
       }
     ],
     "standards": [
@@ -3683,7 +3684,8 @@
       "title": "WB Pro — Commercial License (DRAFT)",
       "name": "WB-PRO-EULA",
       "category": "legal",
-      "audience": "maintainer"
+      "audience": "maintainer",
+      "created": "2026-10-27"
     },
     {
       "path": "docs/linkedin-framework-agnostic.md",
