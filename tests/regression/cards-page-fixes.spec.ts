@@ -69,6 +69,9 @@ test.describe('demos/site/cards.html: full-page fixes', () => {
       page.waitForEvent('popup'),
       badge.click(),
     ]);
+    // A popup opens on about:blank and navigates after; reading popup.url()
+    // at once raced that and read "" in 3 of 5 runs. Wait for the navigation.
+    await popup.waitForURL(/doc-viewer\.html/, { timeout: 10000 });
     expect(popup.url()).toContain('doc-viewer.html');
     await popup.close();
   });
