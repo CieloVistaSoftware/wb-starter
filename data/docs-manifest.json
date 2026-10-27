@@ -1928,7 +1928,7 @@
         "name": "WB-PRO-EULA",
         "category": "legal",
         "audience": "maintainer",
-        "created": "2026-10-27"
+        "created": "2026-10-26"
       }
     ],
     "standards": [
@@ -3685,7 +3685,7 @@
       "name": "WB-PRO-EULA",
       "category": "legal",
       "audience": "maintainer",
-      "created": "2026-10-27"
+      "created": "2026-10-26"
     },
     {
       "path": "docs/linkedin-framework-agnostic.md",
