@@ -1,8 +1,8 @@
 {
-  "totalFiles": 251,
+  "totalFiles": 252,
   "audiences": {
     "user": 175,
-    "maintainer": 76
+    "maintainer": 77
   },
   "categories": [
     "_today",
@@ -12,6 +12,7 @@
     "claude",
     "compliance",
     "guides",
+    "legal",
     "root",
     "standards"
   ],
@@ -1976,6 +1977,15 @@
         "created": "2026-01-10"
       }
     ],
+    "legal": [
+      {
+        "path": "docs/legal/WB-PRO-EULA.md",
+        "title": "WB Pro — Commercial License (DRAFT)",
+        "name": "WB-PRO-EULA",
+        "category": "legal",
+        "audience": "maintainer"
+      }
+    ],
     "standards": [
       {
         "path": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
@@ -3779,6 +3789,13 @@
       "category": "root",
       "audience": "maintainer",
       "created": "2026-01-10"
+    },
+    {
+      "path": "docs/legal/WB-PRO-EULA.md",
+      "title": "WB Pro — Commercial License (DRAFT)",
+      "name": "WB-PRO-EULA",
+      "category": "legal",
+      "audience": "maintainer"
     },
     {
       "path": "docs/linkedin-framework-agnostic.md",
