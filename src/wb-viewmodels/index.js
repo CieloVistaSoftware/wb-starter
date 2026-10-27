@@ -256,6 +256,48 @@ for (const [old, now] of Object.entries(BEHAVIOR_ALIASES)) {
   exportAliases[old] = exportAliases[now] || now;
 }
 
+// Pack module name ('pack:module') -> the URL it loads from.
+const packModuleUrls = new Map();
+
+/**
+ * Add behaviors that live outside this folder, e.g. the commercial WB Pro
+ * pack (#1953). The core never imports a pack; a pack calls this once, and its
+ * behaviors then lazy-load exactly like the built-in ones.
+ *
+ * A pack cannot replace a core behavior: a name the core already registers is
+ * skipped and reported, so loading a pack never changes what Free markup does.
+ *
+ * @param {Object} pack
+ * @param {string} pack.name - Pack id, e.g. 'pro'. Prefixes its module names.
+ * @param {string|URL} pack.baseUrl - Folder the pack's modules load from.
+ * @param {Object<string,string>} pack.behaviors - behavior name -> module basename.
+ * @param {Object<string,string>} [pack.aliases] - behavior name -> export name.
+ * @returns {{ added: string[], skipped: string[] }}
+ */
+export function registerBehaviorPack({ name, baseUrl, behaviors: packBehaviors, aliases = {} }) {
+  if (!name || !baseUrl || !packBehaviors) {
+    throw new Error('[WB] registerBehaviorPack needs name, baseUrl and behaviors');
+  }
+  const base = new URL(String(baseUrl).replace(/\/?$/, '/'), import.meta.url);
+  const added = [];
+  const skipped = [];
+  for (const [behaviorName, moduleBase] of Object.entries(packBehaviors)) {
+    if (Object.prototype.hasOwnProperty.call(behaviorModules, behaviorName)) {
+      skipped.push(behaviorName);
+      continue;
+    }
+    const packModule = `${name}:${moduleBase}`;
+    packModuleUrls.set(packModule, new URL(`${moduleBase}.js`, base));
+    behaviorModules[behaviorName] = packModule;
+    if (aliases[behaviorName]) exportAliases[behaviorName] = aliases[behaviorName];
+    const lower = behaviorName.toLowerCase();
+    if (!KEY_BY_LOWERCASE.has(lower)) KEY_BY_LOWERCASE.set(lower, behaviorName);
+    added.push(behaviorName);
+  }
+  if (skipped.length) console.warn(`[WB] Pack '${name}' skipped core behaviors: ${skipped.join(', ')}`);
+  return { added, skipped };
+}
+
 /**
  * Load a module dynamically (with caching)
  * @param {string} moduleName - Name of the module file (without .js)
@@ -280,8 +322,8 @@ async function loadModule(moduleName) {
     return loadingPromises.get(moduleName);
   }
 
-  // Create loading promise
-  const moduleUrl = new URL(`./${moduleName}.js`, import.meta.url);
+  // Create loading promise. A pack's module loads from the pack's own base.
+  const moduleUrl = packModuleUrls.get(moduleName) || new URL(`./${moduleName}.js`, import.meta.url);
   const loadPromise = (async () => {
     let lastError;
     for (let attempt = 0; attempt <= moduleImportRetries; attempt++) {
