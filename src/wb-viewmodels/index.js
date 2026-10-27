@@ -256,6 +256,18 @@ for (const [old, now] of Object.entries(BEHAVIOR_ALIASES)) {
 // Pack module name ('pack:module') -> the URL it loads from.
 const packModuleUrls = new Map();
 
+// Runtimes that build selector lists once at load (wb-lazy.js) subscribe here,
+// so a pack registered after them still gets its [x-name] attributes routed.
+const packListeners = new Set();
+
+/**
+ * Be told the behavior names each later registerBehaviorPack() call adds.
+ * @param {(added: string[]) => void} listener
+ */
+export function onBehaviorPack(listener) {
+  packListeners.add(listener);
+}
+
 /**
  * Add behaviors that live outside this folder, e.g. the commercial WB Pro
  * pack (#1953). The core never imports a pack; a pack calls this once, and its
@@ -292,6 +304,7 @@ export function registerBehaviorPack({ name, baseUrl, behaviors: packBehaviors, 
     added.push(behaviorName);
   }
   if (skipped.length) console.warn(`[WB] Pack '${name}' skipped core behaviors: ${skipped.join(', ')}`);
+  for (const listener of packListeners) listener(added);
   return { added, skipped };
 }
 

@@ -6,9 +6,9 @@
     "generated": 8,
     "errors": 0,
     "skipped": 0,
-    "totalComponents": 69,
-    "totalSections": 216,
-    "totalDemos": 772
+    "totalComponents": 65,
+    "totalSections": 211,
+    "totalDemos": 757
   },
   "pages": [
     {
@@ -428,43 +428,19 @@
     {
       "id": "effects",
       "title": "Visual Effects",
-      "description": "Confetti, fireworks, ripple, snow — fun stuff",
+      "description": "Ripple and its toggles. Confetti, fireworks, snow and stage lights are WB Pro.",
       "icon": "✨",
       "status": "ok",
       "filename": "effects.html",
-      "componentCount": 5,
-      "sectionCount": 7,
-      "totalDemos": 19,
+      "componentCount": 1,
+      "sectionCount": 2,
+      "totalDemos": 4,
       "components": [
-        {
-          "name": "confetti",
-          "status": "ok",
-          "sections": 1,
-          "demos": 2
-        },
-        {
-          "name": "fireworks",
-          "status": "ok",
-          "sections": 2,
-          "demos": 4
-        },
         {
           "name": "ripple",
           "status": "ok",
           "sections": 2,
           "demos": 4
-        },
-        {
-          "name": "snow",
-          "status": "ok",
-          "sections": 1,
-          "demos": 3
-        },
-        {
-          "name": "stagelight",
-          "status": "ok",
-          "sections": 2,
-          "demos": 7
         }
       ]
     },

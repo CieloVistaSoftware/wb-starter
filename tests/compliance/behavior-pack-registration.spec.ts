@@ -38,4 +38,14 @@ test.describe('behavior packs', () => {
     expect(result.skipped).toEqual(['toast']);
     expect(registry.behaviorModules.toast).toBe(before);
   });
+
+  test('a runtime that subscribed first is told what a later pack added', async () => {
+    // wb-lazy.js builds its selector list once, at load; this is how a pack
+    // registered afterwards still gets its [x-name] attributes routed.
+    const registry = await import('../../src/wb-viewmodels/index.js');
+    const heard: string[][] = [];
+    registry.onBehaviorPack((added: string[]) => heard.push(added));
+    registry.registerBehaviorPack({ name: 'testpack3', baseUrl: PACK_DIR, behaviors: { packlistened: 'fx', toast: 'fx' } });
+    expect(heard).toEqual([['packlistened']]);
+  });
 });

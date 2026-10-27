@@ -235,14 +235,10 @@
     {
       "id": "effects",
       "title": "Visual Effects",
-      "description": "Confetti, fireworks, ripple, snow — fun stuff",
+      "description": "Ripple and its toggles. Confetti, fireworks, snow and stage lights are WB Pro.",
       "icon": "✨",
       "components": [
-        "confetti",
-        "fireworks",
-        "ripple",
-        "snow",
-        "stagelight"
+        "ripple"
       ]
     },
     {

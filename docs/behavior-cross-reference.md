@@ -6,7 +6,7 @@ What each WB behavior adds to the element it decorates. The **inventory** below 
 
 ## Inventory: every behavior
 
-Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
+Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
 
 | Behavior | Written as | Reference | Detailed below |
 |---|---|---|---|
@@ -50,7 +50,6 @@ Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `do
 | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — |
 | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — |
 | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — |
-| `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — |
 | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — |
 | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes |
 | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — |
@@ -73,7 +72,6 @@ Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `do
 | `figure` | `x-figure` | [behaviors/figure.md](behaviors/figure.md) | — |
 | `file` | `x-file` | [behaviors/file.md](behaviors/file.md) | — |
 | `fill` | `x-fill` | [behaviors/fill.md](behaviors/fill.md) | — |
-| `fireworks` | `x-fireworks` | [behaviors/fireworks.md](behaviors/fireworks.md) | — |
 | `fix-card` | `x-fix-card` | [behaviors/fix-card.md](behaviors/fix-card.md) | — |
 | `flash` | `x-flash` | [behaviors/flash.md](behaviors/flash.md) | — |
 | `flex` | `x-flex` | [behaviors/flex.md](behaviors/flex.md) | yes |
@@ -121,7 +119,6 @@ Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `do
 | `prompt` | `x-prompt` | [behaviors/prompt.md](behaviors/prompt.md) | — |
 | `pulse` | `x-pulse` | [behaviors/pulse.md](behaviors/pulse.md) | — |
 | `radio` | `x-radio` | [behaviors/radio.md](behaviors/radio.md) | yes |
-| `rainbow` | `x-rainbow` | [behaviors/rainbow.md](behaviors/rainbow.md) | — |
 | `range` | `x-range` | [behaviors/range.md](behaviors/range.md) | yes |
 | `rating` | `x-rating` | [behaviors/rating.md](behaviors/rating.md) | — |
 | `ratio` | `x-ratio` | [behaviors/ratio.md](behaviors/ratio.md) | — |
@@ -141,11 +138,8 @@ Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `do
 | `skeleton` | `x-skeleton` | [behaviors/skeleton.md](behaviors/skeleton.md) | — |
 | `slidein` | `x-slidein` | [behaviors/slidein.md](behaviors/slidein.md) | — |
 | `slider` | `x-slider` | [behaviors/slider.md](behaviors/slider.md) | — |
-| `snow` | `x-snow` | [behaviors/snow.md](behaviors/snow.md) | — |
-| `sparkle` | `x-sparkle` | [behaviors/sparkle.md](behaviors/sparkle.md) | — |
 | `spinner` | `x-spinner` | [behaviors/spinner.md](behaviors/spinner.md) | — |
 | `stack` | `x-stack` | [behaviors/stack.md](behaviors/stack.md) | yes |
-| `stagelight` | `x-stagelight` | [behaviors/stagelight.md](behaviors/stagelight.md) | — |
 | `stat` | `x-stat` | [behaviors/stat.md](behaviors/stat.md) | — |
 | `status` | `x-status` | [behaviors/status.md](behaviors/status.md) | — |
 | `stepper` | `x-stepper` | [behaviors/stepper.md](behaviors/stepper.md) | — |
@@ -164,7 +158,6 @@ Rows: **161**, read from `src/core/tag-map.js`. 161 have a reference page in `do
 | `toggle` | `x-toggle` | [behaviors/toggle.md](behaviors/toggle.md) | — |
 | `tooltip` | `x-tooltip` | [behaviors/tooltip.md](behaviors/tooltip.md) | — |
 | `truncate` | `x-truncate` | [behaviors/truncate.md](behaviors/truncate.md) | — |
-| `typewriter` | `x-typewriter` | [behaviors/typewriter.md](behaviors/typewriter.md) | — |
 | `ul` | `x-ul` | [behaviors/ul.md](behaviors/ul.md) | — |
 | `video` | `x-video` | [behaviors/video.md](behaviors/video.md) | — |
 | `vimeo` | `x-vimeo` | [behaviors/vimeo.md](behaviors/vimeo.md) | — |

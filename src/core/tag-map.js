@@ -125,8 +125,6 @@ export const extensionMap = {
   // nothing while ripple, confetti and fireworks worked. Three of six
   // registered, with nothing marking which three.
   'x-glow': 'glow',
-  'x-sparkle': 'sparkle',
-  'x-rainbow': 'rainbow',
   'x-tooltip': 'tooltip',
   'x-draggable': 'draggable',
   'x-resizable': 'resizable',
@@ -147,11 +145,8 @@ export const extensionMap = {
   // behavior, one name (the same fix as x-article -> x-card).
   'x-progress': 'progress',
 
-  // Animations & Effects
-  'x-confetti': 'confetti',
-  'x-fireworks': 'fireworks',
-  'x-snow': 'snow',
-  'x-stagelight': 'stagelight',
+  // Animations & Effects: confetti, fireworks, snow, sparkle, rainbow,
+  // typewriter and stagelight are WB Pro (#1953); the pack routes them.
 
   // #783 -- morphing (x-as-card / x-as-timeline / x-as-article) removed.
   // It never ran under the lazy runtime: wb-lazy.js filtered x-as-* out of
@@ -356,7 +351,6 @@ export const extensionMap = {
   'x-code': 'code',
   'x-breadcrumb': 'breadcrumb',
   'x-notify': 'notify',
-  'x-typewriter': 'typewriter',
   'x-bounce': 'bounce',
   'x-pulse': 'pulse',
   // x-copybutton (#291) overlays a separate positioned copy button on any

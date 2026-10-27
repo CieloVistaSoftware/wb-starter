@@ -1788,7 +1788,7 @@
       },
       {
         "path": "docs/behaviors/x-effects.md",
-        "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
+        "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein)",
         "name": "x-effects",
         "category": "behaviors",
         "audience": "maintainer",
@@ -3465,7 +3465,7 @@
     },
     {
       "path": "docs/behaviors/x-effects.md",
-      "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
+      "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein)",
       "name": "x-effects",
       "category": "behaviors",
       "audience": "maintainer",

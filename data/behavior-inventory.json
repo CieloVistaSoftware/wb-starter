@@ -129,14 +129,8 @@
       "heartbeat",
       "flash",
       "rubberband",
-      "typewriter",
-      "countup",
-      "marquee",
-      "parallax",
       "reveal",
-      "sparkle",
       "glow",
-      "rainbow",
       "ripple",
       "draggable",
       "resizable",
@@ -153,8 +147,6 @@
       "floatinglabel",
       "tooltip",
       "lightbox",
-      "snow",
-      "particle",
       "hotkey",
       "offline",
       "debug",
@@ -185,9 +177,7 @@
       "confirm",
       "prompt",
       "notify",
-      "toast",
-      "confetti",
-      "fireworks"
+      "toast"
     ]
   },
   "withTemplates": [
@@ -218,9 +208,7 @@
     "confirm",
     "prompt",
     "notify",
-    "toast",
-    "confetti",
-    "fireworks"
+    "toast"
   ],
   "withInputTypes": [
     "input",
