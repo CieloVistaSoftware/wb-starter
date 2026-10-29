@@ -65,7 +65,6 @@ const NEEDS_NO_RULE: Record<string, string> = {
   'x-status': 'status text with no variant is plain running text by design (status.css); each look is an x-status--{variant} class',
   'x-articles': 'a plain container; its look is its parts (x-articles__header, __list with --grid/--list/--masonry, __pagination) in article.css',
   'x-form': 'the <form> tag is the look; the states form() shows are x-form__message, x-form__field--invalid and x-form--loading, styled in form.css',
-  'x-validator': 'the host is the author\'s own <form> or <input>; the feedback validator() shows is x-validator__error, styled in validator.css',
   'x-move': 'a container whose children move; the motion is x-move__item--animated and x-move--offset, styled in move.css',
   'x-external': 'the host is the author\'s <a>; the mark external() adds is x-external__icon, styled in helpers.css',
   'x-darkmode': 'the host is the author\'s button (button.css); the visible effect is the data-theme it sets on the page',
