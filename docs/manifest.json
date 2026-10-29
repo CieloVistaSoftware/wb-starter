@@ -175,12 +175,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/autocomplete.md",
-          "title": "x-autocomplete Behavior",
-          "description": "Adds a filterable suggestion list under a text input as the user types.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/avatar.md",
           "title": "Avatar",
           "description": "x-avatar renders a round (or shaped) picture from src, and falls back to initials taken from name when there is no image or it fails to load.",
@@ -370,12 +364,6 @@
           "file": "behaviors/collapse.md",
           "title": "Collapse",
           "description": "x-collapse hides the element's content behind a button labelled with heading; clicking it shows or hides the content.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/colorpicker.md",
-          "title": "x-colorpicker Behavior",
-          "description": "Turns a field into a native color picker.",
           "modified": "2026-10-10"
         },
         {
@@ -673,12 +661,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/masked.md",
-          "title": "x-masked Behavior",
-          "description": "Formats input as the user types against a mask pattern (phone numbers, SSNs, license plates, etc).",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/masonry.md",
           "title": "Masonry",
           "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
@@ -718,12 +700,6 @@
           "file": "behaviors/ol.md",
           "title": "OL (Ordered List) Behavior Design & User Guide",
           "description": "The ol behavior transforms the standard ordered list into a versatile tool for displaying sequences.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/otp.md",
-          "title": "OTP Behavior",
-          "description": "x-otp replaces the element's content with length single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.",
           "modified": "2026-10-10"
         },
         {
@@ -952,12 +928,6 @@
           "file": "behaviors/tada.md",
           "title": "Tada",
           "description": "x-tada shrinks the element, then wiggles it at 110% with small rotations, over 1 s when clicked — a flourish for a finished task.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/tags.md",
-          "title": "x-tags Behavior",
-          "description": "Lets a user type and press Enter to build a list of removable tags/chips next to a text input.",
           "modified": "2026-10-10"
         },
         {

@@ -301,13 +301,9 @@ export const extensionMap = {
   'x-radio': 'radio',
   'x-range': 'range',
   'x-mark': 'mark',
-  'x-autocomplete': 'autocomplete',
-  'x-colorpicker': 'colorpicker',
   'x-counter': 'counter',
   'x-file': 'file',
   'x-floatinglabel': 'floatinglabel',
-  'x-masked': 'masked',
-  'x-tags': 'tags',
   'x-collapse': 'collapse',
   // x-copy makes the element itself the copy trigger -- distinct from the
   // sibling 'x-copybutton' attribute (further down this table),
@@ -375,7 +371,6 @@ export const extensionMap = {
   'x-ol': 'ol',
   'x-dl': 'dl',
   'x-stepper': 'stepper',
-  'x-otp': 'otp',
   // Not searchfield: x-searchfield above is the container-aware wrapper.
   'x-search': 'search',
   'x-clock': 'clock',

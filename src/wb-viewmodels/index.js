@@ -171,17 +171,11 @@ const behaviorModules = {
   search: 'search',
   searchfield: 'search',
   password: 'password',
-  masked: 'masked',
   counter: 'counter',
   floatinglabel: 'floatinglabel',
-  otp: 'otp',
-  colorpicker: 'colorpicker',
-  tags: 'tags',
-  autocomplete: 'autocomplete',
   file: 'file',
   
   // Validation
-  validator: 'validator',
   
   // Notes
   notes: 'notes',

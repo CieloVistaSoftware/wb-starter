@@ -6,7 +6,7 @@ What each WB behavior adds to the element it decorates. The **inventory** below 
 
 ## Inventory: every behavior
 
-Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
+Rows: **149**, read from `src/core/tag-map.js`. 149 have a reference page in `docs/behaviors/`; 28 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
 
 | Behavior | Written as | Reference | Detailed below |
 |---|---|---|---|
@@ -14,7 +14,6 @@ Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `do
 | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — |
 | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — |
 | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — |
-| `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — |
 | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — |
 | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — |
 | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — |
@@ -49,7 +48,6 @@ Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `do
 | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes |
 | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — |
 | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — |
-| `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — |
 | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — |
 | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes |
 | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — |
@@ -100,7 +98,6 @@ Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `do
 | `label` | `x-label` | [behaviors/label.md](behaviors/label.md) | — |
 | `lightbox` | `x-lightbox` | [behaviors/lightbox.md](behaviors/lightbox.md) | — |
 | `mark` | `x-mark` | [behaviors/mark.md](behaviors/mark.md) | — |
-| `masked` | `x-masked` | [behaviors/masked.md](behaviors/masked.md) | — |
 | `masonry` | `x-masonry` | [behaviors/masonry.md](behaviors/masonry.md) | yes |
 | `mdhtml` | `x-mdhtml` | [behaviors/mdhtml.md](behaviors/mdhtml.md) | — |
 | `modal` | `x-modal` | [behaviors/modal.md](behaviors/modal.md) | — |
@@ -109,7 +106,6 @@ Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `do
 | `notes` | `x-notes` | [behaviors/notes.md](behaviors/notes.md) | — |
 | `notify` | `x-notify` | [behaviors/notify.md](behaviors/notify.md) | — |
 | `ol` | `x-ol` | [behaviors/ol.md](behaviors/ol.md) | — |
-| `otp` | `x-otp` | [behaviors/otp.md](behaviors/otp.md) | — |
 | `pagination` | `x-pagination` | [behaviors/pagination.md](behaviors/pagination.md) | — |
 | `password` | `x-password` | [behaviors/password.md](behaviors/password.md) | — |
 | `popover` | `x-popover` | [behaviors/popover.md](behaviors/popover.md) | — |
@@ -150,7 +146,6 @@ Rows: **154**, read from `src/core/tag-map.js`. 154 have a reference page in `do
 | `table` | `x-table` | [behaviors/table.md](behaviors/table.md) | yes |
 | `tabs` | `x-tabs` | [behaviors/tabs.md](behaviors/tabs.md) | — |
 | `tada` | `x-tada` | [behaviors/tada.md](behaviors/tada.md) | — |
-| `tags` | `x-tags` | [behaviors/tags.md](behaviors/tags.md) | yes |
 | `textarea` | `x-textarea` | [behaviors/textarea.md](behaviors/textarea.md) | yes |
 | `themecontrol` | `x-themecontrol` | [behaviors/themecontrol.md](behaviors/themecontrol.md) | — |
 | `timeline` | `x-timeline` | [behaviors/timeline.md](behaviors/timeline.md) | — |

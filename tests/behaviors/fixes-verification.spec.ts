@@ -120,37 +120,6 @@ test.describe('Fix Verification Tests', () => {
   // ==========================================================================
   // COLOR PICKER TESTS (001-014)
   // ==========================================================================
-  test('Colorpicker converts input to native type=color', async ({ page }) => {
-    // colorpicker() (src/wb-viewmodels/colorpicker.js) is a plain behavior
-    // function, not a class-based <div x-colorpicker> custom element -- it was
-    // rewritten to convert a real <input> into the browser's own native
-    // <input type="color"> (light DOM, no shadow root, no custom
-    // open/close/toggle API -- the native picker owns that), per this
-    // project's "enhance native elements, never reinvent them" rule. The
-    // original 001-014 checks (customElements.get, .services, .open/.close/
-    // .toggle/.copyToClipboard, role=button trigger) tested an
-    // architecture that no longer exists.
-    await mount(page, `<input id="test-picker" type="text" x-colorpicker value="#6366f1">`);
-
-    const picker = page.locator('#test-picker');
-    await expect(picker).toHaveClass(/x-colorpicker/);
-    await expect(picker).toHaveClass(/x-colorpicker__input/);
-    await expect(picker).toHaveAttribute('type', 'color');
-
-    const hasShadow = await page.evaluate(() => !!document.querySelector('#test-picker').shadowRoot);
-    expect(hasShadow).toBe(false);
-
-    const eventFired = await page.evaluate(() => {
-      return new Promise(resolve => {
-        const el = document.querySelector('#test-picker');
-        el.addEventListener('wb:colorpicker:change', (e: any) => resolve(e.detail));
-        (el as HTMLInputElement).value = '#00ff00';
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-      });
-    });
-    expect(eventFired).toEqual({ value: '#00ff00' });
-  });
-
   // ==========================================================================
   // SEMANTICS & BEHAVIORS (036-039, 041-044)
   // ==========================================================================

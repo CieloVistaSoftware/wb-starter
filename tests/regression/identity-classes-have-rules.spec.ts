@@ -159,17 +159,6 @@ test.describe('#1095 batch 3: identity classes are styled by stylesheet rules', 
     expect(await css(page, '#fl', 'background-color')).toBe(await token(page, 'background-color', '--bg-secondary'));
   });
 
-  // x-countup's half of this check moved to WB Pro with the behavior (#1953).
-  test('x-masked: digits are all one width', async ({ page }) => {
-    await injectAndScan(page, '<input x-masked mask="(999) 999-9999" id="mk">');
-    for (const [sel, cls] of [['#mk', 'x-masked']]) {
-      await expect(page.locator(sel)).toHaveClass(new RegExp(cls));
-      expect(await ruleNames(page, cls), cls).toBe(true);
-      expect(await hasStyleAttr(page, sel), cls).toEqual([]);
-      expect(await css(page, sel, 'font-variant-numeric'), cls).toBe('tabular-nums');
-    }
-  });
-
   test('x-relativetime: "3 days ago" never breaks across lines', async ({ page }) => {
     await injectAndScan(page, '<div id="rt-box"><span x-relativetime date="2020-01-01" id="rt"></span></div>');
     // A column narrower than the phrase: without the rule it wraps at each space.

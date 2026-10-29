@@ -1,7 +1,7 @@
 {
-  "totalFiles": 245,
+  "totalFiles": 240,
   "audiences": {
-    "user": 168,
+    "user": 163,
     "maintainer": 77
   },
   "categories": [
@@ -555,14 +555,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/autocomplete.md",
-        "title": "x-autocomplete Behavior",
-        "name": "autocomplete",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
         "path": "docs/behaviors/autosize.md",
         "title": "x-autosize Behavior (deprecated)",
         "name": "autosize",
@@ -841,14 +833,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/colorpicker.md",
-        "title": "x-colorpicker Behavior",
-        "name": "colorpicker",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/confirm.md",
@@ -1259,14 +1243,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/masked.md",
-        "title": "x-masked Behavior",
-        "name": "masked",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
         "path": "docs/behaviors/masonry.md",
         "title": "Masonry",
         "name": "masonry",
@@ -1329,14 +1305,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2025-12-28"
-      },
-      {
-        "path": "docs/behaviors/otp.md",
-        "title": "OTP Behavior",
-        "name": "otp",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/pagination.md",
@@ -1667,14 +1635,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/tags.md",
-        "title": "x-tags Behavior",
-        "name": "tags",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
         "path": "docs/behaviors/textarea.md",
         "title": "Textarea",
         "name": "textarea",
@@ -1796,7 +1756,7 @@
       },
       {
         "path": "docs/behaviors/x-enhancements.md",
-        "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
+        "title": "x-enhancements (x-form, x-password, x-file)",
         "name": "x-enhancements",
         "category": "behaviors",
         "audience": "maintainer",
@@ -2232,14 +2192,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/autocomplete.md",
-      "title": "x-autocomplete Behavior",
-      "name": "autocomplete",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
       "path": "docs/behaviors/autosize.md",
       "title": "x-autosize Behavior (deprecated)",
       "name": "autosize",
@@ -2518,14 +2470,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/colorpicker.md",
-      "title": "x-colorpicker Behavior",
-      "name": "colorpicker",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/confirm.md",
@@ -2936,14 +2880,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/masked.md",
-      "title": "x-masked Behavior",
-      "name": "masked",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
       "path": "docs/behaviors/masonry.md",
       "title": "Masonry",
       "name": "masonry",
@@ -3006,14 +2942,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2025-12-28"
-    },
-    {
-      "path": "docs/behaviors/otp.md",
-      "title": "OTP Behavior",
-      "name": "otp",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/pagination.md",
@@ -3344,14 +3272,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/tags.md",
-      "title": "x-tags Behavior",
-      "name": "tags",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
       "path": "docs/behaviors/textarea.md",
       "title": "Textarea",
       "name": "textarea",
@@ -3473,7 +3393,7 @@
     },
     {
       "path": "docs/behaviors/x-enhancements.md",
-      "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
+      "title": "x-enhancements (x-form, x-password, x-file)",
       "name": "x-enhancements",
       "category": "behaviors",
       "audience": "maintainer",

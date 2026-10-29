@@ -36,8 +36,10 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   });
 
   test('all 20 examples parse as valid elements with zero x-error markers', async ({ page }) => {
-    const count = await page.locator('#pg-preview input, #pg-preview [x-colorpicker], #pg-preview [x-otp]').count();
-    expect(count).toBeGreaterThanOrEqual(20);
+    // colorpicker, tags, autocomplete, masked and otp moved to WB Pro (#1953);
+    // their checks moved with them and the set now links to ?page=pro.
+    const count = await page.locator('#pg-preview input, #pg-preview textarea').count();
+    expect(count).toBeGreaterThanOrEqual(17);
     await expect(page.locator('#pg-preview [x-error]')).toHaveCount(0);
   });
 
@@ -58,48 +60,12 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     await expect(wrapper.locator('.x-search__clear')).toBeVisible();
   });
 
-  test('3. x-colorpicker (on a div) builds a real native color input', async ({ page }) => {
-    const picker = page.locator('#pg-preview [x-colorpicker]').first();
-    await expect(picker).toHaveClass(/x-colorpicker/);
-    const colorInput = picker.locator('input[type="color"]');
-    await expect(colorInput).toHaveCount(1);
-    await expect(colorInput).toHaveValue('#6366f1');
-  });
-
-  test('4. x-tags: pressing Enter adds a tag pill and clears the input', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .x-tags').first();
-    const input = wrapper.locator('input');
-    await input.click();
-    await input.pressSequentially('urgent');
-    await input.press('Enter');
-    await expect(wrapper.locator('.x-tags__tag', { hasText: 'urgent' })).toBeVisible();
-    await expect(input).toHaveValue('');
-  });
-
-  test('5. x-autocomplete shows a filtered dropdown and fills the input on click', async ({ page }) => {
-    const wrapper = page.locator('#pg-preview .x-autocomplete').first();
-    const input = wrapper.locator('input');
-    await input.click();
-    await input.pressSequentially('ban');
-    const suggestion = wrapper.locator('.x-autocomplete__list li', { hasText: 'Banana' });
-    await expect(suggestion).toBeVisible();
-    await suggestion.click();
-    await expect(input).toHaveValue('Banana');
-  });
-
   test('6. x-password toggles the input type when the eye button is clicked', async ({ page }) => {
     const wrapper = page.locator('#pg-preview .x-password').first();
     const input = wrapper.locator('input');
     await expect(input).toHaveAttribute('type', 'password');
     await wrapper.locator('.x-password__toggle').click();
     await expect(input).toHaveAttribute('type', 'text');
-  });
-
-  test('7. x-masked formats digits into the mask pattern as typed', async ({ page }) => {
-    const masked = page.locator('#pg-preview [x-masked][mask="(999) 999-9999"]');
-    await masked.click();
-    await masked.pressSequentially('5551234567');
-    await expect(masked).toHaveValue('(555) 123-4567');
   });
 
   test('8. x-stepper +/- buttons change the value and respect min/max', async ({ page }) => {
@@ -111,16 +77,6 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     await wrapper.locator('.x-stepper__dec').click();
     await wrapper.locator('.x-stepper__dec').click();
     await expect(input).toHaveValue('4');
-  });
-
-  test('9. x-otp (on a div) builds 6 separate digit boxes and auto-advances focus', async ({ page }) => {
-    const otp = page.locator('#pg-preview [x-otp][length="6"]');
-    await expect(otp).toHaveClass(/x-otp/);
-    const boxes = otp.locator('input');
-    await expect(boxes).toHaveCount(6);
-    await boxes.nth(0).click();
-    await boxes.nth(0).pressSequentially('7');
-    await expect(boxes.nth(1)).toBeFocused();
   });
 
   test('10. x-floatinglabel moves the label text out of the placeholder', async ({ page }) => {
@@ -173,17 +129,6 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Search');
   });
 
-  test('16. combination: x-label="Tags" + x-tags both work on the same input', async ({ page }) => {
-    const input = page.locator('#pg-preview input[x-label="Tags"]');
-    await expect(input).toHaveClass(/x-tags__input/);
-    const inputId = await waitForAssignedId(input);
-    await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Tags');
-    await input.click();
-    await input.pressSequentially('idea');
-    await input.press('Enter');
-    await expect(page.locator('#pg-preview .x-tags__tag', { hasText: 'idea' })).toBeVisible();
-  });
-
   test('17. combination: x-label="Bio" + x-counter (max 100) both work', async ({ page }) => {
     const input = page.locator('#pg-preview input[x-label="Bio"]');
     await expect(input).toHaveAttribute('maxlength', '100');
@@ -204,29 +149,4 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     await expect(input).toHaveAttribute('type', 'text');
   });
 
-  test('19. combination: x-label="Phone" + x-masked both work', async ({ page }) => {
-    const input = page.locator('#pg-preview input[x-label="Phone"]');
-    const inputId = await waitForAssignedId(input);
-    await expect(page.locator(`#pg-preview label[for="${inputId}"]`)).toHaveText('Phone');
-    await input.click();
-    await input.pressSequentially('5551234567');
-    await expect(input).toHaveValue('555-123-4567');
-  });
-
-  test('20. combination: x-masked license plate + x-label label-position="right"', async ({ page }) => {
-    const input = page.locator('#pg-preview input[x-label="License plate"]');
-    const inputId = await waitForAssignedId(input);
-    const label = page.locator(`#pg-preview label[for="${inputId}"]`);
-    await expect(label).toHaveText('License plate');
-    await expect(label).toHaveClass(/x-label--right/);
-    const order = await page.evaluate((id) => {
-      const inputEl = document.getElementById(id);
-      const labelEl = document.querySelector(`label[for="${id}"]`);
-      return inputEl.compareDocumentPosition(labelEl) & Node.DOCUMENT_POSITION_FOLLOWING ? 'after' : 'before';
-    }, inputId);
-    expect(order).toBe('after');
-    await input.click();
-    await input.pressSequentially('ab1234');
-    await expect(input).toHaveValue('AB-1234');
-  });
 });

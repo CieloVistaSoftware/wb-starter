@@ -69,61 +69,6 @@
       "source": "<input type=\"text\" x-search placeholder=\"Search with icon\">",
       "alternates": []
     },
-    "x-colorpicker": {
-      "source": "<input type=\"text\" x-colorpicker value=\"#6366f1\">",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "green",
-          "source": "<input type=\"text\" x-colorpicker value=\"#22c55e\">"
-        },
-        {
-          "label": "red",
-          "source": "<input type=\"text\" x-colorpicker value=\"#ef4444\">"
-        },
-        {
-          "label": "amber",
-          "source": "<input type=\"text\" x-colorpicker value=\"#f59e0b\">"
-        },
-        {
-          "label": "black",
-          "source": "<input type=\"text\" x-colorpicker value=\"#000000\">"
-        },
-        {
-          "label": "white",
-          "source": "<input type=\"text\" x-colorpicker value=\"#ffffff\">"
-        }
-      ]
-    },
-    "x-masked": {
-      "source": "<input x-masked mask=\"(999) 999-9999\" placeholder=\"Phone: (999) 999-9999\">",
-      "alternates": [
-        "<input x-masked mask=\"99/99/9999\" placeholder=\"Date: MM/DD/YYYY\">",
-        "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Credit Card\">"
-      ],
-      "examples": [
-        {
-          "label": "date",
-          "source": "<input x-masked mask=\"99/99/9999\" placeholder=\"MM/DD/YYYY\">"
-        },
-        {
-          "label": "credit card",
-          "source": "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Card number\">"
-        },
-        {
-          "label": "postcode",
-          "source": "<input x-masked mask=\"99999-9999\" placeholder=\"ZIP+4\">"
-        },
-        {
-          "label": "prefilled time",
-          "source": "<input x-masked mask=\"99:99\" value=\"0930\" placeholder=\"HH:MM\">"
-        },
-        {
-          "label": "IBAN",
-          "source": "<input x-masked mask=\"AA99 9999 9999 9999 99\" placeholder=\"IBAN\">"
-        }
-      ]
-    },
     "x-stepper": {
       "source": "<div x-stepper value=\"5\" min=\"0\" max=\"10\"></div>",
       "alternates": [],
@@ -1298,10 +1243,6 @@
       "source": "<div x-switch label=\"Publish to staging on merge\" name=\"auto-deploy\"></div>",
       "alternates": []
     },
-    "x-otp": {
-      "source": "<div x-otp length=\"6\"></div>",
-      "alternates": []
-    },
     "x-counter": {
       "source": "<textarea x-counter max=\"280\" warning=\"40\" placeholder=\"What are you shipping?\"></textarea>",
       "alternates": [],
@@ -1579,32 +1520,6 @@
           "label": "wrapping a checkbox",
           "source": "<div x-label required>Accept the terms <input type=\"checkbox\"></div>",
           "form": "attribute"
-        }
-      ]
-    },
-    "x-autocomplete": {
-      "source": "<input x-autocomplete items=\"main,develop,release/3.0,fix/706-dropdown,docs/behaviors\" placeholder=\"Find a branch…\">",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "countries",
-          "source": "<input x-autocomplete items=\"Argentina,Australia,Austria,Belgium,Brazil,Canada\" placeholder=\"Country…\">"
-        },
-        {
-          "label": "languages",
-          "source": "<input x-autocomplete items=\"JavaScript,TypeScript,Python,Rust,Go\" value=\"Type\" placeholder=\"Language…\">"
-        },
-        {
-          "label": "prefilled",
-          "source": "<input x-autocomplete items=\"red,orange,yellow,green,blue\" value=\"green\">"
-        },
-        {
-          "label": "wide search box",
-          "source": "<input x-autocomplete items=\"Inbox,Sent,Drafts,Archive,Spam\" placeholder=\"Jump to folder…\" size=\"40\">"
-        },
-        {
-          "label": "cities, disabled",
-          "source": "<input x-autocomplete items=\"Austin,Boston,Chicago,Denver\" value=\"Boston\" disabled>"
         }
       ]
     },
@@ -2061,32 +1976,6 @@
         {
           "label": "medium, beside code",
           "source": "<div x-codetheme size=\"md\"></div>\n<code language=\"css\">.card { border-radius: 8px; }</code>"
-        }
-      ]
-    },
-    "x-tags": {
-      "source": "<input x-tags value=\"light-dom,no-build,playwright\" placeholder=\"Add a tag…\">",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "empty",
-          "source": "<input x-tags placeholder=\"Type a tag and press Enter\">"
-        },
-        {
-          "label": "one tag",
-          "source": "<input x-tags value=\"urgent\">"
-        },
-        {
-          "label": "many tags",
-          "source": "<input x-tags value=\"frontend,backend,devops,docs,design,qa\">"
-        },
-        {
-          "label": "long tags",
-          "source": "<input x-tags value=\"needs-design-review,blocked-by-upstream\">"
-        },
-        {
-          "label": "emoji tags",
-          "source": "<input x-tags value=\"🔥 hot,✅ done,🐛 bug\">"
         }
       ]
     },

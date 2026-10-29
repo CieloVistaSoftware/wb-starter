@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-27T05:10:23.208Z",
-  "count": 200,
+  "generatedAt": "2026-10-29T18:30:35.696Z",
+  "count": 194,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -321,27 +321,6 @@
         "since": "1.0.0",
         "status": "stable"
       }
-    },
-    {
-      "file": "autocomplete.schema.json",
-      "name": "autocomplete",
-      "title": "Autocomplete Behavior",
-      "description": "Adds a filterable suggestion list under a text input as the user types.",
-      "tag": "x-autocomplete",
-      "baseClass": "x-autocomplete",
-      "kind": "decorator",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Autocomplete options",
-          "default": []
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
     },
     {
       "file": "autosize.schema.json",
@@ -1967,18 +1946,6 @@
           "expanded": true
         }
       ],
-      "_metadata": {}
-    },
-    {
-      "file": "colorpicker.schema.json",
-      "name": "colorpicker",
-      "title": "Color Picker Behavior",
-      "description": "Turns a field into a native colour picker with a swatch.",
-      "tag": "x-colorpicker",
-      "baseClass": "x-colorpicker",
-      "kind": "decorator",
-      "properties": {},
-      "matrix": [],
       "_metadata": {}
     },
     {
@@ -5543,34 +5510,6 @@
       }
     },
     {
-      "file": "masked.schema.json",
-      "name": "masked",
-      "title": "Masked Input Behavior",
-      "description": "Formats input against a mask pattern (9 = digit, A = letter) as the user types.",
-      "tag": "x-masked",
-      "baseClass": "x-masked",
-      "kind": "decorator",
-      "properties": {
-        "mask": {
-          "type": "string",
-          "description": "Input mask pattern (e.g. '999-99-9999')",
-          "default": "this is the mask"
-        },
-        "placeholder": {
-          "type": "string",
-          "description": "Placeholder text for the empty field. When set it replaces the placeholder derived from the mask.",
-          "default": "this is the placeholder"
-        },
-        "maskPlaceholder": {
-          "type": "string",
-          "description": "Character that stands for each unfilled slot when the placeholder is derived from the mask (`999-99-9999` shows `___-__-____`). Used only when the element has no `placeholder` of its own.",
-          "default": "_"
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "masonry.schema.json",
       "name": "masonry",
       "title": "Masonry",
@@ -6216,31 +6155,6 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
       }
-    },
-    {
-      "file": "otp.schema.json",
-      "name": "otp",
-      "title": "OTP Behavior",
-      "description": "x-otp replaces the element's content with length single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.",
-      "tag": "x-otp",
-      "baseClass": "x-otp",
-      "kind": "decorator",
-      "properties": {
-        "length": {
-          "type": "integer",
-          "description": "Number of single-digit boxes.",
-          "default": 6,
-          "examples": [
-            3,
-            4,
-            5,
-            6,
-            8
-          ]
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
     },
     {
       "file": "cardoverlay.schema.json",
@@ -9385,18 +9299,6 @@
       }
     },
     {
-      "file": "tags.schema.json",
-      "name": "tags",
-      "title": "Tags Behavior",
-      "description": "Type and press Enter to build a list of removable tags next to a text input.",
-      "tag": "x-tags",
-      "baseClass": "x-tags",
-      "kind": "decorator",
-      "properties": {},
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "cardtestimonial.schema.json",
       "name": "cardtestimonial",
       "title": "Testimonial Card",
@@ -10080,56 +9982,6 @@
       "_metadata": {
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
-      }
-    },
-    {
-      "file": "validator.schema.json",
-      "name": "validator",
-      "title": "Validator",
-      "description": "x-validator validates the fields inside its host (usually a <form>): each field's validate rules are checked when the host's validateOn events fire (blur by default), a failing field gets aria-invalid, the errorClass and an error message after it, and a <form> host refuses to submit until every field passes, focusing the first invalid field and firing wb:validator:validate. Rules: required, email, url, number, integer, min:N, max:N, minLength:N, maxLength:N, pattern:REGEX, match:NAME.",
-      "tag": "x-validator",
-      "baseClass": "x-validator",
-      "kind": "decorator",
-      "properties": {
-        "validateOn": {
-          "type": "string",
-          "description": "Which events on the fields re-check the field that fired them, space-separated: any of blur, change, input. A <form> host always checks every field on submit.",
-          "default": "blur",
-          "visual": false,
-          "visualReason": "Changes when a field is checked, not how anything looks until it is (#1844)."
-        },
-        "showErrors": {
-          "type": "boolean",
-          "description": "Show the first failing rule's message in a span.x-validator__error right after the field. Set showErrors=\"false\" to mark the field (aria-invalid, errorClass) without a message.",
-          "default": true,
-          "visual": false,
-          "visualReason": "Only a field that has failed a check shows its message (#1844)."
-        },
-        "errorClass": {
-          "type": "string",
-          "description": "Class put on a field that fails its rules (and taken off when it passes). The default is styled in validator.css with the danger border colour.",
-          "default": "x-validator__field--invalid",
-          "visual": false,
-          "visualReason": "Only a field that has failed a check carries it (#1844)."
-        },
-        "successClass": {
-          "type": "string",
-          "description": "Class put on a field that passes its rules once checked (and taken off when it fails). The default is styled in validator.css with the success border colour.",
-          "default": "x-validator__field--valid",
-          "visual": false,
-          "visualReason": "Only a field that has been checked carries it (#1844)."
-        },
-        "validate": {
-          "type": "string",
-          "description": "Set on each field, not on the host: its rules, space-separated, e.g. `required email` or `minLength:8`.",
-          "default": "",
-          "scope": "child"
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "written by hand (#1841); host options declared in #1844",
-        "derivedFrom": "validator.js validator() — every property here is one the behavior reads"
       }
     },
     {
