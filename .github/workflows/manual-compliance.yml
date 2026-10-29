@@ -23,7 +23,7 @@ permissions:
 jobs:
   run-compliance:
     name: Run focused compliance (with artifacts)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # #1955: ubuntu-latest is 26.04, which Playwright 1.58 cannot install browsers on
     timeout-minutes: 60
     env:
       # Disable recursive fs.watch during CI runs to avoid platform-specific

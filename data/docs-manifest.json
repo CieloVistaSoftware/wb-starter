@@ -1,8 +1,8 @@
 {
-  "totalFiles": 251,
+  "totalFiles": 240,
   "audiences": {
-    "user": 175,
-    "maintainer": 76
+    "user": 163,
+    "maintainer": 77
   },
   "categories": [
     "_today",
@@ -12,6 +12,7 @@
     "claude",
     "compliance",
     "guides",
+    "legal",
     "root",
     "standards"
   ],
@@ -554,14 +555,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/autocomplete.md",
-        "title": "x-autocomplete Behavior",
-        "name": "autocomplete",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
         "path": "docs/behaviors/autosize.md",
         "title": "x-autosize Behavior (deprecated)",
         "name": "autosize",
@@ -842,22 +835,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/colorpicker.md",
-        "title": "x-colorpicker Behavior",
-        "name": "colorpicker",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
-        "path": "docs/behaviors/confetti.md",
-        "title": "Confetti",
-        "name": "confetti",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/confirm.md",
         "title": "Confirm",
         "name": "confirm",
@@ -1032,14 +1009,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2026-08-22"
-      },
-      {
-        "path": "docs/behaviors/fireworks.md",
-        "title": "Fireworks",
-        "name": "fireworks",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/fix-card.md",
@@ -1274,14 +1243,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/masked.md",
-        "title": "x-masked Behavior",
-        "name": "masked",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
         "path": "docs/behaviors/masonry.md",
         "title": "Masonry",
         "name": "masonry",
@@ -1344,14 +1305,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2025-12-28"
-      },
-      {
-        "path": "docs/behaviors/otp.md",
-        "title": "OTP Behavior",
-        "name": "otp",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/pagination.md",
@@ -1424,14 +1377,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2025-12-28"
-      },
-      {
-        "path": "docs/behaviors/rainbow.md",
-        "title": "Rainbow",
-        "name": "rainbow",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/range.md",
@@ -1594,22 +1539,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/snow.md",
-        "title": "Snow",
-        "name": "snow",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/sparkle.md",
-        "title": "Sparkle",
-        "name": "sparkle",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/spinner.md",
         "title": "Spinner",
         "name": "spinner",
@@ -1624,14 +1553,6 @@
         "category": "behaviors",
         "audience": "user",
         "created": "2026-08-20"
-      },
-      {
-        "path": "docs/behaviors/stagelight.md",
-        "title": "Stage Light - wb-starter v3.0",
-        "name": "stagelight",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/stat.md",
@@ -1714,14 +1635,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/tags.md",
-        "title": "x-tags Behavior",
-        "name": "tags",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-17"
-      },
-      {
         "path": "docs/behaviors/textarea.md",
         "title": "Textarea",
         "name": "textarea",
@@ -1786,14 +1699,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/typewriter.md",
-        "title": "Typewriter",
-        "name": "typewriter",
-        "category": "behaviors",
-        "audience": "user",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/ul.md",
         "title": "UL (Unordered List) Behavior Design & User Guide",
         "name": "ul",
@@ -1843,7 +1748,7 @@
       },
       {
         "path": "docs/behaviors/x-effects.md",
-        "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
+        "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein)",
         "name": "x-effects",
         "category": "behaviors",
         "audience": "maintainer",
@@ -1851,7 +1756,7 @@
       },
       {
         "path": "docs/behaviors/x-enhancements.md",
-        "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
+        "title": "x-enhancements (x-form, x-password, x-file)",
         "name": "x-enhancements",
         "category": "behaviors",
         "audience": "maintainer",
@@ -1974,6 +1879,16 @@
         "category": "guides",
         "audience": "user",
         "created": "2026-01-10"
+      }
+    ],
+    "legal": [
+      {
+        "path": "docs/legal/WB-PRO-EULA.md",
+        "title": "WB Pro — Commercial License (DRAFT)",
+        "name": "WB-PRO-EULA",
+        "category": "legal",
+        "audience": "maintainer",
+        "created": "2026-10-26"
       }
     ],
     "standards": [
@@ -2277,14 +2192,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/autocomplete.md",
-      "title": "x-autocomplete Behavior",
-      "name": "autocomplete",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
       "path": "docs/behaviors/autosize.md",
       "title": "x-autosize Behavior (deprecated)",
       "name": "autosize",
@@ -2565,22 +2472,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/colorpicker.md",
-      "title": "x-colorpicker Behavior",
-      "name": "colorpicker",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
-      "path": "docs/behaviors/confetti.md",
-      "title": "Confetti",
-      "name": "confetti",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/confirm.md",
       "title": "Confirm",
       "name": "confirm",
@@ -2755,14 +2646,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2026-08-22"
-    },
-    {
-      "path": "docs/behaviors/fireworks.md",
-      "title": "Fireworks",
-      "name": "fireworks",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/fix-card.md",
@@ -2997,14 +2880,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/masked.md",
-      "title": "x-masked Behavior",
-      "name": "masked",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
       "path": "docs/behaviors/masonry.md",
       "title": "Masonry",
       "name": "masonry",
@@ -3067,14 +2942,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2025-12-28"
-    },
-    {
-      "path": "docs/behaviors/otp.md",
-      "title": "OTP Behavior",
-      "name": "otp",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/pagination.md",
@@ -3147,14 +3014,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2025-12-28"
-    },
-    {
-      "path": "docs/behaviors/rainbow.md",
-      "title": "Rainbow",
-      "name": "rainbow",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/range.md",
@@ -3317,22 +3176,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/snow.md",
-      "title": "Snow",
-      "name": "snow",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/sparkle.md",
-      "title": "Sparkle",
-      "name": "sparkle",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/spinner.md",
       "title": "Spinner",
       "name": "spinner",
@@ -3347,14 +3190,6 @@
       "category": "behaviors",
       "audience": "user",
       "created": "2026-08-20"
-    },
-    {
-      "path": "docs/behaviors/stagelight.md",
-      "title": "Stage Light - wb-starter v3.0",
-      "name": "stagelight",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/stat.md",
@@ -3437,14 +3272,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/tags.md",
-      "title": "x-tags Behavior",
-      "name": "tags",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-17"
-    },
-    {
       "path": "docs/behaviors/textarea.md",
       "title": "Textarea",
       "name": "textarea",
@@ -3509,14 +3336,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/typewriter.md",
-      "title": "Typewriter",
-      "name": "typewriter",
-      "category": "behaviors",
-      "audience": "user",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/ul.md",
       "title": "UL (Unordered List) Behavior Design & User Guide",
       "name": "ul",
@@ -3566,7 +3385,7 @@
     },
     {
       "path": "docs/behaviors/x-effects.md",
-      "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
+      "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein)",
       "name": "x-effects",
       "category": "behaviors",
       "audience": "maintainer",
@@ -3574,7 +3393,7 @@
     },
     {
       "path": "docs/behaviors/x-enhancements.md",
-      "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
+      "title": "x-enhancements (x-form, x-password, x-file)",
       "name": "x-enhancements",
       "category": "behaviors",
       "audience": "maintainer",
@@ -3779,6 +3598,14 @@
       "category": "root",
       "audience": "maintainer",
       "created": "2026-01-10"
+    },
+    {
+      "path": "docs/legal/WB-PRO-EULA.md",
+      "title": "WB Pro — Commercial License (DRAFT)",
+      "name": "WB-PRO-EULA",
+      "category": "legal",
+      "audience": "maintainer",
+      "created": "2026-10-26"
     },
     {
       "path": "docs/linkedin-framework-agnostic.md",

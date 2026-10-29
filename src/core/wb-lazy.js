@@ -9,7 +9,7 @@
  */
 
 import { hasAuthoredAttr } from './read-attr.js';
-import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules, canonicalBehaviorName } from '../wb-viewmodels/index.js';
+import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules, canonicalBehaviorName, onBehaviorPack } from '../wb-viewmodels/index.js';
 import { markReady } from './ready-signal.js';
 import { Events } from './events.js';
 import './click-confirm.js';
@@ -219,6 +219,16 @@ const customElementMappings = [
   // way instead: <button x-tooltip tooltip="Save changes">, on a host the
   // author already knows.
 ];
+// A behavior pack (WB Pro, #1953) registered after this module loaded: route
+// its behaviors by their own x-{name} attribute, like the registry's others.
+onBehaviorPack((added) => {
+  const routed = new Set(customElementMappings.map((m) => m.selector));
+  for (const name of added) {
+    const selector = `[x-${name}]`;
+    if (!routed.has(selector)) customElementMappings.push({ selector, behavior: name });
+  }
+});
+
 
 const autoInjectMappings = [
   ...Object.entries(nativeMap).map(([selector, behavior]) => ({ selector, behavior })),

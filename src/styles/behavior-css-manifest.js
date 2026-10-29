@@ -68,7 +68,6 @@ export const BEHAVIOR_CSS_MAP = {
   accordion: ['accordion.css'],
   alert: ['alert.css'],
   audio: ['audio.css'],
-  autocomplete: ['autocomplete.css'],
   avatar: ['avatar.css'],
   badge: ['badge.css'],
   // pill() is badge() with pill:true -- it stamps the same .x-badge /
@@ -120,7 +119,6 @@ export const BEHAVIOR_CSS_MAP = {
   // #1095: these three added classes no stylesheet defined, and were missing
   // from this map, so even a rule would never have loaded.
   inputgroup: ['input.css'],
-  colorpicker: ['input.css'],
   formrow: ['form.css'],
   // #1095: their host classes are styled in form.css; unmapped, the rule
   // would never load.
@@ -128,7 +126,6 @@ export const BEHAVIOR_CSS_MAP = {
   help: ['form.css'],
   error: ['form.css'],
   file: ['form.css'],
-  masked: ['form.css'],
 
   label: ['label.css'],
   // #773: the status variants (x-status--primary, --success...; x-span until
@@ -136,7 +133,6 @@ export const BEHAVIOR_CSS_MAP = {
   status: ['status.css'],
   mdhtml: ['mdhtml.css'],
   notes: ['notes.css'],
-  otp: ['otp.css'],
   pagination: ['pagination.css'],
   popover: ['popover.css'],
   // #779: overlay.js's other panels, formerly built with style.cssText.
@@ -155,7 +151,6 @@ export const BEHAVIOR_CSS_MAP = {
   stepper: ['stepper.css'],
   steps: ['steps.css'],
   switch: ['switch.css'],
-  tags: ['tags.css'],
   themecontrol: ['themecontrol.css'],
   timeline: ['timeline.css'],
   toast: ['toast.css'],
@@ -184,10 +179,7 @@ export const BEHAVIOR_CSS_MAP = {
   // Effects/utilities — all genuine WB.inject()-dispatched behaviors.
   ripple: ['effects.css'],
   sticky: ['effects.css'],
-  confetti: ['effects.css'],
-  fireworks: ['effects.css'],
-  snow: ['effects.css'],
-  stagelight: ['effects.css'],
+  
   animate: ['effects.css'],
   // #779: every other effects.js behavior. Their declarations moved from
   // element.style into effects.css, so a behavior missing here would load
@@ -198,9 +190,9 @@ export const BEHAVIOR_CSS_MAP = {
   shake: ['effects.css'], pulse: ['effects.css'], flash: ['effects.css'],
   tada: ['effects.css'], wobble: ['effects.css'], jello: ['effects.css'],
   swing: ['effects.css'], rubberband: ['effects.css'], heartbeat: ['effects.css'],
-  typewriter: ['effects.css'], countup: ['effects.css'], parallax: ['effects.css'],
-  reveal: ['effects.css'], marquee: ['effects.css'], sparkle: ['effects.css'],
-  glow: ['effects.css'], rainbow: ['effects.css'], particle: ['effects.css'],
+  reveal: ['effects.css'], glow: ['effects.css'],
+  // The showpiece effects and the advanced inputs are WB Pro (#1953); the
+  // pack loads its own stylesheets.
 
   // #779: stylesheets that exist because these behaviors stopped writing
   // their declarations onto element.style.
@@ -244,5 +236,4 @@ export const BEHAVIOR_CSS_MAP = {
   img: ['image.css'],
   figure: ['image.css'],
   json: ['json.css'],
-  validator: ['validator.css'],
 };

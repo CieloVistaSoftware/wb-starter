@@ -21,8 +21,7 @@ import { settlePage } from '../base';
  *
  * Both tags are now in SCHEMA_EXCLUDED_TAGS.
  *
- * #655 also wired up confetti's `repeat`; it has since been removed (a burst
- * every 3s with no way to stop it), so the test now pins that it stays inert.
+ * The x-confetti half moved to WB Pro (#1953) with the behavior.
  */
 
 test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => {
@@ -66,45 +65,5 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
     expect(result.height).toBeGreaterThan(0);
     expect(result.waveCount, 'a press must produce a ripple wave').toBe(1);
     expect(result.waveWidth, 'the wave must be sized to cover the host').toBeGreaterThan(50);
-  });
-});
-
-test.describe('[x-confetti] keeps authored content and never fires unattended (#655)', () => {
-  test('<div x-confetti> keeps its text; a leftover repeat attribute does nothing', async ({ page }) => {
-    // The removed `repeat` looped on a 3s timer; the page's clock is driven
-    // from here (#1516) so "no burst on its own" covers that window exactly.
-    await page.clock.install();
-    await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => !!(window as any).WB, null, { timeout: 30000 });
-
-    await page.evaluate(async () => {
-      const host = document.createElement('div');
-      // `repeat` was removed: it looped a burst every 3s with no way to stop
-      // it from the page. Markup that still carries it must stay inert.
-      host.innerHTML =
-        '<div x-confetti repeat duration="600ms">This is example confetti content.</div>';
-      document.body.appendChild(host);
-      const el = host.querySelector('[x-confetti]') as HTMLElement & { wbConfetti?: any };
-      await (window as any).WB.inject(el, 'confetti');
-
-      (window as any).__confetti = { host, el, base: document.querySelectorAll('.x-confetti__overlay').length };
-    });
-    await page.clock.runFor(3500);
-    const result = await page.evaluate(() => {
-      const { host, el, base } = (window as any).__confetti;
-      const count = () => document.querySelectorAll('.x-confetti__overlay').length;
-      const unattended = count() - base;
-      el.click();
-      const afterClick = count() - base;
-
-      const text = el.textContent?.trim() ?? '';
-      host.remove();
-      document.querySelectorAll('.x-confetti__overlay').forEach((c) => c.remove());
-      return { unattended, afterClick, text };
-    });
-
-    expect(result.unattended, 'confetti must never fire on its own').toBe(0);
-    expect(result.afterClick, 'a click still fires one burst').toBe(1);
-    expect(result.text, 'authored text must survive the schema pass').toContain('example confetti content');
   });
 });

@@ -164,12 +164,12 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   });
 
   test('Actions: 4 behavior buttons present', async ({ page }) => {
-    await expect(page.locator('button[x-ripple], button[x-tooltip], button[x-confetti], button[x-copy]')).toHaveCount(4);
+    await expect(page.locator('button[x-ripple], button[x-tooltip], button[x-tada], button[x-copy]')).toHaveCount(4);
   });
 
   test('Actions: buttons contain expected text', async ({ page }) => {
     const container = page.locator('[x-container]');
-    for (const text of ['Ripple', 'Tooltip', 'Confetti', 'Copy']) {
+    for (const text of ['Ripple', 'Tooltip', 'Tada', 'Copy']) {
       await expect(container).toContainText(text);
     }
   });
@@ -509,48 +509,31 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     await expect(page.locator('.x-tooltip')).toHaveCount(0);
   });
 
-  test('Interaction: confetti button spawns particles that really fall', async ({ page }) => {
-    const btn = page.locator('button[x-confetti]');
+  // The home page's confetti button became x-tada when confetti moved to WB Pro
+  // (#1953); the confetti version of this check moved with it.
+  test('Interaction: tada button really animates on click', async ({ page }) => {
+    const btn = page.locator('button[x-tada]');
     await expect(btn).toHaveCount(1);
-    await expect(btn).toHaveClass(/\bx-confetti--trigger\b/);
-    await expect(page.locator('.x-confetti__overlay')).toHaveCount(0);
 
-    // Armed on the document BEFORE the click: the particles do not exist yet,
-    // and animationstart bubbles. Filtered to x-confetti-fall on purpose --
-    // confetti() also puts an INFINITE `x-confetti-gradient` animation on the
-    // trigger button itself, which would satisfy an unfiltered listener
-    // whether or not a single particle ever fell.
+    // Armed before the click and filtered to x-tada, so the test fails if the
+    // click names a keyframe no stylesheet defines (the #847 failure mode).
     await page.evaluate(() => {
-      (window as any).__wbFall = [];
+      (window as any).__wbTada = [];
       document.addEventListener('animationstart', (e) => {
         const ev = e as AnimationEvent;
-        if (ev.animationName === 'x-confetti-fall') (window as any).__wbFall.push(ev.animationName);
+        if (ev.animationName === 'x-tada') (window as any).__wbTada.push(ev.animationName);
       });
     });
 
     await btn.click();
 
-    const container = page.locator('.x-confetti__overlay');
-    await expect(container).toHaveCount(1);
-    // confetti() defaults to count=50 and the home page overrides nothing.
-    // Asserting the COUNT is what proves the burst was built, rather than an
-    // empty container being appended.
-    await expect(container.locator('> div')).toHaveCount(50);
-
-    // Particles carry a random animation-delay of up to 0.3s.
     await expect
-      .poll(async () => page.evaluate(() => (window as any).__wbFall.length), {
+      .poll(async () => page.evaluate(() => (window as any).__wbTada.length), {
         timeout: 5000,
-        message:
-          '50 confetti particles were appended but the browser started no x-confetti-fall '
-          + 'animation on any of them, so nothing fell (the #847 failure mode)',
+        message: 'clicking the tada button started no x-tada animation',
       })
       .toBeGreaterThan(0);
-
-    expect(
-      await missingKeyframes(page, ['x-confetti-fall']),
-      'x-confetti-fall matches no @keyframes in any loaded stylesheet',
-    ).toEqual([]);
+    expect(await missingKeyframes(page, ['x-tada']), 'x-tada matches no @keyframes').toEqual([]);
   });
 
   test('Interaction: copy button writes its label to the clipboard', async ({ page, context }) => {

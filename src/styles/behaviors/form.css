@@ -74,8 +74,3 @@
   background: var(--bg-secondary);
 }
 
-/* masked(): every digit the same width, so a value keeps the shape of its
-   mask while it is typed ("(555) 123-4567" does not shift as 1s go in). */
-.x-masked {
-  font-variant-numeric: tabular-nums;
-}

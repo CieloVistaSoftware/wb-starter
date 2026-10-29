@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-17T02:17:07.757Z",
-  "count": 211,
+  "generatedAt": "2026-10-29T18:30:35.696Z",
+  "count": 194,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -321,27 +321,6 @@
         "since": "1.0.0",
         "status": "stable"
       }
-    },
-    {
-      "file": "autocomplete.schema.json",
-      "name": "autocomplete",
-      "title": "Autocomplete Behavior",
-      "description": "Adds a filterable suggestion list under a text input as the user types.",
-      "tag": "x-autocomplete",
-      "baseClass": "x-autocomplete",
-      "kind": "decorator",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Autocomplete options",
-          "default": []
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
     },
     {
       "file": "autosize.schema.json",
@@ -1802,7 +1781,7 @@
           "examples": [
             "America/Chicago",
             "America/New_York",
-            "Europe/London",
+            "Asia/Tokyo",
             "local"
           ]
         }
@@ -1968,71 +1947,6 @@
         }
       ],
       "_metadata": {}
-    },
-    {
-      "file": "colorpicker.schema.json",
-      "name": "colorpicker",
-      "title": "Color Picker Behavior",
-      "description": "Turns a field into a native colour picker with a swatch.",
-      "tag": "x-colorpicker",
-      "baseClass": "x-colorpicker",
-      "kind": "decorator",
-      "properties": {},
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
-      "file": "confetti.schema.json",
-      "name": "confetti",
-      "title": "Confetti",
-      "description": "Confetti particle animation effect",
-      "tag": "x-confetti",
-      "baseClass": "x-confetti",
-      "kind": "decorator",
-      "properties": {
-        "count": {
-          "type": "number",
-          "description": "Number of particles",
-          "default": 50
-        },
-        "label": {
-          "type": "string",
-          "description": "Trigger button label",
-          "default": "Fire Confetti!"
-        },
-        "showButton": {
-          "type": "boolean",
-          "description": "Show trigger button",
-          "default": true
-        },
-        "delay": {
-          "type": "string",
-          "description": "Start delay",
-          "default": "0s"
-        },
-        "duration": {
-          "type": "string",
-          "description": "Animation duration",
-          "default": "3s"
-        },
-        "colors": {
-          "type": "string",
-          "description": "Particle colors as JSON array",
-          "default": "[\"#ff0\",\"#f0f\",\"#0ff\",\"#0f0\",\"#f00\"]"
-        }
-      },
-      "matrix": [
-        {},
-        {
-          "count": 100
-        }
-      ],
-      "_metadata": {
-        "category": "effects",
-        "icon": "🎉",
-        "since": "1.0.0",
-        "status": "stable"
-      }
     },
     {
       "file": "confirm.schema.json",
@@ -2292,52 +2206,6 @@
       },
       "matrix": [],
       "_metadata": {}
-    },
-    {
-      "file": "countup.schema.json",
-      "name": "countup",
-      "title": "Countup",
-      "description": "Counts its host's number up from a start value to an end value, easing out, the first time it scrolls into view. It applies to any element, so it names no host.",
-      "tag": "x-countup",
-      "baseClass": "x-countup",
-      "kind": "decorator",
-      "properties": {
-        "from": {
-          "type": "number",
-          "description": "The number the count starts at.",
-          "default": 0
-        },
-        "to": {
-          "type": "number",
-          "description": "The number the count ends at. Without it the host's own text is the target, and 100 when that is empty.",
-          "default": 100
-        },
-        "duration": {
-          "type": "number",
-          "description": "How long the count takes, in milliseconds.",
-          "default": 2000
-        },
-        "prefix": {
-          "type": "string",
-          "description": "Text written before the number, such as $.",
-          "default": ""
-        },
-        "suffix": {
-          "type": "string",
-          "description": "Text written after the number, such as % or +.",
-          "default": ""
-        },
-        "decimals": {
-          "type": "number",
-          "description": "Digits shown after the decimal point.",
-          "default": 0
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "written by hand (#879)",
-        "derivedFrom": "src/wb-viewmodels/effects.js countup() — every property here is one the behavior reads"
-      }
     },
     {
       "file": "cover.schema.json",
@@ -3508,67 +3376,6 @@
       "_metadata": {}
     },
     {
-      "file": "fireworks.schema.json",
-      "name": "fireworks",
-      "title": "Fireworks",
-      "description": "Fireworks particle burst animation effect",
-      "tag": "x-fireworks",
-      "baseClass": "x-fireworks",
-      "kind": "decorator",
-      "properties": {
-        "count": {
-          "type": "number",
-          "description": "Particles per burst",
-          "default": 30
-        },
-        "label": {
-          "type": "string",
-          "description": "Trigger button label",
-          "default": "Fireworks!"
-        },
-        "showButton": {
-          "type": "boolean",
-          "description": "Show trigger button",
-          "default": true
-        },
-        "repeat": {
-          "type": "boolean",
-          "description": "Loop animation",
-          "default": false
-        },
-        "delay": {
-          "type": "string",
-          "description": "Start delay",
-          "default": "0s"
-        },
-        "duration": {
-          "type": "string",
-          "description": "Animation duration",
-          "default": "1.5s"
-        },
-        "colors": {
-          "type": "string",
-          "description": "Particle colors as JSON array",
-          "default": "[\"#ff0\",\"#f00\",\"#0ff\",\"#f0f\"]"
-        }
-      },
-      "matrix": [
-        {},
-        {
-          "count": 50
-        },
-        {
-          "repeat": true
-        }
-      ],
-      "_metadata": {
-        "category": "effects",
-        "icon": "🎆",
-        "since": "1.0.0",
-        "status": "stable"
-      }
-    },
-    {
       "file": "fix-card.schema.json",
       "name": "fix-card",
       "title": "Fix Card",
@@ -4545,8 +4352,8 @@
               "behavior": "x-tooltip"
             },
             {
-              "label": "🎉 Confetti",
-              "behavior": "x-confetti"
+              "label": "🎉 Tada",
+              "behavior": "x-tada"
             },
             {
               "label": "📋 Copy",
@@ -5703,55 +5510,6 @@
       }
     },
     {
-      "file": "marquee.schema.json",
-      "name": "marquee",
-      "title": "Marquee",
-      "description": "x-marquee scrolls its content horizontally in an endless loop, as two copies of the content moving side by side.",
-      "tag": "x-marquee",
-      "baseClass": "x-marquee",
-      "kind": "decorator",
-      "properties": {
-        "speed": {
-          "type": "number",
-          "description": "Seconds one full loop takes (`--x-marquee-speed`). Larger is slower.",
-          "default": 30
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "written by hand (#1841)",
-        "derivedFrom": "effects.js marquee() — every property here is one the behavior reads"
-      }
-    },
-    {
-      "file": "masked.schema.json",
-      "name": "masked",
-      "title": "Masked Input Behavior",
-      "description": "Formats input against a mask pattern (9 = digit, A = letter) as the user types.",
-      "tag": "x-masked",
-      "baseClass": "x-masked",
-      "kind": "decorator",
-      "properties": {
-        "mask": {
-          "type": "string",
-          "description": "Input mask pattern (e.g. '999-99-9999')",
-          "default": "this is the mask"
-        },
-        "placeholder": {
-          "type": "string",
-          "description": "Placeholder text for the empty field. When set it replaces the placeholder derived from the mask.",
-          "default": "this is the placeholder"
-        },
-        "maskPlaceholder": {
-          "type": "string",
-          "description": "Character that stands for each unfilled slot when the placeholder is derived from the mask (`999-99-9999` shows `___-__-____`). Used only when the element has no `placeholder` of its own.",
-          "default": "_"
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "masonry.schema.json",
       "name": "masonry",
       "title": "Masonry",
@@ -6399,31 +6157,6 @@
       }
     },
     {
-      "file": "otp.schema.json",
-      "name": "otp",
-      "title": "OTP Behavior",
-      "description": "x-otp replaces the element's content with length single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.",
-      "tag": "x-otp",
-      "baseClass": "x-otp",
-      "kind": "decorator",
-      "properties": {
-        "length": {
-          "type": "integer",
-          "description": "Number of single-digit boxes.",
-          "default": 6,
-          "examples": [
-            3,
-            4,
-            5,
-            6,
-            8
-          ]
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "cardoverlay.schema.json",
       "name": "cardoverlay",
       "title": "Overlay Card",
@@ -6565,53 +6298,6 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-      }
-    },
-    {
-      "file": "parallax.schema.json",
-      "name": "parallax",
-      "title": "Parallax",
-      "description": "x-parallax shifts its host vertically as the page scrolls, by an amount proportional to how far the host is from the bottom of the viewport.",
-      "tag": "x-parallax",
-      "baseClass": "x-parallax",
-      "kind": "decorator",
-      "properties": {
-        "speed": {
-          "type": "number",
-          "description": "How strongly the host moves with the scroll. 0 holds it still; larger moves it further.",
-          "default": 0.5
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "written by hand (#1841)",
-        "derivedFrom": "effects.js parallax() — every property here is one the behavior reads"
-      }
-    },
-    {
-      "file": "particle.schema.json",
-      "name": "particle",
-      "title": "Particle",
-      "description": "x-particle fills its host with small dots that float upward continuously, each at a random size, position and speed. Pressing the host gives press feedback (x-particle--pressed).",
-      "tag": "x-particle",
-      "baseClass": "x-particle",
-      "kind": "decorator",
-      "properties": {
-        "count": {
-          "type": "number",
-          "description": "How many dots float in the host.",
-          "default": 20
-        },
-        "color": {
-          "type": "string",
-          "description": "Dot colour, as any CSS colour (`--x-particle-color`). Empty uses the theme's primary colour.",
-          "default": ""
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "written by hand (#1841)",
-        "derivedFrom": "effects.js particle() — every property here is one the behavior reads"
       }
     },
     {
@@ -7554,28 +7240,6 @@
             "lg"
           ],
           "default": "md"
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
-        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-      }
-    },
-    {
-      "file": "rainbow.schema.json",
-      "name": "rainbow",
-      "title": "Rainbow",
-      "description": "x-rainbow paints the element's text with a moving rainbow gradient that cycles every duration.",
-      "tag": "x-rainbow",
-      "baseClass": "x-rainbow",
-      "kind": "decorator",
-      "properties": {
-        "duration": {
-          "type": "string",
-          "description": "How long one full colour cycle takes, as a CSS duration (e.g. `3s`). Longer is slower.",
-          "default": "3s"
         }
       },
       "matrix": [],
@@ -8814,84 +8478,6 @@
       "_metadata": {}
     },
     {
-      "file": "snow.schema.json",
-      "name": "snow",
-      "title": "Snow",
-      "description": "Falling snowflake animation effect",
-      "tag": "x-snow",
-      "baseClass": "x-snow",
-      "kind": "decorator",
-      "properties": {
-        "count": {
-          "type": "number",
-          "description": "Number of snowflakes",
-          "default": 30
-        },
-        "label": {
-          "type": "string",
-          "description": "Trigger button label",
-          "default": "Let it Snow!"
-        },
-        "showButton": {
-          "type": "boolean",
-          "description": "Show trigger button",
-          "default": true
-        },
-        "repeat": {
-          "type": "boolean",
-          "description": "Loop animation",
-          "default": true
-        },
-        "delay": {
-          "type": "string",
-          "description": "Start delay",
-          "default": "0s"
-        },
-        "duration": {
-          "type": "string",
-          "description": "Fall duration",
-          "default": "8s"
-        }
-      },
-      "matrix": [
-        {},
-        {
-          "count": 50
-        },
-        {
-          "repeat": false
-        }
-      ],
-      "_metadata": {
-        "category": "effects",
-        "icon": "❄️",
-        "since": "1.0.0",
-        "status": "stable"
-      }
-    },
-    {
-      "file": "sparkle.schema.json",
-      "name": "sparkle",
-      "title": "Sparkle",
-      "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
-      "tag": "x-sparkle",
-      "baseClass": "x-sparkle",
-      "kind": "decorator",
-      "properties": {
-        "count": {
-          "type": "string",
-          "description": "How many sparkle particles to emit. The behavior's default is `15`.",
-          "default": "15"
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
-        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-      }
-    },
-    {
       "file": "spinner.schema.json",
       "name": "spinner",
       "title": "Spinner",
@@ -9013,82 +8599,6 @@
         "icon": "📦",
         "viewModel": "src/wb-viewmodels/x-stack.js"
       }
-    },
-    {
-      "file": "stagelight.schema.json",
-      "name": "stagelight",
-      "title": "Stage Light",
-      "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
-      "tag": "x-stagelight",
-      "baseClass": "x-stagelight",
-      "kind": "decorator",
-      "properties": {
-        "variant": {
-          "type": "string",
-          "description": "Type of light effect",
-          "enum": [
-            "beam",
-            "spotlight",
-            "fixture"
-          ],
-          "default": "beam",
-          "appliesClass": "x-stagelight--{{value}}"
-        },
-        "color": {
-          "type": "string",
-          "description": "Color of the light (hex, rgb, or named)",
-          "default": "#ffffff"
-        },
-        "intensity": {
-          "type": "number",
-          "description": "Brightness/Opacity (0-1)",
-          "default": 0.5
-        },
-        "size": {
-          "type": "string",
-          "description": "Size of the light/beam",
-          "default": "300px"
-        },
-        "speed": {
-          "type": "string",
-          "description": "Animation speed (e.g., 3s)",
-          "default": "3s"
-        },
-        "target": {
-          "type": "string",
-          "description": "Selector for element to track (for spotlight/fixture)",
-          "default": "mouse"
-        },
-        "label": {
-          "type": "string",
-          "description": "Label for the fixture variant",
-          "default": "this is the label"
-        }
-      },
-      "matrix": [
-        {
-          "variant": "beam",
-          "color": "#6366f1",
-          "intensity": 0.7
-        },
-        {
-          "variant": "spotlight",
-          "color": "#f59e0b",
-          "intensity": 0.5,
-          "size": "400px"
-        },
-        {
-          "variant": "fixture",
-          "color": "#ef4444",
-          "label": "Red Light"
-        },
-        {
-          "variant": "beam",
-          "color": "#22c55e",
-          "speed": "5s"
-        }
-      ],
-      "_metadata": {}
     },
     {
       "file": "stat.schema.json",
@@ -9789,18 +9299,6 @@
       }
     },
     {
-      "file": "tags.schema.json",
-      "name": "tags",
-      "title": "Tags Behavior",
-      "description": "Type and press Enter to build a list of removable tags next to a text input.",
-      "tag": "x-tags",
-      "baseClass": "x-tags",
-      "kind": "decorator",
-      "properties": {},
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "cardtestimonial.schema.json",
       "name": "cardtestimonial",
       "title": "Testimonial Card",
@@ -10445,38 +9943,6 @@
       }
     },
     {
-      "file": "typewriter.schema.json",
-      "name": "typewriter",
-      "title": "Typewriter",
-      "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
-      "tag": "x-typewriter",
-      "baseClass": "x-typewriter",
-      "kind": "decorator",
-      "properties": {
-        "speed": {
-          "type": "string",
-          "description": "Milliseconds between characters. Defaults to `50` — lower is faster.",
-          "default": "50"
-        },
-        "text": {
-          "type": "string",
-          "description": "Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup.",
-          "default": "this is the text"
-        },
-        "cursor": {
-          "type": "boolean",
-          "description": "Show the blinking caret while typing. On by default; cursor=\"false\" turns it off. It is a caret, not a character: its look comes from the stylesheet.",
-          "default": true
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
-        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-      }
-    },
-    {
       "file": "ul.schema.json",
       "name": "ul",
       "title": "Unordered list",
@@ -10516,56 +9982,6 @@
       "_metadata": {
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), properties filled by hand (#879)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads"
-      }
-    },
-    {
-      "file": "validator.schema.json",
-      "name": "validator",
-      "title": "Validator",
-      "description": "x-validator validates the fields inside its host (usually a <form>): each field's validate rules are checked when the host's validateOn events fire (blur by default), a failing field gets aria-invalid, the errorClass and an error message after it, and a <form> host refuses to submit until every field passes, focusing the first invalid field and firing wb:validator:validate. Rules: required, email, url, number, integer, min:N, max:N, minLength:N, maxLength:N, pattern:REGEX, match:NAME.",
-      "tag": "x-validator",
-      "baseClass": "x-validator",
-      "kind": "decorator",
-      "properties": {
-        "validateOn": {
-          "type": "string",
-          "description": "Which events on the fields re-check the field that fired them, space-separated: any of blur, change, input. A <form> host always checks every field on submit.",
-          "default": "blur",
-          "visual": false,
-          "visualReason": "Changes when a field is checked, not how anything looks until it is (#1844)."
-        },
-        "showErrors": {
-          "type": "boolean",
-          "description": "Show the first failing rule's message in a span.x-validator__error right after the field. Set showErrors=\"false\" to mark the field (aria-invalid, errorClass) without a message.",
-          "default": true,
-          "visual": false,
-          "visualReason": "Only a field that has failed a check shows its message (#1844)."
-        },
-        "errorClass": {
-          "type": "string",
-          "description": "Class put on a field that fails its rules (and taken off when it passes). The default is styled in validator.css with the danger border colour.",
-          "default": "x-validator__field--invalid",
-          "visual": false,
-          "visualReason": "Only a field that has failed a check carries it (#1844)."
-        },
-        "successClass": {
-          "type": "string",
-          "description": "Class put on a field that passes its rules once checked (and taken off when it fails). The default is styled in validator.css with the success border colour.",
-          "default": "x-validator__field--valid",
-          "visual": false,
-          "visualReason": "Only a field that has been checked carries it (#1844)."
-        },
-        "validate": {
-          "type": "string",
-          "description": "Set on each field, not on the host: its rules, space-separated, e.g. `required email` or `minLength:8`.",
-          "default": "",
-          "scope": "child"
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "written by hand (#1841); host options declared in #1844",
-        "derivedFrom": "validator.js validator() — every property here is one the behavior reads"
       }
     },
     {

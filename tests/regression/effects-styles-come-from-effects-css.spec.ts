@@ -6,7 +6,9 @@ import { injectAndScan } from '../helpers/inject-and-scan';
  * confetti, sparkle, rainbow, fireworks, snow, particle, ripple, sticky and
  * stagelight each appended their own <style> the first time they ran, so
  * which half of an effect lived where was invisible from the outside. Every
- * one of them is now styled by effects.css alone.
+ * one of them is now styled by effects.css alone. The Pro effects (confetti,
+ * sparkle, rainbow, fireworks, snow, particle, stagelight) moved to WB Pro
+ * with this check (#1953); ripple and sticky stay here.
  *
  * This runs each effect and checks two things: none of the <style> tags the
  * effects used to append appears, and every @keyframes an effect animates
@@ -15,32 +17,19 @@ import { injectAndScan } from '../helpers/inject-and-scan';
  */
 
 const MARKUP = `
-  <button id="cf" x-confetti count="3">Confetti</button>
-  <button id="sp" x-sparkle count="3">Sparkle</button>
-  <span id="rb" x-rainbow>Rainbow</span>
-  <button id="fw" x-fireworks>Fireworks</button>
-  <button id="sn" x-snow count="3">Snow</button>
-  <div id="pt" x-particle count="3" style="height: 60px"></div>
   <button id="rp" x-ripple>Ripple</button>
-  <header id="st" x-sticky>Sticky</header>
-  <div id="sl" x-stagelight>Stage</div>`;
+  <header id="st" x-sticky>Sticky</header>`;
 
 /** The ids of the <style> tags the effects appended before #817. */
-const EFFECT_STYLE_IDS = [
-  'x-confetti-styles', 'x-sparkle-styles', 'x-rainbow-styles', 'x-firework-styles',
-  'x-snow-styles', 'x-particle-styles', 'x-ripple-styles', 'x-sticky-styles', 'x-stagelight-styles',
-];
+const EFFECT_STYLE_IDS = ['x-ripple-styles', 'x-sticky-styles'];
 
-const KEYFRAMES = [
-  'x-confetti-fall', 'x-confetti-gradient', 'x-sparkle', 'x-rainbow',
-  'x-firework-particle', 'x-snow-fall', 'x-particle-float', 'x-ripple-animation',
-];
+const KEYFRAMES = ['x-ripple-animation'];
 
 test('running every effect adds none of its old <style> tags, and the keyframes they use are in a stylesheet', async ({ page }) => {
   await injectAndScan(page, MARKUP);
 
   // Fire the ones that build their particles or waves on a click.
-  for (const id of ['cf', 'sp', 'fw', 'sn', 'rp']) {
+  for (const id of ['rp']) {
     await page.evaluate((elId) => {
       const el = document.getElementById(elId)!;
       el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));

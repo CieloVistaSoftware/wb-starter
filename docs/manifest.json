@@ -139,12 +139,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/stagelight.md",
-          "title": "Stage Light",
-          "description": "Beam, spotlight, and fixture lighting effects",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/tooltip.md",
           "title": "Tooltip Behavior",
           "description": "Tooltip behavior",
@@ -178,12 +172,6 @@
           "file": "behaviors/audio.md",
           "title": "Audio",
           "description": "A bare <audio> gets a styled player with a track display, a play button and, when show-eq is set, a 15-band graphic equaliser with bass and treble controls.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/autocomplete.md",
-          "title": "x-autocomplete Behavior",
-          "description": "Adds a filterable suggestion list under a text input as the user types.",
           "modified": "2026-10-10"
         },
         {
@@ -379,18 +367,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/colorpicker.md",
-          "title": "x-colorpicker Behavior",
-          "description": "Turns a field into a native color picker.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/confetti.md",
-          "title": "Confetti",
-          "description": "x-confetti fires a burst of coloured confetti from the element each time it is clicked; count sets how many pieces and colors their palette.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/confirm.md",
           "title": "Confirm",
           "description": "x-confirm puts a confirmation dialog in front of a click: the dialog shows confirm-title and confirm-message with OK and Cancel buttons, and fires…",
@@ -520,12 +496,6 @@
           "file": "behaviors/fill.md",
           "title": "fill — as wide as the container allows",
           "description": "x-fill makes an element take all the width its container will give it.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/fireworks.md",
-          "title": "Fireworks",
-          "description": "x-fireworks launches a burst of firework particles from the element each time it is clicked; count sets particles per burst and colors their palette.",
           "modified": "2026-10-10"
         },
         {
@@ -691,12 +661,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/masked.md",
-          "title": "x-masked Behavior",
-          "description": "Formats input as the user types against a mask pattern (phone numbers, SSNs, license plates, etc).",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/masonry.md",
           "title": "Masonry",
           "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
@@ -736,12 +700,6 @@
           "file": "behaviors/ol.md",
           "title": "OL (Ordered List) Behavior Design & User Guide",
           "description": "The ol behavior transforms the standard ordered list into a versatile tool for displaying sequences.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/otp.md",
-          "title": "OTP Behavior",
-          "description": "x-otp replaces the element's content with length single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.",
           "modified": "2026-10-10"
         },
         {
@@ -796,12 +754,6 @@
           "file": "behaviors/radio.md",
           "title": "Radio Behavior Design & User Guide",
           "description": "The radio behavior modernizes the <input type=\"radio\"> element.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/rainbow.md",
-          "title": "Rainbow",
-          "description": "x-rainbow paints the element's text with a moving rainbow gradient that cycles every duration.",
           "modified": "2026-10-10"
         },
         {
@@ -907,18 +859,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/snow.md",
-          "title": "Snow",
-          "description": "x-snow makes the element a button that starts or stops snowflakes falling over the page; count sets how many and duration how long each takes to fall.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/sparkle.md",
-          "title": "Sparkle",
-          "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/spinner.md",
           "title": "Spinner",
           "description": "x-spinner draws an animated loading ring in the element, sized by size and coloured by variant, with label as its accessible name.",
@@ -991,12 +931,6 @@
           "modified": "2026-10-10"
         },
         {
-          "file": "behaviors/tags.md",
-          "title": "x-tags Behavior",
-          "description": "Lets a user type and press Enter to build a list of removable tags/chips next to a text input.",
-          "modified": "2026-10-10"
-        },
-        {
           "file": "behaviors/textarea.md",
           "title": "Textarea",
           "description": "A plain <textarea> gets the form styling, and optionally grows with its content (autosize) and shows a character count against max-length (show-count).",
@@ -1030,12 +964,6 @@
           "file": "behaviors/truncate.md",
           "title": "Truncate",
           "description": "x-truncate cuts text off after lines lines with an ellipsis; expandable adds a \"Show more\" control that reveals the rest.",
-          "modified": "2026-10-10"
-        },
-        {
-          "file": "behaviors/typewriter.md",
-          "title": "Typewriter",
-          "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
           "modified": "2026-10-10"
         },
         {

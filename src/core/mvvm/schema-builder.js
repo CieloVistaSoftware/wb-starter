@@ -173,9 +173,25 @@ const inFlightSchemaFetches = new Map();
 // for the rest of the session.
 const knownAbsentSchemas = new Set();
 
+// Schemas that live in a behavior pack (WB Pro, #1953) rather than wb-models:
+// filename -> the pack's schema folder. Without this, a Pro behavior's schema
+// is looked up in core's wb-models, 404s, and is remembered as absent.
+const packSchemaBases = new Map();
+
+/**
+ * Tell the schema loader where a pack's schemas live.
+ * @param {string[]} names - schema names, e.g. ['confetti', 'stagelight']
+ * @param {string|URL} baseUrl - the folder holding {name}.schema.json
+ */
+export function registerSchemaBase(names, baseUrl) {
+  const base = String(baseUrl).replace(/\/$/, '');
+  for (const name of names) packSchemaBases.set(`${name}.schema.json`, base);
+}
+
 export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
   // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
   const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
+  if (basePath === DEFAULT_SCHEMA_BASE && packSchemaBases.has(filename)) basePath = packSchemaBases.get(filename);
 
   if (knownAbsentSchemas.has(filename)) return false;
 

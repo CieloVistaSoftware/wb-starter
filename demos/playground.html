@@ -721,7 +721,7 @@
     // *.js) and confirmed wired to a real [x-*] selector in wb-lazy.js — not
     // guessed from the attribute's "obvious" name. A few behaviors that exist
     // as functions but aren't wired to an auto-inject [x-*] selector
-    // (x-parallax, x-countup, x-reveal, x-marquee, x-rotate, x-swing,
+    // (x-reveal, x-rotate, x-swing,
     // x-rubberband) are intentionally left out rather than shown not-working.
     function fiftyXBehaviors() {
       return [
@@ -766,12 +766,8 @@
         '<div x-fadein>Fades in as it scrolls into view</div>',
         '<div x-slidein>Slides in as it scrolls into view</div>',
         '<div x-zoomin>Zooms in as it scrolls into view</div>',
-        '<h3 x-typewriter text="Typed out letter by letter" speed="40"></h3>',
-        '<div x-rainbow duration="3s">Cycling through rainbow colors (always on, no click)</div>',
-        '<button x-confetti count="80" label="🎉 Celebrate"></button>',
-        '<button x-sparkle count="20">Sparkle Button</button>',
-        '<button x-fireworks count="40">Fireworks</button>',
-        '<button x-snow count="40">Let it Snow</button>',
+        // typewriter, rainbow, confetti, sparkle, fireworks and snow are WB Pro (#1953).
+        '<a href="../?page=pro">⭐ Typewriter, rainbow, confetti, sparkle, fireworks and snow are in WB Pro</a>',
 
         // Overlays (all self-contained triggers — no separate target element needed)
         '<button x-confirm confirmTitle="Delete item?" confirmMessage="This cannot be undone.">Delete</button>',
@@ -800,15 +796,13 @@
         '<nav x-breadcrumb items="Home,Docs,Behaviors"></nav>',
         '<input x-search placeholder="Search…">',
         '<textarea autosize placeholder="Grows as you type…" rows="2"></textarea>',
-        '<input x-colorpicker value="#6366f1">',
-        '<input x-tags placeholder="Type and press Enter to add a tag">',
-        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+        // colorpicker, tags and autocomplete are WB Pro (#1953).
 
         // Combinations — multiple x-* attributes stacked on one element
         '<button x-ripple x-tooltip="Ripples on click, tooltip on hover">Ripple + Tooltip</button>',
         '<button x-ripple x-toast message="Ripple fired the toast too" toast-variant="info">Ripple + Toast</button>',
         '<div x-fadein x-glow color="primary">Fades in, then glows</div>',
-        '<button x-confetti x-tooltip="Click for confetti" count="60" label="🎊 Party"></button>',
+        '<button x-tada x-tooltip="Click for a tada">🎊 Tada + Tooltip</button>',
         '<button x-ripple x-confirm confirmTitle="Really?" confirmMessage="Ripple + confirm together.">Ripple + Confirm</button>',
       ].join('\n');
     }
@@ -816,21 +810,19 @@
     // 20 real form-control examples, each with a different x-* behavior (or a
     // real combination of two). Every attribute is verified against the
     // actual behavior source (src/wb-viewmodels/*.js) and confirmed wired to
-    // a real [x-*] selector in wb-lazy.js. x-colorpicker, x-otp, and x-file
-    // build their OWN internal <input>(s) as children — a real <input> is a
-    // void element and can't have children, so those three go on a <div>
-    // instead (matching x-file's precedent), never on a bare <input>.
+    // a real [x-*] selector in wb-lazy.js. colorpicker, tags, autocomplete,
+    // masked and otp are WB Pro (#1953), so this set links to the Pro page
+    // instead of showing them.
     function twentyInputs() {
       return [
         '<input x-counter max="50" placeholder="Type here — counts up to 50">',
         '<input x-search placeholder="Search…">',
-        '<div x-colorpicker value="#6366f1"></div>',
-        '<input x-tags placeholder="Type and press Enter to add a tag">',
-        '<input x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">',
+        '<input type="date" x-datepicker>',
+        '<input type="time" x-timepicker>',
         '<input type="password" placeholder="Password with show/hide toggle">',
-        '<input x-masked mask="(999) 999-9999" placeholder="Phone number">',
+        '<textarea x-autosize placeholder="Grows as you type…" rows="2"></textarea>',
         '<input x-stepper value="5" min="0" max="10">',
-        '<div x-otp length="6"></div>',
+        '<a href="../?page=pro">⭐ Color picker, tags, autocomplete, masked and one-time-code inputs are in WB Pro</a>',
         '<input x-floatinglabel label="Email address" type="email">',
         '<input x-label="Full name" placeholder="Jane Doe">',
         '<input x-label="Email" required type="email" placeholder="you@example.com">',
@@ -839,11 +831,11 @@
 
         // Combinations — x-label paired with another input behavior
         '<input x-label="Search" x-search placeholder="Type to search…">',
-        '<input x-label="Tags" x-tags placeholder="Press Enter to add">',
+        '<input x-label="Start date" type="date" x-datepicker>',
         '<input x-counter max="100" x-label="Bio" placeholder="Tell us about yourself">',
         '<input x-label="Password" type="password" placeholder="Enter password">',
-        '<input x-label="Phone" x-masked mask="999-999-9999" placeholder="000-000-0000">',
-        '<input x-masked mask="AA-9999" x-label="License plate" labelPosition="right" placeholder="XX-0000">',
+        '<input x-label="Phone" type="tel" placeholder="000-000-0000">',
+        '<input x-label="License plate" labelPosition="right" placeholder="XX-0000">',
       ].join('\n');
     }
 

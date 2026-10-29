@@ -11,9 +11,9 @@ const titleOf = (name: string): string =>
 
 const schemas = [
   'alert', 'audio', 'avatar', 'badge', 'button', 'card', 'checkbox', 'chip',
-  'confetti', 'details', 'dialog', 'drawer', 'drawerLayout', 'dropdown',
-  'fireworks', 'input', 'notes', 'progress', 'rating', 'select', 'skeleton',
-  'snow', 'spinner', 'switch', 'table', 'tabs', 'textarea', 'toast', 'tooltip'
+  'details', 'dialog', 'drawer', 'drawerLayout', 'dropdown',
+  'input', 'notes', 'progress', 'rating', 'select', 'skeleton',
+  'spinner', 'switch', 'table', 'tabs', 'textarea', 'toast', 'tooltip'
 ];
 
 test.describe('Schema Viewer Rendering Tests', () => {

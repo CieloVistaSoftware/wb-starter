@@ -146,30 +146,6 @@ test.describe('R3: attributes that were declared and inert', () => {
     await expect(host.locator('#rz .x-resizable__handle--se')).toHaveCount(1);
   });
 
-  // ---- x-confetti / x-fireworks: colors ---------------------------------
-
-  test('x-confetti uses the declared colors palette', async ({ page }) => {
-    const host = await mount(page, `<div id="cf" x-confetti colors='["rgb(1, 2, 3)"]' count="8">go</div>`);
-    await host.locator('#cf').click();
-    const colors = await page.evaluate(() => {
-      const pieces = Array.from(document.querySelectorAll('[class*="confetti"] div, .x-confetti__overlay div'));
-      return Array.from(new Set(pieces.map((p) => getComputedStyle(p as HTMLElement).backgroundColor))).filter(Boolean);
-    });
-    expect(
-      colors.some((c) => c === 'rgb(1, 2, 3)'),
-      `confetti pieces used ${JSON.stringify(colors)}; the declared colors array was ignored`,
-    ).toBe(true);
-  });
-
-  test('a malformed colors value falls back instead of throwing', async ({ page }) => {
-    const errors: string[] = [];
-    page.on('pageerror', (e) => errors.push(e.message));
-    const host = await mount(page, `<div id="cf2" x-confetti colors="{not json" count="4">go</div>`);
-    await host.locator('#cf2').click();
-    // A palette is decoration; a bad value must not kill the effect.
-    expect(errors, `malformed colors threw: ${errors.join('; ')}`).toHaveLength(0);
-  });
-
   // ---- x-toast: action-href ---------------------------------------------
 
   test('x-toast renders an action link when action-href is given', async ({ page }) => {
