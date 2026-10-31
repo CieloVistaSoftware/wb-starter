@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-10-31T08:24:26.506Z",
+  "count": 1,
+  "failures": [
+    {
+      "project": "regression",
+      "title": "x-clock (attribute): no two options render identically",
+      "file": "regression/variants-render-differently.spec.ts",
+      "line": 623,
+      "error": "Error: 1 option group(s) of x-clock render identically. Each is a row in the showcase promising a distinct look and delivering another row's -- the option's CSS is missing or never matched:\n  x-clock (attribute): timezone=Europe/London = timezone=local render identically\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 3\n- Array []\n+ Array [\n+   \"x-clock (attribute): timezone=Europe/London = timezone=local render identically\",\n+ ]",
+      "stack": "at D:\\a\\wb-starter\\wb-starter\\tests\\regression\\variants-render-differently.spec.ts:640:9",
+      "snippet": "  638 |         `row in the showcase promising a distinct look and delivering another row's -- ` +\n  639 |         `the option's CSS is missing or never matched:\\n  ` + findings.clashes.join('\\n  '),\n> 640 |       ).toEqual([]);\n      |         ^\n  641 |     });\n  642 |   }\n  643 | });",
+      "attachments": [
+        {
+          "name": "protocol-errors",
+          "contentType": "text/plain",
+          "body": "(the browser answered no Runtime/Page call with an error)\n"
+        },
+        {
+          "name": "page-lifecycle",
+          "contentType": "text/plain",
+          "body": "[page http://localhost:3000/?page=behaviors]\n+87ms Page.frameStoppedLoading main-frame\n+88ms Page.lifecycleEvent commit main-frame\n+88ms Page.lifecycleEvent DOMContentLoaded main-frame\n+88ms Page.lifecycleEvent load main-frame\n+88ms Page.lifecycleEvent networkAlmostIdle main-frame\n+88ms Page.lifecycleEvent networkIdle main-frame\n+88ms Runtime.executionContextCreated #1 main world main-frame origin=://\n+98ms Runtime.executionContextCreated #2 isolated \"__playwright_utility_world_page@4d779c9f…\" main-frame origin=-\n+98ms Page.frameStartedLoading main-frame\n+116ms Page.lifecycleEvent init main-frame\n+116ms Runtime.executionContextsCleared\n+116ms Page.frameNavigated main-frame Navigation http://localhost:3000/?page=behaviors\n+123ms Runtime.executionContextCreated #3 main world main-frame origin=http://localhost:3000\n+123ms Runtime.executionContextCreated #4 isolated \"__playwright_utility_world_page@4d779c9f…\" main-frame origin=://\n+245ms Page.lifecycleEvent firstMeaningfulPaintCandidate main-frame\n+245ms Page.lifecycleEvent firstContentfulPaint main-frame\n+245ms Page.lifecycleEvent firstPaint main-frame\n+368ms Page.lifecycleEvent DOMContentLoaded main-frame\n+368ms Page.lifecycleEvent load main-frame\n+372ms Page.frameStoppedLoading main-frame\n+390ms Page.frameStartedLoading main-frame\n+390ms Page.frameStoppedLoading main-frame\n+483ms Page.lifecycleEvent firstMeaningfulPaintCandidate main-frame\n+680ms Page.lifecycleEvent firstImagePaint main-frame\n+1791ms Page.lifecycleEvent firstMeaningfulPaintCandidate main-frame\n"
+        },
+        {
+          "name": "network",
+          "contentType": "text/plain",
+          "path": "D:\\a\\wb-starter\\wb-starter\\data\\playwright-output\\variants-render-differentl-270f5--options-render-identically-regression\\attachments\\network-b7ab3ae52bc1d167d000a5e800647805d080a7ac.txt"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "D:\\a\\wb-starter\\wb-starter\\data\\playwright-output\\variants-render-differentl-270f5--options-render-identically-regression\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "D:\\a\\wb-starter\\wb-starter\\data\\playwright-output\\variants-render-differentl-270f5--options-render-identically-regression\\trace.zip"
+        }
+      ],
+      "retry": 0
+    }
+  ]
+}
