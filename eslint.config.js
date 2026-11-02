@@ -134,6 +134,17 @@ export default [
     files: ['sw.js'],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'script', globals: SERVICE_WORKER_GLOBALS },
   },
+  // ── Cloudflare Workers (#1961) ────────────────────────────────────────────
+  // The waitlist Worker runs on Cloudflare, not Node: the web fetch API is
+  // global there (Request, Response, FormData), and there is no process.
+  {
+    files: ['server/waitlist/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: { ...SERVICE_WORKER_GLOBALS, FormData: 'readonly', Headers: 'readonly' },
+    },
+  },
 
   // ── Type-aware linting for the .ts test suite (issue #840) ─────────────────
   //

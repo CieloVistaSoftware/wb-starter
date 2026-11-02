@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="src/styles/pages/pro.css?v=1.0.563">
+
 <div id="pro-div-1" class="page__hero">
   <h1 id="pro-h1-2">⭐ WB Pro</h1>
   <p id="pro-p-3">Showpiece effects and advanced widgets on top of the free, MIT-licensed core.</p>
@@ -38,5 +40,14 @@
 <div id="pro-div-26" class="page__section">
   <h2 id="pro-h2-27">Join the waitlist</h2>
   <p id="pro-p-28">WB Pro is not on sale yet. People on the waitlist hear first when it opens, and get the launch price.</p>
-  <p id="pro-p-29">The sign-up form opens soon.</p>
+  <form id="pro-form-29" class="pro-waitlist" method="post" action="https://waitlist.cielovistasoftware.com/join">
+    <label id="pro-label-30" for="pro-input-31">Email</label>
+    <input id="pro-input-31" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+    <div id="pro-div-32" class="pro-waitlist__trap" aria-hidden="true">
+      <label id="pro-label-33" for="pro-input-34">Leave this empty</label>
+      <input id="pro-input-34" type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <button id="pro-button-35" type="submit">Join the waitlist</button>
+  </form>
+  <p id="pro-p-36">We only use your address to email you when WB Pro goes on sale. Ask and we remove it.</p>
 </div>

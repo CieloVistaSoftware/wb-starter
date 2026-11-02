@@ -1,0 +1,20 @@
+# WB Pro waitlist Worker (#1961). Deploy steps: server/waitlist/README.md.
+name = "pro-waitlist"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# The Pro page's form posts to https://waitlist.cielovistasoftware.com/join.
+# Cloudflare creates this subdomain on deploy (the domain is on this account).
+routes = [
+  { pattern = "waitlist.cielovistasoftware.com", custom_domain = true }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pro-waitlist"
+# Filled in once, from the output of: npx wrangler d1 create pro-waitlist
+database_id = "REPLACE_WITH_DATABASE_ID"
+
+[vars]
+# "Back to WB Pro" on the page shown after joining.
+PRO_PAGE_URL = "https://cielovistasoftware.github.io/wb-starter/?page=pro"
