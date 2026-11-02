@@ -27,22 +27,18 @@ So the plan has three layers:
 
 ## 2. How WB Pro is split from the free core
 
-This is already built (wb-starter PR #1954, and the `wb-pro` branch
-`claude/elegant-babbage-lylhzl`).
+This is built and merged: the core side in PR #1954 (v1.0.563), and the pack in
+`wb-pro`'s `main` (wb-pro PR #1).
 
-- **Free core (wb-starter, MIT):** public. Has `registerBehaviorPack()`, which
+- **Free core (this repo, MIT):** public. Has `registerBehaviorPack()`, which
   lets an outside pack add behaviors. A pack can't replace a core behavior.
 - **WB Pro (`CieloVistaSoftware/wb-pro`, private, commercial license):**
   - 11 showpiece effects: confetti, fireworks, particle, snow, sparkle, rainbow,
     typewriter, countup, parallax, marquee, stagelight.
   - 6 advanced inputs: autocomplete, tags, masked, otp, colorpicker, validator.
-- A site loads the core, then the pack:
-
-```html
-<script type="importmap">{ "imports": { "wb-starter/": "/src/" } }</script>
-<script type="module" src="/src/core/wb.js"></script>
-<script type="module" src="/wb-pro/src/index.js"></script>
-```
+- A site loads the core's `src/core/wb.js`, then the pack's `src/index.js`. An
+  import map points the pack's imports at the core's `src/` folder. wb-pro's
+  README has the exact tags.
 
 Without the pack, Pro attributes such as `x-confetti` do nothing, and the rest of
 the page works normally.
