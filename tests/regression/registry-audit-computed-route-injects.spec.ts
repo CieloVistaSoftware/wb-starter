@@ -24,7 +24,7 @@ const COMPUTED_ONLY: string[] = audit.computedOnly;
 for (const engine of ['wb-lazy', 'wb'] as const) {
   test(`${engine}.js: every behavior the audit reaches only by the computed route injects from <div x-NAME>`, async ({ page }) => {
     test.setTimeout(120_000);
-    expect(COMPUTED_ONLY.length, 'the audit listed nothing -- this would pass vacuously').toBeGreaterThan(40);
+    expect(COMPUTED_ONLY.length, 'the audit listed nothing -- this would pass vacuously').toBeGreaterThan(30);
 
     await page.goto('/tests/fixtures/blank.html', { waitUntil: 'domcontentloaded' });
     const result = await page.evaluate(async ({ file, names }) => {

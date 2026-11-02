@@ -3,7 +3,7 @@
   "title": "x-effects Attributes",
   "schemaType": "base",
   "type": "object",
-  "description": "Shared attributes of the animation behaviors (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
+  "description": "Shared attributes of the animation behaviors (x-animate, x-fadein, x-fadeout, x-slidein).",
   "properties": {
     "x-animate": {
       "type": "boolean",
@@ -18,14 +18,6 @@
       "default": false
     },
     "x-slidein": {
-      "type": "boolean",
-      "default": false
-    },
-    "x-confetti": {
-      "type": "boolean",
-      "default": false
-    },
-    "x-typewriter": {
       "type": "boolean",
       "default": false
     }
@@ -49,16 +41,6 @@
     {
       "required": [
         "x-slidein"
-      ]
-    },
-    {
-      "required": [
-        "x-confetti"
-      ]
-    },
-    {
-      "required": [
-        "x-typewriter"
       ]
     }
   ]

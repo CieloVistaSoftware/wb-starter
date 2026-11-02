@@ -13,6 +13,8 @@
  * now only a re-export of the standalone modules, so each behavior exists
  * exactly once and every name this module ever exported keeps working.
  *
+ * masked, otp, colorpicker, tags and autocomplete are WB Pro (#1953).
+ *
  * Usage:
  *   <form data-ajax>...</form>
  *   <input x-password>
@@ -27,23 +29,16 @@ import { formrow } from './formrow.js';
 import { stepper } from './stepper.js';
 import { search } from './search.js';
 import { password } from './password.js';
-import { masked } from './masked.js';
 import { counter } from './counter.js';
 import { floatinglabel } from './floatinglabel.js';
-import { otp } from './otp.js';
-import { colorpicker } from './colorpicker.js';
-import { tags } from './tags.js';
-import { autocomplete } from './autocomplete.js';
 import { file } from './file.js';
 
 export {
   form, fieldset, label, help, error, inputgroup, formrow,
-  stepper, search, password, masked, counter, floatinglabel,
-  otp, colorpicker, tags, autocomplete, file
+  stepper, search, password, counter, floatinglabel, file
 };
 
 export default {
   form, fieldset, label, help, error, inputgroup, formrow,
-  stepper, search, password, masked, counter, floatinglabel,
-  otp, colorpicker, tags, autocomplete, file
+  stepper, search, password, counter, floatinglabel, file
 };

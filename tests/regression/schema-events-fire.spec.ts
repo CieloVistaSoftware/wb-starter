@@ -164,13 +164,4 @@ test.describe('schema-declared events fire (#344)', () => {
     await expect.poll(() => events(page)).toEqual(['wb:drawerLayout:toggle']);
     expect(await details(page)).toEqual([{ collapsed: true }]);
   });
-
-  test('confetti fires start, then end once the burst is gone', async ({ page }) => {
-    await injectAndScan(page, '<div id="cf" x-confetti count="5"></div>');
-    await expect(page.locator('#cf')).toHaveClass(/x-confetti--trigger/, { timeout: 15000 });
-    await record(page, 'cf');
-    await page.evaluate(() => document.getElementById('cf')!.click());
-    await expect.poll(() => events(page)).toEqual(['wb:confetti:start']);
-    await expect.poll(() => events(page), { timeout: 8000 }).toEqual(['wb:confetti:start', 'wb:confetti:end']);
-  });
 });

@@ -42,16 +42,16 @@
 const CARD_BODIES = ['card', 'cardbutton', 'carddraggable', 'cardexpandable', 'cardfile',
   'cardhero', 'cardhorizontal', 'cardimage', 'cardlink', 'cardminimizable', 'cardoverlay',
   'cardportfolio', 'cardpricing', 'cardproduct', 'cardprofile', 'cardstats', 'cardvideo'];
+// WB Pro behaviors (stagelight, confetti, fireworks, snow, typewriter,
+// countup) left this table with the move to the pack (#1953).
 export const PRIMARY_VALUE_ATTRIBUTE = Object.freeze({
   badge: 'label', pill: 'label', button: 'label', chip: 'label', spinner: 'label',
-  checkbox: 'label', switch: 'label', radio: 'label', floatinglabel: 'label', stagelight: 'label',
+  checkbox: 'label', switch: 'label', radio: 'label', floatinglabel: 'label',
   print: 'label', share: 'label', fullscreen: 'label', clipboard: 'label', scroll: 'label',
-  confetti: 'label', fireworks: 'label', snow: 'label',
   alert: 'message', empty: 'message', cardnotification: 'message',
-  divider: 'text', link: 'text', typewriter: 'text',
+  divider: 'text', link: 'text',
   avatar: 'initials',
   stat: 'value', input: 'value', textarea: 'value', progress: 'value', rating: 'value', stepper: 'value',
-  countup: 'to',
   cardtestimonial: 'quote',
   ...Object.fromEntries(CARD_BODIES.map((name) => [name, 'content'])),
 });

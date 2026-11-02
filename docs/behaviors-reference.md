@@ -109,6 +109,8 @@ When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
 
 ### 1. Semantic HTML & Forms
 Enhances standard HTML elements with better styling and functionality.
+Autocomplete, tags, masked, otp, colorpicker and validator are
+[WB Pro](../?page=pro) behaviors (#1953).
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
@@ -137,7 +139,6 @@ Enhances standard HTML elements with better styling and functionality.
 | [`searchfield`](behaviors/searchfield.md) | `<input x-searchfield>` | - | Search input with icon, clear button and loading state |
 | [`counter`](behaviors/counter.md) | `<textarea x-counter>` | - | Live length/max character counter |
 | [`floatinglabel`](behaviors/floatinglabel.md) | `<input x-floatinglabel>` | - | Placeholder that floats up into a label |
-| [`masked`](behaviors/masked.md) | `<input x-masked>` | - | Formats input against a mask pattern as you type |
 | [`mark`](behaviors/mark.md) | `<mark>` | Decorate | Highlighted text with status colour variants |
 | [`error`](behaviors/error.md) | any | - | Marks an error message (`role="alert"`) |
 | [`help`](behaviors/help.md) | any | - | Help text for a field |
@@ -525,7 +526,6 @@ Functional utilities.
 | `clock` | `<time>` | Decorate | Live clock |
 | `relativetime` | `<time>` | Decorate | "5 mins ago" format |
 | `visible` | any | - | Visibility observer |
-| `validator` | `<input>` | - | Input validator |
 | `notes` | `<div>` | - | Notes system |
 | [`mdhtml`](behaviors/mdhtml.md) | `<div>` | - | Markdown renderer |
 | `builder` | `<div>` | - | Page builder container |
@@ -548,7 +548,7 @@ Functional utilities.
 
 `copy`, `toggle`, `ripple`, `darkmode`, `lazy`, `print`, `share`, `fullscreen`,
 `scroll`, `truncate`, `highlight`, `countdown`, `clock`, `relativetime`, `visible`,
-`validator`, `notes`, and `builder` don't yet have a dedicated behavior doc with a
+`notes`, and `builder` don't yet have a dedicated behavior doc with a
 live example to pull from — tracked as remaining work, not guessed here.
 
 ### 6. Animations (Effects)
@@ -564,30 +564,14 @@ Apply animations to elements.
 | `shake` | any | - | Shake effect |
 | `pulse` | any | - | Pulse effect |
 | `flip` | any | - | Flip effect |
-| [`confetti`](behaviors/confetti.md) | any | - | Confetti explosion |
-| `sparkle` | any | - | Sparkle effect |
 | `glow` | any | - | Glow effect |
-| `rainbow` | any | - | Rainbow text/bg |
-| `typewriter` | any | - | Typewriter text effect |
-| `parallax` | any | - | Parallax scroll effect |
 | `reveal` | any | - | Scroll reveal effect |
-| [`fireworks`](behaviors/fireworks.md) | any | - | Firework burst on click |
-| [`snow`](behaviors/snow.md) | `<button>` | - | Starts/stops falling snow over the page |
-| [`stagelight`](behaviors/stagelight.md) | any | - | Beam, spotlight and fixture lighting effects |
 
-#### Live Examples
-
-**`confetti`**
-
-<figure x-demo>
-<div x-confetti
-  count="100"
-  label="Celebrate!">
-</div>
-</figure>
+Confetti, fireworks, snow, sparkle, particle, rainbow, typewriter, countup,
+parallax, marquee and stagelight are [WB Pro](../?page=pro) behaviors (#1953).
 
 `animate`, `fadein`, `slidein`, `zoomin`, `bounce`, `shake`, `pulse`, `flip`,
-`sparkle`, `glow`, `rainbow`, `typewriter`, `parallax`, and `reveal` don't yet have a
+`glow` and `reveal` don't yet have a
 dedicated behavior doc with a live example to pull from — tracked as remaining work,
 not guessed here.
 
@@ -631,12 +615,7 @@ schema, styling) — this table is the cross-behavior index.
 | `wb:switch:change` | `semantics/switch.js` (`<div x-switch>`) | the switch is flipped | `{ checked }` |
 | `wb:rating:change` | `semantics/rating.js` (`<div x-rating>`) | a star/icon is clicked | `{ value }` |
 | `wb:stepper:change` | `stepper.js` (`x-stepper`) | the `+`/`-` buttons change the value | `{ value }` |
-| `wb:colorpicker:change` | `colorpicker.js` (`x-colorpicker`) | a color is picked | `{ value }` |
-| `wb:autocomplete:select` | `autocomplete.js` (`x-autocomplete`) | a suggestion is chosen | `{ value }` |
 | `wb:file:change` | `file.js` (`x-file`) | the native file input changes | `{ files }` |
-| `wb:otp:input` | `otp.js` | a digit is typed into an OTP field | `{ value }` |
-| `wb:otp:complete` | `enhancements.js` (OTP auto-enhance) | every OTP digit is filled | `{ value }` |
-| `wb:validator:validate` | `validator.js` (`x-validator`) | the form's `validate()` runs | `{ valid }` |
 
 **Feedback**
 
@@ -719,7 +698,6 @@ per-implementation breakdown.
 | `wb:darkmode:toggle` | `darkmode.js` (`x-darkmode`) | the dark-mode button is clicked | `{ theme }` |
 | `wb:darkmode:applied` | `darkmode.js` | a theme is applied (incl. on page load) | `{ theme }` |
 | `wb:theme:change` | `themecontrol.js` (`<div x-themecontrol>`) | a theme is selected | `{ theme, name }` |
-| `wb:tags:add` / `wb:tags:remove` | `tags.js` (`x-tags`) | a tag is added/removed | `{ tag }` |
 | `wb:table:select` | `semantics/table.js` (`<table>`) | a row is clicked | `{ row, index }` |
 | `wb:code:copy` | `semantics/code.js` (`<pre>`/`<code>`) | the code block's copy button is clicked | `{ text }` |
 | `wb:mdhtml:loaded` | `mdhtml.js` (`x-mdhtml`) | Markdown finishes rendering | `{ src, length }` |

@@ -120,48 +120,6 @@ test.describe('#1095 form-control classes are styled by stylesheet rules', () =>
     expect(await css(page, '#fri', 'flex-direction')).toBe('column');
   });
 
-  test('x-colorpicker is a themed swatch, not the browser default box', async ({ page }) => {
-    await injectAndScan(page, `
-      <input type="text" x-colorpicker value="#ff0000" id="cp">
-      <div x-colorpicker id="cp2" value="#00ff00"></div>`);
-    for (const c of ['x-colorpicker', 'x-colorpicker__input']) {
-      expect(await ruleNames(page, c), `a loaded stylesheet styles .${c}`).toBe(true);
-    }
-    expect(await noStyleAttr(page, '#cp, #cp2, #cp2 *')).toEqual([]);
-    for (const sel of ['#cp', '#cp2 .x-colorpicker__input']) {
-      expect(await css(page, sel, 'cursor')).toBe('pointer');
-      expect(await css(page, sel, 'background-color')).toBe(await token(page, 'background-color', '--bg-secondary'));
-      expect(await css(page, sel, 'border-top-color')).toBe(await token(page, 'border-top-color', '--border-color'));
-    }
-    const dark = await css(page, '#cp', 'background-color');
-    await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
-    const light = await css(page, '#cp', 'background-color');
-    expect(light).toBe(await token(page, 'background-color', '--bg-secondary'));
-    expect(light).not.toBe(dark);
-  });
-
-  test('x-autocomplete shows that it is loading while its remote items are in flight', async ({ page }) => {
-    let release!: () => void;
-    const held = new Promise<void>((r) => { release = r; });
-    await page.route('**/ac-items-1095.json', async (route) => {
-      await held;
-      await route.fulfill({ contentType: 'application/json', body: '["Apple","Banana"]' });
-    });
-    await injectAndScan(page, '<input x-autocomplete src="/ac-items-1095.json" id="ac">');
-    expect(await ruleNames(page, 'x-autocomplete--loading')).toBe(true);
-    const wrap = '.x-autocomplete:has(> #ac)';
-    await expect(page.locator(wrap)).toHaveClass(/x-autocomplete--loading/);
-    expect(await noStyleAttr(page, `${wrap}, ${wrap} *`)).toEqual([]);
-    expect(await css(page, wrap, 'cursor')).toBe('progress');
-    expect(await css(page, wrap, 'content', '::after')).not.toBe('none');
-    expect(await css(page, wrap, 'border-top-color', '::after')).toBe(await token(page, 'border-top-color', '--primary'));
-
-    release();
-    await expect(page.locator(wrap)).not.toHaveClass(/x-autocomplete--loading/);
-    expect(await css(page, wrap, 'content', '::after')).toBe('none');
-    expect(await css(page, wrap, 'cursor')).not.toBe('progress');
-  });
-
   test('x-select searchable stacks its filter box over the field from a stylesheet rule', async ({ page }) => {
     await injectAndScan(page, `<div x-select searchable id="ss" options='[{"value":"1","label":"One"}]'></div>`);
     expect(await ruleNames(page, 'x-select--searchable')).toBe(true);

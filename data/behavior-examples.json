@@ -69,61 +69,6 @@
       "source": "<input type=\"text\" x-search placeholder=\"Search with icon\">",
       "alternates": []
     },
-    "x-colorpicker": {
-      "source": "<input type=\"text\" x-colorpicker value=\"#6366f1\">",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "green",
-          "source": "<input type=\"text\" x-colorpicker value=\"#22c55e\">"
-        },
-        {
-          "label": "red",
-          "source": "<input type=\"text\" x-colorpicker value=\"#ef4444\">"
-        },
-        {
-          "label": "amber",
-          "source": "<input type=\"text\" x-colorpicker value=\"#f59e0b\">"
-        },
-        {
-          "label": "black",
-          "source": "<input type=\"text\" x-colorpicker value=\"#000000\">"
-        },
-        {
-          "label": "white",
-          "source": "<input type=\"text\" x-colorpicker value=\"#ffffff\">"
-        }
-      ]
-    },
-    "x-masked": {
-      "source": "<input x-masked mask=\"(999) 999-9999\" placeholder=\"Phone: (999) 999-9999\">",
-      "alternates": [
-        "<input x-masked mask=\"99/99/9999\" placeholder=\"Date: MM/DD/YYYY\">",
-        "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Credit Card\">"
-      ],
-      "examples": [
-        {
-          "label": "date",
-          "source": "<input x-masked mask=\"99/99/9999\" placeholder=\"MM/DD/YYYY\">"
-        },
-        {
-          "label": "credit card",
-          "source": "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Card number\">"
-        },
-        {
-          "label": "postcode",
-          "source": "<input x-masked mask=\"99999-9999\" placeholder=\"ZIP+4\">"
-        },
-        {
-          "label": "prefilled time",
-          "source": "<input x-masked mask=\"99:99\" value=\"0930\" placeholder=\"HH:MM\">"
-        },
-        {
-          "label": "IBAN",
-          "source": "<input x-masked mask=\"AA99 9999 9999 9999 99\" placeholder=\"IBAN\">"
-        }
-      ]
-    },
     "x-stepper": {
       "source": "<div x-stepper value=\"5\" min=\"0\" max=\"10\"></div>",
       "alternates": [],
@@ -738,119 +683,9 @@
         }
       ]
     },
-    "x-confetti": {
-      "source": "<button variant=\"primary\" x-confetti>\n  x-confetti · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "gold confetti",
-          "source": "<button variant=\"warning\" x-confetti colors=\"#facc15,#f59e0b,#fde68a\">\n  Gold confetti\n</button>"
-        },
-        {
-          "label": "a big burst",
-          "source": "<button variant=\"success\" size=\"lg\" x-confetti count=\"200\">\n  Ship it! (200 pieces)\n</button>"
-        },
-        {
-          "label": "slow fall",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-confetti duration=\"6s\" colors=\"#a855f7,#ec4899\">\n  Slow celebration\n</button>"
-        },
-        {
-          "label": "on a card",
-          "source": "<article x-confetti title=\"You finished the course\" subtitle=\"Click the card to celebrate\"></article>"
-        }
-      ]
-    },
-    "x-fireworks": {
-      "source": "<button variant=\"primary\" x-fireworks>\n  x-fireworks · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "red and gold",
-          "source": "<button variant=\"error\" x-fireworks colors=\"#ef4444,#facc15\">\n  Red and gold\n</button>"
-        },
-        {
-          "label": "a big show",
-          "source": "<button variant=\"success\" size=\"lg\" x-fireworks count=\"80\">\n  Grand finale\n</button>"
-        },
-        {
-          "label": "cool palette",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-fireworks colors=\"#06b6d4,#6366f1,#a855f7\">\n  Cool palette\n</button>"
-        }
-      ]
-    },
-    "x-snow": {
-      "source": "<button variant=\"primary\" x-snow>\n  x-snow · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "light flurry",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-snow count=\"10\">\n  Light flurry\n</button>"
-        },
-        {
-          "label": "blizzard",
-          "source": "<button variant=\"primary\" size=\"lg\" x-snow count=\"120\" duration=\"4s\">\n  Blizzard\n</button>"
-        },
-        {
-          "label": "on a card",
-          "source": "<article x-snow title=\"Winter sale\" subtitle=\"Click for a snowfall\"></article>"
-        }
-      ]
-    },
-    "x-sparkle": {
-      "source": "<button variant=\"primary\" x-sparkle>\n  x-sparkle · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "success button",
-          "source": "<button variant=\"success\" x-sparkle>\n  New feature\n</button>"
-        },
-        {
-          "label": "many sparkles",
-          "source": "<button variant=\"warning\" size=\"lg\" x-sparkle count=\"40\">\n  Premium\n</button>"
-        },
-        {
-          "label": "a few sparkles",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-sparkle count=\"4\">\n  Subtle\n</button>"
-        },
-        {
-          "label": "on a heading",
-          "source": "<h3 x-sparkle>Sparkling headline</h3>"
-        },
-        {
-          "label": "on a card",
-          "source": "<article x-sparkle title=\"Pro plan\" subtitle=\"Now with sparkles\"></article>"
-        }
-      ]
-    },
     "x-glow": {
       "source": "<button variant=\"primary\" x-glow>\n  x-glow · variant: primary\n</button>",
       "alternates": []
-    },
-    "x-rainbow": {
-      "source": "<button variant=\"primary\" x-rainbow>\n  x-rainbow · variant: primary\n</button>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "fast cycle",
-          "source": "<button variant=\"secondary\" size=\"lg\" x-rainbow duration=\"1s\">\n  Fast rainbow\n</button>"
-        },
-        {
-          "label": "slow cycle",
-          "source": "<button variant=\"primary\" size=\"sm\" x-rainbow duration=\"10s\">\n  Slow rainbow\n</button>"
-        },
-        {
-          "label": "on a heading",
-          "source": "<h2 x-rainbow>Rainbow headline</h2>"
-        },
-        {
-          "label": "on a paragraph",
-          "source": "<p x-rainbow>Every letter of this sentence cycles through the spectrum.</p>"
-        },
-        {
-          "label": "error button",
-          "source": "<button variant=\"error\" x-rainbow duration=\"2s\">\n  Rainbow alert\n</button>"
-        }
-      ]
     },
     "x-copy": {
       "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\n  x-copy · variant: primary · copy-text: Text copied to clipboard!\n</button>",
@@ -1408,10 +1243,6 @@
       "source": "<div x-switch label=\"Publish to staging on merge\" name=\"auto-deploy\"></div>",
       "alternates": []
     },
-    "x-otp": {
-      "source": "<div x-otp length=\"6\"></div>",
-      "alternates": []
-    },
     "x-counter": {
       "source": "<textarea x-counter max=\"280\" warning=\"40\" placeholder=\"What are you shipping?\"></textarea>",
       "alternates": [],
@@ -1692,32 +1523,6 @@
         }
       ]
     },
-    "x-autocomplete": {
-      "source": "<input x-autocomplete items=\"main,develop,release/3.0,fix/706-dropdown,docs/behaviors\" placeholder=\"Find a branch…\">",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "countries",
-          "source": "<input x-autocomplete items=\"Argentina,Australia,Austria,Belgium,Brazil,Canada\" placeholder=\"Country…\">"
-        },
-        {
-          "label": "languages",
-          "source": "<input x-autocomplete items=\"JavaScript,TypeScript,Python,Rust,Go\" value=\"Type\" placeholder=\"Language…\">"
-        },
-        {
-          "label": "prefilled",
-          "source": "<input x-autocomplete items=\"red,orange,yellow,green,blue\" value=\"green\">"
-        },
-        {
-          "label": "wide search box",
-          "source": "<input x-autocomplete items=\"Inbox,Sent,Drafts,Archive,Spam\" placeholder=\"Jump to folder…\" size=\"40\">"
-        },
-        {
-          "label": "cities, disabled",
-          "source": "<input x-autocomplete items=\"Austin,Boston,Chicago,Denver\" value=\"Boston\" disabled>"
-        }
-      ]
-    },
     "x-autosize": {
       "source": "<textarea x-autosize rows=\"1\" placeholder=\"This grows as you type — try three or four lines.\"></textarea>",
       "alternates": [],
@@ -1914,32 +1719,6 @@
       "source": "<p>Search matched <mark>light DOM</mark> in 12 documents.</p>",
       "alternates": [
         "<div x-mark>light DOM</div>"
-      ]
-    },
-    "x-typewriter": {
-      "source": "<p x-typewriter speed=\"45\">Zero build. Real components. Light DOM only.</p>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "fast",
-          "source": "<p x-typewriter speed=\"15\">Typed quickly, fifteen milliseconds a letter.</p>"
-        },
-        {
-          "label": "slow",
-          "source": "<p x-typewriter speed=\"150\">Slow. Deliberate. Dramatic.</p>"
-        },
-        {
-          "label": "on a heading",
-          "source": "<h2 x-typewriter speed=\"60\">Hello, world.</h2>"
-        },
-        {
-          "label": "without a caret",
-          "source": "<p x-typewriter speed=\"45\" cursor=\"false\">Typed without a caret.</p>"
-        },
-        {
-          "label": "long sentence",
-          "source": "<p x-typewriter speed=\"30\">Behaviors decorate real elements in light DOM — no build step, no shadow roots, no base classes.</p>"
-        }
       ]
     },
     "x-mdhtml": {
@@ -2200,32 +1979,6 @@
         }
       ]
     },
-    "x-tags": {
-      "source": "<input x-tags value=\"light-dom,no-build,playwright\" placeholder=\"Add a tag…\">",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "empty",
-          "source": "<input x-tags placeholder=\"Type a tag and press Enter\">"
-        },
-        {
-          "label": "one tag",
-          "source": "<input x-tags value=\"urgent\">"
-        },
-        {
-          "label": "many tags",
-          "source": "<input x-tags value=\"frontend,backend,devops,docs,design,qa\">"
-        },
-        {
-          "label": "long tags",
-          "source": "<input x-tags value=\"needs-design-review,blocked-by-upstream\">"
-        },
-        {
-          "label": "emoji tags",
-          "source": "<input x-tags value=\"🔥 hot,✅ done,🐛 bug\">"
-        }
-      ]
-    },
     "x-articles": {
       "source": "<section x-articles layout=\"grid\" columns=\"2\" limit=\"4\">\n  <article title=\"Ridge loop, 8km\">Moderate, three hours, dry crossing.</article>\n  <article title=\"Harbour wall at dawn\">Flat, two hours, best before the fog lifts.</article>\n  <article title=\"Pine gap traverse\">Hard, six hours, carry water.</article>\n  <article title=\"Old quarry circuit\">Easy, ninety minutes, good in rain.</article>\n</section>",
       "alternates": [],
@@ -2355,20 +2108,6 @@
         {
           "label": "on a card",
           "source": "<article x-scrollalong offset=\"8\" title=\"Order summary\" subtitle=\"3 items · $84\"></article>"
-        }
-      ]
-    },
-    "x-stagelight": {
-      "source": "<div x-stagelight variant=\"spotlight\" color=\"#f59e0b\" intensity=\"0.5\" size=\"360px\">\n  The spotlight follows the pointer across this panel.\n</div>",
-      "alternates": [],
-      "examples": [
-        {
-          "label": "red beam",
-          "source": "<div x-stagelight variant=\"beam\" color=\"#ef4444\" intensity=\"0.8\">\n  A red beam sweeps the stage.\n</div>"
-        },
-        {
-          "label": "wide blue spotlight",
-          "source": "<div x-stagelight variant=\"spotlight\" color=\"#3b82f6\" size=\"600px\" intensity=\"0.4\">\n  A wide, soft blue spotlight.\n</div>"
         }
       ]
     },

@@ -505,27 +505,3 @@ input[type="radio"] {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
 }
-
-/* =============================================================================
-   #1095 -- colorpicker(): a themed swatch
-   A native <input type="color"> is left out of the native-control rule above
-   (it draws its own swatch), so it rendered as the browser's light-grey
-   default box in every theme. The swatch keeps its native colour well; the
-   frame around it comes from the theme.
-============================================================================= */
-.x-colorpicker {
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
-}
-
-.x-colorpicker__input {
-  inline-size: 3rem;
-  block-size: 2.5rem;
-  padding: 0.25rem;
-  box-sizing: border-box;
-  cursor: pointer;
-  background-color: var(--bg-secondary);
-  border: 0.0625rem solid var(--border-color);
-  border-radius: var(--radius-md, 0.375rem);
-}

@@ -55,11 +55,9 @@ const NEEDS_NO_RULE: Record<string, string> = {
   // either function, so nothing ever added the classes.)
   'x-globe': 'globe() adds its baseClass and builds nothing; a rule would style an empty host',
   'x-slider': 'slider() adds its baseClass and builds nothing; a rule would style an empty host',
+  // (x-confetti, x-fireworks, x-snow, x-sparkle and x-parallax were listed here
+  // until they moved to WB Pro, #1953.)
   // The look is on a sibling class the same behavior adds to the same element.
-  'x-confetti': 'confetti() also adds x-confetti--trigger (and --trigger-button), which effects.css styles',
-  'x-fireworks': 'fireworks() also adds x-fireworks--trigger (and --trigger-button), which effects.css styles',
-  'x-snow': 'snow() also adds x-snow--trigger (and --trigger-button), which effects.css styles',
-  'x-sparkle': 'sparkle() also adds x-sparkle--trigger, which effects.css styles (position: relative for the sparks)',
   'x-lightbox': 'lightbox() also adds x-lightbox--trigger, which overlays.css styles (cursor: pointer)',
   'x-modal': 'added beside x-dialog on a <dialog>; the tag and dialog.css\'s .x-dialog rules are its look',
   'x-modal--trigger': 'added beside x-dialog--trigger, which dialog.css styles (cursor: pointer)',
@@ -67,14 +65,12 @@ const NEEDS_NO_RULE: Record<string, string> = {
   'x-status': 'status text with no variant is plain running text by design (status.css); each look is an x-status--{variant} class',
   'x-articles': 'a plain container; its look is its parts (x-articles__header, __list with --grid/--list/--masonry, __pagination) in article.css',
   'x-form': 'the <form> tag is the look; the states form() shows are x-form__message, x-form__field--invalid and x-form--loading, styled in form.css',
-  'x-validator': 'the host is the author\'s own <form> or <input>; the feedback validator() shows is x-validator__error, styled in validator.css',
   'x-move': 'a container whose children move; the motion is x-move__item--animated and x-move--offset, styled in move.css',
   'x-external': 'the host is the author\'s <a>; the mark external() adds is x-external__icon, styled in helpers.css',
   'x-darkmode': 'the host is the author\'s button (button.css); the visible effect is the data-theme it sets on the page',
   'x-accordion': 'a plain container; its look is its parts: x-accordion__item/__head/__body in accordion.css for titled panels, and x-details for the <details> form, where accordion() adds only exclusivity. Measured (#1095 batch 4): a <span> host lays its panels out exactly as a <div> host does, so a host rule would have nothing to change',
   'x-tooltip--trigger': 'the trigger is whatever element the tooltip describes, often a button or link with its own cursor; the visible feedback is the .x-tooltip panel',
   // The visible change is made another way; the class is a signal for JS or tests.
-  'x-parallax': 'its look is the per-scroll transform dynamic-style.js generates; a static rule has nothing to add',
   'x-demo--measured': 'readiness signal tests wait on; the visible change at that moment is the removal of x-demo--measuring, which demo.css styles',
   'x-demo__source--unavailable': 'the panel text is an HTML comment saying the source is unavailable, which the highlighter already paints in the theme\'s comment colour',
 };
