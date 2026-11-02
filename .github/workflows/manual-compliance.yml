@@ -23,7 +23,12 @@ permissions:
 jobs:
   run-compliance:
     name: Run focused compliance (with artifacts)
-    runs-on: ubuntu-24.04  # #1955: ubuntu-latest is 26.04, which Playwright 1.58 cannot install browsers on
+    # Windows, like the main Playwright matrix (#1955): ubuntu-latest moved to
+    # 26.04, which Playwright cannot install Chromium on.
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     timeout-minutes: 60
     env:
       # Disable recursive fs.watch during CI runs to avoid platform-specific

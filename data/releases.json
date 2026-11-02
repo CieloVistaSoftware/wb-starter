@@ -6,6 +6,31 @@
   ],
   "releases": [
     {
+      "version": "1.0.562",
+      "date": "2026-11-01",
+      "summary": "CI jobs that install Playwright on Ubuntu failed before any test ran, and the Nightly failed every night since Oct 25 because the x-clock showcase&#39;s London clock matched the runner&#39;s UTC clock. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1955\" target=\"_blank\" rel=\"noopener\">#1955</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1956\" target=\"_blank\" rel=\"noopener\">#1956</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1957\" target=\"_blank\" rel=\"noopener\">#1957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1958\" target=\"_blank\" rel=\"noopener\">#1958</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1959\" target=\"_blank\" rel=\"noopener\">#1959</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Playwright jobs off Ubuntu; x-clock example uses Tokyo</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1955\" target=\"_blank\" rel=\"noopener\">#1955</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1956\" target=\"_blank\" rel=\"noopener\">#1956</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1957\" target=\"_blank\" rel=\"noopener\">#1957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1958\" target=\"_blank\" rel=\"noopener\">#1958</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1959\" target=\"_blank\" rel=\"noopener\">#1959</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4be5be74490646a1aca8990313c206aecc679bde\" target=\"_blank\" rel=\"noopener\"><code>4be5be7</code></a>",
+          "issues": [
+            1955,
+            1956,
+            1957,
+            1958,
+            1959
+          ]
+        }
+      ],
+      "seeIt": "Open the Nightly run&#39;s &quot;Playwright (regression)&quot; job and PR #1959&#39;s &quot;Builder del() guard (quick)&quot; check. Before: &quot;timezone=Europe/London = timezone=local render identically&quot; and &quot;Playwright does not support chromium on ubuntu26.04-x64&quot;. Now: both pass, and the x-clock showcase offers Tokyo instead of London.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/4be5be74490646a1aca8990313c206aecc679bde\" target=\"_blank\" rel=\"noopener\"><code>4be5be7</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.561",
       "date": "2026-10-22",
       "summary": "The nightly run went red because one End-key test gave the page 10s to scroll when the page is built to take up to 12s, and every CI run warned that its GitHub actions use the deprecated Node.js 20. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1950\" target=\"_blank\" rel=\"noopener\">#1950</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1951\" target=\"_blank\" rel=\"noopener\">#1951</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1952\" target=\"_blank\" rel=\"noopener\">#1952</a>",

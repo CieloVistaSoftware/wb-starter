@@ -57,7 +57,7 @@
       "<div x-clock>Test Content</div>",
       "<div x-clock variant=\"digital\">Test Content</div>",
       "<div x-clock format=\"24\">Test Content</div>",
-      "<div x-clock timezone=\"Europe/London\">Test Content</div>"
+      "<div x-clock timezone=\"Asia/Tokyo\">Test Content</div>"
     ]
   },
   "_metadata": {

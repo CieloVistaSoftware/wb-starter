@@ -1301,5 +1301,10 @@
   "1946": "x-navbar ignores the theme: its colours are fixed in navbar.css",
   "1949": "Remove wb-starter's own Articles page: the list now lives on cielovistasoftware.com",
   "1950": "Nightly 2026-10-22: new test failures on main",
-  "1951": "CI: actions target the deprecated Node.js 20 runtime"
+  "1951": "CI: actions target the deprecated Node.js 20 runtime",
+  "1953": "Monetize WB: MIT core + commercial WB Pro tier and paid templates",
+  "1955": "CI: Playwright jobs fail on ubuntu-latest (now Ubuntu 26.04)",
+  "1956": "Nightly 2026-10-27: new test failures on main",
+  "1957": "Nightly 2026-10-30: new test failures on main",
+  "1958": "Nightly 2026-10-31: new test failures on main"
 }
