@@ -1,6 +1,6 @@
 # WB Pro: How Only Paying Customers Get It
 
-**Status:** proposal. Delivery is decided: download first. The waitlist-first order is still open (end of this doc).
+**Status:** plan, decided 2026-11-01. Delivery: the Lemon Squeezy download first. Order: waitlist first, with a 60-day check (end of this doc).
 **Issue:** #1953 (monetize WB: MIT core + commercial WB Pro).
 **Written:** 2026-11-01, US Central.
 
@@ -105,8 +105,8 @@ would mostly hurt the customers who do.
 | Step | Work | Depends on |
 |---|---|---|
 | A | Merge PR #1954 (core becomes MIT), then merge wb-pro's branch to its `main` | John's licensing decision |
-| B | Waitlist page on the live site (step 4 of #1953) | A |
-| C | Lemon Squeezy products: Personal, Team, templates | ~20 waitlist sign-ups |
+| B | Waitlist page on the live site (step 4 of #1953), with the launch prices and Lemon Squeezy's email sign-up | A |
+| C | Lemon Squeezy products: Personal, Team, templates | ~20 waitlist sign-ups; rethink at 60 days if well short |
 | D | Key-gated delivery: the Lemon Squeezy download (a zip per release) | C |
 | E | A release step in wb-pro that builds the zip and uploads it to Lemon Squeezy | D |
 | G | Later, on customer demand: a private npm package, plus the key-to-access service | E |
@@ -118,7 +118,13 @@ would mostly hurt the customers who do.
 
 1. **Delivery: decided (John, 2026-11-01).** The Lemon Squeezy download at
    launch, and a private npm package later, once customers ask for it.
-2. **Order: open.** Keep #1953's plan of waitlist first, then checkout at about
-   20 sign-ups? Recommended: yes. The waitlist is about a day's work, 20
-   sign-ups tests demand at these prices, and the license review (step F) can
-   happen in the meantime.
+2. **Order: decided (John, 2026-11-01). Waitlist first.**
+   - The waitlist page shows the real launch prices ($79 Personal, $249 Team),
+     so a sign-up means interest at that price.
+   - Checkout (steps C–E) is built at **about 20 sign-ups**.
+   - **60-day check:** if sign-ups are well short of 20 after 60 days, rethink
+     the price or what Pro includes before building checkout.
+   - The license review (step F) happens during the waitlist, so it is done
+     before the first sale.
+   - Sign-ups are the launch list: they get the launch price first when checkout
+     opens.
