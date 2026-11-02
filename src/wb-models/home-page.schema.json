@@ -156,8 +156,8 @@
           "behavior": "x-tooltip"
         },
         {
-          "label": "🎉 Confetti",
-          "behavior": "x-confetti"
+          "label": "🎉 Tada",
+          "behavior": "x-tada"
         },
         {
           "label": "📋 Copy",
@@ -309,7 +309,7 @@
       "button[x-tooltip]": {
         "hoverable": true
       },
-      "button[x-confetti]": {
+      "button[x-tada]": {
         "clickable": true
       },
       "button[x-copy]": {
@@ -642,12 +642,12 @@
           "minInstances": 1
         },
         "actions": {
-          "selector": "button[x-ripple], button[x-tooltip], button[x-confetti], button[x-copy]",
+          "selector": "button[x-ripple], button[x-tooltip], button[x-tada], button[x-copy]",
           "minInstances": 4,
           "checkText": [
             "Ripple",
             "Tooltip",
-            "Confetti",
+            "Tada",
             "Copy"
           ]
         },

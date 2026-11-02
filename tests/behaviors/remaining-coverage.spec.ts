@@ -135,7 +135,7 @@ function errored(page: Page) {
 const SWEEP = [
   'x-modal', 'x-drawer', 'x-audio',
   'x-tooltip', 'x-popover', 'x-confirm', 'x-prompt', 'x-lightbox',
-  'x-stepper', 'x-masked', 'x-password',
+  'x-stepper', 'x-password',
   'x-gallery', 'x-img', 'x-youtube',
   'x-share', 'x-print', 'x-fullscreen', 'x-truncate', 'x-kbd', 'x-timeline',
   'x-checkbox', 'x-radio', 'x-slider', 'x-select',

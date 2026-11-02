@@ -47,7 +47,9 @@ test('the audit reads every source, including the computed x-{name} route', () =
   // If the computed route stopped being read, these behaviors would fall back
   // to UNREACHABLE and the gate would fail on them by name. This states the
   // model directly: dozens of behaviors are reachable only through it.
-  expect(result.computedOnly.length).toBeGreaterThan(40);
+  // Was > 40; WB Pro (#1953) takes its behaviors out of the core registry,
+  // so the count falls as groups move. The floor only guards against a blind audit.
+  expect(result.computedOnly.length).toBeGreaterThan(30);
   expect(result.computedOnly).toEqual(expect.arrayContaining(['sidebar', 'list', 'divider', 'hotkey']));
 });
 

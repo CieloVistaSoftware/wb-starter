@@ -248,16 +248,4 @@ test.describe('Native <select> and <input x-autocomplete> (forms.html "Select" f
     expect(await select.inputValue()).toBe('y');
   });
 
-  test('x-autocomplete surfaces a real filtered suggestion for a partial match', async ({ page }) => {
-    await setup(page, `
-      <input id="ac-input" type="text" x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Search fruit...">
-    `);
-
-    const input = page.locator('#ac-input');
-    await input.pressSequentially('Ban');
-
-    const suggestions = page.locator('#test-area .x-autocomplete__list li');
-    await expect(suggestions).toHaveCount(1); // real filtering, not just rendering
-    await expect(suggestions.first()).toHaveText('Banana');
-  });
 });

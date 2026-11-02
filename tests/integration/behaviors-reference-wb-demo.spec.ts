@@ -69,7 +69,6 @@ const CASES: Case[] = [
   { selector: '[x-carddraggable]', label: 'draggable' },
   { selector: '[x-themecontrol]', label: 'themecontrol' },
   { selector: '[x-mdhtml]', label: 'mdhtml' },
-  { selector: '[x-confetti]', label: 'confetti' },
 ];
 
 test.describe('docs/behaviors-reference.md: live <div x-demo> examples', () => {

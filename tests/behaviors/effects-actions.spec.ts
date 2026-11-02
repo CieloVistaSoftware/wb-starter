@@ -65,13 +65,9 @@ const CLICK_EFFECTS: { token: string; cls: string }[] = [
 ];
 
 /** Continuous / particle effects: the class each one adds once it has attached. */
+// confetti, rainbow, sparkle, snow and fireworks moved to WB Pro (#1953).
 const PARTICLE_EFFECTS: { token: string; cls: string }[] = [
-  { token: 'x-confetti', cls: 'x-confetti--trigger' },
-  { token: 'x-rainbow', cls: 'x-rainbow' },
   { token: 'x-glow', cls: 'x-glow' },
-  { token: 'x-sparkle', cls: 'x-sparkle--trigger' },
-  { token: 'x-snow', cls: 'x-snow--trigger' },
-  { token: 'x-fireworks', cls: 'x-fireworks--trigger' },
 ];
 
 async function loadBehaviors(page: Page): Promise<void> {
@@ -325,7 +321,7 @@ test.describe('Behaviors page — Effects', () => {
     }
   });
 
-  test('particle effects (confetti/rainbow/glow/sparkle/snow/fireworks) inject and fire without error', async ({ page }) => {
+  test('particle effects (glow) inject and fire without error', async ({ page }) => {
     await loadBehaviors(page);
     for (const e of PARTICLE_EFFECTS) {
       const target = await showEffect(page, e.token, e.cls);

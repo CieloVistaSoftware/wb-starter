@@ -676,13 +676,12 @@ One implementation: `src/core/author-content.js` (`authorText`, `hasAuthorConten
 
 | Behavior | Primary attribute |
 |----------|-------------------|
-| `x-badge`, `x-pill`, `x-button`, `x-chip`, `x-spinner`, `x-checkbox`, `x-switch`, `x-radio`, `x-floatinglabel`, `x-stagelight` | `label` |
-| `x-print`, `x-share`, `x-fullscreen`, `x-clipboard`, `x-scroll`, `x-confetti`, `x-fireworks`, `x-snow` | `label` |
+| `x-badge`, `x-pill`, `x-button`, `x-chip`, `x-spinner`, `x-checkbox`, `x-switch`, `x-radio`, `x-floatinglabel` | `label` |
+| `x-print`, `x-share`, `x-fullscreen`, `x-clipboard`, `x-scroll` | `label` |
 | `x-alert`, `x-empty`, `x-cardnotification` | `message` |
-| `x-divider`, `x-link`, `x-typewriter` | `text` |
+| `x-divider`, `x-link` | `text` |
 | `x-avatar` | `initials` |
 | `x-stat`, `x-input`, `x-textarea`, `x-progress`, `x-rating`, `x-stepper` | `value` |
-| `x-countup` | `to` |
 | `x-cardtestimonial` | `quote` |
 | `x-card`, `x-cardbutton`, `x-carddraggable`, `x-cardexpandable`, `x-cardfile`, `x-cardhero`, `x-cardhorizontal`, `x-cardimage`, `x-cardlink`, `x-cardminimizable`, `x-cardoverlay`, `x-cardportfolio`, `x-cardpricing`, `x-cardproduct`, `x-cardprofile`, `x-cardstats`, `x-cardvideo` | `content` (the card body) |
 

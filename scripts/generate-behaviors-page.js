@@ -540,7 +540,7 @@ function generateEffectDemos(behaviors) {
 
   // Special effects
   const specialEffects = behaviors.filter(b => b.type === 'action' && [
-    'x-confetti', 'x-fireworks', 'x-snow', 'x-sparkle', 'x-glow', 'x-rainbow', 'x-ripple'
+    'x-glow', 'x-ripple'
   ].includes(b.name));
 
   if (specialEffects.length > 0) {
@@ -548,12 +548,7 @@ function generateEffectDemos(behaviors) {
     specialEffects.forEach(behavior => {
       const displayName = behavior.name.replace('x-', '').charAt(0).toUpperCase() + behavior.name.replace('x-', '').slice(1);
       const emoji = {
-        'x-confetti': '🎊 ',
-        'x-fireworks': '🎆 ',
-        'x-snow': '❄️ ',
-        'x-sparkle': '✨ ',
         'x-glow': '💡 ',
-        'x-rainbow': '🌈 ',
         'x-ripple': ''
       }[behavior.name] || '';
 

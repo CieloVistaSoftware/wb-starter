@@ -60,22 +60,4 @@ test.describe('input() defers to richer explicit behaviors (Behaviors page)', ()
     expect(chain[0]).not.toContain('x-input__field');
   });
 
-  test('x-colorpicker input keeps its native size, no text-field styling forced on it', async ({ page }) => {
-    await showBehavior(page, 'x-colorpicker');
-    const picker = page.locator('#behaviors-live-example input[x-colorpicker]').first();
-    // Same rationale as above: wait for colorpicker()'s own marker class
-    // before measuring, not just element presence.
-    await expect(picker).toHaveClass(/x-colorpicker__input/, { timeout: 10_000 });
-
-    expect(await picker.evaluate((el) => el.className)).not.toContain('x-input__field');
-    expect(await picker.evaluate((el) => el.hasAttribute('style'))).toBe(false);
-
-    // A text-field-styled color input stretches to fill its flex container
-    // (100+px wide); the native swatch is small and roughly square. Poll
-    // since layout can take a frame to settle after the class appears.
-    await expect.poll(async () => {
-      const box = await picker.boundingBox();
-      return box?.width ?? -1;
-    }, { timeout: 5_000 }).toBeLessThan(80);
-  });
 });

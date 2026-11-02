@@ -42,7 +42,9 @@ test('[docs] lists every behavior, split into semantic and x- sections (#1098)',
   const registries = await readRegistries(page);
 
   // Guard the guard: an empty read would make every check below vacuous.
-  expect(registries.extension.length, 'read no x- behaviours from tag-map.js').toBeGreaterThan(150);
+  // Was > 150; WB Pro (#1953) takes its behaviors out of tag-map, so the count
+  // falls as groups move. The floor only guards against reading nothing.
+  expect(registries.extension.length, 'read no x- behaviours from tag-map.js').toBeGreaterThan(120);
 
   const semanticItems = page.locator('#behaviors-semantic .behaviors-grid__item');
   const extensionItems = page.locator('#behaviors-extension .behaviors-grid__item');
