@@ -1,6 +1,6 @@
 # WB Pro: How Only Paying Customers Get It
 
-**Status:** proposal, waiting on two decisions from John (end of this doc).
+**Status:** proposal. Delivery is decided: download first. The waitlist-first order is still open (end of this doc).
 **Issue:** #1953 (monetize WB: MIT core + commercial WB Pro).
 **Written:** 2026-11-01, US Central.
 
@@ -57,12 +57,13 @@ the page works normally.
 
 | Delivery | How the customer gets Pro | For | Against |
 |---|---|---|---|
-| **Private npm package** (recommended) | `npm install @cielovista/wb-pro`, with the key as the access token | Professional; updates are one command | Needs a private registry set up |
-| **Download link** (fallback) | A zip file per release from Lemon Squeezy | Simplest; no npm needed | Updates are manual |
+| **Download link** (at launch) | A zip file per release from Lemon Squeezy | Lemon Squeezy handles payment, key and file in one place; nothing to build | Updates are manual |
+| **Private npm package** (later) | `npm install @cielovista/wb-pro` | How most developers expect to install; updates are one command | Needs a private registry (paid npm org or GitHub Packages) and a small service that turns a license key into package access |
 | **GitHub invite** | Added to the private `wb-pro` repo | Fine for Team customers | GitHub accounts to manage by hand |
 
-**Recommendation:** npm first, with the Lemon Squeezy download for people who
-don't use npm.
+**Decision (John, 2026-11-01): download first.** Launch with the Lemon Squeezy
+download only. Add the private npm package once customers ask for it. Same end
+state, with less to build before the first sale.
 
 ---
 
@@ -106,15 +107,18 @@ would mostly hurt the customers who do.
 | A | Merge PR #1954 (core becomes MIT), then merge wb-pro's branch to its `main` | John's licensing decision |
 | B | Waitlist page on the live site (step 4 of #1953) | A |
 | C | Lemon Squeezy products: Personal, Team, templates | ~20 waitlist sign-ups |
-| D | Key-gated delivery: private npm package plus a download fallback | C |
-| E | A release step in wb-pro that publishes each version to the delivery channels | D |
+| D | Key-gated delivery: the Lemon Squeezy download (a zip per release) | C |
+| E | A release step in wb-pro that builds the zip and uploads it to Lemon Squeezy | D |
+| G | Later, on customer demand: a private npm package, plus the key-to-access service | E |
 | F | Lawyer review of the WB Pro license | before C goes live |
 
 ---
 
-## 8. Decisions for John
+## 8. Decisions
 
-1. **Delivery:** private npm package, download link, GitHub invite, or a mix?
-   Recommended: npm, with the download as the fallback.
-2. **Order:** keep #1953's plan of waitlist first, then checkout at about 20
-   sign-ups?
+1. **Delivery: decided (John, 2026-11-01).** The Lemon Squeezy download at
+   launch, and a private npm package later, once customers ask for it.
+2. **Order: open.** Keep #1953's plan of waitlist first, then checkout at about
+   20 sign-ups? Recommended: yes. The waitlist is about a day's work, 20
+   sign-ups tests demand at these prices, and the license review (step F) can
+   happen in the meantime.
