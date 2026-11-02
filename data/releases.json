@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.563",
+      "date": "2026-11-01",
+      "summary": "The LICENSE file said all rights reserved while package.json said MIT, and the effects and advanced inputs meant for WB Pro were in the public repo, so nothing could be sold as Pro. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1953\" target=\"_blank\" rel=\"noopener\">#1953</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1954\" target=\"_blank\" rel=\"noopener\">#1954</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>MIT core, and the showpiece effects and advanced inputs move to WB Pro</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1953\" target=\"_blank\" rel=\"noopener\">#1953</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1954\" target=\"_blank\" rel=\"noopener\">#1954</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/95a2aafa99da00b390a98729c17ae63c67985ca9\" target=\"_blank\" rel=\"noopener\"><code>95a2aaf</code></a>",
+          "issues": [
+            1953,
+            1954
+          ]
+        }
+      ],
+      "seeIt": "Open LICENSE on GitHub, then the home page and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=pro\" target=\"_blank\" rel=\"noopener\">?page=pro</a>. Before: &quot;All rights reserved&quot;, a Confetti button, and x-confetti and x-autocomplete served from wb-starter. Now: the MIT License, a Tada button, and <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=pro\" target=\"_blank\" rel=\"noopener\">?page=pro</a> listing the 17 Pro behaviors, which only work with the wb-pro pack loaded.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/95a2aafa99da00b390a98729c17ae63c67985ca9\" target=\"_blank\" rel=\"noopener\"><code>95a2aaf</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.562",
       "date": "2026-11-01",
       "summary": "CI jobs that install Playwright on Ubuntu failed before any test ran, and the Nightly failed every night since Oct 25 because the x-clock showcase&#39;s London clock matched the runner&#39;s UTC clock. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1955\" target=\"_blank\" rel=\"noopener\">#1955</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1956\" target=\"_blank\" rel=\"noopener\">#1956</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1957\" target=\"_blank\" rel=\"noopener\">#1957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1958\" target=\"_blank\" rel=\"noopener\">#1958</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1959\" target=\"_blank\" rel=\"noopener\">#1959</a>",
