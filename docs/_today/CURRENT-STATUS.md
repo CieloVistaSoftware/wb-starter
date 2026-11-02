@@ -2,6 +2,16 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-11-01, 9:15 PM CST.** main = v1.0.562.
+
+**Done:** #1959 merged: the Playwright jobs that installed Chromium on Ubuntu run on Windows (#1955), and the x-clock example is Tokyo, not London, which ended the Nightly failures since Oct 25 (#1956–#1958). PR #1954 (WB Pro split, MIT core) brought up to date with main; still a draft.
+
+**New doc:** `docs/architecture/proposals/WB-PRO-ACCESS.md` (WB-PRO-ACCESS.md), how only paying customers get WB Pro: paid download, a year of updates, and the license. It is not a browser license check.
+
+**Open questions for John:** WB Pro delivery (private npm package, download link, GitHub invite); keep the waitlist before checkout; merge #1954 (making the core MIT is permanent).
+
+---
+
 **Parked 2026-10-05, 11:55 PM CDT.** main = v1.0.315.
 
 **Task:** real paths for pages (#1001), which also settled #957.
