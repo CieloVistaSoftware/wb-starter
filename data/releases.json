@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.564",
+      "date": "2026-11-01",
+      "summary": "There was no written plan for how only paying customers get WB Pro, given that browser code can be copied once someone has it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1953\" target=\"_blank\" rel=\"noopener\">#1953</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1960\" target=\"_blank\" rel=\"noopener\">#1960</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>How only paying customers get WB Pro</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1953\" target=\"_blank\" rel=\"noopener\">#1953</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1960\" target=\"_blank\" rel=\"noopener\">#1960</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e4ad159597a3ba75571046780bab872a4933c72f\" target=\"_blank\" rel=\"noopener\"><code>e4ad159</code></a>",
+          "issues": [
+            1953,
+            1960
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2Farchitecture%2Fproposals%2FWB-PRO-ACCESS.md\" target=\"_blank\" rel=\"noopener\">docs/architecture/proposals/WB-PRO-ACCESS.md</a> on GitHub. Before: the file did not exist, and #1953 only said &quot;license keys through Lemon Squeezy&quot;. Now: the three layers (paid download, updates, license), download first with npm later, the waitlist-first order with a 60-day check, and build steps A-G.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e4ad159597a3ba75571046780bab872a4933c72f\" target=\"_blank\" rel=\"noopener\"><code>e4ad159</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.563",
       "date": "2026-11-01",
       "summary": "The LICENSE file said all rights reserved while package.json said MIT, and the effects and advanced inputs meant for WB Pro were in the public repo, so nothing could be sold as Pro. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1953\" target=\"_blank\" rel=\"noopener\">#1953</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1954\" target=\"_blank\" rel=\"noopener\">#1954</a>",
