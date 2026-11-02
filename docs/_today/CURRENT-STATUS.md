@@ -2,6 +2,24 @@
 
 ## 🅿️ PARKING LOT
 
+**Parked 2026-11-01, 9:45 PM CST.** main = v1.0.563.
+
+**Task:** WB Pro waitlist (#1961, step B of #1953).
+
+**Files touched:** `pages/pro.html` (new Pricing and "Join the waitlist" sections), `tests/regression/pro-page-shows-prices-and-waitlist.spec.ts` (new). One commit, `feat(#1961): the WB Pro page shows the launch prices and the waitlist`, on the session's local branch `waitlist`. **It is not pushed.** It goes on the session branch after PR #1960 merges, as its own PR.
+
+**Last action:** John chose Buttondown (free) for the waitlist email sign-up, over Lemon Squeezy's paid email marketing add-on. John is setting up Buttondown tomorrow.
+
+**Next step:** get the Buttondown username or embed snippet from John. Add a form to the waitlist section that posts to `https://buttondown.com/api/emails/embed-subscribe/<username>` (confirm the address against his snippet), replacing "The sign-up form opens soon". Change the spec's "no form yet" check to "the form posts to Buttondown". Then open the PR.
+
+**Done today (merged):** #1959 (Playwright jobs moved from Ubuntu 26.04 to Windows, #1955; x-clock example Tokyo, not London, which ended the Nightly failures since Oct 25, #1956–#1958). #1954 (core is MIT; 11 effects and 6 advanced inputs moved to WB Pro; `registerBehaviorPack()`). wb-pro PR #1 (the Pro pack on wb-pro's main). #1960 (`docs/architecture/proposals/WB-PRO-ACCESS.md`, WB-PRO-ACCESS.md: download first, waitlist first with a 60-day check), merging when CI is green.
+
+**Decided by John today:** WB Pro launches with the Lemon Squeezy download, with npm later; waitlist before checkout, checkout at ~20 sign-ups, 60-day check; Codex uninstalled from GitHub (it is not part of the build).
+
+**Open questions for John:** the "Permission updates requested" on the Claude GitHub App. Without Actions write access a session cannot start the Nightly (403). Activating the Lemon Squeezy store (business details) is needed before checkout, not before the waitlist.
+
+---
+
 **Parked 2026-10-05, 11:55 PM CDT.** main = v1.0.315.
 
 **Task:** real paths for pages (#1001), which also settled #957.

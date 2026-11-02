@@ -1,8 +1,8 @@
 {
-  "totalFiles": 240,
+  "totalFiles": 241,
   "audiences": {
     "user": 163,
-    "maintainer": 77
+    "maintainer": 78
   },
   "categories": [
     "_today",
@@ -429,6 +429,14 @@
         "category": "architecture",
         "audience": "maintainer",
         "created": "2026-02-14"
+      },
+      {
+        "path": "docs/architecture/proposals/WB-PRO-ACCESS.md",
+        "title": "WB Pro: How Only Paying Customers Get It",
+        "name": "WB-PRO-ACCESS",
+        "category": "architecture",
+        "audience": "maintainer",
+        "created": "2026-11-01"
       },
       {
         "path": "docs/architecture/proposals/proposed-custom-elements.md",
@@ -2062,6 +2070,14 @@
       "category": "architecture",
       "audience": "maintainer",
       "created": "2026-08-04"
+    },
+    {
+      "path": "docs/architecture/proposals/WB-PRO-ACCESS.md",
+      "title": "WB Pro: How Only Paying Customers Get It",
+      "name": "WB-PRO-ACCESS",
+      "category": "architecture",
+      "audience": "maintainer",
+      "created": "2026-11-01"
     },
     {
       "path": "docs/architecture/solidjscomparison.md",
