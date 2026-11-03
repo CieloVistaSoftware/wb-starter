@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.565",
+      "date": "2026-11-03",
+      "summary": "While npm run pro:local ran, the browser reloaded whenever the local Worker wrote its own files or a captured log grew, because the site&#39;s file watcher did not ignore them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1963\" target=\"_blank\" rel=\"noopener\">#1963</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1964\" target=\"_blank\" rel=\"noopener\">#1964</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Live reload ignores Wrangler files and logs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1963\" target=\"_blank\" rel=\"noopener\">#1963</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1964\" target=\"_blank\" rel=\"noopener\">#1964</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/56604064eec9487fd6db4d8b6ef5c918adeb4892\" target=\"_blank\" rel=\"noopener\"><code>5660406</code></a>",
+          "issues": [
+            1963,
+            1964
+          ]
+        }
+      ],
+      "seeIt": "Run npm run pro:local and open <a href=\"http://localhost:3000/\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/</a>, then use the page while the Worker runs. Before: the console printed &quot;[File Changed] server\\waitlist\\.wrangler\\... -&gt; Reloading clients...&quot; and the page reloaded. Now: those lines no longer appear and the page stays put, while editing a file under src still reloads it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/56604064eec9487fd6db4d8b6ef5c918adeb4892\" target=\"_blank\" rel=\"noopener\"><code>5660406</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.564",
       "date": "2026-11-01",
       "summary": "There was no written plan for how only paying customers get WB Pro, given that browser code can be copied once someone has it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1953\" target=\"_blank\" rel=\"noopener\">#1953</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1960\" target=\"_blank\" rel=\"noopener\">#1960</a>",

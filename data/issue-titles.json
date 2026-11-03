@@ -1307,5 +1307,6 @@
   "1956": "Nightly 2026-10-27: new test failures on main",
   "1957": "Nightly 2026-10-30: new test failures on main",
   "1958": "Nightly 2026-10-31: new test failures on main",
-  "1961": "WB Pro waitlist: show launch prices and an email sign-up on the Pro page"
+  "1961": "WB Pro waitlist: show launch prices and an email sign-up on the Pro page",
+  "1963": "Live reload fires on Wrangler state and log files during pro:local"
 }
