@@ -55,7 +55,9 @@ async function waitFor(url) {
 // Fixed ports (John: "the ports should always be known"): the site on 3000,
 // the Worker on 8787. A leftover copy of either is stopped first; anything
 // else holding them stops this run with its name (scripts/claim-port.mjs).
-const SITE_PORT = 3000;
+// PRO_SITE_PORT: only for the Windows CI end-to-end test, whose own site
+// server already holds 3000 (tests/integration/waitlist-end-to-end.spec.ts).
+const SITE_PORT = Number(process.env.PRO_SITE_PORT) || 3000;
 const WORKER_PORT = 8787;
 for (const port of [SITE_PORT, WORKER_PORT]) {
   if (!(await claim(port))) process.exit(1);
