@@ -14,7 +14,7 @@ const NODE_GLOBALS = {
   URLSearchParams: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly',
   setInterval: 'readonly', clearInterval: 'readonly', setImmediate: 'readonly',
   clearImmediate: 'readonly', queueMicrotask: 'readonly', structuredClone: 'readonly',
-  globalThis: 'readonly', fetch: 'readonly', AbortController: 'readonly',
+  globalThis: 'readonly', fetch: 'readonly', AbortController: 'readonly', AbortSignal: 'readonly',
   TextEncoder: 'readonly', TextDecoder: 'readonly', performance: 'readonly',
 };
 // sw.js runs in a ServiceWorkerGlobalScope: no window, no document.

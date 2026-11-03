@@ -22,7 +22,7 @@
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
     "pro:local": "node scripts/ensure-installed.mjs && node scripts/pro-local.mjs",
-    "start": "node scripts/pull-on-start.mjs && node scripts/ensure-installed.mjs && node scripts/stamp-version.js --local && node scripts/update-docs-manifest.js && node server.js",
+    "start": "node scripts/pull-on-start.mjs && node scripts/ensure-installed.mjs && node scripts/stamp-version.js --local && node scripts/update-docs-manifest.js && node scripts/claim-port.mjs 3000 && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
     "dev": "npx serve . -p 3000",
@@ -98,7 +98,7 @@
   },
   "scripts-info": {
     "pro:local": "The free site and the WB Pro waitlist running together on this PC, as if deployed (#1961): local waitlist table, the Worker on 8787, the site on 3000, opens Home. Ctrl+C stops both.",
-    "start": "Run the site at localhost:3000: pulls main, makes node_modules match package-lock.json with fresh package data (never a stale cache), stamps the version, rebuilds the docs list, then serves. Use this to work on or look at the site.",
+    "start": "Run the site at localhost:3000: pulls main, makes node_modules match package-lock.json with fresh package data (never a stale cache), stamps the version, rebuilds the docs list, frees port 3000 (stops a leftover copy of the site; never moves to another port), then serves. Use this to work on or look at the site.",
     "dev": "Serve the folder as plain static files on :3000, with no build steps. Use to see what GitHub Pages would serve.",
     "scripts:help": "Print this list of scripts, grouped, with what each does and when to use it.",
     "test:async": "Run tests in the background and return at once: give a spec file, or a filter such as --project=regression. The way to test during the day; results land in data/test-single/ or data/test-status.json.",

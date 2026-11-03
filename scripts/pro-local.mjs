@@ -6,7 +6,8 @@
  *
  *   1. Creates the waitlist table in a local database (safe to repeat).
  *   2. Starts the waitlist Worker on http://localhost:8787 (wrangler dev).
- *   3. Starts the site on http://localhost:3000, or the next free port.
+ *   3. Starts the site on http://localhost:3000. Ports are fixed: a leftover
+ *      copy of the site or Worker is stopped first (scripts/claim-port.mjs).
  *   4. Opens the free Home page. From there: WB Pro in the menu, then join.
  *
  * Ctrl+C stops both. Who joined:
@@ -16,6 +17,7 @@
 import { spawn, spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { claim } from './claim-port.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workerDir = path.join(root, 'server', 'waitlist');
@@ -50,16 +52,19 @@ async function waitFor(url) {
   return false;
 }
 
-// The site first: server.js moves to the next free port when 3000 is taken
-// (another copy of the site already running), and both the browser and the
-// Worker's "Back to WB Pro" link must use the port it really got.
-say('2/4 starting the site (port 3000, or the next free one) ...');
-const site = spawn(process.execPath, ['server.js'], { cwd: root, stdio: ['ignore', 'pipe', 'inherit'] });
-let sitePort = null;
-site.stdout.on('data', (chunk) => {
-  process.stdout.write(chunk);
-  for (const m of String(chunk).matchAll(/WB Starter running at http:\/\/localhost:(\d+)/g)) sitePort = Number(m[1]);
-});
+// Fixed ports (John: "the ports should always be known"): the site on 3000,
+// the Worker on 8787. A leftover copy of either is stopped first; anything
+// else holding them stops this run with its name (scripts/claim-port.mjs).
+const SITE_PORT = 3000;
+const WORKER_PORT = 8787;
+for (const port of [SITE_PORT, WORKER_PORT]) {
+  if (!(await claim(port))) process.exit(1);
+}
+const siteUrl = `http://localhost:${SITE_PORT}/`;
+
+// PORT set explicitly: server.js never moves to another port; a busy port is a hard error.
+say(`2/4 starting the site on ${siteUrl} ...`);
+const site = spawn(process.execPath, ['server.js'], { cwd: root, stdio: 'inherit', env: { ...process.env, PORT: String(SITE_PORT) } });
 
 /** Stop the children that started, then this process. */
 let worker = null;
@@ -72,27 +77,14 @@ function stopAll(code = 0) {
 process.on('SIGINT', () => stopAll(0));
 site.on('exit', (code) => { if (code) { say(`the site stopped (exit ${code}).`); stopAll(code); } });
 
-// server.js prints "running at" for each port it tries; the one that answers is its own.
-let siteUrl = null;
-for (let i = 0; i < 60 && !siteUrl; i += 1) {
-  if (sitePort) {
-    try {
-      await fetch(`http://localhost:${sitePort}/`);
-      siteUrl = `http://localhost:${sitePort}/`;
-      break;
-    } catch { /* not answering yet */ }
-  }
-  await new Promise((r) => setTimeout(r, 1000));
-}
-if (!siteUrl) {
+if (!(await waitFor(siteUrl))) {
   say('the site did not start within 60 seconds (see above).');
   stopAll(1);
 }
-if (sitePort !== 3000) say(`port 3000 is taken (another copy of the site is running), so this one is on ${sitePort}.`);
 
 // LOCAL_DEV=1: the local Worker takes sign-ups from a site on this PC, any port.
 say('3/4 starting the waitlist Worker on http://localhost:8787 ...');
-worker = spawn(wrangler, ['dev', '--port', '8787', '--var', 'LOCAL_DEV:1', '--var', `PRO_PAGE_URL:${siteUrl}?page=pro`], {
+worker = spawn(wrangler, ['dev', '--port', String(WORKER_PORT), '--var', 'LOCAL_DEV:1', '--var', `PRO_PAGE_URL:${siteUrl}?page=pro`], {
   cwd: workerDir, stdio: 'inherit', shell: isWindows,
 });
 worker.on('exit', (code) => { if (code) { say(`the Worker stopped (exit ${code}).`); stopAll(code); } });
