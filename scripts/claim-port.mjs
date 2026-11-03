@@ -10,7 +10,7 @@
  *
  *   - free: nothing to do;
  *   - held by a leftover copy of this site (its /health says
- *     app "wb-starter", or the older {status, timestamp} answer) or of the
+ *     app "cielovista-site", or the older {status, timestamp} answer) or of the
  *     waitlist Worker (404 "Not found" with its X-Frame-Options: DENY):
  *     that process is stopped, and this says which;
  *   - held by anything else: stop, naming the process, and touch nothing.
@@ -97,7 +97,7 @@ export async function whoIsOn(port) {
     const health = await fetch(`http://127.0.0.1:${port}/health`, { signal: AbortSignal.timeout(2000) });
     if (health.ok) {
       const body = await health.json().catch(() => null);
-      if (body && (body.app === 'wb-starter' || (body.status === 'ok' && typeof body.timestamp === 'string'))) return 'site';
+      if (body && (body.app === 'cielovista-site' || (body.status === 'ok' && typeof body.timestamp === 'string'))) return 'site';
     }
     const root = await fetch(`http://127.0.0.1:${port}/`, { signal: AbortSignal.timeout(2000) });
     if (root.status === 404 && root.headers.get('x-frame-options') === 'DENY' && (await root.text()) === 'Not found\n') return 'worker';
