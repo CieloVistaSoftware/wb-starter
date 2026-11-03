@@ -17,7 +17,7 @@
 import { spawn, spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { claim } from './claim-port.mjs';
+import { claim, killTree } from './claim-port.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workerDir = path.join(root, 'server', 'waitlist');
@@ -69,8 +69,9 @@ const site = spawn(process.execPath, ['server.js'], { cwd: root, stdio: 'inherit
 /** Stop the children that started, then this process. */
 let worker = null;
 function stopAll(code = 0) {
+  // The whole tree: on Windows the Worker is cmd.exe -> wrangler -> workerd.
   for (const child of [worker, site]) {
-    if (child && !child.killed) child.kill();
+    if (child && child.pid && child.exitCode === null) killTree(child.pid);
   }
   process.exit(code);
 }

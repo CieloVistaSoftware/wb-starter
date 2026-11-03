@@ -27,6 +27,22 @@ function say(message) {
 }
 
 /**
+ * The PIDs LISTENING on a port in Windows `netstat -ano` output, IPv4 and IPv6.
+ * @param {string} out
+ * @param {number} port
+ * @returns {number[]}
+ */
+export function parseNetstat(out, port) {
+  const pids = new Set();
+  for (const line of out.split(/\r?\n/)) {
+    const cols = line.trim().split(/\s+/);
+    // Proto  Local Address  Foreign Address  State  PID   (Proto is TCP for IPv6 too)
+    if (cols.length >= 5 && cols[0].startsWith('TCP') && cols[3] === 'LISTENING' && cols[1].endsWith(`:${port}`)) pids.add(Number(cols[4]));
+  }
+  return [...pids].filter((pid) => pid > 0);
+}
+
+/**
  * The PIDs listening on a TCP port, [] when it is free.
  * @param {number} port
  * @returns {number[]}
@@ -34,20 +50,34 @@ function say(message) {
 export function listeningPids(port) {
   try {
     if (process.platform === 'win32') {
-      const out = execFileSync('netstat', ['-ano', '-p', 'tcp'], { encoding: 'utf8' });
-      const pids = new Set();
-      for (const line of out.split(/\r?\n/)) {
-        const cols = line.trim().split(/\s+/);
-        // Proto  Local Address  Foreign Address  State  PID
-        if (cols.length >= 5 && cols[3] === 'LISTENING' && cols[1].endsWith(`:${port}`)) pids.add(Number(cols[4]));
-      }
-      return [...pids].filter((pid) => pid > 0);
+      // All protocols: Node listens on [::]:3000 (IPv6), which `-p tcp` (IPv4 only) never lists.
+      return parseNetstat(execFileSync('netstat', ['-ano'], { encoding: 'utf8' }), port);
     }
     const out = execFileSync('lsof', ['-t', `-iTCP:${port}`, '-sTCP:LISTEN'], { encoding: 'utf8' });
     return [...new Set(out.split(/\s+/).filter(Boolean).map(Number))];
   } catch {
     return []; // lsof exits 1 when nothing listens
   }
+}
+
+/**
+ * Stop a process and everything it started. On Windows a launcher (cmd.exe,
+ * npx) does not take its children down with it, so the whole tree goes.
+ * @param {number} pid
+ */
+export function killTree(pid) {
+  try {
+    if (process.platform === 'win32') {
+      execFileSync('taskkill', ['/PID', String(pid), '/T', '/F'], { stdio: 'ignore' });
+    } else {
+      process.kill(pid);
+    }
+  } catch { /* already gone */ }
+}
+
+/** Is anything still answering or listening on the port? */
+async function stillHeld(port) {
+  return listeningPids(port).length > 0 || (await whoIsOn(port)) !== 'none';
 }
 
 /**
@@ -76,18 +106,26 @@ export async function whoIsOn(port) {
 export async function claim(port) {
   const who = await whoIsOn(port);
   if (who === 'none') return true;
-  const pids = listeningPids(port);
+  let pids = listeningPids(port);
+  if (!pids.length && who === 'site') {
+    // A copy of the site reports its own pid on /health.
+    const body = await fetch(`http://localhost:${port}/health`).then((r) => r.json()).catch(() => null);
+    if (body && Number.isInteger(body.pid)) pids = [body.pid];
+  }
   if (who === 'other') {
     say(`port ${port} is in use by another program (PID ${pids.join(', ') || 'unknown'}), not by this site. ` +
       'Close that program, then run this again. Nothing was stopped.');
     return false;
   }
   const what = who === 'site' ? 'an older copy of the site' : 'an older copy of the waitlist Worker';
-  for (const pid of pids) {
-    try { process.kill(pid); } catch { /* already gone */ }
+  if (!pids.length) {
+    say(`port ${port} is held by ${what}, but its process could not be found to stop it. ` +
+      'Close the terminal or VS Code task that started it, then run this again.');
+    return false;
   }
-  for (let i = 0; i < 20 && listeningPids(port).length; i += 1) await new Promise((r) => setTimeout(r, 250));
-  if (listeningPids(port).length) {
+  for (const pid of pids) killTree(pid);
+  for (let i = 0; i < 40 && (await stillHeld(port)); i += 1) await new Promise((r) => setTimeout(r, 250));
+  if (await stillHeld(port)) {
     say(`port ${port}: could not stop ${what} (PID ${pids.join(', ')}). Close it, then run this again.`);
     return false;
   }
