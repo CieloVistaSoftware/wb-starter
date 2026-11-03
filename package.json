@@ -21,6 +21,7 @@
     "ship": "node scripts/ship.mjs",
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
+    "pro:local": "node scripts/pro-local.mjs",
     "start": "node scripts/pull-on-start.mjs && node scripts/stamp-version.js --local && node scripts/update-docs-manifest.js && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
@@ -96,6 +97,7 @@
     "q": "node scripts/ask.mjs"
   },
   "scripts-info": {
+    "pro:local": "The free site and the WB Pro waitlist running together on this PC, as if deployed (#1961): local waitlist table, the Worker on 8787, the site on 3000, opens Home. Ctrl+C stops both.",
     "start": "Run the site at localhost:3000: pulls main, stamps the version, rebuilds the docs list, then serves. Use this to work on or look at the site.",
     "dev": "Serve the folder as plain static files on :3000, with no build steps. Use to see what GitHub Pages would serve.",
     "scripts:help": "Print this list of scripts, grouped, with what each does and when to use it.",
