@@ -51,6 +51,14 @@ export function listeningPids(port) {
   try {
     if (process.platform === 'win32') {
       // All protocols: Node listens on [::]:3000 (IPv6), which `-p tcp` (IPv4 only) never lists.
+      // PowerShell first (what Windows itself reports for the port), netstat as a fallback.
+      try {
+        const ps = execFileSync('powershell', ['-NoProfile', '-Command',
+          `(Get-NetTCPConnection -LocalPort ${port} -State Listen -ErrorAction SilentlyContinue).OwningProcess`],
+        { encoding: 'utf8' });
+        const pids = [...new Set(ps.split(/\s+/).filter(Boolean).map(Number))].filter((pid) => pid > 0);
+        if (pids.length) return pids;
+      } catch { /* no PowerShell: fall back */ }
       return parseNetstat(execFileSync('netstat', ['-ano'], { encoding: 'utf8' }), port);
     }
     const out = execFileSync('lsof', ['-t', `-iTCP:${port}`, '-sTCP:LISTEN'], { encoding: 'utf8' });
@@ -86,12 +94,12 @@ async function stillHeld(port) {
  */
 export async function whoIsOn(port) {
   try {
-    const health = await fetch(`http://localhost:${port}/health`, { signal: AbortSignal.timeout(2000) });
+    const health = await fetch(`http://127.0.0.1:${port}/health`, { signal: AbortSignal.timeout(2000) });
     if (health.ok) {
       const body = await health.json().catch(() => null);
       if (body && (body.app === 'wb-starter' || (body.status === 'ok' && typeof body.timestamp === 'string'))) return 'site';
     }
-    const root = await fetch(`http://localhost:${port}/`, { signal: AbortSignal.timeout(2000) });
+    const root = await fetch(`http://127.0.0.1:${port}/`, { signal: AbortSignal.timeout(2000) });
     if (root.status === 404 && root.headers.get('x-frame-options') === 'DENY' && (await root.text()) === 'Not found\n') return 'worker';
     return 'other';
   } catch {
@@ -109,7 +117,7 @@ export async function claim(port) {
   let pids = listeningPids(port);
   if (!pids.length && who === 'site') {
     // A copy of the site reports its own pid on /health.
-    const body = await fetch(`http://localhost:${port}/health`).then((r) => r.json()).catch(() => null);
+    const body = await fetch(`http://127.0.0.1:${port}/health`).then((r) => r.json()).catch(() => null);
     if (body && Number.isInteger(body.pid)) pids = [body.pid];
   }
   if (who === 'other') {
