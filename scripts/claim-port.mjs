@@ -102,6 +102,35 @@ function describeProcess(pid) {
 }
 
 /**
+ * The process to stop so a port stays free: on Windows, walk up from the
+ * port's owner through its parents while they belong to wrangler. Stopping
+ * workerd.exe alone does not work -- its parent, wrangler, sees a crash and
+ * starts a new workerd on the same port at once (CI, 2026-11-03: workerd 6408
+ * stopped, workerd 6696 listening a moment later). Elsewhere: the pid itself.
+ * @param {number} pid
+ * @returns {number}
+ */
+export function ownerRoot(pid) {
+  if (process.platform !== 'win32') return pid;
+  try {
+    const out = execFileSync('powershell', ['-NoProfile', '-Command', [
+      `$id = ${pid}; $top = $id`,
+      'while ($true) {',
+      '  $p = Get-CimInstance Win32_Process -Filter "ProcessId=$id"; if (-not $p) { break }',
+      '  $parent = Get-CimInstance Win32_Process -Filter "ProcessId=$($p.ParentProcessId)"',
+      "  if (-not $parent -or ($parent.CommandLine -notmatch 'wrangler|workerd')) { break }",
+      '  $top = $parent.ProcessId; $id = $parent.ProcessId',
+      '}',
+      '$top',
+    ].join('\n')], { encoding: 'utf8' }).trim();
+    const top = Number(out.split(/\s+/).pop());
+    return Number.isInteger(top) && top > 0 ? top : pid;
+  } catch {
+    return pid;
+  }
+}
+
+/**
  * On Windows, stop every workerd.exe (where wrangler dev runs a Worker).
  * @returns {string} what taskkill said
  */
@@ -173,7 +202,9 @@ export async function claim(port) {
     return false;
   }
   const holders = pids.map((pid) => `${pid} (${describeProcess(pid) || 'process'})`);
-  const said = pids.map((pid) => killTree(pid));
+  // For the Worker, stop wrangler itself (the root), or it restarts workerd.
+  const targets = [...new Set(pids.map((pid) => (who === 'worker' ? ownerRoot(pid) : pid)))];
+  const said = targets.map((pid) => `${pid}: ${killTree(pid)}`);
   for (let i = 0; i < 40 && (await stillHeld(port)); i += 1) await new Promise((r) => setTimeout(r, 250));
   if ((await stillHeld(port)) && who === 'worker' && process.platform === 'win32') {
     // The PID Windows named did not free the port: stop wrangler's runtime itself.
@@ -187,7 +218,7 @@ export async function claim(port) {
       'Close it, then run this again.');
     return false;
   }
-  say(`port ${port}: stopped ${what} (PID ${pids.join(', ')}), so this run uses ${port}.`);
+  say(`port ${port}: stopped ${what} (PID ${targets.join(', ')}), so this run uses ${port}.`);
   return true;
 }
 
