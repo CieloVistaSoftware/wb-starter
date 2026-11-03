@@ -126,6 +126,16 @@ export async function claim(port) {
     return false;
   }
   const what = who === 'site' ? 'an older copy of the site' : 'an older copy of the waitlist Worker';
+  if (!pids.length && who === 'worker' && process.platform === 'win32') {
+    // Windows sometimes reports no owner for wrangler's port. The Worker runs
+    // in workerd.exe: stop those processes (local Cloudflare dev only).
+    try { execFileSync('taskkill', ['/IM', 'workerd.exe', '/T', '/F'], { stdio: 'ignore' }); } catch { /* none running */ }
+    for (let i = 0; i < 40 && (await stillHeld(port)); i += 1) await new Promise((r) => setTimeout(r, 250));
+    if (!(await stillHeld(port))) {
+      say(`port ${port}: stopped ${what} (workerd.exe), so this run uses ${port}.`);
+      return true;
+    }
+  }
   if (!pids.length) {
     say(`port ${port} is held by ${what}, but its process could not be found to stop it. ` +
       'Close the terminal or VS Code task that started it, then run this again.');
