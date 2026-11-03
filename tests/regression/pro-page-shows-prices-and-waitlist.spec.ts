@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import fs from 'node:fs';
 
 /**
  * #1961: the WB Pro page listed what Pro adds but showed no price and no way to
@@ -25,7 +26,11 @@ test('the WB Pro page shows the launch prices and the waitlist (#1961)', async (
   await expect(waitlist.locator('h2')).toHaveText('Join the waitlist');
   await expect(waitlist).toContainText('launch price');
   const form = waitlist.locator('form');
-  await expect(form).toHaveAttribute('action', 'https://waitlist.cielovistasoftware.com/join');
+  // The page as authored posts to the deployed Worker; on localhost (as here)
+  // its script points the form at the local Worker from npm run pro:local.
+  const authored = fs.readFileSync('pages/pro.html', 'utf8');
+  expect(authored).toContain('action="https://waitlist.cielovistasoftware.com/join"');
+  await expect(form).toHaveAttribute('action', 'http://localhost:8787/join');
   await expect(form).toHaveAttribute('method', 'post');
   await expect(form.getByLabel('Email')).toHaveAttribute('type', 'email');
   await expect(form.getByRole('button', { name: 'Join the waitlist' })).toBeVisible();
