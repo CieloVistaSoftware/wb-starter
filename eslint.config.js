@@ -142,7 +142,7 @@ export default [
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: { ...SERVICE_WORKER_GLOBALS, FormData: 'readonly', Headers: 'readonly' },
+      globals: { ...SERVICE_WORKER_GLOBALS, FormData: 'readonly', Headers: 'readonly', crypto: 'readonly', TextEncoder: 'readonly' },
     },
   },
 

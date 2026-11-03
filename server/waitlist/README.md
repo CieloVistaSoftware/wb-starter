@@ -9,8 +9,21 @@ Cloudflare Worker keeps the list, in a Cloudflare D1 database.
 | `POST https://waitlist.cielovistasoftware.com/join` | Saves one email address. Answers with a "You are on the list" page. |
 | `GET https://waitlist.cielovistasoftware.com/export` | The whole list as CSV. Needs the export token. |
 
-It only accepts sign-ups from the live site and from `localhost:3000`. A hidden
-`website` field catches bots, and joining twice keeps one row.
+## How it is protected
+
+- Only the live site and `localhost:3000` may post; other sites get 403.
+- Only a form body, at most 2 KB (415 / 413 otherwise).
+- At most 5 tries an hour per visitor (429 after that). Visitors are counted by a
+  salted SHA-256 of their IP address; the address itself is never stored.
+- A hidden `website` field catches bots: they are told it worked, nothing is kept.
+- Joining twice keeps one row. SQL is parameterized; typed text is escaped.
+- `/export` needs the token, compared in constant time.
+- Every answer: `no-store`, no framing, a deny-by-default content policy.
+- Only `waitlist.cielovistasoftware.com` answers (`workers_dev = false`).
+
+Locally, every test request comes from the same address, so after 5 tries in an
+hour you get "Too many tries". Clear it with:
+`npx wrangler d1 execute pro-waitlist --local --command "DELETE FROM join_attempts"`
 
 ## Run it locally (no Cloudflare account needed)
 
@@ -38,10 +51,12 @@ Run these in PowerShell from `server\waitlist`:
    `npx wrangler d1 execute pro-waitlist --remote --file=schema.sql`
 4. Set the export token (it asks for the value; pick a long random one and keep it):
    `npx wrangler secret put EXPORT_TOKEN`
-5. Deploy:
+5. Set the salt for visitor fingerprints (any long random value; you never need it again):
+   `npx wrangler secret put IP_SALT`
+6. Deploy:
    `npx wrangler deploy`
 
-Step 5 also creates `waitlist.cielovistasoftware.com`, because the domain is on
+Step 6 also creates `waitlist.cielovistasoftware.com`, because the domain is on
 the same Cloudflare account.
 
 ## Get the list

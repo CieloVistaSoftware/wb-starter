@@ -10,43 +10,22 @@
  *                 small HTML page, so the form works without JavaScript.
  *   GET  /export  the list as CSV. Needs "Authorization: Bearer <token>",
  *                 where the token is the EXPORT_TOKEN secret.
+ *
+ * Security (John, 2026-11-02: "keep cloudflare database and make it secure"):
+ *   - only the live site and localhost may post (Origin check);
+ *   - only url-encoded or multipart form bodies, at most MAX_BODY_BYTES;
+ *   - at most JOIN_LIMIT attempts per visitor per JOIN_WINDOW_MS, counted by a
+ *     salted SHA-256 of the IP address -- the address itself is never stored;
+ *   - a hidden trap field: bots are told it worked and nothing is stored;
+ *   - parameterized SQL only; every visitor-typed value escaped in the page;
+ *   - the export token is compared in constant time;
+ *   - every answer carries no-store, no-framing and a deny-by-default CSP.
  */
 
-/** Pages that may send sign-ups. Anything else is refused. */
-export const ALLOWED_ORIGINS = [
-  'https://cielovistasoftware.github.io',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-];
-
-/** Where "Back to WB Pro" goes when wrangler.toml sets no PRO_PAGE_URL. */
-const DEFAULT_PRO_PAGE = 'https://cielovistasoftware.github.io/';
-
-/** Longest address accepted (RFC 5321 limit). */
-const MAX_EMAIL_LENGTH = 254;
-
-/** One "@", something before it, a dot somewhere after it, no spaces. */
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-/**
- * Lower-cased and trimmed address, or null when it is not one we accept.
- * @param {unknown} value
- * @returns {string | null}
- */
-export function normalizeEmail(value) {
-  if (typeof value !== 'string') return null;
-  const email = value.trim().toLowerCase();
-  if (email.length === 0 || email.length > MAX_EMAIL_LENGTH) return null;
-  return EMAIL_PATTERN.test(email) ? email : null;
-}
-
-/**
- * Escape text for HTML, so nothing a visitor typed is ever run as markup.
- * @param {string} text
- */
-function escapeHtml(text) {
-  return text.replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-}
+import {
+  ALLOWED_ORIGINS, MAX_BODY_BYTES, JOIN_LIMIT, JOIN_WINDOW_MS, DEFAULT_PRO_PAGE,
+  respond, normalizeEmail, sameSecret, visitorKey, escapeHtml,
+} from './lib.js';
 
 /**
  * A small, self-contained page: the answer the visitor sees after the form.
@@ -76,26 +55,70 @@ a{color:#0b5cad}
 </main>
 </body>
 </html>`;
-  return new Response(html, { status, headers: { 'content-type': 'text/html; charset=utf-8' } });
+  return respond(html, status, { 'content-type': 'text/html; charset=utf-8' });
+}
+
+/**
+ * Count this attempt and say whether the visitor is over the limit. Old
+ * attempts are deleted as it goes, so the table only holds the last hour.
+ * @param {D1Database} db
+ * @param {string} key - visitorKey()
+ * @param {number} now - ms since epoch
+ * @returns {Promise<boolean>} true when this attempt is over the limit
+ */
+async function overLimit(db, key, now) {
+  const since = now - JOIN_WINDOW_MS;
+  await db.prepare('DELETE FROM join_attempts WHERE at < ?1').bind(since).run();
+  const row = await db.prepare('SELECT COUNT(*) AS n FROM join_attempts WHERE visitor = ?1').bind(key).first();
+  const count = Number(row?.n ?? 0);
+  if (count >= JOIN_LIMIT) return true;
+  await db.prepare('INSERT INTO join_attempts (visitor, at) VALUES (?1, ?2)').bind(key, now).run();
+  return false;
 }
 
 /**
  * Handle a sign-up.
  * @param {Request} request
- * @param {{ DB: D1Database, PRO_PAGE_URL?: string }} env
+ * @param {{ DB: D1Database, PRO_PAGE_URL?: string, IP_SALT?: string }} env
  */
 async function join(request, env) {
   const answer = (status, heading, message) => page(status, heading, message, env.PRO_PAGE_URL);
+
   const origin = request.headers.get('origin');
   if (!origin || !ALLOWED_ORIGINS.includes(origin)) {
     return answer(403, 'Not accepted', 'Sign-ups are only taken from the WB Pro page.');
   }
 
+  const type = (request.headers.get('content-type') || '').toLowerCase();
+  if (!type.startsWith('application/x-www-form-urlencoded') && !type.startsWith('multipart/form-data')) {
+    return answer(415, 'Not accepted', 'Sign-ups are only taken from the WB Pro page.');
+  }
+
+  const declared = Number(request.headers.get('content-length') || '0');
+  if (declared > MAX_BODY_BYTES) {
+    return answer(413, 'Too large', 'That was more than a sign-up form sends.');
+  }
+  const raw = await request.arrayBuffer();
+  if (raw.byteLength > MAX_BODY_BYTES) {
+    return answer(413, 'Too large', 'That was more than a sign-up form sends.');
+  }
+
   let form;
   try {
-    form = await request.formData();
+    form = await new Response(raw, { headers: { 'content-type': type } }).formData();
   } catch {
     return answer(400, 'Something went wrong', 'The form could not be read. Please try again.');
+  }
+
+  const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+  const key = await visitorKey(ip, env.IP_SALT || 'pro-waitlist');
+  try {
+    if (await overLimit(env.DB, key, Date.now())) {
+      return answer(429, 'Too many tries', 'Please wait an hour and try again.');
+    }
+  } catch (error) {
+    console.error('[waitlist] rate limit check failed', error);
+    return answer(500, 'Something went wrong', 'Your address was not saved. Please try again in a few minutes.');
   }
 
   // The hidden "website" field is a trap for bots. Answer as if it worked,
@@ -129,28 +152,29 @@ async function join(request, env) {
  * @param {{ DB: D1Database, EXPORT_TOKEN?: string }} env
  */
 async function exportList(request, env) {
-  const expected = env.EXPORT_TOKEN ? `Bearer ${env.EXPORT_TOKEN}` : null;
-  if (!expected || request.headers.get('authorization') !== expected) {
-    return new Response('Not allowed\n', { status: 401 });
+  const given = request.headers.get('authorization') || '';
+  if (!env.EXPORT_TOKEN || !sameSecret(given, `Bearer ${env.EXPORT_TOKEN}`)) {
+    return respond('Not allowed\n', 401, { 'content-type': 'text/plain; charset=utf-8' });
   }
   const { results } = await env.DB
     .prepare('SELECT email, joined_at FROM waitlist ORDER BY joined_at')
     .all();
   const rows = ['email,joined_at', ...results.map((row) => `${row.email},${row.joined_at}`)];
-  return new Response(rows.join('\n') + '\n', {
-    headers: { 'content-type': 'text/csv; charset=utf-8', 'content-disposition': 'attachment; filename="pro-waitlist.csv"' },
+  return respond(rows.join('\n') + '\n', 200, {
+    'content-type': 'text/csv; charset=utf-8',
+    'content-disposition': 'attachment; filename="pro-waitlist.csv"',
   });
 }
 
 export default {
   /**
    * @param {Request} request
-   * @param {{ DB: D1Database, EXPORT_TOKEN?: string, PRO_PAGE_URL?: string }} env
+   * @param {{ DB: D1Database, EXPORT_TOKEN?: string, PRO_PAGE_URL?: string, IP_SALT?: string }} env
    */
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (request.method === 'POST' && pathname === '/join') return join(request, env);
     if (request.method === 'GET' && pathname === '/export') return exportList(request, env);
-    return new Response('Not found\n', { status: 404 });
+    return respond('Not found\n', 404, { 'content-type': 'text/plain; charset=utf-8' });
   },
 };

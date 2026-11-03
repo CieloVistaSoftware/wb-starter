@@ -3,6 +3,10 @@ name = "pro-waitlist"
 main = "src/index.js"
 compatibility_date = "2026-10-01"
 
+# Only waitlist.cielovistasoftware.com answers: no extra *.workers.dev address.
+workers_dev = false
+preview_urls = false
+
 # The Pro page's form posts to https://waitlist.cielovistasoftware.com/join.
 # Cloudflare creates this subdomain on deploy (the domain is on this account).
 routes = [
