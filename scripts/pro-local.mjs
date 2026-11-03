@@ -20,7 +20,8 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workerDir = path.join(root, 'server', 'waitlist');
 const isWindows = process.platform === 'win32';
-const npx = isWindows ? 'npx.cmd' : 'npx';
+// The project's own wrangler (a devDependency), never one npx fetches on the fly.
+const wrangler = path.join(root, 'node_modules', '.bin', isWindows ? 'wrangler.cmd' : 'wrangler');
 const SITE = 'http://localhost:3000/';
 
 /** Print one line with this script's prefix. */
@@ -29,7 +30,7 @@ function say(message) {
 }
 
 say('1/4 creating the local waitlist table...');
-const table = spawnSync(npx, ['--yes', 'wrangler', 'd1', 'execute', 'pro-waitlist', '--local', '--file=schema.sql'], {
+const table = spawnSync(wrangler, ['d1', 'execute', 'pro-waitlist', '--local', '--file=schema.sql'], {
   cwd: workerDir, stdio: 'inherit', shell: isWindows,
 });
 if (table.status !== 0) {
@@ -38,7 +39,7 @@ if (table.status !== 0) {
 }
 
 say('2/4 starting the waitlist Worker on http://localhost:8787 ...');
-const worker = spawn(npx, ['--yes', 'wrangler', 'dev', '--port', '8787', '--var', `PRO_PAGE_URL:${SITE}?page=pro`], {
+const worker = spawn(wrangler, ['dev', '--port', '8787', '--var', `PRO_PAGE_URL:${SITE}?page=pro`], {
   cwd: workerDir, stdio: 'inherit', shell: isWindows,
 });
 
