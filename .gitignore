@@ -157,3 +157,6 @@ data/mobile-screenshots/
 
 # Local index for npm run ask (#1926): built on each machine, never committed.
 data/ask-index/
+
+# Cloudflare wrangler local state (server/waitlist: wrangler dev and --local D1)
+.wrangler/

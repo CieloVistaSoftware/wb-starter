@@ -68,4 +68,15 @@
     <button id="pro-button-35" type="submit">Join the waitlist</button>
   </form>
   <p id="pro-p-36">We only use your address to email you when WB Pro goes on sale. Ask and we remove it.</p>
+  <script>
+    /* Run locally (npm start), the form posts to the waitlist Worker running on
+       this PC (npx wrangler dev, port 8787) instead of the deployed one, so the
+       whole sign-up works before and without a deploy. server/waitlist/README.md. */
+    (function () {
+      var host = location.hostname;
+      if (host !== 'localhost' && host !== '127.0.0.1') return;
+      var form = document.getElementById('pro-form-29');
+      if (form) form.action = 'http://localhost:8787/join';
+    })();
+  </script>
 </div>

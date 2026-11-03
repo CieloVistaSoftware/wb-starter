@@ -16,6 +16,7 @@
 export const ALLOWED_ORIGINS = [
   'https://cielovistasoftware.github.io',
   'http://localhost:3000',
+  'http://127.0.0.1:3000',
 ];
 
 /** Where "Back to WB Pro" goes when wrangler.toml sets no PRO_PAGE_URL. */

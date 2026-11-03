@@ -12,6 +12,19 @@ Cloudflare Worker keeps the list, in a Cloudflare D1 database.
 It only accepts sign-ups from the live site and from `localhost:3000`. A hidden
 `website` field catches bots, and joining twice keeps one row.
 
+## Run it locally (no Cloudflare account needed)
+
+Two PowerShell windows, both from the repo root:
+
+1. The site: `npm start`, then open http://localhost:3000/?page=pro
+2. The Worker, with a local database on your PC:
+   `cd server\waitlist`
+   `npx wrangler d1 execute pro-waitlist --local --file=schema.sql`
+   `npx wrangler dev --var PRO_PAGE_URL:http://localhost:3000/?page=pro`
+
+On localhost the Pro page's form posts to the Worker at `http://localhost:8787/join`.
+See who joined: `npx wrangler d1 execute pro-waitlist --local --command "SELECT * FROM waitlist"`
+
 ## Deploy (once, from this folder, on John's PC)
 
 Run these in PowerShell from `server\waitlist`:
