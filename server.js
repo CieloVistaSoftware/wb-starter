@@ -18,6 +18,7 @@ import { marked } from 'marked';
 import { updateToLatest, keepUpToDate } from './scripts/lib/pull-latest.mjs';
 import { mergeIntoLog } from './scripts/lib/error-log-merge.mjs';
 import { fetchIssues, traceFixes } from './scripts/lib/fixes.mjs';
+import { isReloadIgnored } from './scripts/lib/reload-ignore.mjs';
 import { FOLDER_PAGES } from './src/core/routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -98,36 +99,10 @@ const broadcastReload = () => {
 };
 
 // Watch for file changes (Debounced)
-// Top-level dirs whose changes must NEVER trigger a live reload: generated
-// reports, runtime status files, test artifacts, build output. The recursive
-// root watch (watchDir(rootDir)) would otherwise reload on every data/ write —
-// e.g. data/bg-health.json is rewritten every ~30s by the CieloVista Tools
-// extension, causing an endless "Reloading clients..." loop (#221).
-const RELOAD_IGNORE_DIRS = new Set([
-  '.git', 'node_modules', '.vscode',
-  // 'tests' itself (not just its output dirs below) -- a spec file changing
-  // has no bearing on what's rendered in the browser, and Windows'
-  // recursive fs.watch is well-documented to fire spurious 'change' events
-  // for files that were merely READ/stat'd, not modified. Running
-  // `npx playwright test` does a full discovery pass that reads every
-  // .spec.ts file under tests/ -- each run was spuriously triggering a
-  // full-page reload (and full module re-fetch) per file, even though none
-  // of their mtimes had actually changed. Confirmed live: a burst of
-  // "[File Changed] tests\components\*.spec.ts" messages during test runs,
-  // none of which had been edited (user-reported, read as "bogged down
-  // network").
-  'tests',
-  'data', 'test-results', 'playwright-report', '.playwright-artifacts',
-  'coverage', 'dist', 'out',
-]);
 let reloadTimeout;
 const triggerReload = (eventType, filename) => {
   if (!filename) return;
-  // Normalize separators so the checks work identically on Windows + POSIX.
-  const normalized = filename.replace(/\\/g, '/');
-  // Ignore temp files and anything inside a generated/runtime/build directory.
-  if (normalized.includes('.tmp')) return;
-  if (normalized.split('/').some(seg => RELOAD_IGNORE_DIRS.has(seg))) return;
+  if (isReloadIgnored(filename)) return;
 
   clearTimeout(reloadTimeout);
   // 100ms wasn't enough to coalesce a burst of several real changes (e.g. a
