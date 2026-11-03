@@ -32,6 +32,9 @@ test('the WB Pro page shows the launch prices and the waitlist (#1961)', async (
   expect(authored).toContain('action="https://waitlist.cielovistasoftware.com/join"');
   await expect(form).toHaveAttribute('action', 'http://localhost:8787/join');
   await expect(form).toHaveAttribute('method', 'post');
+  // Sent with fetch: the outcome shows on the page, not on a separate one.
+  await expect(form).toHaveAttribute('ajax', '');
+  await expect(form).toHaveAttribute('success-message', /You are on the list/);
   await expect(form.getByLabel('Email')).toHaveAttribute('type', 'email');
   await expect(form.getByRole('button', { name: 'Join the waitlist' })).toBeVisible();
   // The bot trap is in the form but not on screen.

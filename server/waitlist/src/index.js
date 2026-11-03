@@ -82,14 +82,25 @@ async function overLimit(db, key, now) {
  * @param {{ DB: D1Database, PRO_PAGE_URL?: string, IP_SALT?: string, LOCAL_DEV?: string }} env
  */
 async function join(request, env) {
-  const answer = (status, heading, message) => page(status, heading, message, env.PRO_PAGE_URL);
-
   const origin = request.headers.get('origin');
+  // The Pro page sends the form with fetch (ajax) and shows the outcome in
+  // place, so it must be allowed to read the answer: CORS for allowed pages only.
+  const cors = originAllowed(origin, env) ? { 'access-control-allow-origin': origin, vary: 'Origin' } : {};
+  const answer = (status, heading, message) => {
+    const res = page(status, heading, message, env.PRO_PAGE_URL);
+    for (const [k, v] of Object.entries(cors)) res.headers.set(k, v);
+    return res;
+  };
+
   if (!originAllowed(origin, env)) {
     return answer(403, 'Not accepted', 'Sign-ups are only taken from the WB Pro page.');
   }
 
-  const type = (request.headers.get('content-type') || '').toLowerCase();
+  // Checked lower-cased, but parsed with the header as sent: a multipart
+  // boundary is case-sensitive, and lower-casing it made every browser
+  // FormData (fetch) body unreadable -- 400 "The form could not be read".
+  const rawType = request.headers.get('content-type') || '';
+  const type = rawType.toLowerCase();
   if (!type.startsWith('application/x-www-form-urlencoded') && !type.startsWith('multipart/form-data')) {
     return answer(415, 'Not accepted', 'Sign-ups are only taken from the WB Pro page.');
   }
@@ -105,7 +116,7 @@ async function join(request, env) {
 
   let form;
   try {
-    form = await new Response(raw, { headers: { 'content-type': type } }).formData();
+    form = await new Response(raw, { headers: { 'content-type': rawType } }).formData();
   } catch {
     return answer(400, 'Something went wrong', 'The form could not be read. Please try again.');
   }

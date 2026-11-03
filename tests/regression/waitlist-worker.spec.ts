@@ -174,3 +174,18 @@ test('localhost may sign up only to a local Worker, on any port (#1961)', async 
   const deployed = join({ email: 'p3003@example.com' }, 'http://localhost:3003', '192.0.2.51');
   expect((await worker.fetch(deployed, { DB: fakeDb() })).status).toBe(403);
 });
+
+test('a browser-style multipart form (fetch with FormData) is read (#1961)', async () => {
+  // A real multipart boundary has upper-case letters; the Worker once lower-cased
+  // it and could not read any form the Pro page sent with fetch (400).
+  const body = new FormData();
+  body.set('email', 'multi@example.com');
+  body.set('website', '');
+  const DB = fakeDb();
+  const res = await worker.fetch(new Request('https://waitlist.example/join', {
+    method: 'POST', body, headers: { origin: PAGES, 'cf-connecting-ip': '192.0.2.77' },
+  }), { DB });
+  expect(res.status).toBe(200);
+  expect(res.headers.get('access-control-allow-origin')).toBe(PAGES);
+  expect(DB.rows.has('multi@example.com')).toBe(true);
+});
