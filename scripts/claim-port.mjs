@@ -97,6 +97,7 @@ export async function whoIsOn(port) {
     const health = await fetch(`http://127.0.0.1:${port}/health`, { signal: AbortSignal.timeout(2000) });
     if (health.ok) {
       const body = await health.json().catch(() => null);
+      if (body && body.app === 'pro-waitlist') return 'worker';
       if (body && (body.app === 'cielovista-site' || (body.status === 'ok' && typeof body.timestamp === 'string'))) return 'site';
     }
     const root = await fetch(`http://127.0.0.1:${port}/`, { signal: AbortSignal.timeout(2000) });

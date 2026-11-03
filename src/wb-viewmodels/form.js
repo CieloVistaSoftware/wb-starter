@@ -31,7 +31,7 @@ export function form(element, options = {}) {
     successMessage: options.successMessage || text('success-message', text('successmessage', 'Sent.')),
     errorMessage: options.errorMessage || text('error-message', text('errormessage', 'Could not send. Please try again.')),
     loadingText: options.loadingText || text('loading-text', 'Sending…'),
-    timeoutMs: options.timeoutMs ?? (Number(host.getAttribute('timeout-ms')) || 20000),
+    timeoutMs: options.timeoutMs ?? (Number(host.getAttribute('timeout-ms')) || 10000),
     // keep-message (#1961): the success message stays instead of fading after
     // 5 s -- for a one-time action like joining a waitlist. Errors still fade,
     // so the form is ready for another try.
@@ -87,8 +87,9 @@ export function form(element, options = {}) {
       // The ATTRIBUTE, not host.method: the property reads "get" when no
       // method= is written, and fetch() refuses a GET with a body -- every
       // send threw before a request left the page.
-      // A time limit (#1961): a server that accepts the connection and never
-      // answers left the button on "Sending..." for ever. After it, the
+      // A time limit (#1961, 10 s by default, timeout-ms to change it): a server
+      // that accepts the connection and never answers left the button on
+      // "Sending..." for ever. After it, the
       // error message shows and the form is usable again.
       const response = await fetch(host.getAttribute('action') || window.location.href, {
         method: (host.getAttribute('method') || 'POST').toUpperCase(),

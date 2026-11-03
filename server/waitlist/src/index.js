@@ -186,6 +186,10 @@ export default {
     const { pathname } = new URL(request.url);
     if (request.method === 'POST' && pathname === '/join') return join(request, env);
     if (request.method === 'GET' && pathname === '/export') return exportList(request, env);
+    // For npm run pro:local's readiness check; says nothing about the list.
+    if (request.method === 'GET' && pathname === '/health') {
+      return respond('{"status":"ok","app":"pro-waitlist"}\n', 200, { 'content-type': 'application/json' });
+    }
     return respond('Not found\n', 404, { 'content-type': 'text/plain; charset=utf-8' });
   },
 };

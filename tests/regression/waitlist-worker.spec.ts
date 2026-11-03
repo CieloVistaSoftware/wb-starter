@@ -189,3 +189,13 @@ test('a browser-style multipart form (fetch with FormData) is read (#1961)', asy
   expect(res.headers.get('access-control-allow-origin')).toBe(PAGES);
   expect(DB.rows.has('multi@example.com')).toBe(true);
 });
+
+test('GET /health answers for pro:local, and says nothing about the list (#1961)', async () => {
+  const DB = fakeDb();
+  DB.rows.set('secret@example.com', '2026-11-03T00:00:00.000Z');
+  const res = await worker.fetch(new Request('https://waitlist.example/health'), { DB });
+  expect(res.status).toBe(200);
+  const text = await res.text();
+  expect(JSON.parse(text)).toEqual({ status: 'ok', app: 'pro-waitlist' });
+  expect(text).not.toContain('secret');
+});

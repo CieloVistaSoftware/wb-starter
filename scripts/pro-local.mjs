@@ -43,7 +43,7 @@ if (table.status !== 0) {
 async function waitFor(url) {
   for (let i = 0; i < 60; i += 1) {
     try {
-      await fetch(url);
+      await fetch(url, { signal: AbortSignal.timeout(2000) });
       return true;
     } catch {
       await new Promise((r) => setTimeout(r, 1000));
@@ -90,8 +90,24 @@ worker = spawn(wrangler, ['dev', '--port', String(WORKER_PORT), '--var', 'LOCAL_
 });
 worker.on('exit', (code) => { if (code) { say(`the Worker stopped (exit ${code}).`); stopAll(code); } });
 
-if (!(await waitFor('http://localhost:8787/'))) {
-  say('the Worker did not start within 60 seconds (see above).');
+// The page posts to 127.0.0.1:8787 (wrangler dev listens on IPv4 only), so
+// that exact address must answer as the waitlist Worker before "ready".
+async function workerAnswers() {
+  try {
+    const res = await fetch(`http://127.0.0.1:${WORKER_PORT}/health`, { signal: AbortSignal.timeout(2000) });
+    const body = await res.json();
+    return body.app === 'pro-waitlist';
+  } catch {
+    return false;
+  }
+}
+let workerReady = false;
+for (let i = 0; i < 60 && !workerReady; i += 1) {
+  workerReady = await workerAnswers();
+  if (!workerReady) await new Promise((r) => setTimeout(r, 1000));
+}
+if (!workerReady) {
+  say(`the waitlist Worker did not answer at http://127.0.0.1:${WORKER_PORT}/health within 60 seconds (see above). Not opening the page: joining would fail.`);
   stopAll(1);
 }
 say(`4/4 ready. Opening ${siteUrl} -- click WB Pro in the menu, then Join the waitlist. Ctrl+C stops both.`);
