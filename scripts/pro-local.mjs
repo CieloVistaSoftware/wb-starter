@@ -29,7 +29,7 @@ function say(message) {
 }
 
 say('1/4 creating the local waitlist table...');
-const table = spawnSync(npx, ['wrangler', 'd1', 'execute', 'pro-waitlist', '--local', '--file=schema.sql'], {
+const table = spawnSync(npx, ['--yes', 'wrangler', 'd1', 'execute', 'pro-waitlist', '--local', '--file=schema.sql'], {
   cwd: workerDir, stdio: 'inherit', shell: isWindows,
 });
 if (table.status !== 0) {
@@ -38,7 +38,7 @@ if (table.status !== 0) {
 }
 
 say('2/4 starting the waitlist Worker on http://localhost:8787 ...');
-const worker = spawn(npx, ['wrangler', 'dev', '--port', '8787', '--var', `PRO_PAGE_URL:${SITE}?page=pro`], {
+const worker = spawn(npx, ['--yes', 'wrangler', 'dev', '--port', '8787', '--var', `PRO_PAGE_URL:${SITE}?page=pro`], {
   cwd: workerDir, stdio: 'inherit', shell: isWindows,
 });
 
