@@ -177,7 +177,7 @@
   },
   "scripts-groups": {
     "Daily: start here": [
-      "start",
+      "start", "pro:local",
       "dev",
       "scripts:help",
       "ask",
