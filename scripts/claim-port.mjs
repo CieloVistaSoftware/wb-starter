@@ -76,11 +76,41 @@ export function listeningPids(port) {
 export function killTree(pid) {
   try {
     if (process.platform === 'win32') {
-      execFileSync('taskkill', ['/PID', String(pid), '/T', '/F'], { stdio: 'ignore' });
-    } else {
-      process.kill(pid);
+      return execFileSync('taskkill', ['/PID', String(pid), '/T', '/F'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
     }
-  } catch { /* already gone */ }
+    process.kill(pid);
+    return `sent SIGTERM to ${pid}`;
+  } catch (error) {
+    // What the OS said, for the message when the port stays held.
+    return String(error.stderr || error.stdout || error.message || error).trim();
+  }
+}
+
+/**
+ * Name and command line of a process, for messages. Windows only; '' elsewhere.
+ * @param {number} pid
+ */
+function describeProcess(pid) {
+  if (process.platform !== 'win32') return '';
+  try {
+    return execFileSync('powershell', ['-NoProfile', '-Command',
+      `$p = Get-CimInstance Win32_Process -Filter "ProcessId=${pid}"; if ($p) { "$($p.Name): $($p.CommandLine)" } else { 'no such process' }`],
+    { encoding: 'utf8' }).trim().slice(0, 300);
+  } catch (error) {
+    return `could not look it up: ${String(error.message || error).slice(0, 120)}`;
+  }
+}
+
+/**
+ * On Windows, stop every workerd.exe (where wrangler dev runs a Worker).
+ * @returns {string} what taskkill said
+ */
+function killWorkerd() {
+  try {
+    return execFileSync('taskkill', ['/IM', 'workerd.exe', '/T', '/F'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  } catch (error) {
+    return String(error.stderr || error.stdout || error.message || error).trim();
+  }
 }
 
 /** Is anything still answering or listening on the port? */
@@ -130,7 +160,7 @@ export async function claim(port) {
   if (!pids.length && who === 'worker' && process.platform === 'win32') {
     // Windows sometimes reports no owner for wrangler's port. The Worker runs
     // in workerd.exe: stop those processes (local Cloudflare dev only).
-    try { execFileSync('taskkill', ['/IM', 'workerd.exe', '/T', '/F'], { stdio: 'ignore' }); } catch { /* none running */ }
+    killWorkerd();
     for (let i = 0; i < 40 && (await stillHeld(port)); i += 1) await new Promise((r) => setTimeout(r, 250));
     if (!(await stillHeld(port))) {
       say(`port ${port}: stopped ${what} (workerd.exe), so this run uses ${port}.`);
@@ -142,10 +172,19 @@ export async function claim(port) {
       'Close the terminal or VS Code task that started it, then run this again.');
     return false;
   }
-  for (const pid of pids) killTree(pid);
+  const holders = pids.map((pid) => `${pid} (${describeProcess(pid) || 'process'})`);
+  const said = pids.map((pid) => killTree(pid));
   for (let i = 0; i < 40 && (await stillHeld(port)); i += 1) await new Promise((r) => setTimeout(r, 250));
+  if ((await stillHeld(port)) && who === 'worker' && process.platform === 'win32') {
+    // The PID Windows named did not free the port: stop wrangler's runtime itself.
+    said.push(`taskkill /IM workerd.exe: ${killWorkerd()}`);
+    for (let i = 0; i < 40 && (await stillHeld(port)); i += 1) await new Promise((r) => setTimeout(r, 250));
+  }
   if (await stillHeld(port)) {
-    say(`port ${port}: could not stop ${what} (PID ${pids.join(', ')}). Close it, then run this again.`);
+    const now = listeningPids(port);
+    say(`port ${port}: could not stop ${what}. Held by: ${holders.join('; ')}. ` +
+      `Stopping it said: ${said.join(' | ') || 'nothing'}. Still listening now: ${now.map((pid) => `${pid} (${describeProcess(pid) || 'process'})`).join('; ') || 'no PID found'}, answering as: ${await whoIsOn(port)}. ` +
+      'Close it, then run this again.');
     return false;
   }
   say(`port ${port}: stopped ${what} (PID ${pids.join(', ')}), so this run uses ${port}.`);
