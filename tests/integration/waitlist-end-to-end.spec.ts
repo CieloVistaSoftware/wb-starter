@@ -55,8 +55,14 @@ test.beforeAll(async () => {
   test.setTimeout(240_000);
 
   // 1. A Worker left over from an earlier run.
-  stray = spawn(WRANGLER, ['dev', '--port', '8787'], { cwd: path.join(ROOT, 'server', 'waitlist'), shell: WIN, stdio: 'ignore' });
-  expect(await waitUntil(workerAnswers, 120_000), 'the leftover Worker started on 8787').toBe(true);
+  // Its output is kept: if it never answers, the failure says why.
+  let strayOutput = '';
+  stray = spawn(WRANGLER, ['dev', '--port', '8787'], { cwd: path.join(ROOT, 'server', 'waitlist'), shell: WIN, stdio: ['ignore', 'pipe', 'pipe'] });
+  stray.stdout?.on('data', (d) => { strayOutput += String(d); });
+  stray.stderr?.on('data', (d) => { strayOutput += String(d); });
+  stray.on('exit', (code) => { strayOutput += `\n[wrangler dev exited with code ${code}]`; });
+  const strayUp = await waitUntil(workerAnswers, 120_000);
+  expect(strayUp, `the leftover Worker started on 8787. wrangler dev printed:\n${strayOutput.slice(-4000)}`).toBe(true);
 
   // 2. pro:local, as John runs it (WB_NO_OPEN: no browser window on CI).
   proLocal = spawn(process.execPath, ['scripts/pro-local.mjs'], {
