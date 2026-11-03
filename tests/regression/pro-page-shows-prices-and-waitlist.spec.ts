@@ -30,7 +30,7 @@ test('the WB Pro page shows the launch prices and the waitlist (#1961)', async (
   // its script points the form at the local Worker from npm run pro:local.
   const authored = fs.readFileSync('pages/pro.html', 'utf8');
   expect(authored).toContain('action="https://waitlist.cielovistasoftware.com/join"');
-  await expect(form).toHaveAttribute('action', 'http://localhost:8787/join');
+  await expect(form).toHaveAttribute('action', 'http://127.0.0.1:8787/join');
   await expect(form).toHaveAttribute('method', 'post');
   // Sent with fetch: the outcome shows on the page, not on a separate one.
   await expect(form).toHaveAttribute('ajax', '');

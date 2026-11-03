@@ -62,6 +62,7 @@ export default [
         navigator: 'readonly',
         console: 'readonly',
         fetch: 'readonly',
+        AbortSignal: 'readonly',
         localStorage: 'readonly',
         sessionStorage: 'readonly',
         CustomEvent: 'readonly',
