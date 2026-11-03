@@ -38,6 +38,12 @@ if (table.status !== 0) {
   say('could not create the local table (see above). Stopping.');
   process.exit(table.status ?? 1);
 }
+// Every local try comes from the same address, so the 5-an-hour limit would
+// soon refuse John's own tests. Clear the LOCAL attempt counter on each start;
+// the deployed Worker keeps its limit.
+spawnSync(wrangler, ['d1', 'execute', 'pro-waitlist', '--local', '--command', 'DELETE FROM join_attempts'], {
+  cwd: workerDir, stdio: 'ignore', shell: isWindows,
+});
 
 /** Wait until an address answers, then resolve. Gives up after 60 s. */
 async function waitFor(url) {

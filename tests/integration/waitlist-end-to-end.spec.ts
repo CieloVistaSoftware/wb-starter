@@ -31,15 +31,6 @@ let stray: ChildProcess | null = null;
 let proLocal: ChildProcess | null = null;
 let output = '';
 
-async function waitUntil(check: () => boolean | Promise<boolean>, ms: number): Promise<boolean> {
-  const end = Date.now() + ms;
-  while (Date.now() < end) {
-    if (await check()) return true;
-    await new Promise((r) => setTimeout(r, 1000));
-  }
-  return false;
-}
-
 async function workerAnswers(): Promise<boolean> {
   try {
     const res = await fetch('http://127.0.0.1:8787/health', { signal: AbortSignal.timeout(2000) });
@@ -61,8 +52,10 @@ test.beforeAll(async () => {
   stray.stdout?.on('data', (d) => { strayOutput += String(d); });
   stray.stderr?.on('data', (d) => { strayOutput += String(d); });
   stray.on('exit', (code) => { strayOutput += `\n[wrangler dev exited with code ${code}]`; });
-  const strayUp = await waitUntil(workerAnswers, 120_000);
-  expect(strayUp, `the leftover Worker started on 8787. wrangler dev printed:\n${strayOutput.slice(-4000)}`).toBe(true);
+  // The output is read when the wait fails, not when it starts.
+  await expect.poll(workerAnswers, { timeout: 120_000 }).toBe(true).catch((error) => {
+    throw new Error(`the leftover Worker never answered on 8787. wrangler dev printed:\n${strayOutput.slice(-4000)}\n${error}`);
+  });
 
   // 2. pro:local, as John runs it (WB_NO_OPEN: no browser window on CI).
   proLocal = spawn(process.execPath, ['scripts/pro-local.mjs'], {
@@ -72,8 +65,9 @@ test.beforeAll(async () => {
   });
   proLocal.stdout?.on('data', (d) => { output += String(d); });
   proLocal.stderr?.on('data', (d) => { output += String(d); });
-  const ready = await waitUntil(() => output.includes('4/4 ready') || /did not answer|stopped \(exit|run this again/.test(output), 180_000);
-  expect(ready, `pro:local finished starting. Output:\n${output}`).toBe(true);
+  await expect.poll(() => output.includes('4/4 ready') || /did not answer|stopped \(exit|run this again/.test(output), { timeout: 180_000 })
+    .toBe(true)
+    .catch((error) => { throw new Error(`pro:local did not finish starting. Output:\n${output}\n${error}`); });
 });
 
 test.afterAll(() => {
