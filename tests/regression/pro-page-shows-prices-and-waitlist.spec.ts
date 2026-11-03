@@ -35,6 +35,8 @@ test('the WB Pro page shows the launch prices and the waitlist (#1961)', async (
   // Sent with fetch: the outcome shows on the page, not on a separate one.
   await expect(form).toHaveAttribute('ajax', '');
   await expect(form).toHaveAttribute('success-message', /You are on the list/);
+  // A one-time action: the success message stays (John, 2026-11-03).
+  await expect(form).toHaveAttribute('keep-message', '');
   await expect(form.getByLabel('Email')).toHaveAttribute('type', 'email');
   await expect(form.getByRole('button', { name: 'Join the waitlist' })).toBeVisible();
   // The bot trap is in the form but not on screen.

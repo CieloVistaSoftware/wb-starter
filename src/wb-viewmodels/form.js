@@ -31,6 +31,10 @@ export function form(element, options = {}) {
     successMessage: options.successMessage || text('success-message', text('successmessage', 'Sent.')),
     errorMessage: options.errorMessage || text('error-message', text('errormessage', 'Could not send. Please try again.')),
     loadingText: options.loadingText || text('loading-text', 'Sending…'),
+    // keep-message (#1961): the success message stays instead of fading after
+    // 5 s -- for a one-time action like joining a waitlist. Errors still fade,
+    // so the form is ready for another try.
+    keepMessage: options.keepMessage ?? (hasAuthoredAttr(host, 'keep-message') && readFlag(host, 'keep-message', true)),
     ...options
   };
   host.classList.add('x-form');
@@ -57,6 +61,7 @@ export function form(element, options = {}) {
     msg.className = `x-form__message x-form__message--${type}`;
     msg.textContent = message;
     clearTimeout(hideTimer);
+    if (type === 'success' && config.keepMessage) return;
     hideTimer = setTimeout(() => msg.remove(), 5000);
   };
 
