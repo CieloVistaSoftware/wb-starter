@@ -17,7 +17,7 @@ routes = [
 binding = "DB"
 database_name = "pro-waitlist"
 # Filled in once, from the output of: npx wrangler d1 create pro-waitlist
-database_id = "REPLACE_WITH_DATABASE_ID"
+database_id = "35a9ff89-6141-4479-938a-3e960c72da95"
 
 [vars]
 # "Back to WB Pro" on the page shown after joining.
