@@ -6,7 +6,7 @@
  *
  *   1. Creates the waitlist table in a local database (safe to repeat).
  *   2. Starts the waitlist Worker on http://localhost:8787 (wrangler dev).
- *   3. Starts the site on http://localhost:3000 (npm start's server).
+ *   3. Starts the site on http://localhost:3000, or the next free port.
  *   4. Opens the free Home page. From there: WB Pro in the menu, then join.
  *
  * Ctrl+C stops both. Who joined:
@@ -22,7 +22,6 @@ const workerDir = path.join(root, 'server', 'waitlist');
 const isWindows = process.platform === 'win32';
 // The project's own wrangler (a devDependency), never one npx fetches on the fly.
 const wrangler = path.join(root, 'node_modules', '.bin', isWindows ? 'wrangler.cmd' : 'wrangler');
-const SITE = 'http://localhost:3000/';
 
 /** Print one line with this script's prefix. */
 function say(message) {
@@ -38,25 +37,6 @@ if (table.status !== 0) {
   process.exit(table.status ?? 1);
 }
 
-say('2/4 starting the waitlist Worker on http://localhost:8787 ...');
-const worker = spawn(wrangler, ['dev', '--port', '8787', '--var', `PRO_PAGE_URL:${SITE}?page=pro`], {
-  cwd: workerDir, stdio: 'inherit', shell: isWindows,
-});
-
-say(`3/4 starting the site on ${SITE} ...`);
-const site = spawn(process.execPath, ['server.js'], { cwd: root, stdio: 'inherit' });
-
-/** Stop both children, then this process. */
-function stopAll(code = 0) {
-  for (const child of [worker, site]) {
-    if (!child.killed) child.kill();
-  }
-  process.exit(code);
-}
-process.on('SIGINT', () => stopAll(0));
-worker.on('exit', (code) => { if (code) { say(`the Worker stopped (exit ${code}).`); stopAll(code); } });
-site.on('exit', (code) => { if (code) { say(`the site stopped (exit ${code}).`); stopAll(code); } });
-
 /** Wait until an address answers, then resolve. Gives up after 60 s. */
 async function waitFor(url) {
   for (let i = 0; i < 60; i += 1) {
@@ -70,13 +50,59 @@ async function waitFor(url) {
   return false;
 }
 
-const ready = (await waitFor(SITE)) && (await waitFor('http://localhost:8787/'));
-if (!ready) {
-  say('the site or the Worker did not start within 60 seconds (see above).');
+// The site first: server.js moves to the next free port when 3000 is taken
+// (another copy of the site already running), and both the browser and the
+// Worker's "Back to WB Pro" link must use the port it really got.
+say('2/4 starting the site (port 3000, or the next free one) ...');
+const site = spawn(process.execPath, ['server.js'], { cwd: root, stdio: ['ignore', 'pipe', 'inherit'] });
+let sitePort = null;
+site.stdout.on('data', (chunk) => {
+  process.stdout.write(chunk);
+  for (const m of String(chunk).matchAll(/WB Starter running at http:\/\/localhost:(\d+)/g)) sitePort = Number(m[1]);
+});
+
+/** Stop the children that started, then this process. */
+let worker = null;
+function stopAll(code = 0) {
+  for (const child of [worker, site]) {
+    if (child && !child.killed) child.kill();
+  }
+  process.exit(code);
+}
+process.on('SIGINT', () => stopAll(0));
+site.on('exit', (code) => { if (code) { say(`the site stopped (exit ${code}).`); stopAll(code); } });
+
+// server.js prints "running at" for each port it tries; the one that answers is its own.
+let siteUrl = null;
+for (let i = 0; i < 60 && !siteUrl; i += 1) {
+  if (sitePort) {
+    try {
+      await fetch(`http://localhost:${sitePort}/`);
+      siteUrl = `http://localhost:${sitePort}/`;
+      break;
+    } catch { /* not answering yet */ }
+  }
+  await new Promise((r) => setTimeout(r, 1000));
+}
+if (!siteUrl) {
+  say('the site did not start within 60 seconds (see above).');
   stopAll(1);
 }
-say(`4/4 ready. Opening ${SITE} -- click WB Pro in the menu, then Join the waitlist. Ctrl+C stops both.`);
+if (sitePort !== 3000) say(`port 3000 is taken (another copy of the site is running), so this one is on ${sitePort}.`);
+
+// LOCAL_DEV=1: the local Worker takes sign-ups from a site on this PC, any port.
+say('3/4 starting the waitlist Worker on http://localhost:8787 ...');
+worker = spawn(wrangler, ['dev', '--port', '8787', '--var', 'LOCAL_DEV:1', '--var', `PRO_PAGE_URL:${siteUrl}?page=pro`], {
+  cwd: workerDir, stdio: 'inherit', shell: isWindows,
+});
+worker.on('exit', (code) => { if (code) { say(`the Worker stopped (exit ${code}).`); stopAll(code); } });
+
+if (!(await waitFor('http://localhost:8787/'))) {
+  say('the Worker did not start within 60 seconds (see above).');
+  stopAll(1);
+}
+say(`4/4 ready. Opening ${siteUrl} -- click WB Pro in the menu, then Join the waitlist. Ctrl+C stops both.`);
 if (process.env.WB_NO_OPEN !== '1') {
-  const opener = isWindows ? ['cmd', ['/c', 'start', '', SITE]] : process.platform === 'darwin' ? ['open', [SITE]] : ['xdg-open', [SITE]];
+  const opener = isWindows ? ['cmd', ['/c', 'start', '', siteUrl]] : process.platform === 'darwin' ? ['open', [siteUrl]] : ['xdg-open', [siteUrl]];
   spawn(opener[0], opener[1], { stdio: 'ignore', detached: true }).unref();
 }

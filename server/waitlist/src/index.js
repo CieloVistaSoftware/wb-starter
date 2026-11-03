@@ -23,7 +23,7 @@
  */
 
 import {
-  ALLOWED_ORIGINS, MAX_BODY_BYTES, JOIN_LIMIT, JOIN_WINDOW_MS, DEFAULT_PRO_PAGE,
+  originAllowed, MAX_BODY_BYTES, JOIN_LIMIT, JOIN_WINDOW_MS, DEFAULT_PRO_PAGE,
   respond, normalizeEmail, sameSecret, visitorKey, escapeHtml,
 } from './lib.js';
 
@@ -79,13 +79,13 @@ async function overLimit(db, key, now) {
 /**
  * Handle a sign-up.
  * @param {Request} request
- * @param {{ DB: D1Database, PRO_PAGE_URL?: string, IP_SALT?: string }} env
+ * @param {{ DB: D1Database, PRO_PAGE_URL?: string, IP_SALT?: string, LOCAL_DEV?: string }} env
  */
 async function join(request, env) {
   const answer = (status, heading, message) => page(status, heading, message, env.PRO_PAGE_URL);
 
   const origin = request.headers.get('origin');
-  if (!origin || !ALLOWED_ORIGINS.includes(origin)) {
+  if (!originAllowed(origin, env)) {
     return answer(403, 'Not accepted', 'Sign-ups are only taken from the WB Pro page.');
   }
 

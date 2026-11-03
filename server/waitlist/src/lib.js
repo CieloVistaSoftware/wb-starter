@@ -7,9 +7,23 @@
 /** Pages that may send sign-ups. Anything else is refused. */
 export const ALLOWED_ORIGINS = [
   'https://cielovistasoftware.github.io',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
 ];
+
+/** A site on this PC, any port: http://localhost:3003, http://127.0.0.1:3000. */
+const LOCAL_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1):\d{1,5}$/;
+
+/**
+ * May this page send sign-ups? The live site always; a site on this PC only
+ * when the Worker itself runs locally (LOCAL_DEV, set by npm run pro:local),
+ * whatever port the site got -- never on the deployed Worker.
+ * @param {string | null} origin
+ * @param {{ LOCAL_DEV?: string }} env
+ */
+export function originAllowed(origin, env) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  return env.LOCAL_DEV === '1' && LOCAL_ORIGIN.test(origin);
+}
 
 /** Where "Back to WB Pro" goes when wrangler.toml sets no PRO_PAGE_URL. */
 export const DEFAULT_PRO_PAGE = 'https://cielovistasoftware.github.io/';

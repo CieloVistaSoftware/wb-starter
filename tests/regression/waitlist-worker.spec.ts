@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import worker from '../../server/waitlist/src/index.js';
-import { normalizeEmail, sameSecret, visitorKey, JOIN_LIMIT, MAX_BODY_BYTES } from '../../server/waitlist/src/lib.js';
+import { normalizeEmail, sameSecret, visitorKey, originAllowed, JOIN_LIMIT, MAX_BODY_BYTES } from '../../server/waitlist/src/lib.js';
 
 /**
  * #1961: the WB Pro waitlist is our own Cloudflare Worker
@@ -157,4 +157,20 @@ test('normalizeEmail keeps real addresses and rejects the rest (#1961)', () => {
   expect(normalizeEmail('a b@c.co')).toBeNull();
   expect(normalizeEmail(42)).toBeNull();
   expect(normalizeEmail(`${'a'.repeat(250)}@b.co`)).toBeNull();
+});
+
+test('localhost may sign up only to a local Worker, on any port (#1961)', async () => {
+  // Deployed (no LOCAL_DEV): only the live site.
+  expect(originAllowed(PAGES, {})).toBe(true);
+  expect(originAllowed('http://localhost:3000', {})).toBe(false);
+  // npm run pro:local sets LOCAL_DEV=1; the site may be on 3000 or the next free port.
+  expect(originAllowed('http://localhost:3003', { LOCAL_DEV: '1' })).toBe(true);
+  expect(originAllowed('http://127.0.0.1:3000', { LOCAL_DEV: '1' })).toBe(true);
+  expect(originAllowed('https://evil.example', { LOCAL_DEV: '1' })).toBe(false);
+  expect(originAllowed('http://localhost.evil.example:3000', { LOCAL_DEV: '1' })).toBe(false);
+
+  const fromPort3003 = join({ email: 'p3003@example.com' }, 'http://localhost:3003', '192.0.2.50');
+  expect((await worker.fetch(fromPort3003, { DB: fakeDb(), LOCAL_DEV: '1' })).status).toBe(200);
+  const deployed = join({ email: 'p3003@example.com' }, 'http://localhost:3003', '192.0.2.51');
+  expect((await worker.fetch(deployed, { DB: fakeDb() })).status).toBe(403);
 });

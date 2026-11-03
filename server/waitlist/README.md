@@ -11,7 +11,8 @@ Cloudflare Worker keeps the list, in a Cloudflare D1 database.
 
 ## How it is protected
 
-- Only the live site and `localhost:3000` may post; other sites get 403.
+- Only the live site may post; other sites get 403. A Worker run locally by
+  `npm run pro:local` (LOCAL_DEV=1) also takes a site on this PC, any port.
 - Only a form body, at most 2 KB (415 / 413 otherwise).
 - At most 5 tries an hour per visitor (429 after that). Visitors are counted by a
   salted SHA-256 of their IP address; the address itself is never stored.
