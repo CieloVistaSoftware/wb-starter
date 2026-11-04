@@ -22,6 +22,8 @@
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
     "pro:local": "node scripts/ensure-installed.mjs && node scripts/pro-local.mjs",
+    "waitlist": "cd server/waitlist && wrangler d1 execute pro-waitlist --local --command \"SELECT * FROM waitlist ORDER BY joined_at\"",
+    "waitlist:live": "cd server/waitlist && wrangler d1 execute pro-waitlist --remote --command \"SELECT * FROM waitlist ORDER BY joined_at\"",
     "start": "node scripts/pull-on-start.mjs && node scripts/ensure-installed.mjs && node scripts/stamp-version.js --local && node scripts/update-docs-manifest.js && node scripts/claim-port.mjs 3000 && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
@@ -98,6 +100,8 @@
   },
   "scripts-info": {
     "pro:local": "The free site and the WB Pro waitlist running together on this PC, as if deployed (#1961): local waitlist table, the Worker on 8787, the site on 3000, opens Home. Ctrl+C stops both.",
+    "waitlist": "Show who joined the WB Pro waitlist on this PC (the test list from npm run pro:local). Times are UTC.",
+    "waitlist:live": "Show who joined the real WB Pro waitlist on Cloudflare. Needs npx wrangler login. Times are UTC.",
     "start": "Run the site at localhost:3000: pulls main, makes node_modules match package-lock.json with fresh package data (never a stale cache), stamps the version, rebuilds the docs list, frees port 3000 (stops a leftover copy of the site; never moves to another port), then serves. Use this to work on or look at the site.",
     "dev": "Serve the folder as plain static files on :3000, with no build steps. Use to see what GitHub Pages would serve.",
     "scripts:help": "Print this list of scripts, grouped, with what each does and when to use it.",
@@ -179,6 +183,8 @@
     "Daily: start here": [
       "start",
       "pro:local",
+      "waitlist",
+      "waitlist:live",
       "dev",
       "scripts:help",
       "ask",

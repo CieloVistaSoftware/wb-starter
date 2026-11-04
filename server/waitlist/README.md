@@ -37,7 +37,7 @@ Two PowerShell windows, both from the repo root:
    `npx wrangler dev --var PRO_PAGE_URL:http://localhost:3000/?page=pro`
 
 On localhost the Pro page's form posts to the Worker at `http://localhost:8787/join`.
-See who joined: `npx wrangler d1 execute pro-waitlist --local --command "SELECT * FROM waitlist"`
+See who joined: `npm run waitlist` from the repo root (the real list: `npm run waitlist:live`)
 
 ## Deploy (once, from this folder, on John's PC)
 
