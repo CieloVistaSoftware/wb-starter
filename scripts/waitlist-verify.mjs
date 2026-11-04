@@ -25,7 +25,7 @@ if (local) {
 }
 args.push('--command', '"SELECT email FROM waitlist ORDER BY joined_at"');
 
-const query = spawnSync('wrangler', args, { cwd: workerDir, encoding: 'utf8', shell: true });
+const query = spawnSync(`wrangler ${args.join(' ')}`, { cwd: workerDir, encoding: 'utf8', shell: true });
 if (query.status !== 0) {
   console.error(`[waitlist:verify] could not read the list:\n${query.stdout}${query.stderr}`);
   process.exit(1);

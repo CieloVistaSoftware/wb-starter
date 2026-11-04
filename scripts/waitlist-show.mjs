@@ -26,5 +26,5 @@ if (remote) {
 args.push('--command', '"SELECT * FROM waitlist ORDER BY joined_at"');
 
 // npm puts wrangler on the PATH, including from a worktree with no packages of its own.
-const run = spawnSync('wrangler', args, { cwd: workerDir, stdio: 'inherit', shell: true });
+const run = spawnSync(`wrangler ${args.join(' ')}`, { cwd: workerDir, stdio: 'inherit', shell: true });
 process.exit(run.status ?? 1);
