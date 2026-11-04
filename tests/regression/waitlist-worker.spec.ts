@@ -199,3 +199,63 @@ test('GET /health answers for pro:local, and says nothing about the list (#1961)
   expect(JSON.parse(text)).toEqual({ status: 'ok', app: 'pro-waitlist' });
   expect(text).not.toContain('secret');
 });
+
+test.describe('the private list page (#1969)', () => {
+  const make = () => ({ DB: fakeDb(), EXPORT_TOKEN: 'right-token', IP_SALT: 'salt' });
+  const post = (token: string) => new Request('https://waitlist.example/admin', {
+    method: 'POST',
+    body: new URLSearchParams({ token }),
+    headers: { 'cf-connecting-ip': '203.0.113.9' },
+  });
+
+  test('GET shows a password form and no addresses', async () => {
+    const env = make();
+    env.DB.rows.set('someone@example.com', '2026-11-04T04:58:49.603Z');
+    const res = await worker.fetch(new Request('https://waitlist.example/admin'), env);
+    const html = await res.text();
+    expect(res.status).toBe(200);
+    expect(html).toContain('type="password"');
+    expect(html).not.toContain('someone@example.com');
+    expect(res.headers.get('content-security-policy')).toContain("form-action 'self'");
+    expect(res.headers.get('cache-control')).toBe('no-store');
+  });
+
+  test('the right password shows the list, in Central time, escaped', async () => {
+    const env = make();
+    env.DB.rows.set('someone@example.com', '2026-11-04T04:58:49.603Z');
+    env.DB.rows.set('<b>x</b>@example.com', '2026-11-04T05:00:00.000Z');
+    const res = await worker.fetch(post('right-token'), env);
+    const html = await res.text();
+    expect(res.status).toBe(200);
+    expect(html).toContain('2 people signed up');
+    expect(html).toContain('someone@example.com');
+    expect(html).toContain('Nov 3, 2026');
+    expect(html).toContain('CST');
+    expect(html).not.toContain('<b>x</b>');
+  });
+
+  test('a wrong password shows nothing and counts toward the lockout', async () => {
+    const env = make();
+    env.DB.rows.set('someone@example.com', '2026-11-04T04:58:49.603Z');
+    for (let i = 0; i < JOIN_LIMIT; i += 1) {
+      const res = await worker.fetch(post('wrong'), env);
+      expect(res.status).toBe(401);
+      expect(await res.text()).not.toContain('someone@example.com');
+    }
+    const locked = await worker.fetch(post('right-token'), env);
+    expect(locked.status).toBe(429);
+    expect(await locked.text()).not.toContain('someone@example.com');
+  });
+
+  test('viewing the list repeatedly never locks its owner out', async () => {
+    const env = make();
+    for (let i = 0; i < JOIN_LIMIT + 2; i += 1) {
+      expect((await worker.fetch(post('right-token'), env)).status).toBe(200);
+    }
+  });
+
+  test('with no EXPORT_TOKEN set, nothing opens it', async () => {
+    const env = { DB: fakeDb(), IP_SALT: 'salt' };
+    expect((await worker.fetch(post(''), env)).status).toBe(401);
+  });
+});

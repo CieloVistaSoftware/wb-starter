@@ -75,6 +75,18 @@ export function normalizeEmail(value) {
 }
 
 /**
+ * A stored time, in US Central with its label. A value that is not a date is shown as it is.
+ * @param {string} iso
+ */
+export function centralTime(iso) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return String(iso);
+  return date.toLocaleString('en-US', {
+    timeZone: 'America/Chicago', dateStyle: 'medium', timeStyle: 'short',
+  }) + ' ' + date.toLocaleTimeString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' }).split(' ').pop();
+}
+
+/**
  * Compare two strings in constant time, so a wrong token takes as long to
  * reject as a nearly-right one.
  * @param {string} a
