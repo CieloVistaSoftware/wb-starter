@@ -1308,5 +1308,8 @@
   "1957": "Nightly 2026-10-30: new test failures on main",
   "1958": "Nightly 2026-10-31: new test failures on main",
   "1961": "WB Pro waitlist: show launch prices and an email sign-up on the Pro page",
-  "1963": "Live reload fires on Wrangler state and log files during pro:local"
+  "1963": "Live reload fires on Wrangler state and log files during pro:local",
+  "1965": "tooltip spec \"renders without errors\" fails at random: page.evaluate context destroyed by a navigation",
+  "1966": "WB Pro waitlist: confirm each address by email",
+  "1967": "Live reload fires on files in other sessions' worktrees"
 }

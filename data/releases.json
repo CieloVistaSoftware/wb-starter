@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.566",
+      "date": "2026-11-03",
+      "summary": "The WB Pro page had no way to join the waitlist; the site is static and could not store sign-ups. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1962\" target=\"_blank\" rel=\"noopener\">#1962</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1961\" target=\"_blank\" rel=\"noopener\">#1961</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>WB Pro waitlist: Cloudflare Worker, Pro page form, npm run pro:local</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1962\" target=\"_blank\" rel=\"noopener\">#1962</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1961\" target=\"_blank\" rel=\"noopener\">#1961</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/46951059ca17a0fbcbd62059a71ce0109a593bb4\" target=\"_blank\" rel=\"noopener\"><code>4695105</code></a>",
+          "issues": [
+            1962,
+            1961
+          ]
+        }
+      ],
+      "seeIt": "Open the live site, click WB Pro in the menu, enter an email and click Join the waitlist. Before: no waitlist form. Now: a green &quot;You are on the list&quot; message, and the address is saved in the Cloudflare D1 list.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/46951059ca17a0fbcbd62059a71ce0109a593bb4\" target=\"_blank\" rel=\"noopener\"><code>4695105</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.565",
       "date": "2026-11-03",
       "summary": "While npm run pro:local ran, the browser reloaded whenever the local Worker wrote its own files or a captured log grew, because the site&#39;s file watcher did not ignore them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1963\" target=\"_blank\" rel=\"noopener\">#1963</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1964\" target=\"_blank\" rel=\"noopener\">#1964</a>",
