@@ -66,6 +66,10 @@ In PowerShell, with your token in place of `<token>`:
 
 `Invoke-WebRequest https://waitlist.cielovistasoftware.com/export -Headers @{ Authorization = "Bearer <token>" } -OutFile waitlist.csv`
 
+## Check the addresses exist
+
+`npm run waitlist:verify` asks each mail server whether the mailbox exists and reports good, bad or unknown. It sends nothing and changes nothing. It shows a mailbox exists, not that it belongs to the person who typed it.
+
 ## Removing someone
 
 If someone asks to be removed:
