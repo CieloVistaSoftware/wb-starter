@@ -117,8 +117,11 @@ test.describe('playground editor (#265)', () => {
     await page.keyboard.press('Enter');
     await expect(list).toBeHidden();
 
-    await page.evaluate(() => (window as unknown as { releaseIndex: () => void }).releaseIndex());
-    await page.waitForTimeout(100);
+    // A frame runs after every promise callback the release set off.
+    await page.evaluate(async () => {
+      (window as unknown as { releaseIndex: () => void }).releaseIndex();
+      await new Promise(requestAnimationFrame);
+    });
     await expect(list).toBeHidden();
     expect(await page.locator('#slow-index').inputValue()).toBe('<div x-card');
   });
