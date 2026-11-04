@@ -8,6 +8,8 @@ test.describe('live reload ignores files that are not the site (#1963)', () => {
     'server\\waitlist\\.wrangler\\tmp\\dev-ZBxNLR\\index.js',
     'server\\waitlist\\.wrangler\\state\\v3\\observability\\trace.sqlite-wal',
     'pro-local.log',
+    '.claude\\worktrees\\fix-962\\tsconfig.json',
+    '.claude/worktrees/fix-1163/global.d.ts',
     'data\\bg-health.json',
     'tests\\regression\\a.spec.ts',
   ]) {

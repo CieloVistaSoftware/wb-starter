@@ -17,6 +17,8 @@ const RELOAD_IGNORE_DIRS = new Set([
   // The local Worker's build output and its database and trace files, written
   // while `npm run pro:local` runs (#1963).
   '.wrangler',
+  // Other sessions' worktrees, which are not the page being viewed.
+  '.claude',
 ]);
 
 /** @param {string} filename path relative to the watched directory */
