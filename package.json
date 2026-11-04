@@ -21,7 +21,11 @@
     "ship": "node scripts/ship.mjs",
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
-    "start": "node scripts/pull-on-start.mjs && node scripts/stamp-version.js --local && node scripts/update-docs-manifest.js && node server.js",
+    "pro:local": "node scripts/ensure-installed.mjs && node scripts/pro-local.mjs",
+    "waitlist": "node scripts/waitlist-show.mjs",
+    "waitlist:live": "node scripts/waitlist-show.mjs --remote",
+    "waitlist:verify": "node scripts/waitlist-verify.mjs",
+    "start": "node scripts/pull-on-start.mjs && node scripts/ensure-installed.mjs && node scripts/stamp-version.js --local && node scripts/update-docs-manifest.js && node scripts/claim-port.mjs 3000 && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
     "dev": "npx serve . -p 3000",
@@ -96,7 +100,11 @@
     "q": "node scripts/ask.mjs"
   },
   "scripts-info": {
-    "start": "Run the site at localhost:3000: pulls main, stamps the version, rebuilds the docs list, then serves. Use this to work on or look at the site.",
+    "pro:local": "The free site and the WB Pro waitlist running together on this PC, as if deployed (#1961): local waitlist table, the Worker on 8787, the site on 3000, opens Home. Ctrl+C stops both.",
+    "waitlist": "Show who joined the WB Pro waitlist on this PC (the test list from npm run pro:local). Times are UTC.",
+    "waitlist:live": "Show who joined the real WB Pro waitlist on Cloudflare. Needs npx wrangler login. Times are UTC.",
+    "waitlist:verify": "Ask each mail server whether the addresses on the real list exist: good, bad or unknown. Sends nothing. Add -- --local for the test list. Runs from this PC, which needs outgoing port 25.",
+    "start": "Run the site at localhost:3000: pulls main, makes node_modules match package-lock.json with fresh package data (never a stale cache), stamps the version, rebuilds the docs list, frees port 3000 (stops a leftover copy of the site; never moves to another port), then serves. Use this to work on or look at the site.",
     "dev": "Serve the folder as plain static files on :3000, with no build steps. Use to see what GitHub Pages would serve.",
     "scripts:help": "Print this list of scripts, grouped, with what each does and when to use it.",
     "test:async": "Run tests in the background and return at once: give a spec file, or a filter such as --project=regression. The way to test during the day; results land in data/test-single/ or data/test-status.json.",
@@ -176,6 +184,10 @@
   "scripts-groups": {
     "Daily: start here": [
       "start",
+      "pro:local",
+      "waitlist",
+      "waitlist:live",
+      "waitlist:verify",
       "dev",
       "scripts:help",
       "ask",
@@ -295,6 +307,7 @@
     "sharp": "^0.34.5",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
+    "wrangler": "4.156.2",
     "ws": "^8.18.3"
   },
   "bin": {

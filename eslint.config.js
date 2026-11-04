@@ -14,7 +14,7 @@ const NODE_GLOBALS = {
   URLSearchParams: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly',
   setInterval: 'readonly', clearInterval: 'readonly', setImmediate: 'readonly',
   clearImmediate: 'readonly', queueMicrotask: 'readonly', structuredClone: 'readonly',
-  globalThis: 'readonly', fetch: 'readonly', AbortController: 'readonly',
+  globalThis: 'readonly', fetch: 'readonly', AbortController: 'readonly', AbortSignal: 'readonly',
   TextEncoder: 'readonly', TextDecoder: 'readonly', performance: 'readonly',
 };
 // sw.js runs in a ServiceWorkerGlobalScope: no window, no document.
@@ -62,6 +62,7 @@ export default [
         navigator: 'readonly',
         console: 'readonly',
         fetch: 'readonly',
+        AbortSignal: 'readonly',
         localStorage: 'readonly',
         sessionStorage: 'readonly',
         CustomEvent: 'readonly',
@@ -133,6 +134,17 @@ export default [
   {
     files: ['sw.js'],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'script', globals: SERVICE_WORKER_GLOBALS },
+  },
+  // ── Cloudflare Workers (#1961) ────────────────────────────────────────────
+  // The waitlist Worker runs on Cloudflare, not Node: the web fetch API is
+  // global there (Request, Response, FormData), and there is no process.
+  {
+    files: ['server/waitlist/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: { ...SERVICE_WORKER_GLOBALS, FormData: 'readonly', Headers: 'readonly', crypto: 'readonly', TextEncoder: 'readonly' },
+    },
   },
 
   // ── Type-aware linting for the .ts test suite (issue #840) ─────────────────

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T02:53:19.869Z",
+  "generatedAt": "2026-11-03T22:55:40.772Z",
   "count": 194,
   "schemas": [
     {
@@ -3640,6 +3640,20 @@
           "default": false,
           "visual": false,
           "visualReason": "Checks the fields when the form is submitted. Only submitting shows it (#773)."
+        },
+        "keepMessage": {
+          "type": "boolean",
+          "description": "Keep the success message on screen instead of removing it after 5 seconds (errors still fade). For one-time actions such as joining a waitlist.",
+          "default": false,
+          "visual": false,
+          "visualReason": "Only shows after a successful ajax submit (#1961)."
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "description": "How long an ajax submit may take, in milliseconds, before the error message shows and the form is usable again.",
+          "default": 10000,
+          "visual": false,
+          "visualReason": "Only shows when a submit gets no answer in time (#1961)."
         }
       },
       "matrix": [],

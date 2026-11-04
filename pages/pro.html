@@ -1,3 +1,23 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    /* replace() only schedules the navigation: stop this document first, or
+       the parser goes on to request the fragment's own CSS under /pages/,
+       which 404s (#1734). */
+    window.stop();
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<link rel="stylesheet" href="src/styles/pages/pro.css?v=1.0.563">
+
 <div id="pro-div-1" class="page__hero">
   <h1 id="pro-h1-2">⭐ WB Pro</h1>
   <p id="pro-p-3">Showpiece effects and advanced widgets on top of the free, MIT-licensed core.</p>
@@ -18,4 +38,47 @@
 <div id="pro-div-9" class="page__section">
   <h2 id="pro-h2-10">How it works</h2>
   <p id="pro-p-11">The core stays free. WB Pro is a separate pack: load it after wb-starter and its behaviors work like the built-in ones. Free markup behaves the same with or without it.</p>
+</div>
+
+<div id="pro-div-14" class="page__section">
+  <h2 id="pro-h2-15">Pricing</h2>
+  <p id="pro-p-16">One-time payment, not a subscription. Every license includes a year of updates, and you keep every version you have downloaded.</p>
+  <div id="pro-div-17" class="page__grid">
+    <article id="pro-article-18" title="Personal">
+      <p id="pro-p-19"><strong id="pro-strong-20">$79</strong> at launch, then $129.</p>
+      <p id="pro-p-21">1 developer, unlimited projects, every Pro behavior, 1 year of updates.</p>
+    </article>
+    <article id="pro-article-22" title="Team">
+      <p id="pro-p-23"><strong id="pro-strong-24">$249</strong> at launch, then $399.</p>
+      <p id="pro-p-25">Up to 10 developers, unlimited projects, every Pro behavior, 1 year of updates, priority on issues.</p>
+    </article>
+  </div>
+</div>
+
+<div id="pro-div-26" class="page__section">
+  <h2 id="pro-h2-27">Join the waitlist</h2>
+  <p id="pro-p-28">WB Pro is not on sale yet. People on the waitlist hear first when it opens, and get the launch price.</p>
+  <form id="pro-form-29" class="pro-waitlist" method="post" action="https://waitlist.cielovistasoftware.com/join" ajax keep-message timeout-ms="5000" loading-text="Joining…" success-message="You are on the list. We will email you when WB Pro goes on sale, with the launch price." error-message="We could not add you just now, so nothing was saved. Please try again in a few minutes.">
+    <label id="pro-label-30" for="pro-input-31">Email</label>
+    <input id="pro-input-31" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+    <div id="pro-div-32" class="pro-waitlist__trap" aria-hidden="true">
+      <label id="pro-label-33" for="pro-input-34">Leave this empty</label>
+      <input id="pro-input-34" type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <button id="pro-button-35" type="submit">Join the waitlist</button>
+  </form>
+  <p id="pro-p-36">We only use your address to email you when WB Pro goes on sale. Ask and we remove it.</p>
+  <script>
+    /* Run locally (npm start), the form posts to the waitlist Worker running on
+       this PC (npx wrangler dev, 127.0.0.1:8787) instead of the deployed one, so the
+       whole sign-up works before and without a deploy. server/waitlist/README.md. */
+    (function () {
+      var host = location.hostname;
+      if (host !== 'localhost' && host !== '127.0.0.1') return;
+      var form = document.getElementById('pro-form-29');
+      // 127.0.0.1, not localhost: wrangler dev listens on IPv4 only, and on
+      // Windows localhost goes to ::1 first, where the request hung (#1961).
+      if (form) form.setAttribute('action', 'http://127.0.0.1:8787/join');
+    })();
+  </script>
 </div>

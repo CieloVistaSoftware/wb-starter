@@ -188,8 +188,9 @@ test.describe('Home Page — Schema Permutation Tests', () => {
   // `body > [x-grid]` combinator never matched (#854).
   const FEATURES_GRID = `[x-grid]:has(${FEATURE_CARD})`;
 
-  test('Features: article[variant=float] renders 8 instances', async ({ page }) => {
-    await expect(page.locator(FEATURE_CARD)).toHaveCount(8);
+  // 9 since #1961 added "Want more? WB Pro", the free page's way into Pro.
+  test('Features: article[variant=float] renders 9 instances', async ({ page }) => {
+    await expect(page.locator(FEATURE_CARD)).toHaveCount(9);
   });
 
   // Cards stopped stamping x-card--{variant} (a8a7362e): card.css reads

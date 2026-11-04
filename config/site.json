@@ -40,6 +40,12 @@
       "pageToLoad": "docs"
     },
     {
+      "menuItemId": "pro",
+      "menuItemText": "WB Pro",
+      "menuItemEmoji": "⭐",
+      "pageToLoad": "pro"
+    },
+    {
       "menuItemId": "about",
       "menuItemText": "About",
       "menuItemEmoji": "ℹ️",

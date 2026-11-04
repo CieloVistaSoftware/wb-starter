@@ -2,21 +2,21 @@
 
 ## 🅿️ PARKING LOT
 
-**Parked 2026-11-01, 9:45 PM CST.** main = v1.0.563.
+**Parked 2026-11-02, 8:20 PM CST.** main = v1.0.564. PR #1962 = draft, not merged.
 
-**Task:** WB Pro waitlist (#1961, step B of #1953).
+**Task:** WB Pro waitlist (#1961, step B of #1953), all in draft PR #1962 on branch `claude/status-glexi8`. John's PC is on that branch.
 
-**Files touched:** `pages/pro.html` (new Pricing and "Join the waitlist" sections), `tests/regression/pro-page-shows-prices-and-waitlist.spec.ts` (new). One commit, `feat(#1961): the WB Pro page shows the launch prices and the waitlist`, on the session's local branch `waitlist`. **It is not pushed.** It goes on the session branch after PR #1960 merges, as its own PR.
+**What #1962 holds:** the Pro page's Pricing and Join the waitlist sections (`pages/pro.html`, `src/styles/pages/pro.css`); WB Pro in the menu (`config/site.json`) and a ninth Home feature card, so visitors start on the free site and choose Pro; our own hardened Cloudflare Worker with a D1 database (`server/waitlist/`: origin check, form-only 2 KB bodies, 5 tries/hour per salted-hash visitor, trap field, constant-time export token, security headers, `workers_dev = false`); `npm run pro:local` (site + Worker + local database in one command); `npm start` now runs `scripts/ensure-installed.mjs` (`npm install --prefer-online` when node_modules does not match package-lock.json); wrangler 4.156.2 as a devDependency.
 
-**Last action:** John chose Buttondown (free) for the waitlist email sign-up, over Lemon Squeezy's paid email marketing add-on. John is setting up Buttondown tomorrow.
+**Last action:** John ran `npm run pro:local` on his PC: fresh install, local table, Worker ready on 8787, site up. Not yet confirmed: a sign-up through the browser on his PC (it works in the cloud session's browser).
 
-**Next step:** get the Buttondown username or embed snippet from John. Add a form to the waitlist section that posts to `https://buttondown.com/api/emails/embed-subscribe/<username>` (confirm the address against his snippet), replacing "The sign-up form opens soon". Change the spec's "no form yet" check to "the form posts to Buttondown". Then open the PR.
+**Next step:** (1) John signs up once locally and says what he sees. (2) John deploys: the 6 steps in `server/waitlist/README.md` (`wrangler login`, `d1 create`, paste the `database_id` into `wrangler.toml`, `d1 execute --remote`, `secret put EXPORT_TOKEN`, `secret put IP_SALT`, `wrangler deploy`), then sends the `database_id`. (3) Commit it, take #1962 out of draft, merge on green, test a real sign-up on the live site.
 
-**Done today (merged):** #1959 (Playwright jobs moved from Ubuntu 26.04 to Windows, #1955; x-clock example Tokyo, not London, which ended the Nightly failures since Oct 25, #1956–#1958). #1954 (core is MIT; 11 effects and 6 advanced inputs moved to WB Pro; `registerBehaviorPack()`). wb-pro PR #1 (the Pro pack on wb-pro's main). #1960 (`docs/architecture/proposals/WB-PRO-ACCESS.md`, WB-PRO-ACCESS.md: download first, waitlist first with a 60-day check), merging when CI is green.
+**Known, not started:** the Pro page shows no live Pro demos; the version badge shows v1.0.1 locally and live (a badge bug, not a stale site); about 50 old `.claude/worktrees` folders on John's PC (`node scripts/clean-merged-worktrees.mjs --apply`); one flaky run of `tests/components/tooltip.spec.ts` ("Execution context was destroyed"), not seen again.
 
-**Decided by John today:** WB Pro launches with the Lemon Squeezy download, with npm later; waitlist before checkout, checkout at ~20 sign-ups, 60-day check; Codex uninstalled from GitHub (it is not part of the build).
+**Decided by John:** no Buttondown, no newsletter service: the waitlist is our own Cloudflare Worker and D1, kept on Cloudflare (not a GitHub repo). Visitors land on the free site first. `npm start` must start from fresh packages.
 
-**Open questions for John:** the "Permission updates requested" on the Claude GitHub App. Without Actions write access a session cannot start the Nightly (403). Activating the Lemon Squeezy store (business details) is needed before checkout, not before the waitlist.
+**Open for John:** the Claude GitHub App's "Permission updates requested" (without Actions write, a session cannot start the Nightly or re-run a job: 403).
 
 ---
 

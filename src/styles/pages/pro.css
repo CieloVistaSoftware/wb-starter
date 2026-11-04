@@ -1,0 +1,41 @@
+/* pro.css: page-specific styles for pro.html (#1961, the WB Pro waitlist). */
+
+.pro-waitlist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 28rem;
+}
+
+.pro-waitlist label {
+  color: var(--text-secondary);
+}
+
+.pro-waitlist input[type="email"] {
+  padding: 0.75rem;
+  border: 0.0625rem solid var(--border-color);
+  border-radius: 0.375rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.pro-waitlist button[type="submit"] {
+  align-self: flex-start;
+  padding: 1rem 2rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* The bot trap: off-screen for people, still in the form for bots. */
+.pro-waitlist__trap {
+  position: absolute;
+  left: -625rem;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  overflow: hidden;
+}

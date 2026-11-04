@@ -202,8 +202,10 @@ app.use((req, res, next) => {
 });
 
 // Health Check Endpoint
+// app and root (#1961): scripts/claim-port.mjs reads them to tell a leftover
+// copy of this site holding :3000 from some other program.
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', timestamp: new Date().toISOString(), app: 'cielovista-site', root: rootDir, pid: process.pid });
 });
 
 // Start WebSocket Server (Optional)
