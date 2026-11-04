@@ -166,12 +166,19 @@ export function attachEditorAssist(textarea, source, opts = {}) {
   let active = 0;
   let ctx = null;
   let tabLeaves = false;
+  // A slow schema index must not bring back a list the user already dismissed.
+  let reopenWhenLoaded = false;
 
   const close = () => {
     list.hidden = true;
     items = [];
     ctx = null;
     textarea.removeAttribute('aria-activedescendant');
+  };
+
+  const dismiss = () => {
+    reopenWhenLoaded = false;
+    close();
   };
 
   const paint = () => {
@@ -197,7 +204,8 @@ export function attachEditorAssist(textarea, source, opts = {}) {
   const open = () => {
     const c = completionContext(textarea.value, textarea.selectionStart);
     if (c && !c.prefix.startsWith('x-') && !schemas) {
-      ensureSchemas().then(() => { if (document.activeElement === textarea) open(); });
+      reopenWhenLoaded = true;
+      ensureSchemas().then(() => { if (reopenWhenLoaded && document.activeElement === textarea) open(); });
     }
     const found = c && textarea.selectionStart === textarea.selectionEnd ? suggest(c, data) : [];
     // Nothing to offer, or the only offer is exactly what is already typed.
@@ -222,7 +230,7 @@ export function attachEditorAssist(textarea, source, opts = {}) {
     textarea.focus();
     textarea.setSelectionRange(ctx.start, textarea.selectionStart);
     document.execCommand('insertText', false, it.label);
-    close();
+    dismiss();
   };
 
   const onKeydown = (e) => {
@@ -241,11 +249,11 @@ export function attachEditorAssist(textarea, source, opts = {}) {
       }
       if (e.key === 'Escape') {
         e.preventDefault();
-        close();
+        dismiss();
         return;
       }
     }
-    if (e.key === 'Escape') { tabLeaves = true; return; }
+    if (e.key === 'Escape') { reopenWhenLoaded = false; tabLeaves = true; return; }
     if (e.key === 'Tab' && !e.ctrlKey && !e.altKey && !e.metaKey) {
       if (tabLeaves) { tabLeaves = false; return; } // let focus move on
       e.preventDefault();
@@ -268,8 +276,8 @@ export function attachEditorAssist(textarea, source, opts = {}) {
   };
 
   const onInput = () => open();
-  const onBlur = () => close();
-  const onClickCaret = () => close();
+  const onBlur = () => dismiss();
+  const onClickCaret = () => dismiss();
 
   // Capture, so an open list takes Enter before the page's own Enter handler.
   textarea.addEventListener('keydown', onKeydown, true);

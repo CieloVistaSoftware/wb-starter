@@ -94,6 +94,35 @@ test.describe('playground editor (#265)', () => {
     await expect(list).toBeHidden();
   });
 
+  // #1967's CI: typing `x` starts loading the schema index, and a slow load
+  // reopened the list after Enter had already accepted and closed it.
+  test('a slow schema index does not reopen a list Enter already closed', async ({ page }) => {
+    await page.goto('/demos/playground.html');
+    // Its own textarea, so this test decides exactly when the index arrives.
+    await page.evaluate(async () => {
+      const { attachEditorAssist } = await import('/src/lib/html-editor-assist.js');
+      const box = document.createElement('div');
+      const ta = document.createElement('textarea');
+      ta.id = 'slow-index';
+      box.append(ta);
+      document.body.append(box);
+      const w = window as unknown as { releaseIndex: () => void };
+      const held = new Promise((resolve) => { w.releaseIndex = () => resolve({}); });
+      attachEditorAssist(ta, { behaviors: { 'x-card': 'card', 'x-cardstats': 'cardstats' }, loadSchemas: () => held }, { popupClass: 'slow-list' });
+    });
+    await page.locator('#slow-index').focus();
+    await page.keyboard.type('<div x-car');
+    const list = page.locator('.slow-list');
+    await expect(list).toBeVisible();
+    await page.keyboard.press('Enter');
+    await expect(list).toBeHidden();
+
+    await page.evaluate(() => (window as unknown as { releaseIndex: () => void }).releaseIndex());
+    await page.waitForTimeout(100);
+    await expect(list).toBeHidden();
+    expect(await page.locator('#slow-index').inputValue()).toBe('<div x-card');
+  });
+
   test("inside a tag that carries x-card, typing vari offers the card's variant option", async ({ page }) => {
     await openEditor(page, '<article x-card ');
     await page.keyboard.type('vari');
