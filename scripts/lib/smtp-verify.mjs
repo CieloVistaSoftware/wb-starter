@@ -93,8 +93,10 @@ export async function verifyMailbox(email, options = {}) {
     const madeUp = `no-such-user-${randomBytes(8).toString('hex')}@${domain}`;
     const probe = await session.send(`RCPT TO:<${madeUp}>`);
     await session.send('QUIT').catch(() => {});
-    if (classifyRcpt(probe.code, probe.text) === 'good') {
-      return { result: 'unknown', why: `${host} accepts every address` };
+    // "Good" needs a clear "no such mailbox" for the made-up one. Anything else
+    // (Outlook's servers, for one) means the first yes proved nothing.
+    if (classifyRcpt(probe.code, probe.text) !== 'bad') {
+      return { result: 'unknown', why: `${host} did not refuse a made-up address (${probe.code})` };
     }
     return { result: 'good', why: `${host} accepted it` };
   } catch (error) {

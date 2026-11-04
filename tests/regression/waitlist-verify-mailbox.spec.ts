@@ -48,6 +48,13 @@ test.describe('waitlist:verify says whether a mailbox exists (#1966)', () => {
     expect(result).toBe('unknown');
   });
 
+  test('a server that blocks the made-up probe is unknown, not good', async () => {
+    const mail = await fakeServer((line) => (line.includes('no-such-user') ? '550 5.7.1 blocked by policy' : '250 OK'));
+    const { result } = await verifyMailbox('any@example.test', mail.options);
+    mail.close();
+    expect(result).toBe('unknown');
+  });
+
   test('a domain with no mail server is bad', async () => {
     const resolveMx = async () => { throw Object.assign(new Error('none'), { code: 'ENOTFOUND' }); };
     const { result } = await verifyMailbox('a@nowhere.test', { resolveMx });
