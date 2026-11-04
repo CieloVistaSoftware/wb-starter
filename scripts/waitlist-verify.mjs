@@ -8,6 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { verifyMailbox } from './lib/smtp-verify.mjs';
 
+console.clear(); // John: start each waitlist command on a clear terminal.
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const workerDir = path.join(here, '..', 'server', 'waitlist');
 const local = process.argv.includes('--local');
