@@ -4,7 +4,7 @@
 
 Parked 2026-11-04, about 9:25 PM CST.
 
-**Task:** temporary showcase site for wb-starter, built only from the npm package.
+**Task:** temporary showcase site, built only from the published npm package.
 
 **Files:** C:\Users\jwpmi\Downloads\AI\wb-npm-showcase\site (outside the repo, not in git). No repo files changed.
 
