@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.570",
+      "date": "2026-11-05",
+      "summary": "The parking lot had no record of the temporary npm showcase site or the package gaps it found. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1984\" target=\"_blank\" rel=\"noopener\">#1984</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Park the npm showcase site work</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1984\" target=\"_blank\" rel=\"noopener\">#1984</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/06aecab8627de5eb1626b5d8e752c1e419203f6b\" target=\"_blank\" rel=\"noopener\"><code>06aecab</code></a>",
+          "issues": [
+            1984
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2F_today%2FCURRENT-STATUS.md\" target=\"_blank\" rel=\"noopener\">docs/_today/CURRENT-STATUS.md</a> and read the top of the parking lot. Before: the newest entry was the waitlist. Now: the first entry is the npm showcase site, with issues 1972 to 1983.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/06aecab8627de5eb1626b5d8e752c1e419203f6b\" target=\"_blank\" rel=\"noopener\"><code>06aecab</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.569",
       "date": "2026-11-04",
       "summary": "The parking lot still described the waitlist as an unmerged draft from Nov 2. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1971\" target=\"_blank\" rel=\"noopener\">#1971</a>",
