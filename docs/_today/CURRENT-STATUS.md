@@ -2,6 +2,22 @@
 
 ## 🅿️ PARKING LOT
 
+**Parked 2026-11-04, 9:10 PM CST.** main = v1.0.568.
+
+**Task:** WB Pro waitlist: see who joined, who paid, and fulfil orders (#1961, #1969, #1966).
+
+**Files touched:** `server/waitlist/src/index.js`, `server/waitlist/src/lib.js`, `server/waitlist/README.md`, `tests/regression/waitlist-worker.spec.ts` (#1970); `scripts/lib/reload-ignore.mjs`, `src/lib/html-editor-assist.js` (#1968).
+
+**Last action:** #1968 and #1970 merged; Worker deployed from main (version 1ffc6b67). Live /admin checked: form shows, wrong password answers 401, no list shown. The right password and the list were not checked: John could not find his EXPORT_TOKEN and was given the command to replace it.
+
+**Next step:** (1) John finds or replaces EXPORT_TOKEN, opens https://waitlist.cielovistasoftware.com/admin and says what he sees. (2) Check Cloudflare inbound email for the "they email us" confirmation (#1966). (3) Lemon Squeezy for who paid and order fulfilment: nothing built yet.
+
+**Known, not started:** the "Issue signature block" check failed when #1967 and #1969 closed; the `v1.0.1` badge question; John's PC should move to `main`; 29 old `fix-*` worktrees.
+
+**Open for John:** the EXPORT_TOKEN above.
+
+---
+
 **Parked 2026-11-02, 8:20 PM CST.** main = v1.0.564. PR #1962 = draft, not merged.
 
 **Task:** WB Pro waitlist (#1961, step B of #1953), all in draft PR #1962 on branch `claude/status-glexi8`. John's PC is on that branch.
