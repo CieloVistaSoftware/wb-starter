@@ -62,6 +62,10 @@ the same Cloudflare account.
 
 ## Get the list
 
+Open https://waitlist.cielovistasoftware.com/admin and enter the `EXPORT_TOKEN` value. After 5 wrong passwords in an hour, that connection is locked out for the hour.
+
+Or download it as a file:
+
 In PowerShell, with your token in place of `<token>`:
 
 `Invoke-WebRequest https://waitlist.cielovistasoftware.com/export -Headers @{ Authorization = "Bearer <token>" } -OutFile waitlist.csv`

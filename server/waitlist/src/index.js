@@ -23,7 +23,7 @@
  */
 
 import {
-  originAllowed, MAX_BODY_BYTES, JOIN_LIMIT, JOIN_WINDOW_MS, DEFAULT_PRO_PAGE,
+  originAllowed, MAX_BODY_BYTES, JOIN_LIMIT, JOIN_WINDOW_MS, DEFAULT_PRO_PAGE, centralTime,
   respond, normalizeEmail, sameSecret, visitorKey, escapeHtml,
 } from './lib.js';
 
@@ -177,6 +177,85 @@ async function exportList(request, env) {
   });
 }
 
+/** The admin page's shell. Its form posts back here, so form-action is opened to 'self'. */
+function adminPage(status, title, body) {
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>${escapeHtml(title)} - WB Pro</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f4f6f9;color:#141a24}
+main{max-width:720px;margin:48px auto;padding:0 16px;line-height:1.5}
+label,input,button{display:block;font:inherit}
+input{width:100%;max-width:360px;box-sizing:border-box;margin:4px 0 12px;padding:8px}
+button{padding:8px 16px}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{text-align:left;padding:8px;border-bottom:1px solid #d5dae2;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<main>
+${body}
+</main>
+</body>
+</html>`;
+  return respond(html, status, {
+    'content-type': 'text/html; charset=utf-8',
+    'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+  });
+}
+
+/** The password form, with an optional message above it. */
+function adminLogin(status, message = '') {
+  const note = message ? `<p role="alert">${escapeHtml(message)}</p>` : '';
+  return adminPage(status, 'Waitlist', `<h1>Waitlist</h1>
+${note}<form method="post" action="/admin">
+<label for="token">Password (the EXPORT_TOKEN secret)</label>
+<input id="token" name="token" type="password" autocomplete="current-password" required>
+<button type="submit">Show the list</button>
+</form>`);
+}
+
+/**
+ * POST /admin: the list, for the right password. Only wrong passwords count
+ * toward the limit, so looking at the list never locks its owner out.
+ */
+async function adminList(request, env) {
+  if (Number(request.headers.get('content-length') || 0) > MAX_BODY_BYTES) {
+    return adminLogin(413, 'That was too long.');
+  }
+  let given = '';
+  try {
+    given = String((await request.formData()).get('token') ?? '');
+  } catch {
+    return adminLogin(400, 'The form could not be read. Please try again.');
+  }
+  const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+  const key = `admin:${await visitorKey(ip, env.IP_SALT || 'pro-waitlist')}`;
+  const now = Date.now();
+  await env.DB.prepare('DELETE FROM join_attempts WHERE at < ?1').bind(now - JOIN_WINDOW_MS).run();
+  const row = await env.DB.prepare('SELECT COUNT(*) AS n FROM join_attempts WHERE visitor = ?1').bind(key).first();
+  if (Number(row?.n ?? 0) >= JOIN_LIMIT) return adminLogin(429, 'Too many wrong passwords. Please wait an hour.');
+  if (!env.EXPORT_TOKEN || !sameSecret(given, env.EXPORT_TOKEN)) {
+    await env.DB.prepare('INSERT INTO join_attempts (visitor, at) VALUES (?1, ?2)').bind(key, now).run();
+    return adminLogin(401, 'That password is not right.');
+  }
+  const { results } = await env.DB.prepare('SELECT email, joined_at FROM waitlist ORDER BY joined_at').all();
+  const rows = results.map((r) => `<tr><td>${escapeHtml(r.email)}</td><td>${escapeHtml(centralTime(r.joined_at))}</td></tr>`).join('\n');
+  const count = results.length;
+  return adminPage(200, 'Waitlist', `<h1>Waitlist</h1>
+<p>${count} ${count === 1 ? 'person' : 'people'} signed up. Not confirmed: an address here may not belong to the person who typed it.</p>
+<table>
+<thead><tr><th scope="col">Email</th><th scope="col">Joined</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>`);
+}
+
 export default {
   /**
    * @param {Request} request
@@ -186,6 +265,8 @@ export default {
     const { pathname } = new URL(request.url);
     if (request.method === 'POST' && pathname === '/join') return join(request, env);
     if (request.method === 'GET' && pathname === '/export') return exportList(request, env);
+    if (request.method === 'GET' && pathname === '/admin') return adminLogin(200);
+    if (request.method === 'POST' && pathname === '/admin') return adminList(request, env);
     // For npm run pro:local's readiness check; says nothing about the list.
     if (request.method === 'GET' && pathname === '/health') {
       return respond('{"status":"ok","app":"pro-waitlist"}\n', 200, { 'content-type': 'application/json' });
