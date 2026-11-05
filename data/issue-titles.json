@@ -1311,5 +1311,6 @@
   "1963": "Live reload fires on Wrangler state and log files during pro:local",
   "1965": "tooltip spec \"renders without errors\" fails at random: page.evaluate context destroyed by a navigation",
   "1966": "WB Pro waitlist: confirm each address by email",
-  "1967": "Live reload fires on files in other sessions' worktrees"
+  "1967": "Live reload fires on files in other sessions' worktrees",
+  "1969": "WB Pro waitlist: a private page showing who joined"
 }

@@ -6,6 +6,50 @@
   ],
   "releases": [
     {
+      "version": "1.0.568",
+      "date": "2026-11-04",
+      "summary": "Seeing who joined the waitlist needed a terminal command, and there was no page for it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1969\" target=\"_blank\" rel=\"noopener\">#1969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1970\" target=\"_blank\" rel=\"noopener\">#1970</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>A private page shows who joined the waitlist</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1969\" target=\"_blank\" rel=\"noopener\">#1969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1970\" target=\"_blank\" rel=\"noopener\">#1970</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e955e10ef4201b756f30c8c8c7a5f13df6f1c423\" target=\"_blank\" rel=\"noopener\"><code>e955e10</code></a>",
+          "issues": [
+            1969,
+            1970
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://waitlist.cielovistasoftware.com/admin\" target=\"_blank\" rel=\"noopener\">https://waitlist.cielovistasoftware.com/admin</a> and enter the EXPORT_TOKEN password. Before: that address answered Not found. Now: it shows the count and every address, with joined times in Central.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e955e10ef4201b756f30c8c8c7a5f13df6f1c423\" target=\"_blank\" rel=\"noopener\"><code>e955e10</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.567",
+      "date": "2026-11-04",
+      "summary": "The running site reloaded the browser whenever files changed in another session&#39;s worktree under .claude. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1967\" target=\"_blank\" rel=\"noopener\">#1967</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1968\" target=\"_blank\" rel=\"noopener\">#1968</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Live reload ignores other sessions&#39; worktrees</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1967\" target=\"_blank\" rel=\"noopener\">#1967</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1968\" target=\"_blank\" rel=\"noopener\">#1968</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/864982bd81c42b1e63ab49c90b6cc2dea06c3961\" target=\"_blank\" rel=\"noopener\"><code>864982b</code></a>",
+          "issues": [
+            1967,
+            1968
+          ]
+        }
+      ],
+      "seeIt": "Run npm start with a page open, then change a file under .claude\\worktrees. Before: the server printed File Changed and the page reloaded. Now: nothing happens, while editing a file under src still reloads it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/864982bd81c42b1e63ab49c90b6cc2dea06c3961\" target=\"_blank\" rel=\"noopener\"><code>864982b</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.566",
       "date": "2026-11-03",
       "summary": "The WB Pro page had no way to join the waitlist; the site is static and could not store sign-ups. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1962\" target=\"_blank\" rel=\"noopener\">#1962</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1961\" target=\"_blank\" rel=\"noopener\">#1961</a>",
