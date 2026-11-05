@@ -1312,5 +1312,17 @@
   "1965": "tooltip spec \"renders without errors\" fails at random: page.evaluate context destroyed by a navigation",
   "1966": "WB Pro waitlist: confirm each address by email",
   "1967": "Live reload fires on files in other sessions' worktrees",
-  "1969": "WB Pro waitlist: a private page showing who joined"
+  "1969": "WB Pro waitlist: a private page showing who joined",
+  "1972": "npm serves wb-starter 1.0.0 while main is tagged v1.0.400, and npm disagrees with itself about the latest version",
+  "1973": "Default dark theme: --primary is too dark to read as text (card titles, stat values)",
+  "1974": "Behaviors inside an <article> card can run twice: x-typewriter stops at one letter, x-counter draws two counters",
+  "1975": "branding.colorTheme did not set the theme for a first-time visitor",
+  "1976": "navigationPosition in site.json is read by nothing, so \"top\" does nothing",
+  "1977": "x-tabs docs say a section title labels the tab, but the code reads tab-title",
+  "1978": "x-cardhero gradient: bright green title, buttons off center, and an undocumented heading level",
+  "1979": "A plain <table> overflows a 375px phone by 35px",
+  "1980": "npm package README and behavior docs link to files the package does not include",
+  "1981": "README gives two different counts for behavior schemas and stylesheets",
+  "1982": "Published package.json carries 69 repo-only scripts",
+  "1983": "New sites must keep index.html title and description in step with site.json by hand"
 }

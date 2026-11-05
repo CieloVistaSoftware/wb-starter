@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.569",
+      "date": "2026-11-04",
+      "summary": "The parking lot still described the waitlist as an unmerged draft from Nov 2. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1971\" target=\"_blank\" rel=\"noopener\">#1971</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Park, waitlist page live</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1971\" target=\"_blank\" rel=\"noopener\">#1971</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cbfba070a8386463dcd92a8a148c2ae8f782008a\" target=\"_blank\" rel=\"noopener\"><code>cbfba07</code></a>",
+          "issues": [
+            1971
+          ]
+        }
+      ],
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2F_today%2FCURRENT-STATUS.md\" target=\"_blank\" rel=\"noopener\">docs/_today/CURRENT-STATUS.md</a>. Before: the top entry said PR 1962 was a draft. Now: it says the /admin page is live and lists what is left.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cbfba070a8386463dcd92a8a148c2ae8f782008a\" target=\"_blank\" rel=\"noopener\"><code>cbfba07</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.568",
       "date": "2026-11-04",
       "summary": "Seeing who joined the waitlist needed a terminal command, and there was no page for it. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1969\" target=\"_blank\" rel=\"noopener\">#1969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1970\" target=\"_blank\" rel=\"noopener\">#1970</a>",
