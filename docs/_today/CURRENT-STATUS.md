@@ -2,6 +2,22 @@
 
 ## 🅿️ PARKING LOT
 
+Parked 2026-11-04, about 9:25 PM CST.
+
+**Task:** temporary showcase site, built only from the published npm package.
+
+**Files:** C:\Users\jwpmi\Downloads\AI\wb-npm-showcase\site (outside the repo, not in git). No repo files changed.
+
+**Last action:** filed the package gaps as #1972 to #1983. The site was viewed at 1280px and 375px.
+
+**Next step:** decide on npm publishing (#1972), since some gaps may already be fixed on main. To view the site: run `npm start -- --port 4173` in that folder.
+
+**Not tested:** dragging, tooltips and tab switching. The Get started page was not opened. dist/ predates the last hero title fix, so rerun `npm run build`.
+
+**Open for John:** keep or delete the temporary folder.
+
+---
+
 **Parked 2026-11-04, 9:10 PM CST.** main = v1.0.568.
 
 **Task:** WB Pro waitlist: see who joined, who paid, and fulfil orders (#1961, #1969, #1966).
