@@ -14,7 +14,7 @@ This approach promotes:
 
 ## How It Works
 
-When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior.
+When WB starts, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `true` by default**, so a plain `<article>`, `<table>` or `<button>` gets its behavior with no extra markup. To keep a whole page untouched, opt out with `WB.init({ autoInject: false })`; to keep one element untouched, give it `x-ignore` (below).
 
 ### Precedence Rule
 **Auto Injection is additive.**
