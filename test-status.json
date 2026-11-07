@@ -1,0 +1,18 @@
+{
+  "source": "nightly",
+  "state": "failed",
+  "total": 10029,
+  "passed": 9860,
+  "failed": 1,
+  "skipped": 168,
+  "completedAt": "2026-11-07T08:23:44.862Z",
+  "updatedAt": "2026-11-07T08:23:44.862Z",
+  "commit": "059d7924709a9974fd2696864d16d860a4c57d2e",
+  "runUrl": "https://github.com/CieloVistaSoftware/wb-starter/actions/runs/42353738469",
+  "failures": [
+    {
+      "file": "regression/live-reload-client-uses-the-servers-port.spec.ts",
+      "name": "a directly opened page connects to port + 1, never a hardcoded 3001"
+    }
+  ]
+}

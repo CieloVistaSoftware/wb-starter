@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-11-07T08:23:44.862Z",
+  "count": 1,
+  "failures": [
+    {
+      "project": "regression",
+      "title": "a directly opened page connects to port + 1, never a hardcoded 3001",
+      "file": "regression/live-reload-client-uses-the-servers-port.spec.ts",
+      "line": 56,
+      "error": "TypeError: fetch failed",
+      "stack": "at D:\\a\\wb-starter\\wb-starter\\tests\\regression\\live-reload-client-uses-the-servers-port.spec.ts:57:17",
+      "snippet": "  55 |\n  56 |   test('a directly opened page connects to port + 1, never a hardcoded 3001', async () => {\n> 57 |     const res = await fetch(`http://localhost:${port}/pages/about.html`, { headers: { Accept: 'text/html', 'Sec-Fetch-Mode': 'navigate' } });\n     |                 ^\n  58 |     expect(res.status).toBe(200);\n  59 |     const html = await res.text();\n  60 |     expect(html, 'the page was not the live-reload wrapper').toContain('Live Reload Client');",
+      "attachments": [
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "D:\\a\\wb-starter\\wb-starter\\data\\playwright-output\\live-reload-client-uses-th-98789-rt-1-never-a-hardcoded-3001-regression\\trace.zip"
+        }
+      ],
+      "retry": 0
+    }
+  ]
+}
