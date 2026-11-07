@@ -317,8 +317,12 @@ npm start          # http://localhost:3000
 Then write HTML:
 
 ```html
-<article title="Welcome" subtitle="Standard card">
-  This is a card. It is also still an article.
+<article>
+  <header>
+    <h3>Welcome</h3>
+    <p>Standard card</p>
+  </header>
+  <p>This is a card. It is also still an article.</p>
 </article>
 ```
 
