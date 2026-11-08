@@ -17,13 +17,14 @@ test.describe('card component documentation examples (#419)', () => {
     const fences = [...text.matchAll(/```(\w*)\r?\n([\s\S]*?)```/g)]
       .map((match) => ({ language: match[1], source: match[2] }));
 
-    // Eleven since #477 added the goldenRatio example.
-    expect(demos, 'card.md should keep the eleven live card examples').toHaveLength(11);
+    // Eleven since #477 added the goldenRatio example; twelve since #1987 led
+    // Usage with the semantic <header> form and kept the attribute shorthand.
+    expect(demos, 'card.md should keep the twelve live card examples').toHaveLength(12);
     expect(
       // <article> is a card by itself; any other host names the behavior.
       demos.filter((source) => /<article[\s>]|<[a-z]+\s+x-card[\s>]/i.test(source)),
       'each live card example should contain a card usage element'
-    ).toHaveLength(11);
+    ).toHaveLength(12);
 
     const renderableFences = fences.filter(
       ({ language, source }) => language.toLowerCase() === 'html' && RENDERABLE.test(source)

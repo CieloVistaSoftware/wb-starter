@@ -772,6 +772,47 @@ export function composeCard(element, options = {}) {
       
       // MVVM: Do NOT wipe innerHTML. We enhance what's there.
       // element.innerHTML = '';
+
+      // The featured marker and article metadata, for a generated header and
+      // an authored one alike. Each part is skipped when the header already
+      // has one, so a re-visit never adds a second.
+      const appendHeaderMeta = (headerEl) => {
+        if (config.featuredLabel && !headerEl.querySelector(':scope > mark')) {
+          const featuredEl = cardPart(null, 'mark', '', config.featuredLabel);
+          if (config.featuredTone) featuredEl.setAttribute('tone', config.featuredTone);
+          // Before the title, not after it: the point of the marker is to
+          // be read BEFORE you read what the card is about.
+          headerEl.insertBefore(featuredEl, headerEl.firstChild);
+        }
+
+        // Article metadata. Distinct semantic tags rather than classes:
+        // card.css reaches each one as `article > header > time`,
+        // `> address`, `> small`.
+        if (config.category && !headerEl.querySelector(':scope > small')) {
+          cardPart(headerEl, 'small', '', config.category);
+        }
+
+        if (config.date && !headerEl.querySelector(':scope > time')) {
+          const dateEl = document.createElement('time');
+          dateEl.setAttribute('datetime', config.date);
+          dateEl.textContent = config.date;
+          headerEl.appendChild(dateEl);
+        }
+
+        if (config.readingTime && !headerEl.querySelector(':scope > data')) {
+          // <data>, not a second <small>: category is already the <small>,
+          // and two identical tags in the header make the order ambiguous
+          // to CSS -- which is what selects these now.
+          const readingEl = document.createElement('data');
+          readingEl.setAttribute('value', String(config.readingTime));
+          readingEl.textContent = config.readingTime;
+          headerEl.appendChild(readingEl);
+        }
+
+        if (config.author && !headerEl.querySelector(':scope > address')) {
+          cardPart(headerEl, 'address', '', `By ${config.author}`);
+        }
+      };
       
       // HEADER - show if title/subtitle/badge config exists OR a semantic
       // <header> is already present (enhance it to x-card__header). (#159)
@@ -781,43 +822,11 @@ export function composeCard(element, options = {}) {
         if (!header) {
           const headerEl = document.createElement('header');
           // See createHeader: the tag names it, card.css targets the tag.
-          
+
           // Children of the <header> itself -- see createHeader above for why
           // the wrapper div is gone.
           appendTitles(headerEl);
-
-          if (config.featuredLabel) {
-            const featuredEl = cardPart(null, 'mark', '', config.featuredLabel);
-            if (config.featuredTone) featuredEl.setAttribute('tone', config.featuredTone);
-            // Before the title, not after it: the point of the marker is to
-            // be read BEFORE you read what the card is about.
-            headerEl.insertBefore(featuredEl, headerEl.firstChild);
-          }
-
-          // Article metadata. Distinct semantic tags rather than classes:
-          // card.css reaches each one as `article > header > time`,
-          // `> address`, `> small`.
-          if (config.category) cardPart(headerEl, 'small', '', config.category);
-
-          if (config.date) {
-            const dateEl = document.createElement('time');
-            dateEl.setAttribute('datetime', config.date);
-            dateEl.textContent = config.date;
-            headerEl.appendChild(dateEl);
-          }
-
-          if (config.readingTime) {
-            // <data>, not a second <small>: category is already the <small>,
-            // and two identical tags in the header make the order ambiguous
-            // to CSS -- which is what selects these now.
-            const readingEl = document.createElement('data');
-            readingEl.setAttribute('value', String(config.readingTime));
-            readingEl.textContent = config.readingTime;
-            headerEl.appendChild(readingEl);
-          }
-
-          if (config.author) cardPart(headerEl, 'address', '', `By ${config.author}`);
-
+          appendHeaderMeta(headerEl);
           appendHeaderExtra(headerEl, headerContent);
 
           // #884: cardproduct already painted this same badge= over its
@@ -834,6 +843,11 @@ export function composeCard(element, options = {}) {
         } else {
           // Enhance existing header
           // Already a <header> inside the card -- card.css matches the tag.
+          // The author wrote the heading, so no title/subtitle is added, but
+          // the featured marker and metadata options still apply: without
+          // this, featured/featuredTone/category/date/... did nothing on a
+          // semantic card (#1987).
+          appendHeaderMeta(header);
           // Inject badge if missing
           if (config.badge && !badgeAlreadyRendered(element, config.badge)) appendBadge(header);
         }
