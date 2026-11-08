@@ -31,9 +31,15 @@ const img = (seed, w, h) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
 /** token -> markup. Attribute names come from each behavior's schema. */
 export const EXAMPLES = {
   // ── Card family ────────────────────────────────────────────────────────────
-  'x-card': `<article x-card title="Trailhead access" subtitle="Updated this morning" elevated>
-  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds
-  about ten minutes on foot.
+  // Semantic markup first: the heading is a real <h3> in the authored <header>,
+  // not title/subtitle attributes (title is the browser's tooltip) (#1987).
+  'x-card': `<article x-card elevated>
+  <header>
+    <h3>Trailhead access</h3>
+    <p>Updated this morning</p>
+  </header>
+  <p>The north gate is open. Parking fills by 9am on weekends — the overflow lot adds
+  about ten minutes on foot.</p>
 </article>`,
 
   'x-cardbutton': `<article x-cardbutton

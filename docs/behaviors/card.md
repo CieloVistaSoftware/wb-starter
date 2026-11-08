@@ -9,22 +9,47 @@ an element in place, exactly as `x-ripple` does.
 
 ## Usage
 
+Write the card as plain HTML. Auto-injection (on by default) makes every
+`<article>` a card, and the card keeps your own `<header>`, `<h3>` and `<p>` in
+place. It is valid HTML, and with JavaScript off it still has a real heading:
+
 <figure x-demo>
-<article title="Card title" subtitle="A line under it" footer="Footer text"></article>
+<article>
+  <header>
+    <h3>Card title</h3>
+    <p>A line under it</p>
+  </header>
+  <p>Card body.</p>
+  <footer>Footer text</footer>
+</article>
 </figure>
 
 Explicitly, or on a non-article element:
 
 <figure x-demo>
-<div x-card
-  title="Card title"
-  subtitle="A line under it"
-  footer="Footer text"
-  elevated></div>
+<div x-card elevated>
+  <header>
+    <h3>Card title</h3>
+    <p>A line under it</p>
+  </header>
+  <p>Card body.</p>
+</div>
 </figure>
 
-Only the parts you give it are rendered. A card with no `title`/`subtitle` gets
-no header; a card with no `footer` gets no footer. Nothing is emitted empty.
+### Attribute shorthand
+
+The same card can be written with WB attributes instead. This is enhanced HTML,
+not valid HTML: `subtitle` and `footer` are WB's own attributes, and `title` is
+also the browser's tooltip attribute, so the heading shows as a tooltip on hover
+and is missing with JavaScript off. Prefer the markup form above.
+
+<figure x-demo>
+<article title="Card title" subtitle="A line under it" footer="Footer text"></article>
+</figure>
+
+Only the parts you give it are rendered. A card with no header markup and no
+`title`/`subtitle` gets no header; a card with no footer gets no footer. Nothing
+is emitted empty.
 
 ## Attributes
 

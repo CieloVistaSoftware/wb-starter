@@ -947,9 +947,9 @@
       ]
     },
     "x-card": {
-      "source": "<article title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
+      "source": "<article>\n  <header>\n    <h3>Trailhead access</h3>\n    <p>Updated this morning</p>\n  </header>\n  <p>The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.</p>\n</article>",
       "alternates": [
-        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+        "<div x-card>\n  <header>\n    <h3>Trailhead access</h3>\n    <p>Updated this morning</p>\n  </header>\n  <p>The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.</p>\n</div>"
       ],
       "examples": [
         {
