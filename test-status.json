@@ -1,0 +1,13 @@
+{
+  "source": "nightly",
+  "state": "passed",
+  "total": 10029,
+  "passed": 9862,
+  "failed": 0,
+  "skipped": 167,
+  "completedAt": "2026-11-14T08:30:01.072Z",
+  "updatedAt": "2026-11-14T08:30:01.072Z",
+  "commit": "059d7924709a9974fd2696864d16d860a4c57d2e",
+  "runUrl": "https://github.com/CieloVistaSoftware/wb-starter/actions/runs/43573847463",
+  "failures": []
+}
